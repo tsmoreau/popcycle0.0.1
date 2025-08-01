@@ -137,7 +137,7 @@ export default function Navigation() {
             {/* Regular Nav Items */}
             <Link
               href="/shop"
-              className={`systematic-caps text-sm hover:text-pop-green transition-colors ${
+              className={`systematic-caps text-sm hover:text-pop-green transition-colors py-2 ${
                 location === '/shop' ? "nav-link-active" : ""
               }`}
             >
@@ -146,7 +146,7 @@ export default function Navigation() {
             
             <Link
               href="/track"
-              className={`systematic-caps text-sm hover:text-pop-green transition-colors ${
+              className={`systematic-caps text-sm hover:text-pop-green transition-colors py-2 ${
                 location === '/track' ? "nav-link-active" : ""
               }`}
             >
@@ -156,7 +156,7 @@ export default function Navigation() {
 
           <div className="hidden md:block">
             <Link href="/track">
-              <Button className="bg-pop-green text-white hover:bg-pop-black systematic-caps pop-shadow-green">
+              <Button variant="ghost" className="bg-pop-green text-white hover:bg-pop-black systematic-caps">
                 Scan QR Code
               </Button>
             </Link>
