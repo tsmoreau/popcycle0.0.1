@@ -280,14 +280,18 @@ export default function TrackItem() {
                     </div>
                     {item.makerDetails.story && (
                       <div className="border-t border-pop-gray pt-4">
-                        <span className="systematic-caps text-sm text-pop-gray block mb-2">Maker Story</span>
+                        <span className="systematic-caps text-sm text-pop-gray block mb-2">
+                          {item.isCharity ? 'Assembly Story' : 'Maker Story'}
+                        </span>
                         <p className="text-sm italic leading-relaxed">{item.makerDetails.story}</p>
                       </div>
                     )}
                     <div className="border-t border-pop-gray pt-4 flex items-center justify-center">
                       <div className="flex items-center text-pop-red text-sm">
                         <Heart className="w-4 h-4 mr-1 fill-current" />
-                        <span className="systematic-caps">Maker Journey Complete</span>
+                        <span className="systematic-caps">
+                          {item.isCharity ? 'Assembly Complete' : 'Maker Journey Complete'}
+                        </span>
                       </div>
                     </div>
                   </>
@@ -299,7 +303,10 @@ export default function TrackItem() {
                     </div>
                     <h3 className="text-lg helvetica-bold mb-2">Complete Your Maker Journey</h3>
                     <p className="text-sm text-pop-gray mb-6 leading-relaxed">
-                      Did you assemble this item? Share your story and become part of the circular economy narrative.
+                      {item.isCharity 
+                        ? `Did you assemble this item${item.destination ? ` at ${item.destination}` : ''}? Share your story and connect this donation to its educational impact.`
+                        : 'Did you assemble this item? Share your story and become part of the circular economy narrative.'
+                      }
                     </p>
                     <button className="w-full bg-pop-red text-white font-semibold py-3 px-6 border-2 border-pop-black hover:bg-pop-black transition-colors systematic-caps">
                       Register as Maker
