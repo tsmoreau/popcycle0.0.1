@@ -123,7 +123,7 @@ export default function Navigation() {
           <div className="hidden md:block">
             <Link href="/track">
               <Button variant="ghost" className="bg-pop-green text-white hover:bg-pop-black systematic-caps">
-                Scan QR Code
+                Track Plastic
               </Button>
             </Link>
           </div>
@@ -226,7 +226,7 @@ export default function Navigation() {
                   className="w-full bg-pop-green text-white hover:bg-pop-black systematic-caps"
                   onClick={() => setMobileMenuOpen(false)}
                 >
-                  Scan QR Code
+                  Track Plastic
                 </Button>
               </Link>
             </div>
