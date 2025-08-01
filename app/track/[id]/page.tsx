@@ -207,7 +207,7 @@ export default function TrackItem() {
 
                 {item.isCharity && item.donatingEntity && (
                   <div className="flex justify-between">
-                    <span className="systematic-caps text-sm">Donated By</span>
+                    <span className="systematic-caps text-sm">Donor</span>
                     <span>{item.donatingEntity}</span>
                   </div>
                 )}
@@ -215,7 +215,7 @@ export default function TrackItem() {
                 {item.isCharity && (
                   <div className="flex justify-between items-center">
                     <span className="systematic-caps text-sm">Donated</span>
-                    <span className="helvetica-bold">{item.destination}</span>
+                    <span>{item.destination}</span>
                   </div>
                 )}
                 
