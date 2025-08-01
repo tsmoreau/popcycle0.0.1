@@ -131,15 +131,13 @@ export async function GET(
   
   return NextResponse.json({
     id: item.id,
-    qrCode: item.qrCode,
     originPoint: item.originPoint,
     collectionDate: item.collectionDate,
     materialType: item.materialType,
     weight: item.weight,
     processedDate: item.processedDate,
-    purchasedDate: item.purchasedDate,
+    transactionDate: item.transactionDate,
     deliveredDate: item.deliveredDate,
-    isCharity: item.isCharity,
     destination: item.destination,
     donatingEntity: item.donatingEntity,
     carbonOffset: item.carbonOffset,
@@ -147,7 +145,6 @@ export async function GET(
     event: item.event,
     message: item.message,
     makerDetails: item.makerDetails,
-    isSourceOnly: item.isSourceOnly,
     impactMetrics: {
       carbonSaved: item.carbonOffset || 0,
       wasteReduced: item.weight
