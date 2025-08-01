@@ -43,33 +43,25 @@ export default function Navigation() {
           </Link>
           
           <div className="hidden md:flex items-center space-x-8">
-            {/* About Dropdown */}
-            <div 
-              className="relative"
-              onMouseEnter={() => setAboutOpen(true)}
-              onMouseLeave={() => setAboutOpen(false)}
+            {/* Track */}
+            <Link
+              href="/track"
+              className={`systematic-caps text-sm hover:text-pop-green transition-colors py-2 ${
+                pathname === '/track' ? "nav-link-active" : ""
+              }`}
             >
-              <button className={`systematic-caps text-sm hover:text-pop-green transition-colors flex items-center space-x-1 py-2 ${
-                pathname?.startsWith('/about') ? "nav-link-active" : ""
-              }`}>
-                <span>About</span>
-                <ChevronDown className="w-3 h-3" />
-              </button>
-              
-              {aboutOpen && (
-                <div className="absolute top-full left-0 w-48 bg-white border-4 border-pop-black pop-shadow-black">
-                  {aboutItems.map((item) => (
-                    <Link
-                      key={item.href}
-                      href={item.href}
-                      className="block w-full text-left px-4 py-3 systematic-caps text-sm hover:bg-pop-green hover:text-white transition-colors"
-                    >
-                      {item.label}
-                    </Link>
-                  ))}
-                </div>
-              )}
-            </div>
+              Track
+            </Link>
+            
+            {/* Store */}
+            <Link
+              href="/store"
+              className={`systematic-caps text-sm hover:text-pop-green transition-colors py-2 ${
+                pathname === '/store' ? "nav-link-active" : ""
+              }`}
+            >
+              Store
+            </Link>
 
             {/* Services Dropdown */}
             <div 
@@ -99,24 +91,33 @@ export default function Navigation() {
               )}
             </div>
 
-            {/* Regular Nav Items */}
-            <Link
-              href="/store"
-              className={`systematic-caps text-sm hover:text-pop-green transition-colors py-2 ${
-                pathname === '/store' ? "nav-link-active" : ""
-              }`}
+            {/* About Dropdown */}
+            <div 
+              className="relative"
+              onMouseEnter={() => setAboutOpen(true)}
+              onMouseLeave={() => setAboutOpen(false)}
             >
-              Store
-            </Link>
-            
-            <Link
-              href="/track"
-              className={`systematic-caps text-sm hover:text-pop-green transition-colors py-2 ${
-                pathname === '/track' ? "nav-link-active" : ""
-              }`}
-            >
-              Track
-            </Link>
+              <button className={`systematic-caps text-sm hover:text-pop-green transition-colors flex items-center space-x-1 py-2 ${
+                pathname?.startsWith('/about') ? "nav-link-active" : ""
+              }`}>
+                <span>About</span>
+                <ChevronDown className="w-3 h-3" />
+              </button>
+              
+              {aboutOpen && (
+                <div className="absolute top-full left-0 w-48 bg-white border-4 border-pop-black pop-shadow-black">
+                  {aboutItems.map((item) => (
+                    <Link
+                      key={item.href}
+                      href={item.href}
+                      className="block w-full text-left px-4 py-3 systematic-caps text-sm hover:bg-pop-green hover:text-white transition-colors"
+                    >
+                      {item.label}
+                    </Link>
+                  ))}
+                </div>
+              )}
+            </div>
           </div>
 
           <div className="hidden md:block">
