@@ -20,8 +20,8 @@ export default function Services() {
         </div>
 
         {/* Core Services */}
-        <div id="waste-processing" className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-20">
-          <PopArtContainer color="green" shadow className="bg-white border-4 border-pop-green p-8">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-20">
+          <PopArtContainer id="waste-processing" color="green" shadow className="bg-white border-4 border-pop-green p-8">
             <div className="w-16 h-16 bg-pop-green mb-6 flex items-center justify-center">
               <Cog className="w-8 h-8 text-white" />
             </div>

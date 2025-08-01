@@ -28,12 +28,32 @@ export default function Navigation() {
   ];
 
   const handleServicesClick = (href: string) => {
-    window.location.href = href;
+    const [path, hash] = href.split('#');
+    if (location === path && hash) {
+      // Same page, just scroll to anchor
+      const element = document.getElementById(hash);
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth' });
+      }
+    } else {
+      // Different page, navigate then scroll
+      window.location.href = href;
+    }
     setServicesOpen(false);
   };
 
   const handleAboutClick = (href: string) => {
-    window.location.href = href;
+    const [path, hash] = href.split('#');
+    if (location === path && hash) {
+      // Same page, just scroll to anchor
+      const element = document.getElementById(hash);
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth' });
+      }
+    } else {
+      // Different page, navigate then scroll
+      window.location.href = href;
+    }
     setAboutOpen(false);
   };
 
@@ -157,7 +177,15 @@ export default function Navigation() {
                 <button
                   key={item.href}
                   onClick={() => {
-                    handleAboutClick(item.href);
+                    const [path, hash] = item.href.split('#');
+                    if (location === path && hash) {
+                      const element = document.getElementById(hash);
+                      if (element) {
+                        element.scrollIntoView({ behavior: 'smooth' });
+                      }
+                    } else {
+                      window.location.href = item.href;
+                    }
                     setMobileMenuOpen(false);
                   }}
                   className="block w-full text-left px-4 py-2 systematic-caps text-sm hover:bg-pop-green hover:text-white transition-colors border border-pop-black"
@@ -174,7 +202,15 @@ export default function Navigation() {
                 <button
                   key={item.href}
                   onClick={() => {
-                    handleServicesClick(item.href);
+                    const [path, hash] = item.href.split('#');
+                    if (location === path && hash) {
+                      const element = document.getElementById(hash);
+                      if (element) {
+                        element.scrollIntoView({ behavior: 'smooth' });
+                      }
+                    } else {
+                      window.location.href = item.href;
+                    }
                     setMobileMenuOpen(false);
                   }}
                   className="block w-full text-left px-4 py-2 systematic-caps text-sm hover:bg-pop-blue hover:text-white transition-colors border border-pop-black"

@@ -6,6 +6,7 @@ interface PopArtContainerProps {
   pattern?: "dots" | "diagonal" | "geometric";
   shadow?: boolean;
   className?: string;
+  id?: string;
 }
 
 export function PopArtContainer({ 
@@ -13,7 +14,8 @@ export function PopArtContainer({
   color = "green", 
   pattern, 
   shadow = false,
-  className = ""
+  className = "",
+  id
 }: PopArtContainerProps) {
   const colorClasses = {
     green: "border-pop-green text-pop-green",
@@ -34,12 +36,15 @@ export function PopArtContainer({
   };
 
   return (
-    <div className={`
-      transform-pop
-      ${pattern ? patternClasses[pattern] : ""}
-      ${shadow ? shadowClasses[color] : ""}
-      ${className}
-    `}>
+    <div 
+      id={id}
+      className={`
+        transform-pop
+        ${pattern ? patternClasses[pattern] : ""}
+        ${shadow ? shadowClasses[color] : ""}
+        ${className}
+      `}
+    >
       {children}
     </div>
   );
