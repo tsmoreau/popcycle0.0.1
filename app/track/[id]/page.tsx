@@ -461,7 +461,7 @@ export default function TrackItem() {
 
         {/* Source-Only Call to Action */}
         {item.isSourceOnly && (
-          <PopArtContainer color="blue" shadow>
+          <PopArtContainer color={item.processedDate ? "blue" : "red"} shadow>
             <Card className="border-4 border-pop-black">
               <CardHeader>
                 <CardTitle className="systematic-caps flex items-center justify-center text-2xl">
@@ -470,7 +470,7 @@ export default function TrackItem() {
                 </CardTitle>
               </CardHeader>
               <CardContent className="text-center py-8">
-                <div className="text-4xl helvetica-bold text-pop-blue mb-4">
+                <div className={`text-4xl helvetica-bold mb-4 ${item.processedDate ? 'text-pop-blue' : 'text-pop-red'}`}>
                   {item.weight}kg
                 </div>
                 <div className="systematic-caps text-sm text-pop-gray mb-6">
