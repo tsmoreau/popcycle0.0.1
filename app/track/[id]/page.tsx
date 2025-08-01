@@ -143,6 +143,90 @@ export default function TrackItem() {
           </PopArtContainer>
         </div>
 
+        {/* Status Timeline */}
+        {!isSourceOnly && (
+          <div className="mb-12">
+            <h2 className="text-3xl helvetica-bold mb-8 text-center">
+              <span className="text-pop-black">TRANSFORMATION JOURNEY</span>
+            </h2>
+            <div className={`grid grid-cols-1 gap-8 ${hasMaker ? 'md:grid-cols-4' : 'md:grid-cols-3'}`}>
+              <div className="text-center">
+                <div className="w-16 h-16 mx-auto mb-4 border-2 border-pop-black flex items-center justify-center bg-pop-green">
+                  <CheckCircle className="w-8 h-8 text-pop-black" />
+                </div>
+                <h3 className="systematic-caps text-sm mb-1">Collected</h3>
+                <p className="text-xs text-pop-gray">{item.collectionDate}</p>
+              </div>
+              
+              <div className="text-center">
+                <div className="w-16 h-16 mx-auto mb-4 border-2 border-pop-black flex items-center justify-center bg-pop-blue">
+                  <CheckCircle className="w-8 h-8 text-pop-black" />
+                </div>
+                <h3 className="systematic-caps text-sm mb-1">Processed</h3>
+                <p className="text-xs text-pop-gray">{item.processedDate}</p>
+              </div>
+              
+              <div className="text-center">
+                <div className="w-16 h-16 mx-auto mb-4 border-2 border-pop-black flex items-center justify-center bg-pop-black">
+                  <CheckCircle className="w-8 h-8 text-white" />
+                </div>
+                <h3 className="systematic-caps text-sm mb-1">{isCharity ? 'Donated' : 'Purchased'}</h3>
+                <p className="text-xs text-pop-gray">{item.transactionDate}</p>
+              </div>
+              
+              {hasMaker && (
+                <div className="text-center">
+                  <div className="w-16 h-16 mx-auto mb-4 border-2 border-pop-black flex items-center justify-center bg-pop-red">
+                    <CheckCircle className="w-8 h-8 text-pop-black" />
+                  </div>
+                  <h3 className="systematic-caps text-sm mb-1">Assembled</h3>
+                  <p className="text-xs text-pop-gray">{item.makerDetails.assemblyDate}</p>
+                </div>
+              )}
+            </div>
+          </div>
+        )}
+
+        {/* Source-Only Status */}
+        {isSourceOnly && (
+          <div className="mb-12">
+            <h2 className="text-3xl helvetica-bold mb-8 text-center">
+              <span className="text-pop-black">PROCESSING STATUS</span>
+            </h2>
+            <div className={`grid grid-cols-1 gap-8 ${isProcessed ? 'md:grid-cols-2' : 'flex justify-center'}`}>
+              <div className="text-center">
+                <div className="w-16 h-16 mx-auto mb-4 border-2 border-pop-black flex items-center justify-center bg-pop-green">
+                  <CheckCircle className="w-8 h-8 text-pop-black" />
+                </div>
+                <h3 className="systematic-caps text-sm mb-1">Collected</h3>
+                <p className="text-xs text-pop-gray">{item.collectionDate}</p>
+              </div>
+              
+              {isProcessed && (
+                <div className="text-center">
+                  <div className="w-16 h-16 mx-auto mb-4 border-2 border-pop-black flex items-center justify-center bg-pop-blue">
+                    <CheckCircle className="w-8 h-8 text-pop-black" />
+                  </div>
+                  <h3 className="systematic-caps text-sm mb-1">Processed</h3>
+                  <p className="text-xs text-pop-gray">{item.processedDate}</p>
+                </div>
+              )}
+            </div>
+            
+            {!isProcessed && (
+              <div className="text-center mt-4">
+                <p className="text-xs text-pop-red systematic-caps">Ready for Processing</p>
+              </div>
+            )}
+            
+            {isProcessed && (
+              <div className="text-center mt-4">
+                <p className="text-xs text-pop-blue systematic-caps">Ready for Manufacturing</p>
+              </div>
+            )}
+          </div>
+        )}
+
         {/* Item Details */}
         <div className="flex flex-col gap-8 mb-12 max-w-2xl mx-auto">
           {/* Source Details Card */}
@@ -353,90 +437,6 @@ export default function TrackItem() {
             </>
           )}
         </div>
-
-        {/* Status Timeline */}
-        {!isSourceOnly && (
-          <div className="mb-12">
-            <h2 className="text-3xl helvetica-bold mb-8 text-center">
-              <span className="text-pop-black">TRANSFORMATION JOURNEY</span>
-            </h2>
-            <div className={`grid grid-cols-1 gap-8 ${hasMaker ? 'md:grid-cols-4' : 'md:grid-cols-3'}`}>
-              <div className="text-center">
-                <div className="w-16 h-16 mx-auto mb-4 border-2 border-pop-black flex items-center justify-center bg-pop-green">
-                  <CheckCircle className="w-8 h-8 text-pop-black" />
-                </div>
-                <h3 className="systematic-caps text-sm mb-1">Collected</h3>
-                <p className="text-xs text-pop-gray">{item.collectionDate}</p>
-              </div>
-              
-              <div className="text-center">
-                <div className="w-16 h-16 mx-auto mb-4 border-2 border-pop-black flex items-center justify-center bg-pop-blue">
-                  <CheckCircle className="w-8 h-8 text-pop-black" />
-                </div>
-                <h3 className="systematic-caps text-sm mb-1">Processed</h3>
-                <p className="text-xs text-pop-gray">{item.processedDate}</p>
-              </div>
-              
-              <div className="text-center">
-                <div className="w-16 h-16 mx-auto mb-4 border-2 border-pop-black flex items-center justify-center bg-pop-black">
-                  <CheckCircle className="w-8 h-8 text-white" />
-                </div>
-                <h3 className="systematic-caps text-sm mb-1">{isCharity ? 'Donated' : 'Purchased'}</h3>
-                <p className="text-xs text-pop-gray">{item.transactionDate}</p>
-              </div>
-              
-              {hasMaker && (
-                <div className="text-center">
-                  <div className="w-16 h-16 mx-auto mb-4 border-2 border-pop-black flex items-center justify-center bg-pop-red">
-                    <CheckCircle className="w-8 h-8 text-pop-black" />
-                  </div>
-                  <h3 className="systematic-caps text-sm mb-1">Assembled</h3>
-                  <p className="text-xs text-pop-gray">{item.makerDetails.assemblyDate}</p>
-                </div>
-              )}
-            </div>
-          </div>
-        )}
-
-        {/* Source-Only Status */}
-        {isSourceOnly && (
-          <div className="mb-12">
-            <h2 className="text-3xl helvetica-bold mb-8 text-center">
-              <span className="text-pop-black">PROCESSING STATUS</span>
-            </h2>
-            <div className={`grid grid-cols-1 gap-8 ${isProcessed ? 'md:grid-cols-2' : 'flex justify-center'}`}>
-              <div className="text-center">
-                <div className="w-16 h-16 mx-auto mb-4 border-2 border-pop-black flex items-center justify-center bg-pop-green">
-                  <CheckCircle className="w-8 h-8 text-pop-black" />
-                </div>
-                <h3 className="systematic-caps text-sm mb-1">Collected</h3>
-                <p className="text-xs text-pop-gray">{item.collectionDate}</p>
-              </div>
-              
-              {isProcessed && (
-                <div className="text-center">
-                  <div className="w-16 h-16 mx-auto mb-4 border-2 border-pop-black flex items-center justify-center bg-pop-blue">
-                    <CheckCircle className="w-8 h-8 text-pop-black" />
-                  </div>
-                  <h3 className="systematic-caps text-sm mb-1">Processed</h3>
-                  <p className="text-xs text-pop-gray">{item.processedDate}</p>
-                </div>
-              )}
-            </div>
-            
-            {!isProcessed && (
-              <div className="text-center mt-4">
-                <p className="text-xs text-pop-red systematic-caps">Ready for Processing</p>
-              </div>
-            )}
-            
-            {isProcessed && (
-              <div className="text-center mt-4">
-                <p className="text-xs text-pop-blue systematic-caps">Ready for Manufacturing</p>
-              </div>
-            )}
-          </div>
-        )}
 
         {/* Impact Metrics */}
         {!isSourceOnly && impactMetrics && (
