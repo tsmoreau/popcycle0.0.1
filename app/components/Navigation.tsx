@@ -144,31 +144,6 @@ export default function Navigation() {
       {mobileMenuOpen && (
         <div className="md:hidden bg-white border-t-4 border-pop-black">
           <div className="px-4 py-6 space-y-4">
-            {/* About Mobile Accordion Section */}
-            <div className="space-y-2">
-              <button
-                onClick={() => setMobileAboutOpen(!mobileAboutOpen)}
-                className="flex items-center justify-between w-full systematic-caps text-sm font-bold text-pop-black hover:text-pop-green transition-colors"
-              >
-                <span>About</span>
-                <ChevronRight className={`w-4 h-4 transform transition-transform ${mobileAboutOpen ? 'rotate-90' : ''}`} />
-              </button>
-              {mobileAboutOpen && (
-                <div className="pl-4 space-y-1">
-                  {aboutItems.map((item) => (
-                    <Link
-                      key={item.href}
-                      href={item.href}
-                      onClick={() => setMobileMenuOpen(false)}
-                      className="block w-full text-left px-4 py-2 systematic-caps text-sm hover:bg-pop-green hover:text-white transition-colors"
-                    >
-                      {item.label}
-                    </Link>
-                  ))}
-                </div>
-              )}
-            </div>
-            
             {/* Track Mobile Section */}
             <div className="space-y-2">
               <Link
@@ -177,6 +152,17 @@ export default function Navigation() {
                 className="systematic-caps text-sm font-bold text-pop-black hover:text-pop-green transition-colors"
               >
                 Track
+              </Link>
+            </div>
+            
+            {/* Store Mobile Section */}
+            <div className="space-y-2">
+              <Link
+                href="/store"
+                onClick={() => setMobileMenuOpen(false)}
+                className="systematic-caps text-sm font-bold text-pop-black hover:text-pop-red transition-colors"
+              >
+                Store
               </Link>
             </div>
             
@@ -205,15 +191,29 @@ export default function Navigation() {
               )}
             </div>
             
-            {/* Store Mobile Section */}
+            {/* About Mobile Accordion Section */}
             <div className="space-y-2">
-              <Link
-                href="/store"
-                onClick={() => setMobileMenuOpen(false)}
-                className="systematic-caps text-sm font-bold text-pop-black hover:text-pop-red transition-colors"
+              <button
+                onClick={() => setMobileAboutOpen(!mobileAboutOpen)}
+                className="flex items-center justify-between w-full systematic-caps text-sm font-bold text-pop-black hover:text-pop-green transition-colors"
               >
-                Store
-              </Link>
+                <span>About</span>
+                <ChevronRight className={`w-4 h-4 transform transition-transform ${mobileAboutOpen ? 'rotate-90' : ''}`} />
+              </button>
+              {mobileAboutOpen && (
+                <div className="pl-4 space-y-1">
+                  {aboutItems.map((item) => (
+                    <Link
+                      key={item.href}
+                      href={item.href}
+                      onClick={() => setMobileMenuOpen(false)}
+                      className="block w-full text-left px-4 py-2 systematic-caps text-sm hover:bg-pop-green hover:text-white transition-colors"
+                    >
+                      {item.label}
+                    </Link>
+                  ))}
+                </div>
+              )}
             </div>
             
             {/* Mobile CTA */}
