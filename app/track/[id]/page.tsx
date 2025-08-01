@@ -466,16 +466,21 @@ export default function TrackItem() {
               <CardHeader>
                 <CardTitle className="systematic-caps flex items-center justify-center text-2xl">
                   <Building className="w-6 h-6 mr-2" />
-                  Collection Complete
+                  {item.processedDate ? 'Processing Complete' : 'Collection Complete'}
                 </CardTitle>
               </CardHeader>
               <CardContent className="text-center py-8">
                 <div className="text-4xl helvetica-bold text-pop-blue mb-4">
                   {item.weight}kg
                 </div>
-                <div className="systematic-caps text-sm text-pop-gray mb-6">Plastic Collected</div>
+                <div className="systematic-caps text-sm text-pop-gray mb-6">
+                  {item.processedDate ? 'Plastic Processed' : 'Plastic Collected'}
+                </div>
                 <p className="text-lg text-pop-gray mb-2">
-                  This plastic is ready for processing into new products.
+                  {item.processedDate 
+                    ? 'This plastic has been processed and is ready for manufacturing into new products.'
+                    : 'This plastic is ready for processing into new products.'
+                  }
                 </p>
                 <p className="text-sm text-pop-gray">
                   Check back soon to see its transformation journey!
