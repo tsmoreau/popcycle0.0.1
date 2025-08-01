@@ -146,10 +146,7 @@ export default function TrackItem() {
         {/* Status Timeline */}
         {!isSourceOnly && (
           <div className="mb-12">
-            <h2 className="text-3xl helvetica-bold mb-8 text-center">
-              <span className="text-pop-black">TRANSFORMATION JOURNEY</span>
-            </h2>
-            <div className={`grid grid-cols-1 gap-8 ${hasMaker ? 'md:grid-cols-4' : 'md:grid-cols-3'}`}>
+            <div className={`grid gap-8 ${hasMaker ? 'grid-cols-2 md:grid-cols-4' : 'grid-cols-2 md:grid-cols-3'}`}>
               <div className="text-center">
                 <div className="w-16 h-16 mx-auto mb-4 border-2 border-pop-black flex items-center justify-center bg-pop-green">
                   <CheckCircle className="w-8 h-8 text-pop-black" />
@@ -190,10 +187,7 @@ export default function TrackItem() {
         {/* Source-Only Status */}
         {isSourceOnly && (
           <div className="mb-12">
-            <h2 className="text-3xl helvetica-bold mb-8 text-center">
-              <span className="text-pop-black">PROCESSING STATUS</span>
-            </h2>
-            <div className={`grid grid-cols-1 gap-8 ${isProcessed ? 'md:grid-cols-2' : 'flex justify-center'}`}>
+            <div className={`grid gap-8 ${isProcessed ? 'grid-cols-2' : 'flex justify-center'}`}>
               <div className="text-center">
                 <div className="w-16 h-16 mx-auto mb-4 border-2 border-pop-black flex items-center justify-center bg-pop-green">
                   <CheckCircle className="w-8 h-8 text-pop-black" />
