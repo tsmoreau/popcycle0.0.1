@@ -144,7 +144,7 @@ export default function TrackItem() {
         </div>
 
         {/* Item Details */}
-        <div className={`gap-8 mb-12 items-start ${isSourceOnly ? 'flex justify-center' : 'grid lg:grid-cols-3 md:grid-cols-2'}`}>
+        <div className="flex flex-col gap-8 mb-12 items-center max-w-2xl mx-auto">
           <PopArtContainer color="green" shadow>
             <Card className="border-4 border-pop-black">
               <CardHeader>
