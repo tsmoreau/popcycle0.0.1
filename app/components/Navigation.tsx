@@ -120,13 +120,13 @@ export default function Navigation() {
             </div>
           </div>
 
-          <div className="hidden md:block">
+          {/* <div className="hidden md:block">
             <Link href="/track">
               <Button variant="ghost" className="bg-pop-green text-white hover:bg-pop-black systematic-caps">
                 Scan QR Code
               </Button>
             </Link>
-          </div>
+          </div> */}
 
           {/* Mobile menu button */}
           <div className="md:hidden">
@@ -219,7 +219,7 @@ export default function Navigation() {
             </div>
             
             {/* Mobile CTA */}
-            <div className="pt-4">
+            {/* <div className="pt-4">
               <Link href="/track">
                 <Button 
                   variant="ghost"
@@ -229,7 +229,7 @@ export default function Navigation() {
                   Scan QR Code
                 </Button>
               </Link>
-            </div>
+            </div> */}
           </div>
         </div>
       )}
