@@ -81,15 +81,6 @@ export default function TrackItem() {
     );
   }
 
-  const getStatusColor = (status: string) => {
-    switch (status) {
-      case 'delivered': return 'green';
-      case 'assembled': return 'blue';
-      case 'processed': return 'red';
-      default: return 'black';
-    }
-  };
-
   const getProductTypeLabel = (type: string) => {
     switch (type) {
       case 'rover_chassis': return 'Rover Chassis';
@@ -109,13 +100,13 @@ export default function TrackItem() {
             <span className="text-pop-green">QR</span> {item.qrCode}
           </h1>
           <p className="text-lg text-pop-gray">
-            Complete transformation journey from {item.sourceCompany}
+            Complete transformation journey from {item.originPoint}
           </p>
         </div>
 
         {/* QR Code Display */}
         <div className="flex justify-center mb-12">
-          <PopArtContainer color={getStatusColor(item.status)} shadow>
+          <PopArtContainer color="green" shadow>
             <div className="p-8 bg-white border-4 border-pop-black">
               <QRCodeElement qrCode={item.qrCode} size="lg" />
             </div>
@@ -195,19 +186,25 @@ export default function TrackItem() {
                   <span className="systematic-caps text-sm">Product Type</span>
                   <span className="helvetica-bold">{getProductTypeLabel(item.productType)}</span>
                 </div>
+                {item.assembledDate && (
+                  <div className="flex justify-between items-center">
+                    <span className="systematic-caps text-sm">Assembled</span>
+                    <span className="flex items-center">
+                      <Calendar className="w-4 h-4 mr-1" />
+                      {item.assembledDate}
+                    </span>
+                  </div>
+                )}
                 <div className="flex justify-between">
-                  <span className="systematic-caps text-sm">Status</span>
-                  <Badge className={`bg-pop-${getStatusColor(item.status)} text-${getStatusColor(item.status) === 'black' ? 'white' : 'pop-black'}`}>
-                    {item.status.toUpperCase()}
-                  </Badge>
+                  <span className="systematic-caps text-sm">Destination</span>
+                  <span className="helvetica-bold">{item.destination}</span>
                 </div>
-                <div className="flex justify-between items-center">
-                  <span className="systematic-caps text-sm">Processed</span>
-                  <span className="flex items-center">
-                    <Calendar className="w-4 h-4 mr-1" />
-                    {item.processedDate}
-                  </span>
-                </div>
+                {item.event && (
+                  <div className="flex justify-between">
+                    <span className="systematic-caps text-sm">Event</span>
+                    <span className="helvetica-bold">{item.event}</span>
+                  </div>
+                )}
               </CardContent>
             </Card>
           </PopArtContainer>
@@ -220,10 +217,7 @@ export default function TrackItem() {
           </h2>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
             <div className="text-center">
-              <div className={`w-16 h-16 mx-auto mb-4 border-2 border-pop-black flex items-center justify-center ${
-                item.status === 'collected' || item.status === 'processed' || item.status === 'assembled' || item.status === 'delivered' 
-                  ? 'bg-pop-green' : 'bg-gray-200'
-              }`}>
+              <div className="w-16 h-16 mx-auto mb-4 border-2 border-pop-black flex items-center justify-center bg-pop-green">
                 <CheckCircle className="w-8 h-8 text-pop-black" />
               </div>
               <h3 className="systematic-caps text-sm mb-1">Collected</h3>
@@ -231,10 +225,7 @@ export default function TrackItem() {
             </div>
             
             <div className="text-center">
-              <div className={`w-16 h-16 mx-auto mb-4 border-2 border-pop-black flex items-center justify-center ${
-                item.status === 'processed' || item.status === 'assembled' || item.status === 'delivered' 
-                  ? 'bg-pop-blue' : 'bg-gray-200'
-              }`}>
+              <div className="w-16 h-16 mx-auto mb-4 border-2 border-pop-black flex items-center justify-center bg-pop-blue">
                 <CheckCircle className="w-8 h-8 text-pop-black" />
               </div>
               <h3 className="systematic-caps text-sm mb-1">Processed</h3>
@@ -243,23 +234,22 @@ export default function TrackItem() {
             
             <div className="text-center">
               <div className={`w-16 h-16 mx-auto mb-4 border-2 border-pop-black flex items-center justify-center ${
-                item.status === 'assembled' || item.status === 'delivered' 
-                  ? 'bg-pop-red' : 'bg-gray-200'
+                item.assembledDate ? 'bg-pop-red' : 'bg-gray-200'
               }`}>
                 <CheckCircle className="w-8 h-8 text-pop-black" />
               </div>
               <h3 className="systematic-caps text-sm mb-1">Assembled</h3>
-              <p className="text-xs text-pop-gray">Into {getProductTypeLabel(item.productType)}</p>
+              <p className="text-xs text-pop-gray">{item.assembledDate || 'Pending'}</p>
             </div>
             
             <div className="text-center">
               <div className={`w-16 h-16 mx-auto mb-4 border-2 border-pop-black flex items-center justify-center ${
-                item.status === 'delivered' ? 'bg-pop-black' : 'bg-gray-200'
+                item.destination ? 'bg-pop-black' : 'bg-gray-200'
               }`}>
-                <CheckCircle className={`w-8 h-8 ${item.status === 'delivered' ? 'text-white' : 'text-pop-black'}`} />
+                <CheckCircle className={`w-8 h-8 ${item.destination ? 'text-white' : 'text-pop-black'}`} />
               </div>
               <h3 className="systematic-caps text-sm mb-1">Delivered</h3>
-              <p className="text-xs text-pop-gray">To education partner</p>
+              <p className="text-xs text-pop-gray">{item.destination || 'Pending'}</p>
             </div>
           </div>
         </div>
