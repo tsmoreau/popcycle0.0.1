@@ -242,12 +242,24 @@ export default function Navigation() {
             
             {/* Shop Mobile Section */}
             <div className="space-y-2">
-              <div className="systematic-caps text-sm font-bold text-pop-black">Shop</div>
+              <Link
+                href="/shop"
+                onClick={() => setMobileMenuOpen(false)}
+                className="systematic-caps text-sm font-bold text-pop-black hover:text-pop-red transition-colors"
+              >
+                Shop
+              </Link>
             </div>
             
             {/* Track Mobile Section */}
             <div className="space-y-2">
-              <div className="systematic-caps text-sm font-bold text-pop-black">Track</div>
+              <Link
+                href="/track"
+                onClick={() => setMobileMenuOpen(false)}
+                className="systematic-caps text-sm font-bold text-pop-black hover:text-pop-green transition-colors"
+              >
+                Track
+              </Link>
             </div>
             
             {/* Mobile CTA */}
