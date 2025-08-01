@@ -20,9 +20,9 @@ export default function Navigation() {
   ];
 
   const servicesItems = [
-    { href: "/services#collection", label: "Collection" },
-    { href: "/services#processing", label: "Processing" },
-    { href: "/services#manufacturing", label: "Manufacturing" },
+    { href: "/services#community-partnerships", label: "Community Partnerships" },
+    { href: "/services#corporate-esg-events", label: "Corporate ESG & Events" },
+    { href: "/services#educational-kits-workshops", label: "Educational Kits & Workshops" },
     { href: "/services#custom-products", label: "Custom Products" }
   ];
 
