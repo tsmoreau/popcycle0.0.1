@@ -6,7 +6,7 @@ import { Search, QrCode } from "lucide-react";
 import Link from "next/link";
 
 export default function Track() {
-  const sampleCodes = ['ABC123', 'DEF456', 'GHI789', 'JKL012'];
+  const sampleCodes = ['ABC123', 'DEF456', 'GHI789', 'JKL012', 'MNO345', 'PQR678'];
 
   return (
     <div className="min-h-screen py-20">
@@ -52,9 +52,9 @@ export default function Track() {
           <h2 className="text-3xl helvetica-bold mb-8 text-center">
             <span className="text-pop-black">TRY THESE SAMPLE CODES</span>
           </h2>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6">
             {sampleCodes.map((code, index) => {
-              const colors = ['green', 'blue', 'red', 'black'] as const;
+              const colors = ['green', 'blue', 'red', 'black', 'green', 'blue'] as const;
               return (
                 <Link key={code} href={`/track/${code}`}>
                   <PopArtContainer color={colors[index]} shadow>

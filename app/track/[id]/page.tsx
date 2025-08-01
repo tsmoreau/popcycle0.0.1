@@ -296,18 +296,14 @@ export default function TrackItem() {
                         </div>
                         {item.makerDetails.story && (
                           <div className="border-t border-pop-gray pt-4">
-                            <span className="systematic-caps text-sm text-pop-gray block mb-2">
-                              {item.isCharity ? 'Assembly Story' : 'Maker Story'}
-                            </span>
+                            <span className="systematic-caps text-sm text-pop-gray block mb-2">Maker Story</span>
                             <p className="text-sm italic leading-relaxed">{item.makerDetails.story}</p>
                           </div>
                         )}
                         <div className="border-t border-pop-gray pt-4 flex items-center justify-center">
                           <div className="flex items-center text-pop-red text-sm">
                             <Heart className="w-4 h-4 mr-1 fill-current" />
-                            <span className="systematic-caps">
-                              {item.isCharity ? 'Assembly Complete' : 'Maker Journey Complete'}
-                            </span>
+                            <span className="systematic-caps">Maker Journey Complete</span>
                           </div>
                         </div>
                       </>
