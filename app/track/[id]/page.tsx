@@ -196,14 +196,6 @@ export default function TrackItem() {
                     </span>
                   </div>
                 )}
-                
-                <div className="flex justify-between items-center">
-                  <span className="systematic-caps text-sm">Delivered</span>
-                  <span className="flex items-center">
-                    <Calendar className="w-4 h-4 mr-1" />
-                    {item.deliveredDate}
-                  </span>
-                </div>
 
                 {item.isCharity && item.donatingEntity && (
                   <div className="flex justify-between">
@@ -218,6 +210,14 @@ export default function TrackItem() {
                     <span>{item.destination}</span>
                   </div>
                 )}
+                
+                <div className="flex justify-between items-center">
+                  <span className="systematic-caps text-sm">Delivered</span>
+                  <span className="flex items-center">
+                    <Calendar className="w-4 h-4 mr-1" />
+                    {item.deliveredDate}
+                  </span>
+                </div>
                 
                 {item.event && (
                   <div className="flex justify-between">
