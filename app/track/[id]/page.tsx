@@ -187,13 +187,16 @@ export default function TrackItem() {
                   <span className="helvetica-bold">{getProductTypeLabel(item.productType)}</span>
                 </div>
 
-                <div className="flex justify-between items-center">
-                  <span className="systematic-caps text-sm">Purchased</span>
-                  <span className="flex items-center">
-                    <Calendar className="w-4 h-4 mr-1" />
-                    {item.purchasedDate}
-                  </span>
-                </div>
+                {!item.isCharity && (
+                  <div className="flex justify-between items-center">
+                    <span className="systematic-caps text-sm">Purchased</span>
+                    <span className="flex items-center">
+                      <Calendar className="w-4 h-4 mr-1" />
+                      {item.purchasedDate}
+                    </span>
+                  </div>
+                )}
+                
                 <div className="flex justify-between items-center">
                   <span className="systematic-caps text-sm">Destination</span>
                   <div className="flex items-center gap-2">
@@ -203,6 +206,7 @@ export default function TrackItem() {
                     )}
                   </div>
                 </div>
+                
                 {item.isCharity && item.donatingEntity && (
                   <div className="flex justify-between">
                     <span className="systematic-caps text-sm">Donated By</span>
