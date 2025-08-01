@@ -33,7 +33,7 @@ export default function Home() {
           <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
             <Link href="/track">
               <Button size="lg" className="bg-pop-green text-pop-black hover:bg-pop-black hover:text-white systematic-caps text-lg px-8 py-4 pop-shadow-green">
-                Scan QR Code
+                Track Plastic
                 <ArrowRight className="ml-2 w-5 h-5" />
               </Button>
             </Link>
