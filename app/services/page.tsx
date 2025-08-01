@@ -19,37 +19,37 @@ export default function Services() {
           </p>
         </div>
 
-        {/* Collection Section */}
-        <section id="collection" className="mb-20">
+        {/* Community Partnerships Section */}
+        <section id="community-partnerships" className="mb-20">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div>
               <h2 className="text-4xl helvetica-bold mb-6">
-                <span className="text-pop-green">COLLECTION</span>
+                <span className="text-pop-green">COMMUNITY PARTNERSHIPS</span>
               </h2>
               <p className="text-lg mb-6 text-pop-gray">
-                We partner with corporations to establish systematic plastic waste collection programs. Every collected item receives QR code tracking from the moment it enters our circular system.
+                Building circular economy networks through community makerspaces, schools, and local organizations. Every partnership creates new pathways for plastic transformation and education.
               </p>
               <ul className="space-y-3 mb-8">
                 <li className="flex items-center">
                   <div className="w-3 h-3 bg-pop-green mr-3"></div>
-                  <span className="systematic-caps text-sm">On-site collection setup</span>
+                  <span className="systematic-caps text-sm">Makerspace integration programs</span>
                 </li>
                 <li className="flex items-center">
                   <div className="w-3 h-3 bg-pop-green mr-3"></div>
-                  <span className="systematic-caps text-sm">Material sorting protocols</span>
+                  <span className="systematic-caps text-sm">Community collection points</span>
                 </li>
                 <li className="flex items-center">
                   <div className="w-3 h-3 bg-pop-green mr-3"></div>
-                  <span className="systematic-caps text-sm">QR code assignment system</span>
+                  <span className="systematic-caps text-sm">Local educator training</span>
                 </li>
                 <li className="flex items-center">
                   <div className="w-3 h-3 bg-pop-green mr-3"></div>
-                  <span className="systematic-caps text-sm">Regular pickup scheduling</span>
+                  <span className="systematic-caps text-sm">Impact measurement tools</span>
                 </li>
               </ul>
               <Link href="/partners">
                 <Button className="bg-pop-green text-pop-black hover:bg-pop-black hover:text-white systematic-caps">
-                  Start Collection Program
+                  Join Community Network
                   <ArrowRight className="ml-2 w-4 h-4" />
                 </Button>
               </Link>
@@ -60,12 +60,12 @@ export default function Services() {
                   <Recycle className="w-16 h-16 text-pop-green mb-6" />
                   <div className="grid grid-cols-2 gap-4">
                     <div>
-                      <div className="text-2xl helvetica-bold text-pop-green">500+</div>
-                      <div className="systematic-caps text-xs text-pop-gray">Pickup locations</div>
+                      <div className="text-2xl helvetica-bold text-pop-green">75+</div>
+                      <div className="systematic-caps text-xs text-pop-gray">Partner locations</div>
                     </div>
                     <div>
-                      <div className="text-2xl helvetica-bold text-pop-green">12kg</div>
-                      <div className="systematic-caps text-xs text-pop-gray">Avg daily collection</div>
+                      <div className="text-2xl helvetica-bold text-pop-green">2.4k</div>
+                      <div className="systematic-caps text-xs text-pop-gray">Students reached</div>
                     </div>
                   </div>
                 </CardContent>
@@ -74,8 +74,8 @@ export default function Services() {
           </div>
         </section>
 
-        {/* Processing Section */}
-        <section id="processing" className="mb-20">
+        {/* Corporate ESG & Events Section */}
+        <section id="corporate-esg-events" className="mb-20">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <PopArtContainer color="blue" shadow>
               <Card className="border-4 border-pop-black">
@@ -83,16 +83,16 @@ export default function Services() {
                   <Factory className="w-16 h-16 text-pop-blue mb-6" />
                   <div className="space-y-4">
                     <div className="flex justify-between">
-                      <span className="systematic-caps text-sm">HDPE Processing</span>
-                      <span className="text-pop-blue helvetica-bold">95%</span>
+                      <span className="systematic-caps text-sm">ESG Reporting</span>
+                      <span className="text-pop-blue helvetica-bold">100%</span>
                     </div>
                     <div className="flex justify-between">
-                      <span className="systematic-caps text-sm">PET Processing</span>
-                      <span className="text-pop-blue helvetica-bold">87%</span>
+                      <span className="systematic-caps text-sm">Team Events</span>
+                      <span className="text-pop-blue helvetica-bold">45+</span>
                     </div>
                     <div className="flex justify-between">
-                      <span className="systematic-caps text-sm">PP Processing</span>
-                      <span className="text-pop-blue helvetica-bold">92%</span>
+                      <span className="systematic-caps text-sm">Carbon Offset</span>
+                      <span className="text-pop-blue helvetica-bold">2.1t</span>
                     </div>
                   </div>
                 </CardContent>
@@ -100,59 +100,59 @@ export default function Services() {
             </PopArtContainer>
             <div>
               <h2 className="text-4xl helvetica-bold mb-6">
-                <span className="text-pop-blue">PROCESSING</span>
+                <span className="text-pop-blue">CORPORATE ESG & EVENTS</span>
               </h2>
               <p className="text-lg mb-6 text-pop-gray">
-                Advanced cleaning, sorting, and material preparation ensures optimal quality for educational product manufacturing. Each processing stage maintains QR code traceability.
+                Transform corporate sustainability goals into tangible impact through team-building maker workshops and measurable ESG outcomes with complete QR tracking.
               </p>
               <ul className="space-y-3 mb-8">
                 <li className="flex items-center">
                   <div className="w-3 h-3 bg-pop-blue mr-3"></div>
-                  <span className="systematic-caps text-sm">Industrial cleaning systems</span>
+                  <span className="systematic-caps text-sm">Team maker workshops</span>
                 </li>
                 <li className="flex items-center">
                   <div className="w-3 h-3 bg-pop-blue mr-3"></div>
-                  <span className="systematic-caps text-sm">Automated sorting technology</span>
+                  <span className="systematic-caps text-sm">ESG impact reporting</span>
                 </li>
                 <li className="flex items-center">
                   <div className="w-3 h-3 bg-pop-blue mr-3"></div>
-                  <span className="systematic-caps text-sm">Quality control testing</span>
+                  <span className="systematic-caps text-sm">Employee engagement programs</span>
                 </li>
                 <li className="flex items-center">
                   <div className="w-3 h-3 bg-pop-blue mr-3"></div>
-                  <span className="systematic-caps text-sm">Material grade certification</span>
+                  <span className="systematic-caps text-sm">Sustainability storytelling</span>
                 </li>
               </ul>
             </div>
           </div>
         </section>
 
-        {/* Manufacturing Section */}
-        <section id="manufacturing" className="mb-20">
+        {/* Educational Kits & Workshops Section */}
+        <section id="educational-kits-workshops" className="mb-20">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div>
               <h2 className="text-4xl helvetica-bold mb-6">
-                <span className="text-pop-red">MANUFACTURING</span>
+                <span className="text-pop-red">EDUCATIONAL KITS & WORKSHOPS</span>
               </h2>
               <p className="text-lg mb-6 text-pop-gray">
-                Transform processed plastic into educational tools, rover chassis, assembly kits, and custom products designed for maker education and robotics learning.
+                Complete maker education experiences using products made from tracked plastic waste. Every kit tells the story of circular manufacturing through hands-on learning.
               </p>
               <div className="grid grid-cols-2 gap-4 mb-8">
                 <div>
-                  <Badge className="bg-pop-red text-white mb-2">Rover Chassis</Badge>
-                  <p className="text-sm text-pop-gray">Modular robotics platform components</p>
+                  <Badge className="bg-pop-red text-white mb-2">Robotics Kits</Badge>
+                  <p className="text-sm text-pop-gray">Build rovers from plastic waste</p>
                 </div>
                 <div>
-                  <Badge className="bg-pop-red text-white mb-2">Assembly Toys</Badge>
-                  <p className="text-sm text-pop-gray">Educational construction sets</p>
+                  <Badge className="bg-pop-red text-white mb-2">Maker Workshops</Badge>
+                  <p className="text-sm text-pop-gray">Hands-on circular economy education</p>
                 </div>
                 <div>
-                  <Badge className="bg-pop-red text-white mb-2">Learning Kits</Badge>
-                  <p className="text-sm text-pop-gray">STEM education materials</p>
+                  <Badge className="bg-pop-red text-white mb-2">Assembly Sets</Badge>
+                  <p className="text-sm text-pop-gray">STEM construction challenges</p>
                 </div>
                 <div>
-                  <Badge className="bg-pop-red text-white mb-2">Dinnerware</Badge>
-                  <p className="text-sm text-pop-gray">Sustainable cafeteria products</p>
+                  <Badge className="bg-pop-red text-white mb-2">QR Tracking</Badge>
+                  <p className="text-sm text-pop-gray">Complete waste-to-product stories</p>
                 </div>
               </div>
             </div>
@@ -161,9 +161,9 @@ export default function Services() {
                 <CardContent className="p-8">
                   <Package className="w-16 h-16 text-pop-red mb-6" />
                   <div className="space-y-3">
-                    <div className="systematic-caps text-xs text-pop-gray mb-2">Monthly production</div>
-                    <div className="text-3xl helvetica-bold text-pop-red">2,400</div>
-                    <div className="systematic-caps text-xs text-pop-gray">Educational products manufactured</div>
+                    <div className="systematic-caps text-xs text-pop-gray mb-2">Monthly kit production</div>
+                    <div className="text-3xl helvetica-bold text-pop-red">850</div>
+                    <div className="systematic-caps text-xs text-pop-gray">Educational kits delivered</div>
                   </div>
                 </CardContent>
               </Card>
