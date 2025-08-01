@@ -145,8 +145,9 @@ export default function TrackItem() {
 
         {/* Item Details */}
         <div className="flex flex-col gap-8 mb-12 items-center max-w-2xl mx-auto">
-          <PopArtContainer color="green" shadow>
-            <Card className="border-4 border-pop-black">
+          <div className="w-full">
+            <PopArtContainer color="green" shadow>
+              <Card className="border-4 border-pop-black">
               <CardHeader>
                 <CardTitle className="systematic-caps flex items-center">
                   <Building className="w-5 h-5 mr-2" />
@@ -214,8 +215,10 @@ export default function TrackItem() {
               </CardContent>
             </Card>
           </PopArtContainer>
+          </div>
 
           {!isSourceOnly && (
+            <div className="w-full">
             <>
               <PopArtContainer color={isCharity ? "red" : "blue"} shadow>
                 <Card className="border-4 border-pop-black">
@@ -349,6 +352,7 @@ export default function TrackItem() {
                 </Card>
               </PopArtContainer>
             </>
+            </div>
           )}
         </div>
 
