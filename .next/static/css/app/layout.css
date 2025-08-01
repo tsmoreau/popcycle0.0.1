@@ -1060,17 +1060,17 @@ video {
   }
 }
 
-/* Pop Art Color System */
+/* PopCycle Brand Colors */
 :root {
-  --pop-green: #39ff14;
-  --pop-blue: #0080ff;
-  --pop-red: #ff0040;
-  --pop-black: #000000;
-  --pop-white: #ffffff;
-  --pop-gray: #666666;
+  --pop-green: hsl(142, 100%, 35%);
+  --pop-blue: hsl(214, 100%, 50%);
+  --pop-red: hsl(347, 100%, 60%);
+  --pop-black: hsl(0, 0%, 0%);
+  --pop-white: hsl(0, 0%, 100%);
+  --pop-gray: hsl(0, 0%, 20%);
   
-  --background: #ffffff;
-  --foreground: #000000;
+  --background: hsl(0, 0%, 100%);
+  --foreground: hsl(0, 0%, 0%);
 }
 
 /* Typography */
