@@ -1,12 +1,13 @@
 import { useState } from "react";
 import { Link, useLocation } from "wouter";
 import { Button } from "@/components/ui/button";
-import { ChevronDown } from "lucide-react";
+import { ChevronDown, Menu, X } from "lucide-react";
 
 export default function Navigation() {
   const [location] = useLocation();
   const [aboutOpen, setAboutOpen] = useState(false);
   const [servicesOpen, setServicesOpen] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const aboutItems = [
     { href: "/about#staff", label: "Mission" },
@@ -133,12 +134,93 @@ export default function Navigation() {
 
           {/* Mobile menu button */}
           <div className="md:hidden">
-            <Button variant="outline" size="sm">
-              Menu
+            <Button 
+              variant="outline" 
+              size="sm"
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              className="border-2 border-pop-black"
+            >
+              {mobileMenuOpen ? <X className="w-4 h-4" /> : <Menu className="w-4 h-4" />}
             </Button>
           </div>
         </div>
       </div>
+      
+      {/* Mobile Menu */}
+      {mobileMenuOpen && (
+        <div className="md:hidden bg-white border-t-4 border-pop-black">
+          <div className="px-4 py-6 space-y-4">
+            {/* About Mobile Section */}
+            <div className="space-y-2">
+              <div className="systematic-caps text-sm font-bold text-pop-black">About</div>
+              {aboutItems.map((item) => (
+                <button
+                  key={item.href}
+                  onClick={() => {
+                    handleAboutClick(item.href);
+                    setMobileMenuOpen(false);
+                  }}
+                  className="block w-full text-left px-4 py-2 systematic-caps text-sm hover:bg-pop-green hover:text-white transition-colors border border-pop-black"
+                >
+                  {item.label}
+                </button>
+              ))}
+            </div>
+            
+            {/* Services Mobile Section */}
+            <div className="space-y-2">
+              <div className="systematic-caps text-sm font-bold text-pop-black">Services</div>
+              {servicesItems.map((item) => (
+                <button
+                  key={item.href}
+                  onClick={() => {
+                    handleServicesClick(item.href);
+                    setMobileMenuOpen(false);
+                  }}
+                  className="block w-full text-left px-4 py-2 systematic-caps text-sm hover:bg-pop-blue hover:text-white transition-colors border border-pop-black"
+                >
+                  {item.label}
+                </button>
+              ))}
+            </div>
+            
+            {/* Regular Mobile Nav Items */}
+            <div className="space-y-2">
+              <Link
+                href="/shop"
+                onClick={() => setMobileMenuOpen(false)}
+                className={`block px-4 py-3 systematic-caps text-sm hover:bg-pop-red hover:text-white transition-colors border border-pop-black ${
+                  location === '/shop' ? "bg-pop-red text-white" : ""
+                }`}
+              >
+                Shop
+              </Link>
+              
+              <Link
+                href="/track"
+                onClick={() => setMobileMenuOpen(false)}
+                className={`block px-4 py-3 systematic-caps text-sm hover:bg-pop-green hover:text-white transition-colors border border-pop-black ${
+                  location === '/track' ? "bg-pop-green text-white" : ""
+                }`}
+              >
+                Track
+              </Link>
+            </div>
+            
+            {/* Mobile CTA */}
+            <div className="pt-4">
+              <Link href="/track">
+                <Button 
+                  className="w-full bg-pop-green text-white hover:bg-pop-black systematic-caps pop-shadow-green"
+                  onClick={() => setMobileMenuOpen(false)}
+                >
+                  Scan QR Code
+                </Button>
+              </Link>
+            </div>
+          </div>
+        </div>
+      )}
     </nav>
   );
 }
