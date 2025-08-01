@@ -205,7 +205,7 @@ export default function TrackItem() {
                 )}
                 
                 <div className="flex justify-between items-center">
-                  <span className="systematic-caps text-sm">Destination</span>
+                  <span className="systematic-caps text-sm">{item.isCharity ? 'Donated To' : 'Destination'}</span>
                   <div className="flex items-center gap-2">
                     <span>{item.destination}</span>
                     {item.isCharity && (
