@@ -4,6 +4,8 @@
 
 PopCycle is a comprehensive circular economy platform that transforms corporate plastic waste into trackable, educational products. The system creates a self-reinforcing ecosystem connecting waste collection, manufacturing, education, and community engagement through QR code-based provenance tracking. Built as a Next.js full-stack application with MongoDB, it demonstrates circular economy principles by turning abstract sustainability concepts into tangible, hands-on experiences through maker education and robotics.
 
+**Latest Feature**: Maker registration system allowing customers to declare assembly completion, creating a fourth "Assembled" step in the transformation journey timeline. Features email verification through planned NextAuth.js integration for data integrity.
+
 ## User Preferences
 
 Preferred communication style: Simple, everyday language.

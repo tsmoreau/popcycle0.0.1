@@ -319,7 +319,7 @@ export default function TrackItem() {
           <h2 className="text-3xl helvetica-bold mb-8 text-center">
             <span className="text-pop-black">TRANSFORMATION JOURNEY</span>
           </h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className={`grid grid-cols-1 gap-8 ${item.makerDetails ? 'md:grid-cols-4' : 'md:grid-cols-3'}`}>
             <div className="text-center">
               <div className="w-16 h-16 mx-auto mb-4 border-2 border-pop-black flex items-center justify-center bg-pop-green">
                 <CheckCircle className="w-8 h-8 text-pop-black" />
@@ -343,6 +343,16 @@ export default function TrackItem() {
               <h3 className="systematic-caps text-sm mb-1">Purchased</h3>
               <p className="text-xs text-pop-gray">{item.purchasedDate}</p>
             </div>
+            
+            {item.makerDetails && (
+              <div className="text-center">
+                <div className="w-16 h-16 mx-auto mb-4 border-2 border-pop-black flex items-center justify-center bg-pop-red">
+                  <User className="w-8 h-8 text-pop-black" />
+                </div>
+                <h3 className="systematic-caps text-sm mb-1">Assembled</h3>
+                <p className="text-xs text-pop-gray">{item.makerDetails.assemblyDate}</p>
+              </div>
+            )}
           </div>
         </div>
 
