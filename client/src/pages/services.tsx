@@ -20,7 +20,7 @@ export default function Services() {
         </div>
 
         {/* Core Services */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-20">
+        <div id="waste-processing" className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-20">
           <PopArtContainer color="green" shadow className="bg-white border-4 border-pop-green p-8">
             <div className="w-16 h-16 bg-pop-green mb-6 flex items-center justify-center">
               <Cog className="w-8 h-8 text-white" />
@@ -37,7 +37,7 @@ export default function Services() {
             </ul>
           </PopArtContainer>
           
-          <PopArtContainer color="blue" shadow className="bg-white border-4 border-pop-blue p-8">
+          <PopArtContainer id="educational-workshops" color="blue" shadow className="bg-white border-4 border-pop-blue p-8">
             <div className="w-16 h-16 bg-pop-blue mb-6 flex items-center justify-center">
               <GraduationCap className="w-8 h-8 text-white" />
             </div>
@@ -53,7 +53,7 @@ export default function Services() {
             </ul>
           </PopArtContainer>
           
-          <PopArtContainer color="red" shadow className="bg-white border-4 border-pop-red p-8">
+          <PopArtContainer id="custom-products" color="red" shadow className="bg-white border-4 border-pop-red p-8">
             <div className="w-16 h-16 bg-pop-red mb-6 flex items-center justify-center">
               <Package className="w-8 h-8 text-white" />
             </div>
@@ -73,7 +73,7 @@ export default function Services() {
         {/* Service Categories */}
         <div className="space-y-16">
           {/* Corporate Services */}
-          <div>
+          <div id="corporate-services">
             <h2 className="text-4xl helvetica-bold mb-12 text-center systematic-caps">
               For <span className="text-pop-green">Corporations</span>
             </h2>
@@ -118,7 +118,7 @@ export default function Services() {
           </div>
 
           {/* Educational Services */}
-          <div>
+          <div id="educational-services">
             <h2 className="text-4xl helvetica-bold mb-12 text-center systematic-caps">
               For <span className="text-pop-blue">Educational</span> Institutions
             </h2>

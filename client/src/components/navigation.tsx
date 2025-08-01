@@ -9,10 +9,10 @@ export default function Navigation() {
   const [servicesOpen, setServicesOpen] = useState(false);
 
   const aboutItems = [
-    { path: "/about/staff", label: "Staff" },
-    { path: "/about/story", label: "Story" },
-    { path: "/about/process", label: "Process" },
-    { path: "/about/contact", label: "Contact" },
+    { href: "/about#staff", label: "Staff" },
+    { href: "/about#story", label: "Story" },
+    { href: "/about#process", label: "Process" },
+    { href: "/about#contact", label: "Contact" },
   ];
 
   const servicesItems = [
@@ -24,9 +24,13 @@ export default function Navigation() {
   ];
 
   const handleServicesClick = (href: string) => {
-    const [path, hash] = href.split('#');
     window.location.href = href;
     setServicesOpen(false);
+  };
+
+  const handleAboutClick = (href: string) => {
+    window.location.href = href;
+    setAboutOpen(false);
   };
 
   return (
@@ -56,16 +60,13 @@ export default function Navigation() {
               {aboutOpen && (
                 <div className="absolute top-full left-0 mt-2 w-48 bg-white border-4 border-pop-black pop-shadow-black">
                   {aboutItems.map((item) => (
-                    <Link
-                      key={item.path}
-                      href={item.path}
-                      className={`block px-4 py-3 systematic-caps text-sm hover:bg-pop-green hover:text-white transition-colors ${
-                        location === item.path ? "bg-pop-green text-white" : ""
-                      }`}
-                      onClick={() => setAboutOpen(false)}
+                    <button
+                      key={item.href}
+                      onClick={() => handleAboutClick(item.href)}
+                      className="block w-full text-left px-4 py-3 systematic-caps text-sm hover:bg-pop-green hover:text-white transition-colors"
                     >
                       {item.label}
-                    </Link>
+                    </button>
                   ))}
                 </div>
               )}
