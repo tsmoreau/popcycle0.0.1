@@ -58,8 +58,8 @@ export default function Track() {
               return (
                 <Link key={code} href={`/track/${code}`}>
                   <PopArtContainer color={colors[index]} shadow>
-                    <Card className="border-4 border-pop-black hover:scale-105 transition-transform cursor-pointer bg-white">
-                      <CardContent className="p-6 text-center bg-white">
+                    <Card className="border-4 border-pop-black hover:scale-105 transition-transform cursor-pointer bg-white aspect-square">
+                      <CardContent className="p-4 text-center bg-white h-full flex flex-col justify-center">
                         <QRCodeElement qrCode={code} size="md" className="mx-auto mb-4" />
                         <div className="systematic-caps text-lg helvetica-bold">{code}</div>
                         <div className="text-xs text-pop-gray mt-1">Click to track</div>
