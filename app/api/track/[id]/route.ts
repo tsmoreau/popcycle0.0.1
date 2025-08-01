@@ -80,6 +80,7 @@ const sampleItems = {
     donatingEntity: null,
     destination: null,
     carbonOffset: 4.7,
+    event: 'Tech Startup Showcase',
     makerDetails: null
   },
   'MNO345': {
