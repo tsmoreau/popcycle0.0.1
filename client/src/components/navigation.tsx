@@ -84,7 +84,7 @@ export default function Navigation() {
               onMouseEnter={() => setAboutOpen(true)}
               onMouseLeave={() => setAboutOpen(false)}
             >
-              <button className={`systematic-caps text-sm hover:text-pop-green transition-colors flex items-center space-x-1 ${
+              <button className={`systematic-caps text-sm hover:text-pop-green transition-colors flex items-center space-x-1 py-2 ${
                 location.startsWith('/about') ? "nav-link-active" : ""
               }`}>
                 <span>About</span>
@@ -92,7 +92,7 @@ export default function Navigation() {
               </button>
               
               {aboutOpen && (
-                <div className="absolute top-full left-0 mt-2 w-48 bg-white border-4 border-pop-black pop-shadow-black">
+                <div className="absolute top-full left-0 w-48 bg-white border-4 border-pop-black pop-shadow-black">
                   {aboutItems.map((item) => (
                     <button
                       key={item.href}
@@ -112,7 +112,7 @@ export default function Navigation() {
               onMouseEnter={() => setServicesOpen(true)}
               onMouseLeave={() => setServicesOpen(false)}
             >
-              <button className={`systematic-caps text-sm hover:text-pop-green transition-colors flex items-center space-x-1 ${
+              <button className={`systematic-caps text-sm hover:text-pop-green transition-colors flex items-center space-x-1 py-2 ${
                 location === '/services' ? "nav-link-active" : ""
               }`}>
                 <span>Services</span>
@@ -120,7 +120,7 @@ export default function Navigation() {
               </button>
               
               {servicesOpen && (
-                <div className="absolute top-full left-0 mt-2 w-56 bg-white border-4 border-pop-black pop-shadow-black">
+                <div className="absolute top-full left-0 w-56 bg-white border-4 border-pop-black pop-shadow-black">
                   {servicesItems.map((item) => (
                     <button
                       key={item.href}
