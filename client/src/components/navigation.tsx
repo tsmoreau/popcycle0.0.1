@@ -240,22 +240,27 @@ export default function Navigation() {
               ))}
             </div>
             
-            {/* Regular Mobile Nav Items */}
+            {/* Shop Mobile Section */}
             <div className="space-y-2">
+              <div className="systematic-caps text-sm font-bold text-pop-black">Shop</div>
               <Link
                 href="/shop"
                 onClick={() => setMobileMenuOpen(false)}
-                className={`block px-4 py-3 systematic-caps text-sm hover:bg-pop-red hover:text-white transition-colors ${
+                className={`block w-full text-left px-4 py-2 systematic-caps text-sm hover:bg-pop-red hover:text-white transition-colors ${
                   location === '/shop' ? "bg-pop-red text-white" : ""
                 }`}
               >
                 Shop
               </Link>
-              
+            </div>
+            
+            {/* Track Mobile Section */}
+            <div className="space-y-2">
+              <div className="systematic-caps text-sm font-bold text-pop-black">Track</div>
               <Link
                 href="/track"
                 onClick={() => setMobileMenuOpen(false)}
-                className={`block px-4 py-3 systematic-caps text-sm hover:bg-pop-green hover:text-white transition-colors ${
+                className={`block w-full text-left px-4 py-2 systematic-caps text-sm hover:bg-pop-green hover:text-white transition-colors ${
                   location === '/track' ? "bg-pop-green text-white" : ""
                 }`}
               >
