@@ -21,7 +21,7 @@ export default function Navigation() {
   const servicesItems = [
     { href: "/services#waste-processing", label: "Community Parnerships" },
     
-    { href: "/services#corporate-services", label: "Corporate CSR & Event Services" },
+    { href: "/services#corporate-services", label: "Corporate ESG & Event Services" },
     { href: "/services#educational-workshops", label: "Educational Kits & Workshops" },
 
     { href: "/services#custom-products", label: "Custom Products" }
