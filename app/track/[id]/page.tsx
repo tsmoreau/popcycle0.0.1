@@ -119,57 +119,6 @@ export default function TrackItem() {
           </PopArtContainer>
         </div>
 
-        {/* Status Timeline */}
-        <div className="mb-12">
-          <h2 className="text-3xl helvetica-bold mb-8 text-center">
-            <span className="text-pop-black">TRANSFORMATION JOURNEY</span>
-          </h2>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-            <div className="text-center">
-              <div className={`w-16 h-16 mx-auto mb-4 border-2 border-pop-black flex items-center justify-center ${
-                item.status === 'collected' || item.status === 'processed' || item.status === 'assembled' || item.status === 'delivered' 
-                  ? 'bg-pop-green' : 'bg-gray-200'
-              }`}>
-                <CheckCircle className="w-8 h-8 text-pop-black" />
-              </div>
-              <h3 className="systematic-caps text-sm mb-1">Collected</h3>
-              <p className="text-xs text-pop-gray">{item.collectionDate}</p>
-            </div>
-            
-            <div className="text-center">
-              <div className={`w-16 h-16 mx-auto mb-4 border-2 border-pop-black flex items-center justify-center ${
-                item.status === 'processed' || item.status === 'assembled' || item.status === 'delivered' 
-                  ? 'bg-pop-blue' : 'bg-gray-200'
-              }`}>
-                <CheckCircle className="w-8 h-8 text-pop-black" />
-              </div>
-              <h3 className="systematic-caps text-sm mb-1">Processed</h3>
-              <p className="text-xs text-pop-gray">{item.processedDate}</p>
-            </div>
-            
-            <div className="text-center">
-              <div className={`w-16 h-16 mx-auto mb-4 border-2 border-pop-black flex items-center justify-center ${
-                item.status === 'assembled' || item.status === 'delivered' 
-                  ? 'bg-pop-red' : 'bg-gray-200'
-              }`}>
-                <CheckCircle className="w-8 h-8 text-pop-black" />
-              </div>
-              <h3 className="systematic-caps text-sm mb-1">Assembled</h3>
-              <p className="text-xs text-pop-gray">Into {getProductTypeLabel(item.productType)}</p>
-            </div>
-            
-            <div className="text-center">
-              <div className={`w-16 h-16 mx-auto mb-4 border-2 border-pop-black flex items-center justify-center ${
-                item.status === 'delivered' ? 'bg-pop-black' : 'bg-gray-200'
-              }`}>
-                <CheckCircle className={`w-8 h-8 ${item.status === 'delivered' ? 'text-white' : 'text-pop-black'}`} />
-              </div>
-              <h3 className="systematic-caps text-sm mb-1">Delivered</h3>
-              <p className="text-xs text-pop-gray">To education partner</p>
-            </div>
-          </div>
-        </div>
-
         {/* Item Details */}
         <div className="grid md:grid-cols-2 gap-8 mb-12">
           <PopArtContainer color="green" shadow>
@@ -236,6 +185,57 @@ export default function TrackItem() {
               </CardContent>
             </Card>
           </PopArtContainer>
+        </div>
+
+        {/* Status Timeline */}
+        <div className="mb-12">
+          <h2 className="text-3xl helvetica-bold mb-8 text-center">
+            <span className="text-pop-black">TRANSFORMATION JOURNEY</span>
+          </h2>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+            <div className="text-center">
+              <div className={`w-16 h-16 mx-auto mb-4 border-2 border-pop-black flex items-center justify-center ${
+                item.status === 'collected' || item.status === 'processed' || item.status === 'assembled' || item.status === 'delivered' 
+                  ? 'bg-pop-green' : 'bg-gray-200'
+              }`}>
+                <CheckCircle className="w-8 h-8 text-pop-black" />
+              </div>
+              <h3 className="systematic-caps text-sm mb-1">Collected</h3>
+              <p className="text-xs text-pop-gray">{item.collectionDate}</p>
+            </div>
+            
+            <div className="text-center">
+              <div className={`w-16 h-16 mx-auto mb-4 border-2 border-pop-black flex items-center justify-center ${
+                item.status === 'processed' || item.status === 'assembled' || item.status === 'delivered' 
+                  ? 'bg-pop-blue' : 'bg-gray-200'
+              }`}>
+                <CheckCircle className="w-8 h-8 text-pop-black" />
+              </div>
+              <h3 className="systematic-caps text-sm mb-1">Processed</h3>
+              <p className="text-xs text-pop-gray">{item.processedDate}</p>
+            </div>
+            
+            <div className="text-center">
+              <div className={`w-16 h-16 mx-auto mb-4 border-2 border-pop-black flex items-center justify-center ${
+                item.status === 'assembled' || item.status === 'delivered' 
+                  ? 'bg-pop-red' : 'bg-gray-200'
+              }`}>
+                <CheckCircle className="w-8 h-8 text-pop-black" />
+              </div>
+              <h3 className="systematic-caps text-sm mb-1">Assembled</h3>
+              <p className="text-xs text-pop-gray">Into {getProductTypeLabel(item.productType)}</p>
+            </div>
+            
+            <div className="text-center">
+              <div className={`w-16 h-16 mx-auto mb-4 border-2 border-pop-black flex items-center justify-center ${
+                item.status === 'delivered' ? 'bg-pop-black' : 'bg-gray-200'
+              }`}>
+                <CheckCircle className={`w-8 h-8 ${item.status === 'delivered' ? 'text-white' : 'text-pop-black'}`} />
+              </div>
+              <h3 className="systematic-caps text-sm mb-1">Delivered</h3>
+              <p className="text-xs text-pop-gray">To education partner</p>
+            </div>
+          </div>
         </div>
 
         {/* Impact Metrics */}
