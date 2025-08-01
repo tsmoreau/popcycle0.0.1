@@ -1,4 +1,6 @@
-/* Tailwind temporarily disabled due to configuration issues */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 /* Pop Art Color System */
 :root {

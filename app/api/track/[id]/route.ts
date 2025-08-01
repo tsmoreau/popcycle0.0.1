@@ -50,9 +50,10 @@ const sampleItems = {
 
 export async function GET(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
-  const item = sampleItems[params.id.toUpperCase() as keyof typeof sampleItems];
+  const { id } = await params;
+  const item = sampleItems[id.toUpperCase() as keyof typeof sampleItems];
   
   if (!item) {
     return NextResponse.json({ error: 'Item not found' }, { status: 404 });
