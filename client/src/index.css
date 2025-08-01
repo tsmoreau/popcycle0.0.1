@@ -1,0 +1,248 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: hsl(0, 0%, 100%);
+  --foreground: hsl(0, 0%, 0%);
+  --muted: hsl(210, 40%, 98%);
+  --muted-foreground: hsl(215, 13.8%, 34.1%);
+  --popover: hsl(0, 0%, 100%);
+  --popover-foreground: hsl(0, 0%, 0%);
+  --card: hsl(0, 0%, 100%);
+  --card-foreground: hsl(0, 0%, 0%);
+  --border: hsl(0, 0%, 0%);
+  --input: hsl(214.3, 31.8%, 91.4%);
+  --primary: hsl(142, 100%, 35%);
+  --primary-foreground: hsl(0, 0%, 100%);
+  --secondary: hsl(210, 40%, 98%);
+  --secondary-foreground: hsl(0, 0%, 0%);
+  --accent: hsl(210, 40%, 98%);
+  --accent-foreground: hsl(0, 0%, 0%);
+  --destructive: hsl(0, 84.2%, 60.2%);
+  --destructive-foreground: hsl(60, 9.1%, 97.8%);
+  --ring: hsl(0, 0%, 0%);
+  --radius: 0rem;
+  
+  /* PopCycle Brand Colors */
+  --pop-green: hsl(142, 100%, 35%);
+  --pop-blue: hsl(214, 100%, 50%);
+  --pop-red: hsl(347, 100%, 60%);
+  --pop-black: hsl(0, 0%, 0%);
+  --pop-gray: hsl(0, 0%, 20%);
+}
+
+.dark {
+  --background: hsl(0, 0%, 0%);
+  --foreground: hsl(0, 0%, 100%);
+  --muted: hsl(0, 0%, 5%);
+  --muted-foreground: hsl(0, 0%, 60%);
+  --popover: hsl(0, 0%, 0%);
+  --popover-foreground: hsl(0, 0%, 100%);
+  --card: hsl(0, 0%, 0%);
+  --card-foreground: hsl(0, 0%, 100%);
+  --border: hsl(0, 0%, 100%);
+  --input: hsl(0, 0%, 10%);
+  --primary: hsl(142, 100%, 35%);
+  --primary-foreground: hsl(0, 0%, 100%);
+  --secondary: hsl(0, 0%, 5%);
+  --secondary-foreground: hsl(0, 0%, 100%);
+  --accent: hsl(0, 0%, 5%);
+  --accent-foreground: hsl(0, 0%, 100%);
+  --destructive: hsl(0, 62.8%, 30.6%);
+  --destructive-foreground: hsl(0, 0%, 98%);
+  --ring: hsl(0, 0%, 100%);
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply font-sans antialiased bg-background text-foreground;
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-weight: 700;
+    letter-spacing: -0.02em;
+  }
+}
+
+@layer components {
+  /* Pop Art Elements */
+  .dots-pattern {
+    background-image: radial-gradient(circle, var(--pop-green) 1px, transparent 1px);
+    background-size: 12px 12px;
+  }
+
+  .dots-pattern-blue {
+    background-image: radial-gradient(circle, var(--pop-blue) 1px, transparent 1px);
+    background-size: 12px 12px;
+  }
+
+  .dots-pattern-red {
+    background-image: radial-gradient(circle, var(--pop-red) 1px, transparent 1px);
+    background-size: 12px 12px;
+  }
+
+  /* Geometric Shapes */
+  .geometric-border {
+    clip-path: polygon(0 0, calc(100% - 20px) 0, 100% 20px, 100% 100%, 20px 100%, 0 calc(100% - 20px));
+  }
+
+  .diagonal-cut {
+    clip-path: polygon(0 0, 100% 0, calc(100% - 40px) 100%, 0 100%);
+  }
+
+  /* Pop Shadows */
+  .pop-shadow-green {
+    box-shadow: 8px 8px 0px var(--pop-green);
+  }
+
+  .pop-shadow-blue {
+    box-shadow: 8px 8px 0px var(--pop-blue);
+  }
+
+  .pop-shadow-red {
+    box-shadow: 8px 8px 0px var(--pop-red);
+  }
+
+  .pop-shadow-black {
+    box-shadow: 8px 8px 0px var(--pop-black);
+  }
+
+  /* Grid System */
+  .jetset-grid {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    gap: 1.5rem;
+  }
+
+  /* Typography */
+  .helvetica-bold {
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+  }
+
+  .systematic-caps {
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    font-weight: 600;
+  }
+
+  /* QR Code Styling */
+  .qr-pop-art {
+    background: var(--pop-black);
+    border: 4px solid var(--pop-green);
+    position: relative;
+  }
+
+  .qr-pop-art::after {
+    content: 'QR';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: var(--pop-green);
+    font-weight: 700;
+    font-size: 1.5rem;
+  }
+
+  /* Constructivist Elements */
+  .constructivist-block {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .constructivist-block::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(45deg, transparent 40%, var(--pop-green) 40%, var(--pop-green) 60%, transparent 60%);
+    opacity: 0.1;
+  }
+
+  /* Transformation Animations */
+  .transform-pop {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .transform-pop:hover {
+    transform: scale(1.02) rotate(0.5deg);
+  }
+
+  /* Navigation Styles */
+  .nav-systematic {
+    background: var(--background);
+    border-bottom: 4px solid var(--pop-black);
+  }
+
+  .nav-link-active {
+    color: var(--pop-green);
+    font-weight: 700;
+  }
+}
+
+@layer utilities {
+  .text-pop-green {
+    color: var(--pop-green);
+  }
+
+  .text-pop-blue {
+    color: var(--pop-blue);
+  }
+
+  .text-pop-red {
+    color: var(--pop-red);
+  }
+
+  .text-pop-black {
+    color: var(--pop-black);
+  }
+
+  .text-pop-gray {
+    color: var(--pop-gray);
+  }
+
+  .bg-pop-green {
+    background-color: var(--pop-green);
+  }
+
+  .bg-pop-blue {
+    background-color: var(--pop-blue);
+  }
+
+  .bg-pop-red {
+    background-color: var(--pop-red);
+  }
+
+  .bg-pop-black {
+    background-color: var(--pop-black);
+  }
+
+  .bg-pop-gray {
+    background-color: var(--pop-gray);
+  }
+
+  .border-pop-green {
+    border-color: var(--pop-green);
+  }
+
+  .border-pop-blue {
+    border-color: var(--pop-blue);
+  }
+
+  .border-pop-red {
+    border-color: var(--pop-red);
+  }
+
+  .border-pop-black {
+    border-color: var(--pop-black);
+  }
+}
