@@ -588,9 +588,6 @@ video {
 .block {
   display: block;
 }
-.inline-block {
-  display: inline-block;
-}
 .flex {
   display: flex;
 }
@@ -829,6 +826,9 @@ video {
 .border-t-4 {
   border-top-width: 4px;
 }
+.border-t {
+  border-top-width: 1px;
+}
 .border-input {
   border-color: hsl(var(--input));
 }
@@ -981,6 +981,9 @@ video {
 }
 .font-semibold {
   font-weight: 600;
+}
+.italic {
+  font-style: italic;
 }
 .leading-none {
   line-height: 1;

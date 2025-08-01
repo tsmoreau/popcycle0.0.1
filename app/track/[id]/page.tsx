@@ -8,6 +8,7 @@ import { PopArtContainer, QRCodeElement } from "../../components/PopArtElements"
 import { Building, Calendar, Weight, Leaf, Package, CheckCircle } from "lucide-react";
 
 interface PlasticItem {
+  id: string;
   qrCode: string;
   sourceCompany: string;
   collectionDate: string;
@@ -17,6 +18,8 @@ interface PlasticItem {
   carbonOffset: number;
   status: string;
   productType: string;
+  event?: string;
+  message?: string;
   impactMetrics: {
     carbonSaved: number;
     wasteReduced: number;
@@ -131,6 +134,10 @@ export default function TrackItem() {
               </CardHeader>
               <CardContent className="space-y-4">
                 <div className="flex justify-between">
+                  <span className="systematic-caps text-sm">ID</span>
+                  <span className="helvetica-bold">{item.id}</span>
+                </div>
+                <div className="flex justify-between">
                   <span className="systematic-caps text-sm">Company</span>
                   <span className="helvetica-bold">{item.sourceCompany}</span>
                 </div>
@@ -152,6 +159,18 @@ export default function TrackItem() {
                     {item.collectionDate}
                   </span>
                 </div>
+                {item.event && (
+                  <div className="flex justify-between">
+                    <span className="systematic-caps text-sm">Event</span>
+                    <span className="helvetica-bold">{item.event}</span>
+                  </div>
+                )}
+                {item.message && (
+                  <div className="border-t border-pop-gray pt-4">
+                    <span className="systematic-caps text-sm text-pop-gray block mb-2">Message</span>
+                    <p className="text-sm italic">{item.message}</p>
+                  </div>
+                )}
               </CardContent>
             </Card>
           </PopArtContainer>
