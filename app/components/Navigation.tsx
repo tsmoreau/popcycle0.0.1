@@ -4,17 +4,18 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
 import { Button } from "./ui/button";
-import { ChevronDown, Menu, X } from "lucide-react";
+import { ChevronDown, Menu, X, ChevronRight } from "lucide-react";
 
 export default function Navigation() {
   const pathname = usePathname();
   const [aboutOpen, setAboutOpen] = useState(false);
   const [servicesOpen, setServicesOpen] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [mobileAboutOpen, setMobileAboutOpen] = useState(false);
+  const [mobileServicesOpen, setMobileServicesOpen] = useState(false);
 
   const aboutItems = [
-    { href: "/about#staff", label: "Staff" },
-    { href: "/about#story", label: "Story" },
+    { href: "/about#team", label: "Team" },
     { href: "/about#process", label: "Process" },
     { href: "/about#contact", label: "Contact" }
   ];
@@ -143,45 +144,29 @@ export default function Navigation() {
       {mobileMenuOpen && (
         <div className="md:hidden bg-white border-t-4 border-pop-black">
           <div className="px-4 py-6 space-y-4">
-            {/* About Mobile Section */}
+            {/* About Mobile Accordion Section */}
             <div className="space-y-2">
-              <div className="systematic-caps text-sm font-bold text-pop-black">About</div>
-              {aboutItems.map((item) => (
-                <Link
-                  key={item.href}
-                  href={item.href}
-                  onClick={() => setMobileMenuOpen(false)}
-                  className="block w-full text-left px-4 py-2 systematic-caps text-sm hover:bg-pop-green hover:text-white transition-colors"
-                >
-                  {item.label}
-                </Link>
-              ))}
-            </div>
-            
-            {/* Services Mobile Section */}
-            <div className="space-y-2">
-              <div className="systematic-caps text-sm font-bold text-pop-black">Services</div>
-              {servicesItems.map((item) => (
-                <Link
-                  key={item.href}
-                  href={item.href}
-                  onClick={() => setMobileMenuOpen(false)}
-                  className="block w-full text-left px-4 py-2 systematic-caps text-sm hover:bg-pop-blue hover:text-white transition-colors"
-                >
-                  {item.label}
-                </Link>
-              ))}
-            </div>
-            
-            {/* Store Mobile Section */}
-            <div className="space-y-2">
-              <Link
-                href="/store"
-                onClick={() => setMobileMenuOpen(false)}
-                className="systematic-caps text-sm font-bold text-pop-black hover:text-pop-red transition-colors"
+              <button
+                onClick={() => setMobileAboutOpen(!mobileAboutOpen)}
+                className="flex items-center justify-between w-full systematic-caps text-sm font-bold text-pop-black hover:text-pop-green transition-colors"
               >
-                Store
-              </Link>
+                <span>About</span>
+                <ChevronRight className={`w-4 h-4 transform transition-transform ${mobileAboutOpen ? 'rotate-90' : ''}`} />
+              </button>
+              {mobileAboutOpen && (
+                <div className="pl-4 space-y-1">
+                  {aboutItems.map((item) => (
+                    <Link
+                      key={item.href}
+                      href={item.href}
+                      onClick={() => setMobileMenuOpen(false)}
+                      className="block w-full text-left px-4 py-2 systematic-caps text-sm hover:bg-pop-green hover:text-white transition-colors"
+                    >
+                      {item.label}
+                    </Link>
+                  ))}
+                </div>
+              )}
             </div>
             
             {/* Track Mobile Section */}
@@ -192,6 +177,42 @@ export default function Navigation() {
                 className="systematic-caps text-sm font-bold text-pop-black hover:text-pop-green transition-colors"
               >
                 Track
+              </Link>
+            </div>
+            
+            {/* Services Mobile Accordion Section */}
+            <div className="space-y-2">
+              <button
+                onClick={() => setMobileServicesOpen(!mobileServicesOpen)}
+                className="flex items-center justify-between w-full systematic-caps text-sm font-bold text-pop-black hover:text-pop-blue transition-colors"
+              >
+                <span>Services</span>
+                <ChevronRight className={`w-4 h-4 transform transition-transform ${mobileServicesOpen ? 'rotate-90' : ''}`} />
+              </button>
+              {mobileServicesOpen && (
+                <div className="pl-4 space-y-1">
+                  {servicesItems.map((item) => (
+                    <Link
+                      key={item.href}
+                      href={item.href}
+                      onClick={() => setMobileMenuOpen(false)}
+                      className="block w-full text-left px-4 py-2 systematic-caps text-sm hover:bg-pop-blue hover:text-white transition-colors"
+                    >
+                      {item.label}
+                    </Link>
+                  ))}
+                </div>
+              )}
+            </div>
+            
+            {/* Store Mobile Section */}
+            <div className="space-y-2">
+              <Link
+                href="/store"
+                onClick={() => setMobileMenuOpen(false)}
+                className="systematic-caps text-sm font-bold text-pop-black hover:text-pop-red transition-colors"
+              >
+                Store
               </Link>
             </div>
             
