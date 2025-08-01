@@ -4,8 +4,15 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Link } from "wouter";
 import { PopArtContainer, MetricCard } from "@/components/pop-art-elements";
 
+interface Metrics {
+  totalPieces: number;
+  totalWeight: number;
+  totalCarbonOffset: number;
+  totalPartners: number;
+}
+
 export default function Home() {
-  const { data: metrics } = useQuery({
+  const { data: metrics } = useQuery<Metrics>({
     queryKey: ["/api/metrics"],
   });
 
@@ -103,22 +110,22 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-4">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
             <MetricCard 
-              value={metrics?.totalPieces || 0}
+              value={metrics?.totalPieces ?? 0}
               label="Pieces Tracked"
               color="green"
             />
             <MetricCard 
-              value={`${Math.round(metrics?.totalWeight || 0)}kg`}
+              value={`${Math.round(metrics?.totalWeight ?? 0)}kg`}
               label="Plastic Diverted"
               color="blue"
             />
             <MetricCard 
-              value={`${Math.round(metrics?.totalCarbonOffset || 0)}kg`}
+              value={`${Math.round(metrics?.totalCarbonOffset ?? 0)}kg`}
               label="CO₂ Saved"
               color="red"
             />
             <MetricCard 
-              value={metrics?.totalPartners || 0}
+              value={metrics?.totalPartners ?? 0}
               label="Partner Companies"
               color="green"
             />
@@ -133,9 +140,9 @@ export default function Home() {
             Ready to <span className="text-pop-green">Transform</span>?
           </h2>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link href="/partners">
+            <Link href="/services">
               <Button className="bg-pop-green text-white hover:bg-pop-black systematic-caps pop-shadow-green text-lg px-8 py-4">
-                Become a Partner
+                Our Services
               </Button>
             </Link>
             <Link href="/track">

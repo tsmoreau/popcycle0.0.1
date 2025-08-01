@@ -5,10 +5,10 @@ export default function Navigation() {
   const [location] = useLocation();
 
   const navItems = [
-    { path: "/", label: "Home" },
-    { path: "/track", label: "Track" },
     { path: "/about", label: "About" },
-    { path: "/partners", label: "Partners" },
+    { path: "/services", label: "Services" },
+    { path: "/shop", label: "Shop" },
+    { path: "/track", label: "Track" },
   ];
 
   return (

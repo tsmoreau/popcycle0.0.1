@@ -18,9 +18,10 @@ export default function Footer() {
             <h4 className="helvetica-bold mb-4 systematic-caps">Quick Links</h4>
             <ul className="space-y-2">
               <li><Link href="/" className="hover:text-pop-green transition-colors">Home</Link></li>
-              <li><Link href="/track" className="hover:text-pop-green transition-colors">Track Item</Link></li>
-              <li><Link href="/about" className="hover:text-pop-green transition-colors">About Us</Link></li>
-              <li><Link href="/partners" className="hover:text-pop-green transition-colors">Partners</Link></li>
+              <li><Link href="/about" className="hover:text-pop-green transition-colors">About</Link></li>
+              <li><Link href="/services" className="hover:text-pop-green transition-colors">Services</Link></li>
+              <li><Link href="/shop" className="hover:text-pop-green transition-colors">Shop</Link></li>
+              <li><Link href="/track" className="hover:text-pop-green transition-colors">Track</Link></li>
             </ul>
           </div>
           

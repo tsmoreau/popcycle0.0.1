@@ -8,6 +8,8 @@ import Home from "@/pages/home";
 import Track from "@/pages/track";
 import TrackItem from "@/pages/track-item";
 import About from "@/pages/about";
+import Services from "@/pages/services";
+import Shop from "@/pages/shop";
 import Partners from "@/pages/partners";
 import Navigation from "@/components/navigation";
 import Footer from "@/components/footer";
@@ -16,9 +18,11 @@ function Router() {
   return (
     <Switch>
       <Route path="/" component={Home} />
+      <Route path="/about" component={About} />
+      <Route path="/services" component={Services} />
+      <Route path="/shop" component={Shop} />
       <Route path="/track" component={Track} />
       <Route path="/track/:id" component={TrackItem} />
-      <Route path="/about" component={About} />
       <Route path="/partners" component={Partners} />
       <Route component={NotFound} />
     </Switch>
