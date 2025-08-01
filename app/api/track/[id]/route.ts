@@ -5,7 +5,7 @@ const sampleItems = {
   'ABC123': {
     id: 'ABC123',
     qrCode: 'ABC123',
-    sourceCompany: 'Cafe Luna',
+    originPoint: 'Cafe Luna',
     collectionDate: '2025-01-15',
     materialType: 'HDPE',
     weight: 2.3,
@@ -19,7 +19,7 @@ const sampleItems = {
   'DEF456': {
     id: 'DEF456',
     qrCode: 'DEF456', 
-    sourceCompany: 'TechCorp',
+    originPoint: 'TechCorp',
     collectionDate: '2025-01-12',
     materialType: 'PET',
     weight: 1.7,
@@ -32,7 +32,7 @@ const sampleItems = {
   'GHI789': {
     id: 'GHI789',
     qrCode: 'GHI789',
-    sourceCompany: 'Green Office',
+    originPoint: 'Riverside Park',
     collectionDate: '2025-01-10',
     materialType: 'HDPE',
     weight: 3.1,
@@ -40,12 +40,12 @@ const sampleItems = {
     carbonOffset: 7.8,
     status: 'processed',
     productType: 'educational_kit',
-    message: 'Every piece of plastic has a story. This one becomes a learning tool.'
+    message: 'From park cleanup to learning tool - community action creates change.'
   },
   'JKL012': {
     id: 'JKL012',
     qrCode: 'JKL012',
-    sourceCompany: 'Startup Hub',
+    originPoint: 'Startup Hub',
     collectionDate: '2025-01-08',
     materialType: 'PP',
     weight: 1.9,
@@ -70,7 +70,7 @@ export async function GET(
   return NextResponse.json({
     id: item.id,
     qrCode: item.qrCode,
-    sourceCompany: item.sourceCompany,
+    originPoint: item.originPoint,
     collectionDate: item.collectionDate,
     materialType: item.materialType,
     weight: item.weight,
