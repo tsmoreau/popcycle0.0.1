@@ -197,21 +197,37 @@ export default function TrackItem() {
                   </div>
                 )}
                 
+                <div className="flex justify-between items-center">
+                  <span className="systematic-caps text-sm">Delivered On</span>
+                  <span className="flex items-center">
+                    <Calendar className="w-4 h-4 mr-1" />
+                    {item.deliveredDate}
+                  </span>
+                </div>
+
                 {item.isCharity && item.donatingEntity && (
                   <div className="flex justify-between">
                     <span className="systematic-caps text-sm">Donated By</span>
-                    <span className="helvetica-bold">{item.donatingEntity}</span>
+                    <span>{item.donatingEntity}</span>
                   </div>
                 )}
                 
                 <div className="flex justify-between items-center">
                   <span className="systematic-caps text-sm">{item.isCharity ? 'Donated To' : 'Destination'}</span>
-                  <span>{item.destination}</span>
+                  <span className="helvetica-bold">{item.destination}</span>
                 </div>
+                
                 {item.event && (
                   <div className="flex justify-between">
                     <span className="systematic-caps text-sm">Event</span>
                     <span className="helvetica-bold">{item.event}</span>
+                  </div>
+                )}
+                
+                {item.isCharity && item.message && (
+                  <div className="border-t border-pop-gray pt-4">
+                    <span className="systematic-caps text-sm text-pop-gray block mb-2">Message</span>
+                    <p className="text-sm italic">{item.message}</p>
                   </div>
                 )}
               </CardContent>
