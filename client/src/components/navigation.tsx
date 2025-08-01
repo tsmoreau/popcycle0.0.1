@@ -245,7 +245,7 @@ export default function Navigation() {
               <Link
                 href="/shop"
                 onClick={() => setMobileMenuOpen(false)}
-                className={`block px-4 py-3 systematic-caps text-sm hover:bg-pop-red hover:text-white transition-colors border border-pop-black ${
+                className={`block px-4 py-3 systematic-caps text-sm hover:bg-pop-red hover:text-white transition-colors ${
                   location === '/shop' ? "bg-pop-red text-white" : ""
                 }`}
               >
@@ -255,7 +255,7 @@ export default function Navigation() {
               <Link
                 href="/track"
                 onClick={() => setMobileMenuOpen(false)}
-                className={`block px-4 py-3 systematic-caps text-sm hover:bg-pop-green hover:text-white transition-colors border border-pop-black ${
+                className={`block px-4 py-3 systematic-caps text-sm hover:bg-pop-green hover:text-white transition-colors ${
                   location === '/track' ? "bg-pop-green text-white" : ""
                 }`}
               >
@@ -267,7 +267,8 @@ export default function Navigation() {
             <div className="pt-4">
               <Link href="/track">
                 <Button 
-                  className="w-full bg-pop-green text-white hover:bg-pop-black systematic-caps pop-shadow-green"
+                  variant="ghost"
+                  className="w-full bg-pop-green text-white hover:bg-pop-black systematic-caps"
                   onClick={() => setMobileMenuOpen(false)}
                 >
                   Scan QR Code
