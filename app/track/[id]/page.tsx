@@ -31,6 +31,7 @@ interface PlasticItem {
   event?: string;
   message?: string;
   makerDetails?: MakerDetails | null;
+  isSourceOnly?: boolean;
   impactMetrics: {
     carbonSaved: number;
     wasteReduced: number;
@@ -84,7 +85,7 @@ export default function TrackItem() {
             <CardContent className="p-8 text-center">
               <h2 className="text-3xl helvetica-bold mb-4">Item Not Found</h2>
               <p className="text-pop-gray mb-6">QR code "{id}" is not in our system.</p>
-              <p className="text-sm text-pop-gray">Try one of our sample codes: ABC123, DEF456, GHI789, JKL012</p>
+              <p className="text-sm text-pop-gray">Try one of our sample codes: ABC123, DEF456, GHI789, JKL012, MNO345, PQR678</p>
             </CardContent>
           </Card>
         </PopArtContainer>
@@ -111,7 +112,10 @@ export default function TrackItem() {
             <span className="text-pop-green">QR</span> {item.qrCode}
           </h1>
           <p className="text-lg text-pop-gray">
-            Complete transformation journey from {item.originPoint}
+            {item.isSourceOnly 
+              ? `Fresh plastic collection from ${item.originPoint}` 
+              : `Complete transformation journey from ${item.originPoint}`
+            }
           </p>
         </div>
 
@@ -125,7 +129,7 @@ export default function TrackItem() {
         </div>
 
         {/* Item Details */}
-        <div className="grid lg:grid-cols-3 md:grid-cols-2 gap-8 mb-12 items-start">
+        <div className={`gap-8 mb-12 items-start ${item.isSourceOnly ? 'flex justify-center' : 'grid lg:grid-cols-3 md:grid-cols-2'}`}>
           <PopArtContainer color="green" shadow>
             <Card className="border-4 border-pop-black">
               <CardHeader>
@@ -161,13 +165,15 @@ export default function TrackItem() {
                     {item.collectionDate}
                   </span>
                 </div>
-                <div className="flex justify-between items-center">
-                  <span className="systematic-caps text-sm">Processed</span>
-                  <span className="flex items-center">
-                    <Calendar className="w-4 h-4 mr-1" />
-                    {item.processedDate}
-                  </span>
-                </div>
+                {item.processedDate && (
+                  <div className="flex justify-between items-center">
+                    <span className="systematic-caps text-sm">Processed</span>
+                    <span className="flex items-center">
+                      <Calendar className="w-4 h-4 mr-1" />
+                      {item.processedDate}
+                    </span>
+                  </div>
+                )}
                 {item.event && (
                   <div className="flex justify-between">
                     <span className="systematic-caps text-sm">Event</span>
@@ -180,222 +186,283 @@ export default function TrackItem() {
                     <p className="text-sm italic">{item.message}</p>
                   </div>
                 )}
-              </CardContent>
-            </Card>
-          </PopArtContainer>
-
-          <PopArtContainer color={item.isCharity ? "red" : "blue"} shadow>
-            <Card className="border-4 border-pop-black">
-              <CardHeader>
-                <CardTitle className="systematic-caps flex items-center">
-                  <Package className="w-5 h-5 mr-2" />
-                  Product Details
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <div className="flex justify-between">
-                  <span className="systematic-caps text-sm">Product Type</span>
-                  <span>{getProductTypeLabel(item.productType)}</span>
-                </div>
-
-                {!item.isCharity && (
-                  <div className="flex justify-between items-center">
-                    <span className="systematic-caps text-sm">Purchased</span>
-                    <span className="flex items-center">
+                {item.isSourceOnly && (
+                  <div className="border-t border-pop-red pt-4 text-center">
+                    <div className="flex items-center justify-center text-pop-red text-sm">
                       <Calendar className="w-4 h-4 mr-1" />
-                      {item.purchasedDate}
-                    </span>
-                  </div>
-                )}
-
-                {item.isCharity && item.donatingEntity && (
-                  <div className="flex justify-between">
-                    <span className="systematic-caps text-sm">Donor</span>
-                    <span>{item.donatingEntity}</span>
-                  </div>
-                )}
-                
-                {item.isCharity && (
-                  <div className="flex justify-between items-center">
-                    <span className="systematic-caps text-sm">Donated</span>
-                    <span>{item.destination}</span>
-                  </div>
-                )}
-                
-                <div className="flex justify-between items-center">
-                  <span className="systematic-caps text-sm">Delivered</span>
-                  <span className="flex items-center">
-                    <Calendar className="w-4 h-4 mr-1" />
-                    {item.deliveredDate}
-                  </span>
-                </div>
-                
-                {item.event && (
-                  <div className="flex justify-between">
-                    <span className="systematic-caps text-sm">Event</span>
-                    <span>{item.event}</span>
-                  </div>
-                )}
-                
-                {item.isCharity && item.message && (
-                  <div className="border-t border-pop-gray pt-4">
-                    <span className="systematic-caps text-sm text-pop-gray block mb-2">Message</span>
-                    <p className="text-sm italic">{item.message}</p>
+                      <span className="systematic-caps">Awaiting Processing</span>
+                    </div>
                   </div>
                 )}
               </CardContent>
             </Card>
           </PopArtContainer>
 
-          {/* Maker Details */}
-          <PopArtContainer color="red" shadow>
-            <Card className="border-4 border-pop-black">
-              <CardHeader>
-                <CardTitle className="systematic-caps flex items-center">
-                  <User className="w-5 h-5 mr-2" />
-                  Maker Details
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                {item.makerDetails ? (
-                  // Registered State - Show completed maker details
-                  <>
+          {!item.isSourceOnly && (
+            <>
+              <PopArtContainer color={item.isCharity ? "red" : "blue"} shadow>
+                <Card className="border-4 border-pop-black">
+                  <CardHeader>
+                    <CardTitle className="systematic-caps flex items-center">
+                      <Package className="w-5 h-5 mr-2" />
+                      Product Details
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent className="space-y-4">
                     <div className="flex justify-between">
-                      <span className="systematic-caps text-sm">Maker</span>
-                      <span className="font-semibold">{item.makerDetails.name}</span>
+                      <span className="systematic-caps text-sm">Product Type</span>
+                      <span>{getProductTypeLabel(item.productType)}</span>
                     </div>
-                    <div className="flex justify-between items-center">
-                      <span className="systematic-caps text-sm">Location</span>
-                      <span className="flex items-center">
-                        <MapPin className="w-4 h-4 mr-1" />
-                        {item.makerDetails.location}
-                      </span>
-                    </div>
-                    <div className="flex justify-between items-center">
-                      <span className="systematic-caps text-sm">Assembled</span>
-                      <span className="flex items-center">
-                        <Calendar className="w-4 h-4 mr-1" />
-                        {item.makerDetails.assemblyDate}
-                      </span>
-                    </div>
-                    {item.makerDetails.story && (
-                      <div className="border-t border-pop-gray pt-4">
-                        <span className="systematic-caps text-sm text-pop-gray block mb-2">
-                          {item.isCharity ? 'Assembly Story' : 'Maker Story'}
+
+                    {!item.isCharity && (
+                      <div className="flex justify-between items-center">
+                        <span className="systematic-caps text-sm">Purchased</span>
+                        <span className="flex items-center">
+                          <Calendar className="w-4 h-4 mr-1" />
+                          {item.purchasedDate}
                         </span>
-                        <p className="text-sm italic leading-relaxed">{item.makerDetails.story}</p>
                       </div>
                     )}
-                    <div className="border-t border-pop-gray pt-4 flex items-center justify-center">
-                      <div className="flex items-center text-pop-red text-sm">
-                        <Heart className="w-4 h-4 mr-1 fill-current" />
-                        <span className="systematic-caps">
-                          {item.isCharity ? 'Assembly Complete' : 'Maker Journey Complete'}
-                        </span>
+
+                    {item.isCharity && item.donatingEntity && (
+                      <div className="flex justify-between">
+                        <span className="systematic-caps text-sm">Donor</span>
+                        <span>{item.donatingEntity}</span>
                       </div>
+                    )}
+                    
+                    {item.isCharity && (
+                      <div className="flex justify-between items-center">
+                        <span className="systematic-caps text-sm">Donated</span>
+                        <span>{item.destination}</span>
+                      </div>
+                    )}
+                    
+                    <div className="flex justify-between items-center">
+                      <span className="systematic-caps text-sm">Delivered</span>
+                      <span className="flex items-center">
+                        <Calendar className="w-4 h-4 mr-1" />
+                        {item.deliveredDate}
+                      </span>
                     </div>
-                  </>
-                ) : (
-                  // Unregistered State - Show CTA
-                  <div className="text-center py-8">
-                    <div className="w-16 h-16 mx-auto mb-4 border-2 border-dashed border-pop-gray rounded-full flex items-center justify-center">
-                      <Plus className="w-8 h-8 text-pop-gray" />
-                    </div>
-                    <h3 className="text-lg helvetica-bold mb-2">Complete Your Maker Journey</h3>
-                    <p className="text-sm text-pop-gray mb-6 leading-relaxed">
-                      {item.isCharity 
-                        ? `Did you assemble this item${item.destination ? ` at ${item.destination}` : ''}? Share your story and connect this donation to its educational impact.`
-                        : 'Did you assemble this item? Share your story and become part of the circular economy narrative.'
-                      }
-                    </p>
-                    <button className="w-full bg-pop-red text-white font-semibold py-3 px-6 border-2 border-pop-black hover:bg-pop-black transition-colors systematic-caps">
-                      Register as Maker
-                    </button>
-                    <p className="text-xs text-pop-gray mt-3">
-                      Email verification required
-                    </p>
-                  </div>
-                )}
-              </CardContent>
-            </Card>
-          </PopArtContainer>
+                    
+                    {item.event && (
+                      <div className="flex justify-between">
+                        <span className="systematic-caps text-sm">Event</span>
+                        <span>{item.event}</span>
+                      </div>
+                    )}
+                    
+                    {item.isCharity && item.message && (
+                      <div className="border-t border-pop-gray pt-4">
+                        <span className="systematic-caps text-sm text-pop-gray block mb-2">Message</span>
+                        <p className="text-sm italic">{item.message}</p>
+                      </div>
+                    )}
+                  </CardContent>
+                </Card>
+              </PopArtContainer>
+
+              {/* Maker Details */}
+              <PopArtContainer color="red" shadow>
+                <Card className="border-4 border-pop-black">
+                  <CardHeader>
+                    <CardTitle className="systematic-caps flex items-center">
+                      <User className="w-5 h-5 mr-2" />
+                      Maker Details
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent className="space-y-4">
+                    {item.makerDetails ? (
+                      // Registered State - Show completed maker details
+                      <>
+                        <div className="flex justify-between">
+                          <span className="systematic-caps text-sm">Maker</span>
+                          <span className="font-semibold">{item.makerDetails.name}</span>
+                        </div>
+                        <div className="flex justify-between items-center">
+                          <span className="systematic-caps text-sm">Location</span>
+                          <span className="flex items-center">
+                            <MapPin className="w-4 h-4 mr-1" />
+                            {item.makerDetails.location}
+                          </span>
+                        </div>
+                        <div className="flex justify-between items-center">
+                          <span className="systematic-caps text-sm">Assembled</span>
+                          <span className="flex items-center">
+                            <Calendar className="w-4 h-4 mr-1" />
+                            {item.makerDetails.assemblyDate}
+                          </span>
+                        </div>
+                        {item.makerDetails.story && (
+                          <div className="border-t border-pop-gray pt-4">
+                            <span className="systematic-caps text-sm text-pop-gray block mb-2">
+                              {item.isCharity ? 'Assembly Story' : 'Maker Story'}
+                            </span>
+                            <p className="text-sm italic leading-relaxed">{item.makerDetails.story}</p>
+                          </div>
+                        )}
+                        <div className="border-t border-pop-gray pt-4 flex items-center justify-center">
+                          <div className="flex items-center text-pop-red text-sm">
+                            <Heart className="w-4 h-4 mr-1 fill-current" />
+                            <span className="systematic-caps">
+                              {item.isCharity ? 'Assembly Complete' : 'Maker Journey Complete'}
+                            </span>
+                          </div>
+                        </div>
+                      </>
+                    ) : (
+                      // Unregistered State - Show CTA
+                      <div className="text-center py-8">
+                        <div className="w-16 h-16 mx-auto mb-4 border-2 border-dashed border-pop-gray rounded-full flex items-center justify-center">
+                          <Plus className="w-8 h-8 text-pop-gray" />
+                        </div>
+                        <h3 className="text-lg helvetica-bold mb-2">Complete Your Maker Journey</h3>
+                        <p className="text-sm text-pop-gray mb-6 leading-relaxed">
+                          {item.isCharity 
+                            ? `Did you assemble this item${item.destination ? ` at ${item.destination}` : ''}? Share your story and connect this donation to its educational impact.`
+                            : 'Did you assemble this item? Share your story and become part of the circular economy narrative.'
+                          }
+                        </p>
+                        <button className="w-full bg-pop-red text-white font-semibold py-3 px-6 border-2 border-pop-black hover:bg-pop-black transition-colors systematic-caps">
+                          Register as Maker
+                        </button>
+                        <p className="text-xs text-pop-gray mt-3">
+                          Email verification required
+                        </p>
+                      </div>
+                    )}
+                  </CardContent>
+                </Card>
+              </PopArtContainer>
+            </>
+          )}
         </div>
 
         {/* Status Timeline */}
-        <div className="mb-12">
-          <h2 className="text-3xl helvetica-bold mb-8 text-center">
-            <span className="text-pop-black">TRANSFORMATION JOURNEY</span>
-          </h2>
-          <div className={`grid grid-cols-1 gap-8 ${item.makerDetails ? 'md:grid-cols-4' : 'md:grid-cols-3'}`}>
-            <div className="text-center">
-              <div className="w-16 h-16 mx-auto mb-4 border-2 border-pop-black flex items-center justify-center bg-pop-green">
-                <CheckCircle className="w-8 h-8 text-pop-black" />
-              </div>
-              <h3 className="systematic-caps text-sm mb-1">Collected</h3>
-              <p className="text-xs text-pop-gray">{item.collectionDate}</p>
-            </div>
-            
-            <div className="text-center">
-              <div className="w-16 h-16 mx-auto mb-4 border-2 border-pop-black flex items-center justify-center bg-pop-blue">
-                <CheckCircle className="w-8 h-8 text-pop-black" />
-              </div>
-              <h3 className="systematic-caps text-sm mb-1">Processed</h3>
-              <p className="text-xs text-pop-gray">{item.processedDate}</p>
-            </div>
-            
-            <div className="text-center">
-              <div className="w-16 h-16 mx-auto mb-4 border-2 border-pop-black flex items-center justify-center bg-pop-black">
-                <CheckCircle className="w-8 h-8 text-white" />
-              </div>
-              <h3 className="systematic-caps text-sm mb-1">{item.isCharity ? 'Donated' : 'Purchased'}</h3>
-              <p className="text-xs text-pop-gray">{item.purchasedDate}</p>
-            </div>
-            
-            {item.makerDetails && (
+        {!item.isSourceOnly && (
+          <div className="mb-12">
+            <h2 className="text-3xl helvetica-bold mb-8 text-center">
+              <span className="text-pop-black">TRANSFORMATION JOURNEY</span>
+            </h2>
+            <div className={`grid grid-cols-1 gap-8 ${item.makerDetails ? 'md:grid-cols-4' : 'md:grid-cols-3'}`}>
               <div className="text-center">
-                <div className="w-16 h-16 mx-auto mb-4 border-2 border-pop-black flex items-center justify-center bg-pop-red">
+                <div className="w-16 h-16 mx-auto mb-4 border-2 border-pop-black flex items-center justify-center bg-pop-green">
                   <CheckCircle className="w-8 h-8 text-pop-black" />
                 </div>
-                <h3 className="systematic-caps text-sm mb-1">Assembled</h3>
-                <p className="text-xs text-pop-gray">{item.makerDetails.assemblyDate}</p>
+                <h3 className="systematic-caps text-sm mb-1">Collected</h3>
+                <p className="text-xs text-pop-gray">{item.collectionDate}</p>
               </div>
-            )}
+              
+              <div className="text-center">
+                <div className="w-16 h-16 mx-auto mb-4 border-2 border-pop-black flex items-center justify-center bg-pop-blue">
+                  <CheckCircle className="w-8 h-8 text-pop-black" />
+                </div>
+                <h3 className="systematic-caps text-sm mb-1">Processed</h3>
+                <p className="text-xs text-pop-gray">{item.processedDate}</p>
+              </div>
+              
+              <div className="text-center">
+                <div className="w-16 h-16 mx-auto mb-4 border-2 border-pop-black flex items-center justify-center bg-pop-black">
+                  <CheckCircle className="w-8 h-8 text-white" />
+                </div>
+                <h3 className="systematic-caps text-sm mb-1">{item.isCharity ? 'Donated' : 'Purchased'}</h3>
+                <p className="text-xs text-pop-gray">{item.purchasedDate}</p>
+              </div>
+              
+              {item.makerDetails && (
+                <div className="text-center">
+                  <div className="w-16 h-16 mx-auto mb-4 border-2 border-pop-black flex items-center justify-center bg-pop-red">
+                    <CheckCircle className="w-8 h-8 text-pop-black" />
+                  </div>
+                  <h3 className="systematic-caps text-sm mb-1">Assembled</h3>
+                  <p className="text-xs text-pop-gray">{item.makerDetails.assemblyDate}</p>
+                </div>
+              )}
+            </div>
           </div>
-        </div>
+        )}
+
+        {/* Source-Only Status */}
+        {item.isSourceOnly && (
+          <div className="mb-12">
+            <h2 className="text-3xl helvetica-bold mb-8 text-center">
+              <span className="text-pop-black">COLLECTION STATUS</span>
+            </h2>
+            <div className="flex justify-center">
+              <div className="text-center">
+                <div className="w-16 h-16 mx-auto mb-4 border-2 border-pop-black flex items-center justify-center bg-pop-green">
+                  <CheckCircle className="w-8 h-8 text-pop-black" />
+                </div>
+                <h3 className="systematic-caps text-sm mb-1">Collected</h3>
+                <p className="text-xs text-pop-gray">{item.collectionDate}</p>
+                <p className="text-xs text-pop-red mt-2 systematic-caps">Ready for Processing</p>
+              </div>
+            </div>
+          </div>
+        )}
 
         {/* Impact Metrics */}
-        <PopArtContainer color="red" shadow>
-          <Card className="border-4 border-pop-black">
-            <CardHeader>
-              <CardTitle className="systematic-caps flex items-center justify-center text-2xl">
-                <Leaf className="w-6 h-6 mr-2" />
-                Environmental Impact
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="grid md:grid-cols-2 gap-8 text-center">
-                <div>
-                  <div className="text-4xl helvetica-bold text-pop-red mb-2">
-                    {item.impactMetrics.carbonSaved}kg
+        {!item.isSourceOnly && (
+          <PopArtContainer color="red" shadow>
+            <Card className="border-4 border-pop-black">
+              <CardHeader>
+                <CardTitle className="systematic-caps flex items-center justify-center text-2xl">
+                  <Leaf className="w-6 h-6 mr-2" />
+                  Environmental Impact
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="grid md:grid-cols-2 gap-8 text-center">
+                  <div>
+                    <div className="text-4xl helvetica-bold text-pop-red mb-2">
+                      {item.impactMetrics.carbonSaved}kg
+                    </div>
+                    <div className="systematic-caps text-sm text-pop-gray">CO₂ Offset Generated</div>
+                    <p className="text-xs text-pop-gray mt-2">
+                      Equivalent to removing a car from the road for 2.3 days
+                    </p>
                   </div>
-                  <div className="systematic-caps text-sm text-pop-gray">CO₂ Offset Generated</div>
-                  <p className="text-xs text-pop-gray mt-2">
-                    Equivalent to removing a car from the road for 2.3 days
-                  </p>
-                </div>
-                <div>
-                  <div className="text-4xl helvetica-bold text-pop-red mb-2">
-                    {item.impactMetrics.wasteReduced}kg
+                  <div>
+                    <div className="text-4xl helvetica-bold text-pop-red mb-2">
+                      {item.impactMetrics.wasteReduced}kg
+                    </div>
+                    <div className="systematic-caps text-sm text-pop-gray">Plastic Waste Diverted</div>
+                    <p className="text-xs text-pop-gray mt-2">
+                      Prevented from entering landfills or ocean systems
+                    </p>
                   </div>
-                  <div className="systematic-caps text-sm text-pop-gray">Plastic Waste Diverted</div>
-                  <p className="text-xs text-pop-gray mt-2">
-                    Prevented from entering landfills or ocean systems
-                  </p>
                 </div>
-              </div>
-            </CardContent>
-          </Card>
-        </PopArtContainer>
+              </CardContent>
+            </Card>
+          </PopArtContainer>
+        )}
+
+        {/* Source-Only Call to Action */}
+        {item.isSourceOnly && (
+          <PopArtContainer color="blue" shadow>
+            <Card className="border-4 border-pop-black">
+              <CardHeader>
+                <CardTitle className="systematic-caps flex items-center justify-center text-2xl">
+                  <Building className="w-6 h-6 mr-2" />
+                  Collection Complete
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="text-center py-8">
+                <div className="text-4xl helvetica-bold text-pop-blue mb-4">
+                  {item.weight}kg
+                </div>
+                <div className="systematic-caps text-sm text-pop-gray mb-6">Plastic Collected</div>
+                <p className="text-lg text-pop-gray mb-2">
+                  This plastic is ready for processing into new products.
+                </p>
+                <p className="text-sm text-pop-gray">
+                  Check back soon to see its transformation journey!
+                </p>
+              </CardContent>
+            </Card>
+          </PopArtContainer>
+        )}
       </div>
     </div>
   );

@@ -87,6 +87,46 @@ const sampleItems = {
     carbonOffset: 4.7,
     productType: 'dinnerware',
     makerDetails: null // Another unregistered example
+  },
+  'MNO345': {
+    id: 'MNO345',
+    qrCode: 'MNO345',
+    originPoint: 'Green Valley Office Park',
+    collectionDate: '2025-01-29',
+    materialType: 'PET',
+    weight: 3.2,
+    processedDate: null,
+    purchasedDate: null,
+    deliveredDate: null,
+    isCharity: null,
+    destination: null,
+    donatingEntity: null,
+    carbonOffset: null,
+    productType: null,
+    event: 'Corporate Cleanup Day',
+    message: 'Fresh collection from our quarterly office cleanup - ready for processing into new products.',
+    makerDetails: null,
+    isSourceOnly: true
+  },
+  'PQR678': {
+    id: 'PQR678',
+    qrCode: 'PQR678',
+    originPoint: 'Riverside Community Center',
+    collectionDate: '2025-01-30',
+    materialType: 'HDPE',
+    weight: 2.8,
+    processedDate: null,
+    purchasedDate: null,
+    deliveredDate: null,
+    isCharity: null,
+    destination: null,
+    donatingEntity: null,
+    carbonOffset: null,
+    productType: null,
+    event: 'Weekend Volunteer Drive',
+    message: 'Collected during our community volunteer cleanup - awaiting transformation into educational materials.',
+    makerDetails: null,
+    isSourceOnly: true
   }
 };
 
@@ -119,8 +159,9 @@ export async function GET(
     event: item.event,
     message: item.message,
     makerDetails: item.makerDetails,
+    isSourceOnly: item.isSourceOnly,
     impactMetrics: {
-      carbonSaved: item.carbonOffset,
+      carbonSaved: item.carbonOffset || 0,
       wasteReduced: item.weight
     }
   });
