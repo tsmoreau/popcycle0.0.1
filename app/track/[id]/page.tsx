@@ -219,7 +219,6 @@ export default function TrackItem() {
 
           {!isSourceOnly && (
             <div className="w-full">
-            <>
               <PopArtContainer color={isCharity ? "red" : "blue"} shadow>
                 <Card className="border-4 border-pop-black">
                   <CardHeader>
@@ -284,8 +283,9 @@ export default function TrackItem() {
               </PopArtContainer>
 
               {/* Maker Details */}
-              <PopArtContainer color="red" shadow>
-                <Card className="border-4 border-pop-black">
+              <div className="w-full">
+                <PopArtContainer color="red" shadow>
+                  <Card className="border-4 border-pop-black">
                   <CardHeader>
                     <CardTitle className="systematic-caps flex items-center">
                       <User className="w-5 h-5 mr-2" />
@@ -351,7 +351,7 @@ export default function TrackItem() {
                   </CardContent>
                 </Card>
               </PopArtContainer>
-            </>
+              </div>
             </div>
           )}
         </div>
