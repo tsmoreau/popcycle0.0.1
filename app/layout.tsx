@@ -1,4 +1,4 @@
-import './globals.css'
+// import './globals.css' // Temporarily disabled
 import { Inter } from 'next/font/google'
 import Navigation from './components/Navigation'
 import Footer from './components/Footer'

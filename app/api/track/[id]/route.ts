@@ -1,43 +1,77 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { MongoClient } from 'mongodb';
 
-const uri = process.env.MONGODB_URI || 'mongodb://localhost:27017/popcycle';
+// Sample data for demonstration - in production this would come from MongoDB
+const sampleItems = {
+  'ABC123': {
+    qrCode: 'ABC123',
+    sourceCompany: 'Cafe Luna',
+    collectionDate: '2025-01-15',
+    materialType: 'HDPE',
+    weight: 2.3,
+    processedDate: '2025-01-20',
+    carbonOffset: 5.8,
+    status: 'delivered',
+    productType: 'rover_chassis'
+  },
+  'DEF456': {
+    qrCode: 'DEF456', 
+    sourceCompany: 'TechCorp',
+    collectionDate: '2025-01-12',
+    materialType: 'PET',
+    weight: 1.7,
+    processedDate: '2025-01-18',
+    carbonOffset: 4.2,
+    status: 'assembled',
+    productType: 'assembly_toy'
+  },
+  'GHI789': {
+    qrCode: 'GHI789',
+    sourceCompany: 'Green Office',
+    collectionDate: '2025-01-10',
+    materialType: 'HDPE',
+    weight: 3.1,
+    processedDate: '2025-01-16',
+    carbonOffset: 7.8,
+    status: 'processed',
+    productType: 'educational_kit'
+  },
+  'JKL012': {
+    qrCode: 'JKL012',
+    sourceCompany: 'Startup Hub',
+    collectionDate: '2025-01-08',
+    materialType: 'PP',
+    weight: 1.9,
+    processedDate: '2025-01-14',
+    carbonOffset: 4.7,
+    status: 'delivered',
+    productType: 'dinnerware'
+  }
+};
 
 export async function GET(
   request: NextRequest,
   { params }: { params: { id: string } }
 ) {
-  try {
-    const client = new MongoClient(uri);
-    await client.connect();
-    
-    const db = client.db('popcycle');
-    const item = await db.collection('items').findOne({ qrCode: params.id });
-    
-    await client.close();
-    
-    if (!item) {
-      return NextResponse.json({ error: 'Item not found' }, { status: 404 });
-    }
-    
-    return NextResponse.json({
-      qrCode: item.qrCode,
-      sourceCompany: item.sourceCompany,
-      collectionDate: item.collectionDate,
-      materialType: item.materialType,
-      weight: item.weight,
-      processedDate: item.processedDate,
-      carbonOffset: item.carbonOffset,
-      status: item.status,
-      productType: item.productType,
-      impactMetrics: {
-        carbonSaved: item.carbonOffset,
-        wasteReduced: item.weight,
-        status: item.status
-      }
-    });
-  } catch (error) {
-    console.error('Error fetching item:', error);
-    return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
+  const item = sampleItems[params.id.toUpperCase() as keyof typeof sampleItems];
+  
+  if (!item) {
+    return NextResponse.json({ error: 'Item not found' }, { status: 404 });
   }
+  
+  return NextResponse.json({
+    qrCode: item.qrCode,
+    sourceCompany: item.sourceCompany,
+    collectionDate: item.collectionDate,
+    materialType: item.materialType,
+    weight: item.weight,
+    processedDate: item.processedDate,
+    carbonOffset: item.carbonOffset,
+    status: item.status,
+    productType: item.productType,
+    impactMetrics: {
+      carbonSaved: item.carbonOffset,
+      wasteReduced: item.weight,
+      status: item.status
+    }
+  });
 }
