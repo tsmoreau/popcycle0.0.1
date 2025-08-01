@@ -138,7 +138,7 @@ export default function TrackItem() {
                   <span>{item.id}</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="systematic-caps text-sm">Company</span>
+                  <span className="systematic-caps text-sm">Origin</span>
                   <span className="helvetica-bold">{item.sourceCompany}</span>
                 </div>
                 <div className="flex justify-between">
