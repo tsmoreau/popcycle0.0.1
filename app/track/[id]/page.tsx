@@ -198,7 +198,7 @@ export default function TrackItem() {
                 )}
                 
                 <div className="flex justify-between items-center">
-                  <span className="systematic-caps text-sm">Delivered On</span>
+                  <span className="systematic-caps text-sm">Delivered</span>
                   <span className="flex items-center">
                     <Calendar className="w-4 h-4 mr-1" />
                     {item.deliveredDate}
@@ -213,7 +213,7 @@ export default function TrackItem() {
                 )}
                 
                 <div className="flex justify-between items-center">
-                  <span className="systematic-caps text-sm">{item.isCharity ? 'Donated To' : 'Destination'}</span>
+                  <span className="systematic-caps text-sm">{item.isCharity ? 'Donated' : 'Destination'}</span>
                   <span className="helvetica-bold">{item.destination}</span>
                 </div>
                 
