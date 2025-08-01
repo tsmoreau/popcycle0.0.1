@@ -340,14 +340,14 @@ export default function TrackItem() {
               <div className="w-16 h-16 mx-auto mb-4 border-2 border-pop-black flex items-center justify-center bg-pop-black">
                 <CheckCircle className="w-8 h-8 text-white" />
               </div>
-              <h3 className="systematic-caps text-sm mb-1">Purchased</h3>
+              <h3 className="systematic-caps text-sm mb-1">{item.isCharity ? 'Donated' : 'Purchased'}</h3>
               <p className="text-xs text-pop-gray">{item.purchasedDate}</p>
             </div>
             
             {item.makerDetails && (
               <div className="text-center">
                 <div className="w-16 h-16 mx-auto mb-4 border-2 border-pop-black flex items-center justify-center bg-pop-red">
-                  <User className="w-8 h-8 text-pop-black" />
+                  <CheckCircle className="w-8 h-8 text-pop-black" />
                 </div>
                 <h3 className="systematic-caps text-sm mb-1">Assembled</h3>
                 <p className="text-xs text-pop-gray">{item.makerDetails.assemblyDate}</p>
