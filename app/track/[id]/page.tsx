@@ -135,7 +135,7 @@ export default function TrackItem() {
               <CardContent className="space-y-4">
                 <div className="flex justify-between">
                   <span className="systematic-caps text-sm">ID</span>
-                  <span className="helvetica-bold">{item.id}</span>
+                  <span>{item.id}</span>
                 </div>
                 <div className="flex justify-between">
                   <span className="systematic-caps text-sm">Company</span>
