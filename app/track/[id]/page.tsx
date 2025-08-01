@@ -194,9 +194,14 @@ export default function TrackItem() {
                     {item.purchasedDate}
                   </span>
                 </div>
-                <div className="flex justify-between">
+                <div className="flex justify-between items-center">
                   <span className="systematic-caps text-sm">Destination</span>
-                  <span>{item.destination}</span>
+                  <div className="flex items-center gap-2">
+                    <span>{item.destination}</span>
+                    {item.isCharity && (
+                      <Badge className="bg-pop-red text-white text-xs">CHARITY</Badge>
+                    )}
+                  </div>
                 </div>
                 {item.isCharity && item.donatingEntity && (
                   <div className="flex justify-between">
