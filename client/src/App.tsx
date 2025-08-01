@@ -27,7 +27,12 @@ function ScrollToTop() {
       setTimeout(() => {
         const element = document.getElementById(hash.substring(1));
         if (element) {
-          element.scrollIntoView({ behavior: 'smooth' });
+          const navHeight = 80; // Height of sticky nav bar
+          const elementPosition = element.offsetTop - navHeight;
+          window.scrollTo({
+            top: elementPosition,
+            behavior: 'smooth'
+          });
         }
       }, 100);
     } else {

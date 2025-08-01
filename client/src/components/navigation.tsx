@@ -33,7 +33,12 @@ export default function Navigation() {
       // Same page, just scroll to anchor
       const element = document.getElementById(hash);
       if (element) {
-        element.scrollIntoView({ behavior: 'smooth' });
+        const navHeight = 80; // Height of sticky nav bar
+        const elementPosition = element.offsetTop - navHeight;
+        window.scrollTo({
+          top: elementPosition,
+          behavior: 'smooth'
+        });
       }
     } else {
       // Different page, navigate then scroll
@@ -48,7 +53,12 @@ export default function Navigation() {
       // Same page, just scroll to anchor
       const element = document.getElementById(hash);
       if (element) {
-        element.scrollIntoView({ behavior: 'smooth' });
+        const navHeight = 80; // Height of sticky nav bar
+        const elementPosition = element.offsetTop - navHeight;
+        window.scrollTo({
+          top: elementPosition,
+          behavior: 'smooth'
+        });
       }
     } else {
       // Different page, navigate then scroll
@@ -181,7 +191,12 @@ export default function Navigation() {
                     if (location === path && hash) {
                       const element = document.getElementById(hash);
                       if (element) {
-                        element.scrollIntoView({ behavior: 'smooth' });
+                        const navHeight = 80;
+                        const elementPosition = element.offsetTop - navHeight;
+                        window.scrollTo({
+                          top: elementPosition,
+                          behavior: 'smooth'
+                        });
                       }
                     } else {
                       window.location.href = item.href;
@@ -206,7 +221,12 @@ export default function Navigation() {
                     if (location === path && hash) {
                       const element = document.getElementById(hash);
                       if (element) {
-                        element.scrollIntoView({ behavior: 'smooth' });
+                        const navHeight = 80;
+                        const elementPosition = element.offsetTop - navHeight;
+                        window.scrollTo({
+                          top: elementPosition,
+                          behavior: 'smooth'
+                        });
                       }
                     } else {
                       window.location.href = item.href;
