@@ -111,9 +111,9 @@ export default function TrackItem() {
         </div>
 
         {/* QR Code Display */}
-        <div className="text-center mb-12">
+        <div className="flex justify-center mb-12">
           <PopArtContainer color={getStatusColor(item.status)} shadow>
-            <div className="inline-block p-8 bg-white border-4 border-pop-black">
+            <div className="p-8 bg-white border-4 border-pop-black">
               <QRCodeElement qrCode={item.qrCode} size="lg" />
             </div>
           </PopArtContainer>
