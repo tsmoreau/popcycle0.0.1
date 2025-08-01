@@ -186,13 +186,7 @@ export default function TrackItem() {
                   <span className="systematic-caps text-sm">Product Type</span>
                   <span className="helvetica-bold">{getProductTypeLabel(item.productType)}</span>
                 </div>
-                <div className="flex justify-between items-center">
-                  <span className="systematic-caps text-sm">Assembled</span>
-                  <span className="flex items-center">
-                    <Calendar className="w-4 h-4 mr-1" />
-                    {item.assembledDate}
-                  </span>
-                </div>
+
                 <div className="flex justify-between items-center">
                   <span className="systematic-caps text-sm">Purchased</span>
                   <span className="flex items-center">
@@ -226,7 +220,7 @@ export default function TrackItem() {
           <h2 className="text-3xl helvetica-bold mb-8 text-center">
             <span className="text-pop-black">TRANSFORMATION JOURNEY</span>
           </h2>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div className="text-center">
               <div className="w-16 h-16 mx-auto mb-4 border-2 border-pop-black flex items-center justify-center bg-pop-green">
                 <CheckCircle className="w-8 h-8 text-pop-black" />
@@ -241,14 +235,6 @@ export default function TrackItem() {
               </div>
               <h3 className="systematic-caps text-sm mb-1">Processed</h3>
               <p className="text-xs text-pop-gray">{item.processedDate}</p>
-            </div>
-            
-            <div className="text-center">
-              <div className="w-16 h-16 mx-auto mb-4 border-2 border-pop-black flex items-center justify-center bg-pop-red">
-                <CheckCircle className="w-8 h-8 text-pop-black" />
-              </div>
-              <h3 className="systematic-caps text-sm mb-1">Assembled</h3>
-              <p className="text-xs text-pop-gray">{item.assembledDate}</p>
             </div>
             
             <div className="text-center">
