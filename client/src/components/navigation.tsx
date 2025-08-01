@@ -9,18 +9,21 @@ export default function Navigation() {
   const [servicesOpen, setServicesOpen] = useState(false);
 
   const aboutItems = [
-    { href: "/about#staff", label: "Staff" },
-    { href: "/about#story", label: "Story" },
+    { href: "/about#staff", label: "Mission" },
+    { href: "/about#staff", label: "Team" },
+   
     { href: "/about#process", label: "Process" },
+     { href: "/about#process", label: "Impact" },
     { href: "/about#contact", label: "Contact" },
   ];
 
   const servicesItems = [
-    { href: "/services#waste-processing", label: "Waste Processing" },
-    { href: "/services#educational-workshops", label: "Educational Workshops" },
-    { href: "/services#custom-products", label: "Custom Products" },
-    { href: "/services#corporate-services", label: "Corporate Services" },
-    { href: "/services#educational-services", label: "Educational Services" },
+    { href: "/services#waste-processing", label: "Community Parnerships" },
+    
+    { href: "/services#corporate-services", label: "Corporate CSR & Event Services" },
+    { href: "/services#educational-workshops", label: "Educational Kits & Workshops" },
+
+    { href: "/services#custom-products", label: "Custom Products" }
   ];
 
   const handleServicesClick = (href: string) => {
