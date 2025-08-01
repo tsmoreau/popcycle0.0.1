@@ -52,7 +52,7 @@ export default function Track() {
           <h2 className="text-3xl helvetica-bold mb-8 text-center">
             <span className="text-pop-black">TRY THESE SAMPLE CODES</span>
           </h2>
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6">
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 max-w-4xl mx-auto">
             {sampleCodes.map((code, index) => {
               const colors = ['green', 'blue', 'red', 'black', 'green', 'blue'] as const;
               return (
