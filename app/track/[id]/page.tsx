@@ -124,7 +124,7 @@ export default function TrackItem() {
           <h2 className="text-3xl helvetica-bold mb-8 text-center">
             <span className="text-pop-black">TRANSFORMATION JOURNEY</span>
           </h2>
-          <div className="grid md:grid-cols-4 gap-6">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
             <div className="text-center">
               <div className={`w-16 h-16 mx-auto mb-4 border-2 border-pop-black flex items-center justify-center ${
                 item.status === 'collected' || item.status === 'processed' || item.status === 'assembled' || item.status === 'delivered' 
