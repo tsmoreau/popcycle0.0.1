@@ -165,10 +165,10 @@ export default function Navigation() {
           {/* Mobile menu button */}
           <div className="md:hidden">
             <Button 
-              variant="outline" 
+              variant="ghost" 
               size="sm"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="border-2 border-pop-black"
+              className="hover:bg-pop-green hover:text-white"
             >
               {mobileMenuOpen ? <X className="w-4 h-4" /> : <Menu className="w-4 h-4" />}
             </Button>
@@ -203,7 +203,7 @@ export default function Navigation() {
                     }
                     setMobileMenuOpen(false);
                   }}
-                  className="block w-full text-left px-4 py-2 systematic-caps text-sm hover:bg-pop-green hover:text-white transition-colors border border-pop-black"
+                  className="block w-full text-left px-4 py-2 systematic-caps text-sm hover:bg-pop-green hover:text-white transition-colors"
                 >
                   {item.label}
                 </button>
@@ -233,7 +233,7 @@ export default function Navigation() {
                     }
                     setMobileMenuOpen(false);
                   }}
-                  className="block w-full text-left px-4 py-2 systematic-caps text-sm hover:bg-pop-blue hover:text-white transition-colors border border-pop-black"
+                  className="block w-full text-left px-4 py-2 systematic-caps text-sm hover:bg-pop-blue hover:text-white transition-colors"
                 >
                   {item.label}
                 </button>

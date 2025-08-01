@@ -23,11 +23,11 @@
   --destructive-foreground: hsl(60, 9.1%, 97.8%);
   --ring: hsl(0, 0%, 0%);
   --radius: 0rem;
-  
+
   /* PopCycle Brand Colors */
   --pop-green: hsl(142, 100%, 35%);
   --pop-blue: hsl(214, 100%, 50%);
-  --pop-red: hsl(347, 100%, 60%);
+  --pop-red: hsl(0, 100%, 60%);
   --pop-black: hsl(0, 0%, 0%);
   --pop-gray: hsl(0, 0%, 20%);
 }
@@ -64,13 +64,19 @@
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
   }
 
-  h1, h2, h3, h4, h5, h6 {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
     font-weight: 700;
     letter-spacing: -0.02em;
   }
 }
 
 @layer components {
+
   /* Pop Art Elements */
   .dots-pattern {
     background-image: radial-gradient(circle, var(--pop-green) 1px, transparent 1px);
