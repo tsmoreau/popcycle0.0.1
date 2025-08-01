@@ -18,10 +18,10 @@ export default function About() {
           </p>
         </div>
 
-        {/* Staff Section */}
-        <section id="staff" className="mb-20">
+        {/* Team Section */}
+        <section id="team" className="mb-20">
           <h2 className="text-4xl helvetica-bold mb-12 text-center">
-            <span className="text-pop-blue">STAFF</span>
+            <span className="text-pop-blue">TEAM</span>
           </h2>
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             <PopArtContainer color="green" shadow>
@@ -118,6 +118,73 @@ export default function About() {
               <h3 className="systematic-caps text-lg mb-2">Distribution</h3>
               <p className="text-pop-gray text-sm">Deliver QR-coded products to educational institutions and makerspaces</p>
             </div>
+          </div>
+        </section>
+
+        {/* Partners Section */}
+        <section id="partners" className="mb-20">
+          <h2 className="text-4xl helvetica-bold mb-12 text-center">
+            <span className="text-pop-red">PARTNERS</span>
+          </h2>
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <PopArtContainer color="green" shadow>
+              <Card className="border-4 border-pop-black text-center">
+                <CardContent className="p-6">
+                  <div className="w-12 h-12 bg-pop-green border-2 border-pop-black mx-auto mb-4 flex items-center justify-center">
+                    <span className="text-pop-black helvetica-bold text-lg">C</span>
+                  </div>
+                  <h3 className="systematic-caps text-lg mb-2">Corporate Partners</h3>
+                  <p className="text-pop-gray text-sm">Companies providing plastic waste streams for circular transformation</p>
+                </CardContent>
+              </Card>
+            </PopArtContainer>
+            
+            <PopArtContainer color="blue" shadow>
+              <Card className="border-4 border-pop-black text-center">
+                <CardContent className="p-6">
+                  <div className="w-12 h-12 bg-pop-blue border-2 border-pop-black mx-auto mb-4 flex items-center justify-center">
+                    <span className="text-pop-black helvetica-bold text-lg">E</span>
+                  </div>
+                  <h3 className="systematic-caps text-lg mb-2">Educational Institutions</h3>
+                  <p className="text-pop-gray text-sm">Schools and universities implementing maker education programs</p>
+                </CardContent>
+              </Card>
+            </PopArtContainer>
+            
+            <PopArtContainer color="red" shadow>
+              <Card className="border-4 border-pop-black text-center">
+                <CardContent className="p-6">
+                  <div className="w-12 h-12 bg-pop-red border-2 border-pop-black mx-auto mb-4 flex items-center justify-center">
+                    <span className="text-pop-black helvetica-bold text-lg">M</span>
+                  </div>
+                  <h3 className="systematic-caps text-lg mb-2">Makerspaces</h3>
+                  <p className="text-pop-gray text-sm">Community workshops integrating circular materials into learning</p>
+                </CardContent>
+              </Card>
+            </PopArtContainer>
+            
+            <PopArtContainer color="green" shadow>
+              <Card className="border-4 border-pop-black text-center">
+                <CardContent className="p-6">
+                  <div className="w-12 h-12 bg-pop-black border-2 border-pop-black mx-auto mb-4 flex items-center justify-center">
+                    <span className="text-white helvetica-bold text-lg">R</span>
+                  </div>
+                  <h3 className="systematic-caps text-lg mb-2">Research Labs</h3>
+                  <p className="text-pop-gray text-sm">Academic and industry labs advancing circular manufacturing methods</p>
+                </CardContent>
+              </Card>
+            </PopArtContainer>
+          </div>
+          
+          <div className="text-center mt-12">
+            <Card className="border-4 border-pop-black pop-shadow-red max-w-3xl mx-auto">
+              <CardContent className="p-8">
+                <p className="text-lg mb-4">
+                  Our partner network creates the circular ecosystem where plastic waste becomes educational opportunity. Each QR code tells the complete story from corporate waste stream to classroom learning experience.
+                </p>
+                <Badge className="bg-pop-red text-white systematic-caps">50+ Active Partners</Badge>
+              </CardContent>
+            </Card>
           </div>
         </section>
 

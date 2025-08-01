@@ -17,6 +17,7 @@ export default function Navigation() {
   const aboutItems = [
     { href: "/about#team", label: "Team" },
     { href: "/about#process", label: "Process" },
+    { href: "/about#partners", label: "Partners" },
     { href: "/about#contact", label: "Contact" }
   ];
 
