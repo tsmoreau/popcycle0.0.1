@@ -212,10 +212,12 @@ export default function TrackItem() {
                   </div>
                 )}
                 
-                <div className="flex justify-between items-center">
-                  <span className="systematic-caps text-sm">{item.isCharity ? 'Donated' : 'Destination'}</span>
-                  <span className="helvetica-bold">{item.destination}</span>
-                </div>
+                {item.isCharity && (
+                  <div className="flex justify-between items-center">
+                    <span className="systematic-caps text-sm">Donated</span>
+                    <span className="helvetica-bold">{item.destination}</span>
+                  </div>
+                )}
                 
                 {item.event && (
                   <div className="flex justify-between">
