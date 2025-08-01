@@ -113,7 +113,9 @@ export default function TrackItem() {
           </h1>
           <p className="text-lg text-pop-gray">
             {item.isSourceOnly 
-              ? `Fresh plastic collection from ${item.originPoint}` 
+              ? (item.processedDate 
+                  ? `Processed plastic from ${item.originPoint}` 
+                  : `Fresh plastic collection from ${item.originPoint}`)
               : `Complete transformation journey from ${item.originPoint}`
             }
           </p>
@@ -187,10 +189,12 @@ export default function TrackItem() {
                   </div>
                 )}
                 {item.isSourceOnly && (
-                  <div className="border-t border-pop-red pt-4 text-center">
-                    <div className="flex items-center justify-center text-pop-red text-sm">
+                  <div className={`border-t pt-4 text-center ${item.processedDate ? 'border-pop-blue' : 'border-pop-red'}`}>
+                    <div className={`flex items-center justify-center text-sm ${item.processedDate ? 'text-pop-blue' : 'text-pop-red'}`}>
                       <Calendar className="w-4 h-4 mr-1" />
-                      <span className="systematic-caps">Awaiting Processing</span>
+                      <span className="systematic-caps">
+                        {item.processedDate ? 'Ready for Manufacturing' : 'Awaiting Processing'}
+                      </span>
                     </div>
                   </div>
                 )}
@@ -383,18 +387,39 @@ export default function TrackItem() {
         {item.isSourceOnly && (
           <div className="mb-12">
             <h2 className="text-3xl helvetica-bold mb-8 text-center">
-              <span className="text-pop-black">COLLECTION STATUS</span>
+              <span className="text-pop-black">PROCESSING STATUS</span>
             </h2>
-            <div className="flex justify-center">
+            <div className={`grid grid-cols-1 gap-8 ${item.processedDate ? 'md:grid-cols-2' : 'flex justify-center'}`}>
               <div className="text-center">
                 <div className="w-16 h-16 mx-auto mb-4 border-2 border-pop-black flex items-center justify-center bg-pop-green">
                   <CheckCircle className="w-8 h-8 text-pop-black" />
                 </div>
                 <h3 className="systematic-caps text-sm mb-1">Collected</h3>
                 <p className="text-xs text-pop-gray">{item.collectionDate}</p>
-                <p className="text-xs text-pop-red mt-2 systematic-caps">Ready for Processing</p>
               </div>
+              
+              {item.processedDate && (
+                <div className="text-center">
+                  <div className="w-16 h-16 mx-auto mb-4 border-2 border-pop-black flex items-center justify-center bg-pop-blue">
+                    <CheckCircle className="w-8 h-8 text-pop-black" />
+                  </div>
+                  <h3 className="systematic-caps text-sm mb-1">Processed</h3>
+                  <p className="text-xs text-pop-gray">{item.processedDate}</p>
+                </div>
+              )}
             </div>
+            
+            {!item.processedDate && (
+              <div className="text-center mt-4">
+                <p className="text-xs text-pop-red systematic-caps">Ready for Processing</p>
+              </div>
+            )}
+            
+            {item.processedDate && (
+              <div className="text-center mt-4">
+                <p className="text-xs text-pop-blue systematic-caps">Ready for Manufacturing</p>
+              </div>
+            )}
           </div>
         )}
 

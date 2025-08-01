@@ -95,7 +95,7 @@ const sampleItems = {
     collectionDate: '2025-01-29',
     materialType: 'PET',
     weight: 3.2,
-    processedDate: null,
+    processedDate: '2025-02-02',
     purchasedDate: null,
     deliveredDate: null,
     isCharity: null,
@@ -104,7 +104,7 @@ const sampleItems = {
     carbonOffset: null,
     productType: null,
     event: 'Corporate Cleanup Day',
-    message: 'Fresh collection from our quarterly office cleanup - ready for processing into new products.',
+    message: 'Processed into clean plastic pellets - ready for manufacturing into educational products.',
     makerDetails: null,
     isSourceOnly: true
   },
