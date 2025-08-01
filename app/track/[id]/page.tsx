@@ -93,6 +93,19 @@ export default function TrackItem() {
     );
   }
 
+  // Derived logic from streamlined schema
+  const isSourceOnly = !item.productType;
+  const isProcessed = !!item.processedDate;
+  const isCharity = !!item.donatingEntity;
+  const isComplete = !!item.deliveredDate;
+  const hasMaker = !!item.makerDetails;
+
+  // Impact metrics calculation
+  const impactMetrics = item.carbonOffset ? {
+    carbonSaved: item.carbonOffset,
+    wasteReduced: item.weight
+  } : null;
+
   const getProductTypeLabel = (type: string) => {
     switch (type) {
       case 'rover_chassis': return 'Rover Chassis';
@@ -109,11 +122,11 @@ export default function TrackItem() {
         {/* Header */}
         <div className="text-center mb-12">
           <h1 className="text-4xl lg:text-6xl helvetica-bold mb-6 tracking-tight">
-            <span className="text-pop-green">QR</span> {item.qrCode}
+            <span className="text-pop-green">QR</span> {item.id}
           </h1>
           <p className="text-lg text-pop-gray">
-            {item.isSourceOnly 
-              ? (item.processedDate 
+            {isSourceOnly 
+              ? (isProcessed 
                   ? `Processed plastic from ${item.originPoint}` 
                   : `Fresh plastic collection from ${item.originPoint}`)
               : `Complete transformation journey from ${item.originPoint}`
@@ -125,13 +138,13 @@ export default function TrackItem() {
         <div className="flex justify-center mb-12">
           <PopArtContainer color="green" shadow>
             <div className="p-8 bg-white border-4 border-pop-black">
-              <QRCodeElement qrCode={item.qrCode} size="lg" />
+              <QRCodeElement qrCode={item.id} size="lg" />
             </div>
           </PopArtContainer>
         </div>
 
         {/* Item Details */}
-        <div className={`gap-8 mb-12 items-start ${item.isSourceOnly ? 'flex justify-center' : 'grid lg:grid-cols-3 md:grid-cols-2'}`}>
+        <div className={`gap-8 mb-12 items-start ${isSourceOnly ? 'flex justify-center' : 'grid lg:grid-cols-3 md:grid-cols-2'}`}>
           <PopArtContainer color="green" shadow>
             <Card className="border-4 border-pop-black">
               <CardHeader>
@@ -188,12 +201,12 @@ export default function TrackItem() {
                     <p className="text-sm italic">{item.message}</p>
                   </div>
                 )}
-                {item.isSourceOnly && (
-                  <div className={`border-t pt-4 text-center ${item.processedDate ? 'border-pop-blue' : 'border-pop-red'}`}>
-                    <div className={`flex items-center justify-center text-sm ${item.processedDate ? 'text-pop-blue' : 'text-pop-red'}`}>
+                {isSourceOnly && (
+                  <div className={`border-t pt-4 text-center ${isProcessed ? 'border-pop-blue' : 'border-pop-red'}`}>
+                    <div className={`flex items-center justify-center text-sm ${isProcessed ? 'text-pop-blue' : 'text-pop-red'}`}>
                       <Calendar className="w-4 h-4 mr-1" />
                       <span className="systematic-caps">
-                        {item.processedDate ? 'Ready for Manufacturing' : 'Awaiting Processing'}
+                        {isProcessed ? 'Ready for Manufacturing' : 'Awaiting Processing'}
                       </span>
                     </div>
                   </div>
@@ -202,9 +215,9 @@ export default function TrackItem() {
             </Card>
           </PopArtContainer>
 
-          {!item.isSourceOnly && (
+          {!isSourceOnly && (
             <>
-              <PopArtContainer color={item.isCharity ? "red" : "blue"} shadow>
+              <PopArtContainer color={isCharity ? "red" : "blue"} shadow>
                 <Card className="border-4 border-pop-black">
                   <CardHeader>
                     <CardTitle className="systematic-caps flex items-center">
@@ -218,24 +231,24 @@ export default function TrackItem() {
                       <span>{getProductTypeLabel(item.productType)}</span>
                     </div>
 
-                    {!item.isCharity && (
+                    {!isCharity && (
                       <div className="flex justify-between items-center">
                         <span className="systematic-caps text-sm">Purchased</span>
                         <span className="flex items-center">
                           <Calendar className="w-4 h-4 mr-1" />
-                          {item.purchasedDate}
+                          {item.transactionDate}
                         </span>
                       </div>
                     )}
 
-                    {item.isCharity && item.donatingEntity && (
+                    {isCharity && item.donatingEntity && (
                       <div className="flex justify-between">
                         <span className="systematic-caps text-sm">Donor</span>
                         <span>{item.donatingEntity}</span>
                       </div>
                     )}
                     
-                    {item.isCharity && (
+                    {isCharity && (
                       <div className="flex justify-between items-center">
                         <span className="systematic-caps text-sm">Donated</span>
                         <span>{item.destination}</span>
@@ -257,7 +270,7 @@ export default function TrackItem() {
                       </div>
                     )}
                     
-                    {item.isCharity && item.message && (
+                    {isCharity && item.message && (
                       <div className="border-t border-pop-gray pt-4">
                         <span className="systematic-caps text-sm text-pop-gray block mb-2">Message</span>
                         <p className="text-sm italic">{item.message}</p>
@@ -319,7 +332,7 @@ export default function TrackItem() {
                         </div>
                         <h3 className="text-lg helvetica-bold mb-2">Complete Your Maker Journey</h3>
                         <p className="text-sm text-pop-gray mb-6 leading-relaxed">
-                          {item.isCharity 
+                          {isCharity 
                             ? `Did you assemble this item${item.destination ? ` at ${item.destination}` : ''}? Share your story and connect this donation to its educational impact.`
                             : 'Did you assemble this item? Share your story and become part of the circular economy narrative.'
                           }
@@ -340,12 +353,12 @@ export default function TrackItem() {
         </div>
 
         {/* Status Timeline */}
-        {!item.isSourceOnly && (
+        {!isSourceOnly && (
           <div className="mb-12">
             <h2 className="text-3xl helvetica-bold mb-8 text-center">
               <span className="text-pop-black">TRANSFORMATION JOURNEY</span>
             </h2>
-            <div className={`grid grid-cols-1 gap-8 ${item.makerDetails ? 'md:grid-cols-4' : 'md:grid-cols-3'}`}>
+            <div className={`grid grid-cols-1 gap-8 ${hasMaker ? 'md:grid-cols-4' : 'md:grid-cols-3'}`}>
               <div className="text-center">
                 <div className="w-16 h-16 mx-auto mb-4 border-2 border-pop-black flex items-center justify-center bg-pop-green">
                   <CheckCircle className="w-8 h-8 text-pop-black" />
@@ -366,11 +379,11 @@ export default function TrackItem() {
                 <div className="w-16 h-16 mx-auto mb-4 border-2 border-pop-black flex items-center justify-center bg-pop-black">
                   <CheckCircle className="w-8 h-8 text-white" />
                 </div>
-                <h3 className="systematic-caps text-sm mb-1">{item.isCharity ? 'Donated' : 'Purchased'}</h3>
-                <p className="text-xs text-pop-gray">{item.purchasedDate}</p>
+                <h3 className="systematic-caps text-sm mb-1">{isCharity ? 'Donated' : 'Purchased'}</h3>
+                <p className="text-xs text-pop-gray">{item.transactionDate}</p>
               </div>
               
-              {item.makerDetails && (
+              {hasMaker && (
                 <div className="text-center">
                   <div className="w-16 h-16 mx-auto mb-4 border-2 border-pop-black flex items-center justify-center bg-pop-red">
                     <CheckCircle className="w-8 h-8 text-pop-black" />
@@ -384,12 +397,12 @@ export default function TrackItem() {
         )}
 
         {/* Source-Only Status */}
-        {item.isSourceOnly && (
+        {isSourceOnly && (
           <div className="mb-12">
             <h2 className="text-3xl helvetica-bold mb-8 text-center">
               <span className="text-pop-black">PROCESSING STATUS</span>
             </h2>
-            <div className={`grid grid-cols-1 gap-8 ${item.processedDate ? 'md:grid-cols-2' : 'flex justify-center'}`}>
+            <div className={`grid grid-cols-1 gap-8 ${isProcessed ? 'md:grid-cols-2' : 'flex justify-center'}`}>
               <div className="text-center">
                 <div className="w-16 h-16 mx-auto mb-4 border-2 border-pop-black flex items-center justify-center bg-pop-green">
                   <CheckCircle className="w-8 h-8 text-pop-black" />
@@ -398,7 +411,7 @@ export default function TrackItem() {
                 <p className="text-xs text-pop-gray">{item.collectionDate}</p>
               </div>
               
-              {item.processedDate && (
+              {isProcessed && (
                 <div className="text-center">
                   <div className="w-16 h-16 mx-auto mb-4 border-2 border-pop-black flex items-center justify-center bg-pop-blue">
                     <CheckCircle className="w-8 h-8 text-pop-black" />
@@ -409,13 +422,13 @@ export default function TrackItem() {
               )}
             </div>
             
-            {!item.processedDate && (
+            {!isProcessed && (
               <div className="text-center mt-4">
                 <p className="text-xs text-pop-red systematic-caps">Ready for Processing</p>
               </div>
             )}
             
-            {item.processedDate && (
+            {isProcessed && (
               <div className="text-center mt-4">
                 <p className="text-xs text-pop-blue systematic-caps">Ready for Manufacturing</p>
               </div>
@@ -424,7 +437,7 @@ export default function TrackItem() {
         )}
 
         {/* Impact Metrics */}
-        {!item.isSourceOnly && (
+        {!isSourceOnly && impactMetrics && (
           <PopArtContainer color="red" shadow>
             <Card className="border-4 border-pop-black">
               <CardHeader>
@@ -437,7 +450,7 @@ export default function TrackItem() {
                 <div className="grid md:grid-cols-2 gap-8 text-center">
                   <div>
                     <div className="text-4xl helvetica-bold text-pop-red mb-2">
-                      {item.impactMetrics.carbonSaved}kg
+                      {impactMetrics.carbonSaved}kg
                     </div>
                     <div className="systematic-caps text-sm text-pop-gray">CO₂ Offset Generated</div>
                     <p className="text-xs text-pop-gray mt-2">
@@ -446,7 +459,7 @@ export default function TrackItem() {
                   </div>
                   <div>
                     <div className="text-4xl helvetica-bold text-pop-red mb-2">
-                      {item.impactMetrics.wasteReduced}kg
+                      {impactMetrics.wasteReduced}kg
                     </div>
                     <div className="systematic-caps text-sm text-pop-gray">Plastic Waste Diverted</div>
                     <p className="text-xs text-pop-gray mt-2">
@@ -460,24 +473,24 @@ export default function TrackItem() {
         )}
 
         {/* Source-Only Call to Action */}
-        {item.isSourceOnly && (
-          <PopArtContainer color={item.processedDate ? "blue" : "red"} shadow>
+        {isSourceOnly && (
+          <PopArtContainer color={isProcessed ? "blue" : "red"} shadow>
             <Card className="border-4 border-pop-black">
               <CardHeader>
                 <CardTitle className="systematic-caps flex items-center justify-center text-2xl">
                   <Building className="w-6 h-6 mr-2" />
-                  {item.processedDate ? 'Processing Complete' : 'Collection Complete'}
+                  {isProcessed ? 'Processing Complete' : 'Collection Complete'}
                 </CardTitle>
               </CardHeader>
               <CardContent className="text-center py-8">
-                <div className={`text-4xl helvetica-bold mb-4 ${item.processedDate ? 'text-pop-blue' : 'text-pop-red'}`}>
+                <div className={`text-4xl helvetica-bold mb-4 ${isProcessed ? 'text-pop-blue' : 'text-pop-red'}`}>
                   {item.weight}kg
                 </div>
                 <div className="systematic-caps text-sm text-pop-gray mb-6">
-                  {item.processedDate ? 'Plastic Processed' : 'Plastic Collected'}
+                  {isProcessed ? 'Plastic Processed' : 'Plastic Collected'}
                 </div>
                 <p className="text-lg text-pop-gray mb-2">
-                  {item.processedDate 
+                  {isProcessed 
                     ? 'This plastic has been processed and is ready for manufacturing into new products.'
                     : 'This plastic is ready for processing into new products.'
                   }
