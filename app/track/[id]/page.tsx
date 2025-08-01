@@ -130,7 +130,7 @@ export default function TrackItem() {
                 </div>
                 <div className="flex justify-between">
                   <span className="systematic-caps text-sm">Origin</span>
-                  <span className="helvetica-bold">{item.originPoint}</span>
+                  <span>{item.originPoint}</span>
                 </div>
                 <div className="flex justify-between">
                   <span className="systematic-caps text-sm">Material</span>
