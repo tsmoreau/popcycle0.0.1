@@ -160,7 +160,7 @@ export default function TrackItem() {
                 {item.event && (
                   <div className="flex justify-between">
                     <span className="systematic-caps text-sm">Event</span>
-                    <span className="helvetica-bold">{item.event}</span>
+                    <span>{item.event}</span>
                   </div>
                 )}
                 {item.message && (
@@ -184,7 +184,7 @@ export default function TrackItem() {
               <CardContent className="space-y-4">
                 <div className="flex justify-between">
                   <span className="systematic-caps text-sm">Product Type</span>
-                  <span className="helvetica-bold">{getProductTypeLabel(item.productType)}</span>
+                  <span>{getProductTypeLabel(item.productType)}</span>
                 </div>
 
                 {!item.isCharity && (
@@ -220,7 +220,7 @@ export default function TrackItem() {
                 {item.event && (
                   <div className="flex justify-between">
                     <span className="systematic-caps text-sm">Event</span>
-                    <span className="helvetica-bold">{item.event}</span>
+                    <span>{item.event}</span>
                   </div>
                 )}
                 
