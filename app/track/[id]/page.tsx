@@ -114,7 +114,7 @@ export default function TrackItem() {
         </div>
 
         {/* Item Details */}
-        <div className="grid md:grid-cols-2 gap-8 mb-12">
+        <div className="grid md:grid-cols-2 gap-8 mb-12 items-start">
           <PopArtContainer color="green" shadow>
             <Card className="border-4 border-pop-black">
               <CardHeader>
