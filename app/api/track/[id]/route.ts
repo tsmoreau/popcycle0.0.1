@@ -40,6 +40,7 @@ const sampleItems = {
     donatingEntity: null,
     destination: null,
     carbonOffset: 4.2,
+    event: 'Earth Day Corporate Challenge',
     makerDetails: null
   },
   'GHI789': {
@@ -79,6 +80,7 @@ const sampleItems = {
     donatingEntity: null,
     destination: null,
     carbonOffset: 4.7,
+    event: 'Green Living Expo',
     makerDetails: null
   },
   'MNO345': {
