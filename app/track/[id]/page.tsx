@@ -159,6 +159,13 @@ export default function TrackItem() {
                     {item.collectionDate}
                   </span>
                 </div>
+                <div className="flex justify-between items-center">
+                  <span className="systematic-caps text-sm">Processed</span>
+                  <span className="flex items-center">
+                    <Calendar className="w-4 h-4 mr-1" />
+                    {item.processedDate}
+                  </span>
+                </div>
                 {item.event && (
                   <div className="flex justify-between">
                     <span className="systematic-caps text-sm">Event</span>
