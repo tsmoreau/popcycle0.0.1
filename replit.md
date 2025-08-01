@@ -2,7 +2,7 @@
 
 ## Overview
 
-PopCycle is a comprehensive circular economy platform that transforms corporate plastic waste into trackable, educational products. The system creates a self-reinforcing ecosystem connecting waste collection, manufacturing, education, and community engagement through QR code-based provenance tracking. Built as a full-stack TypeScript application, it demonstrates circular economy principles by turning abstract sustainability concepts into tangible, hands-on experiences through maker education and robotics.
+PopCycle is a comprehensive circular economy platform that transforms corporate plastic waste into trackable, educational products. The system creates a self-reinforcing ecosystem connecting waste collection, manufacturing, education, and community engagement through QR code-based provenance tracking. Built as a Next.js full-stack application with MongoDB, it demonstrates circular economy principles by turning abstract sustainability concepts into tangible, hands-on experiences through maker education and robotics.
 
 ## User Preferences
 
@@ -11,19 +11,17 @@ Preferred communication style: Simple, everyday language.
 ## System Architecture
 
 ### Frontend Architecture
-- **Framework**: React with TypeScript using Vite for build tooling
-- **Routing**: Wouter for lightweight client-side routing
+- **Framework**: Next.js 15 with App Router and TypeScript
 - **UI Framework**: Radix UI components with shadcn/ui design system
-- **Styling**: Tailwind CSS with custom PopCycle brand colors and pop-art aesthetic
-- **State Management**: TanStack React Query for server state management
-- **Form Handling**: React Hook Form with Zod validation
+- **Styling**: Tailwind CSS with custom PopCycle brand colors and pop-art aesthetic inspired by Experimental Jetset and constructivism with green color palette
+- **Design Philosophy**: Timeless systematic approach with bold geometric elements and restrained minimalism that balances institutional weight with pop art energy
 
 ### Backend Architecture
-- **Runtime**: Node.js with Express.js framework
-- **Language**: TypeScript with ES modules
-- **API Design**: RESTful API with structured error handling and request logging
-- **Data Layer**: In-memory storage implementation (IStorage interface) ready for database integration
-- **Schema Validation**: Zod schemas shared between client and server for type safety
+- **Framework**: Next.js API Routes for serverless functions
+- **Database**: MongoDB for flexible document storage
+- **API Design**: RESTful API routes with server-side rendering capabilities
+- **Data Layer**: MongoDB collections with QR code-based tracking
+- **Architecture**: Serverless functions that combine data fetching and page rendering for optimal scaling
 
 ### Data Models
 - **PlasticItem**: Core tracking entity with QR codes, source company, material type, processing status, and transformation journey
