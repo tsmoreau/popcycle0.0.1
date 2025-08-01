@@ -18,7 +18,16 @@ const sampleItems = {
     carbonOffset: 5.8,
     productType: 'rover_chassis',
     event: 'Annual Sustainability Summit',
-    message: 'From our cafeteria to your classroom - building the future together!'
+    message: 'From our cafeteria to your classroom - building the future together!',
+    makerDetails: {
+      userId: 'user_001',
+      name: 'Sarah Chen',
+      location: 'Portland, OR',
+      assemblyDate: '2025-02-01',
+      story: 'Built this rover chassis with my daughter Emma for her robotics club! She\'s fascinated by how waste becomes functional tech. We spent three hours assembling it together - she did all the precision work while I held pieces steady. Now it\'s ready for their Mars exploration project.',
+      registeredAt: '2025-02-01T19:30:00Z',
+      verifiedEmail: 'sarah.chen@email.com'
+    }
   },
   'DEF456': {
     id: 'DEF456',
@@ -34,7 +43,8 @@ const sampleItems = {
     destination: 'Customer',
     carbonOffset: 4.2,
     productType: 'assembly_toy',
-    event: 'Earth Day Corporate Challenge'
+    event: 'Earth Day Corporate Challenge',
+    makerDetails: null // Unregistered - shows CTA
   },
   'GHI789': {
     id: 'GHI789',
@@ -51,7 +61,16 @@ const sampleItems = {
     donatingEntity: 'Local Community Fund',
     carbonOffset: 7.8,
     productType: 'educational_kit',
-    message: 'From park cleanup to learning tool - community action creates change.'
+    message: 'From park cleanup to learning tool - community action creates change.',
+    makerDetails: {
+      userId: 'user_002',
+      name: 'Marcus Thompson',
+      location: 'Denver, CO',
+      assemblyDate: '2025-01-26',
+      story: 'Assembled this educational kit for my nephew\'s birthday. Amazing to see how plastic bottles from our local park cleanup became this hands-on learning tool. The instructions were clear and it took about 90 minutes. He loves building things and understanding how recycling actually works.',
+      registeredAt: '2025-01-26T16:45:00Z',
+      verifiedEmail: 'marcus.t@email.com'
+    }
   },
   'JKL012': {
     id: 'JKL012',
@@ -66,7 +85,8 @@ const sampleItems = {
     isCharity: false,
     destination: 'Customer',
     carbonOffset: 4.7,
-    productType: 'dinnerware'
+    productType: 'dinnerware',
+    makerDetails: null // Another unregistered example
   }
 };
 
@@ -98,6 +118,7 @@ export async function GET(
     productType: item.productType,
     event: item.event,
     message: item.message,
+    makerDetails: item.makerDetails,
     impactMetrics: {
       carbonSaved: item.carbonOffset,
       wasteReduced: item.weight

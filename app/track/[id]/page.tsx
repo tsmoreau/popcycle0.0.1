@@ -5,7 +5,17 @@ import { useParams } from 'next/navigation';
 import { Card, CardContent, CardHeader, CardTitle } from "../../components/ui/card";
 import { Badge } from "../../components/ui/badge";
 import { PopArtContainer, QRCodeElement } from "../../components/PopArtElements";
-import { Building, Calendar, Weight, Leaf, Package, CheckCircle } from "lucide-react";
+import { Building, Calendar, Weight, Leaf, Package, CheckCircle, User, MapPin, Heart, Plus } from "lucide-react";
+
+interface MakerDetails {
+  userId: string;
+  name: string;
+  location: string;
+  assemblyDate: string;
+  story: string;
+  registeredAt: string;
+  verifiedEmail: string;
+}
 
 interface PlasticItem {
   id: string;
@@ -20,6 +30,7 @@ interface PlasticItem {
   productType: string;
   event?: string;
   message?: string;
+  makerDetails?: MakerDetails | null;
   impactMetrics: {
     carbonSaved: number;
     wasteReduced: number;
@@ -114,7 +125,7 @@ export default function TrackItem() {
         </div>
 
         {/* Item Details */}
-        <div className="grid md:grid-cols-2 gap-8 mb-12 items-start">
+        <div className="grid lg:grid-cols-3 md:grid-cols-2 gap-8 mb-12 items-start">
           <PopArtContainer color="green" shadow>
             <Card className="border-4 border-pop-black">
               <CardHeader>
@@ -230,6 +241,72 @@ export default function TrackItem() {
                   <div className="border-t border-pop-gray pt-4">
                     <span className="systematic-caps text-sm text-pop-gray block mb-2">Message</span>
                     <p className="text-sm italic">{item.message}</p>
+                  </div>
+                )}
+              </CardContent>
+            </Card>
+          </PopArtContainer>
+
+          {/* Maker Details */}
+          <PopArtContainer color="red" shadow>
+            <Card className="border-4 border-pop-black">
+              <CardHeader>
+                <CardTitle className="systematic-caps flex items-center">
+                  <User className="w-5 h-5 mr-2" />
+                  Maker Details
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                {item.makerDetails ? (
+                  // Registered State - Show completed maker details
+                  <>
+                    <div className="flex justify-between">
+                      <span className="systematic-caps text-sm">Maker</span>
+                      <span className="font-semibold">{item.makerDetails.name}</span>
+                    </div>
+                    <div className="flex justify-between items-center">
+                      <span className="systematic-caps text-sm">Location</span>
+                      <span className="flex items-center">
+                        <MapPin className="w-4 h-4 mr-1" />
+                        {item.makerDetails.location}
+                      </span>
+                    </div>
+                    <div className="flex justify-between items-center">
+                      <span className="systematic-caps text-sm">Assembled</span>
+                      <span className="flex items-center">
+                        <Calendar className="w-4 h-4 mr-1" />
+                        {item.makerDetails.assemblyDate}
+                      </span>
+                    </div>
+                    {item.makerDetails.story && (
+                      <div className="border-t border-pop-gray pt-4">
+                        <span className="systematic-caps text-sm text-pop-gray block mb-2">Maker Story</span>
+                        <p className="text-sm italic leading-relaxed">{item.makerDetails.story}</p>
+                      </div>
+                    )}
+                    <div className="border-t border-pop-gray pt-4 flex items-center justify-center">
+                      <div className="flex items-center text-pop-red text-sm">
+                        <Heart className="w-4 h-4 mr-1 fill-current" />
+                        <span className="systematic-caps">Maker Journey Complete</span>
+                      </div>
+                    </div>
+                  </>
+                ) : (
+                  // Unregistered State - Show CTA
+                  <div className="text-center py-8">
+                    <div className="w-16 h-16 mx-auto mb-4 border-2 border-dashed border-pop-gray rounded-full flex items-center justify-center">
+                      <Plus className="w-8 h-8 text-pop-gray" />
+                    </div>
+                    <h3 className="text-lg helvetica-bold mb-2">Complete Your Maker Journey</h3>
+                    <p className="text-sm text-pop-gray mb-6 leading-relaxed">
+                      Did you assemble this item? Share your story and become part of the circular economy narrative.
+                    </p>
+                    <button className="w-full bg-pop-red text-white font-semibold py-3 px-6 border-2 border-pop-black hover:bg-pop-black transition-colors systematic-caps">
+                      Register as Maker
+                    </button>
+                    <p className="text-xs text-pop-gray mt-3">
+                      Email verification required
+                    </p>
                   </div>
                 )}
               </CardContent>
