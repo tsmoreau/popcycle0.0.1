@@ -173,7 +173,7 @@ export default function TrackItem() {
             </Card>
           </PopArtContainer>
 
-          <PopArtContainer color="blue" shadow>
+          <PopArtContainer color={item.isCharity ? "red" : "blue"} shadow>
             <Card className="border-4 border-pop-black">
               <CardHeader>
                 <CardTitle className="systematic-caps flex items-center">
@@ -206,12 +206,7 @@ export default function TrackItem() {
                 
                 <div className="flex justify-between items-center">
                   <span className="systematic-caps text-sm">{item.isCharity ? 'Donated To' : 'Destination'}</span>
-                  <div className="flex items-center gap-2">
-                    <span>{item.destination}</span>
-                    {item.isCharity && (
-                      <Badge className="bg-pop-red text-white text-xs">CHARITY</Badge>
-                    )}
-                  </div>
+                  <span>{item.destination}</span>
                 </div>
                 {item.event && (
                   <div className="flex justify-between">
