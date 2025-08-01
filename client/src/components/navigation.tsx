@@ -136,12 +136,12 @@ export default function Navigation() {
 
             {/* Regular Nav Items */}
             <Link
-              href="/shop"
+              href="/store"
               className={`systematic-caps text-sm hover:text-pop-green transition-colors py-2 ${
-                location === '/shop' ? "nav-link-active" : ""
+                location === '/store' ? "nav-link-active" : ""
               }`}
             >
-              Shop
+              Store
             </Link>
             
             <Link
@@ -240,14 +240,14 @@ export default function Navigation() {
               ))}
             </div>
             
-            {/* Shop Mobile Section */}
+            {/* Store Mobile Section */}
             <div className="space-y-2">
               <Link
-                href="/shop"
+                href="/store"
                 onClick={() => setMobileMenuOpen(false)}
                 className="systematic-caps text-sm font-bold text-pop-black hover:text-pop-red transition-colors"
               >
-                Shop
+                Store
               </Link>
             </div>
             

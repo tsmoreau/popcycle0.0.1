@@ -5,7 +5,7 @@ import { PopArtContainer, QRCodeElement } from "@/components/pop-art-elements";
 import { Link } from "wouter";
 import { Package, Zap, Building, Heart } from "lucide-react";
 
-export default function Shop() {
+export default function Store() {
   const products = [
     {
       id: 1,
@@ -77,7 +77,7 @@ export default function Shop() {
         {/* Header */}
         <div className="text-center mb-16">
           <h1 className="text-5xl lg:text-7xl helvetica-bold mb-8 tracking-tight">
-            <span className="text-pop-green">SHOP</span><br />
+            <span className="text-pop-green">STORE</span><br />
             RECYCLED
           </h1>
           <p className="text-xl max-w-3xl mx-auto leading-relaxed text-pop-gray">
