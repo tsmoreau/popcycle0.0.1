@@ -1,165 +1,276 @@
-import { notFound } from 'next/navigation';
-import Link from 'next/link';
-import { Button } from '@/app/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle } from '@/app/components/ui/card';
-import { Badge } from '@/app/components/ui/badge';
-import { PopArtContainer } from '@/app/components/PopArtElements';
-import { ArrowRight, Calendar, Factory, Leaf, Scale, Users } from 'lucide-react';
+'use client'
 
-async function getTrackingData(id: string) {
-  const baseUrl = process.env.VERCEL_URL 
-    ? `https://${process.env.VERCEL_URL}` 
-    : 'http://localhost:5000';
-    
-  try {
-    const res = await fetch(`${baseUrl}/api/track/${id}`, {
-      cache: 'no-store'
-    });
-    
-    if (!res.ok) {
-      return null;
-    }
-    
-    return res.json();
-  } catch (error) {
-    console.error('Error fetching tracking data:', error);
-    return null;
-  }
+import { useEffect, useState } from 'react';
+import { useParams } from 'next/navigation';
+import { Card, CardContent, CardHeader, CardTitle } from "../../components/ui/card";
+import { Badge } from "../../components/ui/badge";
+import { PopArtContainer, QRCodeElement } from "../../components/PopArtElements";
+import { Building, Calendar, Weight, Leaf, Package, CheckCircle } from "lucide-react";
+
+interface PlasticItem {
+  qrCode: string;
+  sourceCompany: string;
+  collectionDate: string;
+  materialType: string;
+  weight: number;
+  processedDate: string;
+  carbonOffset: number;
+  status: string;
+  productType: string;
+  impactMetrics: {
+    carbonSaved: number;
+    wasteReduced: number;
+    status: string;
+  };
 }
 
-export default async function TrackingPage({ params }: { params: { id: string } }) {
-  const data = await getTrackingData(params.id);
-  
-  if (!data) {
-    notFound();
+export default function TrackItem() {
+  const { id } = useParams();
+  const [item, setItem] = useState<PlasticItem | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    const fetchItem = async () => {
+      try {
+        const response = await fetch(`/api/track/${id}`);
+        if (!response.ok) {
+          throw new Error('Item not found');
+        }
+        const data = await response.json();
+        setItem(data);
+      } catch (err) {
+        setError(err instanceof Error ? err.message : 'Failed to fetch item');
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    if (id) {
+      fetchItem();
+    }
+  }, [id]);
+
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-center">
+          <div className="w-16 h-16 bg-pop-green border-2 border-pop-black mx-auto mb-4 animate-pulse"></div>
+          <p className="systematic-caps">Loading item data...</p>
+        </div>
+      </div>
+    );
   }
 
-  const statusColors = {
-    'collected': 'bg-pop-blue',
-    'processed': 'bg-pop-green', 
-    'assembled': 'bg-pop-red',
-    'delivered': 'bg-pop-black'
+  if (error || !item) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <PopArtContainer color="red" shadow>
+          <Card className="border-4 border-pop-black">
+            <CardContent className="p-8 text-center">
+              <h2 className="text-3xl helvetica-bold mb-4">Item Not Found</h2>
+              <p className="text-pop-gray mb-6">QR code "{id}" is not in our system.</p>
+              <p className="text-sm text-pop-gray">Try one of our sample codes: ABC123, DEF456, GHI789, JKL012</p>
+            </CardContent>
+          </Card>
+        </PopArtContainer>
+      </div>
+    );
+  }
+
+  const getStatusColor = (status: string) => {
+    switch (status) {
+      case 'delivered': return 'green';
+      case 'assembled': return 'blue';
+      case 'processed': return 'red';
+      default: return 'black';
+    }
+  };
+
+  const getProductTypeLabel = (type: string) => {
+    switch (type) {
+      case 'rover_chassis': return 'Rover Chassis';
+      case 'assembly_toy': return 'Assembly Toy';
+      case 'educational_kit': return 'Educational Kit';
+      case 'dinnerware': return 'Dinnerware';
+      default: return type;
+    }
   };
 
   return (
-    <div className="min-h-screen py-12 px-4">
-      <div className="max-w-4xl mx-auto">
+    <div className="min-h-screen py-20">
+      <div className="max-w-4xl mx-auto px-4">
         {/* Header */}
         <div className="text-center mb-12">
-          <h1 className="text-5xl lg:text-7xl helvetica-bold mb-6 tracking-tight">
-            <span className="text-pop-green">YOUR PLASTIC'S</span><br />
-            JOURNEY
+          <h1 className="text-4xl lg:text-6xl helvetica-bold mb-6 tracking-tight">
+            <span className="text-pop-green">QR</span> {item.qrCode}
           </h1>
-          
-          <div className="inline-flex items-center space-x-4 mb-8">
-            <div className="w-16 h-16 bg-white border-4 border-pop-black flex items-center justify-center pop-shadow-green">
-              <span className="systematic-caps text-xs font-bold">{data.qrCode}</span>
+          <p className="text-lg text-pop-gray">
+            Complete transformation journey from {item.sourceCompany}
+          </p>
+        </div>
+
+        {/* QR Code Display */}
+        <div className="text-center mb-12">
+          <PopArtContainer color={getStatusColor(item.status)} shadow>
+            <div className="inline-block p-8 bg-white border-4 border-pop-black">
+              <QRCodeElement qrCode={item.qrCode} size="lg" />
             </div>
-            <Badge className={`${statusColors[data.status as keyof typeof statusColors]} text-white systematic-caps text-sm px-4 py-2`}>
-              {data.status.toUpperCase()}
-            </Badge>
+          </PopArtContainer>
+        </div>
+
+        {/* Status Timeline */}
+        <div className="mb-12">
+          <h2 className="text-3xl helvetica-bold mb-8 text-center">
+            <span className="text-pop-black">TRANSFORMATION JOURNEY</span>
+          </h2>
+          <div className="grid md:grid-cols-4 gap-6">
+            <div className="text-center">
+              <div className={`w-16 h-16 mx-auto mb-4 border-2 border-pop-black flex items-center justify-center ${
+                item.status === 'collected' || item.status === 'processed' || item.status === 'assembled' || item.status === 'delivered' 
+                  ? 'bg-pop-green' : 'bg-gray-200'
+              }`}>
+                <CheckCircle className="w-8 h-8 text-pop-black" />
+              </div>
+              <h3 className="systematic-caps text-sm mb-1">Collected</h3>
+              <p className="text-xs text-pop-gray">{item.collectionDate}</p>
+            </div>
+            
+            <div className="text-center">
+              <div className={`w-16 h-16 mx-auto mb-4 border-2 border-pop-black flex items-center justify-center ${
+                item.status === 'processed' || item.status === 'assembled' || item.status === 'delivered' 
+                  ? 'bg-pop-blue' : 'bg-gray-200'
+              }`}>
+                <CheckCircle className="w-8 h-8 text-pop-black" />
+              </div>
+              <h3 className="systematic-caps text-sm mb-1">Processed</h3>
+              <p className="text-xs text-pop-gray">{item.processedDate}</p>
+            </div>
+            
+            <div className="text-center">
+              <div className={`w-16 h-16 mx-auto mb-4 border-2 border-pop-black flex items-center justify-center ${
+                item.status === 'assembled' || item.status === 'delivered' 
+                  ? 'bg-pop-red' : 'bg-gray-200'
+              }`}>
+                <CheckCircle className="w-8 h-8 text-pop-black" />
+              </div>
+              <h3 className="systematic-caps text-sm mb-1">Assembled</h3>
+              <p className="text-xs text-pop-gray">Into {getProductTypeLabel(item.productType)}</p>
+            </div>
+            
+            <div className="text-center">
+              <div className={`w-16 h-16 mx-auto mb-4 border-2 border-pop-black flex items-center justify-center ${
+                item.status === 'delivered' ? 'bg-pop-black' : 'bg-gray-200'
+              }`}>
+                <CheckCircle className={`w-8 h-8 ${item.status === 'delivered' ? 'text-white' : 'text-pop-black'}`} />
+              </div>
+              <h3 className="systematic-caps text-sm mb-1">Delivered</h3>
+              <p className="text-xs text-pop-gray">To education partner</p>
+            </div>
           </div>
         </div>
 
-        {/* Journey Timeline */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-12">
-          <PopArtContainer color="green" shadow className="bg-white border-4 border-pop-green p-8">
-            <div className="space-y-6">
-              <div className="flex items-center space-x-3">
-                <div className="w-12 h-12 bg-pop-green rounded-full flex items-center justify-center">
-                  <Users className="w-6 h-6 text-white" />
+        {/* Item Details */}
+        <div className="grid md:grid-cols-2 gap-8 mb-12">
+          <PopArtContainer color="green" shadow>
+            <Card className="border-4 border-pop-black">
+              <CardHeader>
+                <CardTitle className="systematic-caps flex items-center">
+                  <Building className="w-5 h-5 mr-2" />
+                  Source Details
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <div className="flex justify-between">
+                  <span className="systematic-caps text-sm">Company</span>
+                  <span className="helvetica-bold">{item.sourceCompany}</span>
                 </div>
-                <div>
-                  <h3 className="text-2xl helvetica-bold systematic-caps">Source</h3>
-                  <p className="text-pop-gray">{data.sourceCompany}</p>
+                <div className="flex justify-between">
+                  <span className="systematic-caps text-sm">Material</span>
+                  <Badge className="bg-pop-green text-pop-black">{item.materialType}</Badge>
                 </div>
-              </div>
-              
-              <div className="flex items-center space-x-3">
-                <div className="w-12 h-12 bg-pop-blue rounded-full flex items-center justify-center">
-                  <Calendar className="w-6 h-6 text-white" />
+                <div className="flex justify-between items-center">
+                  <span className="systematic-caps text-sm">Weight</span>
+                  <span className="flex items-center">
+                    <Weight className="w-4 h-4 mr-1" />
+                    {item.weight}kg
+                  </span>
                 </div>
-                <div>
-                  <h3 className="text-lg helvetica-bold systematic-caps">Collected</h3>
-                  <p className="text-pop-gray">{new Date(data.collectionDate).toLocaleDateString()}</p>
+                <div className="flex justify-between items-center">
+                  <span className="systematic-caps text-sm">Collected</span>
+                  <span className="flex items-center">
+                    <Calendar className="w-4 h-4 mr-1" />
+                    {item.collectionDate}
+                  </span>
                 </div>
-              </div>
-            </div>
+              </CardContent>
+            </Card>
           </PopArtContainer>
 
-          <PopArtContainer color="blue" shadow className="bg-white border-4 border-pop-blue p-8">
-            <div className="space-y-6">
-              <div className="flex items-center space-x-3">
-                <div className="w-12 h-12 bg-pop-blue rounded-full flex items-center justify-center">
-                  <Factory className="w-6 h-6 text-white" />
+          <PopArtContainer color="blue" shadow>
+            <Card className="border-4 border-pop-black">
+              <CardHeader>
+                <CardTitle className="systematic-caps flex items-center">
+                  <Package className="w-5 h-5 mr-2" />
+                  Product Details
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <div className="flex justify-between">
+                  <span className="systematic-caps text-sm">Product Type</span>
+                  <span className="helvetica-bold">{getProductTypeLabel(item.productType)}</span>
                 </div>
-                <div>
-                  <h3 className="text-2xl helvetica-bold systematic-caps">Material</h3>
-                  <p className="text-pop-gray">{data.materialType}</p>
+                <div className="flex justify-between">
+                  <span className="systematic-caps text-sm">Status</span>
+                  <Badge className={`bg-pop-${getStatusColor(item.status)} text-${getStatusColor(item.status) === 'black' ? 'white' : 'pop-black'}`}>
+                    {item.status.toUpperCase()}
+                  </Badge>
                 </div>
-              </div>
-              
-              <div className="flex items-center space-x-3">
-                <div className="w-12 h-12 bg-pop-red rounded-full flex items-center justify-center">
-                  <Scale className="w-6 h-6 text-white" />
+                <div className="flex justify-between items-center">
+                  <span className="systematic-caps text-sm">Processed</span>
+                  <span className="flex items-center">
+                    <Calendar className="w-4 h-4 mr-1" />
+                    {item.processedDate}
+                  </span>
                 </div>
-                <div>
-                  <h3 className="text-lg helvetica-bold systematic-caps">Weight</h3>
-                  <p className="text-pop-gray">{data.weight}kg</p>
-                </div>
-              </div>
-            </div>
+              </CardContent>
+            </Card>
           </PopArtContainer>
         </div>
 
         {/* Impact Metrics */}
-        <Card className="border-4 border-pop-black pop-shadow-black mb-12">
-          <CardHeader className="bg-pop-black text-white">
-            <CardTitle className="text-3xl helvetica-bold systematic-caps flex items-center">
-              <Leaf className="w-8 h-8 mr-3 text-pop-green" />
-              Environmental Impact
-            </CardTitle>
-          </CardHeader>
-          <CardContent className="p-8">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-              <div className="text-center">
-                <div className="text-4xl helvetica-bold text-pop-green mb-2">
-                  {data.carbonOffset}kg
+        <PopArtContainer color="red" shadow>
+          <Card className="border-4 border-pop-black">
+            <CardHeader>
+              <CardTitle className="systematic-caps flex items-center justify-center text-2xl">
+                <Leaf className="w-6 h-6 mr-2" />
+                Environmental Impact
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="grid md:grid-cols-2 gap-8 text-center">
+                <div>
+                  <div className="text-4xl helvetica-bold text-pop-red mb-2">
+                    {item.impactMetrics.carbonSaved}kg
+                  </div>
+                  <div className="systematic-caps text-sm text-pop-gray">CO₂ Offset Generated</div>
+                  <p className="text-xs text-pop-gray mt-2">
+                    Equivalent to removing a car from the road for 2.3 days
+                  </p>
                 </div>
-                <p className="systematic-caps text-sm text-pop-gray">CO₂ Offset</p>
-              </div>
-              
-              <div className="text-center">
-                <div className="text-4xl helvetica-bold text-pop-blue mb-2">
-                  {data.weight}kg
+                <div>
+                  <div className="text-4xl helvetica-bold text-pop-red mb-2">
+                    {item.impactMetrics.wasteReduced}kg
+                  </div>
+                  <div className="systematic-caps text-sm text-pop-gray">Plastic Waste Diverted</div>
+                  <p className="text-xs text-pop-gray mt-2">
+                    Prevented from entering landfills or ocean systems
+                  </p>
                 </div>
-                <p className="systematic-caps text-sm text-pop-gray">Waste Diverted</p>
               </div>
-            </div>
-          </CardContent>
-        </Card>
-
-        {/* Transformation Story */}
-        <div className="text-center mb-12">
-          <h2 className="text-3xl helvetica-bold mb-6 systematic-caps">
-            Transformed Into: <span className="text-pop-red">{data.productType?.replace('_', ' ').toUpperCase()}</span>
-          </h2>
-          
-          <p className="text-xl text-pop-gray leading-relaxed mb-8 max-w-2xl mx-auto">
-            This piece of plastic waste has been given new life as an educational tool, 
-            helping students learn through hands-on making and building projects.
-          </p>
-        </div>
-
-        {/* Call to Action */}
-        <div className="text-center">
-          <Link href="/about">
-            <Button size="lg" className="bg-pop-green text-pop-black hover:bg-pop-black hover:text-white systematic-caps text-lg px-8 py-4 pop-shadow-green">
-              Learn About Our Process
-              <ArrowRight className="ml-2 w-5 h-5" />
-            </Button>
-          </Link>
-        </div>
+            </CardContent>
+          </Card>
+        </PopArtContainer>
       </div>
     </div>
   );

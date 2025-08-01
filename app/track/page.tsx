@@ -1,117 +1,114 @@
-'use client'
+import { Card, CardContent, CardHeader, CardTitle } from "../components/ui/card";
+import { Button } from "../components/ui/button";
+import { Input } from "../components/ui/input";
+import { PopArtContainer, QRCodeElement } from "../components/PopArtElements";
+import { Search, QrCode } from "lucide-react";
+import Link from "next/link";
 
-import { useState } from 'react';
-import { useRouter } from 'next/navigation';
-import { Button } from '../components/ui/button';
-import { Input } from '../components/ui/input';
-import { Card, CardContent, CardHeader, CardTitle } from '../components/ui/card';
-import { PopArtContainer } from '../components/PopArtElements';
-import { QrCode, Search, ArrowRight } from 'lucide-react';
-
-export default function TrackPage() {
-  const [qrCode, setQrCode] = useState('');
-  const [isLoading, setIsLoading] = useState(false);
-  const router = useRouter();
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!qrCode.trim()) return;
-    
-    setIsLoading(true);
-    router.push(`/track/${qrCode.trim()}`);
-  };
-
-  // Mock QR codes for demonstration
-  const sampleQRs = ['ABC123', 'DEF456', 'GHI789', 'JKL012'];
+export default function Track() {
+  const sampleCodes = ['ABC123', 'DEF456', 'GHI789', 'JKL012'];
 
   return (
-    <div className="min-h-screen py-20 px-4">
-      <div className="max-w-4xl mx-auto text-center">
-        <h1 className="text-6xl lg:text-8xl helvetica-bold mb-8 tracking-tight">
-          <span className="text-pop-green">TRACK</span><br />
-          YOUR ITEM
-        </h1>
-        
-        <p className="text-xl lg:text-2xl max-w-3xl mx-auto mb-12 leading-relaxed text-pop-gray">
-          Enter your QR code to see the complete journey from waste to wonder.
-        </p>
+    <div className="min-h-screen py-20">
+      <div className="max-w-4xl mx-auto px-4">
+        {/* Header */}
+        <div className="text-center mb-16">
+          <h1 className="text-5xl lg:text-7xl helvetica-bold mb-6 tracking-tight">
+            <span className="text-pop-green">TRACK</span><br />
+            YOUR ITEM
+          </h1>
+          <p className="text-xl text-pop-gray max-w-2xl mx-auto">
+            Enter a QR code to see the complete journey from corporate waste to educational wonder.
+          </p>
+        </div>
 
-        {/* QR Input Form */}
-        <PopArtContainer color="green" shadow className="bg-white border-4 border-pop-green p-8 mb-12 max-w-2xl mx-auto">
-          <form onSubmit={handleSubmit} className="space-y-6">
-            <div className="flex items-center space-x-3 mb-6">
-              <div className="w-12 h-12 bg-pop-green rounded-full flex items-center justify-center">
-                <QrCode className="w-6 h-6 text-white" />
-              </div>
-              <h2 className="text-2xl helvetica-bold systematic-caps">Enter QR Code</h2>
-            </div>
-            
-            <div className="space-y-4">
-              <Input
-                type="text"
-                placeholder="ABC123"
-                value={qrCode}
-                onChange={(e) => setQrCode(e.target.value.toUpperCase())}
-                className="text-center text-xl systematic-caps border-2 border-pop-black h-14"
-                maxLength={6}
-              />
-              
-              <Button 
-                type="submit" 
-                size="lg" 
-                disabled={isLoading || !qrCode.trim()}
-                className="w-full bg-pop-black text-white hover:bg-pop-green hover:text-pop-black systematic-caps text-lg py-4"
-              >
-                {isLoading ? 'Loading...' : (
-                  <>
+        {/* QR Code Search */}
+        <div className="mb-16">
+          <PopArtContainer color="green" shadow>
+            <Card className="border-4 border-pop-black">
+              <CardContent className="p-8">
+                <div className="flex flex-col sm:flex-row gap-4">
+                  <div className="flex-1">
+                    <Input 
+                      placeholder="Enter QR code (e.g. ABC123)" 
+                      className="border-2 border-pop-black text-lg h-12"
+                    />
+                  </div>
+                  <Button 
+                    size="lg" 
+                    className="bg-pop-green text-pop-black hover:bg-pop-black hover:text-white systematic-caps h-12 px-8"
+                  >
+                    <Search className="w-5 h-5 mr-2" />
                     Track Item
-                    <Search className="ml-2 w-5 h-5" />
-                  </>
-                )}
-              </Button>
-            </div>
-          </form>
-        </PopArtContainer>
+                  </Button>
+                </div>
+              </CardContent>
+            </Card>
+          </PopArtContainer>
+        </div>
 
         {/* Sample QR Codes */}
-        <div className="mb-12">
-          <h3 className="text-2xl helvetica-bold mb-6 systematic-caps">
-            Or Try These <span className="text-pop-blue">Sample Codes</span>
-          </h3>
-          
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            {sampleQRs.map((code) => (
-              <Card key={code} className="border-2 border-pop-black hover:border-pop-blue transition-colors cursor-pointer">
-                <CardContent className="p-4" onClick={() => router.push(`/track/${code}`)}>
-                  <div className="w-16 h-16 bg-white border-2 border-pop-black flex items-center justify-center mx-auto mb-3">
-                    <span className="systematic-caps text-xs font-bold">{code}</span>
-                  </div>
-                  <Button variant="ghost" size="sm" className="w-full systematic-caps text-xs">
-                    Track {code}
-                  </Button>
-                </CardContent>
-              </Card>
-            ))}
+        <div className="mb-16">
+          <h2 className="text-3xl helvetica-bold mb-8 text-center">
+            <span className="text-pop-black">TRY THESE SAMPLE CODES</span>
+          </h2>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+            {sampleCodes.map((code, index) => {
+              const colors = ['green', 'blue', 'red', 'black'] as const;
+              return (
+                <Link key={code} href={`/track/${code}`}>
+                  <PopArtContainer color={colors[index]} shadow>
+                    <Card className="border-4 border-pop-black hover:scale-105 transition-transform cursor-pointer">
+                      <CardContent className="p-6 text-center">
+                        <QRCodeElement qrCode={code} size="md" className="mx-auto mb-4" />
+                        <div className="systematic-caps text-lg helvetica-bold">{code}</div>
+                        <div className="text-xs text-pop-gray mt-1">Click to track</div>
+                      </CardContent>
+                    </Card>
+                  </PopArtContainer>
+                </Link>
+              );
+            })}
           </div>
         </div>
 
-        {/* How it Works */}
-        <div className="text-center">
-          <h3 className="text-2xl helvetica-bold mb-4 systematic-caps">
-            How <span className="text-pop-red">Tracking</span> Works
-          </h3>
-          
-          <p className="text-lg text-pop-gray leading-relaxed max-w-2xl mx-auto mb-8">
-            Every recycled item gets a unique QR code during manufacturing. 
-            Scan or enter the code to see its complete transformation story, 
-            environmental impact, and educational journey.
-          </p>
-          
-          <Button variant="outline" size="lg" className="border-2 border-pop-black systematic-caps">
-            Learn More About Our Process
-            <ArrowRight className="ml-2 w-5 h-5" />
-          </Button>
-        </div>
+        {/* How It Works */}
+        <section>
+          <h2 className="text-3xl helvetica-bold mb-8 text-center">
+            <span className="text-pop-blue">HOW QR TRACKING WORKS</span>
+          </h2>
+          <div className="grid md:grid-cols-3 gap-8">
+            <div className="text-center">
+              <div className="w-16 h-16 bg-pop-green border-2 border-pop-black mx-auto mb-4 flex items-center justify-center">
+                <QrCode className="w-8 h-8 text-pop-black" />
+              </div>
+              <h3 className="systematic-caps text-lg mb-2">Scan or Enter Code</h3>
+              <p className="text-pop-gray text-sm">
+                Each recycled item gets a unique QR code when it enters our system
+              </p>
+            </div>
+            
+            <div className="text-center">
+              <div className="w-16 h-16 bg-pop-blue border-2 border-pop-black mx-auto mb-4 flex items-center justify-center">
+                <span className="text-pop-black helvetica-bold text-xl">→</span>
+              </div>
+              <h3 className="systematic-caps text-lg mb-2">See Full Journey</h3>
+              <p className="text-pop-gray text-sm">
+                Track transformation from corporate waste through processing to final product
+              </p>
+            </div>
+            
+            <div className="text-center">
+              <div className="w-16 h-16 bg-pop-red border-2 border-pop-black mx-auto mb-4 flex items-center justify-center">
+                <span className="text-pop-black helvetica-bold text-xl">!</span>
+              </div>
+              <h3 className="systematic-caps text-lg mb-2">Learn Impact</h3>
+              <p className="text-pop-gray text-sm">
+                Discover environmental impact, carbon offset, and educational value created
+              </p>
+            </div>
+          </div>
+        </section>
       </div>
     </div>
   );
