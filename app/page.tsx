@@ -17,16 +17,20 @@ export default function Home() {
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
-      <div className="bg-pop-green py-16">
-        <div className="max-w-7xl mx-auto px-6 text-center">
-          <h1 className="text-6xl helvetica-bold mb-6 text-pop-black">
-            TRACK YOUR PLASTIC'S JOURNEY
+      <section className="py-20 px-4">
+        <div className="max-w-6xl mx-auto text-center">
+          <h1 className="text-6xl lg:text-8xl helvetica-bold mb-8 tracking-tight">
+            <span className="text-pop-green">TRACK</span><br />
+            YOUR PLASTIC'S<br />
+            JOURNEY
           </h1>
-          <p className="text-xl text-pop-black max-w-3xl mx-auto mb-8">
+          
+          <p className="text-xl lg:text-2xl max-w-4xl mx-auto mb-12 leading-relaxed text-pop-gray">
             Every QR code tells the complete story of transformation: from corporate waste to educational wonder. 
             Scan. Learn. Make.
           </p>
-          <div className="flex justify-center items-center gap-4 text-pop-black mb-8">
+          
+          <div className="flex justify-center items-center gap-4 text-pop-gray mb-8">
             <Recycle className="w-6 h-6" />
             <span className="systematic-caps">Complete Provenance Tracking</span>
           </div>
@@ -44,7 +48,7 @@ export default function Home() {
             </Link>
           </div>
         </div>
-      </div>
+      </section>
 
       {/* Impact Metrics */}
       <section className="py-16 bg-pop-black text-white">

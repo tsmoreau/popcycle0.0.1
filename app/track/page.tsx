@@ -11,15 +11,15 @@ export default function Track() {
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
-      <div className="bg-pop-green py-16">
+      <div className="bg-pop-black py-16">
         <div className="max-w-7xl mx-auto px-6 text-center">
-          <h1 className="text-6xl helvetica-bold mb-6 text-pop-black">
+          <h1 className="text-6xl helvetica-bold mb-6 text-white">
             TRACK YOUR ITEM
           </h1>
-          <p className="text-xl text-pop-black max-w-3xl mx-auto mb-8">
+          <p className="text-xl text-white max-w-3xl mx-auto mb-8">
             Enter a QR code to see the complete journey from corporate waste to educational wonder.
           </p>
-          <div className="flex justify-center items-center gap-4 text-pop-black">
+          <div className="flex justify-center items-center gap-4 text-white">
             <QrCode className="w-6 h-6" />
             <span className="systematic-caps">Complete Transformation Stories</span>
           </div>
