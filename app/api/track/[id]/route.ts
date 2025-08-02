@@ -57,15 +57,7 @@ const sampleItems = {
     destination: 'YMCA Summer Camp',
     carbonOffset: 7.8,
     message: 'From park cleanup to learning tool - community action creates change.',
-    makerDetails: {
-      userId: 'user_002',
-      name: 'Marcus Thompson',
-      location: 'Denver, CO',
-      assemblyDate: '2025-01-26',
-      story: 'Assembled this educational kit for my nephew\'s birthday. Amazing to see how plastic bottles from our local park cleanup became this hands-on learning tool. The instructions were clear and it took about 90 minutes. He loves building things and understanding how recycling actually works.',
-      registeredAt: '2025-01-26T16:45:00Z',
-      verifiedEmail: 'marcus.t@email.com'
-    }
+    makerDetails: null
   },
   'JKL012': {
     id: 'JKL012',
