@@ -657,9 +657,6 @@ video {
 .h-full {
   height: 100%;
 }
-.min-h-32 {
-  min-height: 8rem;
-}
 .min-h-\[80px\] {
   min-height: 80px;
 }
@@ -823,11 +820,6 @@ video {
   --tw-space-y-reverse: 0;
   margin-top: calc(1rem * calc(1 - var(--tw-space-y-reverse)));
   margin-bottom: calc(1rem * var(--tw-space-y-reverse));
-}
-.space-y-6 > :not([hidden]) ~ :not([hidden]) {
-  --tw-space-y-reverse: 0;
-  margin-top: calc(1.5rem * calc(1 - var(--tw-space-y-reverse)));
-  margin-bottom: calc(1.5rem * var(--tw-space-y-reverse));
 }
 .whitespace-nowrap {
   white-space: nowrap;
