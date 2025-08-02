@@ -28,8 +28,7 @@ export default function Services() {
         <div className="max-w-6xl mx-auto px-4">
 
         {/* Community Partnerships Section */}
-        <section className="mb-20">
-          <div className="scroll-mt-24" id="community-partnerships"></div>
+        <section className="mb-20 scroll-mt-24" id="community-partnerships">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div>
               <h2 className="text-4xl helvetica-bold mb-6">
@@ -84,9 +83,29 @@ export default function Services() {
         </section>
 
         {/* Corporate ESG & Events Section */}
-        <section className="mb-20">
-          <div className="scroll-mt-24" id="corporate-esg-events"></div>
+        <section className="mb-20 scroll-mt-24" id="corporate-esg-events">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
+            <PopArtContainer color="blue" shadow>
+              <Card className="border-4 border-pop-black">
+                <CardContent className="p-8">
+                  <Factory className="w-16 h-16 text-pop-blue mb-6" />
+                  <div className="space-y-4">
+                    <div className="flex justify-between">
+                      <span className="systematic-caps text-sm">ESG Reporting</span>
+                      <span className="text-pop-blue helvetica-bold">100%</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="systematic-caps text-sm">Team Events</span>
+                      <span className="text-pop-blue helvetica-bold">45+</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="systematic-caps text-sm">Carbon Offset</span>
+                      <span className="text-pop-blue helvetica-bold">2.1t</span>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            </PopArtContainer>
             <div>
               <h2 className="text-4xl helvetica-bold mb-6">
                 <span className="text-pop-blue">CORPORATE ESG & EVENTS</span>
@@ -119,33 +138,11 @@ export default function Services() {
                 </Button>
               </Link>
             </div>
-            <PopArtContainer color="blue" shadow>
-              <Card className="border-4 border-pop-black">
-                <CardContent className="p-8">
-                  <Factory className="w-16 h-16 text-pop-blue mb-6" />
-                  <div className="space-y-4">
-                    <div className="flex justify-between">
-                      <span className="systematic-caps text-sm">ESG Reporting</span>
-                      <span className="text-pop-blue helvetica-bold">100%</span>
-                    </div>
-                    <div className="flex justify-between">
-                      <span className="systematic-caps text-sm">Team Events</span>
-                      <span className="text-pop-blue helvetica-bold">45+</span>
-                    </div>
-                    <div className="flex justify-between">
-                      <span className="systematic-caps text-sm">Carbon Offset</span>
-                      <span className="text-pop-blue helvetica-bold">2.1t</span>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-            </PopArtContainer>
           </div>
         </section>
 
         {/* Educational Kits & Workshops Section */}
-        <section className="mb-20">
-          <div className="scroll-mt-24" id="educational-kits-workshops"></div>
+        <section className="mb-20 scroll-mt-24" id="educational-kits-workshops">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div>
               <h2 className="text-4xl helvetica-bold mb-6">
@@ -195,8 +192,7 @@ export default function Services() {
         </section>
 
         {/* Custom Products Section */}
-        <section>
-          <div className="scroll-mt-24" id="custom-products"></div>
+        <section className="scroll-mt-24" id="custom-products">
           <div className="text-center mb-12">
             <h2 className="text-4xl helvetica-bold mb-6">
               <span className="text-pop-black">CUSTOM PRODUCTS</span>
