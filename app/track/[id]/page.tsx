@@ -164,9 +164,9 @@ export default function TrackItem() {
               </div>
               
               <div className="text-center">
-                <div className="w-16 h-16 mx-auto mb-4 border-2 border-pop-black flex items-center justify-center bg-pop-black">
+                <div className={`w-16 h-16 mx-auto mb-4 border-2 border-pop-black flex items-center justify-center ${isCharity ? 'bg-pop-red' : 'bg-pop-black'}`}>
                   {isCharity ? (
-                    <HeartHandshake className="w-8 h-8 text-white" />
+                    <HeartHandshake className="w-8 h-8 text-pop-black" />
                   ) : (
                     <CheckCircle className="w-8 h-8 text-white" />
                   )}
