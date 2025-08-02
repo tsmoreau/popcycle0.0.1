@@ -164,11 +164,11 @@ export default function TrackItem() {
               </div>
               
               <div className="text-center">
-                <div className={`w-16 h-16 mx-auto mb-4 border-2 border-pop-black flex items-center justify-center ${isCharity ? 'bg-pop-red' : 'bg-pop-black'}`}>
+                <div className="w-16 h-16 mx-auto mb-4 border-2 border-pop-black flex items-center justify-center bg-pop-red">
                   {isCharity ? (
                     <HeartHandshake className="w-8 h-8 text-pop-black" />
                   ) : (
-                    <CheckCircle className="w-8 h-8 text-white" />
+                    <CheckCircle className="w-8 h-8 text-pop-black" />
                   )}
                 </div>
                 <h3 className="systematic-caps text-sm mb-1">{isCharity ? 'Donated' : 'Purchased'}</h3>
