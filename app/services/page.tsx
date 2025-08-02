@@ -151,24 +151,24 @@ export default function Services() {
               <p className="text-lg mb-6 text-pop-gray">
                 Complete maker education experiences using products made from tracked plastic waste. Every kit tells the story of circular manufacturing through hands-on learning.
               </p>
-              <div className="grid grid-cols-2 gap-4 mb-8">
-                <div>
-                  <Badge className="bg-pop-red text-white mb-2">Robotics Kits</Badge>
-                  <p className="text-sm text-pop-gray">Build rovers from plastic waste</p>
-                </div>
-                <div>
-                  <Badge className="bg-pop-red text-white mb-2">Maker Workshops</Badge>
-                  <p className="text-sm text-pop-gray">Hands-on circular economy education</p>
-                </div>
-                <div>
-                  <Badge className="bg-pop-red text-white mb-2">Assembly Sets</Badge>
-                  <p className="text-sm text-pop-gray">STEM construction challenges</p>
-                </div>
-                <div>
-                  <Badge className="bg-pop-red text-white mb-2">QR Tracking</Badge>
-                  <p className="text-sm text-pop-gray">Complete waste-to-product stories</p>
-                </div>
-              </div>
+              <ul className="space-y-3 mb-8">
+                <li className="flex items-center">
+                  <div className="w-3 h-3 bg-pop-red mr-3"></div>
+                  <span className="systematic-caps text-sm">Robotics kits from plastic waste</span>
+                </li>
+                <li className="flex items-center">
+                  <div className="w-3 h-3 bg-pop-red mr-3"></div>
+                  <span className="systematic-caps text-sm">Hands-on maker workshops</span>
+                </li>
+                <li className="flex items-center">
+                  <div className="w-3 h-3 bg-pop-red mr-3"></div>
+                  <span className="systematic-caps text-sm">STEM assembly challenges</span>
+                </li>
+                <li className="flex items-center">
+                  <div className="w-3 h-3 bg-pop-red mr-3"></div>
+                  <span className="systematic-caps text-sm">Complete QR provenance tracking</span>
+                </li>
+              </ul>
               <Link href="/shop">
                 <Button className="bg-pop-red text-white hover:bg-pop-black hover:text-white systematic-caps">
                   View Educational Kits
