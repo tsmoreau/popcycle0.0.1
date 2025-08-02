@@ -31,7 +31,6 @@ interface PlasticItem {
   event?: string;
   message?: string;
   makerDetails?: MakerDetails | null;
-  isSourceOnly?: boolean;
   impactMetrics: {
     carbonSaved: number;
     wasteReduced: number;
