@@ -9,14 +9,20 @@ export default function Services() {
   return (
     <div className="min-h-screen py-20">
       <div className="max-w-6xl mx-auto px-4">
-        {/* Header */}
-        <div className="text-center mb-16">
-          <h1 className="text-5xl lg:text-7xl helvetica-bold mb-6 tracking-tight">
-            <span className="text-pop-green">SERVICES</span>
-          </h1>
-          <p className="text-xl text-pop-gray max-w-3xl mx-auto">
-            Complete circular manufacturing solutions from waste collection through educational product delivery.
-          </p>
+        {/* Hero Section */}
+        <div className="bg-pop-green py-16 -mx-4 mb-16">
+          <div className="max-w-7xl mx-auto px-6 text-center">
+            <h1 className="text-6xl helvetica-bold mb-6 text-pop-black">
+              SERVICES
+            </h1>
+            <p className="text-xl text-pop-black max-w-3xl mx-auto mb-8">
+              Complete circular manufacturing solutions from waste collection through educational product delivery.
+            </p>
+            <div className="flex justify-center items-center gap-4 text-pop-black">
+              <Factory className="w-6 h-6" />
+              <span className="systematic-caps">End-to-End Circular Solutions</span>
+            </div>
+          </div>
         </div>
 
         {/* Community Partnerships Section */}
