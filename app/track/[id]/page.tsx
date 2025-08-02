@@ -219,7 +219,7 @@ export default function TrackItem() {
             
             {isProcessed && (
               <div className="text-center mt-4">
-                <p className="text-xs text-pop-blue systematic-caps">Ready for Manufacturing</p>
+                <p className="text-xs text-pop-blue systematic-caps">Ready for Purchase</p>
               </div>
             )}
           </div>
@@ -289,7 +289,7 @@ export default function TrackItem() {
                     <div className={`flex items-center justify-center text-sm ${isProcessed ? 'text-pop-blue' : 'text-pop-red'}`}>
                       <Calendar className="w-4 h-4 mr-1" />
                       <span className="systematic-caps">
-                        {isProcessed ? 'Ready for Manufacturing' : 'Awaiting Processing'}
+                        {isProcessed ? 'Ready for Purchase' : 'Awaiting Processing'}
                       </span>
                     </div>
                   </div>
