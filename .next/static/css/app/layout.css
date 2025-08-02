@@ -536,14 +536,6 @@ video {
 .z-50 {
   z-index: 50;
 }
-.-mx-4 {
-  margin-left: -1rem;
-  margin-right: -1rem;
-}
-.-mx-6 {
-  margin-left: -1.5rem;
-  margin-right: -1.5rem;
-}
 .mx-auto {
   margin-left: auto;
   margin-right: auto;
@@ -1303,11 +1295,6 @@ video {
   opacity: 0.5;
 }
 @media (min-width: 640px) {
-
-  .sm\:-mx-8 {
-    margin-left: -2rem;
-    margin-right: -2rem;
-  }
 
   .sm\:flex-row {
     flex-direction: row;

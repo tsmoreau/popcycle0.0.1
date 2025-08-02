@@ -5,23 +5,25 @@ import { Users, Target, Cog, Mail } from "lucide-react";
 
 export default function About() {
   return (
-    <div className="min-h-screen py-20">
-      <div className="max-w-6xl mx-auto px-4">
-        {/* Hero Section */}
-        <div className="bg-pop-green py-16 -mx-4 mb-16">
-          <div className="max-w-7xl mx-auto px-6 text-center">
-            <h1 className="text-6xl helvetica-bold mb-6 text-pop-black">
-              ABOUT POPCYCLE
-            </h1>
-            <p className="text-xl text-pop-black max-w-3xl mx-auto mb-8">
-              Transforming corporate plastic waste into educational opportunities through systematic design and circular manufacturing.
-            </p>
-            <div className="flex justify-center items-center gap-4 text-pop-black">
-              <Users className="w-6 h-6" />
-              <span className="systematic-caps">Systematic Design for Circular Impact</span>
-            </div>
+    <div className="min-h-screen">
+      {/* Hero Section */}
+      <div className="bg-pop-green py-16">
+        <div className="max-w-7xl mx-auto px-6 text-center">
+          <h1 className="text-6xl helvetica-bold mb-6 text-pop-black">
+            ABOUT POPCYCLE
+          </h1>
+          <p className="text-xl text-pop-black max-w-3xl mx-auto mb-8">
+            Transforming corporate plastic waste into educational opportunities through systematic design and circular manufacturing.
+          </p>
+          <div className="flex justify-center items-center gap-4 text-pop-black">
+            <Users className="w-6 h-6" />
+            <span className="systematic-caps">Systematic Design for Circular Impact</span>
           </div>
         </div>
+      </div>
+
+      <div className="py-20">
+        <div className="max-w-6xl mx-auto px-4">
 
         {/* Team Section */}
         <section id="team" className="mb-20">
@@ -208,6 +210,7 @@ export default function About() {
             </Card>
           </div>
         </section>
+        </div>
       </div>
     </div>
   );

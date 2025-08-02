@@ -9,23 +9,25 @@ export default function Track() {
   const sampleCodes = ['ABC123', 'DEF456', 'GHI789', 'JKL012', 'MNO345', 'PQR678'];
 
   return (
-    <div className="min-h-screen py-20">
-      <div className="max-w-4xl mx-auto px-6 sm:px-8">
-        {/* Hero Section */}
-        <div className="bg-pop-green py-16 -mx-6 sm:-mx-8 mb-16">
-          <div className="max-w-7xl mx-auto px-6 text-center">
-            <h1 className="text-6xl helvetica-bold mb-6 text-pop-black">
-              TRACK YOUR ITEM
-            </h1>
-            <p className="text-xl text-pop-black max-w-3xl mx-auto mb-8">
-              Enter a QR code to see the complete journey from corporate waste to educational wonder.
-            </p>
-            <div className="flex justify-center items-center gap-4 text-pop-black">
-              <QrCode className="w-6 h-6" />
-              <span className="systematic-caps">Complete Transformation Stories</span>
-            </div>
+    <div className="min-h-screen">
+      {/* Hero Section */}
+      <div className="bg-pop-green py-16">
+        <div className="max-w-7xl mx-auto px-6 text-center">
+          <h1 className="text-6xl helvetica-bold mb-6 text-pop-black">
+            TRACK YOUR ITEM
+          </h1>
+          <p className="text-xl text-pop-black max-w-3xl mx-auto mb-8">
+            Enter a QR code to see the complete journey from corporate waste to educational wonder.
+          </p>
+          <div className="flex justify-center items-center gap-4 text-pop-black">
+            <QrCode className="w-6 h-6" />
+            <span className="systematic-caps">Complete Transformation Stories</span>
           </div>
         </div>
+      </div>
+
+      <div className="py-20">
+        <div className="max-w-4xl mx-auto px-6 sm:px-8">
 
         {/* QR Code Search */}
         <div className="mb-16">
@@ -114,6 +116,7 @@ export default function Track() {
             </div>
           </div>
         </section>
+        </div>
       </div>
     </div>
   );
