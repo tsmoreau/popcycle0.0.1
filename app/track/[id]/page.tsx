@@ -19,20 +19,23 @@ interface MakerDetails {
 
 interface PlasticItem {
   id: string;
-  originPoint: string;
+  qrCode: string;
+  sourceCompany: string;
   collectionDate: string;
   materialType: string;
   weight: number;
   processedDate: string;
   carbonOffset: number;
+  status: string;
   productType: string;
   event?: string;
   message?: string;
   makerDetails?: MakerDetails | null;
-  transactionDate?: string;
-  deliveredDate?: string;
-  donatingEntity?: string;
-  destination?: string;
+  impactMetrics: {
+    carbonSaved: number;
+    wasteReduced: number;
+    status: string;
+  };
 }
 
 export default function TrackItem() {
@@ -97,10 +100,7 @@ export default function TrackItem() {
   const hasMaker = !!item.makerDetails;
 
   // Impact metrics calculation
-  const impactMetrics = item.carbonOffset ? {
-    carbonSaved: item.carbonOffset,
-    wasteReduced: item.weight
-  } : null;
+  const impactMetrics = item.impactMetrics;
 
   const getProductTypeLabel = (type: string) => {
     switch (type) {
@@ -239,7 +239,7 @@ export default function TrackItem() {
                 </div>
                 <div className="flex justify-between">
                   <span className="systematic-caps text-sm">Origin</span>
-                  <span>{item.originPoint}</span>
+                  <span>{item.sourceCompany}</span>
                 </div>
                 <div className="flex justify-between">
                   <span className="systematic-caps text-sm">Material</span>
