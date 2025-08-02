@@ -92,7 +92,7 @@ export default function Shop() {
   return (
     <div className="min-h-screen bg-white">
       {/* Hero Section */}
-      <div className="bg-pop-green py-16 border-b-4 border-pop-black">
+      <div className="bg-white py-16">
         <div className="max-w-7xl mx-auto px-6 text-center">
           <h1 className="text-6xl helvetica-bold mb-6 text-pop-black">
             SHOP
