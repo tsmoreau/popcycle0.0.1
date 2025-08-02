@@ -11,6 +11,17 @@ PopCycle is a comprehensive circular economy platform that transforms corporate 
 Preferred communication style: Simple, everyday language.
 Brand colors: Must use exact HSL values - pop-green: hsl(142, 100%, 35%), pop-blue: hsl(214, 100%, 50%), pop-red: hsl(347, 100%, 60%), pop-black: hsl(0, 0%, 0%), pop-gray: hsl(0, 0%, 20%).
 
+## Current State (Updated Jan 2025)
+
+### Hero Section Styling
+- Each page has unique color hero sections with full-bleed backgrounds
+- Home: White background (original style)
+- Shop: Green background with black bottom border
+- Services: Blue background (no border)
+- About: Red background (no border) 
+- Track: Black background with white bottom border
+- Partners page does not exist
+
 ## System Architecture
 
 ### Frontend Architecture
