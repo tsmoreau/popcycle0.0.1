@@ -20,7 +20,7 @@ Brand colors: Must use exact HSL values - pop-green: hsl(142, 100%, 35%), pop-bl
 - Services: Blue background (no border)
 - About: Red background (no border) 
 - Track: Black background with white bottom border
-- Partners page does not exist
+- Partners: Gray background with black bottom border
 
 ## System Architecture
 
