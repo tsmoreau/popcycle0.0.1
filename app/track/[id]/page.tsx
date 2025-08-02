@@ -5,7 +5,7 @@ import { useParams } from 'next/navigation';
 import { Card, CardContent, CardHeader, CardTitle } from "../../components/ui/card";
 import { Badge } from "../../components/ui/badge";
 import { PopArtContainer, QRCodeElement } from "../../components/PopArtElements";
-import { Building, Calendar, Weight, Leaf, Package, CheckCircle, User, MapPin, Heart, Plus } from "lucide-react";
+import { Building, Calendar, Weight, Leaf, Package, CheckCircle, User, MapPin, Heart, Plus, HeartHandshake } from "lucide-react";
 
 interface MakerDetails {
   userId: string;
@@ -165,7 +165,11 @@ export default function TrackItem() {
               
               <div className="text-center">
                 <div className="w-16 h-16 mx-auto mb-4 border-2 border-pop-black flex items-center justify-center bg-pop-black">
-                  <CheckCircle className="w-8 h-8 text-white" />
+                  {isCharity ? (
+                    <HeartHandshake className="w-8 h-8 text-white" />
+                  ) : (
+                    <CheckCircle className="w-8 h-8 text-white" />
+                  )}
                 </div>
                 <h3 className="systematic-caps text-sm mb-1">{isCharity ? 'Donated' : 'Purchased'}</h3>
                 <p className="text-xs text-pop-gray">{item.transactionDate}</p>
