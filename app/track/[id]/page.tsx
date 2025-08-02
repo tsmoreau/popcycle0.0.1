@@ -19,23 +19,20 @@ interface MakerDetails {
 
 interface PlasticItem {
   id: string;
-  qrCode: string;
-  sourceCompany: string;
+  originPoint: string;
   collectionDate: string;
   materialType: string;
   weight: number;
   processedDate: string;
   carbonOffset: number;
-  status: string;
   productType: string;
   event?: string;
   message?: string;
   makerDetails?: MakerDetails | null;
-  impactMetrics: {
-    carbonSaved: number;
-    wasteReduced: number;
-    status: string;
-  };
+  transactionDate?: string;
+  deliveredDate?: string;
+  donatingEntity?: string;
+  destination?: string;
 }
 
 export default function TrackItem() {
