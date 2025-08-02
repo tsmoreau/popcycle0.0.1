@@ -432,41 +432,7 @@ export default function TrackItem() {
           )}
         </div>
 
-        {/* Impact Metrics */}
-        {!isSourceOnly && impactMetrics && (
-          <PopArtContainer color="red" shadow>
-            <Card className="border-4 border-pop-black">
-              <CardHeader>
-                <CardTitle className="systematic-caps flex items-center justify-center text-2xl">
-                  <Leaf className="w-6 h-6 mr-2" />
-                  Environmental Impact
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="grid md:grid-cols-2 gap-8 text-center">
-                  <div>
-                    <div className="text-4xl helvetica-bold text-pop-red mb-2">
-                      {impactMetrics.carbonSaved}kg
-                    </div>
-                    <div className="systematic-caps text-sm text-pop-gray">CO₂ Offset Generated</div>
-                    <p className="text-xs text-pop-gray mt-2">
-                      Equivalent to removing a car from the road for 2.3 days
-                    </p>
-                  </div>
-                  <div>
-                    <div className="text-4xl helvetica-bold text-pop-red mb-2">
-                      {impactMetrics.wasteReduced}kg
-                    </div>
-                    <div className="systematic-caps text-sm text-pop-gray">Plastic Waste Diverted</div>
-                    <p className="text-xs text-pop-gray mt-2">
-                      Prevented from entering landfills or ocean systems
-                    </p>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-          </PopArtContainer>
-        )}
+        {/* Impact Metrics - Removed for now */}
 
         {/* Source-Only Call to Action */}
         {isSourceOnly && (
