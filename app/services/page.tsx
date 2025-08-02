@@ -28,7 +28,8 @@ export default function Services() {
         <div className="max-w-6xl mx-auto px-4">
 
         {/* Community Partnerships Section */}
-        <section id="community-partnerships" className="mb-20">
+        <section className="mb-20">
+          <div className="scroll-mt-24" id="community-partnerships"></div>
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div>
               <h2 className="text-4xl helvetica-bold mb-6">
@@ -55,7 +56,7 @@ export default function Services() {
                   <span className="systematic-caps text-sm">Impact measurement tools</span>
                 </li>
               </ul>
-              <Link href="/partners">
+              <Link href="/about#contact">
                 <Button className="bg-pop-green text-pop-black hover:bg-pop-black hover:text-white systematic-caps">
                   Join Community Network
                   <ArrowRight className="ml-2 w-4 h-4" />
@@ -83,29 +84,9 @@ export default function Services() {
         </section>
 
         {/* Corporate ESG & Events Section */}
-        <section id="corporate-esg-events" className="mb-20">
+        <section className="mb-20">
+          <div className="scroll-mt-24" id="corporate-esg-events"></div>
           <div className="grid lg:grid-cols-2 gap-12 items-center">
-            <PopArtContainer color="blue" shadow>
-              <Card className="border-4 border-pop-black">
-                <CardContent className="p-8">
-                  <Factory className="w-16 h-16 text-pop-blue mb-6" />
-                  <div className="space-y-4">
-                    <div className="flex justify-between">
-                      <span className="systematic-caps text-sm">ESG Reporting</span>
-                      <span className="text-pop-blue helvetica-bold">100%</span>
-                    </div>
-                    <div className="flex justify-between">
-                      <span className="systematic-caps text-sm">Team Events</span>
-                      <span className="text-pop-blue helvetica-bold">45+</span>
-                    </div>
-                    <div className="flex justify-between">
-                      <span className="systematic-caps text-sm">Carbon Offset</span>
-                      <span className="text-pop-blue helvetica-bold">2.1t</span>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-            </PopArtContainer>
             <div>
               <h2 className="text-4xl helvetica-bold mb-6">
                 <span className="text-pop-blue">CORPORATE ESG & EVENTS</span>
@@ -131,12 +112,40 @@ export default function Services() {
                   <span className="systematic-caps text-sm">Sustainability storytelling</span>
                 </li>
               </ul>
+              <Link href="/about#contact">
+                <Button className="bg-pop-blue text-white hover:bg-pop-black hover:text-white systematic-caps">
+                  Request ESG Consultation
+                  <ArrowRight className="ml-2 w-4 h-4" />
+                </Button>
+              </Link>
             </div>
+            <PopArtContainer color="blue" shadow>
+              <Card className="border-4 border-pop-black">
+                <CardContent className="p-8">
+                  <Factory className="w-16 h-16 text-pop-blue mb-6" />
+                  <div className="space-y-4">
+                    <div className="flex justify-between">
+                      <span className="systematic-caps text-sm">ESG Reporting</span>
+                      <span className="text-pop-blue helvetica-bold">100%</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="systematic-caps text-sm">Team Events</span>
+                      <span className="text-pop-blue helvetica-bold">45+</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="systematic-caps text-sm">Carbon Offset</span>
+                      <span className="text-pop-blue helvetica-bold">2.1t</span>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            </PopArtContainer>
           </div>
         </section>
 
         {/* Educational Kits & Workshops Section */}
-        <section id="educational-kits-workshops" className="mb-20">
+        <section className="mb-20">
+          <div className="scroll-mt-24" id="educational-kits-workshops"></div>
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div>
               <h2 className="text-4xl helvetica-bold mb-6">
@@ -163,6 +172,12 @@ export default function Services() {
                   <p className="text-sm text-pop-gray">Complete waste-to-product stories</p>
                 </div>
               </div>
+              <Link href="/shop">
+                <Button className="bg-pop-red text-white hover:bg-pop-black hover:text-white systematic-caps">
+                  View Educational Kits
+                  <ArrowRight className="ml-2 w-4 h-4" />
+                </Button>
+              </Link>
             </div>
             <PopArtContainer color="red" shadow>
               <Card className="border-4 border-pop-black">
@@ -180,7 +195,8 @@ export default function Services() {
         </section>
 
         {/* Custom Products Section */}
-        <section id="custom-products">
+        <section>
+          <div className="scroll-mt-24" id="custom-products"></div>
           <div className="text-center mb-12">
             <h2 className="text-4xl helvetica-bold mb-6">
               <span className="text-pop-black">CUSTOM PRODUCTS</span>
@@ -223,7 +239,7 @@ export default function Services() {
           </div>
           
           <div className="text-center mt-12">
-            <Link href="/partners">
+            <Link href="/about#contact">
               <Button size="lg" className="bg-pop-black text-white hover:bg-pop-green hover:text-pop-black systematic-caps text-lg px-8 py-4">
                 Start Custom Project
                 <ArrowRight className="ml-2 w-5 h-5" />
