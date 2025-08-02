@@ -11,7 +11,7 @@ export default function Track() {
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
-      <div className="bg-pop-black py-16">
+      <div className="bg-pop-black py-16 border-b-4 border-white">
         <div className="max-w-7xl mx-auto px-6 text-center">
           <h1 className="text-6xl helvetica-bold mb-6 text-white">
             TRACK YOUR ITEM

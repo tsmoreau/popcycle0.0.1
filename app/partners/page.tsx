@@ -9,7 +9,7 @@ export default function Partners() {
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
-      <div className="bg-pop-gray py-16">
+      <div className="bg-pop-gray py-16 border-b-4 border-pop-black">
         <div className="max-w-7xl mx-auto px-6 text-center">
           <h1 className="text-6xl helvetica-bold mb-6 text-white">
             PARTNERS
