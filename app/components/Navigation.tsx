@@ -43,6 +43,16 @@ export default function Navigation() {
           </Link>
           
           <div className="hidden md:flex items-center space-x-8">
+            {/* Shop */}
+            <Link
+              href="/shop"
+              className={`systematic-caps text-sm hover:text-pop-green transition-colors py-2 ${
+                pathname === '/shop' ? "nav-link-active" : ""
+              }`}
+            >
+              Shop
+            </Link>
+            
             {/* Track */}
             <Link
               href="/track"
@@ -51,16 +61,6 @@ export default function Navigation() {
               }`}
             >
               Track
-            </Link>
-            
-            {/* Store */}
-            <Link
-              href="/shop"
-              className={`systematic-caps text-sm hover:text-pop-green transition-colors py-2 ${
-                pathname === '/shop' ? "nav-link-active" : ""
-              }`}
-            >
-              Shop
             </Link>
 
             {/* Services Dropdown */}
@@ -146,17 +146,6 @@ export default function Navigation() {
       {mobileMenuOpen && (
         <div className="md:hidden bg-white border-t-4 border-pop-black">
           <div className="px-4 py-6 space-y-4">
-            {/* Track Mobile Section */}
-            <div className="space-y-2">
-              <Link
-                href="/track"
-                onClick={() => setMobileMenuOpen(false)}
-                className="systematic-caps text-sm font-bold text-pop-black hover:text-pop-green transition-colors"
-              >
-                Track
-              </Link>
-            </div>
-            
             {/* Shop Mobile Section */}
             <div className="space-y-2">
               <Link
@@ -165,6 +154,17 @@ export default function Navigation() {
                 className="systematic-caps text-sm font-bold text-pop-black hover:text-pop-red transition-colors"
               >
                 Shop
+              </Link>
+            </div>
+            
+            {/* Track Mobile Section */}
+            <div className="space-y-2">
+              <Link
+                href="/track"
+                onClick={() => setMobileMenuOpen(false)}
+                className="systematic-caps text-sm font-bold text-pop-black hover:text-pop-green transition-colors"
+              >
+                Track
               </Link>
             </div>
             
