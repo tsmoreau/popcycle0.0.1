@@ -542,34 +542,36 @@ export default function TrackItem() {
 
         {/* Source-Only Call to Action */}
         {isSourceOnly && (
-          <PopArtContainer color={isProcessed ? "blue" : "red"} shadow>
-            <Card className="border-4 border-pop-black">
-              <CardHeader>
-                <CardTitle className="systematic-caps flex items-center justify-center text-2xl">
-                  <Building className="w-6 h-6 mr-2" />
-                  {isProcessed ? "Processing Complete" : "Collection Complete"}
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="text-center py-8">
-                <div
-                  className={`text-4xl helvetica-bold mb-4 ${isProcessed ? "text-pop-blue" : "text-pop-red"}`}
-                >
-                  {item.weight}kg
-                </div>
-                <div className="systematic-caps text-sm text-pop-gray mb-6">
-                  {isProcessed ? "Plastic Processed" : "Plastic Collected"}
-                </div>
-                <p className="text-lg text-pop-gray mb-2">
-                  {isProcessed
-                    ? "This plastic has been processed and is ready for manufacturing into new products."
-                    : "This plastic is ready for processing into new products."}
-                </p>
-                <p className="text-sm text-pop-gray">
-                  Check back soon to see its transformation journey!
-                </p>
-              </CardContent>
-            </Card>
-          </PopArtContainer>
+          <div className="max-w-2xl mx-auto">
+            <PopArtContainer color={isProcessed ? "blue" : "red"} shadow>
+              <Card className="border-4 border-pop-black">
+                <CardHeader>
+                  <CardTitle className="systematic-caps flex items-center justify-center text-2xl">
+                    <Building className="w-6 h-6 mr-2" />
+                    {isProcessed ? "Processing Complete" : "Collection Complete"}
+                  </CardTitle>
+                </CardHeader>
+                <CardContent className="text-center py-8">
+                  <div
+                    className={`text-4xl helvetica-bold mb-4 ${isProcessed ? "text-pop-blue" : "text-pop-red"}`}
+                  >
+                    {item.weight}kg
+                  </div>
+                  <div className="systematic-caps text-sm text-pop-gray mb-6">
+                    {isProcessed ? "Plastic Processed" : "Plastic Collected"}
+                  </div>
+                  <p className="text-lg text-pop-gray mb-2">
+                    {isProcessed
+                      ? "This plastic has been processed and is ready for manufacturing into new products."
+                      : "This plastic is ready for processing into new products."}
+                  </p>
+                  <p className="text-sm text-pop-gray">
+                    Check back soon to see its transformation journey!
+                  </p>
+                </CardContent>
+              </Card>
+            </PopArtContainer>
+          </div>
         )}
       </div>
     </div>
