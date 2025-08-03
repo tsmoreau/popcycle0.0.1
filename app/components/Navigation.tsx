@@ -60,7 +60,7 @@ export default function Navigation() {
                 pathname === '/track' ? "nav-link-active" : ""
               }`}
             >
-              Track
+              Track Our Plastic
             </Link>
 
             {/* Services Dropdown */}
@@ -164,7 +164,7 @@ export default function Navigation() {
                 onClick={() => setMobileMenuOpen(false)}
                 className="systematic-caps text-sm font-bold text-pop-black hover:text-pop-green transition-colors"
               >
-                Track
+                Track Our Plastic
               </Link>
             </div>
             

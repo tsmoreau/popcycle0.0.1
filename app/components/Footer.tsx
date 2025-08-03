@@ -34,6 +34,9 @@ export default function Footer() {
               <Link href="/track" className="block text-gray-300 hover:text-white transition-colors">
                 Track Our Plastic
               </Link>
+              <Link href="#" className="block text-gray-300 hover:text-white transition-colors">
+                Impact Reports
+              </Link>
             </div>
           </div>
           
