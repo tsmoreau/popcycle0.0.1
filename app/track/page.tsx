@@ -109,7 +109,7 @@ export default function Track() {
           </div>
 
           {/* How It Works */}
-          <section>
+          {/* <section>
             <h2 className="text-3xl helvetica-bold mb-8 text-center">
               <span className="text-pop-blue">HOW QR TRACKING WORKS</span>
             </h2>
@@ -155,7 +155,7 @@ export default function Track() {
                 </p>
               </div>
             </div>
-          </section>
+          </section> */}
         </div>
       </div>
 
