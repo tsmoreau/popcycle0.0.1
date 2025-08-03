@@ -109,55 +109,53 @@ export default function Track() {
           </div>
 
           {/* How It Works */}
-          {false && (
-            <section>
-              <h2 className="text-3xl helvetica-bold mb-8 text-center">
-                <span className="text-pop-blue">HOW QR TRACKING WORKS</span>
-              </h2>
-              <div className="grid md:grid-cols-3 gap-8">
-                <div className="text-center">
-                  <div className="w-16 h-16 bg-pop-green border-2 border-pop-black mx-auto mb-4 flex items-center justify-center">
-                    <QrCode className="w-8 h-8 text-pop-black" />
-                  </div>
-                  <h3 className="systematic-caps text-lg mb-2">
-                    Scan or Enter Code
-                  </h3>
-                  <p className="text-pop-gray text-sm">
-                    Each recycled item gets a unique QR code when it enters our
-                    system
-                  </p>
+          <section>
+            <h2 className="text-3xl helvetica-bold mb-8 text-center">
+              <span className="text-pop-blue">HOW QR TRACKING WORKS</span>
+            </h2>
+            <div className="grid md:grid-cols-3 gap-8">
+              <div className="text-center">
+                <div className="w-16 h-16 bg-pop-green border-2 border-pop-black mx-auto mb-4 flex items-center justify-center">
+                  <QrCode className="w-8 h-8 text-pop-black" />
                 </div>
-
-                <div className="text-center">
-                  <div className="w-16 h-16 bg-pop-blue border-2 border-pop-black mx-auto mb-4 flex items-center justify-center">
-                    <span className="text-pop-black helvetica-bold text-xl">
-                      →
-                    </span>
-                  </div>
-                  <h3 className="systematic-caps text-lg mb-2">
-                    See Full Journey
-                  </h3>
-                  <p className="text-pop-gray text-sm">
-                    Track transformation from corporate waste through processing
-                    to final product
-                  </p>
-                </div>
-
-                <div className="text-center">
-                  <div className="w-16 h-16 bg-pop-red border-2 border-pop-black mx-auto mb-4 flex items-center justify-center">
-                    <span className="text-pop-black helvetica-bold text-xl">
-                      !
-                    </span>
-                  </div>
-                  <h3 className="systematic-caps text-lg mb-2">Learn Impact</h3>
-                  <p className="text-pop-gray text-sm">
-                    Discover environmental impact, carbon offset, and educational
-                    value created
-                  </p>
-                </div>
+                <h3 className="systematic-caps text-lg mb-2">
+                  Scan or Enter Code
+                </h3>
+                <p className="text-pop-gray text-sm">
+                  Each recycled item gets a unique QR code when it enters our
+                  system
+                </p>
               </div>
-            </section>
-          )}
+
+              <div className="text-center">
+                <div className="w-16 h-16 bg-pop-blue border-2 border-pop-black mx-auto mb-4 flex items-center justify-center">
+                  <span className="text-pop-black helvetica-bold text-xl">
+                    →
+                  </span>
+                </div>
+                <h3 className="systematic-caps text-lg mb-2">
+                  See Full Journey
+                </h3>
+                <p className="text-pop-gray text-sm">
+                  Track transformation from corporate waste through processing
+                  to final product
+                </p>
+              </div>
+
+              <div className="text-center">
+                <div className="w-16 h-16 bg-pop-red border-2 border-pop-black mx-auto mb-4 flex items-center justify-center">
+                  <span className="text-pop-black helvetica-bold text-xl">
+                    !
+                  </span>
+                </div>
+                <h3 className="systematic-caps text-lg mb-2">Learn Impact</h3>
+                <p className="text-pop-gray text-sm">
+                  Discover environmental impact, carbon offset, and educational
+                  value created
+                </p>
+              </div>
+            </div>
+          </section>
         </div>
       </div>
 

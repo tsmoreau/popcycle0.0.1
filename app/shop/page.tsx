@@ -123,7 +123,7 @@ export default function Shop() {
 
       {/* Products Grid */}
       <div className="max-w-7xl mx-auto px-6 pb-16">
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 sm:gap-10 lg:gap-12">
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
           {products.map((product) => (
             <PopArtContainer key={product.id} color={product.inStock ? "blue" : "black"} shadow>
               <Card className="border-4 border-pop-black h-full">
