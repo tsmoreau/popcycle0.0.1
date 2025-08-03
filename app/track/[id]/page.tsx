@@ -1,11 +1,31 @@
-'use client'
+"use client";
 
-import { useEffect, useState } from 'react';
-import { useParams } from 'next/navigation';
-import { Card, CardContent, CardHeader, CardTitle } from "../../components/ui/card";
+import { useEffect, useState } from "react";
+import { useParams } from "next/navigation";
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+} from "../../components/ui/card";
 import { Badge } from "../../components/ui/badge";
-import { PopArtContainer, QRCodeElement } from "../../components/PopArtElements";
-import { Building, Calendar, Weight, Leaf, Package, CheckCircle, User, MapPin, Heart, Plus, HeartHandshake } from "lucide-react";
+import {
+  PopArtContainer,
+  QRCodeElement,
+} from "../../components/PopArtElements";
+import {
+  Building,
+  Calendar,
+  Weight,
+  Leaf,
+  Package,
+  CheckCircle,
+  User,
+  MapPin,
+  Heart,
+  Plus,
+  HeartHandshake,
+} from "lucide-react";
 
 interface MakerDetails {
   userId: string;
@@ -46,12 +66,12 @@ export default function TrackItem() {
       try {
         const response = await fetch(`/api/track/${id}`);
         if (!response.ok) {
-          throw new Error('Item not found');
+          throw new Error("Item not found");
         }
         const data = await response.json();
         setItem(data);
       } catch (err) {
-        setError(err instanceof Error ? err.message : 'Failed to fetch item');
+        setError(err instanceof Error ? err.message : "Failed to fetch item");
       } finally {
         setLoading(false);
       }
@@ -80,8 +100,13 @@ export default function TrackItem() {
           <Card className="border-4 border-pop-black">
             <CardContent className="p-8 text-center">
               <h2 className="text-3xl helvetica-bold mb-4">Item Not Found</h2>
-              <p className="text-pop-gray mb-6">QR code "{id}" is not in our system.</p>
-              <p className="text-sm text-pop-gray">Try one of our sample codes: ABC123, DEF456, GHI789, JKL012, MNO345, PQR678</p>
+              <p className="text-pop-gray mb-6">
+                Item code "{id}" is not in our system.
+              </p>
+              <p className="text-sm text-pop-gray">
+                Try one of our sample item codes: ABC123, DEF456, GHI789,
+                JKL012, MNO345, PQR678
+              </p>
             </CardContent>
           </Card>
         </PopArtContainer>
@@ -97,18 +122,25 @@ export default function TrackItem() {
   const hasMaker = !!item.makerDetails;
 
   // Impact metrics calculation
-  const impactMetrics = item.carbonOffset ? {
-    carbonSaved: item.carbonOffset,
-    wasteReduced: item.weight
-  } : null;
+  const impactMetrics = item.carbonOffset
+    ? {
+        carbonSaved: item.carbonOffset,
+        wasteReduced: item.weight,
+      }
+    : null;
 
   const getProductTypeLabel = (type: string) => {
     switch (type) {
-      case 'rover_chassis': return 'Rover Chassis';
-      case 'assembly_toy': return 'Assembly Toy';
-      case 'educational_kit': return 'Educational Kit';
-      case 'dinnerware': return 'Dinnerware';
-      default: return type;
+      case "rover_chassis":
+        return "Rover Chassis";
+      case "assembly_toy":
+        return "Assembly Toy";
+      case "educational_kit":
+        return "Educational Kit";
+      case "dinnerware":
+        return "Dinnerware";
+      default:
+        return type;
     }
   };
 
@@ -118,15 +150,14 @@ export default function TrackItem() {
         {/* Header */}
         <div className="text-center mb-12">
           <h1 className="text-4xl lg:text-6xl helvetica-bold mb-6 tracking-tight">
-            <span className="text-pop-green">QR</span> {item.id}
+            <span className="text-pop-green"></span> {item.id}
           </h1>
           <p className="text-lg text-pop-gray">
-            {isSourceOnly 
-              ? (isProcessed 
-                  ? `Processed plastic from ${item.originPoint}` 
-                  : `Fresh plastic collection from ${item.originPoint}`)
-              : `Complete transformation journey from ${item.originPoint}`
-            }
+            {isSourceOnly
+              ? isProcessed
+                ? `Processed plastic from ${item.originPoint}`
+                : `Fresh plastic collection from ${item.originPoint}`
+              : `Complete transformation journey from ${item.originPoint}`}
           </p>
         </div>
 
@@ -142,24 +173,24 @@ export default function TrackItem() {
         {/* Status Timeline */}
         {!isSourceOnly && (
           <div className="mb-12">
-            <div className="flex gap-2 justify-center">
-              <div className="text-center">
+            <div className="flex gap-2 justify-center max-w-2xl mx-auto">
+              <div className="text-center flex-1 max-w-[120px]">
                 <div className="w-16 h-16 mx-auto mb-4 border-2 border-pop-black flex items-center justify-center bg-pop-green">
                   <CheckCircle className="w-8 h-8 text-pop-black" />
                 </div>
                 <h3 className="systematic-caps text-sm mb-1">Collected</h3>
-                <p className="text-xs text-pop-gray">{item.collectionDate}</p>
+                <p className="text-xs text-pop-gray truncate">{item.collectionDate}</p>
               </div>
-              
-              <div className="text-center">
+
+              <div className="text-center flex-1 max-w-[120px]">
                 <div className="w-16 h-16 mx-auto mb-4 border-2 border-pop-black flex items-center justify-center bg-pop-blue">
                   <CheckCircle className="w-8 h-8 text-pop-black" />
                 </div>
                 <h3 className="systematic-caps text-sm mb-1">Processed</h3>
-                <p className="text-xs text-pop-gray">{item.processedDate}</p>
+                <p className="text-xs text-pop-gray truncate">{item.processedDate}</p>
               </div>
-              
-              <div className="text-center">
+
+              <div className="text-center flex-1 max-w-[120px]">
                 <div className="w-16 h-16 mx-auto mb-4 border-2 border-pop-black flex items-center justify-center bg-pop-red">
                   {isCharity ? (
                     <HeartHandshake className="w-8 h-8 text-pop-black" />
@@ -167,17 +198,21 @@ export default function TrackItem() {
                     <CheckCircle className="w-8 h-8 text-pop-black" />
                   )}
                 </div>
-                <h3 className="systematic-caps text-sm mb-1">{isCharity ? 'Donated' : 'Purchased'}</h3>
-                <p className="text-xs text-pop-gray">{item.transactionDate}</p>
+                <h3 className="systematic-caps text-sm mb-1">
+                  {isCharity ? "Donated" : "Purchased"}
+                </h3>
+                <p className="text-xs text-pop-gray truncate">{item.transactionDate}</p>
               </div>
-              
+
               {hasMaker && (
-                <div className="text-center">
+                <div className="text-center flex-1 max-w-[120px]">
                   <div className="w-16 h-16 mx-auto mb-4 border-2 border-pop-black flex items-center justify-center bg-pop-red">
                     <CheckCircle className="w-8 h-8 text-pop-black" />
                   </div>
                   <h3 className="systematic-caps text-sm mb-1">Assembled</h3>
-                  <p className="text-xs text-pop-gray">{item.makerDetails.assemblyDate}</p>
+                  <p className="text-xs text-pop-gray truncate">
+                    {item.makerDetails.assemblyDate}
+                  </p>
                 </div>
               )}
             </div>
@@ -195,7 +230,7 @@ export default function TrackItem() {
                 <h3 className="systematic-caps text-sm mb-1">Collected</h3>
                 <p className="text-xs text-pop-gray">{item.collectionDate}</p>
               </div>
-              
+
               {isProcessed && (
                 <div className="text-center">
                   <div className="w-16 h-16 mx-auto mb-4 border-2 border-pop-black flex items-center justify-center bg-pop-blue">
@@ -206,16 +241,20 @@ export default function TrackItem() {
                 </div>
               )}
             </div>
-            
+
             {!isProcessed && (
               <div className="text-center mt-4">
-                <p className="text-xs text-pop-red systematic-caps">Ready for Processing</p>
+                <p className="text-xs text-pop-red systematic-caps">
+                  Ready for Processing
+                </p>
               </div>
             )}
-            
+
             {isProcessed && (
               <div className="text-center mt-4">
-                <p className="text-xs text-pop-blue systematic-caps">Ready for Purchase</p>
+                <p className="text-xs text-pop-blue systematic-caps">
+                  Ready for Purchase
+                </p>
               </div>
             )}
           </div>
@@ -243,7 +282,9 @@ export default function TrackItem() {
                 </div>
                 <div className="flex justify-between">
                   <span className="systematic-caps text-sm">Material</span>
-                  <Badge className="bg-pop-green text-pop-black">{item.materialType}</Badge>
+                  <Badge className="bg-pop-green text-pop-black">
+                    {item.materialType}
+                  </Badge>
                 </div>
                 <div className="flex justify-between items-center">
                   <span className="systematic-caps text-sm">Weight</span>
@@ -276,16 +317,24 @@ export default function TrackItem() {
                 )}
                 {item.message && (
                   <div className="border-t border-pop-gray pt-4">
-                    <span className="systematic-caps text-sm text-pop-gray block mb-2">Message</span>
+                    <span className="systematic-caps text-sm text-pop-gray block mb-2">
+                      Message
+                    </span>
                     <p className="text-sm italic">{item.message}</p>
                   </div>
                 )}
                 {isSourceOnly && (
-                  <div className={`border-t pt-4 text-center ${isProcessed ? 'border-pop-blue' : 'border-pop-red'}`}>
-                    <div className={`flex items-center justify-center text-sm ${isProcessed ? 'text-pop-blue' : 'text-pop-red'}`}>
+                  <div
+                    className={`border-t pt-4 text-center ${isProcessed ? "border-pop-blue" : "border-pop-red"}`}
+                  >
+                    <div
+                      className={`flex items-center justify-center text-sm ${isProcessed ? "text-pop-blue" : "text-pop-red"}`}
+                    >
                       <Calendar className="w-4 h-4 mr-1" />
                       <span className="systematic-caps">
-                        {isProcessed ? 'Ready for Purchase' : 'Awaiting Processing'}
+                        {isProcessed
+                          ? "Ready for Purchase"
+                          : "Awaiting Processing"}
                       </span>
                     </div>
                   </div>
@@ -307,13 +356,17 @@ export default function TrackItem() {
                   </CardHeader>
                   <CardContent className="space-y-4">
                     <div className="flex justify-between">
-                      <span className="systematic-caps text-sm">Product Type</span>
+                      <span className="systematic-caps text-sm">
+                        Product Type
+                      </span>
                       <span>{getProductTypeLabel(item.productType)}</span>
                     </div>
 
                     {!isCharity && (
                       <div className="flex justify-between items-center">
-                        <span className="systematic-caps text-sm">Purchased</span>
+                        <span className="systematic-caps text-sm">
+                          Purchased
+                        </span>
                         <span className="flex items-center">
                           <Calendar className="w-4 h-4 mr-1" />
                           {item.transactionDate}
@@ -327,14 +380,14 @@ export default function TrackItem() {
                         <span>{item.donatingEntity}</span>
                       </div>
                     )}
-                    
+
                     {isCharity && (
                       <div className="flex justify-between items-center">
                         <span className="systematic-caps text-sm">Donated</span>
                         <span>{item.destination}</span>
                       </div>
                     )}
-                    
+
                     <div className="flex justify-between items-center">
                       <span className="systematic-caps text-sm">Delivered</span>
                       <span className="flex items-center">
@@ -342,17 +395,19 @@ export default function TrackItem() {
                         {item.deliveredDate}
                       </span>
                     </div>
-                    
+
                     {item.event && (
                       <div className="flex justify-between">
                         <span className="systematic-caps text-sm">Event</span>
                         <span>{item.event}</span>
                       </div>
                     )}
-                    
+
                     {isCharity && item.message && (
                       <div className="border-t border-pop-gray pt-4">
-                        <span className="systematic-caps text-sm text-pop-gray block mb-2">Message</span>
+                        <span className="systematic-caps text-sm text-pop-gray block mb-2">
+                          Message
+                        </span>
                         <p className="text-sm italic">{item.message}</p>
                       </div>
                     )}
@@ -362,7 +417,7 @@ export default function TrackItem() {
 
               {/* Maker Details Card */}
               <PopArtContainer color="red" shadow>
-                  <Card className="border-4 border-pop-black">
+                <Card className="border-4 border-pop-black">
                   <CardHeader>
                     <CardTitle className="systematic-caps flex items-center">
                       <User className="w-5 h-5 mr-2" />
@@ -375,17 +430,23 @@ export default function TrackItem() {
                       <>
                         <div className="flex justify-between">
                           <span className="systematic-caps text-sm">Maker</span>
-                          <span className="font-semibold">{item.makerDetails.name}</span>
+                          <span className="font-semibold">
+                            {item.makerDetails.name}
+                          </span>
                         </div>
                         <div className="flex justify-between items-center">
-                          <span className="systematic-caps text-sm">Location</span>
+                          <span className="systematic-caps text-sm">
+                            Location
+                          </span>
                           <span className="flex items-center">
                             <MapPin className="w-4 h-4 mr-1" />
                             {item.makerDetails.location}
                           </span>
                         </div>
                         <div className="flex justify-between items-center">
-                          <span className="systematic-caps text-sm">Assembled</span>
+                          <span className="systematic-caps text-sm">
+                            Assembled
+                          </span>
                           <span className="flex items-center">
                             <Calendar className="w-4 h-4 mr-1" />
                             {item.makerDetails.assemblyDate}
@@ -393,14 +454,20 @@ export default function TrackItem() {
                         </div>
                         {item.makerDetails.story && (
                           <div className="border-t border-pop-gray pt-4">
-                            <span className="systematic-caps text-sm text-pop-gray block mb-2">Maker Story</span>
-                            <p className="text-sm italic leading-relaxed">{item.makerDetails.story}</p>
+                            <span className="systematic-caps text-sm text-pop-gray block mb-2">
+                              Maker Story
+                            </span>
+                            <p className="text-sm italic leading-relaxed">
+                              {item.makerDetails.story}
+                            </p>
                           </div>
                         )}
                         <div className="border-t border-pop-gray pt-4 flex items-center justify-center">
                           <div className="flex items-center text-pop-red text-sm">
                             <Heart className="w-4 h-4 mr-1 fill-current" />
-                            <span className="systematic-caps">Maker Journey Complete</span>
+                            <span className="systematic-caps">
+                              Maker Journey Complete
+                            </span>
                           </div>
                         </div>
                       </>
@@ -410,12 +477,13 @@ export default function TrackItem() {
                         <div className="w-16 h-16 mx-auto mb-4 border-2 border-dashed border-pop-gray rounded-full flex items-center justify-center">
                           <Plus className="w-8 h-8 text-pop-gray" />
                         </div>
-                        <h3 className="text-lg helvetica-bold mb-2">Complete Your Maker Journey</h3>
+                        <h3 className="text-lg helvetica-bold mb-2">
+                          Complete Your Maker Journey
+                        </h3>
                         <p className="text-sm text-pop-gray mb-6 leading-relaxed">
-                          {isCharity 
-                            ? `Did you assemble this item${item.destination ? ` at ${item.destination}` : ''}? Share your story and connect this donation to its educational impact.`
-                            : 'Did you assemble this item? Share your story and become part of the circular economy narrative.'
-                          }
+                          {isCharity
+                            ? `Did you assemble this item${item.destination ? ` at ${item.destination}` : ""}? Share your story and connect this donation to its educational impact.`
+                            : "Did you assemble this item? Share your story and become part of the circular economy narrative."}
                         </p>
                         <button className="w-full bg-pop-red text-white font-semibold py-3 px-6 border-2 border-pop-black hover:bg-pop-black transition-colors systematic-caps">
                           Register as Maker
@@ -448,7 +516,9 @@ export default function TrackItem() {
                     <div className="text-4xl helvetica-bold text-pop-red mb-2">
                       {impactMetrics.carbonSaved}kg
                     </div>
-                    <div className="systematic-caps text-sm text-pop-gray">CO₂ Offset Generated</div>
+                    <div className="systematic-caps text-sm text-pop-gray">
+                      CO₂ Offset Generated
+                    </div>
                     <p className="text-xs text-pop-gray mt-2">
                       Equivalent to removing a car from the road for 2.3 days
                     </p>
@@ -457,7 +527,9 @@ export default function TrackItem() {
                     <div className="text-4xl helvetica-bold text-pop-red mb-2">
                       {impactMetrics.wasteReduced}kg
                     </div>
-                    <div className="systematic-caps text-sm text-pop-gray">Plastic Waste Diverted</div>
+                    <div className="systematic-caps text-sm text-pop-gray">
+                      Plastic Waste Diverted
+                    </div>
                     <p className="text-xs text-pop-gray mt-2">
                       Prevented from entering landfills or ocean systems
                     </p>
@@ -475,21 +547,22 @@ export default function TrackItem() {
               <CardHeader>
                 <CardTitle className="systematic-caps flex items-center justify-center text-2xl">
                   <Building className="w-6 h-6 mr-2" />
-                  {isProcessed ? 'Processing Complete' : 'Collection Complete'}
+                  {isProcessed ? "Processing Complete" : "Collection Complete"}
                 </CardTitle>
               </CardHeader>
               <CardContent className="text-center py-8">
-                <div className={`text-4xl helvetica-bold mb-4 ${isProcessed ? 'text-pop-blue' : 'text-pop-red'}`}>
+                <div
+                  className={`text-4xl helvetica-bold mb-4 ${isProcessed ? "text-pop-blue" : "text-pop-red"}`}
+                >
                   {item.weight}kg
                 </div>
                 <div className="systematic-caps text-sm text-pop-gray mb-6">
-                  {isProcessed ? 'Plastic Processed' : 'Plastic Collected'}
+                  {isProcessed ? "Plastic Processed" : "Plastic Collected"}
                 </div>
                 <p className="text-lg text-pop-gray mb-2">
-                  {isProcessed 
-                    ? 'This plastic has been processed and is ready for manufacturing into new products.'
-                    : 'This plastic is ready for processing into new products.'
-                  }
+                  {isProcessed
+                    ? "This plastic has been processed and is ready for manufacturing into new products."
+                    : "This plastic is ready for processing into new products."}
                 </p>
                 <p className="text-sm text-pop-gray">
                   Check back soon to see its transformation journey!
