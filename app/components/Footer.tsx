@@ -28,20 +28,11 @@ export default function Footer() {
           {/* Quick Links */}
           <div>
             <h3 className="systematic-caps text-sm font-bold mb-4 text-pop-green">
-              Explore
+              Resources
             </h3>
             <div className="space-y-2">
-              <Link href="/about" className="block text-gray-300 hover:text-white transition-colors">
-                About Us
-              </Link>
-              <Link href="/services" className="block text-gray-300 hover:text-white transition-colors">
-                Services
-              </Link>
-              <Link href="/store" className="block text-gray-300 hover:text-white transition-colors">
-                Store
-              </Link>
               <Link href="/track" className="block text-gray-300 hover:text-white transition-colors">
-                Track Item
+                Track Our Plastic
               </Link>
             </div>
           </div>
