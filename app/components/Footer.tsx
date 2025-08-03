@@ -9,8 +9,8 @@ export default function Footer() {
           {/* Logo & Description */}
           <div className="md:col-span-2">
             <div className="flex items-center space-x-3 mb-4">
-              <div className="w-12 h-12 bg-pop-green border-2 border-white flex items-center justify-center">
-                <Recycle className="w-6 h-6 text-black" />
+              <div className="w-12 h-12 bg-pop-green border-2 border-pop-black flex items-center justify-center">
+                <span className="text-pop-black helvetica-bold text-xl">P</span>
               </div>
               <span className="helvetica-bold text-2xl tracking-tight">
                 PopCycle
