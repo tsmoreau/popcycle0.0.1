@@ -2,7 +2,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "../components/ui/card"
 import { Button } from "../components/ui/button";
 import { Input } from "../components/ui/input";
 import { PopArtContainer, QRCodeElement } from "../components/PopArtElements";
-import { Search, QrCode } from "lucide-react";
+import { Search, QrCode, ArrowRight } from "lucide-react";
 import Link from "next/link";
 
 export default function Track() {
@@ -118,6 +118,27 @@ export default function Track() {
         </section>
         </div>
       </div>
+
+      {/* Footer CTA Section */}
+      <section className="py-20 px-4 bg-pop-black">
+        <div className="max-w-4xl mx-auto text-center">
+          <h2 className="text-4xl lg:text-6xl helvetica-bold mb-8 text-white">
+            DISCOVER YOUR<br />
+            IMPACT STORY
+          </h2>
+          
+          <p className="text-xl mb-12 text-white leading-relaxed">
+            Every QR code reveals the complete transformation journey from waste to wonder.
+          </p>
+          
+          <Link href="/shop">
+            <Button size="lg" className="bg-pop-green text-pop-black hover:bg-white hover:text-pop-black systematic-caps text-lg px-12 py-4">
+              SHOP PRODUCTS
+              <ArrowRight className="ml-2 w-5 h-5" />
+            </Button>
+          </Link>
+        </div>
+      </section>
     </div>
   );
 }

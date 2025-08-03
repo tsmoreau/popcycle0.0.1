@@ -1,7 +1,9 @@
+import Link from "next/link";
+import { Button } from "../components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "../components/ui/card";
 import { Badge } from "../components/ui/badge";
 import { PopArtContainer } from "../components/PopArtElements";
-import { Users, Target, Cog, Mail } from "lucide-react";
+import { Users, Target, Cog, Mail, ArrowRight } from "lucide-react";
 
 export default function About() {
   return (
@@ -212,6 +214,27 @@ export default function About() {
         </section>
         </div>
       </div>
+
+      {/* Footer CTA Section */}
+      <section className="py-20 px-4 bg-pop-black">
+        <div className="max-w-4xl mx-auto text-center">
+          <h2 className="text-4xl lg:text-6xl helvetica-bold mb-8 text-white">
+            JOIN THE CIRCULAR<br />
+            REVOLUTION
+          </h2>
+          
+          <p className="text-xl mb-12 text-white leading-relaxed">
+            Transform your organization's impact through traceable plastic transformation.
+          </p>
+          
+          <Link href="/shop">
+            <Button size="lg" className="bg-pop-green text-pop-black hover:bg-white hover:text-pop-black systematic-caps text-lg px-12 py-4">
+              EXPLORE PRODUCTS
+              <ArrowRight className="ml-2 w-5 h-5" />
+            </Button>
+          </Link>
+        </div>
+      </section>
     </div>
   );
 }

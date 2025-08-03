@@ -133,20 +133,20 @@ export default function Home() {
       </section>
 
       {/* CTA Section */}
-      <section className="py-20 px-4 bg-pop-green">
+      <section className="py-20 px-4 bg-pop-black">
         <div className="max-w-4xl mx-auto text-center">
-          <h2 className="text-4xl lg:text-6xl helvetica-bold mb-8 text-pop-black">
+          <h2 className="text-4xl lg:text-6xl helvetica-bold mb-8 text-white">
             READY TO TRANSFORM<br />
             YOUR WASTE?
           </h2>
           
-          <p className="text-xl mb-12 text-pop-black leading-relaxed">
+          <p className="text-xl mb-12 text-white leading-relaxed">
             Join companies already turning their plastic waste into educational impact.
           </p>
           
-          <Link href="/partners">
-            <Button size="lg" className="bg-pop-black text-white hover:bg-white hover:text-pop-black systematic-caps text-lg px-12 py-4 pop-shadow-black">
-              Start Partnership
+          <Link href="/about#contact">
+            <Button size="lg" className="bg-pop-green text-pop-black hover:bg-white hover:text-pop-black systematic-caps text-lg px-12 py-4">
+              START PARTNERSHIP
               <ArrowRight className="ml-2 w-5 h-5" />
             </Button>
           </Link>

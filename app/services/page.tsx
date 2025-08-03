@@ -245,6 +245,27 @@ export default function Services() {
         </section>
         </div>
       </div>
+
+      {/* Footer CTA Section */}
+      <section className="py-20 px-4 bg-pop-black">
+        <div className="max-w-4xl mx-auto text-center">
+          <h2 className="text-4xl lg:text-6xl helvetica-bold mb-8 text-white">
+            TRANSFORM YOUR<br />
+            PLASTIC IMPACT
+          </h2>
+          
+          <p className="text-xl mb-12 text-white leading-relaxed">
+            Partner with us to create trackable educational products from your corporate waste.
+          </p>
+          
+          <Link href="/about#contact">
+            <Button size="lg" className="bg-pop-green text-pop-black hover:bg-white hover:text-pop-black systematic-caps text-lg px-12 py-4">
+              GET STARTED
+              <ArrowRight className="ml-2 w-5 h-5" />
+            </Button>
+          </Link>
+        </div>
+      </section>
     </div>
   );
 }
