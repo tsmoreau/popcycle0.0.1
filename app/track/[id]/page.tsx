@@ -222,22 +222,22 @@ export default function TrackItem() {
         {/* Source-Only Status */}
         {isSourceOnly && (
           <div className="mb-12">
-            <div className="flex gap-2 justify-center">
-              <div className="text-center">
+            <div className="flex gap-2 justify-center max-w-2xl mx-auto">
+              <div className="text-center flex-1 max-w-[120px]">
                 <div className="w-16 h-16 mx-auto mb-4 border-2 border-pop-black flex items-center justify-center bg-pop-green">
                   <CheckCircle className="w-8 h-8 text-pop-black" />
                 </div>
                 <h3 className="systematic-caps text-sm mb-1">Collected</h3>
-                <p className="text-xs text-pop-gray">{item.collectionDate}</p>
+                <p className="text-xs text-pop-gray truncate">{item.collectionDate}</p>
               </div>
 
               {isProcessed && (
-                <div className="text-center">
+                <div className="text-center flex-1 max-w-[120px]">
                   <div className="w-16 h-16 mx-auto mb-4 border-2 border-pop-black flex items-center justify-center bg-pop-blue">
                     <CheckCircle className="w-8 h-8 text-pop-black" />
                   </div>
                   <h3 className="systematic-caps text-sm mb-1">Processed</h3>
-                  <p className="text-xs text-pop-gray">{item.processedDate}</p>
+                  <p className="text-xs text-pop-gray truncate">{item.processedDate}</p>
                 </div>
               )}
             </div>
