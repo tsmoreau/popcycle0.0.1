@@ -86,7 +86,7 @@ const products = [
   }
 ];
 
-const categories = ['All', 'Educational Kits', 'Educational Toys', 'Practical Items', 'Educational Tools'];
+const categories = ['All', 'Forever Flowers', 'Kinetic Sculptures ', 'Practical Items', 'Educational Tools'];
 
 export default function Shop() {
   return (
@@ -98,8 +98,7 @@ export default function Shop() {
             SHOP
           </h1>
           <p className="text-xl text-pop-black max-w-3xl mx-auto mb-8">
-            Educational products made from traceable corporate plastic waste. Every purchase supports circular economy education and comes with complete provenance tracking.
-          </p>
+            Toys, games, models, and more, custom cut from traceable 100% recycled plastic waste. Choose your design and a sheet blank and we'll send you a unique piece of sustainability.</p>
           <div className="flex justify-center items-center gap-4 text-pop-black">
             <Package className="w-6 h-6" />
             <span className="systematic-caps">All Products Include QR Tracking</span>

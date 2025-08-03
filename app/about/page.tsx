@@ -15,7 +15,7 @@ export default function About() {
             ABOUT POPCYCLE
           </h1>
           <p className="text-xl text-pop-gray max-w-3xl mx-auto mb-8">
-            Transforming corporate plastic waste into educational opportunities through systematic design and circular manufacturing.
+            We transform plastic waste into products that teach through making. Every item is 100% recycled, digitally tracked from collection to creation, and designed to inspire hands-on learning and community connection.
           </p>
           <div className="flex justify-center items-center gap-4 text-pop-gray">
             <Users className="w-6 h-6" />
@@ -36,10 +36,10 @@ export default function About() {
             <PopArtContainer color="green" shadow>
               <Card className="border-4 border-pop-black">
                 <CardHeader>
-                  <CardTitle className="systematic-caps text-pop-black">Design Director</CardTitle>
+                  <CardTitle className="systematic-caps text-pop-black">Founder & Creative Lead</CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <p className="text-pop-gray">Leading circular design methodology and systematic visual identity development.</p>
+                  <p className="text-pop-gray">Builder, artist, and teacher. Responsible for product development, backend systems, and hands-on R&D.</p>
                 </CardContent>
               </Card>
             </PopArtContainer>
@@ -47,10 +47,10 @@ export default function About() {
             <PopArtContainer color="blue" shadow>
               <Card className="border-4 border-pop-black">
                 <CardHeader>
-                  <CardTitle className="systematic-caps text-pop-black">Manufacturing Lead</CardTitle>
+                  <CardTitle className="systematic-caps text-pop-black">Partnerships Lead</CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <p className="text-pop-gray">Overseeing plastic processing and transformation into educational products.</p>
+                  <p className="text-pop-gray">Connects people with systems of impact, education, and enjoyment. Leads outreach and collaborations.</p>
                 </CardContent>
               </Card>
             </PopArtContainer>
@@ -58,10 +58,12 @@ export default function About() {
             <PopArtContainer color="red" shadow>
               <Card className="border-4 border-pop-black">
                 <CardHeader>
-                  <CardTitle className="systematic-caps text-pop-black">Education Coordinator</CardTitle>
+                  <CardTitle className="systematic-caps text-pop-black">Human Relations Lead</CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <p className="text-pop-gray">Developing maker education programs and community partnerships.</p>
+                  <p className="text-pop-gray">In charge of distractions, snacks, and walks. Enthusiastically chairs the studio greeting committee.
+
+</p>
                 </CardContent>
               </Card>
             </PopArtContainer>
@@ -131,7 +133,7 @@ export default function About() {
         </section>
 
         {/* Partners Section */}
-        <section id="partners" className="mb-20">
+        {/* <section id="partners" className="mb-20">
           <h2 className="text-4xl helvetica-bold mb-12 text-center">
             <span className="text-pop-red">PARTNERS</span>
           </h2>
@@ -195,7 +197,7 @@ export default function About() {
               </CardContent>
             </Card>
           </div>
-        </section>
+        </section> */}
 
         {/* Contact Section */}
         <section id="contact">
