@@ -93,7 +93,7 @@ export default function Shop() {
     <div className="min-h-screen bg-white">
       {/* Hero Section */}
       <div className="bg-white py-16">
-        <div className="max-w-7xl mx-auto px-6 text-center">
+        <div className="max-w-7xl mx-auto px-8 sm:px-12 lg:px-16 text-center">
           <h1 className="text-6xl helvetica-bold mb-6 text-pop-black">
             SHOP
           </h1>
@@ -108,7 +108,7 @@ export default function Shop() {
       </div>
 
       {/* Categories Filter */}
-      <div className="max-w-7xl mx-auto px-6 py-8">
+      <div className="max-w-7xl mx-auto px-8 sm:px-12 lg:px-16 py-8">
         <div className="flex flex-wrap gap-4 justify-center mb-12">
           {categories.map((category) => (
             <button
@@ -122,12 +122,12 @@ export default function Shop() {
       </div>
 
       {/* Products Grid */}
-      <div className="max-w-7xl mx-auto px-6 pb-16">
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+      <div className="max-w-7xl mx-auto px-8 sm:px-12 lg:px-16 pb-16">
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 sm:gap-10 lg:gap-12">
           {products.map((product) => (
             <PopArtContainer key={product.id} color={product.inStock ? "blue" : "black"} shadow>
               <Card className="border-4 border-pop-black h-full">
-                <CardHeader className="pb-4">
+                <CardHeader className="pb-4 px-6 pt-6">
                   <div className="w-full h-48 bg-pop-gray border-2 border-pop-black mb-4 flex items-center justify-center">
                     <Package className="w-16 h-16 text-pop-black" />
                   </div>
@@ -145,7 +145,7 @@ export default function Shop() {
                     {product.name}
                   </CardTitle>
                 </CardHeader>
-                <CardContent className="space-y-4">
+                <CardContent className="space-y-4 px-6 pb-6">
                   <p className="text-sm text-pop-gray leading-relaxed">
                     {product.description}
                   </p>
@@ -196,7 +196,7 @@ export default function Shop() {
 
       {/* Bottom CTA */}
       <div className="bg-pop-black text-white py-16">
-        <div className="max-w-7xl mx-auto px-6 text-center">
+        <div className="max-w-7xl mx-auto px-8 sm:px-12 lg:px-16 text-center">
           <h2 className="text-4xl helvetica-bold mb-6">
             Every Purchase Tells a Story
           </h2>
