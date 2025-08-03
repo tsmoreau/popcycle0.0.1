@@ -127,7 +127,7 @@ export default function Shop() {
           {products.map((product) => (
             <PopArtContainer key={product.id} color={product.inStock ? "blue" : "black"} shadow>
               <Card className="border-4 border-pop-black h-full">
-                <CardHeader className="pb-4 px-6 pt-6">
+                <CardHeader className="pb-4">
                   <div className="w-full h-48 bg-pop-gray border-2 border-pop-black mb-4 flex items-center justify-center">
                     <Package className="w-16 h-16 text-pop-black" />
                   </div>
@@ -145,7 +145,7 @@ export default function Shop() {
                     {product.name}
                   </CardTitle>
                 </CardHeader>
-                <CardContent className="space-y-4 px-6 pb-6">
+                <CardContent className="space-y-4">
                   <p className="text-sm text-pop-gray leading-relaxed">
                     {product.description}
                   </p>
