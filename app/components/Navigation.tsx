@@ -221,13 +221,12 @@ export default function Navigation() {
             
             {/* Mobile CTA */}
             <div className="pt-4">
-              <Button 
-                variant="ghost"
-                className="w-full bg-pop-green text-white hover:bg-pop-black systematic-caps"
+              <button 
+                className="login-button w-full systematic-caps px-4 py-2 rounded-md transition-colors"
                 onClick={() => setMobileMenuOpen(false)}
               >
                 Login
-              </Button>
+              </button>
             </div>
           </div>
         </div>
