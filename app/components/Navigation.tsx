@@ -125,7 +125,17 @@ export default function Navigation() {
           {/* Right-aligned Login Button */}
           <div className="hidden md:block">
             <button 
-              className="inline-flex items-center justify-center h-10 px-4 py-2 text-sm font-medium rounded-md transition-colors bg-pop-green text-white hover:bg-pop-black hover:text-white systematic-caps"
+              className="inline-flex items-center justify-center h-10 px-4 py-2 text-sm font-medium rounded-md transition-colors bg-pop-green text-white hover:bg-pop-black systematic-caps"
+              style={{
+                backgroundColor: 'var(--pop-green)',
+                color: 'white'
+              }}
+              onMouseOver={(e) => {
+                e.currentTarget.style.backgroundColor = 'var(--pop-black)';
+              }}
+              onMouseOut={(e) => {
+                e.currentTarget.style.backgroundColor = 'var(--pop-green)';
+              }}
             >
               Login
             </button>
