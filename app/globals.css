@@ -84,12 +84,12 @@
 /* Login Button Override */
 .login-button {
   background-color: var(--pop-green) !important;
-  color: var(--pop-black) !important;
-  border: 2px solid var(--pop-black) !important;
+  color: white !important;
+  border: 2px solid white !important;
 }
 
 .login-button:hover {
   background-color: var(--pop-green) !important;
-  color: white !important;
-  border-color: white !important;
+  color: var(--pop-black) !important;
+  border-color: var(--pop-black) !important;
 }
