@@ -93,13 +93,3 @@
   color: white !important;
   border-color: white !important;
 }
-
-/* Scroll padding for anchor links to account for fixed navigation */
-html {
-  scroll-padding-top: 70px;
-}
-
-/* Alternative: target specific sections with offset */
-section[id] {
-  scroll-margin-top: 70px;
-}
