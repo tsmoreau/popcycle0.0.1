@@ -84,3 +84,13 @@
 .\!text-white { color: white !important; }
 .hover\:\!bg-pop-black:hover { background-color: var(--pop-black) !important; }
 .hover\:\!text-white:hover { color: white !important; }
+
+/* Force login button styles */
+.login-button-force {
+  background-color: hsl(142, 100%, 35%) !important;
+  color: white !important;
+}
+.login-button-force:hover {
+  background-color: hsl(0, 0%, 0%) !important;
+  color: white !important;
+}
