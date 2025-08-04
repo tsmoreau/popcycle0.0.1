@@ -78,7 +78,7 @@ export default function Navigation() {
               </button>
               
               {servicesOpen && (
-                <div className="absolute top-full left-0 w-72 bg-white border-4 border-pop-black pop-shadow-black whitespace-normal">
+                <div className="absolute top-full left-0 min-w-max bg-white border-4 border-pop-black pop-shadow-black whitespace-nowrap">
                   {servicesItems.map((item) => (
                     <Link
                       key={item.href}
@@ -106,7 +106,7 @@ export default function Navigation() {
               </button>
               
               {aboutOpen && (
-                <div className="absolute top-full left-0 w-56 bg-white border-4 border-pop-black pop-shadow-black whitespace-normal">
+                <div className="absolute top-full left-0 min-w-max bg-white border-4 border-pop-black pop-shadow-black whitespace-nowrap">
                   {aboutItems.map((item) => (
                     <Link
                       key={item.href}
