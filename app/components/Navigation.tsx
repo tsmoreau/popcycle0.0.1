@@ -106,7 +106,7 @@ export default function Navigation() {
               </button>
               
               {aboutOpen && (
-                <div className="absolute top-full right-0 w-48 bg-white border-4 border-pop-black pop-shadow-black">
+                <div className="absolute top-full left-0 w-48 bg-white border-4 border-pop-black pop-shadow-black">
                   {aboutItems.map((item) => (
                     <Link
                       key={item.href}
