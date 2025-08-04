@@ -43,7 +43,7 @@ export default function Navigation() {
           </Link>
           
           {/* Absolutely centered navigation links */}
-          <div className="hidden md:flex items-center space-x-8 absolute left-1/2 transform -translate-x-1/2 whitespace-nowrap">
+          <div className="hidden lg:flex items-center space-x-8 absolute left-1/2 transform -translate-x-1/2 whitespace-nowrap">
             {/* Track */}
             <Link
               href="/track"
@@ -123,14 +123,14 @@ export default function Navigation() {
           </div>
 
           {/* Right-aligned Login Button */}
-          <div className="hidden md:block">
+          <div className="hidden lg:block">
             <Button variant="ghost" className="bg-pop-green text-white hover:bg-pop-black systematic-caps">
               Login
             </Button>
           </div>
 
           {/* Mobile menu button */}
-          <div className="md:hidden">
+          <div className="lg:hidden">
             <Button 
               variant="ghost" 
               size="sm"
@@ -145,7 +145,7 @@ export default function Navigation() {
       
       {/* Mobile Menu */}
       {mobileMenuOpen && (
-        <div className="md:hidden bg-white border-t-4 border-pop-black">
+        <div className="lg:hidden bg-white border-t-4 border-pop-black">
           <div className="px-4 py-6 space-y-4">
             {/* Track Mobile Section */}
             <div className="space-y-2">
