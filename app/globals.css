@@ -80,3 +80,16 @@
 .hover\:text-white:hover { color: white !important; }
 
 .hover\:border-white:hover { border-color: white !important; }
+
+/* Login Button Override */
+.login-button {
+  background-color: var(--pop-green) !important;
+  color: var(--pop-black) !important;
+  border: 2px solid var(--pop-black) !important;
+}
+
+.login-button:hover {
+  background-color: var(--pop-green) !important;
+  color: white !important;
+  border-color: white !important;
+}
