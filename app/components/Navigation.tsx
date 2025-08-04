@@ -118,9 +118,8 @@ export default function Navigation() {
                 </div>
               )}
             </div>
-          </div>
 
-          <div className="hidden md:block">
+            {/* Login Button */}
             <Button variant="ghost" className="bg-pop-green text-white hover:bg-pop-black systematic-caps">
               Login
             </Button>
