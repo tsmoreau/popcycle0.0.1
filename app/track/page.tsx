@@ -32,6 +32,7 @@ export default function Track() {
             Enter an item code to see the complete journey from corporate waste
             to educational wonder.
           </p>
+         
         </div>
       </div>
 
@@ -60,6 +61,20 @@ export default function Track() {
                 </CardContent>
               </Card>
             </PopArtContainer>
+          </div>
+
+          {/* Categories Filter */}
+          <div className="mb-16">
+            <div className="flex flex-wrap gap-4 justify-center">
+              {['COLLECTED BATCHES', 'PRESSED BLANKS', 'FINISHED ITEMS'].map((category) => (
+                <button
+                  key={category}
+                  className="px-6 py-3 border-2 border-pop-black bg-white hover:bg-pop-black hover:text-white transition-colors systematic-caps"
+                >
+                  {category}
+                </button>
+              ))}
+            </div>
           </div>
 
           {/* Sample QR Codes */}
@@ -163,8 +178,8 @@ export default function Track() {
           </h2>
 
           <p className="text-xl mb-12 text-white leading-relaxed">
-            Every unique code represents a complete transformation from waste to
-            wonder.
+            Every unique code represents a complete transformation from waste
+            to wonder.
           </p>
 
           <Link href="/shop">
