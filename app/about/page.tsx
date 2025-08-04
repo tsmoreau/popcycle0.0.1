@@ -35,7 +35,10 @@ export default function About() {
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             <PopArtContainer color="green" shadow>
               <Card className="border-4 border-pop-black">
-                <CardHeader>
+                <CardHeader className="text-center">
+                  <div className="w-24 h-24 mx-auto mb-4 rounded-full bg-pop-green border-4 border-pop-black flex items-center justify-center">
+                    <Users className="w-10 h-10 text-pop-black" />
+                  </div>
                   <CardTitle className="systematic-caps text-pop-black">Founder & Creative Lead</CardTitle>
                 </CardHeader>
                 <CardContent>
@@ -46,7 +49,10 @@ export default function About() {
 
             <PopArtContainer color="blue" shadow>
               <Card className="border-4 border-pop-black">
-                <CardHeader>
+                <CardHeader className="text-center">
+                  <div className="w-24 h-24 mx-auto mb-4 rounded-full bg-pop-blue border-4 border-pop-black flex items-center justify-center">
+                    <Target className="w-10 h-10 text-pop-black" />
+                  </div>
                   <CardTitle className="systematic-caps text-pop-black">Partnerships Lead</CardTitle>
                 </CardHeader>
                 <CardContent>
@@ -57,13 +63,14 @@ export default function About() {
 
             <PopArtContainer color="red" shadow>
               <Card className="border-4 border-pop-black">
-                <CardHeader>
+                <CardHeader className="text-center">
+                  <div className="w-24 h-24 mx-auto mb-4 rounded-full bg-pop-red border-4 border-pop-black flex items-center justify-center">
+                    <Cog className="w-10 h-10 text-pop-black" />
+                  </div>
                   <CardTitle className="systematic-caps text-pop-black">Human Relations Lead</CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <p className="text-pop-gray">In charge of distractions, snacks, and walks. Enthusiastically chairs the studio greeting committee.
-
-</p>
+                  <p className="text-pop-gray">In charge of distractions, snacks, and walks. Enthusiastically chairs the studio greeting committee.</p>
                 </CardContent>
               </Card>
             </PopArtContainer>
