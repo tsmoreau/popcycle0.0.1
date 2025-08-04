@@ -26,7 +26,7 @@ export default function Track() {
       <div className="bg-white py-0 pt-32">
         <div className="max-w-7xl mx-auto px-6 text-center">
           <h1 className="text-6xl helvetica-bold mb-6 text-pop-black">
-            TRACK YOUR ITEMS
+            TRACK OUR PLASTIC
           </h1>
           <p className="text-xl text-pop-gray max-w-3xl mx-auto mb-6">
             Enter an item code to see the complete journey from corporate waste
@@ -61,6 +61,20 @@ export default function Track() {
                 </CardContent>
               </Card>
             </PopArtContainer>
+          </div>
+
+          {/* Categories Filter */}
+          <div className="mb-16">
+            <div className="flex flex-wrap gap-4 justify-center">
+              {['COLLECTED BATCHES', 'PRESSED BLANKS', 'FINISHED ITEMS'].map((category) => (
+                <button
+                  key={category}
+                  className="px-6 py-3 border-2 border-pop-black bg-white hover:bg-pop-black hover:text-white transition-colors systematic-caps"
+                >
+                  {category}
+                </button>
+              ))}
+            </div>
           </div>
 
           {/* Sample QR Codes */}
@@ -164,7 +178,7 @@ export default function Track() {
           </h2>
 
           <p className="text-xl mb-12 text-white leading-relaxed">
-            Every unique code reveals the complete transformation journey from waste
+            Every unique code represents a complete transformation from waste
             to wonder.
           </p>
 

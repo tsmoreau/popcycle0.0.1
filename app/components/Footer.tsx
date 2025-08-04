@@ -8,7 +8,7 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-6 gap-8 md:gap-6">
           {/* Logo & Description */}
           <div className="md:col-span-2 mb-8 md:mb-0">
-            <div className="flex items-center space-x-3 mb-4">
+            <div className="flex items-center space-x-3 mb-1">
               <div className="w-12 h-12 bg-pop-green border-2 border-white flex items-center justify-center">
                 <span className="text-white helvetica-bold text-xl">P</span>
               </div>
@@ -26,7 +26,7 @@ export default function Footer() {
           </div>
 
           {/* Resources */}
-          <div className="mb-6 md:mb-0">
+          <div className="mb-2 md:mb-0">
             <h3 className="systematic-caps text-sm font-bold mb-3 text-pop-green">
               Resources
             </h3>
@@ -53,7 +53,7 @@ export default function Footer() {
           </div>
 
           {/* Connect */}
-          <div className="mb-6 md:mb-0">
+          <div className="mb-2 md:mb-0">
             <h3 className="systematic-caps text-sm font-bold mb-3 text-pop-green">
               Connect
             </h3>
@@ -74,7 +74,7 @@ export default function Footer() {
           </div>
 
           {/* Social Media */}
-          <div className="mb-6 md:mb-0">
+          <div className="mb-2 md:mb-0">
             <h3 className="systematic-caps text-sm font-bold mb-3 text-pop-green">
               Social Media
             </h3>
@@ -101,7 +101,7 @@ export default function Footer() {
           </div>
 
           {/* Insight Ecosystem */}
-          <div>
+          <div className="mb-12">
             <h3 className="systematic-caps text-sm font-bold mb-3 text-pop-green">
               Insight Ecosystem
             </h3>
