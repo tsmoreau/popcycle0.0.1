@@ -77,3 +77,10 @@
 .hover\:text-pop-blue:hover { color: var(--pop-blue); }
 .hover\:text-pop-red:hover { color: var(--pop-red); }
 .hover\:text-pop-black:hover { color: var(--pop-black); }
+
+/* Important modifiers */
+.\!bg-pop-green { background-color: var(--pop-green) !important; }
+.\!bg-pop-black { background-color: var(--pop-black) !important; }
+.\!text-white { color: white !important; }
+.hover\:\!bg-pop-black:hover { background-color: var(--pop-black) !important; }
+.hover\:\!text-white:hover { color: white !important; }
