@@ -18,7 +18,7 @@ export default function Navigation() {
     { href: "/about#team", label: "Team" },
     { href: "/about#story", label: "Story" },
     { href: "/about#process", label: "Process" },
-    { href: "/about#contact", label: "Contact" }
+    { href: "/about#faq", label: "FAQ" }
   ];
 
   const servicesItems = [

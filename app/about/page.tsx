@@ -311,26 +311,7 @@ export default function About() {
             </div>
           </section>
 
-          {/* Contact Section */}
-          <section id="contact">
-            <h2 className="text-4xl helvetica-bold mb-12 text-center">
-              <span className="text-pop-black">CONTACT</span>
-            </h2>
-            <div className="max-w-2xl mx-auto text-center">
-              <Card className="border-4 border-pop-green pop-shadow-green">
-                <CardContent className="p-8">
-                  <Mail className="w-12 h-12 text-pop-green mx-auto mb-6" />
-                  <p className="text-lg mb-4">
-                    Ready to transform your plastic waste into educational
-                    opportunities?
-                  </p>
-                  <p className="systematic-caps text-pop-green text-xl">
-                    hello@popcycle.io
-                  </p>
-                </CardContent>
-              </Card>
-            </div>
-          </section>
+
         </div>
       </div>
 

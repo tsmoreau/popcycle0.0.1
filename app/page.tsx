@@ -41,9 +41,9 @@ export default function Home() {
               </Button>
             </Link>
             
-            <Link href="/about#contact">
+            <Link href="/about#faq">
               <Button variant="outline" size="lg" className="border-2 border-pop-black text-pop-black hover:bg-pop-black hover:text-white systematic-caps text-lg px-8 py-4">
-                Contact Us
+                FAQ
               </Button>
             </Link>
           </div>
