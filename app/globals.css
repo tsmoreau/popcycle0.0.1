@@ -51,34 +51,29 @@
   font-weight: 700;
 }
 
-/* Tailwind Brand Color Utilities */
-.bg-pop-green { background-color: var(--pop-green); }
-.bg-pop-blue { background-color: var(--pop-blue); }
-.bg-pop-red { background-color: var(--pop-red); }
-.bg-pop-black { background-color: var(--pop-black); }
-.bg-pop-gray { background-color: var(--pop-gray); }
-
+/* Custom Colors */
 .text-pop-green { color: var(--pop-green); }
 .text-pop-blue { color: var(--pop-blue); }
 .text-pop-red { color: var(--pop-red); }
 .text-pop-black { color: var(--pop-black); }
 .text-pop-gray { color: var(--pop-gray); }
 
+.bg-pop-green { background-color: var(--pop-green); }
+.bg-pop-blue { background-color: var(--pop-blue); }
+.bg-pop-red { background-color: var(--pop-red); }
+.bg-pop-black { background-color: var(--pop-black); }
+
 .border-pop-green { border-color: var(--pop-green); }
 .border-pop-blue { border-color: var(--pop-blue); }
 .border-pop-red { border-color: var(--pop-red); }
 .border-pop-black { border-color: var(--pop-black); }
-.border-pop-gray { border-color: var(--pop-gray); }
 
 .hover\:bg-pop-green:hover { background-color: var(--pop-green); }
 .hover\:bg-pop-blue:hover { background-color: var(--pop-blue); }
 .hover\:bg-pop-red:hover { background-color: var(--pop-red); }
-.hover\:bg-pop-black:hover { background-color: var(--pop-black) !important; }
-.hover\:bg-pop-gray:hover { background-color: var(--pop-gray); }
+.hover\:bg-pop-black:hover { background-color: var(--pop-black); }
 
 .hover\:text-pop-green:hover { color: var(--pop-green); }
 .hover\:text-pop-blue:hover { color: var(--pop-blue); }
 .hover\:text-pop-red:hover { color: var(--pop-red); }
 .hover\:text-pop-black:hover { color: var(--pop-black); }
-.hover\:text-pop-gray:hover { color: var(--pop-gray); }
-

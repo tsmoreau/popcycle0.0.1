@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
-
+import { Button } from "./ui/button";
 import { ChevronDown, Menu, X, ChevronRight } from "lucide-react";
 
 export default function Navigation() {
@@ -124,19 +124,21 @@ export default function Navigation() {
 
           {/* Right-aligned Login Button */}
           <div className="hidden md:block">
-            <button className="inline-flex items-center justify-center h-10 px-4 py-2 text-sm font-medium rounded-md transition-colors bg-pop-green text-white hover:bg-pop-black hover:text-white systematic-caps">
+            <Button variant="ghost" className="bg-pop-green text-white hover:bg-pop-black systematic-caps">
               Login
-            </button>
+            </Button>
           </div>
 
           {/* Mobile menu button */}
           <div className="md:hidden">
-            <button 
+            <Button 
+              variant="ghost" 
+              size="sm"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="inline-flex items-center justify-center h-9 px-3 rounded-md transition-colors hover:bg-pop-green hover:text-white"
+              className="hover:bg-pop-green hover:text-white"
             >
               {mobileMenuOpen ? <X className="w-4 h-4" /> : <Menu className="w-4 h-4" />}
-            </button>
+            </Button>
           </div>
         </div>
       </div>
@@ -219,12 +221,13 @@ export default function Navigation() {
             
             {/* Mobile CTA */}
             <div className="pt-4">
-              <button 
-                className="w-full inline-flex items-center justify-center h-10 px-4 py-2 text-sm font-medium rounded-md transition-colors bg-pop-green text-white hover:bg-pop-black hover:text-white systematic-caps"
+              <Button 
+                variant="ghost"
+                className="w-full bg-pop-green text-white hover:bg-pop-black systematic-caps"
                 onClick={() => setMobileMenuOpen(false)}
               >
                 Login
-              </button>
+              </Button>
             </div>
           </div>
         </div>
