@@ -17,6 +17,14 @@ module.exports = {
     },
     extend: {
       colors: {
+        // PopCycle Brand Colors
+        'pop-green': 'hsl(var(--pop-green))',
+        'pop-blue': 'hsl(var(--pop-blue))',
+        'pop-red': 'hsl(var(--pop-red))',
+        'pop-black': 'hsl(var(--pop-black))',
+        'pop-white': 'hsl(var(--pop-white))',
+        'pop-gray': 'hsl(var(--pop-gray))',
+        
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
