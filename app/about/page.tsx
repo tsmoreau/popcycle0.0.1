@@ -8,7 +8,13 @@ import {
 } from "../components/ui/card";
 import { Badge } from "../components/ui/badge";
 import { PopArtContainer } from "../components/PopArtElements";
-import { Users, Target, Cog, Mail, ArrowRight } from "lucide-react";
+import { Users, Target, Cog, Mail, ArrowRight, ChevronDown } from "lucide-react";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "../components/ui/accordion";
 
 export default function About() {
   return (
@@ -249,6 +255,61 @@ export default function About() {
             </Card>
           </div>
         </section> */}
+
+          {/* FAQ Section */}
+          <section id="faq" className="mb-20">
+            <h2 className="text-4xl helvetica-bold mb-12 text-center">
+              <span className="text-pop-red">FREQUENTLY ASKED QUESTIONS</span>
+            </h2>
+            <div className="max-w-4xl mx-auto">
+              <Accordion type="single" collapsible className="space-y-4">
+                <AccordionItem value="item-1" className="border-4 border-pop-black rounded-md">
+                  <AccordionTrigger className="systematic-caps text-lg px-6 py-4 hover:bg-pop-green hover:text-white transition-colors">
+                    How does QR code tracking work?
+                  </AccordionTrigger>
+                  <AccordionContent className="px-6 pb-4 text-pop-gray">
+                    Each plastic item receives a unique QR code during collection. This code tracks the complete journey from corporate waste through processing, manufacturing, and final delivery to educational institutions. Users can scan the code to see the full provenance story.
+                  </AccordionContent>
+                </AccordionItem>
+
+                <AccordionItem value="item-2" className="border-4 border-pop-black rounded-md">
+                  <AccordionTrigger className="systematic-caps text-lg px-6 py-4 hover:bg-pop-blue hover:text-white transition-colors">
+                    What types of plastic do you accept?
+                  </AccordionTrigger>
+                  <AccordionContent className="px-6 pb-4 text-pop-gray">
+                    We work with common office plastics including cups, containers, and packaging materials. Our system is designed to handle PET, HDPE, and PP plastics that are commonly found in corporate waste streams.
+                  </AccordionContent>
+                </AccordionItem>
+
+                <AccordionItem value="item-3" className="border-4 border-pop-black rounded-md">
+                  <AccordionTrigger className="systematic-caps text-lg px-6 py-4 hover:bg-pop-red hover:text-white transition-colors">
+                    How can educational institutions get involved?
+                  </AccordionTrigger>
+                  <AccordionContent className="px-6 pb-4 text-pop-gray">
+                    Schools and makerspaces can join our network to receive tracked educational products. We provide maker education resources, assembly guides, and curriculum integration support to maximize learning outcomes.
+                  </AccordionContent>
+                </AccordionItem>
+
+                <AccordionItem value="item-4" className="border-4 border-pop-black rounded-md">
+                  <AccordionTrigger className="systematic-caps text-lg px-6 py-4 hover:bg-pop-green hover:text-white transition-colors">
+                    What is the maker registration system?
+                  </AccordionTrigger>
+                  <AccordionContent className="px-6 pb-4 text-pop-gray">
+                    Our maker registration allows customers to declare when they've completed assembling their tracked products. This creates a fourth "Assembled" step in the transformation timeline, completing the circular economy story from waste to finished educational tool.
+                  </AccordionContent>
+                </AccordionItem>
+
+                <AccordionItem value="item-5" className="border-4 border-pop-black rounded-md">
+                  <AccordionTrigger className="systematic-caps text-lg px-6 py-4 hover:bg-pop-blue hover:text-white transition-colors">
+                    How do companies become partners?
+                  </AccordionTrigger>
+                  <AccordionContent className="px-6 pb-4 text-pop-gray">
+                    Corporate partners provide plastic waste streams and receive detailed impact reporting. We handle collection, processing, and transformation while providing complete transparency through our QR tracking system. Contact us to discuss partnership opportunities.
+                  </AccordionContent>
+                </AccordionItem>
+              </Accordion>
+            </div>
+          </section>
 
           {/* Contact Section */}
           <section id="contact">
