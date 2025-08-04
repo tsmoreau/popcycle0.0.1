@@ -23,7 +23,7 @@ export default function About() {
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
-      <div className="bg-white py-16">
+      <div className="bg-white py-0 pt-32">
         <div className="max-w-7xl mx-auto px-6 text-center">
           <h1 className="text-6xl helvetica-bold mb-6 text-pop-black">
             ABOUT POPCYCLE
@@ -37,21 +37,24 @@ export default function About() {
         </div>
       </div>
 
-      <div className="py-20">
+      <div className="pb-20 pt-10">
         <div className="max-w-6xl mx-auto px-4">
           {/* Team Section */}
           <section id="team" className="mb-20">
             <h2 className="text-4xl helvetica-bold mb-12 text-center">
-              <span className="text-pop-blue">TEAM</span>
+              <span className="text-pop-green">TEAM</span>
             </h2>
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
               <PopArtContainer color="green" shadow>
                 <Card className="border-4 border-pop-black">
                   <CardHeader className="text-center">
-                    <div className="w-56 h-56 mx-auto mb-4 rounded-full bg-pop-green border-4 border-pop-black flex items-center justify-center">
+                    <div className="w-64 h-64 mx-auto mb-4 rounded-full bg-pop-green border-4 border-pop-black flex items-center justify-center">
                       <Users className="w-10 h-10 text-pop-black" />
                     </div>
-                    <CardTitle className="systematic-caps text-pop-black">
+                    <CardTitle className="systematic-caps text-pop-black px-10 pb-4 pt-2">
+                     Terrence Stasse
+                    </CardTitle>
+                    <CardTitle className="systematic-caps text-pop-black mt-12">
                       Founder & Creative Lead
                     </CardTitle>
                   </CardHeader>
@@ -67,9 +70,12 @@ export default function About() {
               <PopArtContainer color="blue" shadow>
                 <Card className="border-4 border-pop-black">
                   <CardHeader className="text-center">
-                    <div className="w-56 h-56 mx-auto mb-4 rounded-full bg-pop-blue border-4 border-pop-black flex items-center justify-center">
+                    <div className="w-64 h-64 mx-auto mb-4 rounded-full bg-pop-blue border-4 border-pop-black flex items-center justify-center">
                       <Target className="w-10 h-10 text-pop-black" />
                     </div>
+                    <CardTitle className="systematic-caps text-pop-black px-10 pb-4 pt-2">
+                     Oxana Ermolova
+                    </CardTitle>
                     <CardTitle className="systematic-caps text-pop-black">
                       Development & Partnerships Lead
                     </CardTitle>
@@ -86,13 +92,17 @@ export default function About() {
               <PopArtContainer color="red" shadow>
                 <Card className="border-4 border-pop-black">
                   <CardHeader className="text-center">
-                    <div className="w-56 h-56 mx-auto mb-4 rounded-full bg-pop-red border-4 border-pop-black flex items-center justify-center">
+                    <div className="w-64 h-64 mx-auto mb-4 rounded-full bg-pop-red border-4 border-pop-black flex items-center justify-center">
                       <Cog className="w-10 h-10 text-pop-black" />
                     </div>
+                    <CardTitle className="systematic-caps text-pop-black px-10 pb-4 pt-2">
+                     Argo
+                    </CardTitle>
                     <CardTitle className="systematic-caps text-pop-black">
                       Human Relations Lead
                     </CardTitle>
                   </CardHeader>
+                 
                   <CardContent>
                     <p className="text-pop-gray">
                       In charge of distractions, snacks, and walks.
@@ -107,7 +117,7 @@ export default function About() {
           {/* Story Section */}
           <section id="story" className="mb-20">
             <h2 className="text-4xl helvetica-bold mb-12 text-center">
-              <span className="text-pop-red">STORY</span>
+              <span className="text-pop-blue">STORY</span>
             </h2>
             <div className="max-w-4xl mx-auto">
               <Card className="border-4 border-pop-black pop-shadow-black">
@@ -137,7 +147,7 @@ export default function About() {
           {/* Process Section */}
           <section id="process" className="mb-20">
             <h2 className="text-4xl helvetica-bold mb-12 text-center">
-              <span className="text-pop-green">PROCESS</span>
+              <span className="text-pop-red">PROCESS</span>
             </h2>
             <div className="grid md:grid-cols-4 gap-6">
               <div className="text-center">
@@ -262,7 +272,7 @@ export default function About() {
           {/* FAQ Section */}
           <section id="faq" className="mb-20">
             <h2 className="text-4xl helvetica-bold mb-12 text-center">
-              <span className="text-pop-red">FREQUENTLY ASKED QUESTIONS</span>
+              <span className="text-pop-black">FREQUENTLY ASKED QUESTIONS</span>
             </h2>
             <div className="max-w-4xl mx-auto space-y-6">
               <PopArtContainer color="green" shadow>

@@ -92,17 +92,14 @@ export default function Shop() {
   return (
     <div className="min-h-screen bg-white">
       {/* Hero Section */}
-      <div className="bg-white py-16">
+      <div className="bg-white py-0 pt-32">
         <div className="max-w-7xl mx-auto px-6 text-center">
           <h1 className="text-6xl helvetica-bold mb-6 text-pop-black">
             SHOP
           </h1>
           <p className="text-xl text-pop-black max-w-3xl mx-auto mb-8">
             Toys, games, models, and more, custom cut from traceable 100% recycled plastic waste. Choose your design and a sheet blank and we'll send you a unique piece of sustainability.</p>
-          <div className="flex justify-center items-center gap-4 text-pop-black">
-            <Package className="w-6 h-6" />
-            <span className="systematic-caps">All Products Include QR Tracking</span>
-          </div>
+         
         </div>
       </div>
 

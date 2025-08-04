@@ -9,7 +9,7 @@ export default function Services() {
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
-      <div className="bg-white py-16">
+      <div className="bg-white py-0 pt-32">
         <div className="max-w-7xl mx-auto px-6 text-center">
           <h1 className="text-6xl helvetica-bold mb-6 text-pop-black">
             SERVICES
@@ -17,14 +17,11 @@ export default function Services() {
           <p className="text-xl text-pop-gray max-w-3xl mx-auto mb-8">
             Complete circular manufacturing solutions from waste collection through educational product delivery.
           </p>
-          <div className="flex justify-center items-center gap-4 text-pop-gray">
-            <Factory className="w-6 h-6" />
-            <span className="systematic-caps">End-to-End Circular Solutions</span>
-          </div>
+         
         </div>
       </div>
 
-      <div className="py-20">
+      <div className="pb-20 pt-10">
         <div className="max-w-6xl mx-auto px-4">
 
         {/* Community Partnerships Section */}

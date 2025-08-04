@@ -23,25 +23,20 @@ export default function Track() {
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
-      <div className="bg-white py-16">
+      <div className="bg-white py-0 pt-32">
         <div className="max-w-7xl mx-auto px-6 text-center">
           <h1 className="text-6xl helvetica-bold mb-6 text-pop-black">
-            TRACK YOUR ITEM
+            TRACK YOUR ITEMS
           </h1>
-          <p className="text-xl text-pop-gray max-w-3xl mx-auto mb-8">
+          <p className="text-xl text-pop-gray max-w-3xl mx-auto mb-6">
             Enter an item code to see the complete journey from corporate waste
             to educational wonder.
           </p>
-          <div className="flex justify-center items-center gap-4 text-pop-gray">
-            <QrCode className="w-6 h-6" />
-            <span className="systematic-caps">
-              Complete Transformation Stories
-            </span>
-          </div>
+         
         </div>
       </div>
 
-      <div className="py-20">
+      <div className="pb-24 pt-0">
         <div className="max-w-4xl mx-auto px-6 sm:px-8">
           {/* QR Code Search */}
           <div className="mb-16">
@@ -69,7 +64,7 @@ export default function Track() {
           </div>
 
           {/* Sample QR Codes */}
-          <div className="mb-16">
+          <div className="mb-16 mt-32">
             <h2 className="text-3xl helvetica-bold mb-8 text-center">
               <span className="text-pop-black">TRY THESE SAMPLE CODES</span>
             </h2>
@@ -163,13 +158,13 @@ export default function Track() {
       <section className="py-20 px-4 bg-pop-black">
         <div className="max-w-4xl mx-auto text-center">
           <h2 className="text-4xl lg:text-6xl helvetica-bold mb-8 text-white">
-            DISCOVER YOUR
+            HOW DOES THIS
             <br />
-            IMPACT STORY
+            ALL WORK?
           </h2>
 
           <p className="text-xl mb-12 text-white leading-relaxed">
-            Every QR code reveals the complete transformation journey from waste
+            Every unique code reveals the complete transformation journey from waste
             to wonder.
           </p>
 
@@ -178,7 +173,7 @@ export default function Track() {
               size="lg"
               className="bg-pop-green text-pop-black hover:bg-white hover:text-pop-black systematic-caps text-lg px-12 py-4"
             >
-              SHOP PRODUCTS
+              LEARN MORE ABOUT THE PROCESS
               <ArrowRight className="ml-2 w-5 h-5" />
             </Button>
           </Link>

@@ -36,7 +36,7 @@ export default function Home() {
           </div>
           <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
             <Link href="/track">
-              <Button size="lg" className="bg-pop-black text-white hover:bg-white hover:text-pop-black systematic-caps text-lg px-8 py-4">
+              <Button size="lg" className="bg-pop-green text-white hover:bg-white hover:text-pop-black systematic-caps text-lg px-8 py-4">
                 Track Plastic
               </Button>
             </Link>
@@ -55,28 +55,28 @@ export default function Home() {
         <div className="max-w-6xl mx-auto px-4">
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-8">
             <div className="text-center">
-              <div className="text-4xl lg:text-5xl helvetica-bold text-pop-green mb-2">
+              <div className="text-4xl lg:text-5xl helvetica-bold text-white mb-2">
                 {impactMetrics.totalPieces.toLocaleString()}
               </div>
               <div className="systematic-caps text-sm">Pieces Tracked</div>
             </div>
             
             <div className="text-center">
-              <div className="text-4xl lg:text-5xl helvetica-bold text-pop-blue mb-2">
+              <div className="text-4xl lg:text-5xl helvetica-bold text-white mb-2">
                 {impactMetrics.totalWeight}kg
               </div>
               <div className="systematic-caps text-sm">Plastic Recycled</div>
             </div>
             
             <div className="text-center">
-              <div className="text-4xl lg:text-5xl helvetica-bold text-pop-red mb-2">
+              <div className="text-4xl lg:text-5xl helvetica-bold text-white mb-2">
                 {impactMetrics.totalCarbonOffset}kg
               </div>
               <div className="systematic-caps text-sm">CO₂ Offset</div>
             </div>
             
             <div className="text-center">
-              <div className="text-4xl lg:text-5xl helvetica-bold text-pop-green mb-2">
+              <div className="text-4xl lg:text-5xl helvetica-bold text-white mb-2">
                 {impactMetrics.companiesPartnered}
               </div>
               <div className="systematic-caps text-sm">Partner Companies</div>
