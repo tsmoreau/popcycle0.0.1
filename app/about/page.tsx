@@ -35,10 +35,7 @@ export default function About() {
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             <PopArtContainer color="green" shadow>
               <Card className="border-4 border-pop-black">
-                <CardHeader className="text-center">
-                  <div className="w-24 h-24 bg-pop-green border-4 border-pop-black rounded-full mx-auto mb-4 flex items-center justify-center">
-                    <div className="w-12 h-12 bg-pop-black rounded-full"></div>
-                  </div>
+                <CardHeader>
                   <CardTitle className="systematic-caps text-pop-black">Founder & Creative Lead</CardTitle>
                 </CardHeader>
                 <CardContent>
@@ -49,10 +46,7 @@ export default function About() {
 
             <PopArtContainer color="blue" shadow>
               <Card className="border-4 border-pop-black">
-                <CardHeader className="text-center">
-                  <div className="w-24 h-24 bg-pop-blue border-4 border-pop-black rounded-full mx-auto mb-4 flex items-center justify-center">
-                    <div className="w-8 h-8 bg-pop-black rounded-sm rotate-45"></div>
-                  </div>
+                <CardHeader>
                   <CardTitle className="systematic-caps text-pop-black">Partnerships Lead</CardTitle>
                 </CardHeader>
                 <CardContent>
@@ -63,16 +57,13 @@ export default function About() {
 
             <PopArtContainer color="red" shadow>
               <Card className="border-4 border-pop-black">
-                <CardHeader className="text-center">
-                  <div className="w-24 h-24 bg-pop-red border-4 border-pop-black rounded-full mx-auto mb-4 flex items-center justify-center">
-                    <div className="w-4 h-4 bg-pop-black rounded-full"></div>
-                    <div className="w-4 h-4 bg-pop-black rounded-full ml-2"></div>
-                    <div className="w-8 h-2 bg-pop-black rounded-full mt-2 absolute"></div>
-                  </div>
+                <CardHeader>
                   <CardTitle className="systematic-caps text-pop-black">Human Relations Lead</CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <p className="text-pop-gray">In charge of distractions, snacks, and walks. Enthusiastically chairs the studio greeting committee.</p>
+                  <p className="text-pop-gray">In charge of distractions, snacks, and walks. Enthusiastically chairs the studio greeting committee.
+
+</p>
                 </CardContent>
               </Card>
             </PopArtContainer>
