@@ -1,4 +1,4 @@
-'use client'
+"use client";
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -18,14 +18,20 @@ export default function Navigation() {
     { href: "/about#team", label: "Team" },
     { href: "/about#story", label: "Story" },
     { href: "/about#process", label: "Process" },
-    { href: "/about#contact", label: "Contact" }
+    { href: "/about#contact", label: "Contact" },
   ];
 
   const servicesItems = [
-    { href: "/services#community-partnerships", label: "Community Partnerships" },
+    {
+      href: "/services#community-partnerships",
+      label: "Community Partnerships",
+    },
     { href: "/services#corporate-esg-events", label: "Corporate Services" },
-    { href: "/services#educational-kits-workshops", label: "Educational Kits & Workshops" },
-    { href: "/services#custom-products", label: "Custom Products" }
+    {
+      href: "/services#educational-kits-workshops",
+      label: "Educational Kits & Workshops",
+    },
+    { href: "/services#custom-products", label: "Custom Products" },
   ];
 
   return (
@@ -41,42 +47,44 @@ export default function Navigation() {
               PopCycle
             </span>
           </Link>
-          
+
           {/* Absolutely centered navigation links */}
           <div className="hidden lg:flex items-center space-x-8 absolute left-1/2 transform -translate-x-1/2 whitespace-nowrap">
             {/* Track */}
             <Link
               href="/track"
               className={`systematic-caps text-sm hover:text-pop-green transition-colors py-2 ${
-                pathname === '/track' ? "nav-link-active" : ""
+                pathname === "/track" ? "nav-link-active" : ""
               }`}
             >
               Track Our Plastic
             </Link>
-            
+
             {/* Shop */}
             <Link
               href="/shop"
               className={`systematic-caps text-sm hover:text-pop-green transition-colors py-2 ${
-                pathname === '/shop' ? "nav-link-active" : ""
+                pathname === "/shop" ? "nav-link-active" : ""
               }`}
             >
               Shop
             </Link>
 
             {/* Services Dropdown */}
-            <div 
+            <div
               className="relative"
               onMouseEnter={() => setServicesOpen(true)}
               onMouseLeave={() => setServicesOpen(false)}
             >
-              <button className={`systematic-caps text-sm hover:text-pop-green transition-colors flex items-center space-x-1 py-2 ${
-                pathname === '/services' ? "nav-link-active" : ""
-              }`}>
-                <span>Services</span>
+              <button
+                className={`systematic-caps text-sm hover:text-pop-green transition-colors flex items-center space-x-1 py-2 ${
+                  pathname === "/services" ? "nav-link-active" : ""
+                }`}
+              >
                 <ChevronDown className="w-3 h-3" />
+                <span>Services</span>
               </button>
-              
+
               {servicesOpen && (
                 <div className="absolute top-full left-0 w-80 bg-white border-4 border-pop-black pop-shadow-black">
                   {servicesItems.map((item) => (
@@ -93,18 +101,20 @@ export default function Navigation() {
             </div>
 
             {/* About Dropdown */}
-            <div 
+            <div
               className="relative"
               onMouseEnter={() => setAboutOpen(true)}
               onMouseLeave={() => setAboutOpen(false)}
             >
-              <button className={`systematic-caps text-sm hover:text-pop-green transition-colors flex items-center space-x-1 py-2 ${
-                pathname?.startsWith('/about') ? "nav-link-active" : ""
-              }`}>
-                <span>About</span>
+              <button
+                className={`systematic-caps text-sm hover:text-pop-green transition-colors flex items-center space-x-1 py-2 ${
+                  pathname?.startsWith("/about") ? "nav-link-active" : ""
+                }`}
+              >
                 <ChevronDown className="w-3 h-3" />
+                <span>About</span>
               </button>
-              
+
               {aboutOpen && (
                 <div className="absolute top-full left-0 min-w-max bg-white border-4 border-pop-black pop-shadow-black whitespace-nowrap">
                   {aboutItems.map((item) => (
@@ -119,30 +129,33 @@ export default function Navigation() {
                 </div>
               )}
             </div>
-
           </div>
 
           {/* Right-aligned Login Button */}
           <div className="hidden lg:block">
-            <button className="login-button systematic-caps text-sm px-4 py-2 rounded-md transition-colors">
+            <button className="login-button systematic-caps text-md px-10 py-2 rounded-lg transition-colors">
               Login
             </button>
           </div>
 
           {/* Mobile menu button */}
           <div className="lg:hidden">
-            <Button 
-              variant="ghost" 
+            <Button
+              variant="ghost"
               size="sm"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
               className="hover:bg-pop-green hover:text-white"
             >
-              {mobileMenuOpen ? <X className="w-4 h-4" /> : <Menu className="w-4 h-4" />}
+              {mobileMenuOpen ? (
+                <X className="w-4 h-4" />
+              ) : (
+                <Menu className="w-4 h-4" />
+              )}
             </Button>
           </div>
         </div>
       </div>
-      
+
       {/* Mobile Menu */}
       {mobileMenuOpen && (
         <div className="lg:hidden bg-white border-t-4 border-pop-black">
@@ -157,7 +170,7 @@ export default function Navigation() {
                 Track Our Plastic
               </Link>
             </div>
-            
+
             {/* Shop Mobile Section */}
             <div className="space-y-2">
               <Link
@@ -168,7 +181,7 @@ export default function Navigation() {
                 Shop
               </Link>
             </div>
-            
+
             {/* Services Mobile Accordion Section */}
             <div className="space-y-2">
               <button
@@ -176,7 +189,9 @@ export default function Navigation() {
                 className="flex items-center justify-between w-full systematic-caps text-sm font-bold text-pop-black hover:text-pop-blue transition-colors"
               >
                 <span>Services</span>
-                <ChevronRight className={`w-4 h-4 transform transition-transform ${mobileServicesOpen ? 'rotate-90' : ''}`} />
+                <ChevronRight
+                  className={`w-4 h-4 transform transition-transform ${mobileServicesOpen ? "rotate-90" : ""}`}
+                />
               </button>
               {mobileServicesOpen && (
                 <div className="pl-4 space-y-1">
@@ -193,7 +208,7 @@ export default function Navigation() {
                 </div>
               )}
             </div>
-            
+
             {/* About Mobile Accordion Section */}
             <div className="space-y-2">
               <button
@@ -201,7 +216,9 @@ export default function Navigation() {
                 className="flex items-center justify-between w-full systematic-caps text-sm font-bold text-pop-black hover:text-pop-green transition-colors"
               >
                 <span>About</span>
-                <ChevronRight className={`w-4 h-4 transform transition-transform ${mobileAboutOpen ? 'rotate-90' : ''}`} />
+                <ChevronRight
+                  className={`w-4 h-4 transform transition-transform ${mobileAboutOpen ? "rotate-90" : ""}`}
+                />
               </button>
               {mobileAboutOpen && (
                 <div className="pl-4 space-y-1">
@@ -218,10 +235,10 @@ export default function Navigation() {
                 </div>
               )}
             </div>
-            
+
             {/* Mobile CTA */}
             <div className="pt-4">
-              <Button 
+              <Button
                 variant="ghost"
                 className="w-full bg-pop-green text-white hover:bg-pop-black systematic-caps"
                 onClick={() => setMobileMenuOpen(false)}
