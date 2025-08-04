@@ -43,7 +43,7 @@ export default function Navigation() {
           </Link>
           
           {/* Absolutely centered navigation links */}
-          <div className="hidden md:flex items-center space-x-8 absolute left-1/2 transform -translate-x-1/2">
+          <div className="hidden md:flex items-center space-x-8 absolute left-1/2 transform -translate-x-1/2 whitespace-nowrap">
             {/* Track */}
             <Link
               href="/track"
