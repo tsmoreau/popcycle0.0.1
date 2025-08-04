@@ -36,7 +36,7 @@ export default function About() {
             <PopArtContainer color="green" shadow>
               <Card className="border-4 border-pop-black">
                 <CardHeader className="text-center">
-                  <div className="w-24 h-24 mx-auto mb-4 rounded-full bg-pop-green border-4 border-pop-black flex items-center justify-center">
+                  <div className="w-56 h-56 mx-auto mb-4 rounded-full bg-pop-green border-4 border-pop-black flex items-center justify-center">
                     <Users className="w-10 h-10 text-pop-black" />
                   </div>
                   <CardTitle className="systematic-caps text-pop-black">Founder & Creative Lead</CardTitle>
@@ -50,7 +50,7 @@ export default function About() {
             <PopArtContainer color="blue" shadow>
               <Card className="border-4 border-pop-black">
                 <CardHeader className="text-center">
-                  <div className="w-24 h-24 mx-auto mb-4 rounded-full bg-pop-blue border-4 border-pop-black flex items-center justify-center">
+                  <div className="w-56 h-56 mx-auto mb-4 rounded-full bg-pop-blue border-4 border-pop-black flex items-center justify-center">
                     <Target className="w-10 h-10 text-pop-black" />
                   </div>
                   <CardTitle className="systematic-caps text-pop-black">Partnerships Lead</CardTitle>
