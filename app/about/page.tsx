@@ -1,4 +1,7 @@
+"use client";
+
 import Link from "next/link";
+import { useState } from "react";
 import { Button } from "../components/ui/button";
 import {
   Card,
@@ -9,14 +12,14 @@ import {
 import { Badge } from "../components/ui/badge";
 import { PopArtContainer } from "../components/PopArtElements";
 import { Users, Target, Cog, Mail, ArrowRight, ChevronDown } from "lucide-react";
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "../components/ui/accordion";
 
 export default function About() {
+  const [openFaq, setOpenFaq] = useState<string | null>(null);
+
+  const toggleFaq = (id: string) => {
+    setOpenFaq(openFaq === id ? null : id);
+  };
+
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
@@ -261,53 +264,111 @@ export default function About() {
             <h2 className="text-4xl helvetica-bold mb-12 text-center">
               <span className="text-pop-red">FREQUENTLY ASKED QUESTIONS</span>
             </h2>
-            <div className="max-w-4xl mx-auto">
-              <Accordion type="single" collapsible className="space-y-4">
-                <AccordionItem value="item-1" className="border-4 border-pop-black rounded-md">
-                  <AccordionTrigger className="systematic-caps text-lg px-6 py-4 hover:bg-pop-green hover:text-white transition-colors">
-                    How does QR code tracking work?
-                  </AccordionTrigger>
-                  <AccordionContent className="px-6 pb-4 text-pop-gray">
-                    Each plastic item receives a unique QR code during collection. This code tracks the complete journey from corporate waste through processing, manufacturing, and final delivery to educational institutions. Users can scan the code to see the full provenance story.
-                  </AccordionContent>
-                </AccordionItem>
+            <div className="max-w-4xl mx-auto space-y-6">
+              <PopArtContainer color="green" shadow>
+                <Card className="border-4 border-pop-black">
+                  <CardHeader 
+                    className="cursor-pointer hover:bg-pop-green hover:text-white transition-colors"
+                    onClick={() => toggleFaq('faq1')}
+                  >
+                    <div className="flex items-center justify-between">
+                      <CardTitle className="systematic-caps text-lg">How does QR code tracking work?</CardTitle>
+                      <ChevronDown className={`w-6 h-6 transition-transform ${openFaq === 'faq1' ? 'rotate-180' : ''}`} />
+                    </div>
+                  </CardHeader>
+                  {openFaq === 'faq1' && (
+                    <CardContent>
+                      <p className="text-pop-gray">
+                        Each plastic item receives a unique QR code during collection. This code tracks the complete journey from corporate waste through processing, manufacturing, and final delivery to educational institutions. Users can scan the code to see the full provenance story.
+                      </p>
+                    </CardContent>
+                  )}
+                </Card>
+              </PopArtContainer>
 
-                <AccordionItem value="item-2" className="border-4 border-pop-black rounded-md">
-                  <AccordionTrigger className="systematic-caps text-lg px-6 py-4 hover:bg-pop-blue hover:text-white transition-colors">
-                    What types of plastic do you accept?
-                  </AccordionTrigger>
-                  <AccordionContent className="px-6 pb-4 text-pop-gray">
-                    We work with common office plastics including cups, containers, and packaging materials. Our system is designed to handle PET, HDPE, and PP plastics that are commonly found in corporate waste streams.
-                  </AccordionContent>
-                </AccordionItem>
+              <PopArtContainer color="blue" shadow>
+                <Card className="border-4 border-pop-black">
+                  <CardHeader 
+                    className="cursor-pointer hover:bg-pop-blue hover:text-white transition-colors"
+                    onClick={() => toggleFaq('faq2')}
+                  >
+                    <div className="flex items-center justify-between">
+                      <CardTitle className="systematic-caps text-lg">What types of plastic do you accept?</CardTitle>
+                      <ChevronDown className={`w-6 h-6 transition-transform ${openFaq === 'faq2' ? 'rotate-180' : ''}`} />
+                    </div>
+                  </CardHeader>
+                  {openFaq === 'faq2' && (
+                    <CardContent>
+                      <p className="text-pop-gray">
+                        We work with common office plastics including cups, containers, and packaging materials. Our system is designed to handle PET, HDPE, and PP plastics that are commonly found in corporate waste streams.
+                      </p>
+                    </CardContent>
+                  )}
+                </Card>
+              </PopArtContainer>
 
-                <AccordionItem value="item-3" className="border-4 border-pop-black rounded-md">
-                  <AccordionTrigger className="systematic-caps text-lg px-6 py-4 hover:bg-pop-red hover:text-white transition-colors">
-                    How can educational institutions get involved?
-                  </AccordionTrigger>
-                  <AccordionContent className="px-6 pb-4 text-pop-gray">
-                    Schools and makerspaces can join our network to receive tracked educational products. We provide maker education resources, assembly guides, and curriculum integration support to maximize learning outcomes.
-                  </AccordionContent>
-                </AccordionItem>
+              <PopArtContainer color="red" shadow>
+                <Card className="border-4 border-pop-black">
+                  <CardHeader 
+                    className="cursor-pointer hover:bg-pop-red hover:text-white transition-colors"
+                    onClick={() => toggleFaq('faq3')}
+                  >
+                    <div className="flex items-center justify-between">
+                      <CardTitle className="systematic-caps text-lg">How can educational institutions get involved?</CardTitle>
+                      <ChevronDown className={`w-6 h-6 transition-transform ${openFaq === 'faq3' ? 'rotate-180' : ''}`} />
+                    </div>
+                  </CardHeader>
+                  {openFaq === 'faq3' && (
+                    <CardContent>
+                      <p className="text-pop-gray">
+                        Schools and makerspaces can join our network to receive tracked educational products. We provide maker education resources, assembly guides, and curriculum integration support to maximize learning outcomes.
+                      </p>
+                    </CardContent>
+                  )}
+                </Card>
+              </PopArtContainer>
 
-                <AccordionItem value="item-4" className="border-4 border-pop-black rounded-md">
-                  <AccordionTrigger className="systematic-caps text-lg px-6 py-4 hover:bg-pop-green hover:text-white transition-colors">
-                    What is the maker registration system?
-                  </AccordionTrigger>
-                  <AccordionContent className="px-6 pb-4 text-pop-gray">
-                    Our maker registration allows customers to declare when they've completed assembling their tracked products. This creates a fourth "Assembled" step in the transformation timeline, completing the circular economy story from waste to finished educational tool.
-                  </AccordionContent>
-                </AccordionItem>
+              <PopArtContainer color="green" shadow>
+                <Card className="border-4 border-pop-black">
+                  <CardHeader 
+                    className="cursor-pointer hover:bg-pop-green hover:text-white transition-colors"
+                    onClick={() => toggleFaq('faq4')}
+                  >
+                    <div className="flex items-center justify-between">
+                      <CardTitle className="systematic-caps text-lg">What is the maker registration system?</CardTitle>
+                      <ChevronDown className={`w-6 h-6 transition-transform ${openFaq === 'faq4' ? 'rotate-180' : ''}`} />
+                    </div>
+                  </CardHeader>
+                  {openFaq === 'faq4' && (
+                    <CardContent>
+                      <p className="text-pop-gray">
+                        Our maker registration allows customers to declare when they've completed assembling their tracked products. This creates a fourth "Assembled" step in the transformation timeline, completing the circular economy story from waste to finished educational tool.
+                      </p>
+                    </CardContent>
+                  )}
+                </Card>
+              </PopArtContainer>
 
-                <AccordionItem value="item-5" className="border-4 border-pop-black rounded-md">
-                  <AccordionTrigger className="systematic-caps text-lg px-6 py-4 hover:bg-pop-blue hover:text-white transition-colors">
-                    How do companies become partners?
-                  </AccordionTrigger>
-                  <AccordionContent className="px-6 pb-4 text-pop-gray">
-                    Corporate partners provide plastic waste streams and receive detailed impact reporting. We handle collection, processing, and transformation while providing complete transparency through our QR tracking system. Contact us to discuss partnership opportunities.
-                  </AccordionContent>
-                </AccordionItem>
-              </Accordion>
+              <PopArtContainer color="blue" shadow>
+                <Card className="border-4 border-pop-black">
+                  <CardHeader 
+                    className="cursor-pointer hover:bg-pop-blue hover:text-white transition-colors"
+                    onClick={() => toggleFaq('faq5')}
+                  >
+                    <div className="flex items-center justify-between">
+                      <CardTitle className="systematic-caps text-lg">How do companies become partners?</CardTitle>
+                      <ChevronDown className={`w-6 h-6 transition-transform ${openFaq === 'faq5' ? 'rotate-180' : ''}`} />
+                    </div>
+                  </CardHeader>
+                  {openFaq === 'faq5' && (
+                    <CardContent>
+                      <p className="text-pop-gray">
+                        Corporate partners provide plastic waste streams and receive detailed impact reporting. We handle collection, processing, and transformation while providing complete transparency through our QR tracking system. Contact us to discuss partnership opportunities.
+                      </p>
+                    </CardContent>
+                  )}
+                </Card>
+              </PopArtContainer>
             </div>
           </section>
 
