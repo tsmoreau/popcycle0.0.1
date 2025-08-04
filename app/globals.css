@@ -68,12 +68,15 @@
 .border-pop-red { border-color: var(--pop-red); }
 .border-pop-black { border-color: var(--pop-black); }
 
-.hover\:bg-pop-green:hover { background-color: var(--pop-green); }
-.hover\:bg-pop-blue:hover { background-color: var(--pop-blue); }
-.hover\:bg-pop-red:hover { background-color: var(--pop-red); }
-.hover\:bg-pop-black:hover { background-color: var(--pop-black); }
+.hover\:bg-pop-green:hover { background-color: var(--pop-green) !important; }
+.hover\:bg-pop-blue:hover { background-color: var(--pop-blue) !important; }
+.hover\:bg-pop-red:hover { background-color: var(--pop-red) !important; }
+.hover\:bg-pop-black:hover { background-color: var(--pop-black) !important; }
 
 .hover\:text-pop-green:hover { color: var(--pop-green); }
 .hover\:text-pop-blue:hover { color: var(--pop-blue); }
 .hover\:text-pop-red:hover { color: var(--pop-red); }
 .hover\:text-pop-black:hover { color: var(--pop-black); }
+.hover\:text-white:hover { color: white !important; }
+
+.hover\:border-white:hover { border-color: white !important; }
