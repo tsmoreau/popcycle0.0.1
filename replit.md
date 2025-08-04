@@ -49,17 +49,17 @@ Brand colors: Must use exact HSL values - pop-green: hsl(142, 100%, 35%), pop-bl
 - **Educational Integration**: Links to workshop participation and skill development
 
 ### Development Workflow
-- **Hot Reload**: Vite development server with HMR for rapid iteration
-- **Build Process**: Separate client (Vite) and server (esbuild) build pipelines
-- **Type Safety**: Shared schema definitions ensure consistency across full stack
-- **Error Handling**: Centralized error boundary with development-friendly error modals
+- **Hot Reload**: Next.js development server with Fast Refresh for rapid iteration
+- **Build Process**: Next.js unified build system for client and server
+- **Type Safety**: TypeScript with strict mode for comprehensive type checking
+- **Error Handling**: Next.js error boundaries with development-friendly overlays
 
 ## External Dependencies
 
-### Database Integration (Prepared)
-- **ORM**: Drizzle ORM configured for PostgreSQL with Neon Database serverless
-- **Migration System**: Drizzle Kit for schema migrations and database management
-- **Schema Location**: `./shared/schema.ts` for centralized data definitions
+### Database Integration 
+- **Database**: MongoDB for flexible document storage and tracking
+- **Connection**: Native MongoDB driver with connection pooling
+- **Data Structure**: JSON documents for plastic items, partners, and metrics
 
 ### UI Component Library
 - **Design System**: shadcn/ui built on Radix UI primitives
@@ -68,12 +68,11 @@ Brand colors: Must use exact HSL values - pop-green: hsl(142, 100%, 35%), pop-bl
 - **Form Components**: Comprehensive form controls with validation support
 
 ### Development Tools
-- **Replit Integration**: Custom Vite plugins for Replit development environment
-- **Session Management**: Express session handling prepared with connect-pg-simple
+- **Next.js Development**: Hot reload with built-in development server
 - **Error Tracking**: Runtime error overlay for development debugging
 - **Code Quality**: TypeScript strict mode with comprehensive type checking
 
-### Third-Party Services (Ready for Integration)
-- **Database**: Neon Database serverless PostgreSQL (configured via DATABASE_URL)
+### Third-Party Services
+- **Database**: MongoDB for document storage and QR code tracking
 - **QR Code Generation**: Framework prepared for QR code generation and scanning
 - **File Storage**: Asset management through `attached_assets` directory structure
