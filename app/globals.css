@@ -73,7 +73,7 @@
 .hover\:bg-pop-green:hover { background-color: var(--pop-green); }
 .hover\:bg-pop-blue:hover { background-color: var(--pop-blue); }
 .hover\:bg-pop-red:hover { background-color: var(--pop-red); }
-.hover\:bg-pop-black:hover { background-color: var(--pop-black); }
+.hover\:bg-pop-black:hover { background-color: var(--pop-black) !important; }
 .hover\:bg-pop-gray:hover { background-color: var(--pop-gray); }
 
 .hover\:text-pop-green:hover { color: var(--pop-green); }
