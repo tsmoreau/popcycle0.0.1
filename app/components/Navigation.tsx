@@ -124,9 +124,23 @@ export default function Navigation() {
 
           {/* Right-aligned Login Button */}
           <div className="hidden md:block">
-            <Button variant="ghost" className="bg-pop-green text-white hover:!bg-pop-black hover:!text-white systematic-caps">
+            <button 
+              className="inline-flex items-center justify-center h-10 px-4 py-2 bg-pop-green text-white systematic-caps rounded-md transition-colors hover:bg-pop-black hover:text-white"
+              style={{
+                backgroundColor: 'hsl(142, 100%, 35%)',
+                color: 'white'
+              }}
+              onMouseEnter={(e) => {
+                (e.target as HTMLButtonElement).style.backgroundColor = 'hsl(0, 0%, 0%)';
+                (e.target as HTMLButtonElement).style.color = 'white';
+              }}
+              onMouseLeave={(e) => {
+                (e.target as HTMLButtonElement).style.backgroundColor = 'hsl(142, 100%, 35%)';
+                (e.target as HTMLButtonElement).style.color = 'white';
+              }}
+            >
               Login
-            </Button>
+            </button>
           </div>
 
           {/* Mobile menu button */}
