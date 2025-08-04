@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
-import { Button } from "./ui/button";
+
 import { ChevronDown, Menu, X, ChevronRight } from "lucide-react";
 
 export default function Navigation() {
@@ -131,14 +131,12 @@ export default function Navigation() {
 
           {/* Mobile menu button */}
           <div className="md:hidden">
-            <Button 
-              variant="ghost" 
-              size="sm"
+            <button 
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="hover:bg-pop-green hover:text-white"
+              className="inline-flex items-center justify-center h-9 px-3 rounded-md transition-colors hover:bg-pop-green hover:text-white"
             >
               {mobileMenuOpen ? <X className="w-4 h-4" /> : <Menu className="w-4 h-4" />}
-            </Button>
+            </button>
           </div>
         </div>
       </div>
