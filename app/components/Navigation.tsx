@@ -78,12 +78,12 @@ export default function Navigation() {
               </button>
               
               {servicesOpen && (
-                <div className="absolute top-full left-0 min-w-max bg-white border-4 border-pop-black pop-shadow-black whitespace-nowrap">
+                <div className="absolute top-full left-0 w-80 bg-white border-4 border-pop-black pop-shadow-black">
                   {servicesItems.map((item) => (
                     <Link
                       key={item.href}
                       href={item.href}
-                      className="block w-full text-left px-4 py-3 systematic-caps text-sm hover:bg-pop-blue hover:text-white transition-colors"
+                      className="block w-full text-left px-4 py-3 systematic-caps text-sm hover:bg-pop-blue hover:text-white transition-colors whitespace-normal"
                     >
                       {item.label}
                     </Link>
