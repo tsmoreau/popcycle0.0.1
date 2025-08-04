@@ -17,44 +17,53 @@ export default function Footer() {
               </span>
             </div>
             <p className="text-gray-300 leading-relaxed mb-4">
-              Transforming corporate plastic waste into trackable, educational products. 
-              Every QR code tells a complete story of circular transformation.
+              Transforming waste into sustainability. <br/> Track our plastic, every
+              piece tells a story.
             </p>
             <p className="text-sm text-gray-400">
               © 2025 PopCycle. Building the circular economy through making.
             </p>
           </div>
-          
+
           {/* Quick Links */}
           <div>
             <h3 className="systematic-caps text-sm font-bold mb-4 text-pop-green">
               Resources
             </h3>
             <div className="space-y-2">
-              <Link href="/track" className="block text-gray-300 hover:text-white transition-colors">
+              <Link
+                href="/track"
+                className="block text-gray-300 hover:text-white transition-colors"
+              >
                 Track Our Plastic
               </Link>
-              <Link href="#" className="block text-gray-300 hover:text-white transition-colors">
+              <Link
+                href="#"
+                className="block text-gray-300 hover:text-white transition-colors"
+              >
                 Impact Reports
               </Link>
             </div>
           </div>
-          
+
           {/* Contact */}
           <div>
             <h3 className="systematic-caps text-sm font-bold mb-4 text-pop-green">
               Connect
             </h3>
             <div className="space-y-2">
-              <Link href="/partners" className="block text-gray-300 hover:text-white transition-colors">
+              <Link
+                href="/partners"
+                className="block text-gray-300 hover:text-white transition-colors"
+              >
                 Become a Partner
               </Link>
-              <Link href="/about#contact" className="block text-gray-300 hover:text-white transition-colors">
+              <Link
+                href="/about#contact"
+                className="block text-gray-300 hover:text-white transition-colors"
+              >
                 Contact Us
               </Link>
-              <p className="text-gray-400 text-sm">
-                Building sustainable futures through circular design
-              </p>
             </div>
           </div>
         </div>
