@@ -124,7 +124,7 @@ export default function Navigation() {
 
           {/* Right-aligned Login Button */}
           <div className="hidden md:block">
-            <Button variant="ghost" className="bg-pop-green text-white hover:bg-pop-black systematic-caps">
+            <Button variant="ghost" className="bg-pop-green text-white hover:bg-pop-black hover:text-white systematic-caps">
               Login
             </Button>
           </div>
