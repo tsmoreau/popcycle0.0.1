@@ -124,9 +124,9 @@ export default function Navigation() {
 
           {/* Right-aligned Login Button */}
           <div className="hidden lg:block">
-            <Button variant="ghost" className="bg-pop-green text-pop-black border-2 border-pop-black hover:!bg-pop-green hover:!text-white hover:!border-white systematic-caps">
+            <button className="bg-pop-green text-pop-black border-2 border-pop-black hover:bg-pop-green hover:text-white hover:border-white systematic-caps px-4 py-2 rounded-md transition-colors">
               Login
-            </Button>
+            </button>
           </div>
 
           {/* Mobile menu button */}
