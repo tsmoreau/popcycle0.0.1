@@ -25,12 +25,12 @@ export default function Home() {
             JOURNEY
           </h1>
           
-          <p className="text-xl lg:text-2xl max-w-4xl mx-auto mb-12 leading-relaxed text-pop-gray">
+          <p className="text-xl lg:text-2xl max-w-4xl mx-auto mb-12 leading-relaxed text-pop-black">
             Every QR code tells the complete story of transformation: from corporate waste to educational wonder. 
             Scan. Learn. Make.
           </p>
           
-          <div className="flex justify-center items-center gap-4 text-pop-gray mb-8">
+          <div className="flex justify-center items-center gap-4 text-pop-black mb-8">
             <Recycle className="w-6 h-6" />
             <span className="systematic-caps">Complete Provenance Tracking</span>
           </div>
