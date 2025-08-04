@@ -31,7 +31,7 @@ export default function Navigation() {
   return (
     <nav className="sticky top-0 z-50 bg-white border-b-4 border-pop-black">
       <div className="max-w-6xl mx-auto px-4">
-        <div className="flex items-center justify-between h-20">
+        <div className="flex items-center h-20">
           {/* Logo */}
           <Link href="/" className="flex items-center space-x-3">
             <div className="w-12 h-12 bg-pop-green border-2 border-pop-black flex items-center justify-center">
@@ -42,7 +42,7 @@ export default function Navigation() {
             </span>
           </Link>
           
-          <div className="hidden md:flex items-center space-x-8">
+          <div className="hidden md:flex items-center space-x-8 flex-1 justify-center">
             {/* Track */}
             <Link
               href="/track"
@@ -119,7 +119,10 @@ export default function Navigation() {
               )}
             </div>
 
-            {/* Login Button */}
+          </div>
+
+          {/* Right-aligned Login Button */}
+          <div className="hidden md:block">
             <Button variant="ghost" className="bg-pop-green text-white hover:bg-pop-black systematic-caps">
               Login
             </Button>
