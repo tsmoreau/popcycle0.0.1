@@ -1,8 +1,21 @@
 import { ObjectId } from 'mongodb';
 
+// Event - Nested within Org, represents collection events
+export interface Event {
+  eventId: string; // Unique identifier within the org
+  name: string;
+  type: 'recurring' | 'ad_hoc';
+  description?: string;
+  scheduledDate: Date;
+  completedDate?: Date;
+  location: string;
+  binIds: ObjectId[]; // References to Bins used in this event
+  status: 'planned' | 'active' | 'completed' | 'cancelled';
+  notes?: string;
+}
+
 // Organization - Client partners (Discovery Cube, Ace Hotel, etc.)
 export interface Org {
-  
   _id: ObjectId;
   name: string;
   type: 'corporate' | 'educational' | 'community';
@@ -14,24 +27,27 @@ export interface Org {
     address?: string;
     website?: string;
   };
+  events: Event[]; // Nested events array
   createdAt: Date;
   updatedAt: Date;
-  
 }
 
 // Bin - Physical branded containers with QR codes at partner locations
+// Can be permanent office bins or temporary event bags
 export interface Bin {
-  
   _id: ObjectId;
   qrCode: string; // Unique QR code identifier
   orgId: ObjectId; // Reference to Org
-  name: string; // e.g., "Discovery Cube Main Entrance Bin"
+  eventId?: string; // Reference to Event within the org (for event-specific bins)
+  name: string; // e.g., "Discovery Cube Main Entrance Bin" or "Beach Cleanup Bag #1"
+  type: 'permanent' | 'temporary'; // Permanent office bin vs temporary event bag
   location: string; // Physical location description
-  capacity: number; // in kg
+  capacity?: number; // in kg (may not apply to temporary bags)
   isActive: boolean;
+  canBeAdopted: boolean; // Whether teams/departments can "adopt" and name this bin
+  adoptedBy?: string; // Team/department that adopted this bin
   createdAt: Date;
   updatedAt: Date;
-  
 }
 
 // Batch - Collection record when bins are emptied
