@@ -48,10 +48,13 @@ Brand colors: Must use exact HSL values - pop-green: hsl(142, 100%, 35%), pop-bl
 ### Core System Architecture
 
 #### QR Code & Provenance Tracking
-- **URL Pattern**: `https://popcycle.io/p/ABC123` for individual item tracking with complete lifecycle visibility
+- **Dual QR Code System**: Each item features redundant tracking codes for reliability and user experience
+  - **Backend QR Code**: Large, non-customer-facing code containing minimal provenance JSON for operational scanning
+  - **Customer QR Code**: Clean, front-facing code linking to `https://popcycle.io/track/ABC123` for public engagement
 - **Transformation Chain**: Waste collection → batch processing → blank production → maker assembly → delivery
 - **Real-time Status**: Live updates across physical operations with mobile staff workflows
 - **Educational Integration**: Assembly tutorials, maker skill progression, and community achievement systems
+- **Redundant Data Storage**: Critical provenance information stored both in QR payload and database for offline accessibility
 
 #### Logistics & Operations Management
 - **Pickup Scheduling**: Route optimization with calendar integration and real-time status updates
