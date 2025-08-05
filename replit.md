@@ -2,7 +2,7 @@
 
 ## Overview
 
-PopCycle is a comprehensive circular economy platform that transforms corporate plastic waste into trackable, educational products. The system creates a self-reinforcing ecosystem connecting waste collection, manufacturing, education, and community engagement through QR code-based provenance tracking. Built as a Next.js full-stack application with MongoDB, it demonstrates circular economy principles by turning abstract sustainability concepts into tangible, hands-on experiences through maker education and robotics.
+PopCycle is a comprehensive circular economy platform that transforms corporate plastic waste into trackable, educational products. The system creates a self-reinforcing ecosystem connecting waste collection, manufacturing, education, and community engagement through QR code-based provenance tracking. Built as a unified Next.js PWA with MongoDB, it serves as the single in-house system managing all operations - from partner CRM and logistics scheduling to maker skill tracking and community engagement - while integrating with external services only for communications (Google Workspace) and finance (QuickBooks/Stripe).
 
 **Latest Feature**: Maker registration system allowing customers to declare assembly completion, creating a fourth "Assembled" step in the transformation journey timeline. Features email verification through planned NextAuth.js integration for data integrity.
 
@@ -31,11 +31,11 @@ Brand colors: Must use exact HSL values - pop-green: hsl(142, 100%, 35%), pop-bl
 - **Design Philosophy**: Timeless systematic approach with bold geometric elements and restrained minimalism that balances institutional weight with pop art energy
 
 ### Backend Architecture
-- **Framework**: Next.js API Routes for serverless functions
-- **Database**: MongoDB for flexible document storage
-- **API Design**: RESTful API routes with server-side rendering capabilities
-- **Data Layer**: MongoDB collections with QR code-based tracking
-- **Architecture**: Serverless functions that combine data fetching and page rendering for optimal scaling
+- **Framework**: Next.js API Routes for serverless functions serving as unified business system
+- **Database**: MongoDB for flexible document storage handling all operational data
+- **API Design**: RESTful API routes supporting CRM, logistics, user tracking, and QR code tracking
+- **Data Layer**: Unified MongoDB collections managing partner relationships, pickup scheduling, maker progression, and provenance tracking
+- **Architecture**: Single PWA handling all business operations with strategic external integrations for finance and communications
 
 ### Data Models
 - **Org**: Client partners (Discovery Cube, Ace Hotel, etc.) with contact information and organizational details
@@ -59,10 +59,11 @@ Brand colors: Must use exact HSL values - pop-green: hsl(142, 100%, 35%), pop-bl
 
 ## External Dependencies
 
-### Database Integration 
-- **Database**: MongoDB for flexible document storage and tracking
+### Unified Database Architecture
+- **Database**: MongoDB as single source of truth for all business operations
 - **Connection**: Native MongoDB driver with connection pooling
-- **Data Structure**: JSON documents for plastic items, partners, and metrics
+- **Data Structure**: Integrated collections supporting CRM (orgs), logistics (bins/batches), user progression (makers), and provenance tracking (items)
+- **Philosophy**: All operational data in-house, external services only for finance and communications
 
 ### UI Component Library
 - **Design System**: shadcn/ui built on Radix UI primitives
@@ -80,27 +81,20 @@ Brand colors: Must use exact HSL values - pop-green: hsl(142, 100%, 35%), pop-bl
 - **QR Code Generation**: Framework prepared for QR code generation and scanning
 - **File Storage**: Asset management through `attached_assets` directory structure
 
-## In-House Systems Strategy
+## Business Operations Architecture
 
-### CRM (Partner Management)
-- **Implementation**: MongoDB views/queries within existing PWA dashboard
-- **Data Source**: Existing `orgs` collection with added status fields (lead, prospect, active, churned)
-- **Features**: Lead pipeline tracking, nested communication logs, contract status management
-- **Integration**: Google Workspace API for automated email/calendar generation
+The PWA serves as the complete business management system with three integrated operational views of the same MongoDB data:
 
-### Logistics (Pickup Scheduling)  
-- **Implementation**: Staff-facing views of bin/batch data with operational workflows
-- **Features**: Geographic route planning, real-time pickup status updates, historical optimization
-- **Mobile Interface**: Staff apps to update bin status and create batch records on collection
-- **Integration**: Calendar sync for schedules, notification system for route changes
+### Partner Management (CRM)
+Built into PWA dashboard using `orgs` collection with lead pipeline tracking, communication logs, and contract management. Google Workspace integration for automated correspondence.
 
-### User Tracking and Skill Development
-- **Implementation**: Rich nested documents within user collection tracking complete maker journey
-- **Features**: Skill progression trees, achievement systems, assembly history with photos
-- **Community**: Maker profiles, story sharing, mentorship matching, gamification
-- **Data Architecture**: All tracking stored as nested user data for complete maker profiles
+### Operations & Logistics
+Staff interfaces for pickup scheduling and route optimization using `bins` and `batches` collections. Real-time status updates and mobile collection workflows.
 
-### External Service Integration
-- **Financial**: QuickBooks for comprehensive accounting, Stripe for payment processing
-- **Communication**: Google Workspace for email/calendar automation
-- **Philosophy**: In-house systems for competitive advantage, external services for commoditized functions
+### Maker Community & Skills
+Rich user progression system with nested maker profiles, skill trees, assembly history, and community features. All tracking data stored within user documents.
+
+### Strategic External Integrations
+- **Finance**: QuickBooks (accounting) + Stripe (payments) - regulated, complex ecosystems
+- **Communications**: Google Workspace API - email/calendar automation
+- **Core Principle**: Build in-house where competitive advantage exists, integrate externally for commoditized services
