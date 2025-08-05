@@ -107,32 +107,24 @@ export default function OperationsPage() {
 
       {/* Main Operations Tabs */}
       <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-        <TabsList className="grid w-full grid-cols-4 mb-6 bg-white border-2 border-gray-200 shadow-lg h-16">
-          <TabsTrigger
-            value="collections"
-            className="data-[state=active]:bg-pop-green data-[state=active]:text-pop-green data-[state=active]:border-pop-green font-bold text-base py-3"
-          >
-            📦 Collections
-          </TabsTrigger>
-          <TabsTrigger
-            value="processing"
-            className="data-[state=active]:bg-pop-blue data-[state=active]:text-white data-[state=active]:border-pop-blue font-bold text-base py-3"
-          >
-            ⚙️ Processing
-          </TabsTrigger>
-          <TabsTrigger
-            value="inventory"
-            className="data-[state=active]:bg-pop-red data-[state=active]:text-white data-[state=active]:border-pop-red font-bold text-base py-3"
-          >
-            📊 Inventory
-          </TabsTrigger>
-          <TabsTrigger
-            value="fulfillment"
-            className="data-[state=active]:bg-pop-black data-[state=active]:text-white data-[state=active]:border-pop-black font-bold text-base py-3"
-          >
-            🚚 Fulfillment
-          </TabsTrigger>
-        </TabsList>
+        <div className="relative mb-6">
+          <TabsList className="mb-0 relative z-10">
+            <TabsTrigger value="collections" className="folder-tab-green">
+              📦 Collections
+            </TabsTrigger>
+            <TabsTrigger value="processing" className="folder-tab-blue">
+              ⚙️ Processing
+            </TabsTrigger>
+            <TabsTrigger value="inventory" className="folder-tab-red">
+              📊 Inventory
+            </TabsTrigger>
+            <TabsTrigger value="fulfillment" className="folder-tab-black">
+              🚚 Fulfillment
+            </TabsTrigger>
+          </TabsList>
+          {/* Tab base line */}
+          <div className="h-px bg-gray-400 w-full absolute bottom-0 z-0"></div>
+        </div>
 
         {/* Collections Tab */}
         <TabsContent value="collections" className="space-y-6">

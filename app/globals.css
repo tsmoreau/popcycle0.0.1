@@ -93,3 +93,28 @@
   color: hsl(var(--pop-black)) !important;
   border-color: hsl(var(--pop-black)) !important;
 }
+
+/* Folder Tab Styles */
+.folder-tab-green[data-state="active"] {
+  background-color: hsl(var(--pop-green)) !important;
+  color: white !important;
+  border-color: hsl(var(--pop-green)) !important;
+}
+
+.folder-tab-blue[data-state="active"] {
+  background-color: hsl(var(--pop-blue)) !important;
+  color: white !important;
+  border-color: hsl(var(--pop-blue)) !important;
+}
+
+.folder-tab-red[data-state="active"] {
+  background-color: hsl(var(--pop-red)) !important;
+  color: white !important;
+  border-color: hsl(var(--pop-red)) !important;
+}
+
+.folder-tab-black[data-state="active"] {
+  background-color: hsl(var(--pop-black)) !important;
+  color: white !important;
+  border-color: hsl(var(--pop-black)) !important;
+}
