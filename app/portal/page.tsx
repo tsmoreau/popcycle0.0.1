@@ -32,8 +32,8 @@ export default function PortalPage() {
     { id: 'admin' as const, label: 'Admin', icon: Settings, color: 'text-pop-black' },
     { id: 'operations' as const, label: 'Operations', icon: Truck, color: 'text-pop-green' },
     { id: 'crm' as const, label: 'CRM', icon: Phone, color: 'text-pop-blue' },
-    { id: 'partner' as const, label: 'Partners', icon: Building2, color: 'text-pop-red' },
-    { id: 'financial' as const, label: 'Financial', icon: DollarSign, color: 'text-pop-gray' },
+    { id: 'partner' as const, label: 'Partner', icon: Building2, color: 'text-pop-red' },
+    { id: 'financial' as const, label: 'Finance', icon: DollarSign, color: 'text-pop-gray' },
   ]
 
   const renderDashboard = () => {
