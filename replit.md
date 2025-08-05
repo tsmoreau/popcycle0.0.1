@@ -49,8 +49,12 @@ Brand colors: Must use exact HSL values - pop-green: hsl(142, 100%, 35%), pop-bl
 
 #### QR Code & Provenance Tracking
 - **Dual QR Code System**: Each item features redundant tracking codes for reliability and user experience
-  - **Backend QR Code**: Large, non-customer-facing code containing minimal provenance JSON for operational scanning
+  - **Offline Backup QR**: Large, non-customer-facing code containing minimal provenance JSON for permanent accessibility
   - **Customer QR Code**: Clean, front-facing code linking to `https://popcycle.io/track/ABC123` for public engagement
+- **ID Structure**: Human-readable prefixed identifiers using UUID-based generation for collision-free tracking
+  - `BI-` prefix for bins, `BA-` for batches, `IT-` for items
+  - Stateless `/track/[id]` page handles any valid ID type through prefix detection
+- **Manufacturing Integration**: Both QR codes re-lasered at final manufacturing to survive CNC cutting processes
 - **Transformation Chain**: Waste collection → batch processing → blank production → maker assembly → delivery
 - **Real-time Status**: Live updates across physical operations with mobile staff workflows
 - **Educational Integration**: Assembly tutorials, maker skill progression, and community achievement systems
@@ -59,6 +63,10 @@ Brand colors: Must use exact HSL values - pop-green: hsl(142, 100%, 35%), pop-bl
 #### Logistics & Operations Management
 - **Pickup Scheduling**: Route optimization with calendar integration and real-time status updates
 - **Mobile Workflows**: Staff apps for collection, batch creation, and inventory management
+- **Production Stations**: PWA thin clients at manufacturing stations for real-time coordination
+  - Weighing/Photo Station: HID scale integration, webcam capture, one-button item creation
+  - Laser Station: QR code display for copy/paste into Lightburn, completion tracking
+- **Hardware Integration**: USB HID scales for automatic weight input, external cameras via WebRTC API
 - **Capacity Planning**: Bin monitoring, production scheduling, and resource allocation
 - **Quality Control**: Batch tracking, processing metrics, and compliance documentation
 
@@ -133,9 +141,14 @@ All business dashboards organized under `/portal/` with role-based access:
 
 - **Admin Dashboard** (`/portal/admin`) - User management, system settings, permissions
 - **Operations Dashboard** (`/portal/operations`) - Bins, batches, pickups, logistics workflow
-- **CRM Dashboard** (`/portal/crm`) - Sales pipeline, relationship management, events
+- **CRM Dashboard** (`/portal/crm`) - Sales pipeline, relationship management, events management
 - **Partner Dashboard** (`/portal/partner`) - Client self-service portal with bins, impact reports
 - **Financial Dashboard** (`/portal/financial`) - Revenue tracking, cost analysis, QuickBooks integration
+
+### Production Workflow Architecture
+- **Station 1 - Weighing/Photo/Creation**: Batch ID input, HID scale integration, webcam capture, database entry creation, QR code generation
+- **Station 2 - Laser Processing**: Queue management, QR code display for Lightburn integration, completion status updates
+- **PWA Integration**: Thin client approach using browser-based interfaces at each production station for real-time data coordination
 
 ### User-Facing Pages
 - **User Profile/Maker Dashboard** - Personal maker journey, skills, assembly history (existing user profile functionality)
