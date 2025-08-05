@@ -1,23 +1,55 @@
-'use client'
+"use client";
 
-import { useState } from 'react'
-import { Package, Truck, Settings, AlertCircle, Calendar, BarChart3, Users, MapPin, Scale, Camera, Zap, QrCode, CheckCircle, Clock, ArrowRight } from 'lucide-react'
-import { Button } from '../../components/ui/button'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../../components/ui/card'
-import { Badge } from '../../components/ui/badge'
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '../../components/ui/tabs'
-import { Input } from '../../components/ui/input'
-import { Label } from '../../components/ui/label'
-import { Textarea } from '../../components/ui/textarea'
+import { useState } from "react";
+import {
+  Package,
+  Truck,
+  Settings,
+  AlertCircle,
+  Calendar,
+  BarChart3,
+  Users,
+  MapPin,
+  Scale,
+  Camera,
+  Zap,
+  QrCode,
+  CheckCircle,
+  Clock,
+  ArrowRight,
+} from "lucide-react";
+import { Button } from "../../components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "../../components/ui/card";
+import { Badge } from "../../components/ui/badge";
+import {
+  Tabs,
+  TabsContent,
+  TabsList,
+  TabsTrigger,
+} from "../../components/ui/tabs";
+import { Input } from "../../components/ui/input";
+import { Label } from "../../components/ui/label";
+import { Textarea } from "../../components/ui/textarea";
 
 export default function OperationsPage() {
-  const [activeTab, setActiveTab] = useState('collections')
+  const [activeTab, setActiveTab] = useState("collections");
 
   return (
     <div className="space-y-6">
       <div>
-        <h2 className="text-3xl font-bold text-pop-black">Operations Management</h2>
-        <p className="text-gray-600 mt-2">Complete operations workflow: collections, processing, inventory, and fulfillment</p>
+        <h2 className="text-3xl font-bold text-pop-black">
+          Operations Management
+        </h2>
+        <p className="text-gray-600 mt-2">
+          Complete operations workflow: collections, processing, inventory, and
+          fulfillment
+        </p>
       </div>
 
       {/* Quick Stats Overview */}
@@ -35,7 +67,9 @@ export default function OperationsPage() {
 
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Active Batches</CardTitle>
+            <CardTitle className="text-sm font-medium">
+              Active Batches
+            </CardTitle>
             <Truck className="h-4 w-4 text-pop-blue" />
           </CardHeader>
           <CardContent>
@@ -46,7 +80,9 @@ export default function OperationsPage() {
 
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Items in Queue</CardTitle>
+            <CardTitle className="text-sm font-medium">
+              Items in Queue
+            </CardTitle>
             <Settings className="h-4 w-4 text-pop-red" />
           </CardHeader>
           <CardContent>
@@ -57,7 +93,9 @@ export default function OperationsPage() {
 
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Station Status</CardTitle>
+            <CardTitle className="text-sm font-medium">
+              Station Status
+            </CardTitle>
             <AlertCircle className="h-4 w-4 text-pop-green" />
           </CardHeader>
           <CardContent>
@@ -70,16 +108,28 @@ export default function OperationsPage() {
       {/* Main Operations Tabs */}
       <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
         <TabsList className="grid w-full grid-cols-4 mb-6 bg-white border-2 border-gray-200 shadow-lg h-16">
-          <TabsTrigger value="collections" className="data-[state=active]:bg-pop-green data-[state=active]:text-white data-[state=active]:border-pop-green font-bold text-base py-3">
+          <TabsTrigger
+            value="collections"
+            className="data-[state=active]:bg-pop-green data-[state=active]:text-pop-green data-[state=active]:border-pop-green font-bold text-base py-3"
+          >
             📦 Collections
           </TabsTrigger>
-          <TabsTrigger value="processing" className="data-[state=active]:bg-pop-blue data-[state=active]:text-white data-[state=active]:border-pop-blue font-bold text-base py-3">
+          <TabsTrigger
+            value="processing"
+            className="data-[state=active]:bg-pop-blue data-[state=active]:text-white data-[state=active]:border-pop-blue font-bold text-base py-3"
+          >
             ⚙️ Processing
           </TabsTrigger>
-          <TabsTrigger value="inventory" className="data-[state=active]:bg-pop-red data-[state=active]:text-white data-[state=active]:border-pop-red font-bold text-base py-3">
+          <TabsTrigger
+            value="inventory"
+            className="data-[state=active]:bg-pop-red data-[state=active]:text-white data-[state=active]:border-pop-red font-bold text-base py-3"
+          >
             📊 Inventory
           </TabsTrigger>
-          <TabsTrigger value="fulfillment" className="data-[state=active]:bg-pop-black data-[state=active]:text-white data-[state=active]:border-pop-black font-bold text-base py-3">
+          <TabsTrigger
+            value="fulfillment"
+            className="data-[state=active]:bg-pop-black data-[state=active]:text-white data-[state=active]:border-pop-black font-bold text-base py-3"
+          >
             🚚 Fulfillment
           </TabsTrigger>
         </TabsList>
@@ -90,28 +140,40 @@ export default function OperationsPage() {
             <Card>
               <CardHeader>
                 <CardTitle>Pickup Scheduling</CardTitle>
-                <CardDescription>Route optimization and calendar integration</CardDescription>
+                <CardDescription>
+                  Route optimization and calendar integration
+                </CardDescription>
               </CardHeader>
               <CardContent className="space-y-4">
                 <div className="space-y-2">
                   <div className="flex items-center justify-between p-3 bg-pop-red/5 rounded-lg">
                     <div>
-                      <span className="font-medium text-sm">TechCorp - Floor 3</span>
-                      <p className="text-xs text-gray-600">BI-7829 - 85% Full</p>
+                      <span className="font-medium text-sm">
+                        TechCorp - Floor 3
+                      </span>
+                      <p className="text-xs text-gray-600">
+                        BI-7829 - 85% Full
+                      </p>
                     </div>
                     <Badge className="bg-pop-red text-white">Urgent</Badge>
                   </div>
                   <div className="flex items-center justify-between p-3 bg-pop-blue/5 rounded-lg">
                     <div>
-                      <span className="font-medium text-sm">GreenOffice Kitchen</span>
+                      <span className="font-medium text-sm">
+                        GreenOffice Kitchen
+                      </span>
                       <p className="text-xs text-gray-600">BI-7830 - Ready</p>
                     </div>
                     <Badge className="bg-pop-blue text-white">Scheduled</Badge>
                   </div>
                   <div className="flex items-center justify-between p-3 bg-pop-green/5 rounded-lg">
                     <div>
-                      <span className="font-medium text-sm">Metro Facilities A</span>
-                      <p className="text-xs text-gray-600">BI-7831 - 78% Full</p>
+                      <span className="font-medium text-sm">
+                        Metro Facilities A
+                      </span>
+                      <p className="text-xs text-gray-600">
+                        BI-7831 - 78% Full
+                      </p>
                     </div>
                     <Badge className="bg-pop-green text-white">Tomorrow</Badge>
                   </div>
@@ -135,15 +197,21 @@ export default function OperationsPage() {
                     <span className="font-medium">156 total</span>
                   </div>
                   <div className="flex justify-between items-center">
-                    <span className="text-sm text-gray-600">Ready for Pickup</span>
+                    <span className="text-sm text-gray-600">
+                      Ready for Pickup
+                    </span>
                     <span className="font-medium text-pop-red">12 bins</span>
                   </div>
                   <div className="flex justify-between items-center">
-                    <span className="text-sm text-gray-600">Recently Collected</span>
+                    <span className="text-sm text-gray-600">
+                      Recently Collected
+                    </span>
                     <span className="font-medium">8 today</span>
                   </div>
                   <div className="flex justify-between items-center">
-                    <span className="text-sm text-gray-600">Average Fill Rate</span>
+                    <span className="text-sm text-gray-600">
+                      Average Fill Rate
+                    </span>
                     <span className="font-medium">67%</span>
                   </div>
                 </div>
@@ -163,7 +231,9 @@ export default function OperationsPage() {
                 <div className="space-y-2">
                   <div className="flex items-center justify-between p-2 bg-gray-50 rounded">
                     <span className="text-sm">Driver: Mike Chen</span>
-                    <Badge className="bg-pop-green text-white">Active Route</Badge>
+                    <Badge className="bg-pop-green text-white">
+                      Active Route
+                    </Badge>
                   </div>
                   <div className="flex items-center justify-between p-2 bg-gray-50 rounded">
                     <span className="text-sm">Driver: Sarah Kim</span>
@@ -187,14 +257,20 @@ export default function OperationsPage() {
           <Card>
             <CardHeader>
               <CardTitle>Collection History</CardTitle>
-              <CardDescription>Recent pickups and batch creation</CardDescription>
+              <CardDescription>
+                Recent pickups and batch creation
+              </CardDescription>
             </CardHeader>
             <CardContent>
               <div className="space-y-3">
                 <div className="flex items-center justify-between p-3 border rounded-lg">
                   <div>
-                    <span className="font-medium text-sm">Batch BA-8472 Created</span>
-                    <p className="text-xs text-gray-600">45 lbs from TechCorp Industries</p>
+                    <span className="font-medium text-sm">
+                      Batch BA-8472 Created
+                    </span>
+                    <p className="text-xs text-gray-600">
+                      45 lbs from TechCorp Industries
+                    </p>
                   </div>
                   <div className="text-right">
                     <span className="text-xs text-gray-500">2 hours ago</span>
@@ -203,8 +279,12 @@ export default function OperationsPage() {
                 </div>
                 <div className="flex items-center justify-between p-3 border rounded-lg">
                   <div>
-                    <span className="font-medium text-sm">Batch BA-8471 Created</span>
-                    <p className="text-xs text-gray-600">32 lbs from GreenOffice Solutions</p>
+                    <span className="font-medium text-sm">
+                      Batch BA-8471 Created
+                    </span>
+                    <p className="text-xs text-gray-600">
+                      32 lbs from GreenOffice Solutions
+                    </p>
                   </div>
                   <div className="text-right">
                     <span className="text-xs text-gray-500">5 hours ago</span>
@@ -213,12 +293,18 @@ export default function OperationsPage() {
                 </div>
                 <div className="flex items-center justify-between p-3 border rounded-lg">
                   <div>
-                    <span className="font-medium text-sm">Batch BA-8470 Created</span>
-                    <p className="text-xs text-gray-600">28 lbs from Metro Facilities</p>
+                    <span className="font-medium text-sm">
+                      Batch BA-8470 Created
+                    </span>
+                    <p className="text-xs text-gray-600">
+                      28 lbs from Metro Facilities
+                    </p>
                   </div>
                   <div className="text-right">
                     <span className="text-xs text-gray-500">1 day ago</span>
-                    <p className="text-xs text-pop-green">Driver: Alex Rivera</p>
+                    <p className="text-xs text-pop-green">
+                      Driver: Alex Rivera
+                    </p>
                   </div>
                 </div>
               </div>
@@ -232,18 +318,28 @@ export default function OperationsPage() {
             <Card>
               <CardHeader>
                 <CardTitle>Station 1: Weighing/Photo/Creation</CardTitle>
-                <CardDescription>Batch processing and item creation workflow</CardDescription>
+                <CardDescription>
+                  Batch processing and item creation workflow
+                </CardDescription>
               </CardHeader>
               <CardContent className="space-y-4">
                 <div className="space-y-4">
                   <div>
                     <Label htmlFor="batch-id">Batch ID Input</Label>
-                    <Input id="batch-id" placeholder="BA-XXXX" className="mt-1" />
+                    <Input
+                      id="batch-id"
+                      placeholder="BA-XXXX"
+                      className="mt-1"
+                    />
                   </div>
                   <div className="flex items-center justify-between p-3 bg-pop-green/5 rounded-lg">
                     <div>
-                      <span className="font-medium text-sm">HID Scale Integration</span>
-                      <p className="text-xs text-gray-600">Auto-weight capture ready</p>
+                      <span className="font-medium text-sm">
+                        HID Scale Integration
+                      </span>
+                      <p className="text-xs text-gray-600">
+                        Auto-weight capture ready
+                      </p>
                     </div>
                     <Badge className="bg-pop-green text-white">
                       <Scale className="h-3 w-3 mr-1" />
@@ -252,7 +348,9 @@ export default function OperationsPage() {
                   </div>
                   <div className="flex items-center justify-between p-3 bg-pop-blue/5 rounded-lg">
                     <div>
-                      <span className="font-medium text-sm">Webcam Capture</span>
+                      <span className="font-medium text-sm">
+                        Webcam Capture
+                      </span>
                       <p className="text-xs text-gray-600">USB camera ready</p>
                     </div>
                     <Badge className="bg-pop-blue text-white">
@@ -271,7 +369,9 @@ export default function OperationsPage() {
             <Card>
               <CardHeader>
                 <CardTitle>Station 2: Laser Processing</CardTitle>
-                <CardDescription>QR code laser engraving workflow</CardDescription>
+                <CardDescription>
+                  QR code laser engraving workflow
+                </CardDescription>
               </CardHeader>
               <CardContent className="space-y-4">
                 <div className="space-y-4">
@@ -279,27 +379,43 @@ export default function OperationsPage() {
                     <Label>Queue Management</Label>
                     <div className="space-y-2">
                       <div className="flex items-center justify-between p-2 bg-gray-50 rounded">
-                        <span className="text-sm">IT-8472-001 - Phone Stand</span>
+                        <span className="text-sm">
+                          IT-8472-001 - Phone Stand
+                        </span>
                         <Badge variant="outline">Queued</Badge>
                       </div>
                       <div className="flex items-center justify-between p-2 bg-pop-blue/5 rounded">
-                        <span className="text-sm">IT-8471-003 - Desk Organizer</span>
-                        <Badge className="bg-pop-blue text-white">Processing</Badge>
+                        <span className="text-sm">
+                          IT-8471-003 - Desk Organizer
+                        </span>
+                        <Badge className="bg-pop-blue text-white">
+                          Processing
+                        </Badge>
                       </div>
                     </div>
                   </div>
                   <div className="p-3 bg-pop-green/5 rounded-lg">
                     <div className="flex items-center justify-between mb-2">
-                      <span className="font-medium text-sm">Lightburn Integration</span>
+                      <span className="font-medium text-sm">
+                        Lightburn Integration
+                      </span>
                       <Badge className="bg-pop-green text-white">
                         <Zap className="h-3 w-3 mr-1" />
                         Active
                       </Badge>
                     </div>
-                    <p className="text-xs text-gray-600 mb-2">Copy QR codes for laser engraving</p>
+                    <p className="text-xs text-gray-600 mb-2">
+                      Copy QR codes for laser engraving
+                    </p>
                     <div className="flex space-x-2">
-                      <Input placeholder="Offline QR: ABC123" className="text-xs" readOnly />
-                      <Button size="sm" variant="outline">Copy</Button>
+                      <Input
+                        placeholder="Offline QR: ABC123"
+                        className="text-xs"
+                        readOnly
+                      />
+                      <Button size="sm" variant="outline">
+                        Copy
+                      </Button>
                     </div>
                   </div>
                 </div>
@@ -314,14 +430,18 @@ export default function OperationsPage() {
           <Card>
             <CardHeader>
               <CardTitle>Batch Processing Status</CardTitle>
-              <CardDescription>Track material transformation pipeline</CardDescription>
+              <CardDescription>
+                Track material transformation pipeline
+              </CardDescription>
             </CardHeader>
             <CardContent>
               <div className="space-y-3">
                 <div className="flex items-center justify-between p-3 border rounded-lg">
                   <div>
                     <span className="font-medium text-sm">Batch BA-8472</span>
-                    <p className="text-xs text-gray-600">45 lbs → 12 Phone Stands</p>
+                    <p className="text-xs text-gray-600">
+                      45 lbs → 12 Phone Stands
+                    </p>
                   </div>
                   <div className="flex items-center space-x-2">
                     <Badge className="bg-pop-blue text-white">Station 2</Badge>
@@ -331,7 +451,9 @@ export default function OperationsPage() {
                 <div className="flex items-center justify-between p-3 border rounded-lg">
                   <div>
                     <span className="font-medium text-sm">Batch BA-8471</span>
-                    <p className="text-xs text-gray-600">32 lbs → 8 Desk Organizers</p>
+                    <p className="text-xs text-gray-600">
+                      32 lbs → 8 Desk Organizers
+                    </p>
                   </div>
                   <div className="flex items-center space-x-2">
                     <Badge className="bg-pop-green text-white">Complete</Badge>
@@ -341,7 +463,9 @@ export default function OperationsPage() {
                 <div className="flex items-center justify-between p-3 border rounded-lg">
                   <div>
                     <span className="font-medium text-sm">Batch BA-8470</span>
-                    <p className="text-xs text-gray-600">28 lbs → 7 Plant Holders</p>
+                    <p className="text-xs text-gray-600">
+                      28 lbs → 7 Plant Holders
+                    </p>
                   </div>
                   <div className="flex items-center space-x-2">
                     <Badge className="bg-pop-green text-white">Station 1</Badge>
@@ -364,15 +488,21 @@ export default function OperationsPage() {
               <CardContent className="space-y-4">
                 <div className="space-y-3">
                   <div className="flex justify-between items-center">
-                    <span className="text-sm text-gray-600">Processed Plastic Stock</span>
+                    <span className="text-sm text-gray-600">
+                      Processed Plastic Stock
+                    </span>
                     <span className="font-medium">847 lbs</span>
                   </div>
                   <div className="flex justify-between items-center">
-                    <span className="text-sm text-gray-600">Pending Processing</span>
+                    <span className="text-sm text-gray-600">
+                      Pending Processing
+                    </span>
                     <span className="font-medium">156 lbs</span>
                   </div>
                   <div className="flex justify-between items-center">
-                    <span className="text-sm text-gray-600">Ready for Production</span>
+                    <span className="text-sm text-gray-600">
+                      Ready for Production
+                    </span>
                     <span className="font-medium text-pop-green">691 lbs</span>
                   </div>
                   <div className="flex justify-between items-center">
@@ -426,21 +556,27 @@ export default function OperationsPage() {
                   <div className="flex items-center justify-between p-3 bg-pop-green/5 rounded-lg">
                     <div>
                       <span className="font-medium text-sm">Batch BA-8471</span>
-                      <p className="text-xs text-gray-600">All QC checks passed</p>
+                      <p className="text-xs text-gray-600">
+                        All QC checks passed
+                      </p>
                     </div>
                     <Badge className="bg-pop-green text-white">Approved</Badge>
                   </div>
                   <div className="flex items-center justify-between p-3 bg-pop-blue/5 rounded-lg">
                     <div>
                       <span className="font-medium text-sm">Batch BA-8472</span>
-                      <p className="text-xs text-gray-600">Pending final inspection</p>
+                      <p className="text-xs text-gray-600">
+                        Pending final inspection
+                      </p>
                     </div>
                     <Badge className="bg-pop-blue text-white">Review</Badge>
                   </div>
                   <div className="flex items-center justify-between p-3 bg-pop-red/5 rounded-lg">
                     <div>
                       <span className="font-medium text-sm">Batch BA-8469</span>
-                      <p className="text-xs text-gray-600">Material defect noted</p>
+                      <p className="text-xs text-gray-600">
+                        Material defect noted
+                      </p>
                     </div>
                     <Badge className="bg-pop-red text-white">Hold</Badge>
                   </div>
@@ -455,14 +591,20 @@ export default function OperationsPage() {
           <Card>
             <CardHeader>
               <CardTitle>Inventory Movements</CardTitle>
-              <CardDescription>Recent stock changes and transfers</CardDescription>
+              <CardDescription>
+                Recent stock changes and transfers
+              </CardDescription>
             </CardHeader>
             <CardContent>
               <div className="space-y-3">
                 <div className="flex items-center justify-between p-3 border rounded-lg">
                   <div>
-                    <span className="font-medium text-sm">Material Addition</span>
-                    <p className="text-xs text-gray-600">+45 lbs from Batch BA-8472</p>
+                    <span className="font-medium text-sm">
+                      Material Addition
+                    </span>
+                    <p className="text-xs text-gray-600">
+                      +45 lbs from Batch BA-8472
+                    </p>
                   </div>
                   <div className="text-right">
                     <span className="text-xs text-gray-500">2 hours ago</span>
@@ -471,8 +613,12 @@ export default function OperationsPage() {
                 </div>
                 <div className="flex items-center justify-between p-3 border rounded-lg">
                   <div>
-                    <span className="font-medium text-sm">Production Consumption</span>
-                    <p className="text-xs text-gray-600">-12 lbs for Phone Stand Blanks</p>
+                    <span className="font-medium text-sm">
+                      Production Consumption
+                    </span>
+                    <p className="text-xs text-gray-600">
+                      -12 lbs for Phone Stand Blanks
+                    </p>
                   </div>
                   <div className="text-right">
                     <span className="text-xs text-gray-500">4 hours ago</span>
@@ -482,7 +628,9 @@ export default function OperationsPage() {
                 <div className="flex items-center justify-between p-3 border rounded-lg">
                   <div>
                     <span className="font-medium text-sm">Quality Hold</span>
-                    <p className="text-xs text-gray-600">-12 lbs from Batch BA-8469</p>
+                    <p className="text-xs text-gray-600">
+                      -12 lbs from Batch BA-8469
+                    </p>
                   </div>
                   <div className="text-right">
                     <span className="text-xs text-gray-500">1 day ago</span>
@@ -500,28 +648,36 @@ export default function OperationsPage() {
             <Card>
               <CardHeader>
                 <CardTitle>Order Queue</CardTitle>
-                <CardDescription>Customer orders and maker assignments</CardDescription>
+                <CardDescription>
+                  Customer orders and maker assignments
+                </CardDescription>
               </CardHeader>
               <CardContent className="space-y-4">
                 <div className="space-y-2">
                   <div className="flex items-center justify-between p-3 bg-pop-red/5 rounded-lg">
                     <div>
                       <span className="font-medium text-sm">Order #2847</span>
-                      <p className="text-xs text-gray-600">3x Phone Stand - Due Tomorrow</p>
+                      <p className="text-xs text-gray-600">
+                        3x Phone Stand - Due Tomorrow
+                      </p>
                     </div>
                     <Badge className="bg-pop-red text-white">Urgent</Badge>
                   </div>
                   <div className="flex items-center justify-between p-3 bg-pop-blue/5 rounded-lg">
                     <div>
                       <span className="font-medium text-sm">Order #2846</span>
-                      <p className="text-xs text-gray-600">1x Desk Organizer - Due Friday</p>
+                      <p className="text-xs text-gray-600">
+                        1x Desk Organizer - Due Friday
+                      </p>
                     </div>
                     <Badge className="bg-pop-blue text-white">Assembly</Badge>
                   </div>
                   <div className="flex items-center justify-between p-3 bg-pop-green/5 rounded-lg">
                     <div>
                       <span className="font-medium text-sm">Order #2845</span>
-                      <p className="text-xs text-gray-600">2x Plant Holder - Due Monday</p>
+                      <p className="text-xs text-gray-600">
+                        2x Plant Holder - Due Monday
+                      </p>
                     </div>
                     <Badge className="bg-pop-green text-white">Ready</Badge>
                   </div>
@@ -536,28 +692,36 @@ export default function OperationsPage() {
             <Card>
               <CardHeader>
                 <CardTitle>Maker Assembly Status</CardTitle>
-                <CardDescription>Active maker projects and progress</CardDescription>
+                <CardDescription>
+                  Active maker projects and progress
+                </CardDescription>
               </CardHeader>
               <CardContent className="space-y-4">
                 <div className="space-y-2">
                   <div className="flex items-center justify-between p-2 bg-gray-50 rounded">
                     <div>
                       <span className="text-sm font-medium">Alex Chen</span>
-                      <p className="text-xs text-gray-600">Phone Stand Assembly</p>
+                      <p className="text-xs text-gray-600">
+                        Phone Stand Assembly
+                      </p>
                     </div>
                     <Badge className="bg-pop-blue text-white">Active</Badge>
                   </div>
                   <div className="flex items-center justify-between p-2 bg-gray-50 rounded">
                     <div>
                       <span className="text-sm font-medium">Maria Santos</span>
-                      <p className="text-xs text-gray-600">Desk Organizer Assembly</p>
+                      <p className="text-xs text-gray-600">
+                        Desk Organizer Assembly
+                      </p>
                     </div>
                     <Badge className="bg-pop-green text-white">Complete</Badge>
                   </div>
                   <div className="flex items-center justify-between p-2 bg-gray-50 rounded">
                     <div>
                       <span className="text-sm font-medium">Jordan Kim</span>
-                      <p className="text-xs text-gray-600">Available for assignment</p>
+                      <p className="text-xs text-gray-600">
+                        Available for assignment
+                      </p>
                     </div>
                     <Badge variant="outline">Available</Badge>
                   </div>
@@ -571,12 +735,16 @@ export default function OperationsPage() {
             <Card>
               <CardHeader>
                 <CardTitle>Shipping & Delivery</CardTitle>
-                <CardDescription>Order fulfillment coordination</CardDescription>
+                <CardDescription>
+                  Order fulfillment coordination
+                </CardDescription>
               </CardHeader>
               <CardContent className="space-y-4">
                 <div className="space-y-3">
                   <div className="flex justify-between items-center">
-                    <span className="text-sm text-gray-600">Orders Ready to Ship</span>
+                    <span className="text-sm text-gray-600">
+                      Orders Ready to Ship
+                    </span>
                     <span className="font-medium text-pop-green">8 orders</span>
                   </div>
                   <div className="flex justify-between items-center">
@@ -588,7 +756,9 @@ export default function OperationsPage() {
                     <span className="font-medium">12 orders</span>
                   </div>
                   <div className="flex justify-between items-center">
-                    <span className="text-sm text-gray-600">Average Fulfillment</span>
+                    <span className="text-sm text-gray-600">
+                      Average Fulfillment
+                    </span>
                     <span className="font-medium">2.3 days</span>
                   </div>
                 </div>
@@ -602,14 +772,20 @@ export default function OperationsPage() {
           <Card>
             <CardHeader>
               <CardTitle>Recent Fulfillment Activity</CardTitle>
-              <CardDescription>Order completion and customer updates</CardDescription>
+              <CardDescription>
+                Order completion and customer updates
+              </CardDescription>
             </CardHeader>
             <CardContent>
               <div className="space-y-3">
                 <div className="flex items-center justify-between p-3 border rounded-lg">
                   <div>
-                    <span className="font-medium text-sm">Order #2843 Shipped</span>
-                    <p className="text-xs text-gray-600">2x Phone Stand to GreenTech Corp</p>
+                    <span className="font-medium text-sm">
+                      Order #2843 Shipped
+                    </span>
+                    <p className="text-xs text-gray-600">
+                      2x Phone Stand to GreenTech Corp
+                    </p>
                   </div>
                   <div className="text-right">
                     <span className="text-xs text-gray-500">1 hour ago</span>
@@ -618,18 +794,28 @@ export default function OperationsPage() {
                 </div>
                 <div className="flex items-center justify-between p-3 border rounded-lg">
                   <div>
-                    <span className="font-medium text-sm">Order #2844 Completed</span>
-                    <p className="text-xs text-gray-600">1x Desk Organizer - Ready for shipping</p>
+                    <span className="font-medium text-sm">
+                      Order #2844 Completed
+                    </span>
+                    <p className="text-xs text-gray-600">
+                      1x Desk Organizer - Ready for shipping
+                    </p>
                   </div>
                   <div className="text-right">
                     <span className="text-xs text-gray-500">3 hours ago</span>
-                    <p className="text-xs text-pop-green">Maker: Maria Santos</p>
+                    <p className="text-xs text-pop-green">
+                      Maker: Maria Santos
+                    </p>
                   </div>
                 </div>
                 <div className="flex items-center justify-between p-3 border rounded-lg">
                   <div>
-                    <span className="font-medium text-sm">Order #2842 Assembly Started</span>
-                    <p className="text-xs text-gray-600">3x Plant Holder - Estimated completion Friday</p>
+                    <span className="font-medium text-sm">
+                      Order #2842 Assembly Started
+                    </span>
+                    <p className="text-xs text-gray-600">
+                      3x Plant Holder - Estimated completion Friday
+                    </p>
                   </div>
                   <div className="text-right">
                     <span className="text-xs text-gray-500">5 hours ago</span>
@@ -642,5 +828,5 @@ export default function OperationsPage() {
         </TabsContent>
       </Tabs>
     </div>
-  )
+  );
 }
