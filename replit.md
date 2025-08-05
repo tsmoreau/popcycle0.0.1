@@ -4,7 +4,7 @@
 
 PopCycle is a comprehensive circular economy platform that transforms corporate plastic waste into trackable, educational products. The system creates a self-reinforcing ecosystem connecting waste collection, manufacturing, education, and community engagement through QR code-based provenance tracking. Built as a unified Next.js PWA with MongoDB, it serves as the single in-house system managing all operations - from partner CRM and logistics scheduling to maker skill tracking and community engagement - while integrating with external services only for communications (Google Workspace) and finance (QuickBooks/Stripe).
 
-**Latest Feature**: Maker registration system allowing customers to declare assembly completion, creating a fourth "Assembled" step in the transformation journey timeline. Features email verification through planned NextAuth.js integration for data integrity.
+**Current Development Focus**: Building comprehensive circular economy platform with dual QR code system, production workflow automation, and unified business management through PWA architecture.
 
 ## User Preferences
 
@@ -66,7 +66,7 @@ Brand colors: Must use exact HSL values - pop-green: hsl(142, 100%, 35%), pop-bl
 - **Production Stations**: PWA thin clients at manufacturing stations for real-time coordination
   - Weighing/Photo Station: HID scale integration, webcam capture, one-button item creation
   - Laser Station: QR code display for copy/paste into Lightburn, completion tracking
-- **Hardware Integration**: USB HID scales for automatic weight input, external cameras via WebRTC API
+- **Hardware Integration**: USB HID scales for automatic weight input, external USB cameras via `navigator.mediaDevices.getUserMedia()`
 - **Capacity Planning**: Bin monitoring, production scheduling, and resource allocation
 - **Quality Control**: Batch tracking, processing metrics, and compliance documentation
 
@@ -114,7 +114,7 @@ Brand colors: Must use exact HSL values - pop-green: hsl(142, 100%, 35%), pop-bl
 
 ## Business Operations Architecture
 
-The PWA serves as the complete business management system with three integrated operational views of the same MongoDB data:
+The PWA serves as the complete business management system with five integrated dashboard views of the same MongoDB data:
 
 ### Partner Management (CRM)
 Built into PWA dashboard using `orgs` collection with lead pipeline tracking, communication logs, and contract management. Google Workspace integration for automated correspondence.
