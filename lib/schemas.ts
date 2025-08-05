@@ -85,25 +85,33 @@ export interface Item {
   
 }
 
-// User - People who interact with the system and build items
+// User - People who interact with the system in various roles
 export interface User {
-  
   _id: ObjectId;
   name: string;
   email: string;
+  userType: 'admin' | 'super_admin' | 'staff' | 'user' | 'partner_owner';
+  orgId?: ObjectId; // Reference to Org (for partner owners and some staff)
   location?: string;
-  skillLevel: 'beginner' | 'intermediate' | 'advanced';
-  itemsAssembled: number;
-  totalHoursLogged: number;
-  favoriteProducts: ObjectId[]; // References to Products
-  assemblyStories: {
+  
+  // Maker/User specific fields
+  skillLevel?: 'beginner' | 'intermediate' | 'advanced';
+  itemsAssembled?: number;
+  totalHoursLogged?: number;
+  favoriteProducts?: ObjectId[]; // References to Products
+  assemblyStories?: {
     itemId: ObjectId;
     story: string;
     date: Date;
   }[];
+  
+  // Staff/Admin specific fields
+  permissions?: string[]; // Flexible permissions array
+  assignedRoutes?: string[]; // For staff pickup assignments
+  
+  isActive: boolean;
   createdAt: Date;
   updatedAt: Date;
-  
 }
 
 // Product - Design files, templates, and specifications
