@@ -11,24 +11,6 @@ PopCycle is a comprehensive circular economy platform that transforms corporate 
 Preferred communication style: Simple, everyday language.
 Brand colors: Must use exact HSL values - pop-green: hsl(142, 100%, 35%), pop-blue: hsl(214, 100%, 50%), pop-red: hsl(347, 100%, 60%), pop-black: hsl(0, 0%, 0%), pop-gray: hsl(0, 0%, 20%).
 
-## User Architecture
-
-### User Identity & Role System
-**Default User Type**: All users start as makers with user profile and progression tracking. The system uses capability-based access where users accumulate permissions and access rights over time without losing their foundational maker identity.
-
-**Staff Designation**: `role` field exists only for staff positions ("admin", "operations_staff", "crm_staff"). Absence of role indicates standard maker user.
-
-**Partner Affiliation**: `orgId` field grants read-only access to partner reporting dashboard for that organization's data. Partners have zero write permissions - the partner dashboard is purely a reporting and analytics tool.
-
-### Access Control Matrix
-- **Standard Maker**: User profile only
-- **Partner-Affiliated Maker**: User profile + partner reporting dashboard (read-only)
-- **Staff**: User profile + authorized staff dashboard(s)
-- **Staff with Partner Affiliation**: User profile + staff dashboard(s) + partner reporting dashboard
-
-### Authentication Strategy
-**Single Sign-On**: One login provides access to all authorized areas. **Production Stations**: Quick staff authentication for manufacturing workflows. **Universal Provenance**: All users can view complete provenance chains via QR code tracking - transparency is core to the circular economy mission.
-
 ## Current State (Updated Jan 2025)
 
 ### Hero Section Styling
@@ -60,7 +42,7 @@ Brand colors: Must use exact HSL values - pop-green: hsl(142, 100%, 35%), pop-bl
 - **Bin**: Physical branded containers with QR codes at partner locations, pickup schedules, and capacity tracking
 - **Batch**: Collection records with provenance chain, processing status, and transformation tracking
 - **Item**: Individual trackable products with QR codes, assembly status, and maker progression integration
-- **User**: Multi-role system supporting makers, staff, partners, and admins with nested skill and interaction data
+- **User**: Capability-based identity system where all users start as makers and accumulate access rights over time
 - **Product**: Design templates, assembly guides, customization options, and inventory specifications
 
 ### Core System Architecture
@@ -89,6 +71,7 @@ Brand colors: Must use exact HSL values - pop-green: hsl(142, 100%, 35%), pop-bl
 - **Quality Control**: Batch tracking, processing metrics, and compliance documentation
 
 #### Community & Education Platform
+- **Universal Maker Identity**: All users maintain maker progression regardless of additional roles or partner affiliations
 - **Maker Progression**: Skill trees, achievement systems, and assembly history tracking
 - **Tutorial System**: Step-by-step assembly guides with progress validation
 - **Community Features**: Mentorship matching, project sharing, and peer recognition
@@ -168,9 +151,27 @@ All business dashboards organized under `/portal/` with role-based access:
 - **Station 2 - Laser Processing**: Queue management, QR code display for Lightburn integration, completion status updates
 - **PWA Integration**: Thin client approach using browser-based interfaces at each production station for real-time data coordination
 
+### User Access Architecture
+
+#### User Identity System
+**Default User Type**: All users begin as makers with user profile and progression tracking. The system employs capability-based access where users accumulate permissions and dashboard access over time without losing their foundational maker identity.
+
+**Staff Designation**: `role` field exists only for staff positions ("admin", "operations_staff", "crm_staff"). Absence of role indicates standard maker user.
+
+**Partner Affiliation**: `orgId` field grants read-only access to partner reporting dashboard for that organization's data. Partner dashboards are purely reporting tools with zero write permissions.
+
+#### Access Control Matrix
+- **Standard Maker**: User profile with maker progression
+- **Partner-Affiliated Maker**: User profile + read-only partner reporting dashboard
+- **Staff**: User profile + authorized staff dashboard(s) based on role
+- **Staff with Partner Affiliation**: User profile + staff dashboard(s) + partner reporting dashboard
+
+#### Authentication Strategy
+**Single Sign-On** across all authorized areas. **Production Stations** use quick staff authentication for manufacturing workflows. **Universal Provenance Access** allows all users to view complete transformation chains via QR code tracking.
+
 ### User-Facing Pages
-- **User Profile/Maker Dashboard** - Personal maker journey, skills, assembly history (existing user profile functionality)
-- **Public Pages** - Home, shop, services, about, track (existing public site structure)
+- **User Profile** - Universal maker progression, skills, assembly history for all users
+- **Public Pages** - Home, shop, services, about, track (accessible without authentication)
 
 ## System Integration Architecture
 
