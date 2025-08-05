@@ -52,9 +52,9 @@ export default function PortalPage() {
   }
 
   return (
-    <div className="h-screen bg-gray-50 flex flex-col">
-      {/* Header */}
-      <header className="bg-white border-b border-gray-200 h-20 flex-shrink-0">
+    <div className="h-screen bg-gray-50">
+      {/* Header - Fixed */}
+      <header className="fixed top-0 left-0 right-0 bg-white border-b border-gray-200 h-20 z-50">
         <div className="px-6 py-4 flex items-center justify-between h-full">
           <div className="flex items-center space-x-4">
             <h1 className="text-2xl font-bold text-pop-black">PopCycle Portal</h1>
@@ -75,39 +75,37 @@ export default function PortalPage() {
         </div>
       </header>
 
-      <div className="flex h-full">
-        {/* Sidebar - Fixed */}
-        <nav className="w-64 bg-white border-r border-gray-200 h-full overflow-y-auto">
-          <div className="p-6">
-            <div className="space-y-2">
-              {sidebarItems.map((item) => {
-                const Icon = item.icon
-                return (
-                  <button
-                    key={item.id}
-                    onClick={() => setActiveSection(item.id)}
-                    className={`w-full flex items-center px-4 py-3 text-left rounded-lg transition-colors ${
-                      activeSection === item.id
-                        ? 'bg-pop-green/10 text-pop-green border border-pop-green/20'
-                        : 'text-gray-600 hover:bg-gray-50'
-                    }`}
-                  >
-                    <Icon className={`h-5 w-5 mr-3 ${activeSection === item.id ? 'text-pop-green' : item.color}`} />
-                    <span className="font-medium">{item.label}</span>
-                  </button>
-                )
-              })}
-            </div>
+      {/* Sidebar - Fixed */}
+      <nav className="fixed top-20 left-0 w-64 h-[calc(100vh-5rem)] bg-white border-r border-gray-200 overflow-y-auto z-40">
+        <div className="p-6">
+          <div className="space-y-2">
+            {sidebarItems.map((item) => {
+              const Icon = item.icon
+              return (
+                <button
+                  key={item.id}
+                  onClick={() => setActiveSection(item.id)}
+                  className={`w-full flex items-center px-4 py-3 text-left rounded-lg transition-colors ${
+                    activeSection === item.id
+                      ? 'bg-pop-green/10 text-pop-green border border-pop-green/20'
+                      : 'text-gray-600 hover:bg-gray-50'
+                  }`}
+                >
+                  <Icon className={`h-5 w-5 mr-3 ${activeSection === item.id ? 'text-pop-green' : item.color}`} />
+                  <span className="font-medium">{item.label}</span>
+                </button>
+              )
+            })}
           </div>
-        </nav>
+        </div>
+      </nav>
 
-        {/* Main Content */}
-        <main className="flex-1 h-full overflow-y-auto">
-          <div className="p-6">
-            {renderDashboard()}
-          </div>
-        </main>
-      </div>
+      {/* Main Content */}
+      <main className="ml-64 mt-20 h-[calc(100vh-5rem)] overflow-y-auto">
+        <div className="p-6">
+          {renderDashboard()}
+        </div>
+      </main>
     </div>
   )
 }
