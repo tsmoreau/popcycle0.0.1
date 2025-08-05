@@ -13,6 +13,8 @@ import {
   Package,
   Calendar,
   TrendingUp,
+  TrendingDown,
+  CreditCard,
   BarChart3,
   FileText,
   AlertCircle
