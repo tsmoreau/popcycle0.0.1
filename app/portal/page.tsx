@@ -50,9 +50,9 @@ export default function PortalPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gray-50" style={{position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, zIndex: 1000, backgroundColor: '#f9fafb'}}>
       {/* Header */}
-      <header className="bg-white border-b border-gray-200">
+        <header className="bg-white border-b border-gray-200">
         <div className="px-6 py-4 flex items-center justify-between">
           <div className="flex items-center space-x-4">
             <h1 className="text-2xl font-bold text-pop-black">PopCycle Portal</h1>
