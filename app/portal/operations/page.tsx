@@ -17,6 +17,13 @@ import {
   CheckCircle,
   Clock,
   ArrowRight,
+  Scan,
+  Droplets,
+  Scissors,
+  Zap as ShredIcon,
+  Wind,
+  Archive,
+  ChevronDown,
 } from "lucide-react";
 import { Button } from "../../components/ui/button";
 import {
@@ -33,6 +40,12 @@ import {
   TabsList,
   TabsTrigger,
 } from "../../components/ui/tabs";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "../../components/ui/accordion";
 import { Input } from "../../components/ui/input";
 import { Label } from "../../components/ui/label";
 import { Textarea } from "../../components/ui/textarea";
@@ -128,6 +141,22 @@ export default function OperationsPage() {
 
         {/* Collections Tab */}
         <TabsContent value="collections" className="space-y-6">
+          {/* Scan Bin Section */}
+          <Card className="bg-pop-green/5 border-pop-green/20">
+            <CardContent className="pt-6">
+              <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
+                <div className="text-center sm:text-left">
+                  <h3 className="text-lg font-semibold text-pop-green mb-1">Quick Bin Access</h3>
+                  <p className="text-sm text-gray-600">Scan QR code for bin check-in, check-out, and status updates</p>
+                </div>
+                <Button className="bg-pop-green hover:bg-pop-green/90 text-white px-8 py-3 text-base">
+                  <Scan className="h-5 w-5 mr-2" />
+                  Scan Bin
+                </Button>
+              </div>
+            </CardContent>
+          </Card>
+
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
             <Card>
               <CardHeader>
@@ -306,6 +335,158 @@ export default function OperationsPage() {
 
         {/* Processing Tab */}
         <TabsContent value="processing" className="space-y-6">
+          {/* Manufacturing Workflow Steps */}
+          <Card>
+            <CardHeader>
+              <CardTitle>Manufacturing Workflow</CardTitle>
+              <CardDescription>
+                Complete plastic transformation process from waste to blanks
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <Accordion type="single" collapsible className="w-full">
+                <AccordionItem value="wash">
+                  <AccordionTrigger className="text-left">
+                    <div className="flex items-center">
+                      <Droplets className="h-5 w-5 mr-3 text-pop-blue" />
+                      <div>
+                        <div className="font-medium">1. Rough Wash</div>
+                        <div className="text-sm text-gray-600">Initial cleaning and contaminant removal</div>
+                      </div>
+                    </div>
+                  </AccordionTrigger>
+                  <AccordionContent>
+                    <div className="pl-8 space-y-3">
+                      <div className="flex items-center justify-between p-3 bg-pop-blue/5 rounded-lg">
+                        <span className="text-sm">Current Status</span>
+                        <Badge className="bg-pop-blue text-white">Active</Badge>
+                      </div>
+                      <div className="text-sm text-gray-600">
+                        Remove labels, adhesives, and surface contaminants before sorting.
+                      </div>
+                    </div>
+                  </AccordionContent>
+                </AccordionItem>
+
+                <AccordionItem value="sort">
+                  <AccordionTrigger className="text-left">
+                    <div className="flex items-center">
+                      <Scissors className="h-5 w-5 mr-3 text-pop-green" />
+                      <div>
+                        <div className="font-medium">2. Sort</div>
+                        <div className="text-sm text-gray-600">Material type separation and quality check</div>
+                      </div>
+                    </div>
+                  </AccordionTrigger>
+                  <AccordionContent>
+                    <div className="pl-8 space-y-3">
+                      <div className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                        <span className="text-sm">Current Status</span>
+                        <Badge variant="outline">Pending</Badge>
+                      </div>
+                      <div className="text-sm text-gray-600">
+                        Separate by plastic type (PET, HDPE, etc.) and remove non-recyclables.
+                      </div>
+                    </div>
+                  </AccordionContent>
+                </AccordionItem>
+
+                <AccordionItem value="shred">
+                  <AccordionTrigger className="text-left">
+                    <div className="flex items-center">
+                      <ShredIcon className="h-5 w-5 mr-3 text-pop-red" />
+                      <div>
+                        <div className="font-medium">3. Shred</div>
+                        <div className="text-sm text-gray-600">Size reduction processing</div>
+                      </div>
+                    </div>
+                  </AccordionTrigger>
+                  <AccordionContent>
+                    <div className="pl-8 space-y-3">
+                      <div className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                        <span className="text-sm">Current Status</span>
+                        <Badge variant="outline">Pending</Badge>
+                      </div>
+                      <div className="text-sm text-gray-600">
+                        Mechanical shredding to uniform flake size for processing.
+                      </div>
+                    </div>
+                  </AccordionContent>
+                </AccordionItem>
+
+                <AccordionItem value="dry">
+                  <AccordionTrigger className="text-left">
+                    <div className="flex items-center">
+                      <Wind className="h-5 w-5 mr-3 text-gray-600" />
+                      <div>
+                        <div className="font-medium">4. Dry</div>
+                        <div className="text-sm text-gray-600">Moisture removal and preparation</div>
+                      </div>
+                    </div>
+                  </AccordionTrigger>
+                  <AccordionContent>
+                    <div className="pl-8 space-y-3">
+                      <div className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                        <span className="text-sm">Current Status</span>
+                        <Badge variant="outline">Pending</Badge>
+                      </div>
+                      <div className="text-sm text-gray-600">
+                        Remove moisture to prevent quality issues during pressing.
+                      </div>
+                    </div>
+                  </AccordionContent>
+                </AccordionItem>
+
+                <AccordionItem value="storage">
+                  <AccordionTrigger className="text-left">
+                    <div className="flex items-center">
+                      <Archive className="h-5 w-5 mr-3 text-gray-500" />
+                      <div>
+                        <div className="font-medium">5. Storage</div>
+                        <div className="text-sm text-gray-600">Temporary holding before pressing</div>
+                      </div>
+                    </div>
+                  </AccordionTrigger>
+                  <AccordionContent>
+                    <div className="pl-8 space-y-3">
+                      <div className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                        <span className="text-sm">Current Status</span>
+                        <Badge variant="outline">Pending</Badge>
+                      </div>
+                      <div className="text-sm text-gray-600">
+                        Organized storage by material type ready for pressing.
+                      </div>
+                    </div>
+                  </AccordionContent>
+                </AccordionItem>
+
+                <AccordionItem value="pressing">
+                  <AccordionTrigger className="text-left">
+                    <div className="flex items-center">
+                      <ChevronDown className="h-5 w-5 mr-3 text-pop-black" />
+                      <div>
+                        <div className="font-medium">6. Pressing</div>
+                        <div className="text-sm text-gray-600">Formation into blanks/sheets</div>
+                      </div>
+                    </div>
+                  </AccordionTrigger>
+                  <AccordionContent>
+                    <div className="pl-8 space-y-3">
+                      <div className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                        <span className="text-sm">Current Status</span>
+                        <Badge variant="outline">Pending</Badge>
+                      </div>
+                      <div className="text-sm text-gray-600">
+                        Heat pressing into standardized blanks ready for CNC cutting.
+                      </div>
+                    </div>
+                  </AccordionContent>
+                </AccordionItem>
+              </Accordion>
+            </CardContent>
+          </Card>
+
+          {/* Production Stations */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
             <Card>
               <CardHeader>
