@@ -32,14 +32,13 @@ export default function Track() {
             Enter an item code to see the complete journey from corporate waste
             to educational wonder.
           </p>
-         
         </div>
       </div>
 
       <div className="pb-24 pt-0">
-        <div className="max-w-4xl mx-auto px-6 sm:px-8">
+        <div className=" mx-auto px-6 sm:px-8">
           {/* QR Code Search */}
-          <div className="mb-16">
+          <div className="mb-16 mx-auto  max-w-4xl">
             <PopArtContainer color="green" shadow>
               <Card className="border-4 border-pop-black">
                 <CardContent className="p-8">
@@ -64,9 +63,15 @@ export default function Track() {
           </div>
 
           {/* Categories Filter */}
-          <div className="mb-16">
+          <div className="mb-16 max-w-full">
             <div className="flex flex-wrap gap-4 justify-center">
-              {['COLLECTED BATCHES', 'PRESSED BLANKS', 'FINISHED ITEMS'].map((category) => (
+              {[
+                "ALL",
+                "COLLECTED BATCHES",
+                "PRESSED BLANKS",
+                "FINISHED ITEMS",
+                "ASSEMBLED ITEMS",
+              ].map((category) => (
                 <button
                   key={category}
                   className="px-6 py-3 border-2 border-pop-black bg-white hover:bg-pop-black hover:text-white transition-colors systematic-caps"
@@ -79,10 +84,8 @@ export default function Track() {
 
           {/* Sample QR Codes */}
           <div className="mb-16 mt-32">
-            <h2 className="text-3xl helvetica-bold mb-8 text-center">
-              <span className="text-pop-black">TRY THESE SAMPLE CODES</span>
-            </h2>
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6 max-w-4xl mx-auto px-2">
+           
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 max-w-4xl mx-auto px-12">
               {sampleCodes.map((code, index) => {
                 const colors = [
                   "green",
@@ -178,8 +181,8 @@ export default function Track() {
           </h2>
 
           <p className="text-xl mb-12 text-white leading-relaxed">
-            Every unique code represents a complete transformation from waste
-            to wonder.
+            Every unique code represents a complete transformation from waste to
+            wonder.
           </p>
 
           <Link href="/shop">

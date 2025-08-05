@@ -37,12 +37,12 @@ export default function About() {
         </div>
       </div>
 
-      <div className="pb-20 pt-10">
+      <div className="pb-20 pt-20">
         <div className="max-w-6xl mx-auto px-4">
           {/* Team Section */}
           <section id="team" className="mb-20">
             <h2 className="text-4xl helvetica-bold mb-12 text-center">
-              <span className="text-pop-green">TEAM</span>
+              <span className="text-black">TEAM</span>
             </h2>
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
               <PopArtContainer color="green" shadow>
@@ -106,7 +106,7 @@ export default function About() {
                   <CardContent>
                     <p className="text-pop-gray">
                       In charge of distractions, snacks, and walks.
-                      Enthusiastically chairs the studio greeting committee.
+                      Enthusiastically leads the studio greeting committee.
                     </p>
                   </CardContent>
                 </Card>
@@ -117,10 +117,10 @@ export default function About() {
           {/* Story Section */}
           <section id="story" className="mb-20">
             <h2 className="text-4xl helvetica-bold mb-12 text-center">
-              <span className="text-pop-blue">STORY</span>
+              <span className="text-pop-black">STORY</span>
             </h2>
             <div className="max-w-4xl mx-auto">
-              <Card className="border-4 border-pop-black pop-shadow-black">
+              <Card className="border-4 border-pop-black pop-shadow-green">
                 <CardContent className="p-8">
                   <p className="text-lg leading-relaxed mb-6">
                     PopCycle emerged from the intersection of waste crisis and
@@ -147,7 +147,7 @@ export default function About() {
           {/* Process Section */}
           <section id="process" className="mb-20">
             <h2 className="text-4xl helvetica-bold mb-12 text-center">
-              <span className="text-pop-red">PROCESS</span>
+              <span className="text-pop-black">PROCESS</span>
             </h2>
             <div className="grid md:grid-cols-4 gap-6">
               <div className="text-center">

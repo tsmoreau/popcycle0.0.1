@@ -73,8 +73,8 @@ export default function Navigation() {
               <button className={`systematic-caps text-sm hover:text-pop-green transition-colors flex items-center space-x-1 py-2 ${
                 pathname === '/services' ? "nav-link-active" : ""
               }`}>
-                <span>Services</span>
                 <ChevronDown className="w-3 h-3" />
+                <span>Services</span>
               </button>
               
               {servicesOpen && (
@@ -101,8 +101,8 @@ export default function Navigation() {
               <button className={`systematic-caps text-sm hover:text-pop-green transition-colors flex items-center space-x-1 py-2 ${
                 pathname?.startsWith('/about') ? "nav-link-active" : ""
               }`}>
-                <span>About</span>
                 <ChevronDown className="w-3 h-3" />
+                <span>About</span>
               </button>
               
               {aboutOpen && (
