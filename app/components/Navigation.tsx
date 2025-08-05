@@ -14,6 +14,11 @@ export default function Navigation() {
   const [mobileAboutOpen, setMobileAboutOpen] = useState(false);
   const [mobileServicesOpen, setMobileServicesOpen] = useState(false);
 
+  // Don't render navigation on portal pages
+  if (pathname?.startsWith('/portal')) {
+    return null;
+  }
+
   const aboutItems = [
     { href: "/about#team", label: "Team" },
     { href: "/about#story", label: "Story" },

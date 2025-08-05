@@ -1,7 +1,16 @@
+'use client'
+
 import Link from "next/link";
 import { Recycle } from "lucide-react";
+import { usePathname } from "next/navigation";
 
 export default function Footer() {
+  const pathname = usePathname();
+
+  // Don't render footer on portal pages
+  if (pathname?.startsWith('/portal')) {
+    return null;
+  }
   return (
     <footer className="bg-pop-black text-white py-12">
       <div className="max-w-6xl mx-auto px-4">
