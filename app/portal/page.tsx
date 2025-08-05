@@ -52,9 +52,9 @@ export default function PortalPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50" style={{position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, zIndex: 1000, backgroundColor: '#f9fafb'}}>
+    <div className="min-h-screen bg-gray-50 flex flex-col">
       {/* Header */}
-        <header className="bg-white border-b border-gray-200">
+      <header className="bg-white border-b border-gray-200 flex-shrink-0">
         <div className="px-6 py-4 flex items-center justify-between">
           <div className="flex items-center space-x-4">
             <h1 className="text-2xl font-bold text-pop-black">PopCycle Portal</h1>
@@ -75,9 +75,9 @@ export default function PortalPage() {
         </div>
       </header>
 
-      <div className="flex">
+      <div className="flex flex-1 overflow-hidden">
         {/* Sidebar */}
-        <nav className="w-64 bg-white border-r border-gray-200 min-h-screen">
+        <nav className="w-64 bg-white border-r border-gray-200 flex-shrink-0">
           <div className="p-6">
             <div className="space-y-2">
               {sidebarItems.map((item) => {
