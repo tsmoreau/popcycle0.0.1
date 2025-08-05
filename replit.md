@@ -11,6 +11,24 @@ PopCycle is a comprehensive circular economy platform that transforms corporate 
 Preferred communication style: Simple, everyday language.
 Brand colors: Must use exact HSL values - pop-green: hsl(142, 100%, 35%), pop-blue: hsl(214, 100%, 50%), pop-red: hsl(347, 100%, 60%), pop-black: hsl(0, 0%, 0%), pop-gray: hsl(0, 0%, 20%).
 
+## User Architecture
+
+### User Identity & Role System
+**Default User Type**: All users start as makers with user profile and progression tracking. The system uses capability-based access where users accumulate permissions and access rights over time without losing their foundational maker identity.
+
+**Staff Designation**: `role` field exists only for staff positions ("admin", "operations_staff", "crm_staff"). Absence of role indicates standard maker user.
+
+**Partner Affiliation**: `orgId` field grants read-only access to partner reporting dashboard for that organization's data. Partners have zero write permissions - the partner dashboard is purely a reporting and analytics tool.
+
+### Access Control Matrix
+- **Standard Maker**: User profile only
+- **Partner-Affiliated Maker**: User profile + partner reporting dashboard (read-only)
+- **Staff**: User profile + authorized staff dashboard(s)
+- **Staff with Partner Affiliation**: User profile + staff dashboard(s) + partner reporting dashboard
+
+### Authentication Strategy
+**Single Sign-On**: One login provides access to all authorized areas. **Production Stations**: Quick staff authentication for manufacturing workflows. **Universal Provenance**: All users can view complete provenance chains via QR code tracking - transparency is core to the circular economy mission.
+
 ## Current State (Updated Jan 2025)
 
 ### Hero Section Styling
