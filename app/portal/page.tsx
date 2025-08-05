@@ -101,8 +101,8 @@ export default function PortalPage() {
       </nav>
 
       {/* Main Content */}
-      <main className="ml-64 mt-20 h-[calc(100vh-5rem)] overflow-y-auto">
-        <div className="p-6">
+      <main className="ml-64 mt-20 min-h-[calc(100vh-5rem)] overflow-y-auto">
+        <div className="p-6 pb-12">
           {renderDashboard()}
         </div>
       </main>
