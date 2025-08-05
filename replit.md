@@ -79,3 +79,28 @@ Brand colors: Must use exact HSL values - pop-green: hsl(142, 100%, 35%), pop-bl
 - **Database**: MongoDB for document storage and QR code tracking
 - **QR Code Generation**: Framework prepared for QR code generation and scanning
 - **File Storage**: Asset management through `attached_assets` directory structure
+
+## In-House Systems Strategy
+
+### CRM (Partner Management)
+- **Implementation**: MongoDB views/queries within existing PWA dashboard
+- **Data Source**: Existing `orgs` collection with added status fields (lead, prospect, active, churned)
+- **Features**: Lead pipeline tracking, nested communication logs, contract status management
+- **Integration**: Google Workspace API for automated email/calendar generation
+
+### Logistics (Pickup Scheduling)  
+- **Implementation**: Staff-facing views of bin/batch data with operational workflows
+- **Features**: Geographic route planning, real-time pickup status updates, historical optimization
+- **Mobile Interface**: Staff apps to update bin status and create batch records on collection
+- **Integration**: Calendar sync for schedules, notification system for route changes
+
+### User Tracking and Skill Development
+- **Implementation**: Rich nested documents within user collection tracking complete maker journey
+- **Features**: Skill progression trees, achievement systems, assembly history with photos
+- **Community**: Maker profiles, story sharing, mentorship matching, gamification
+- **Data Architecture**: All tracking stored as nested user data for complete maker profiles
+
+### External Service Integration
+- **Financial**: QuickBooks for comprehensive accounting, Stripe for payment processing
+- **Communication**: Google Workspace for email/calendar automation
+- **Philosophy**: In-house systems for competitive advantage, external services for commoditized functions
