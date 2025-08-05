@@ -138,13 +138,17 @@ Rich user progression system with nested maker profiles, skill trees, assembly h
 ## Dashboard Architecture
 
 ### Portal Structure
-All business dashboards organized under `/portal/` with role-based access:
+Simple route-based portal navigation under `/portal/` with clean separation:
 
+- **Main Portal** (`/portal`) - Overview dashboard with quick access to all sections
 - **Admin Dashboard** (`/portal/admin`) - User management, system settings, permissions
-- **Operations Dashboard** (`/portal/operations`) - Bins, batches, pickups, logistics workflow
+- **Operations Dashboard** (`/portal/operations`) - Complete operations in single file: collections, processing, inventory, fulfillment
 - **CRM Dashboard** (`/portal/crm`) - Sales pipeline, relationship management, events management
 - **Partner Dashboard** (`/portal/partner`) - Client self-service portal with bins, impact reports
 - **Financial Dashboard** (`/portal/financial`) - Revenue tracking, cost analysis, QuickBooks integration
+
+### Simplified Architecture Decision (Aug 2025)
+User preference confirmed: Operations functions contained in single file rather than complex sub-folder organization. All operations sub-sections (collections, processing, inventory, fulfillment) integrated into one comprehensive operations page for better usability and maintenance.
 
 ### Production Workflow Architecture
 - **Station 1 - Weighing/Photo/Creation**: Batch ID input, HID scale integration, webcam capture, database entry creation, QR code generation
