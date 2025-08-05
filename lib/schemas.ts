@@ -2,6 +2,7 @@ import { ObjectId } from 'mongodb';
 
 // Organization - Client partners (Discovery Cube, Ace Hotel, etc.)
 export interface Org {
+  
   _id: ObjectId;
   name: string;
   type: 'corporate' | 'educational' | 'community';
@@ -15,10 +16,12 @@ export interface Org {
   };
   createdAt: Date;
   updatedAt: Date;
+  
 }
 
 // Bin - Physical branded containers with QR codes at partner locations
 export interface Bin {
+  
   _id: ObjectId;
   qrCode: string; // Unique QR code identifier
   orgId: ObjectId; // Reference to Org
@@ -28,10 +31,12 @@ export interface Bin {
   isActive: boolean;
   createdAt: Date;
   updatedAt: Date;
+  
 }
 
 // Batch - Collection record when bins are emptied
 export interface Batch {
+  
   _id: ObjectId;
   qrCode: string; // Unique QR code identifier
   binId: ObjectId; // Reference to Bin (inherits org provenance)
@@ -43,10 +48,12 @@ export interface Batch {
   notes?: string;
   createdAt: Date;
   updatedAt: Date;
+  
 }
 
 // Item - Individual physical blank or finished product
 export interface Item {
+  
   _id: ObjectId;
   qrCode: string; // Unique QR code identifier
   batchId: ObjectId; // Reference to Batch
@@ -59,10 +66,12 @@ export interface Item {
   deliveryDate?: Date;
   createdAt: Date;
   updatedAt: Date;
+  
 }
 
 // User - People who interact with the system and build items
 export interface User {
+  
   _id: ObjectId;
   name: string;
   email: string;
@@ -78,10 +87,12 @@ export interface User {
   }[];
   createdAt: Date;
   updatedAt: Date;
+  
 }
 
 // Product - Design files, templates, and specifications
 export interface Product {
+  
   _id: ObjectId;
   name: string;
   description: string;
@@ -103,4 +114,5 @@ export interface Product {
   reviewCount: number;
   createdAt: Date;
   updatedAt: Date;
+  
 }
