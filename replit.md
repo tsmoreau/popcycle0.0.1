@@ -94,7 +94,11 @@ Staff interfaces for pickup scheduling and route optimization using `bins` and `
 ### Maker Community & Skills
 Rich user progression system with nested maker profiles, skill trees, assembly history, and community features. All tracking data stored within user documents.
 
-### Strategic External Integrations
-- **Finance**: QuickBooks (accounting) + Stripe (payments) - regulated, complex ecosystems
-- **Communications**: Google Workspace API - email/calendar automation
-- **Core Principle**: Build in-house where competitive advantage exists, integrate externally for commoditized services
+### Complete Operational Stack
+**Four-Tool Business Infrastructure:**
+- **PopCycle PWA**: All business operations (CRM, logistics, user tracking, provenance)
+- **Google Workspace**: Communications, email automation, calendar integration
+- **QuickBooks**: Comprehensive accounting and financial reporting
+- **Stripe**: Payment processing and transaction management
+
+**Philosophy**: Everything needed to run the entire circular economy operation with minimal external dependencies and maximum operational control.
