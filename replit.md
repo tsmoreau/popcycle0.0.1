@@ -38,9 +38,12 @@ Brand colors: Must use exact HSL values - pop-green: hsl(142, 100%, 35%), pop-bl
 - **Architecture**: Serverless functions that combine data fetching and page rendering for optimal scaling
 
 ### Data Models
-- **PlasticItem**: Core tracking entity with QR codes, source company, material type, processing status, and transformation journey
-- **Partner**: Corporate, educational, and community organizations contributing to the circular economy
-- **Metrics**: Aggregated sustainability impact data (total pieces, weight, carbon offset)
+- **Org**: Client partners (Discovery Cube, Ace Hotel, etc.) with contact information and organizational details
+- **Bin**: Physical branded containers with QR codes at partner locations, linked to organizations
+- **Batch**: Collection records created when bins are emptied, inheriting provenance from bins
+- **Item**: Individual physical blanks or finished products with unique QR codes, linked to batches
+- **User**: People who interact with the system, assemble items, and track their maker skills
+- **Product**: Design files, templates, and specifications for each item type (rovers, coasters, etc.)
 
 ### QR Code Tracking System
 - **URL Pattern**: `https://popcycle.io/p/ABC123` for individual item tracking
