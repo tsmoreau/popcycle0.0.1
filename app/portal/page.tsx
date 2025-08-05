@@ -113,10 +113,10 @@ function AdminDashboard() {
     <div className="space-y-6">
       <div>
         <h2 className="text-3xl font-bold text-pop-black">Admin Dashboard</h2>
-        <p className="text-gray-600 mt-2">User management, system settings, and permissions</p>
+        <p className="text-gray-600 mt-2">User management, role assignment, and system configuration</p>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">Total Users</CardTitle>
@@ -124,18 +124,29 @@ function AdminDashboard() {
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">247</div>
-            <p className="text-xs text-gray-600">+12 from last month</p>
+            <p className="text-xs text-gray-600">185 makers, 8 staff, 54 partners</p>
           </CardContent>
         </Card>
 
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Active Staff</CardTitle>
-            <Settings className="h-4 w-4 text-pop-blue" />
+            <CardTitle className="text-sm font-medium">Partner Orgs</CardTitle>
+            <Building2 className="h-4 w-4 text-pop-blue" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">8</div>
-            <p className="text-xs text-gray-600">4 operations, 4 CRM</p>
+            <div className="text-2xl font-bold">23</div>
+            <p className="text-xs text-gray-600">54 affiliated users</p>
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-sm font-medium">Role Changes</CardTitle>
+            <Settings className="h-4 w-4 text-pop-red" />
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold">12</div>
+            <p className="text-xs text-gray-600">This month</p>
           </CardContent>
         </Card>
 
@@ -151,39 +162,78 @@ function AdminDashboard() {
         </Card>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         <Card>
           <CardHeader>
-            <CardTitle>User Management</CardTitle>
-            <CardDescription>Manage user roles and permissions</CardDescription>
+            <CardTitle>Role Management</CardTitle>
+            <CardDescription>Assign staff roles and partner affiliations</CardDescription>
           </CardHeader>
-          <CardContent className="space-y-4">
+          <CardContent className="space-y-3">
+            <div className="space-y-2">
+              <div className="flex justify-between items-center p-2 bg-gray-50 rounded">
+                <span className="text-sm">Operations Staff: 4</span>
+                <Button size="sm" variant="outline">Manage</Button>
+              </div>
+              <div className="flex justify-between items-center p-2 bg-gray-50 rounded">
+                <span className="text-sm">CRM Staff: 4</span>
+                <Button size="sm" variant="outline">Manage</Button>
+              </div>
+              <div className="flex justify-between items-center p-2 bg-gray-50 rounded">
+                <span className="text-sm">Partner Affiliations: 54</span>
+                <Button size="sm" variant="outline">Manage</Button>
+              </div>
+            </div>
             <Button className="w-full bg-pop-green hover:bg-pop-green/90">
-              Add New User
-            </Button>
-            <Button variant="outline" className="w-full">
-              Manage Roles
-            </Button>
-            <Button variant="outline" className="w-full">
-              View Audit Log
+              Assign Roles
             </Button>
           </CardContent>
         </Card>
 
         <Card>
           <CardHeader>
-            <CardTitle>System Settings</CardTitle>
-            <CardDescription>Configure system-wide settings</CardDescription>
+            <CardTitle>Production Stations</CardTitle>
+            <CardDescription>Configure manufacturing station access</CardDescription>
           </CardHeader>
-          <CardContent className="space-y-4">
+          <CardContent className="space-y-3">
+            <div className="space-y-2">
+              <div className="flex items-center justify-between p-3 bg-pop-green/5 rounded-lg">
+                <div>
+                  <span className="font-medium text-sm">Station 1: Weighing/Photo</span>
+                  <p className="text-xs text-gray-600">HID Scale + Camera Ready</p>
+                </div>
+                <Badge className="bg-pop-green text-white">Online</Badge>
+              </div>
+              <div className="flex items-center justify-between p-3 bg-pop-blue/5 rounded-lg">
+                <div>
+                  <span className="font-medium text-sm">Station 2: Laser</span>
+                  <p className="text-xs text-gray-600">Lightburn Integration</p>
+                </div>
+                <Badge className="bg-pop-blue text-white">Active</Badge>
+              </div>
+            </div>
             <Button variant="outline" className="w-full">
-              QR Code Settings
+              Configure Stations
+            </Button>
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardHeader>
+            <CardTitle>System Administration</CardTitle>
+            <CardDescription>Core system configuration</CardDescription>
+          </CardHeader>
+          <CardContent className="space-y-3">
+            <Button variant="outline" className="w-full">
+              QR Code Generation Settings
             </Button>
             <Button variant="outline" className="w-full">
-              Integration Settings
+              External Integrations
             </Button>
             <Button variant="outline" className="w-full">
-              Backup Configuration
+              Data Backup & Recovery
+            </Button>
+            <Button variant="outline" className="w-full">
+              View System Audit Trail
             </Button>
           </CardContent>
         </Card>
