@@ -52,10 +52,10 @@ export default function PortalPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 flex flex-col">
+    <div className="h-screen bg-gray-50 flex flex-col">
       {/* Header */}
-      <header className="bg-white border-b border-gray-200 flex-shrink-0">
-        <div className="px-6 py-4 flex items-center justify-between">
+      <header className="bg-white border-b border-gray-200 h-20 flex-shrink-0">
+        <div className="px-6 py-4 flex items-center justify-between h-full">
           <div className="flex items-center space-x-4">
             <h1 className="text-2xl font-bold text-pop-black">PopCycle Portal</h1>
             <Badge variant="outline" className="bg-pop-green/10 text-pop-green border-pop-green">
@@ -75,9 +75,9 @@ export default function PortalPage() {
         </div>
       </header>
 
-      <div className="flex flex-1 overflow-hidden">
-        {/* Sidebar */}
-        <nav className="w-64 bg-white border-r border-gray-200 flex-shrink-0 overflow-y-auto">
+      <div className="flex h-full">
+        {/* Sidebar - Fixed */}
+        <nav className="w-64 bg-white border-r border-gray-200 h-full overflow-y-auto">
           <div className="p-6">
             <div className="space-y-2">
               {sidebarItems.map((item) => {
@@ -102,7 +102,7 @@ export default function PortalPage() {
         </nav>
 
         {/* Main Content */}
-        <main className="flex-1 overflow-y-auto">
+        <main className="flex-1 h-full overflow-y-auto">
           <div className="p-6">
             {renderDashboard()}
           </div>
