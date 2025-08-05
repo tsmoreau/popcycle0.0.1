@@ -102,3 +102,18 @@ Rich user progression system with nested maker profiles, skill trees, assembly h
 - **Stripe**: Payment processing and transaction management
 
 **Philosophy**: Everything needed to run the entire circular economy operation with minimal external dependencies and maximum operational control.
+
+## Dashboard Architecture
+
+### Portal Structure
+All business dashboards organized under `/portal/` with role-based access:
+
+- **Admin Dashboard** (`/portal/admin`) - User management, system settings, permissions
+- **Operations Dashboard** (`/portal/operations`) - Bins, batches, pickups, logistics workflow
+- **CRM Dashboard** (`/portal/crm`) - Sales pipeline, relationship management, events
+- **Partner Dashboard** (`/portal/partner`) - Client self-service portal with bins, impact reports
+- **Financial Dashboard** (`/portal/financial`) - Revenue tracking, cost analysis, QuickBooks integration
+
+### User-Facing Pages
+- **User Profile/Maker Dashboard** - Personal maker journey, skills, assembly history (existing user profile functionality)
+- **Public Pages** - Home, shop, services, about, track (existing public site structure)
