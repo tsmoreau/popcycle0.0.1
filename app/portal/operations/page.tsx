@@ -335,164 +335,221 @@ export default function OperationsPage() {
 
         {/* Processing Tab */}
         <TabsContent value="processing" className="space-y-6">
-          {/* Manufacturing Workflow Steps */}
-          <Card>
-            <CardHeader>
-              <CardTitle>Manufacturing Workflow</CardTitle>
-              <CardDescription>
-                Complete plastic transformation process from waste to blanks
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              <Accordion type="single" collapsible className="w-full">
-                <AccordionItem value="wash">
-                  <AccordionTrigger className="text-left">
-                    <div className="flex items-center">
-                      <Droplets className="h-5 w-5 mr-3 text-pop-blue" />
-                      <div>
-                        <div className="font-medium">1. Rough Wash</div>
-                        <div className="text-sm text-gray-600">Initial cleaning and contaminant removal</div>
-                      </div>
-                    </div>
-                  </AccordionTrigger>
-                  <AccordionContent>
-                    <div className="pl-8 space-y-3">
-                      <div className="flex items-center justify-between p-3 bg-pop-blue/5 rounded-lg">
-                        <span className="text-sm">Current Status</span>
-                        <Badge className="bg-pop-blue text-white">Active</Badge>
-                      </div>
-                      <div className="text-sm text-gray-600">
-                        Remove labels, adhesives, and surface contaminants before sorting.
-                      </div>
-                    </div>
-                  </AccordionContent>
-                </AccordionItem>
+          {/* Manufacturing Workflow Stations */}
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            {/* Station 1: Rough Wash */}
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center">
+                  <Droplets className="h-5 w-5 mr-2 text-pop-blue" />
+                  Wash Station
+                </CardTitle>
+                <CardDescription>Initial cleaning and contaminant removal</CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <div className="space-y-2">
+                  <Label>Current Batch</Label>
+                  <Input value="BA-8473" readOnly />
+                </div>
+                <div className="flex items-center justify-between p-3 bg-pop-blue/5 rounded-lg">
+                  <span className="text-sm">Station Status</span>
+                  <Badge className="bg-pop-blue text-white">Processing</Badge>
+                </div>
+                <div className="space-y-2">
+                  <div className="flex justify-between text-sm">
+                    <span>Progress</span>
+                    <span>78%</span>
+                  </div>
+                  <div className="w-full bg-gray-200 rounded-full h-2">
+                    <div className="bg-pop-blue h-2 rounded-full" style={{width: '78%'}}></div>
+                  </div>
+                </div>
+                <Button className="w-full bg-pop-blue hover:bg-pop-blue/90">
+                  Complete Wash Cycle
+                </Button>
+              </CardContent>
+            </Card>
 
-                <AccordionItem value="sort">
-                  <AccordionTrigger className="text-left">
-                    <div className="flex items-center">
-                      <Scissors className="h-5 w-5 mr-3 text-pop-green" />
-                      <div>
-                        <div className="font-medium">2. Sort</div>
-                        <div className="text-sm text-gray-600">Material type separation and quality check</div>
-                      </div>
-                    </div>
-                  </AccordionTrigger>
-                  <AccordionContent>
-                    <div className="pl-8 space-y-3">
-                      <div className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
-                        <span className="text-sm">Current Status</span>
-                        <Badge variant="outline">Pending</Badge>
-                      </div>
-                      <div className="text-sm text-gray-600">
-                        Separate by plastic type (PET, HDPE, etc.) and remove non-recyclables.
-                      </div>
-                    </div>
-                  </AccordionContent>
-                </AccordionItem>
+            {/* Station 2: Sort */}
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center">
+                  <Scissors className="h-5 w-5 mr-2 text-pop-green" />
+                  Sort Station
+                </CardTitle>
+                <CardDescription>Material separation and quality control</CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <div className="space-y-2">
+                  <Label>Queue</Label>
+                  <div className="space-y-1">
+                    <div className="text-sm p-2 bg-gray-50 rounded">BA-8472 - Ready</div>
+                    <div className="text-sm p-2 bg-gray-50 rounded">BA-8471 - Ready</div>
+                  </div>
+                </div>
+                <div className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                  <span className="text-sm">Station Status</span>
+                  <Badge variant="outline">Idle</Badge>
+                </div>
+                <div className="grid grid-cols-2 gap-2">
+                  <Button variant="outline" size="sm">PET</Button>
+                  <Button variant="outline" size="sm">HDPE</Button>
+                  <Button variant="outline" size="sm">PP</Button>
+                  <Button variant="outline" size="sm">Reject</Button>
+                </div>
+                <Button className="w-full bg-pop-green hover:bg-pop-green/90">
+                  Start Sort Process
+                </Button>
+              </CardContent>
+            </Card>
 
-                <AccordionItem value="shred">
-                  <AccordionTrigger className="text-left">
-                    <div className="flex items-center">
-                      <ShredIcon className="h-5 w-5 mr-3 text-pop-red" />
-                      <div>
-                        <div className="font-medium">3. Shred</div>
-                        <div className="text-sm text-gray-600">Size reduction processing</div>
-                      </div>
-                    </div>
-                  </AccordionTrigger>
-                  <AccordionContent>
-                    <div className="pl-8 space-y-3">
-                      <div className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
-                        <span className="text-sm">Current Status</span>
-                        <Badge variant="outline">Pending</Badge>
-                      </div>
-                      <div className="text-sm text-gray-600">
-                        Mechanical shredding to uniform flake size for processing.
-                      </div>
-                    </div>
-                  </AccordionContent>
-                </AccordionItem>
+            {/* Station 3: Shred */}
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center">
+                  <ShredIcon className="h-5 w-5 mr-2 text-pop-red" />
+                  Shred Station
+                </CardTitle>
+                <CardDescription>Size reduction processing</CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <div className="space-y-2">
+                  <Label>Material Input</Label>
+                  <div className="flex space-x-2">
+                    <Input placeholder="Weight (lbs)" className="flex-1" />
+                    <Button size="sm" variant="outline">Scale</Button>
+                  </div>
+                </div>
+                <div className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                  <span className="text-sm">Shredder Status</span>
+                  <Badge variant="outline">Ready</Badge>
+                </div>
+                <div className="space-y-2">
+                  <div className="flex justify-between text-sm">
+                    <span>Target Size</span>
+                    <span>5mm flakes</span>
+                  </div>
+                </div>
+                <Button className="w-full bg-pop-red hover:bg-pop-red/90">
+                  Start Shredding
+                </Button>
+              </CardContent>
+            </Card>
+          </div>
 
-                <AccordionItem value="dry">
-                  <AccordionTrigger className="text-left">
-                    <div className="flex items-center">
-                      <Wind className="h-5 w-5 mr-3 text-gray-600" />
-                      <div>
-                        <div className="font-medium">4. Dry</div>
-                        <div className="text-sm text-gray-600">Moisture removal and preparation</div>
-                      </div>
-                    </div>
-                  </AccordionTrigger>
-                  <AccordionContent>
-                    <div className="pl-8 space-y-3">
-                      <div className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
-                        <span className="text-sm">Current Status</span>
-                        <Badge variant="outline">Pending</Badge>
-                      </div>
-                      <div className="text-sm text-gray-600">
-                        Remove moisture to prevent quality issues during pressing.
-                      </div>
-                    </div>
-                  </AccordionContent>
-                </AccordionItem>
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            {/* Station 4: Dry */}
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center">
+                  <Wind className="h-5 w-5 mr-2 text-gray-600" />
+                  Dry Station
+                </CardTitle>
+                <CardDescription>Moisture removal</CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <div className="space-y-2">
+                  <Label>Temperature Control</Label>
+                  <div className="flex items-center space-x-2">
+                    <Input value="85°C" readOnly className="flex-1" />
+                    <Badge className="bg-pop-green text-white">Optimal</Badge>
+                  </div>
+                </div>
+                <div className="space-y-2">
+                  <div className="flex justify-between text-sm">
+                    <span>Drying Time</span>
+                    <span>45 min remaining</span>
+                  </div>
+                  <div className="w-full bg-gray-200 rounded-full h-2">
+                    <div className="bg-gray-600 h-2 rounded-full" style={{width: '60%'}}></div>
+                  </div>
+                </div>
+                <Button className="w-full" variant="outline">
+                  Monitor Cycle
+                </Button>
+              </CardContent>
+            </Card>
 
-                <AccordionItem value="storage">
-                  <AccordionTrigger className="text-left">
-                    <div className="flex items-center">
-                      <Archive className="h-5 w-5 mr-3 text-gray-500" />
-                      <div>
-                        <div className="font-medium">5. Storage</div>
-                        <div className="text-sm text-gray-600">Temporary holding before pressing</div>
-                      </div>
+            {/* Station 5: Storage */}
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center">
+                  <Archive className="h-5 w-5 mr-2 text-gray-500" />
+                  Storage Bins
+                </CardTitle>
+                <CardDescription>Material inventory management</CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <div className="space-y-2">
+                  <div className="grid grid-cols-2 gap-2 text-sm">
+                    <div className="p-2 bg-pop-blue/10 rounded">
+                      <div className="font-medium">PET</div>
+                      <div className="text-xs">156 lbs</div>
                     </div>
-                  </AccordionTrigger>
-                  <AccordionContent>
-                    <div className="pl-8 space-y-3">
-                      <div className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
-                        <span className="text-sm">Current Status</span>
-                        <Badge variant="outline">Pending</Badge>
-                      </div>
-                      <div className="text-sm text-gray-600">
-                        Organized storage by material type ready for pressing.
-                      </div>
+                    <div className="p-2 bg-pop-green/10 rounded">
+                      <div className="font-medium">HDPE</div>
+                      <div className="text-xs">89 lbs</div>
                     </div>
-                  </AccordionContent>
-                </AccordionItem>
+                    <div className="p-2 bg-pop-red/10 rounded">
+                      <div className="font-medium">PP</div>
+                      <div className="text-xs">67 lbs</div>
+                    </div>
+                    <div className="p-2 bg-gray-100 rounded">
+                      <div className="font-medium">Mixed</div>
+                      <div className="text-xs">23 lbs</div>
+                    </div>
+                  </div>
+                </div>
+                <Button className="w-full" variant="outline">
+                  Update Inventory
+                </Button>
+              </CardContent>
+            </Card>
 
-                <AccordionItem value="pressing">
-                  <AccordionTrigger className="text-left">
-                    <div className="flex items-center">
-                      <ChevronDown className="h-5 w-5 mr-3 text-pop-black" />
-                      <div>
-                        <div className="font-medium">6. Pressing</div>
-                        <div className="text-sm text-gray-600">Formation into blanks/sheets</div>
-                      </div>
+            {/* Station 6: Pressing */}
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center">
+                  <ChevronDown className="h-5 w-5 mr-2 text-pop-black" />
+                  Press Station
+                </CardTitle>
+                <CardDescription>Blank formation</CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <div className="space-y-2">
+                  <Label>Press Settings</Label>
+                  <div className="grid grid-cols-2 gap-2">
+                    <div>
+                      <div className="text-xs text-gray-600">Temperature</div>
+                      <div className="text-sm font-medium">180°C</div>
                     </div>
-                  </AccordionTrigger>
-                  <AccordionContent>
-                    <div className="pl-8 space-y-3">
-                      <div className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
-                        <span className="text-sm">Current Status</span>
-                        <Badge variant="outline">Pending</Badge>
-                      </div>
-                      <div className="text-sm text-gray-600">
-                        Heat pressing into standardized blanks ready for CNC cutting.
-                      </div>
+                    <div>
+                      <div className="text-xs text-gray-600">Pressure</div>
+                      <div className="text-sm font-medium">2500 PSI</div>
                     </div>
-                  </AccordionContent>
-                </AccordionItem>
-              </Accordion>
-            </CardContent>
-          </Card>
+                  </div>
+                </div>
+                <div className="flex items-center justify-between p-3 bg-pop-black/5 rounded-lg">
+                  <span className="text-sm">Press Status</span>
+                  <Badge className="bg-pop-black text-white">Ready</Badge>
+                </div>
+                <Button className="w-full bg-pop-black hover:bg-pop-black/90 text-white">
+                  Start Press Cycle
+                </Button>
+              </CardContent>
+            </Card>
+          </div>
 
           {/* Production Stations */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
             <Card>
               <CardHeader>
-                <CardTitle>Station 1: Weighing/Photo/Creation</CardTitle>
+                <CardTitle className="flex items-center">
+                  <Scale className="h-5 w-5 mr-2 text-pop-green" />
+                  Station 7: Weighing/Photo/Creation
+                </CardTitle>
                 <CardDescription>
-                  Batch processing and item creation workflow
+                  Item creation from pressed blanks
                 </CardDescription>
               </CardHeader>
               <CardContent className="space-y-4">
@@ -541,9 +598,12 @@ export default function OperationsPage() {
 
             <Card>
               <CardHeader>
-                <CardTitle>Station 2: Laser Processing</CardTitle>
+                <CardTitle className="flex items-center">
+                  <Zap className="h-5 w-5 mr-2 text-pop-blue" />
+                  Station 8: Laser Processing
+                </CardTitle>
                 <CardDescription>
-                  QR code laser engraving workflow
+                  QR code engraving and completion
                 </CardDescription>
               </CardHeader>
               <CardContent className="space-y-4">
