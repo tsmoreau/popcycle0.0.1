@@ -77,7 +77,7 @@ export default function PortalPage() {
 
       <div className="flex flex-1 overflow-hidden">
         {/* Sidebar */}
-        <nav className="w-64 bg-white border-r border-gray-200 flex-shrink-0">
+        <nav className="w-64 bg-white border-r border-gray-200 flex-shrink-0 overflow-y-auto">
           <div className="p-6">
             <div className="space-y-2">
               {sidebarItems.map((item) => {
@@ -102,8 +102,10 @@ export default function PortalPage() {
         </nav>
 
         {/* Main Content */}
-        <main className="flex-1 p-6 overflow-y-auto">
-          {renderDashboard()}
+        <main className="flex-1 overflow-y-auto">
+          <div className="p-6">
+            {renderDashboard()}
+          </div>
         </main>
       </div>
     </div>
