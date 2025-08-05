@@ -61,7 +61,7 @@ export default function PortalPage() {
             </Badge>
           </div>
           <div className="flex items-center space-x-4">
-            <Button variant="ghost" size="sm">
+            <Button variant="ghost" size="sm" onClick={() => window.location.href = '/'}>
               <Home className="h-4 w-4 mr-2" />
               Public Site
             </Button>
