@@ -81,13 +81,13 @@ export default function OperationsPage() {
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">
-              Items in Queue
+              Blanks in Inventory
             </CardTitle>
             <Settings className="h-4 w-4 text-pop-red" />
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">89</div>
-            <p className="text-xs text-gray-600">Ready for assembly</p>
+            <p className="text-xs text-gray-600">Ready for manufacture</p>
           </CardContent>
         </Card>
 
@@ -107,7 +107,7 @@ export default function OperationsPage() {
 
       {/* Main Operations Tabs */}
       <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-        <div className="relative mb-6">
+        <div className="relative">
           <TabsList className="mb-0 relative z-10">
             <TabsTrigger value="collections" className="folder-tab-green">
               📦 Collections
@@ -122,7 +122,7 @@ export default function OperationsPage() {
               🚚 Fulfillment
             </TabsTrigger>
           </TabsList>
-          {/* Tab base line */}
+          {/* Tab base line - will be covered by content border */}
           <div className="h-px bg-gray-400 w-full absolute bottom-0 z-0"></div>
         </div>
 
