@@ -438,7 +438,41 @@ export default function OperationsPage() {
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-            {/* Station 4: Dry */}
+            {/* Station 4: Fine Wash */}
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center">
+                  <Droplets className="h-5 w-5 mr-2 text-pop-blue" />
+                  Fine Wash Station
+                </CardTitle>
+                <CardDescription>Post-shred cleaning and debris removal</CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <div className="space-y-2">
+                  <Label>Current Material</Label>
+                  <Input value="PET Flakes - 5mm" readOnly />
+                </div>
+                <div className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                  <span className="text-sm">Station Status</span>
+                  <Badge variant="outline">Ready</Badge>
+                </div>
+                <div className="space-y-2">
+                  <div className="flex justify-between text-sm">
+                    <span>Water Temperature</span>
+                    <span>60°C</span>
+                  </div>
+                  <div className="flex justify-between text-sm">
+                    <span>Rinse Cycles</span>
+                    <span>3x planned</span>
+                  </div>
+                </div>
+                <Button className="w-full bg-pop-blue hover:bg-pop-blue/90">
+                  Start Fine Wash
+                </Button>
+              </CardContent>
+            </Card>
+
+            {/* Station 5: Dry */}
             <Card>
               <CardHeader>
                 <CardTitle className="flex items-center">
@@ -470,7 +504,7 @@ export default function OperationsPage() {
               </CardContent>
             </Card>
 
-            {/* Station 5: Storage */}
+            {/* Station 6: Storage */}
             <Card>
               <CardHeader>
                 <CardTitle className="flex items-center">
@@ -506,7 +540,7 @@ export default function OperationsPage() {
               </CardContent>
             </Card>
 
-            {/* Station 6: Pressing */}
+            {/* Station 7: Pressing */}
             <Card>
               <CardHeader>
                 <CardTitle className="flex items-center">
@@ -546,7 +580,7 @@ export default function OperationsPage() {
               <CardHeader>
                 <CardTitle className="flex items-center">
                   <Scale className="h-5 w-5 mr-2 text-pop-green" />
-                  Station 7: Weighing/Photo/Creation
+                  Station 8: Weighing/Photo/Creation
                 </CardTitle>
                 <CardDescription>
                   Item creation from pressed blanks
@@ -600,7 +634,7 @@ export default function OperationsPage() {
               <CardHeader>
                 <CardTitle className="flex items-center">
                   <Zap className="h-5 w-5 mr-2 text-pop-blue" />
-                  Station 8: Laser Processing
+                  Station 9: Laser Processing
                 </CardTitle>
                 <CardDescription>
                   QR code engraving and completion
