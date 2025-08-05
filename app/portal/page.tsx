@@ -24,9 +24,11 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../co
 import { Badge } from '../components/ui/badge'
 
 type DashboardSection = 'admin' | 'operations' | 'crm' | 'partner' | 'financial'
+type OperationsSection = 'collections' | 'processing' | 'inventory' | 'fulfillment'
 
 export default function PortalPage() {
   const [activeSection, setActiveSection] = useState<DashboardSection>('admin')
+  const [activeOperationsSection, setActiveOperationsSection] = useState<OperationsSection>('collections')
 
   const sidebarItems = [
     { id: 'admin' as const, label: 'Admin', icon: Settings, color: 'text-pop-black' },
@@ -41,7 +43,7 @@ export default function PortalPage() {
       case 'admin':
         return <AdminDashboard />
       case 'operations':
-        return <OperationsDashboard />
+        return <OperationsDashboard activeSubSection={activeOperationsSection} setActiveSubSection={setActiveOperationsSection} />
       case 'crm':
         return <CRMDashboard />
       case 'partner':
@@ -244,7 +246,30 @@ function AdminDashboard() {
   )
 }
 
-function OperationsDashboard() {
+function OperationsDashboard({ activeSubSection, setActiveSubSection }: {
+  activeSubSection: OperationsSection;
+  setActiveSubSection: (section: OperationsSection) => void;
+}) {
+  const operationsSubSections = [
+    { id: 'collections' as const, label: 'Collections', icon: Truck, color: 'text-pop-green' },
+    { id: 'processing' as const, label: 'Processing', icon: Package, color: 'text-pop-blue' },
+    { id: 'inventory' as const, label: 'Inventory', icon: BarChart3, color: 'text-pop-red' },
+    { id: 'fulfillment' as const, label: 'Fulfillment', icon: Users, color: 'text-pop-gray' },
+  ]
+
+  const renderOperationsSubSection = () => {
+    switch (activeSubSection) {
+      case 'collections':
+        return <CollectionsSection />
+      case 'processing':
+        return <ProcessingSection />
+      case 'inventory':
+        return <InventorySection />
+      case 'fulfillment':
+        return <FulfillmentSection />
+    }
+  }
+
   return (
     <div className="space-y-6">
       <div>
@@ -252,7 +277,40 @@ function OperationsDashboard() {
         <p className="text-gray-600 mt-2">Bins, batches, production workflow, and logistics coordination</p>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-5 gap-6">
+      {/* Sub-navigation */}
+      <div className="border-b border-gray-200">
+        <nav className="flex space-x-8">
+          {operationsSubSections.map((section) => {
+            const Icon = section.icon
+            return (
+              <button
+                key={section.id}
+                onClick={() => setActiveSubSection(section.id)}
+                className={`flex items-center py-3 px-1 border-b-2 font-medium text-sm transition-colors ${
+                  activeSubSection === section.id
+                    ? 'border-pop-green text-pop-green'
+                    : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+                }`}
+              >
+                <Icon className={`h-5 w-5 mr-2 ${activeSubSection === section.id ? 'text-pop-green' : section.color}`} />
+                {section.label}
+              </button>
+            )
+          })}
+        </nav>
+      </div>
+
+      {/* Sub-section content */}
+      {renderOperationsSubSection()}
+    </div>
+  )
+}
+
+// Operations Sub-sections
+function CollectionsSection() {
+  return (
+    <div className="space-y-6">
+      <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">Active Bins</CardTitle>
@@ -437,6 +495,351 @@ function OperationsDashboard() {
             </Button>
             <Button variant="outline" className="w-full">
               Operations Reports
+            </Button>
+          </CardContent>
+        </Card>
+      </div>
+    </div>
+  )
+}
+
+function ProcessingSection() {
+  return (
+    <div className="space-y-6">
+      <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+        <Card>
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-sm font-medium">Active Batches</CardTitle>
+            <Package className="h-4 w-4 text-pop-blue" />
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold">23</div>
+            <p className="text-xs text-gray-600">8 processing, 15 complete</p>
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-sm font-medium">Station 1 Queue</CardTitle>
+            <Settings className="h-4 w-4 text-pop-green" />
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold">12</div>
+            <p className="text-xs text-gray-600">Weighing/Photo items</p>
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-sm font-medium">Station 2 Queue</CardTitle>
+            <Settings className="h-4 w-4 text-pop-red" />
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold">35</div>
+            <p className="text-xs text-gray-600">Laser processing items</p>
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-sm font-medium">Items Created Today</CardTitle>
+            <BarChart3 className="h-4 w-4 text-pop-blue" />
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold">47</div>
+            <p className="text-xs text-gray-600">From 23 batches</p>
+          </CardContent>
+        </Card>
+      </div>
+
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <Card>
+          <CardHeader>
+            <CardTitle>Production Stations</CardTitle>
+            <CardDescription>Real-time station status and control</CardDescription>
+          </CardHeader>
+          <CardContent className="space-y-3">
+            <div className="p-3 bg-pop-green/5 border border-pop-green/20 rounded-lg">
+              <div className="flex items-center justify-between mb-2">
+                <span className="font-medium">Station 1: Weighing/Photo</span>
+                <Badge className="bg-pop-green text-white">Ready</Badge>
+              </div>
+              <div className="space-y-1 text-xs text-gray-600">
+                <div>HID Scale: Connected (2.3kg)</div>
+                <div>Camera: USB Feed Active</div>
+                <div>Last Item: IT-ABC123 (14:32)</div>
+              </div>
+              <Button className="w-full mt-2 bg-pop-green hover:bg-pop-green/90" size="sm">
+                Open Station Interface
+              </Button>
+            </div>
+            
+            <div className="p-3 bg-pop-blue/5 border border-pop-blue/20 rounded-lg">
+              <div className="flex items-center justify-between mb-2">
+                <span className="font-medium">Station 2: Laser Processing</span>
+                <Badge className="bg-pop-blue text-white">Processing</Badge>
+              </div>
+              <div className="space-y-1 text-xs text-gray-600">
+                <div>Current: IT-XYZ789</div>
+                <div>Queue: 35 items</div>
+                <div>Est. Completion: 16:45</div>
+              </div>
+              <Button className="w-full mt-2 bg-pop-blue hover:bg-pop-blue/90" size="sm">
+                Lightburn Integration
+              </Button>
+            </div>
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardHeader>
+            <CardTitle>Batch Management</CardTitle>
+            <CardDescription>Processing pipeline and status tracking</CardDescription>
+          </CardHeader>
+          <CardContent className="space-y-3">
+            <div className="space-y-2">
+              <div className="flex justify-between items-center p-2 bg-blue-50 rounded">
+                <span className="text-sm">BA-2024-001: Tech District</span>
+                <Badge className="bg-blue-500 text-white">Processing</Badge>
+              </div>
+              <div className="flex justify-between items-center p-2 bg-green-50 rounded">
+                <span className="text-sm">BA-2024-002: University</span>
+                <Badge className="bg-green-500 text-white">Complete</Badge>
+              </div>
+              <div className="flex justify-between items-center p-2 bg-yellow-50 rounded">
+                <span className="text-sm">BA-2024-003: Downtown</span>
+                <Badge className="bg-yellow-500 text-white">Station 1</Badge>
+              </div>
+            </div>
+            <Button variant="outline" className="w-full">
+              View All Batches
+            </Button>
+            <Button variant="outline" className="w-full">
+              Create New Batch
+            </Button>
+          </CardContent>
+        </Card>
+      </div>
+    </div>
+  )
+}
+
+function InventorySection() {
+  return (
+    <div className="space-y-6">
+      <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+        <Card>
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-sm font-medium">Raw Material</CardTitle>
+            <Package className="h-4 w-4 text-pop-green" />
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold">2.3 tons</div>
+            <p className="text-xs text-gray-600">Processed plastic ready</p>
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-sm font-medium">Items in Production</CardTitle>
+            <Settings className="h-4 w-4 text-pop-blue" />
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold">156</div>
+            <p className="text-xs text-gray-600">Various stages</p>
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-sm font-medium">Finished Products</CardTitle>
+            <BarChart3 className="h-4 w-4 text-pop-red" />
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold">89</div>
+            <p className="text-xs text-gray-600">Ready for makers</p>
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-sm font-medium">Low Stock Alerts</CardTitle>
+            <AlertCircle className="h-4 w-4 text-pop-red" />
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold">3</div>
+            <p className="text-xs text-gray-600">Items need restocking</p>
+          </CardContent>
+        </Card>
+      </div>
+
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <Card>
+          <CardHeader>
+            <CardTitle>Material Levels</CardTitle>
+            <CardDescription>Raw material and component inventory</CardDescription>
+          </CardHeader>
+          <CardContent className="space-y-3">
+            <div className="space-y-2">
+              <div className="flex justify-between items-center p-2 bg-green-50 rounded">
+                <span className="text-sm">PET Plastic Flakes</span>
+                <Badge className="bg-green-500 text-white">1.8 tons</Badge>
+              </div>
+              <div className="flex justify-between items-center p-2 bg-yellow-50 rounded">
+                <span className="text-sm">HDPE Sheets</span>
+                <Badge className="bg-yellow-500 text-white">0.5 tons</Badge>
+              </div>
+              <div className="flex justify-between items-center p-2 bg-red-50 rounded">
+                <span className="text-sm">Assembly Hardware</span>
+                <Badge className="bg-red-500 text-white">Low Stock</Badge>
+              </div>
+            </div>
+            <Button variant="outline" className="w-full">
+              Order Raw Materials
+            </Button>
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardHeader>
+            <CardTitle>Product Inventory</CardTitle>
+            <CardDescription>Finished goods ready for assembly</CardDescription>
+          </CardHeader>
+          <CardContent className="space-y-3">
+            <div className="space-y-2">
+              <div className="flex justify-between items-center p-2 bg-gray-50 rounded">
+                <span className="text-sm">Desk Organizers</span>
+                <Badge variant="outline">23 units</Badge>
+              </div>
+              <div className="flex justify-between items-center p-2 bg-gray-50 rounded">
+                <span className="text-sm">Phone Stands</span>
+                <Badge variant="outline">15 units</Badge>
+              </div>
+              <div className="flex justify-between items-center p-2 bg-gray-50 rounded">
+                <span className="text-sm">Pen Holders</span>
+                <Badge variant="outline">51 units</Badge>
+              </div>
+            </div>
+            <Button variant="outline" className="w-full">
+              Inventory Report
+            </Button>
+          </CardContent>
+        </Card>
+      </div>
+    </div>
+  )
+}
+
+function FulfillmentSection() {
+  return (
+    <div className="space-y-6">
+      <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+        <Card>
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-sm font-medium">Pending Orders</CardTitle>
+            <Truck className="h-4 w-4 text-pop-blue" />
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold">34</div>
+            <p className="text-xs text-gray-600">Awaiting maker assembly</p>
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-sm font-medium">In Assembly</CardTitle>
+            <Users className="h-4 w-4 text-pop-green" />
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold">18</div>
+            <p className="text-xs text-gray-600">With makers currently</p>
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-sm font-medium">Ready to Ship</CardTitle>
+            <Package className="h-4 w-4 text-pop-red" />
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold">12</div>
+            <p className="text-xs text-gray-600">Assembly complete</p>
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-sm font-medium">Avg. Assembly Time</CardTitle>
+            <BarChart3 className="h-4 w-4 text-pop-blue" />
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold">2.5h</div>
+            <p className="text-xs text-gray-600">Per item average</p>
+          </CardContent>
+        </Card>
+      </div>
+
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <Card>
+          <CardHeader>
+            <CardTitle>Order Queue</CardTitle>
+            <CardDescription>Production scheduling and maker assignment</CardDescription>
+          </CardHeader>
+          <CardContent className="space-y-3">
+            <div className="space-y-2">
+              <div className="flex justify-between items-center p-2 bg-blue-50 rounded">
+                <span className="text-sm">Order #1201 - Desk Organizer</span>
+                <Badge className="bg-blue-500 text-white">Priority</Badge>
+              </div>
+              <div className="flex justify-between items-center p-2 bg-green-50 rounded">
+                <span className="text-sm">Order #1202 - Phone Stand</span>
+                <Badge className="bg-green-500 text-white">In Progress</Badge>
+              </div>
+              <div className="flex justify-between items-center p-2 bg-yellow-50 rounded">
+                <span className="text-sm">Order #1203 - Pen Holder</span>
+                <Badge className="bg-yellow-500 text-white">Assigned</Badge>
+              </div>
+            </div>
+            <Button variant="outline" className="w-full">
+              View Full Queue (34)
+            </Button>
+            <Button variant="outline" className="w-full">
+              Assign to Makers
+            </Button>
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardHeader>
+            <CardTitle>Maker Assignment</CardTitle>
+            <CardDescription>Active makers and their current projects</CardDescription>
+          </CardHeader>
+          <CardContent className="space-y-3">
+            <div className="space-y-2">
+              <div className="flex justify-between items-center p-2 bg-gray-50 rounded">
+                <div>
+                  <span className="text-sm font-medium">Sarah Chen</span>
+                  <p className="text-xs text-gray-600">Level 3 Maker</p>
+                </div>
+                <Badge variant="outline">2 items</Badge>
+              </div>
+              <div className="flex justify-between items-center p-2 bg-gray-50 rounded">
+                <div>
+                  <span className="text-sm font-medium">Alex Rivera</span>
+                  <p className="text-xs text-gray-600">Level 4 Maker</p>
+                </div>
+                <Badge variant="outline">1 item</Badge>
+              </div>
+              <div className="flex justify-between items-center p-2 bg-gray-50 rounded">
+                <div>
+                  <span className="text-sm font-medium">Jamie Kim</span>
+                  <p className="text-xs text-gray-600">Level 2 Maker</p>
+                </div>
+                <Badge variant="outline">3 items</Badge>
+              </div>
+            </div>
+            <Button variant="outline" className="w-full">
+              Maker Performance
             </Button>
           </CardContent>
         </Card>
