@@ -38,18 +38,38 @@ Brand colors: Must use exact HSL values - pop-green: hsl(142, 100%, 35%), pop-bl
 - **Architecture**: Single PWA handling all business operations with strategic external integrations for finance and communications
 
 ### Data Models
-- **Org**: Client partners (Discovery Cube, Ace Hotel, etc.) with contact information and organizational details
-- **Bin**: Physical branded containers with QR codes at partner locations, linked to organizations
-- **Batch**: Collection records created when bins are emptied, inheriting provenance from bins
-- **Item**: Individual physical blanks or finished products with unique QR codes, linked to batches
-- **User**: People who interact with the system, assemble items, and track their maker skills
-- **Product**: Design files, templates, and specifications for each item type (rovers, coasters, etc.)
+- **Org**: Client partners with CRM pipeline status, contact information, contracts, and interaction history
+- **Bin**: Physical branded containers with QR codes at partner locations, pickup schedules, and capacity tracking
+- **Batch**: Collection records with provenance chain, processing status, and transformation tracking
+- **Item**: Individual trackable products with QR codes, assembly status, and maker progression integration
+- **User**: Multi-role system supporting makers, staff, partners, and admins with nested skill and interaction data
+- **Product**: Design templates, assembly guides, customization options, and inventory specifications
 
-### QR Code Tracking System
-- **URL Pattern**: `https://popcycle.io/p/ABC123` for individual item tracking
-- **Provenance Chain**: Complete lifecycle from waste collection through manufacturing to end-user delivery
-- **Status Tracking**: Multi-stage workflow (collected → processed → assembled → delivered)
-- **Educational Integration**: Links to workshop participation and skill development
+### Core System Architecture
+
+#### QR Code & Provenance Tracking
+- **URL Pattern**: `https://popcycle.io/p/ABC123` for individual item tracking with complete lifecycle visibility
+- **Transformation Chain**: Waste collection → batch processing → blank production → maker assembly → delivery
+- **Real-time Status**: Live updates across physical operations with mobile staff workflows
+- **Educational Integration**: Assembly tutorials, maker skill progression, and community achievement systems
+
+#### Logistics & Operations Management
+- **Pickup Scheduling**: Route optimization with calendar integration and real-time status updates
+- **Mobile Workflows**: Staff apps for collection, batch creation, and inventory management
+- **Capacity Planning**: Bin monitoring, production scheduling, and resource allocation
+- **Quality Control**: Batch tracking, processing metrics, and compliance documentation
+
+#### Community & Education Platform
+- **Maker Progression**: Skill trees, achievement systems, and assembly history tracking
+- **Tutorial System**: Step-by-step assembly guides with progress validation
+- **Community Features**: Mentorship matching, project sharing, and peer recognition
+- **Workshop Management**: Event scheduling, registration, and skill certification
+
+#### E-commerce & Product Systems
+- **Product Catalog**: Customizable items with real-time inventory and provenance display
+- **Order Fulfillment**: Integration with maker assembly workflows and shipping coordination
+- **Customer Communication**: Automated updates throughout the transformation and delivery process
+- **Impact Reporting**: Partner-specific metrics, sustainability data, and circular economy storytelling
 
 ### Development Workflow
 - **Hot Reload**: Next.js development server with Fast Refresh for rapid iteration
@@ -117,3 +137,17 @@ All business dashboards organized under `/portal/` with role-based access:
 ### User-Facing Pages
 - **User Profile/Maker Dashboard** - Personal maker journey, skills, assembly history (existing user profile functionality)
 - **Public Pages** - Home, shop, services, about, track (existing public site structure)
+
+## System Integration Architecture
+
+### External Service Coordination
+- **Google Workspace Integration**: Automated email campaigns, calendar synchronization, and communication workflows
+- **QuickBooks Synchronization**: Real-time financial data, invoice generation, and revenue tracking
+- **Stripe Payment Processing**: Secure transactions with order fulfillment integration and subscription management
+- **Mobile Operations**: Staff applications for pickup scheduling, batch processing, and real-time status updates
+
+### Data Synchronization Strategy
+- **Real-time Updates**: Live status tracking across physical operations and digital interfaces
+- **Offline Capability**: Mobile staff workflows with sync-when-connected functionality  
+- **Integration Resilience**: Graceful handling of external service downtime with local operation continuity
+- **Audit Trails**: Complete activity logging for compliance, debugging, and operational optimization
