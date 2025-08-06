@@ -718,26 +718,27 @@ export default function OperationsPage() {
       </Accordion>
 
       {/* Unified Quick Scan Section */}
-      <Button 
-        className="w-full bg-gray-50 hover:bg-gray-100 border border-gray-200 text-gray-700 hover:text-gray-800 h-20 sm:h-24 text-left justify-start p-6 rounded-lg"
-        variant="outline"
-        onClick={() => setShowScanModal(true)}
-      >
-        <div className="flex items-center justify-between w-full">
-          <div className="flex items-center gap-4">
-            <div className="bg-gray-600 p-3 rounded-lg">
-              <Scan className="h-6 w-6 text-white" />
+      <Accordion type="single" className="w-full">
+        <AccordionItem value="scan" className="border border-gray-200 rounded-lg bg-gray-50">
+          <AccordionTrigger 
+            className="hover:no-underline px-6 py-4 cursor-pointer"
+            onClick={(e) => {
+              e.preventDefault();
+              setShowScanModal(true);
+            }}
+          >
+            <div className="flex items-center gap-4 w-full">
+              <div className="bg-gray-600 p-3 rounded-lg">
+                <Scan className="h-6 w-6 text-white" />
+              </div>
+              <div className="text-left">
+                <h3 className="text-lg font-semibold text-gray-700 mb-1">Quick QR Access</h3>
+                <p className="text-sm text-gray-600">Scan any bin or batch QR code for instant access</p>
+              </div>
             </div>
-            <div>
-              <h3 className="text-lg font-semibold text-gray-700 mb-1">Quick QR Access</h3>
-              <p className="text-sm text-gray-600">Scan any bin or batch QR code for instant access</p>
-            </div>
-          </div>
-          <div className="text-gray-400 hidden sm:block">
-            <ArrowRight className="h-5 w-5" />
-          </div>
-        </div>
-      </Button>
+          </AccordionTrigger>
+        </AccordionItem>
+      </Accordion>
 
       {/* Main Operations Tabs */}
       <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
