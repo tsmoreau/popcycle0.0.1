@@ -300,7 +300,7 @@ export default function OperationsPage() {
         <h2 className="text-3xl font-bold text-pop-black">
           Operations Management
         </h2>
-        <p className="text-gray-600 mt-2">
+        <p className="text-gray-600 mt-2 hidden sm:block">
           Complete operations workflow: collections, processing, inventory, and
           fulfillment
         </p>
