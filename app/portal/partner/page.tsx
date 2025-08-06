@@ -100,40 +100,61 @@ export default function PartnerPage() {
             <CardTitle>Partner Documentation</CardTitle>
             <CardDescription>Essential documents and agreements</CardDescription>
           </CardHeader>
-          <CardContent className="space-y-3">
-            <div className="space-y-3">
-              <div className="flex items-center justify-between p-3 bg-blue-50 rounded-lg">
-                <div>
-                  <span className="font-medium text-sm">Signed Partnership Agreement</span>
-                  <p className="text-xs text-gray-600">Executed: Jan 15, 2024</p>
+          <CardContent className="space-y-4">
+            <div className="grid grid-cols-2 gap-3">
+              <div className="border border-blue-200 rounded-lg p-4 hover:shadow-md transition-shadow">
+                <div className="flex items-start justify-between mb-2">
+                  <div className="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center">
+                    <span className="text-blue-600 text-sm font-medium">📄</span>
+                  </div>
+                  <Badge className="bg-green-500 text-white text-xs">Active</Badge>
                 </div>
-                <Badge className="bg-green-100 text-green-700">Active</Badge>
+                <h4 className="font-medium text-sm mb-1">Partnership Agreement</h4>
+                <p className="text-xs text-gray-500">Signed Jan 15, 2024</p>
               </div>
-              <div className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
-                <div>
-                  <span className="font-medium text-sm">Initial Waste Assessment</span>
-                  <p className="text-xs text-gray-600">Baseline: 2,340 lbs/month</p>
+              
+              <div className="border border-gray-200 rounded-lg p-4 hover:shadow-md transition-shadow">
+                <div className="flex items-start justify-between mb-2">
+                  <div className="w-8 h-8 bg-gray-100 rounded-full flex items-center justify-center">
+                    <span className="text-gray-600 text-sm font-medium">📊</span>
+                  </div>
+                  <Badge variant="secondary" className="text-xs">Complete</Badge>
                 </div>
-                <Badge variant="outline">Complete</Badge>
+                <h4 className="font-medium text-sm mb-1">Waste Assessment</h4>
+                <p className="text-xs text-gray-500">2,340 lbs baseline</p>
               </div>
-              <div className="flex items-center justify-between p-3 bg-orange-50 rounded-lg">
-                <div>
-                  <span className="font-medium text-sm">Service Level Agreement</span>
-                  <p className="text-xs text-gray-600">Updated: Mar 8, 2024</p>
+              
+              <div className="border border-orange-200 rounded-lg p-4 hover:shadow-md transition-shadow">
+                <div className="flex items-start justify-between mb-2">
+                  <div className="w-8 h-8 bg-orange-100 rounded-full flex items-center justify-center">
+                    <span className="text-orange-600 text-sm font-medium">⚖️</span>
+                  </div>
+                  <Badge className="bg-orange-500 text-white text-xs">Current</Badge>
                 </div>
-                <Badge className="bg-orange-100 text-orange-700">Current</Badge>
+                <h4 className="font-medium text-sm mb-1">Service Agreement</h4>
+                <p className="text-xs text-gray-500">Updated Mar 8, 2024</p>
               </div>
-              <div className="flex items-center justify-between p-3 bg-green-50 rounded-lg">
-                <div>
-                  <span className="font-medium text-sm">Compliance Certification</span>
-                  <p className="text-xs text-gray-600">Valid through Dec 2024</p>
+              
+              <div className="border border-green-200 rounded-lg p-4 hover:shadow-md transition-shadow">
+                <div className="flex items-start justify-between mb-2">
+                  <div className="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center">
+                    <span className="text-green-600 text-sm font-medium">✓</span>
+                  </div>
+                  <Badge className="bg-green-500 text-white text-xs">Valid</Badge>
                 </div>
-                <Badge className="bg-green-100 text-green-700">Verified</Badge>
+                <h4 className="font-medium text-sm mb-1">Compliance Cert</h4>
+                <p className="text-xs text-gray-500">Expires Dec 2024</p>
               </div>
             </div>
-            <Button variant="outline" className="w-full">
-              View All Documents
-            </Button>
+            
+            <div className="flex gap-2">
+              <Button variant="outline" className="flex-1 text-sm">
+                Download All
+              </Button>
+              <Button className="flex-1 bg-pop-blue hover:bg-pop-blue/90 text-sm">
+                Request New Document
+              </Button>
+            </div>
           </CardContent>
         </Card>
       </div>
