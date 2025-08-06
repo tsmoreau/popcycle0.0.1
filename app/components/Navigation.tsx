@@ -2,17 +2,33 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Button } from "./ui/button";
-import { ChevronDown, Menu, X, ChevronRight } from "lucide-react";
+import { ChevronDown, Menu, X, ChevronRight, User, Settings, LogOut } from "lucide-react";
 
 export default function Navigation() {
   const pathname = usePathname();
   const [aboutOpen, setAboutOpen] = useState(false);
   const [servicesOpen, setServicesOpen] = useState(false);
+  const [userMenuOpen, setUserMenuOpen] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [mobileAboutOpen, setMobileAboutOpen] = useState(false);
   const [mobileServicesOpen, setMobileServicesOpen] = useState(false);
+  const userMenuRef = useRef<HTMLDivElement>(null);
+
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      if (userMenuRef.current && !userMenuRef.current.contains(event.target as Node)) {
+        setUserMenuOpen(false);
+      }
+    }
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
 
   // Don't render navigation on portal pages
   if (pathname?.startsWith("/portal")) {
@@ -132,26 +148,54 @@ export default function Navigation() {
           </div>
 
           {/* Right-aligned User Menu */}
-          <div className="hidden lg:block">
+          <div className="hidden lg:block relative">
             {/* Commented out login button - showing logged in state */}
             {/* <button className="login-button systematic-caps px-10 py-1.5 rounded-md transition-colors">
               Login
             </button> */}
             
-            {/* User logged in state */}
-            <div className="flex items-center space-x-4">
-              <Link 
-                href="/portal" 
-                className="systematic-caps text-sm hover:text-pop-green transition-colors px-4 py-2 border-2 border-pop-black hover:bg-pop-green hover:text-white rounded-md"
+            {/* User Avatar with Dropdown */}
+            <div className="relative" ref={userMenuRef}>
+              <button
+                onClick={() => setUserMenuOpen(!userMenuOpen)}
+                className="w-10 h-10 bg-pop-green border-2 border-pop-black rounded-full flex items-center justify-center hover:bg-pop-black hover:text-pop-green transition-colors"
               >
-                Portal
-              </Link>
-              <div className="flex items-center space-x-2">
-                <div className="w-8 h-8 bg-pop-green border-2 border-pop-black rounded-full flex items-center justify-center">
-                  <span className="text-pop-black helvetica-bold text-sm">A</span>
+                <span className="text-pop-black helvetica-bold text-sm">A</span>
+              </button>
+
+              {userMenuOpen && (
+                <div className="absolute top-full right-0 mt-2 w-48 bg-white border-4 border-pop-black pop-shadow-black">
+                  <div className="py-2">
+                    <div className="px-4 py-2 border-b-2 border-pop-black">
+                      <div className="systematic-caps text-sm font-bold text-pop-black">Alex Martinez</div>
+                      <div className="systematic-caps text-xs text-gray-600">Maker Level 3</div>
+                    </div>
+                    <Link
+                      href="/portal/profile"
+                      className="flex items-center px-4 py-2 systematic-caps text-sm hover:bg-pop-green hover:text-white transition-colors"
+                      onClick={() => setUserMenuOpen(false)}
+                    >
+                      <User className="w-4 h-4 mr-3" />
+                      My Profile
+                    </Link>
+                    <Link
+                      href="/portal"
+                      className="flex items-center px-4 py-2 systematic-caps text-sm hover:bg-pop-blue hover:text-white transition-colors"
+                      onClick={() => setUserMenuOpen(false)}
+                    >
+                      <Settings className="w-4 h-4 mr-3" />
+                      Portal Dashboard
+                    </Link>
+                    <button
+                      className="w-full flex items-center px-4 py-2 systematic-caps text-sm hover:bg-pop-red hover:text-white transition-colors text-left"
+                      onClick={() => setUserMenuOpen(false)}
+                    >
+                      <LogOut className="w-4 h-4 mr-3" />
+                      Sign Out
+                    </button>
+                  </div>
                 </div>
-                <span className="systematic-caps text-sm text-pop-black">Alex M.</span>
-              </div>
+              )}
             </div>
           </div>
 
@@ -255,25 +299,45 @@ export default function Navigation() {
 
             {/* Mobile User Section */}
             <div className="pt-4 border-t-2 border-pop-black space-y-3">
-              {/* User Profile */}
-              <div className="flex items-center space-x-3">
-                <div className="w-10 h-10 bg-pop-green border-2 border-pop-black rounded-full flex items-center justify-center">
-                  <span className="text-pop-black helvetica-bold text-base">A</span>
-                </div>
-                <div>
-                  <div className="systematic-caps text-sm font-bold text-pop-black">Alex Martinez</div>
-                  <div className="systematic-caps text-xs text-gray-600">Maker Level 3</div>
+              {/* User Profile Header */}
+              <div className="flex items-center justify-between">
+                <div className="flex items-center space-x-3">
+                  <div className="w-10 h-10 bg-pop-green border-2 border-pop-black rounded-full flex items-center justify-center">
+                    <span className="text-pop-black helvetica-bold text-base">A</span>
+                  </div>
+                  <div>
+                    <div className="systematic-caps text-sm font-bold text-pop-black">Alex Martinez</div>
+                    <div className="systematic-caps text-xs text-gray-600">Maker Level 3</div>
+                  </div>
                 </div>
               </div>
               
-              {/* Portal Link */}
-              <Link
-                href="/portal"
-                onClick={() => setMobileMenuOpen(false)}
-                className="w-full bg-pop-green border-2 border-pop-black text-pop-black systematic-caps px-4 py-2 rounded-md transition-colors hover:bg-pop-black hover:text-pop-green flex items-center justify-center"
-              >
-                Go to Portal
-              </Link>
+              {/* User Menu Items */}
+              <div className="space-y-2">
+                <Link
+                  href="/portal/profile"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="w-full flex items-center px-4 py-2 systematic-caps text-sm border-2 border-pop-black rounded-md hover:bg-pop-green hover:text-white transition-colors"
+                >
+                  <User className="w-4 h-4 mr-3" />
+                  My Profile
+                </Link>
+                <Link
+                  href="/portal"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="w-full flex items-center px-4 py-2 systematic-caps text-sm border-2 border-pop-black rounded-md hover:bg-pop-blue hover:text-white transition-colors"
+                >
+                  <Settings className="w-4 h-4 mr-3" />
+                  Portal Dashboard
+                </Link>
+                <button
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="w-full flex items-center px-4 py-2 systematic-caps text-sm border-2 border-pop-black rounded-md hover:bg-pop-red hover:text-white transition-colors text-left"
+                >
+                  <LogOut className="w-4 h-4 mr-3" />
+                  Sign Out
+                </button>
+              </div>
               
               {/* Commented out login button */}
               {/* <button
