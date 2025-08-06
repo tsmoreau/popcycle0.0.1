@@ -724,12 +724,13 @@ export default function OperationsPage() {
       >
         <div className="px-6 py-4">
           <div className="flex items-center gap-3">
-            <div className="bg-pop-green p-2 rounded-lg">
-              <Scan className="h-5 w-5 text-white" />
-            </div>
+            <Scan className="h-5 w-5 text-pop-green" />
             <div className="flex-1">
               <h3 className="text-lg font-semibold text-pop-black">Quick QR Access</h3>
               <p className="text-sm text-gray-600">Scan any bin or batch QR code for instant access</p>
+            </div>
+            <div className="text-gray-400">
+              <ArrowRight className="h-5 w-5" />
             </div>
           </div>
         </div>
