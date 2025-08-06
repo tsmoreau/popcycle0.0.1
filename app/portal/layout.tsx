@@ -12,7 +12,8 @@ import {
   Home,
   LogOut,
   Menu,
-  X
+  X,
+  User
 } from 'lucide-react'
 import { Button } from '../components/ui/button'
 import { Badge } from '../components/ui/badge'
@@ -28,6 +29,7 @@ export default function PortalLayout({
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
 
   const sidebarItems = [
+    { id: 'profile', label: 'Portal Profile', icon: User, color: 'text-pop-blue', href: '/portal/profile' },
     { id: 'admin', label: 'Admin', icon: Settings, color: 'text-pop-black', href: '/portal/admin' },
     { id: 'operations', label: 'Operations', icon: Truck, color: 'text-pop-green', href: '/portal/operations' },
     { id: 'crm', label: 'CRM', icon: Phone, color: 'text-pop-blue', href: '/portal/crm' },
