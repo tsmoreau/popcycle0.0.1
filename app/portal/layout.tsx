@@ -87,7 +87,7 @@ export default function PortalLayout({
           <div className="fixed inset-0 bg-black/20" onClick={() => setMobileMenuOpen(false)} />
           <nav className="fixed top-0 left-0 bottom-0 w-64 bg-white border-r border-gray-200 overflow-y-auto">
             {/* Close button in top corner */}
-            <div className="flex justify-start items-center p-4">
+            <div className="flex justify-start items-center p-4 pb-2">
               <Button 
                 variant="ghost" 
                 size="sm"
@@ -97,7 +97,7 @@ export default function PortalLayout({
               </Button>
             </div>
             
-            <div className="p-6">
+            <div className="px-6 pt-2">
               <div className="space-y-2">
                 {sidebarItems.map((item) => {
                   const Icon = item.icon
