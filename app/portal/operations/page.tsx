@@ -717,6 +717,25 @@ export default function OperationsPage() {
         </AccordionItem>
       </Accordion>
 
+      {/* Unified Quick Scan Section */}
+      <Card className="bg-gray-50 border-gray-200">
+        <CardContent className="pt-6">
+          <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
+            <div className="text-center sm:text-left">
+              <h3 className="text-lg font-semibold text-gray-700 mb-1">Quick QR Access</h3>
+              <p className="text-sm text-gray-600">Scan any bin or batch QR code for instant access</p>
+            </div>
+            <Button 
+              className="bg-gray-600 hover:bg-gray-700 text-white px-8 py-3 text-base"
+              onClick={() => setShowScanModal(true)}
+            >
+              <Scan className="h-5 w-5 mr-2" />
+              Scan QR Code
+            </Button>
+          </div>
+        </CardContent>
+      </Card>
+
       {/* Main Operations Tabs */}
       <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
         <div className="relative">
@@ -738,25 +757,6 @@ export default function OperationsPage() {
 
         {/* Collections Tab */}
         <TabsContent value="collections" className="space-y-6">
-          {/* Scan Bin Section */}
-          <Card className="bg-pop-green/5 border-pop-green/20">
-            <CardContent className="pt-6">
-              <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
-                <div className="text-center sm:text-left">
-                  <h3 className="text-lg font-semibold text-pop-green mb-1">Quick QR Access</h3>
-          
-                </div>
-                <Button 
-                  className="bg-pop-green hover:bg-pop-green/90 text-white px-8 py-3 text-base"
-                  onClick={() => setShowScanModal(true)}
-                >
-                  <Scan className="h-5 w-5 mr-2" />
-                  Scan QR Code
-                </Button>
-              </div>
-            </CardContent>
-          </Card>
-
           {/* Collections Queue */}
           <DataTable
             title="Collections Queue"
@@ -1031,24 +1031,6 @@ export default function OperationsPage() {
 
         {/* Processing Tab */}
         <TabsContent value="processing" className="space-y-6">
-          <Card className="bg-pop-green/5 border-pop-green/20">
-            <CardContent className="pt-6">
-              <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
-                <div className="text-center sm:text-left">
-                  <h3 className="text-lg font-semibold text-pop-green mb-1">Quick QR Access</h3>
-                 
-                </div>
-                <Button 
-                  className="bg-pop-green hover:bg-pop-green/90 text-white px-8 py-3 text-base"
-                  onClick={() => setShowScanModal(true)}
-                >
-                  <Scan className="h-5 w-5 mr-2" />
-                  Scan Bin
-                </Button>
-              </div>
-            </CardContent>
-          </Card>
-
           {/* Processing Queue */}
           <DataTable
             title="Processing Queue"
