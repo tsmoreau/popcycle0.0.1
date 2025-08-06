@@ -16,6 +16,11 @@ export default function Navigation() {
   const [mobileServicesOpen, setMobileServicesOpen] = useState(false);
   const userMenuRef = useRef<HTMLDivElement>(null);
 
+  // Mock user data - in real app this would come from auth context
+  const userRole = "operations_staff"; // Staff user with portal access
+  // const userRole = null; // Regular maker without portal access
+  const hasPortalAccess = userRole !== null;
+
   // Close dropdown when clicking outside
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
@@ -176,16 +181,18 @@ export default function Navigation() {
                       onClick={() => setUserMenuOpen(false)}
                     >
                       <User className="w-4 h-4 mr-3" />
-                      My Profile
+                      Profile
                     </Link>
-                    <Link
-                      href="/portal"
-                      className="flex items-center px-4 py-2 systematic-caps text-sm hover:bg-pop-blue hover:text-white transition-colors"
-                      onClick={() => setUserMenuOpen(false)}
-                    >
-                      <Settings className="w-4 h-4 mr-3" />
-                      Portal Dashboard
-                    </Link>
+                    {hasPortalAccess && (
+                      <Link
+                        href="/portal"
+                        className="flex items-center px-4 py-2 systematic-caps text-sm hover:bg-pop-blue hover:text-white transition-colors"
+                        onClick={() => setUserMenuOpen(false)}
+                      >
+                        <Settings className="w-4 h-4 mr-3" />
+                        Portal
+                      </Link>
+                    )}
                     <button
                       className="w-full flex items-center px-4 py-2 systematic-caps text-sm hover:bg-pop-red hover:text-white transition-colors text-left"
                       onClick={() => setUserMenuOpen(false)}
@@ -320,16 +327,18 @@ export default function Navigation() {
                   className="w-full flex items-center px-4 py-2 systematic-caps text-sm border-2 border-pop-black rounded-md hover:bg-pop-green hover:text-white transition-colors"
                 >
                   <User className="w-4 h-4 mr-3" />
-                  My Profile
+                  Profile
                 </Link>
-                <Link
-                  href="/portal"
-                  onClick={() => setMobileMenuOpen(false)}
-                  className="w-full flex items-center px-4 py-2 systematic-caps text-sm border-2 border-pop-black rounded-md hover:bg-pop-blue hover:text-white transition-colors"
-                >
-                  <Settings className="w-4 h-4 mr-3" />
-                  Portal Dashboard
-                </Link>
+                {hasPortalAccess && (
+                  <Link
+                    href="/portal"
+                    onClick={() => setMobileMenuOpen(false)}
+                    className="w-full flex items-center px-4 py-2 systematic-caps text-sm border-2 border-pop-black rounded-md hover:bg-pop-blue hover:text-white transition-colors"
+                  >
+                    <Settings className="w-4 h-4 mr-3" />
+                    Portal
+                  </Link>
+                )}
                 <button
                   onClick={() => setMobileMenuOpen(false)}
                   className="w-full flex items-center px-4 py-2 systematic-caps text-sm border-2 border-pop-black rounded-md hover:bg-pop-red hover:text-white transition-colors text-left"
