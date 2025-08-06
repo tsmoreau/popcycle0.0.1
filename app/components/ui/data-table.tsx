@@ -19,7 +19,8 @@ import {
 } from "./dialog"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "./card"
 import { Button } from "./button"
-import { ArrowUp, ArrowDown, GripVertical } from "lucide-react"
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "./select"
+import { ArrowUpDown } from "lucide-react"
 
 export interface Column<T> {
   key: keyof T | string
@@ -36,8 +37,6 @@ export interface DataTableProps<T> {
   columns: Column<T>[]
   renderModal?: (item: T) => React.ReactNode
   className?: string
-  allowReorder?: boolean
-  onReorder?: (newData: T[]) => void
 }
 
 type SortDirection = "asc" | "desc"
