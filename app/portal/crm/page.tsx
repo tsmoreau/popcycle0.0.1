@@ -22,6 +22,7 @@ interface Organization {
 export default function CRMPage() {
   const [showOnboarding, setShowOnboarding] = useState(false)
   const [showSalesWorkflow, setShowSalesWorkflow] = useState(false)
+  const [showCommunications, setShowCommunications] = useState(false)
 
   // Sample organization data
   const organizationsData: Organization[] = [
@@ -357,36 +358,70 @@ export default function CRMPage() {
               </div>
             )}
           </div>
-        </CardContent>
-      </Card>
 
-      {/* Communication Hub Section */}
-      <Card>
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2">
-            <MessageCircle className="h-5 w-5 text-pop-green" />
-            Communication Hub
-          </CardTitle>
-          <CardDescription>Google Workspace integration and partner communications</CardDescription>
-        </CardHeader>
-        <CardContent>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-            <Button variant="outline" className="justify-start">
-              <Calendar className="h-4 w-4 mr-2" />
-              Schedule Meeting
-            </Button>
-            <Button variant="outline" className="justify-start">
-              <MessageCircle className="h-4 w-4 mr-2" />
-              Send Email Campaign
-            </Button>
-            <Button variant="outline" className="justify-start">
-              <TrendingUp className="h-4 w-4 mr-2" />
-              Generate Impact Report
-            </Button>
-            <Button variant="outline" className="justify-start">
-              <Users className="h-4 w-4 mr-2" />
-              Export Partner Data
-            </Button>
+          {/* Communication Hub Dropdown */}
+          <div className="w-full border rounded-lg">
+            <div className="px-4 py-4 cursor-pointer hover:bg-gray-50" onClick={() => setShowCommunications(!showCommunications)}>
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-3">
+                  <MessageCircle className="h-5 w-5 text-pop-green" />
+                  <span className="font-medium">Communication Hub</span>
+                </div>
+                <ChevronDown className={`h-5 w-5 text-gray-400 transition-transform ${showCommunications ? 'rotate-180' : ''}`} />
+              </div>
+            </div>
+            {showCommunications && (
+              <div className="px-4 pb-4 border-t bg-gray-50">
+                <div className="mt-4">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                    <Button variant="outline" className="justify-start">
+                      <Calendar className="h-4 w-4 mr-2" />
+                      Schedule Meeting
+                    </Button>
+                    <Button variant="outline" className="justify-start">
+                      <MessageCircle className="h-4 w-4 mr-2" />
+                      Send Email Campaign
+                    </Button>
+                    <Button variant="outline" className="justify-start">
+                      <TrendingUp className="h-4 w-4 mr-2" />
+                      Generate Impact Report
+                    </Button>
+                    <Button variant="outline" className="justify-start">
+                      <Users className="h-4 w-4 mr-2" />
+                      Export Partner Data
+                    </Button>
+                  </div>
+                </div>
+                
+                {/* Recent Communications */}
+                <div className="mt-4 space-y-2">
+                  <h4 className="font-medium text-sm">Recent Communications</h4>
+                  <div className="space-y-2">
+                    <div className="flex items-center justify-between p-3 bg-white rounded-lg border">
+                      <div>
+                        <span className="font-medium text-sm">Email Campaign: Q1 Impact Report</span>
+                        <p className="text-xs text-gray-600">Sent to 42 partners • 89% open rate</p>
+                      </div>
+                      <Badge className="bg-pop-green text-white">Delivered</Badge>
+                    </div>
+                    <div className="flex items-center justify-between p-3 bg-white rounded-lg border">
+                      <div>
+                        <span className="font-medium text-sm">Meeting: TechCorp Renewal</span>
+                        <p className="text-xs text-gray-600">Scheduled for tomorrow 2:00 PM</p>
+                      </div>
+                      <Badge className="bg-pop-blue text-white">Upcoming</Badge>
+                    </div>
+                    <div className="flex items-center justify-between p-3 bg-white rounded-lg border">
+                      <div>
+                        <span className="font-medium text-sm">Follow-up: Metro Facilities</span>
+                        <p className="text-xs text-gray-600">Call scheduled for Friday</p>
+                      </div>
+                      <Badge className="bg-orange-500 text-white">Pending</Badge>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
           </div>
         </CardContent>
       </Card>
