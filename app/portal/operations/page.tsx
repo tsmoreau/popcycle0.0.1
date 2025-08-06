@@ -990,7 +990,7 @@ export default function OperationsPage() {
               <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-4 py-4">
                 {/* Step 1: Rough Wash */}
                 <div className="flex flex-col items-center">
-                  <Badge className="bg-pop-blue text-white px-4 py-2 text-sm whitespace-nowrap">
+                  <Badge className="bg-blue-500 text-white px-4 py-2 text-sm whitespace-nowrap">
                     <Droplets className="h-4 w-4 mr-2" />
                     Rough Wash
                   </Badge>
@@ -1002,7 +1002,7 @@ export default function OperationsPage() {
                 
                 {/* Step 2: Sort */}
                 <div className="flex flex-col items-center">
-                  <Badge className="bg-pop-green text-white px-4 py-2 text-sm whitespace-nowrap">
+                  <Badge className="bg-green-500 text-white px-4 py-2 text-sm whitespace-nowrap">
                     <Scissors className="h-4 w-4 mr-2" />
                     Sort
                   </Badge>
@@ -1014,7 +1014,7 @@ export default function OperationsPage() {
                 
                 {/* Step 3: First Dry */}
                 <div className="flex flex-col items-center">
-                  <Badge className="bg-orange-500 text-white px-4 py-2 text-sm whitespace-nowrap">
+                  <Badge className="bg-yellow-500 text-white px-4 py-2 text-sm whitespace-nowrap">
                     <Wind className="h-4 w-4 mr-2" />
                     First Dry
                   </Badge>
@@ -1026,7 +1026,7 @@ export default function OperationsPage() {
                 
                 {/* Step 4: Shred */}
                 <div className="flex flex-col items-center">
-                  <Badge className="bg-pop-red text-white px-4 py-2 text-sm whitespace-nowrap">
+                  <Badge className="bg-orange-500 text-white px-4 py-2 text-sm whitespace-nowrap">
                     <ShredIcon className="h-4 w-4 mr-2" />
                     Shred
                   </Badge>
@@ -1036,11 +1036,11 @@ export default function OperationsPage() {
                 <ArrowRight className="h-5 w-5 text-gray-400 hidden sm:block" />
                 <ChevronDown className="h-5 w-5 text-gray-400 sm:hidden" />
                 
-                {/* Step 5: Second Dry */}
+                {/* Step 5: Fine Wash */}
                 <div className="flex flex-col items-center">
-                  <Badge className="bg-purple-500 text-white px-4 py-2 text-sm whitespace-nowrap">
-                    <Wind className="h-4 w-4 mr-2" />
-                    Second Dry
+                  <Badge className="bg-cyan-500 text-white px-4 py-2 text-sm whitespace-nowrap">
+                    <Droplets className="h-4 w-4 mr-2" />
+                    Fine Wash
                   </Badge>
                 </div>
                 
@@ -1048,11 +1048,11 @@ export default function OperationsPage() {
                 <ArrowRight className="h-5 w-5 text-gray-400 hidden sm:block" />
                 <ChevronDown className="h-5 w-5 text-gray-400 sm:hidden" />
                 
-                {/* Step 6: Press */}
+                {/* Step 6: Second Dry */}
                 <div className="flex flex-col items-center">
-                  <Badge className="bg-pop-black text-white px-4 py-2 text-sm whitespace-nowrap">
-                    <Archive className="h-4 w-4 mr-2" />
-                    Press
+                  <Badge className="bg-purple-500 text-white px-4 py-2 text-sm whitespace-nowrap">
+                    <Wind className="h-4 w-4 mr-2" />
+                    Second Dry
                   </Badge>
                 </div>
                 
@@ -1060,11 +1060,11 @@ export default function OperationsPage() {
                 <ArrowRight className="h-5 w-5 text-gray-400 hidden sm:block" />
                 <ChevronDown className="h-5 w-5 text-gray-400 sm:hidden" />
                 
-                {/* Step 7: Weigh & Photo */}
+                {/* Step 7: Press */}
                 <div className="flex flex-col items-center">
-                  <Badge className="bg-indigo-500 text-white px-4 py-2 text-sm whitespace-nowrap">
-                    <Scale className="h-4 w-4 mr-2" />
-                    Weigh & Photo
+                  <Badge className="bg-red-500 text-white px-4 py-2 text-sm whitespace-nowrap">
+                    <Archive className="h-4 w-4 mr-2" />
+                    Press
                   </Badge>
                 </div>
                 
@@ -1072,9 +1072,21 @@ export default function OperationsPage() {
                 <ArrowRight className="h-5 w-5 text-gray-400 hidden sm:block" />
                 <ChevronDown className="h-5 w-5 text-gray-400 sm:hidden" />
                 
-                {/* Step 8: Laser Marking */}
+                {/* Step 8: Weigh & Photo */}
                 <div className="flex flex-col items-center">
-                  <Badge className="bg-amber-500 text-white px-4 py-2 text-sm whitespace-nowrap">
+                  <Badge className="bg-indigo-500 text-white px-4 py-2 text-sm whitespace-nowrap">
+                    <Scale className="h-4 w-4 mr-2" />
+                    Weigh & Photo
+                  </Badge>
+                </div>
+                
+                {/* Arrow 8 */}
+                <ArrowRight className="h-5 w-5 text-gray-400 hidden sm:block" />
+                <ChevronDown className="h-5 w-5 text-gray-400 sm:hidden" />
+                
+                {/* Step 9: Laser Marking */}
+                <div className="flex flex-col items-center">
+                  <Badge className="bg-pink-500 text-white px-4 py-2 text-sm whitespace-nowrap">
                     <Zap className="h-4 w-4 mr-2" />
                     Laser Marking
                   </Badge>
