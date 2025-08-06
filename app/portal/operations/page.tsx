@@ -718,20 +718,25 @@ export default function OperationsPage() {
       </Accordion>
 
       {/* Unified Quick Scan Section */}
-      <div 
-        className="w-full border border-gray-200 rounded-lg bg-gray-50 hover:bg-gray-100 cursor-pointer transition-colors px-4"
-        onClick={() => setShowScanModal(true)}
-      >
-        <div className="py-4">
-          <div className="flex items-center gap-3">
-            <Scan className="h-5 w-5 text-pop-green" />
-            <div className="text-left">
-              <h3 className="text-lg font-semibold text-pop-black">Quick QR Access</h3>
-              <p className="text-sm text-gray-600">Scan any bin or batch QR code for instant access</p>
+      <Accordion type="single" className="w-full">
+        <AccordionItem value="scan" className="border rounded-lg px-4">
+          <AccordionTrigger 
+            className="hover:no-underline"
+            onClick={(e) => {
+              e.preventDefault();
+              setShowScanModal(true);
+            }}
+          >
+            <div className="flex items-center gap-3">
+              <Scan className="h-5 w-5 text-pop-green" />
+              <div className="text-left">
+                <h3 className="text-lg font-semibold text-pop-black">Quick QR Access</h3>
+                <p className="text-sm text-gray-600">Scan any bin or batch QR code for instant access</p>
+              </div>
             </div>
-          </div>
-        </div>
-      </div>
+          </AccordionTrigger>
+        </AccordionItem>
+      </Accordion>
 
       {/* Main Operations Tabs */}
       <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
