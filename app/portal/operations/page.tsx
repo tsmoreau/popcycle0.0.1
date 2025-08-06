@@ -300,10 +300,7 @@ export default function OperationsPage() {
         <h2 className="text-3xl font-bold text-pop-black">
           Operations Management
         </h2>
-        <p className="text-gray-600 mt-2 hidden sm:block">
-          Complete operations workflow: collections, processing, inventory, and
-          fulfillment
-        </p>
+
       </div>
 
       {/* Quick Stats Overview - Hidden on mobile */}
@@ -386,7 +383,7 @@ export default function OperationsPage() {
               <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
                 <div className="text-center sm:text-left">
                   <h3 className="text-lg font-semibold text-pop-green mb-1">Quick QR Access</h3>
-                  <p className="text-sm text-gray-600">Scan code for bin check-in, check-out, and status updates</p>
+          
                 </div>
                 <Button 
                   className="bg-pop-green hover:bg-pop-green/90 text-white px-8 py-3 text-base"
