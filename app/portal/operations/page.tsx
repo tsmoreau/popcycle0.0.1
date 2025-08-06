@@ -1014,7 +1014,7 @@ export default function OperationsPage() {
                 
                 {/* Step 3: First Dry */}
                 <div className="flex flex-col items-center">
-                  <Badge className="bg-gray-500 text-white px-4 py-2 text-sm whitespace-nowrap">
+                  <Badge className="bg-orange-500 text-white px-4 py-2 text-sm whitespace-nowrap">
                     <Wind className="h-4 w-4 mr-2" />
                     First Dry
                   </Badge>
@@ -1026,7 +1026,7 @@ export default function OperationsPage() {
                 
                 {/* Step 4: Shred */}
                 <div className="flex flex-col items-center">
-                  <Badge className="bg-pop-red text-white px-4 py-2 text-sm whitespace-nowrap">
+                  <Badge className="bg-red-600 text-white px-4 py-2 text-sm whitespace-nowrap">
                     <ShredIcon className="h-4 w-4 mr-2" />
                     Shred
                   </Badge>
@@ -1050,7 +1050,7 @@ export default function OperationsPage() {
                 
                 {/* Step 6: Second Dry */}
                 <div className="flex flex-col items-center">
-                  <Badge className="bg-gray-500 text-white px-4 py-2 text-sm whitespace-nowrap">
+                  <Badge className="bg-orange-500 text-white px-4 py-2 text-sm whitespace-nowrap">
                     <Wind className="h-4 w-4 mr-2" />
                     Second Dry
                   </Badge>
