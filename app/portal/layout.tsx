@@ -41,8 +41,8 @@ export default function PortalLayout({
     <div className="h-screen bg-gray-50">
       {/* Header - Fixed */}
       <header className="fixed top-0 left-0 right-0 bg-white border-b border-gray-200 h-16 z-50">
-        <div className="px-6 py-4 flex items-center justify-between h-full">
-          <div className="flex items-center space-x-4">
+        <div className="px-2 md:px-6 py-4 flex items-center justify-between h-full w-full">
+          <div className="flex items-center space-x-2 md:space-x-4">
             {/* Desktop sidebar toggle */}
             <Button 
               variant="ghost" 
@@ -63,12 +63,12 @@ export default function PortalLayout({
               {mobileMenuOpen ? <X className="h-4 w-4" /> : <Menu className="h-4 w-4" />}
             </Button>
             
-            <h1 className="text-xl md:text-2xl font-bold text-pop-black">PopCycle Portal</h1>
+            <h1 className="text-lg md:text-2xl font-bold text-pop-black">PopCycle Portal</h1>
             <Badge variant="outline" className="hidden sm:flex bg-pop-green/10 text-pop-green border-pop-green">
               Admin Access
             </Badge>
           </div>
-          <div className="flex items-center space-x-2 md:space-x-4">
+          <div className="flex items-center space-x-1 md:space-x-4">
             <Button variant="ghost" size="sm" onClick={() => window.location.href = '/'}>
               <Home className="h-4 w-4 md:mr-2" />
               <span className="hidden md:inline">Public Site</span>
