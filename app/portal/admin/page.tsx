@@ -207,7 +207,7 @@ export default function AdminPage() {
         </AccordionItem>
       </Accordion>
 
-      <div className="space-y-6">
+      <div className="space-y-3">
           {/* Production Stations Dropdown */}
           <div className="w-full border rounded-lg">
             <div className="px-4 py-4 cursor-pointer hover:bg-gray-50" onClick={() => setShowProductionStations(!showProductionStations)}>
