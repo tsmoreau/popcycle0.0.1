@@ -71,6 +71,8 @@ export default function OperationsPage() {
   const [selectedBin, setSelectedBin] = useState(null);
   const [sortField, setSortField] = useState("id");
   const [sortDirection, setSortDirection] = useState("asc");
+  const [processingSortField, setProcessingSortField] = useState("id");
+  const [processingSortDirection, setProcessingSortDirection] = useState("asc");
 
   // Mock data for Collections Queue - this should come from your MongoDB API
   const collectionsQueue = [
@@ -132,12 +134,77 @@ export default function OperationsPage() {
     }
   ];
 
+  // Mock data for Processing Queue - this should come from your MongoDB API
+  const processingQueue = [
+    {
+      id: "BA-8472",
+      qrCode: "QR-BA-8472",
+      binId: "BI-7829",
+      orgName: "TechCorp",
+      collectionDate: "2025-01-15",
+      weight: 45,
+      materialType: "HDPE",
+      collectedBy: "Mike Chen",
+      status: "collected",
+      stage: "rough_wash",
+      notes: "Large batch, mixed containers"
+    },
+    {
+      id: "BA-8471",
+      qrCode: "QR-BA-8471",
+      binId: "BI-7830",
+      orgName: "GreenOffice",
+      collectionDate: "2025-01-14",
+      weight: 32,
+      materialType: "PET",
+      collectedBy: "Sarah Kim",
+      status: "sorted",
+      stage: "sorting",
+      notes: "Clean bottles mostly"
+    },
+    {
+      id: "BA-8470",
+      qrCode: "QR-BA-8470",
+      binId: "BI-7831",
+      orgName: "Metro Facilities",
+      collectionDate: "2025-01-13",
+      weight: 28,
+      materialType: "mixed",
+      collectedBy: "Alex Rivera",
+      status: "cleaned",
+      stage: "shredding",
+      notes: "Ready for processing"
+    },
+    {
+      id: "BA-8469",
+      qrCode: "QR-BA-8469",
+      binId: "BI-7832",
+      orgName: "Creative Studios",
+      collectionDate: "2025-01-12",
+      weight: 38,
+      materialType: "PP",
+      collectedBy: "Mike Chen",
+      status: "processed",
+      stage: "complete",
+      notes: "High quality material"
+    }
+  ];
+
   const handleSort = (field: string) => {
     if (sortField === field) {
       setSortDirection(sortDirection === "asc" ? "desc" : "asc");
     } else {
       setSortField(field);
       setSortDirection("asc");
+    }
+  };
+
+  const handleProcessingSort = (field: string) => {
+    if (processingSortField === field) {
+      setProcessingSortDirection(processingSortDirection === "asc" ? "desc" : "asc");
+    } else {
+      setProcessingSortField(field);
+      setProcessingSortDirection("asc");
     }
   };
 
@@ -162,6 +229,27 @@ export default function OperationsPage() {
     }
   });
 
+  const sortedProcessingQueue = [...processingQueue].sort((a, b) => {
+    let aVal: any = a[processingSortField as keyof typeof a];
+    let bVal: any = b[processingSortField as keyof typeof b];
+    
+    // Handle null/undefined values
+    if (aVal == null) aVal = "";
+    if (bVal == null) bVal = "";
+    
+    // Convert to string for comparison if needed
+    if (typeof aVal === "string" && typeof bVal === "string") {
+      aVal = aVal.toLowerCase();
+      bVal = bVal.toLowerCase();
+    }
+    
+    if (processingSortDirection === "asc") {
+      return aVal < bVal ? -1 : aVal > bVal ? 1 : 0;
+    } else {
+      return aVal > bVal ? -1 : aVal < bVal ? 1 : 0;
+    }
+  });
+
   const getStatusBadge = (status: string) => {
     switch (status) {
       case "Ready for Pickup":
@@ -172,6 +260,36 @@ export default function OperationsPage() {
         return <Badge className="bg-pop-green text-white">Awaiting Wash</Badge>;
       default:
         return <Badge variant="outline">{status}</Badge>;
+    }
+  };
+
+  const getProcessingStatusBadge = (status: string) => {
+    switch (status) {
+      case "collected":
+        return <Badge className="bg-pop-blue text-white">Collected</Badge>;
+      case "sorted":
+        return <Badge className="bg-pop-green text-white">Sorted</Badge>;
+      case "cleaned":
+        return <Badge className="bg-orange-500 text-white">Cleaned</Badge>;
+      case "processed":
+        return <Badge className="bg-pop-red text-white">Processed</Badge>;
+      default:
+        return <Badge variant="outline">{status}</Badge>;
+    }
+  };
+
+  const getMaterialTypeBadge = (type: string) => {
+    switch (type) {
+      case "HDPE":
+        return <Badge variant="secondary" className="bg-blue-100 text-blue-800">HDPE</Badge>;
+      case "PET":
+        return <Badge variant="secondary" className="bg-green-100 text-green-800">PET</Badge>;
+      case "PP":
+        return <Badge variant="secondary" className="bg-purple-100 text-purple-800">PP</Badge>;
+      case "mixed":
+        return <Badge variant="secondary" className="bg-gray-100 text-gray-800">Mixed</Badge>;
+      default:
+        return <Badge variant="outline">{type}</Badge>;
     }
   };
 
@@ -611,6 +729,152 @@ export default function OperationsPage() {
               </div>
             </CardContent>
           </Card>
+
+          {/* Processing Queue */}
+          <Card>
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <Settings className="h-5 w-5 text-pop-blue" />
+                Processing Queue
+              </CardTitle>
+              <CardDescription>
+                Live status overview of all batches in various processing stages
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <Table>
+                <TableHeader>
+                  <TableRow>
+                    <TableHead onClick={() => handleProcessingSort("id")} className="cursor-pointer hover:bg-gray-50">
+                      Batch ID {processingSortField === "id" && (processingSortDirection === "asc" ? "↑" : "↓")}
+                    </TableHead>
+                    <TableHead onClick={() => handleProcessingSort("orgName")} className="cursor-pointer hover:bg-gray-50">
+                      Organization {processingSortField === "orgName" && (processingSortDirection === "asc" ? "↑" : "↓")}
+                    </TableHead>
+                    <TableHead onClick={() => handleProcessingSort("weight")} className="cursor-pointer hover:bg-gray-50">
+                      Weight {processingSortField === "weight" && (processingSortDirection === "asc" ? "↑" : "↓")}
+                    </TableHead>
+                    <TableHead onClick={() => handleProcessingSort("materialType")} className="cursor-pointer hover:bg-gray-50">
+                      Material {processingSortField === "materialType" && (processingSortDirection === "asc" ? "↑" : "↓")}
+                    </TableHead>
+                    <TableHead onClick={() => handleProcessingSort("status")} className="cursor-pointer hover:bg-gray-50">
+                      Status {processingSortField === "status" && (processingSortDirection === "asc" ? "↑" : "↓")}
+                    </TableHead>
+                    <TableHead onClick={() => handleProcessingSort("collectedBy")} className="cursor-pointer hover:bg-gray-50">
+                      Collector {processingSortField === "collectedBy" && (processingSortDirection === "asc" ? "↑" : "↓")}
+                    </TableHead>
+                  </TableRow>
+                </TableHeader>
+                <TableBody>
+                  {sortedProcessingQueue.map((batch) => (
+                    <Dialog key={batch.id}>
+                      <DialogTrigger asChild>
+                        <TableRow className="cursor-pointer hover:bg-gray-50">
+                          <TableCell className="font-medium">{batch.id}</TableCell>
+                          <TableCell>{batch.orgName}</TableCell>
+                          <TableCell>{batch.weight} lbs</TableCell>
+                          <TableCell>{getMaterialTypeBadge(batch.materialType)}</TableCell>
+                          <TableCell>{getProcessingStatusBadge(batch.status)}</TableCell>
+                          <TableCell>{batch.collectedBy}</TableCell>
+                        </TableRow>
+                      </DialogTrigger>
+                      <DialogContent className="max-w-lg">
+                        <DialogHeader>
+                          <DialogTitle>Batch Details - {batch.id}</DialogTitle>
+                          <DialogDescription>
+                            Universal scan modal - same interface as QR code scanning
+                          </DialogDescription>
+                        </DialogHeader>
+                        <div className="space-y-4">
+                          <div className="grid grid-cols-2 gap-4">
+                            <div>
+                              <Label className="text-sm font-medium text-gray-700">Organization</Label>
+                              <p className="text-sm">{batch.orgName}</p>
+                            </div>
+                            <div>
+                              <Label className="text-sm font-medium text-gray-700">Collection Date</Label>
+                              <p className="text-sm">{new Date(batch.collectionDate).toLocaleDateString()}</p>
+                            </div>
+                          </div>
+                          <div className="grid grid-cols-2 gap-4">
+                            <div>
+                              <Label className="text-sm font-medium text-gray-700">Weight</Label>
+                              <p className="text-sm">{batch.weight} lbs</p>
+                            </div>
+                            <div>
+                              <Label className="text-sm font-medium text-gray-700">Material Type</Label>
+                              <div className="mt-1">{getMaterialTypeBadge(batch.materialType)}</div>
+                            </div>
+                          </div>
+                          <div className="grid grid-cols-2 gap-4">
+                            <div>
+                              <Label className="text-sm font-medium text-gray-700">Current Status</Label>
+                              <div className="mt-1">{getProcessingStatusBadge(batch.status)}</div>
+                            </div>
+                            <div>
+                              <Label className="text-sm font-medium text-gray-700">Collected By</Label>
+                              <p className="text-sm">{batch.collectedBy}</p>
+                            </div>
+                          </div>
+                          <div className="grid grid-cols-2 gap-4">
+                            <div>
+                              <Label className="text-sm font-medium text-gray-700">Source Bin</Label>
+                              <p className="text-sm font-mono">{batch.binId}</p>
+                            </div>
+                            <div>
+                              <Label className="text-sm font-medium text-gray-700">QR Code</Label>
+                              <p className="text-sm font-mono">{batch.qrCode}</p>
+                            </div>
+                          </div>
+                          {batch.notes && (
+                            <div>
+                              <Label className="text-sm font-medium text-gray-700">Processing Notes</Label>
+                              <p className="text-sm">{batch.notes}</p>
+                            </div>
+                          )}
+                          <div className="pt-4 border-t">
+                            <div className="space-y-2">
+                              {batch.status === "collected" && (
+                                <Button className="w-full bg-pop-blue hover:bg-pop-blue/90">
+                                  <Droplets className="h-4 w-4 mr-2" />
+                                  Start Rough Wash
+                                </Button>
+                              )}
+                              {batch.status === "sorted" && (
+                                <Button className="w-full bg-pop-green hover:bg-pop-green/90">
+                                  <Scissors className="h-4 w-4 mr-2" />
+                                  Begin Sorting
+                                </Button>
+                              )}
+                              {batch.status === "cleaned" && (
+                                <Button className="w-full bg-pop-red hover:bg-pop-red/90">
+                                  <ShredIcon className="h-4 w-4 mr-2" />
+                                  Start Shredding
+                                </Button>
+                              )}
+                              {batch.status === "processed" && (
+                                <div className="text-center">
+                                  <Badge className="bg-green-500 text-white">
+                                    <CheckCircle className="h-3 w-3 mr-1" />
+                                    Processing Complete
+                                  </Badge>
+                                  <Button className="w-full mt-2 bg-pop-black hover:bg-pop-black/90 text-white">
+                                    <Archive className="h-4 w-4 mr-2" />
+                                    Create Inventory Items
+                                  </Button>
+                                </div>
+                              )}
+                            </div>
+                          </div>
+                        </div>
+                      </DialogContent>
+                    </Dialog>
+                  ))}
+                </TableBody>
+              </Table>
+            </CardContent>
+          </Card>
+
           {/* Manufacturing Workflow Stations */}
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
             {/* Station 1: Rough Wash */}
