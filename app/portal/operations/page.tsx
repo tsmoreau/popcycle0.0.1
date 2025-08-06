@@ -730,8 +730,20 @@ export default function OperationsPage() {
         </div>
       </div>
 
-      {/* Main Operations Tabs */}
-      <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
+      {/* Operations Management Accordion */}
+      <Accordion type="single" collapsible className="w-full">
+        <AccordionItem value="operations-management" className="border rounded-lg px-4">
+          <AccordionTrigger className="hover:no-underline">
+            <div className="flex items-center gap-3">
+              <Settings className="h-5 w-5 text-pop-green" />
+              <div className="text-left">
+                <h3 className="text-lg font-semibold text-pop-black">Operations Management</h3>
+              </div>
+            </div>
+          </AccordionTrigger>
+          <AccordionContent>
+            {/* Main Operations Tabs */}
+            <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
         <div className="relative">
           <TabsList className="mb-0 relative z-10 p-0 bg-transparent h-auto gap-0 flex-nowrap overflow-visible">
             <TabsTrigger value="collections" className="folder-tab-white relative z-[4] text-xs sm:text-sm px-3 sm:px-4 py-2 sm:py-2">
@@ -1883,7 +1895,10 @@ export default function OperationsPage() {
           </Card>
           </div>
         </TabsContent>
-      </Tabs>
+            </Tabs>
+          </AccordionContent>
+        </AccordionItem>
+      </Accordion>
 
       {/* Scan Modal */}
       <Dialog open={showScanModal} onOpenChange={setShowScanModal}>
