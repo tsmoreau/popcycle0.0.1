@@ -73,6 +73,8 @@ export default function OperationsPage() {
   const [sortDirection, setSortDirection] = useState("asc");
   const [processingSortField, setProcessingSortField] = useState("id");
   const [processingSortDirection, setProcessingSortDirection] = useState("asc");
+  const [fulfillmentSortField, setFulfillmentSortField] = useState("id");
+  const [fulfillmentSortDirection, setFulfillmentSortDirection] = useState("asc");
   const [showScanModal, setShowScanModal] = useState(false);
 
   // Mock data for Collections Queue - this should come from your MongoDB API
@@ -191,6 +193,75 @@ export default function OperationsPage() {
     }
   ];
 
+  // Mock data for Fulfillment Queue - this should come from your MongoDB API
+  const fulfillmentQueue = [
+    {
+      id: "ORD-2847",
+      qrCode: "QR-ORD-2847",
+      customerName: "GreenTech Corp",
+      itemType: "Phone Stand",
+      quantity: 3,
+      dueDate: "2025-01-17",
+      status: "urgent",
+      priority: "high",
+      assignedMaker: null,
+      batchId: "BA-8472",
+      notes: "Rush order - customer pickup"
+    },
+    {
+      id: "ORD-2846",
+      qrCode: "QR-ORD-2846",
+      customerName: "Metro Facilities",
+      itemType: "Desk Organizer",
+      quantity: 1,
+      dueDate: "2025-01-18",
+      status: "assembly",
+      priority: "medium",
+      assignedMaker: "Jordan Kim",
+      batchId: "BA-8471",
+      notes: "Standard assembly timeline"
+    },
+    {
+      id: "ORD-2845",
+      qrCode: "QR-ORD-2845",
+      customerName: "Creative Studios",
+      itemType: "Plant Holder",
+      quantity: 2,
+      dueDate: "2025-01-21",
+      status: "ready",
+      priority: "medium",
+      assignedMaker: null,
+      batchId: "BA-8470",
+      notes: "Materials ready for assembly"
+    },
+    {
+      id: "ORD-2844",
+      qrCode: "QR-ORD-2844",
+      customerName: "TechCorp",
+      itemType: "Desk Organizer",
+      quantity: 1,
+      dueDate: "2025-01-20",
+      status: "shipping",
+      priority: "low",
+      assignedMaker: "Maria Santos",
+      batchId: "BA-8469",
+      notes: "Completed, ready for shipment"
+    },
+    {
+      id: "ORD-2843",
+      qrCode: "QR-ORD-2843",
+      customerName: "GreenOffice",
+      itemType: "Phone Stand",
+      quantity: 2,
+      dueDate: "2025-01-19",
+      status: "shipped",
+      priority: "low",
+      assignedMaker: "Alex Chen",
+      batchId: "BA-8468",
+      notes: "Delivered successfully"
+    }
+  ];
+
   const handleSort = (field: string) => {
     if (sortField === field) {
       setSortDirection(sortDirection === "asc" ? "desc" : "asc");
@@ -206,6 +277,15 @@ export default function OperationsPage() {
     } else {
       setProcessingSortField(field);
       setProcessingSortDirection("asc");
+    }
+  };
+
+  const handleFulfillmentSort = (field: string) => {
+    if (fulfillmentSortField === field) {
+      setFulfillmentSortDirection(fulfillmentSortDirection === "asc" ? "desc" : "asc");
+    } else {
+      setFulfillmentSortField(field);
+      setFulfillmentSortDirection("asc");
     }
   };
 
@@ -245,6 +325,27 @@ export default function OperationsPage() {
     }
     
     if (processingSortDirection === "asc") {
+      return aVal < bVal ? -1 : aVal > bVal ? 1 : 0;
+    } else {
+      return aVal > bVal ? -1 : aVal < bVal ? 1 : 0;
+    }
+  });
+
+  const sortedFulfillmentQueue = [...fulfillmentQueue].sort((a, b) => {
+    let aVal: any = a[fulfillmentSortField as keyof typeof a];
+    let bVal: any = b[fulfillmentSortField as keyof typeof b];
+    
+    // Handle null/undefined values
+    if (aVal == null) aVal = "";
+    if (bVal == null) bVal = "";
+    
+    // Convert to string for comparison if needed
+    if (typeof aVal === "string" && typeof bVal === "string") {
+      aVal = aVal.toLowerCase();
+      bVal = bVal.toLowerCase();
+    }
+    
+    if (fulfillmentSortDirection === "asc") {
       return aVal < bVal ? -1 : aVal > bVal ? 1 : 0;
     } else {
       return aVal > bVal ? -1 : aVal < bVal ? 1 : 0;
@@ -291,6 +392,23 @@ export default function OperationsPage() {
         return <Badge variant="secondary" className="bg-gray-100 text-gray-800">Mixed</Badge>;
       default:
         return <Badge variant="outline">{type}</Badge>;
+    }
+  };
+
+  const getFulfillmentStatusBadge = (status: string) => {
+    switch (status) {
+      case "urgent":
+        return <Badge className="bg-pop-red text-white">Urgent</Badge>;
+      case "assembly":
+        return <Badge className="bg-pop-blue text-white">Assembly</Badge>;
+      case "ready":
+        return <Badge className="bg-pop-green text-white">Ready</Badge>;
+      case "shipping":
+        return <Badge className="bg-orange-500 text-white">Shipping</Badge>;
+      case "shipped":
+        return <Badge className="bg-gray-500 text-white">Shipped</Badge>;
+      default:
+        return <Badge variant="outline">{status}</Badge>;
     }
   };
 
@@ -353,7 +471,7 @@ export default function OperationsPage() {
                   <span className="text-xs font-medium text-gray-500 uppercase tracking-wide">Inventory</span>
                 </div>
                 <div className="text-2xl font-bold text-pop-black mb-1">89</div>
-                <div className="text-sm text-gray-600 mb-2">Blanks Ready</div>
+                <div className="text-sm text-gray-600 mb-2">Total Blanks</div>
                 <div className="flex gap-2 text-xs">
                   <span className="bg-gray-100 text-gray-700 px-2 py-1 rounded">42 Items</span>
                   <span className="bg-gray-100 text-gray-700 px-2 py-1 rounded">5 Orders</span>
@@ -1681,50 +1799,133 @@ export default function OperationsPage() {
 
         {/* Fulfillment Tab */}
         <TabsContent value="fulfillment" className="space-y-6">
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-            <Card>
-              <CardHeader>
-                <CardTitle>Order Queue</CardTitle>
-                <CardDescription>
-                  Customer orders and maker assignments
-                </CardDescription>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <div className="space-y-2">
-                  <div className="flex items-center justify-between p-3 bg-pop-red/5 rounded-lg">
-                    <div>
-                      <span className="font-medium text-sm">Order #2847</span>
-                      <p className="text-xs text-gray-600">
-                        3x Phone Stand - Due Tomorrow
-                      </p>
-                    </div>
-                    <Badge className="bg-pop-red text-white">Urgent</Badge>
-                  </div>
-                  <div className="flex items-center justify-between p-3 bg-pop-blue/5 rounded-lg">
-                    <div>
-                      <span className="font-medium text-sm">Order #2846</span>
-                      <p className="text-xs text-gray-600">
-                        1x Desk Organizer - Due Friday
-                      </p>
-                    </div>
-                    <Badge className="bg-pop-blue text-white">Assembly</Badge>
-                  </div>
-                  <div className="flex items-center justify-between p-3 bg-pop-green/5 rounded-lg">
-                    <div>
-                      <span className="font-medium text-sm">Order #2845</span>
-                      <p className="text-xs text-gray-600">
-                        2x Plant Holder - Due Monday
-                      </p>
-                    </div>
-                    <Badge className="bg-pop-green text-white">Ready</Badge>
-                  </div>
-                </div>
-                <Button className="w-full bg-pop-green hover:bg-pop-green/90">
-                  <Users className="h-4 w-4 mr-2" />
-                  Assign to Maker
-                </Button>
-              </CardContent>
-            </Card>
+          {/* Fulfillment Queue */}
+          <Card>
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <Users className="h-5 w-5 text-pop-green" />
+                Order Queue
+              </CardTitle>
+              <CardDescription>
+                Customer orders and maker assignments with fulfillment status tracking
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <Table>
+                <TableHeader>
+                  <TableRow>
+                    <TableHead onClick={() => handleFulfillmentSort("id")} className="cursor-pointer hover:bg-gray-50">
+                      Order ID {fulfillmentSortField === "id" && (fulfillmentSortDirection === "asc" ? "↑" : "↓")}
+                    </TableHead>
+                    <TableHead onClick={() => handleFulfillmentSort("customerName")} className="cursor-pointer hover:bg-gray-50">
+                      Customer {fulfillmentSortField === "customerName" && (fulfillmentSortDirection === "asc" ? "↑" : "↓")}
+                    </TableHead>
+                    <TableHead onClick={() => handleFulfillmentSort("itemType")} className="cursor-pointer hover:bg-gray-50">
+                      Item {fulfillmentSortField === "itemType" && (fulfillmentSortDirection === "asc" ? "↑" : "↓")}
+                    </TableHead>
+                    <TableHead onClick={() => handleFulfillmentSort("quantity")} className="cursor-pointer hover:bg-gray-50">
+                      Qty {fulfillmentSortField === "quantity" && (fulfillmentSortDirection === "asc" ? "↑" : "↓")}
+                    </TableHead>
+                    <TableHead onClick={() => handleFulfillmentSort("status")} className="cursor-pointer hover:bg-gray-50">
+                      Status {fulfillmentSortField === "status" && (fulfillmentSortDirection === "asc" ? "↑" : "↓")}
+                    </TableHead>
+                    <TableHead onClick={() => handleFulfillmentSort("dueDate")} className="cursor-pointer hover:bg-gray-50">
+                      Due Date {fulfillmentSortField === "dueDate" && (fulfillmentSortDirection === "asc" ? "↑" : "↓")}
+                    </TableHead>
+                  </TableRow>
+                </TableHeader>
+                <TableBody>
+                  {sortedFulfillmentQueue.map((order) => (
+                    <Dialog key={order.id}>
+                      <DialogTrigger asChild>
+                        <TableRow className="cursor-pointer hover:bg-gray-50">
+                          <TableCell className="font-medium">{order.id}</TableCell>
+                          <TableCell>{order.customerName}</TableCell>
+                          <TableCell>{order.itemType}</TableCell>
+                          <TableCell>{order.quantity}</TableCell>
+                          <TableCell>{getFulfillmentStatusBadge(order.status)}</TableCell>
+                          <TableCell>{order.dueDate}</TableCell>
+                        </TableRow>
+                      </DialogTrigger>
+                      <DialogContent className="max-w-md">
+                        <DialogHeader>
+                          <DialogTitle>Order Details - {order.id}</DialogTitle>
+                          <DialogDescription>
+                            Customer order tracking and maker assignment
+                          </DialogDescription>
+                        </DialogHeader>
+                        <div className="space-y-4">
+                          <div className="grid grid-cols-2 gap-4">
+                            <div>
+                              <Label className="text-sm font-medium text-gray-700">Customer</Label>
+                              <p className="text-sm">{order.customerName}</p>
+                            </div>
+                            <div>
+                              <Label className="text-sm font-medium text-gray-700">Item Type</Label>
+                              <p className="text-sm">{order.itemType}</p>
+                            </div>
+                          </div>
+                          <div className="grid grid-cols-2 gap-4">
+                            <div>
+                              <Label className="text-sm font-medium text-gray-700">Quantity</Label>
+                              <p className="text-sm">{order.quantity} units</p>
+                            </div>
+                            <div>
+                              <Label className="text-sm font-medium text-gray-700">Due Date</Label>
+                              <p className="text-sm">{order.dueDate}</p>
+                            </div>
+                          </div>
+                          <div className="grid grid-cols-2 gap-4">
+                            <div>
+                              <Label className="text-sm font-medium text-gray-700">Status</Label>
+                              <div className="mt-1">{getFulfillmentStatusBadge(order.status)}</div>
+                            </div>
+                            <div>
+                              <Label className="text-sm font-medium text-gray-700">Priority</Label>
+                              <p className="text-sm capitalize">{order.priority}</p>
+                            </div>
+                          </div>
+                          <div className="grid grid-cols-2 gap-4">
+                            <div>
+                              <Label className="text-sm font-medium text-gray-700">Assigned Maker</Label>
+                              <p className="text-sm">{order.assignedMaker || "Unassigned"}</p>
+                            </div>
+                            <div>
+                              <Label className="text-sm font-medium text-gray-700">Batch ID</Label>
+                              <p className="text-sm font-mono">{order.batchId}</p>
+                            </div>
+                          </div>
+                          {order.notes && (
+                            <div>
+                              <Label className="text-sm font-medium text-gray-700">Notes</Label>
+                              <p className="text-sm text-gray-600">{order.notes}</p>
+                            </div>
+                          )}
+                          <div className="flex gap-2 pt-2">
+                            {order.status === "ready" && (
+                              <Button className="bg-pop-green hover:bg-pop-green/90">
+                                Assign Maker
+                              </Button>
+                            )}
+                            {order.status === "assembly" && (
+                              <Button className="bg-pop-blue hover:bg-pop-blue/90">
+                                Mark Complete
+                              </Button>
+                            )}
+                            {order.status === "urgent" && (
+                              <Button className="bg-pop-red hover:bg-pop-red/90">
+                                Prioritize
+                              </Button>
+                            )}
+                          </div>
+                        </div>
+                      </DialogContent>
+                    </Dialog>
+                  ))}
+                </TableBody>
+              </Table>
+            </CardContent>
+          </Card>
 
             <Card>
               <CardHeader>
@@ -1804,9 +2005,9 @@ export default function OperationsPage() {
                 </Button>
               </CardContent>
             </Card>
-          </div>
 
-          <Card>
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            <Card>
             <CardHeader>
               <CardTitle>Recent Fulfillment Activity</CardTitle>
               <CardDescription>
@@ -1862,6 +2063,7 @@ export default function OperationsPage() {
               </div>
             </CardContent>
           </Card>
+          </div>
         </TabsContent>
       </Tabs>
 
