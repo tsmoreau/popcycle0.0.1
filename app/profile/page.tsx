@@ -1,244 +1,311 @@
 'use client'
 
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../components/ui/card'
-import { Button } from '../components/ui/button'
-import { Badge } from '../components/ui/badge'
-import { User, Mail, Phone, Calendar, MapPin, Award, Star, Edit, Eye, Trophy, Target, Users } from 'lucide-react'
-import Link from 'next/link'
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../components/ui/card"
+import { Button } from "../components/ui/button"
+import { Badge } from "../components/ui/badge"
+import { User, MapPin, Calendar, Edit, ExternalLink, Star, Trophy, Target, Users, TrendingUp, Award, Activity, BookOpen } from "lucide-react"
 
 export default function ProfilePage() {
   return (
     <div className="min-h-screen bg-gray-50">
-      {/* Profile Header */}
-      <div className="bg-white border-b-4 border-pop-black">
-        <div className="max-w-4xl mx-auto px-4 py-8">
-          <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+      {/* Desktop Header - Wide and Professional */}
+      <div className="bg-white border-b border-gray-200 shadow-sm">
+        <div className="max-w-screen-2xl mx-auto px-8 py-8">
+          <div className="flex items-center justify-between">
+            {/* Left: Avatar and Basic Info */}
             <div className="flex items-center space-x-6">
-              <div className="w-20 h-20 bg-pop-green border-4 border-pop-black rounded-full flex items-center justify-center">
-                <span className="text-pop-black helvetica-bold text-3xl">A</span>
+              <div className="w-20 h-20 bg-pop-green border-3 border-pop-black rounded-full flex items-center justify-center shadow-lg">
+                <User className="w-10 h-10 text-white" />
               </div>
               <div>
-                <h1 className="text-3xl helvetica-bold text-pop-black">Alex Martinez</h1>
-                <p className="systematic-caps text-gray-600 mt-1">San Francisco, CA • Joined March 2023</p>
-                <div className="flex items-center space-x-4 mt-2">
-                  <Badge className="bg-pop-green/10 text-pop-green border-pop-green">
-                    <Trophy className="w-3 h-3 mr-1" />
-                    Maker Level 3
-                  </Badge>
-                  <Badge className="bg-pop-blue/10 text-pop-blue border-pop-blue">
-                    <Users className="w-3 h-3 mr-1" />
-                    Operations Staff
-                  </Badge>
+                <h1 className="helvetica-bold text-4xl text-pop-black mb-2">Alex Chen</h1>
+                <div className="flex items-center space-x-6 text-gray-600">
+                  <div className="flex items-center space-x-2">
+                    <MapPin className="w-4 h-4" />
+                    <span className="systematic-caps text-sm">San Francisco, CA</span>
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    <Calendar className="w-4 h-4" />
+                    <span className="systematic-caps text-sm">Joined March 2023</span>
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    <Badge className="bg-pop-green text-white systematic-caps">Level 3 Maker</Badge>
+                    <Badge className="bg-pop-blue text-white systematic-caps">Workshop Leader</Badge>
+                  </div>
                 </div>
               </div>
             </div>
+
+            {/* Right: Action Buttons */}
             <div className="flex space-x-3">
               <Button variant="outline" className="systematic-caps border-2 border-pop-black hover:bg-pop-green hover:text-white">
-                <Eye className="w-4 h-4 mr-2" />
+                <ExternalLink className="w-4 h-4 mr-2" />
                 View Public Profile
               </Button>
-              <Button className="systematic-caps bg-pop-green border-2 border-pop-black text-pop-black hover:bg-pop-black hover:text-pop-green">
+              <Button className="bg-pop-green text-white systematic-caps border-2 border-pop-black hover:bg-pop-blue">
                 <Edit className="w-4 h-4 mr-2" />
                 Edit Profile
               </Button>
             </div>
           </div>
+
+          {/* Progress Bar - Full Width */}
+          <div className="mt-6 bg-gray-100 rounded-lg p-4 border-2 border-pop-black">
+            <div className="flex justify-between items-center mb-2">
+              <span className="systematic-caps text-sm text-pop-black font-medium">Progress to Level 4</span>
+              <span className="systematic-caps text-sm text-pop-black font-bold">2,650 / 3,000 XP</span>
+            </div>
+            <div className="w-full bg-gray-300 rounded-full h-4 border-2 border-pop-black">
+              <div className="bg-pop-green h-full rounded-full border-r-2 border-pop-black" style={{ width: '88%' }}></div>
+            </div>
+          </div>
         </div>
       </div>
 
-      <div className="max-w-7xl mx-auto px-4 py-8">
-        <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
+      {/* Main Content - Dashboard Style */}
+      <div className="max-w-screen-2xl mx-auto px-8 py-8">
+        {/* Top Stats Row */}
+        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6 mb-8">
+          <Card className="border-2 border-pop-black shadow-lg">
+            <CardContent className="p-6">
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="systematic-caps text-sm text-gray-600 mb-1">Total Projects</p>
+                  <p className="helvetica-bold text-3xl text-pop-black">47</p>
+                  <p className="systematic-caps text-xs text-pop-green">+3 this month</p>
+                </div>
+                <div className="bg-pop-green/10 p-3 rounded-lg border-2 border-pop-green">
+                  <Target className="w-8 h-8 text-pop-green" />
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+
+          <Card className="border-2 border-pop-black shadow-lg">
+            <CardContent className="p-6">
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="systematic-caps text-sm text-gray-600 mb-1">Plastic Transformed</p>
+                  <p className="helvetica-bold text-3xl text-pop-black">123 lbs</p>
+                  <p className="systematic-caps text-xs text-pop-blue">+12 lbs this month</p>
+                </div>
+                <div className="bg-pop-blue/10 p-3 rounded-lg border-2 border-pop-blue">
+                  <TrendingUp className="w-8 h-8 text-pop-blue" />
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+
+          <Card className="border-2 border-pop-black shadow-lg">
+            <CardContent className="p-6">
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="systematic-caps text-sm text-gray-600 mb-1">Skills Earned</p>
+                  <p className="helvetica-bold text-3xl text-pop-black">12</p>
+                  <p className="systematic-caps text-xs text-pop-red">+1 this month</p>
+                </div>
+                <div className="bg-pop-red/10 p-3 rounded-lg border-2 border-pop-red">
+                  <Award className="w-8 h-8 text-pop-red" />
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+
+          <Card className="border-2 border-pop-black shadow-lg">
+            <CardContent className="p-6">
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="systematic-caps text-sm text-gray-600 mb-1">Workshops Led</p>
+                  <p className="helvetica-bold text-3xl text-pop-black">8</p>
+                  <p className="systematic-caps text-xs text-gray-500">+2 this month</p>
+                </div>
+                <div className="bg-gray-100 p-3 rounded-lg border-2 border-pop-black">
+                  <Users className="w-8 h-8 text-pop-black" />
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+
+        {/* Main Dashboard Grid */}
+        <div className="grid grid-cols-1 xl:grid-cols-3 gap-8">
           
-          {/* Left Column - Stats & Contact */}
-          <div className="space-y-6">
-            {/* Contact Information */}
-            <Card className="border-2 border-pop-black">
-              <CardHeader>
-                <CardTitle className="systematic-caps text-pop-black">Contact Info</CardTitle>
+          {/* Left Column - Recent Activity & Contact */}
+          <div className="xl:col-span-2 space-y-8">
+            
+            {/* Recent Projects - Table Style */}
+            <Card className="border-2 border-pop-black shadow-lg">
+              <CardHeader className="border-b border-gray-200 bg-gray-50">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <CardTitle className="systematic-caps text-xl text-pop-black">Recent Projects</CardTitle>
+                    <CardDescription className="text-gray-600">Latest maker creations and assemblies</CardDescription>
+                  </div>
+                  <Button variant="outline" className="systematic-caps border-2 border-pop-black hover:bg-pop-green hover:text-white">
+                    View All Projects
+                  </Button>
+                </div>
               </CardHeader>
-              <CardContent className="space-y-4">
-                <div className="flex items-center space-x-3">
-                  <Mail className="h-4 w-4 text-gray-400" />
-                  <span className="text-sm">alex.martinez@popcycle.io</span>
-                </div>
-                <div className="flex items-center space-x-3">
-                  <Phone className="h-4 w-4 text-gray-400" />
-                  <span className="text-sm">(555) 123-4567</span>
-                </div>
-                <div className="flex items-center space-x-3">
-                  <MapPin className="h-4 w-4 text-gray-400" />
-                  <span className="text-sm">San Francisco, CA</span>
+              <CardContent className="p-0">
+                <div className="overflow-x-auto">
+                  <table className="w-full">
+                    <thead className="bg-gray-50 border-b border-gray-200">
+                      <tr>
+                        <th className="text-left px-6 py-4 systematic-caps text-sm text-gray-600">Project Name</th>
+                        <th className="text-left px-6 py-4 systematic-caps text-sm text-gray-600">Date</th>
+                        <th className="text-left px-6 py-4 systematic-caps text-sm text-gray-600">Plastic Used</th>
+                        <th className="text-left px-6 py-4 systematic-caps text-sm text-gray-600">Status</th>
+                        <th className="text-left px-6 py-4 systematic-caps text-sm text-gray-600">Impact</th>
+                      </tr>
+                    </thead>
+                    <tbody className="divide-y divide-gray-200">
+                      {[
+                        { name: 'Office Desk Organizer', date: 'Jan 15, 2025', plastic: '2.3 lbs', status: 'Completed', impact: 'High' },
+                        { name: 'Phone Stand Set', date: 'Jan 12, 2025', plastic: '0.8 lbs', status: 'Completed', impact: 'Medium' },
+                        { name: 'Custom Planters', date: 'Jan 8, 2025', plastic: '4.1 lbs', status: 'In Progress', impact: 'High' },
+                        { name: 'Workshop Demo Kit', date: 'Jan 5, 2025', plastic: '1.5 lbs', status: 'Completed', impact: 'Medium' },
+                        { name: 'Eco Water Bottles', date: 'Jan 2, 2025', plastic: '3.2 lbs', status: 'Completed', impact: 'High' },
+                        { name: 'Garden Tool Handles', date: 'Dec 28, 2024', plastic: '2.8 lbs', status: 'Completed', impact: 'Medium' },
+                      ].map((project, index) => (
+                        <tr key={index} className="hover:bg-gray-50 cursor-pointer">
+                          <td className="px-6 py-4">
+                            <div className="helvetica-bold text-sm text-pop-black">{project.name}</div>
+                          </td>
+                          <td className="px-6 py-4">
+                            <span className="systematic-caps text-sm text-gray-600">{project.date}</span>
+                          </td>
+                          <td className="px-6 py-4">
+                            <span className="systematic-caps text-sm text-pop-black font-medium">{project.plastic}</span>
+                          </td>
+                          <td className="px-6 py-4">
+                            <Badge variant={project.status === 'Completed' ? 'default' : 'secondary'} className="systematic-caps">
+                              {project.status}
+                            </Badge>
+                          </td>
+                          <td className="px-6 py-4">
+                            <Badge 
+                              variant="outline" 
+                              className={`systematic-caps ${
+                                project.impact === 'High' ? 'border-pop-green text-pop-green' : 
+                                'border-pop-blue text-pop-blue'
+                              }`}
+                            >
+                              {project.impact}
+                            </Badge>
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
                 </div>
               </CardContent>
             </Card>
 
-            {/* Maker Stats */}
-            <Card className="border-2 border-pop-black">
-              <CardHeader>
-                <CardTitle className="systematic-caps text-pop-black">Maker Stats</CardTitle>
+            {/* Skills Grid */}
+            <Card className="border-2 border-pop-black shadow-lg">
+              <CardHeader className="border-b border-gray-200 bg-gray-50">
+                <CardTitle className="systematic-caps text-xl text-pop-black">Technical Skills</CardTitle>
+                <CardDescription className="text-gray-600">Maker capabilities and certifications</CardDescription>
               </CardHeader>
-              <CardContent className="space-y-4">
-                <div className="flex justify-between items-center">
-                  <span className="systematic-caps text-sm text-gray-600">Projects Completed</span>
-                  <span className="helvetica-bold text-xl text-pop-green">47</span>
-                </div>
-                <div className="flex justify-between items-center">
-                  <span className="systematic-caps text-sm text-gray-600">Plastic Transformed</span>
-                  <span className="helvetica-bold text-xl text-pop-blue">143 lbs</span>
-                </div>
-                <div className="flex justify-between items-center">
-                  <span className="systematic-caps text-sm text-gray-600">Skills Earned</span>
-                  <span className="helvetica-bold text-xl text-pop-red">12</span>
-                </div>
-                <div className="flex justify-between items-center">
-                  <span className="systematic-caps text-sm text-gray-600">Workshops Led</span>
-                  <span className="helvetica-bold text-xl text-orange-600">8</span>
-                </div>
-              </CardContent>
-            </Card>
-
-            {/* Current Level Progress */}
-            <Card className="border-2 border-pop-black">
-              <CardHeader>
-                <CardTitle className="systematic-caps text-pop-black flex items-center">
-                  <Target className="w-4 h-4 mr-2" />
-                  Level Progress
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="space-y-3">
-                  <div className="flex justify-between items-center">
-                    <span className="systematic-caps text-sm">Level 3 → 4</span>
-                    <span className="systematic-caps text-sm text-gray-600">2,847 / 5,000 XP</span>
-                  </div>
-                  <div className="w-full bg-gray-200 rounded-full h-3 border-2 border-pop-black">
-                    <div className="bg-pop-green h-full rounded-full border-r-2 border-pop-black" style={{width: '57%'}}></div>
-                  </div>
-                  <p className="systematic-caps text-xs text-gray-600">2,153 XP to next level</p>
+              <CardContent className="p-6">
+                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                  {[
+                    { name: 'Basic Assembly', level: 'Expert', color: 'bg-pop-green' },
+                    { name: 'Advanced Techniques', level: 'Advanced', color: 'bg-pop-blue' },
+                    { name: 'Quality Control', level: 'Expert', color: 'bg-pop-green' },
+                    { name: 'Material Knowledge', level: 'Intermediate', color: 'bg-pop-red' },
+                    { name: 'Safety Protocols', level: 'Expert', color: 'bg-pop-green' },
+                    { name: 'Workshop Teaching', level: 'Advanced', color: 'bg-pop-blue' },
+                    { name: 'Team Leadership', level: 'Advanced', color: 'bg-pop-blue' },
+                    { name: 'Design Thinking', level: 'Intermediate', color: 'bg-pop-red' },
+                  ].map((skill, index) => (
+                    <div key={index} className="p-4 border-2 border-pop-black rounded-lg hover:shadow-md transition-shadow">
+                      <div className="text-center space-y-2">
+                        <div className={`w-3 h-3 ${skill.color} rounded-full mx-auto border border-pop-black`}></div>
+                        <div className="systematic-caps text-sm font-medium text-pop-black">{skill.name}</div>
+                        <div className="systematic-caps text-xs text-gray-600">{skill.level}</div>
+                      </div>
+                    </div>
+                  ))}
                 </div>
               </CardContent>
             </Card>
           </div>
 
-          {/* Right Columns - Activities & Achievements */}
-          <div className="lg:col-span-3 space-y-6">
+          {/* Right Sidebar */}
+          <div className="space-y-8">
             
-            {/* Recent Projects */}
-            <Card className="border-2 border-pop-black">
-              <CardHeader>
-                <CardTitle className="systematic-caps text-pop-black">Recent Projects</CardTitle>
-                <CardDescription>Latest maker creations and assemblies</CardDescription>
+            {/* Contact & Profile Info */}
+            <Card className="border-2 border-pop-black shadow-lg">
+              <CardHeader className="border-b border-gray-200 bg-gray-50">
+                <CardTitle className="systematic-caps text-lg text-pop-black">Contact Information</CardTitle>
               </CardHeader>
-              <CardContent>
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-                  {[
-                    { name: 'Office Desk Organizer', date: 'Jan 15, 2025', plastic: '2.3 lbs', status: 'Completed' },
-                    { name: 'Phone Stand Set', date: 'Jan 12, 2025', plastic: '0.8 lbs', status: 'Completed' },
-                    { name: 'Custom Planters', date: 'Jan 8, 2025', plastic: '4.1 lbs', status: 'In Progress' },
-                    { name: 'Workshop Demo Kit', date: 'Jan 5, 2025', plastic: '1.5 lbs', status: 'Completed' },
-                    { name: 'Eco Water Bottles', date: 'Jan 2, 2025', plastic: '3.2 lbs', status: 'Completed' },
-                    { name: 'Garden Tool Handles', date: 'Dec 28, 2024', plastic: '2.8 lbs', status: 'Completed' },
-                    { name: 'Storage Containers', date: 'Dec 22, 2024', plastic: '5.1 lbs', status: 'Completed' },
-                    { name: 'Workshop Signage', date: 'Dec 18, 2024', plastic: '1.2 lbs', status: 'Completed' },
-                  ].map((project, index) => (
-                    <div key={index} className="border-2 border-pop-black rounded-lg p-4 hover:bg-pop-green/5 transition-colors">
-                      <div className="space-y-2">
-                        <h4 className="helvetica-bold text-sm">{project.name}</h4>
-                        <p className="systematic-caps text-xs text-gray-600">{project.date}</p>
-                        <div className="flex justify-between items-center">
-                          <span className="systematic-caps text-xs">Plastic: {project.plastic}</span>
-                          <Badge variant={project.status === 'Completed' ? 'default' : 'secondary'} className="systematic-caps text-xs">
-                            {project.status}
-                          </Badge>
-                        </div>
-                      </div>
-                    </div>
-                  ))}
+              <CardContent className="p-6 space-y-4">
+                <div>
+                  <span className="systematic-caps text-xs text-gray-600 font-medium">Email</span>
+                  <p className="text-sm text-pop-black mt-1">alex.chen@email.com</p>
                 </div>
-                <Button variant="outline" className="w-full mt-4 systematic-caps border-2 border-pop-black hover:bg-pop-green hover:text-white">
-                  View All Projects
-                </Button>
+                <div>
+                  <span className="systematic-caps text-xs text-gray-600 font-medium">Phone</span>
+                  <p className="text-sm text-pop-black mt-1">(555) 123-4567</p>
+                </div>
+                <div>
+                  <span className="systematic-caps text-xs text-gray-600 font-medium">Location</span>
+                  <p className="text-sm text-pop-black mt-1">San Francisco, CA</p>
+                </div>
+                <div>
+                  <span className="systematic-caps text-xs text-gray-600 font-medium">Member Since</span>
+                  <p className="text-sm text-pop-black mt-1">March 15, 2023</p>
+                </div>
               </CardContent>
             </Card>
 
-            {/* Skills & Achievements - Split into two columns on desktop */}
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-              {/* Achievement Badges */}
-              <Card className="border-2 border-pop-black">
-                <CardHeader>
-                  <CardTitle className="systematic-caps text-pop-black">Achievements</CardTitle>
-                  <CardDescription>Earned certifications and milestones</CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <div className="grid grid-cols-2 gap-3">
-                    {[
-                      { name: 'Workshop Leader', icon: '👨‍🏫', date: 'Jan 2025', color: 'bg-pop-green' },
-                      { name: 'Level 3 Maker', icon: '🏆', date: 'Dec 2024', color: 'bg-pop-blue' },
-                      { name: '100 lbs Milestone', icon: '♻️', date: 'Nov 2024', color: 'bg-pop-red' },
-                      { name: 'Community Helper', icon: '🤝', date: 'Oct 2024', color: 'bg-pop-black' },
-                      { name: 'Precision Assembly', icon: '🎯', date: 'Sep 2024', color: 'bg-pop-green' },
-                      { name: 'First Project', icon: '⭐', date: 'Mar 2023', color: 'bg-pop-blue' },
-                    ].map((achievement, index) => (
-                      <div key={index} className={`${achievement.color} text-white p-3 rounded-lg border-2 border-pop-black text-center`}>
-                        <div className="text-2xl mb-1">{achievement.icon}</div>
-                        <div className="systematic-caps text-xs font-bold">{achievement.name}</div>
-                        <div className="text-xs opacity-90">{achievement.date}</div>
-                      </div>
-                    ))}
-                  </div>
-                </CardContent>
-              </Card>
-
-              {/* Skills */}
-              <Card className="border-2 border-pop-black">
-                <CardHeader>
-                  <CardTitle className="systematic-caps text-pop-black">Maker Skills</CardTitle>
-                  <CardDescription>Technical and leadership capabilities</CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <div className="space-y-4">
-                    <div>
-                      <h5 className="systematic-caps text-xs mb-2 text-gray-600 font-medium">Technical Skills</h5>
-                      <div className="flex flex-wrap gap-2">
-                        {[
-                          'Basic Assembly', 'Advanced Techniques', 'Quality Control', 'Material Knowledge', 'Safety Protocols'
-                        ].map((skill, index) => (
-                          <span key={index} className="bg-pop-green/10 border-2 border-pop-green text-pop-green px-3 py-1 rounded-lg systematic-caps text-xs">
-                            {skill}
-                          </span>
-                        ))}
-                      </div>
+            {/* Achievements */}
+            <Card className="border-2 border-pop-black shadow-lg">
+              <CardHeader className="border-b border-gray-200 bg-gray-50">
+                <CardTitle className="systematic-caps text-lg text-pop-black">Recent Achievements</CardTitle>
+              </CardHeader>
+              <CardContent className="p-6 space-y-4">
+                {[
+                  { name: 'Workshop Leader', desc: '25+ workshops led', icon: '👨‍🏫', date: 'Jan 2025', color: 'bg-pop-green' },
+                  { name: 'Level 3 Maker', desc: 'Advanced maker status', icon: '🏆', date: 'Dec 2024', color: 'bg-pop-blue' },
+                  { name: '100 lbs Milestone', desc: 'Environmental impact', icon: '♻️', date: 'Nov 2024', color: 'bg-pop-red' },
+                  { name: 'Community Helper', desc: 'Mentored 10+ makers', icon: '🤝', date: 'Oct 2024', color: 'bg-pop-black' },
+                ].map((achievement, index) => (
+                  <div key={index} className="flex items-center space-x-3 p-3 border-2 border-gray-200 rounded-lg hover:border-pop-green transition-colors">
+                    <div className={`${achievement.color} text-white w-10 h-10 rounded-full flex items-center justify-center border-2 border-pop-black text-lg`}>
+                      {achievement.icon}
                     </div>
-                    
-                    <div>
-                      <h5 className="systematic-caps text-xs mb-2 text-gray-600 font-medium">Leadership Skills</h5>
-                      <div className="flex flex-wrap gap-2">
-                        {[
-                          'Workshop Teaching', 'Team Leadership', 'Community Building', 'Mentoring', 'Process Improvement'
-                        ].map((skill, index) => (
-                          <span key={index} className="bg-pop-blue/10 border-2 border-pop-blue text-pop-blue px-3 py-1 rounded-lg systematic-caps text-xs">
-                            {skill}
-                          </span>
-                        ))}
-                      </div>
-                    </div>
-
-                    <div>
-                      <h5 className="systematic-caps text-xs mb-2 text-gray-600 font-medium">Specialized Skills</h5>
-                      <div className="flex flex-wrap gap-2">
-                        {[
-                          'Design Thinking', 'Sustainability'
-                        ].map((skill, index) => (
-                          <span key={index} className="bg-pop-red/10 border-2 border-pop-red text-pop-red px-3 py-1 rounded-lg systematic-caps text-xs">
-                            {skill}
-                          </span>
-                        ))}
-                      </div>
+                    <div className="flex-1">
+                      <div className="systematic-caps text-sm font-medium text-pop-black">{achievement.name}</div>
+                      <div className="text-xs text-gray-600">{achievement.desc}</div>
+                      <div className="systematic-caps text-xs text-gray-500">{achievement.date}</div>
                     </div>
                   </div>
-                </CardContent>
-              </Card>
-            </div>
+                ))}
+              </CardContent>
+            </Card>
+
+            {/* Quick Actions */}
+            <Card className="border-2 border-pop-black shadow-lg">
+              <CardHeader className="border-b border-gray-200 bg-gray-50">
+                <CardTitle className="systematic-caps text-lg text-pop-black">Quick Actions</CardTitle>
+              </CardHeader>
+              <CardContent className="p-6 space-y-3">
+                <Button className="w-full bg-pop-green text-white systematic-caps border-2 border-pop-black hover:bg-pop-blue">
+                  <BookOpen className="w-4 h-4 mr-2" />
+                  Start New Project
+                </Button>
+                <Button variant="outline" className="w-full systematic-caps border-2 border-pop-black hover:bg-pop-green hover:text-white">
+                  <Activity className="w-4 h-4 mr-2" />
+                  View Activity Feed
+                </Button>
+                <Button variant="outline" className="w-full systematic-caps border-2 border-pop-black hover:bg-pop-green hover:text-white">
+                  <Users className="w-4 h-4 mr-2" />
+                  Find Collaborators
+                </Button>
+              </CardContent>
+            </Card>
           </div>
         </div>
       </div>
