@@ -319,85 +319,59 @@ export default function OperationsPage() {
             {/* Mobile-First Grid Layout */}
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 pt-2 pb-4">
               {/* Active Bins */}
-              <div className="bg-pop-green/5 border border-pop-green/20 rounded-lg p-4">
+              <div className="bg-gray-50 border border-gray-200 rounded-lg p-4">
                 <div className="flex items-center justify-between mb-2">
-                  <Package className="h-5 w-5 text-pop-green" />
-                  <span className="text-xs font-medium text-pop-green uppercase tracking-wide">Bins</span>
+                  <Package className="h-5 w-5 text-gray-600" />
+                  <span className="text-xs font-medium text-gray-500 uppercase tracking-wide">Bins</span>
                 </div>
                 <div className="text-2xl font-bold text-pop-black mb-1">156</div>
                 <div className="text-sm text-gray-600 mb-2">Total Active</div>
                 <div className="flex gap-2 text-xs">
-                  <span className="bg-pop-red/10 text-pop-red px-2 py-1 rounded">12 Ready</span>
-                  <span className="bg-pop-blue/10 text-pop-blue px-2 py-1 rounded">8 Transit</span>
+                  <span className="bg-gray-100 text-gray-700 px-2 py-1 rounded">12 Ready</span>
+                  <span className="bg-gray-100 text-gray-700 px-2 py-1 rounded">8 Transit</span>
                 </div>
               </div>
 
               {/* Active Batches */}
-              <div className="bg-pop-blue/5 border border-pop-blue/20 rounded-lg p-4">
+              <div className="bg-gray-50 border border-gray-200 rounded-lg p-4">
                 <div className="flex items-center justify-between mb-2">
-                  <Truck className="h-5 w-5 text-pop-blue" />
-                  <span className="text-xs font-medium text-pop-blue uppercase tracking-wide">Batches</span>
+                  <Truck className="h-5 w-5 text-gray-600" />
+                  <span className="text-xs font-medium text-gray-500 uppercase tracking-wide">Batches</span>
                 </div>
                 <div className="text-2xl font-bold text-pop-black mb-1">23</div>
                 <div className="text-sm text-gray-600 mb-2">Total Active</div>
                 <div className="flex gap-2 text-xs">
-                  <span className="bg-orange-500/10 text-orange-600 px-2 py-1 rounded">8 Processing</span>
-                  <span className="bg-pop-green/10 text-pop-green px-2 py-1 rounded">15 Complete</span>
+                  <span className="bg-gray-100 text-gray-700 px-2 py-1 rounded">8 Processing</span>
+                  <span className="bg-gray-100 text-gray-700 px-2 py-1 rounded">15 Complete</span>
                 </div>
               </div>
 
               {/* Inventory Status */}
-              <div className="bg-pop-red/5 border border-pop-red/20 rounded-lg p-4">
+              <div className="bg-gray-50 border border-gray-200 rounded-lg p-4">
                 <div className="flex items-center justify-between mb-2">
-                  <Archive className="h-5 w-5 text-pop-red" />
-                  <span className="text-xs font-medium text-pop-red uppercase tracking-wide">Inventory</span>
+                  <Archive className="h-5 w-5 text-gray-600" />
+                  <span className="text-xs font-medium text-gray-500 uppercase tracking-wide">Inventory</span>
                 </div>
                 <div className="text-2xl font-bold text-pop-black mb-1">89</div>
                 <div className="text-sm text-gray-600 mb-2">Blanks Ready</div>
                 <div className="flex gap-2 text-xs">
-                  <span className="bg-pop-green/10 text-pop-green px-2 py-1 rounded">42 Items</span>
-                  <span className="bg-orange-500/10 text-orange-600 px-2 py-1 rounded">5 Orders</span>
+                  <span className="bg-gray-100 text-gray-700 px-2 py-1 rounded">42 Items</span>
+                  <span className="bg-gray-100 text-gray-700 px-2 py-1 rounded">5 Orders</span>
                 </div>
               </div>
 
               {/* Station Status */}
               <div className="bg-gray-50 border border-gray-200 rounded-lg p-4">
                 <div className="flex items-center justify-between mb-2">
-                  <Settings className="h-5 w-5 text-pop-black" />
-                  <span className="text-xs font-medium text-pop-black uppercase tracking-wide">Stations</span>
+                  <Settings className="h-5 w-5 text-gray-600" />
+                  <span className="text-xs font-medium text-gray-500 uppercase tracking-wide">Stations</span>
                 </div>
                 <div className="text-2xl font-bold text-pop-black mb-1">2/2</div>
                 <div className="text-sm text-gray-600 mb-2">Online</div>
                 <div className="flex gap-2 text-xs">
-                  <span className="bg-pop-green/10 text-pop-green px-2 py-1 rounded">Weigh/Photo</span>
-                  <span className="bg-pop-green/10 text-pop-green px-2 py-1 rounded">Laser</span>
+                  <span className="bg-gray-100 text-gray-700 px-2 py-1 rounded">Weigh/Photo</span>
+                  <span className="bg-gray-100 text-gray-700 px-2 py-1 rounded">Laser</span>
                 </div>
-              </div>
-            </div>
-
-            {/* Quick Actions Bar - Mobile Optimized */}
-            <div className="border-t pt-4 mt-2">
-              <div className="flex flex-wrap gap-2">
-                <Button 
-                  size="sm" 
-                  className="bg-pop-green hover:bg-pop-green/90 text-white"
-                  onClick={() => setShowScanModal(true)}
-                >
-                  <QrCode className="h-4 w-4 mr-2" />
-                  Scan QR
-                </Button>
-                <Button size="sm" variant="outline">
-                  <Calendar className="h-4 w-4 mr-2" />
-                  Schedule
-                </Button>
-                <Button size="sm" variant="outline">
-                  <BarChart3 className="h-4 w-4 mr-2" />
-                  Reports
-                </Button>
-                <Button size="sm" variant="outline">
-                  <AlertCircle className="h-4 w-4 mr-2" />
-                  Alerts
-                </Button>
               </div>
             </div>
           </AccordionContent>
