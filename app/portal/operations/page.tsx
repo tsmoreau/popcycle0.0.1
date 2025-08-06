@@ -142,10 +142,15 @@ export default function OperationsPage() {
   };
 
   const sortedQueue = [...collectionsQueue].sort((a, b) => {
-    let aVal = a[sortField as keyof typeof a];
-    let bVal = b[sortField as keyof typeof b];
+    let aVal: any = a[sortField as keyof typeof a];
+    let bVal: any = b[sortField as keyof typeof b];
     
-    if (typeof aVal === "string") {
+    // Handle null/undefined values
+    if (aVal == null) aVal = "";
+    if (bVal == null) bVal = "";
+    
+    // Convert to string for comparison if needed
+    if (typeof aVal === "string" && typeof bVal === "string") {
       aVal = aVal.toLowerCase();
       bVal = bVal.toLowerCase();
     }
