@@ -98,47 +98,55 @@ export default function FinancialPage() {
             </CardTitle>
             <CardDescription>Monthly operational expenses</CardDescription>
           </CardHeader>
-          <CardContent className="space-y-4">
-            <div className="space-y-3">
-              <div className="flex justify-between items-center p-3 bg-red-50 rounded-lg">
+          <CardContent className="space-y-3">
+            <div className="space-y-2">
+              <div className="flex justify-between items-center py-2 px-3 border rounded-lg">
                 <div>
-                  <span className="text-sm font-medium">Collection & Logistics</span>
-                  <p className="text-xs text-gray-600">Fuel, vehicles, pickup labor</p>
+                  <span className="text-sm font-medium">Shell Gas Station</span>
+                  <p className="text-xs text-gray-600">Fleet fuel - Jan 15</p>
                 </div>
-                <span className="font-medium">$8,450</span>
+                <span className="font-medium">$340.50</span>
               </div>
-              <div className="flex justify-between items-center p-3 bg-orange-50 rounded-lg">
+              <div className="flex justify-between items-center py-2 px-3 border rounded-lg">
                 <div>
-                  <span className="text-sm font-medium">Manufacturing</span>
-                  <p className="text-xs text-gray-600">Materials, utilities, equipment</p>
+                  <span className="text-sm font-medium">HD Supply</span>
+                  <p className="text-xs text-gray-600">Plastic pellets - Jan 14</p>
                 </div>
-                <span className="font-medium">$6,720</span>
+                <span className="font-medium">$2,850.00</span>
               </div>
-              <div className="flex justify-between items-center p-3 bg-yellow-50 rounded-lg">
+              <div className="flex justify-between items-center py-2 px-3 border rounded-lg">
                 <div>
-                  <span className="text-sm font-medium">Staff & Makers</span>
-                  <p className="text-xs text-gray-600">Wages, workshops, certifications</p>
+                  <span className="text-sm font-medium">Pacific Electric</span>
+                  <p className="text-xs text-gray-600">Monthly utilities - Jan 12</p>
                 </div>
-                <span className="font-medium">$4,890</span>
+                <span className="font-medium">$1,205.75</span>
               </div>
-              <div className="flex justify-between items-center p-3 bg-blue-50 rounded-lg">
+              <div className="flex justify-between items-center py-2 px-3 border rounded-lg">
                 <div>
-                  <span className="text-sm font-medium">Operations</span>
-                  <p className="text-xs text-gray-600">Software, insurance, admin</p>
+                  <span className="text-sm font-medium">Workshop Materials Inc</span>
+                  <p className="text-xs text-gray-600">Maker supplies - Jan 10</p>
                 </div>
-                <span className="font-medium">$3,130</span>
+                <span className="font-medium">$485.20</span>
+              </div>
+              <div className="flex justify-between items-center py-2 px-3 border rounded-lg">
+                <div>
+                  <span className="text-sm font-medium">Stripe Processing</span>
+                  <p className="text-xs text-gray-600">Payment fees - Jan 8</p>
+                </div>
+                <span className="font-medium">$127.85</span>
+              </div>
+              <div className="flex justify-between items-center py-2 px-3 border rounded-lg">
+                <div>
+                  <span className="text-sm font-medium">Office Depot</span>
+                  <p className="text-xs text-gray-600">Admin supplies - Jan 5</p>
+                </div>
+                <span className="font-medium">$89.40</span>
               </div>
             </div>
             
-            <div className="pt-2 border-t">
-              <div className="flex justify-between items-center mb-3">
-                <span className="text-sm font-medium">vs. Last Month</span>
-                <Badge variant="secondary" className="bg-green-100 text-green-700">-8.3%</Badge>
-              </div>
-              <Button variant="outline" className="w-full">
-                View Detailed Breakdown
-              </Button>
-            </div>
+            <Button variant="outline" className="w-full mt-3">
+              View All Expenses
+            </Button>
           </CardContent>
         </Card>
 
