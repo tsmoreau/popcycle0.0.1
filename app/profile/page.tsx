@@ -46,8 +46,8 @@ export default function ProfilePage() {
         </div>
       </div>
 
-      <div className="max-w-4xl mx-auto px-4 py-8">
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+      <div className="max-w-7xl mx-auto px-4 py-8">
+        <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
           
           {/* Left Column - Stats & Contact */}
           <div className="space-y-6">
@@ -121,7 +121,7 @@ export default function ProfilePage() {
           </div>
 
           {/* Right Columns - Activities & Achievements */}
-          <div className="lg:col-span-2 space-y-6">
+          <div className="lg:col-span-3 space-y-6">
             
             {/* Recent Projects */}
             <Card className="border-2 border-pop-black">
@@ -130,12 +130,16 @@ export default function ProfilePage() {
                 <CardDescription>Latest maker creations and assemblies</CardDescription>
               </CardHeader>
               <CardContent>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
                   {[
                     { name: 'Office Desk Organizer', date: 'Jan 15, 2025', plastic: '2.3 lbs', status: 'Completed' },
                     { name: 'Phone Stand Set', date: 'Jan 12, 2025', plastic: '0.8 lbs', status: 'Completed' },
                     { name: 'Custom Planters', date: 'Jan 8, 2025', plastic: '4.1 lbs', status: 'In Progress' },
                     { name: 'Workshop Demo Kit', date: 'Jan 5, 2025', plastic: '1.5 lbs', status: 'Completed' },
+                    { name: 'Eco Water Bottles', date: 'Jan 2, 2025', plastic: '3.2 lbs', status: 'Completed' },
+                    { name: 'Garden Tool Handles', date: 'Dec 28, 2024', plastic: '2.8 lbs', status: 'Completed' },
+                    { name: 'Storage Containers', date: 'Dec 22, 2024', plastic: '5.1 lbs', status: 'Completed' },
+                    { name: 'Workshop Signage', date: 'Dec 18, 2024', plastic: '1.2 lbs', status: 'Completed' },
                   ].map((project, index) => (
                     <div key={index} className="border-2 border-pop-black rounded-lg p-4 hover:bg-pop-green/5 transition-colors">
                       <div className="space-y-2">
@@ -157,51 +161,84 @@ export default function ProfilePage() {
               </CardContent>
             </Card>
 
-            {/* Skills & Achievements */}
-            <Card className="border-2 border-pop-black">
-              <CardHeader>
-                <CardTitle className="systematic-caps text-pop-black">Skills & Achievements</CardTitle>
-                <CardDescription>Earned certifications and accomplishments</CardDescription>
-              </CardHeader>
-              <CardContent>
-                <div className="space-y-6">
-                  <div>
-                    <h4 className="systematic-caps font-medium text-pop-black mb-3">Recent Achievements</h4>
-                    <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
-                      {[
-                        { name: 'Workshop Leader', icon: '👨‍🏫', date: 'Jan 2025' },
-                        { name: 'Level 3 Maker', icon: '🏆', date: 'Dec 2024' },
-                        { name: '100 lbs Milestone', icon: '♻️', date: 'Nov 2024' },
-                        { name: 'Community Helper', icon: '🤝', date: 'Oct 2024' },
-                        { name: 'Precision Assembly', icon: '🎯', date: 'Sep 2024' },
-                        { name: 'First Project', icon: '⭐', date: 'Mar 2023' },
-                      ].map((achievement, index) => (
-                        <div key={index} className="text-center p-3 border-2 border-pop-black rounded-lg hover:bg-pop-blue/5 transition-colors">
-                          <div className="text-2xl mb-1">{achievement.icon}</div>
-                          <div className="systematic-caps text-xs font-medium">{achievement.name}</div>
-                          <div className="systematic-caps text-xs text-gray-600">{achievement.date}</div>
-                        </div>
-                      ))}
-                    </div>
+            {/* Skills & Achievements - Split into two columns on desktop */}
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+              {/* Achievement Badges */}
+              <Card className="border-2 border-pop-black">
+                <CardHeader>
+                  <CardTitle className="systematic-caps text-pop-black">Achievements</CardTitle>
+                  <CardDescription>Earned certifications and milestones</CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <div className="grid grid-cols-2 gap-3">
+                    {[
+                      { name: 'Workshop Leader', icon: '👨‍🏫', date: 'Jan 2025', color: 'bg-pop-green' },
+                      { name: 'Level 3 Maker', icon: '🏆', date: 'Dec 2024', color: 'bg-pop-blue' },
+                      { name: '100 lbs Milestone', icon: '♻️', date: 'Nov 2024', color: 'bg-pop-red' },
+                      { name: 'Community Helper', icon: '🤝', date: 'Oct 2024', color: 'bg-pop-black' },
+                      { name: 'Precision Assembly', icon: '🎯', date: 'Sep 2024', color: 'bg-pop-green' },
+                      { name: 'First Project', icon: '⭐', date: 'Mar 2023', color: 'bg-pop-blue' },
+                    ].map((achievement, index) => (
+                      <div key={index} className={`${achievement.color} text-white p-3 rounded-lg border-2 border-pop-black text-center`}>
+                        <div className="text-2xl mb-1">{achievement.icon}</div>
+                        <div className="systematic-caps text-xs font-bold">{achievement.name}</div>
+                        <div className="text-xs opacity-90">{achievement.date}</div>
+                      </div>
+                    ))}
                   </div>
+                </CardContent>
+              </Card>
 
-                  <div>
-                    <h4 className="systematic-caps font-medium text-pop-black mb-3">Skills</h4>
-                    <div className="flex flex-wrap gap-2">
-                      {[
-                        'Basic Assembly', 'Advanced Techniques', 'Quality Control', 'Workshop Teaching', 
-                        'Team Leadership', 'Design Thinking', 'Material Knowledge', 'Safety Protocols',
-                        'Community Building', 'Mentoring', 'Process Improvement', 'Sustainability'
-                      ].map((skill, index) => (
-                        <Badge key={index} variant="outline" className="systematic-caps text-xs border-pop-black">
-                          {skill}
-                        </Badge>
-                      ))}
+              {/* Skills */}
+              <Card className="border-2 border-pop-black">
+                <CardHeader>
+                  <CardTitle className="systematic-caps text-pop-black">Maker Skills</CardTitle>
+                  <CardDescription>Technical and leadership capabilities</CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <div className="space-y-4">
+                    <div>
+                      <h5 className="systematic-caps text-xs mb-2 text-gray-600 font-medium">Technical Skills</h5>
+                      <div className="flex flex-wrap gap-2">
+                        {[
+                          'Basic Assembly', 'Advanced Techniques', 'Quality Control', 'Material Knowledge', 'Safety Protocols'
+                        ].map((skill, index) => (
+                          <span key={index} className="bg-pop-green/10 border-2 border-pop-green text-pop-green px-3 py-1 rounded-lg systematic-caps text-xs">
+                            {skill}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                    
+                    <div>
+                      <h5 className="systematic-caps text-xs mb-2 text-gray-600 font-medium">Leadership Skills</h5>
+                      <div className="flex flex-wrap gap-2">
+                        {[
+                          'Workshop Teaching', 'Team Leadership', 'Community Building', 'Mentoring', 'Process Improvement'
+                        ].map((skill, index) => (
+                          <span key={index} className="bg-pop-blue/10 border-2 border-pop-blue text-pop-blue px-3 py-1 rounded-lg systematic-caps text-xs">
+                            {skill}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+
+                    <div>
+                      <h5 className="systematic-caps text-xs mb-2 text-gray-600 font-medium">Specialized Skills</h5>
+                      <div className="flex flex-wrap gap-2">
+                        {[
+                          'Design Thinking', 'Sustainability'
+                        ].map((skill, index) => (
+                          <span key={index} className="bg-pop-red/10 border-2 border-pop-red text-pop-red px-3 py-1 rounded-lg systematic-caps text-xs">
+                            {skill}
+                          </span>
+                        ))}
+                      </div>
                     </div>
                   </div>
-                </div>
-              </CardContent>
-            </Card>
+                </CardContent>
+              </Card>
+            </div>
           </div>
         </div>
       </div>
