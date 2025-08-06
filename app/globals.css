@@ -100,46 +100,76 @@
 .folder-tab-red,
 .folder-tab-black {
   position: relative;
-  border: 2px solid #d1d5db;
-  border-bottom: none;
-  border-radius: 8px 8px 0 0;
   background-color: #f9fafb;
   color: #374151;
-  clip-path: polygon(10px 0%, calc(100% - 10px) 0%, 100% 100%, 0% 100%);
+  border: none;
+}
+
+.folder-tab-green::before,
+.folder-tab-blue::before,
+.folder-tab-red::before,
+.folder-tab-black::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: #f9fafb;
+  border: 2px solid #d1d5db;
+  border-bottom: none;
+  clip-path: polygon(10px 0%, calc(100% - 10px) 0%, calc(100% - 8px) calc(100% - 2px), 8px calc(100% - 2px));
+  z-index: -1;
 }
 
 .folder-tab-green[data-state="active"] {
   background-color: hsl(var(--pop-green)) !important;
   color: white !important;
-  border-color: hsl(var(--pop-green)) !important;
-  border-bottom: 2px solid hsl(var(--pop-green)) !important;
   margin-bottom: -2px;
   z-index: 10;
+}
+
+.folder-tab-green[data-state="active"]::before {
+  background: hsl(var(--pop-green)) !important;
+  border-color: hsl(var(--pop-green)) !important;
+  border-bottom: 2px solid hsl(var(--pop-green)) !important;
 }
 
 .folder-tab-blue[data-state="active"] {
   background-color: hsl(var(--pop-blue)) !important;
   color: white !important;
-  border-color: hsl(var(--pop-blue)) !important;
-  border-bottom: 2px solid hsl(var(--pop-blue)) !important;
   margin-bottom: -2px;
   z-index: 10;
+}
+
+.folder-tab-blue[data-state="active"]::before {
+  background: hsl(var(--pop-blue)) !important;
+  border-color: hsl(var(--pop-blue)) !important;
+  border-bottom: 2px solid hsl(var(--pop-blue)) !important;
 }
 
 .folder-tab-red[data-state="active"] {
   background-color: hsl(var(--pop-red)) !important;
   color: white !important;
-  border-color: hsl(var(--pop-red)) !important;
-  border-bottom: 2px solid hsl(var(--pop-red)) !important;
   margin-bottom: -2px;
   z-index: 10;
+}
+
+.folder-tab-red[data-state="active"]::before {
+  background: hsl(var(--pop-red)) !important;
+  border-color: hsl(var(--pop-red)) !important;
+  border-bottom: 2px solid hsl(var(--pop-red)) !important;
 }
 
 .folder-tab-black[data-state="active"] {
   background-color: hsl(var(--pop-black)) !important;
   color: white !important;
-  border-color: hsl(var(--pop-black)) !important;
-  border-bottom: 2px solid hsl(var(--pop-black)) !important;
   margin-bottom: -2px;
   z-index: 10;
+}
+
+.folder-tab-black[data-state="active"]::before {
+  background: hsl(var(--pop-black)) !important;
+  border-color: hsl(var(--pop-black)) !important;
+  border-bottom: 2px solid hsl(var(--pop-black)) !important;
 }
