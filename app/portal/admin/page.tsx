@@ -196,6 +196,8 @@ export default function AdminPage() {
           <AccordionContent>
             <div className="pt-2 pb-4">
               <DataTable
+                title=""
+                description=""
                 data={usersData}
                 columns={userColumns}
                 renderModal={renderUserModal}
@@ -205,16 +207,7 @@ export default function AdminPage() {
         </AccordionItem>
       </Accordion>
 
-      {/* System Administration Section */}
-      <Card>
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2">
-            <Cog className="h-5 w-5 text-pop-green" />
-            System Administration
-          </CardTitle>
-          <CardDescription>Core system configuration and settings</CardDescription>
-        </CardHeader>
-        <CardContent className="space-y-4">
+      <div className="space-y-6">
           {/* Production Stations Dropdown */}
           <div className="w-full border rounded-lg">
             <div className="px-4 py-4 cursor-pointer hover:bg-gray-50" onClick={() => setShowProductionStations(!showProductionStations)}>
@@ -419,8 +412,7 @@ export default function AdminPage() {
               </div>
             )}
           </div>
-        </CardContent>
-      </Card>
+      </div>
     </div>
   )
 }
