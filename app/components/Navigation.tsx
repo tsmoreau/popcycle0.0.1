@@ -131,11 +131,28 @@ export default function Navigation() {
             </div>
           </div>
 
-          {/* Right-aligned Login Button */}
+          {/* Right-aligned User Menu */}
           <div className="hidden lg:block">
-            <button className="login-button systematic-caps px-10 py-1.5 rounded-md transition-colors">
+            {/* Commented out login button - showing logged in state */}
+            {/* <button className="login-button systematic-caps px-10 py-1.5 rounded-md transition-colors">
               Login
-            </button>
+            </button> */}
+            
+            {/* User logged in state */}
+            <div className="flex items-center space-x-4">
+              <Link 
+                href="/portal" 
+                className="systematic-caps text-sm hover:text-pop-green transition-colors px-4 py-2 border-2 border-pop-black hover:bg-pop-green hover:text-white rounded-md"
+              >
+                Portal
+              </Link>
+              <div className="flex items-center space-x-2">
+                <div className="w-8 h-8 bg-pop-green border-2 border-pop-black rounded-full flex items-center justify-center">
+                  <span className="text-pop-black helvetica-bold text-sm">A</span>
+                </div>
+                <span className="systematic-caps text-sm text-pop-black">Alex M.</span>
+              </div>
+            </div>
           </div>
 
           {/* Mobile menu button */}
@@ -236,14 +253,35 @@ export default function Navigation() {
               )}
             </div>
 
-            {/* Mobile CTA */}
-            <div className="pt-4">
-              <button
+            {/* Mobile User Section */}
+            <div className="pt-4 border-t-2 border-pop-black space-y-3">
+              {/* User Profile */}
+              <div className="flex items-center space-x-3">
+                <div className="w-10 h-10 bg-pop-green border-2 border-pop-black rounded-full flex items-center justify-center">
+                  <span className="text-pop-black helvetica-bold text-base">A</span>
+                </div>
+                <div>
+                  <div className="systematic-caps text-sm font-bold text-pop-black">Alex Martinez</div>
+                  <div className="systematic-caps text-xs text-gray-600">Maker Level 3</div>
+                </div>
+              </div>
+              
+              {/* Portal Link */}
+              <Link
+                href="/portal"
+                onClick={() => setMobileMenuOpen(false)}
+                className="w-full bg-pop-green border-2 border-pop-black text-pop-black systematic-caps px-4 py-2 rounded-md transition-colors hover:bg-pop-black hover:text-pop-green flex items-center justify-center"
+              >
+                Go to Portal
+              </Link>
+              
+              {/* Commented out login button */}
+              {/* <button
                 className="login-button w-full systematic-caps px-4 py-2 rounded-md transition-colors"
                 onClick={() => setMobileMenuOpen(false)}
               >
                 Login
-              </button>
+              </button> */}
             </div>
           </div>
         </div>
