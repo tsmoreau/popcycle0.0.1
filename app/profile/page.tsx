@@ -77,22 +77,24 @@ export default function ProfilePage() {
               <CardHeader>
                 <CardTitle className="systematic-caps text-pop-black">Maker Stats</CardTitle>
               </CardHeader>
-              <CardContent className="space-y-4">
-                <div className="flex justify-between items-center">
-                  <span className="systematic-caps text-sm text-gray-600">Projects Completed</span>
-                  <span className="helvetica-bold text-xl text-pop-green">47</span>
-                </div>
-                <div className="flex justify-between items-center">
-                  <span className="systematic-caps text-sm text-gray-600">Plastic Transformed</span>
-                  <span className="helvetica-bold text-xl text-pop-blue">143 lbs</span>
-                </div>
-                <div className="flex justify-between items-center">
-                  <span className="systematic-caps text-sm text-gray-600">Skills Earned</span>
-                  <span className="helvetica-bold text-xl text-pop-red">12</span>
-                </div>
-                <div className="flex justify-between items-center">
-                  <span className="systematic-caps text-sm text-gray-600">Workshops Led</span>
-                  <span className="helvetica-bold text-xl text-orange-600">8</span>
+              <CardContent className="p-6">
+                <div className="grid grid-cols-2 gap-6">
+                  <div className="text-center">
+                    <div className="helvetica-bold text-2xl text-pop-green mb-1">47</div>
+                    <div className="systematic-caps text-xs text-gray-600 whitespace-nowrap">Projects Completed</div>
+                  </div>
+                  <div className="text-center">
+                    <div className="helvetica-bold text-2xl text-pop-blue mb-1">143</div>
+                    <div className="systematic-caps text-xs text-gray-600 whitespace-nowrap">Plastic Transformed (lbs)</div>
+                  </div>
+                  <div className="text-center">
+                    <div className="helvetica-bold text-2xl text-pop-red mb-1">12</div>
+                    <div className="systematic-caps text-xs text-gray-600 whitespace-nowrap">Skills Earned</div>
+                  </div>
+                  <div className="text-center">
+                    <div className="helvetica-bold text-2xl text-orange-600 mb-1">8</div>
+                    <div className="systematic-caps text-xs text-gray-600 whitespace-nowrap">Workshops Led</div>
+                  </div>
                 </div>
               </CardContent>
             </Card>
@@ -105,16 +107,19 @@ export default function ProfilePage() {
                   Level Progress
                 </CardTitle>
               </CardHeader>
-              <CardContent>
-                <div className="space-y-3">
-                  <div className="flex justify-between items-center">
-                    <span className="systematic-caps text-sm">Level 3 → 4</span>
-                    <span className="systematic-caps text-sm text-gray-600">2,847 / 5,000 XP</span>
+              <CardContent className="p-6">
+                <div className="space-y-4">
+                  <div className="text-center">
+                    <div className="systematic-caps text-lg font-bold text-pop-black mb-1">Level 3 → 4</div>
+                    <div className="systematic-caps text-sm text-gray-600">2,847 / 5,000 XP</div>
                   </div>
-                  <div className="w-full bg-gray-200 rounded-full h-3 border-2 border-pop-black">
-                    <div className="bg-pop-green h-full rounded-full border-r-2 border-pop-black" style={{width: '57%'}}></div>
+                  <div className="w-full bg-gray-200 rounded-full h-4 border-2 border-pop-black">
+                    <div className="bg-pop-green h-full rounded-full" style={{width: '57%'}}></div>
                   </div>
-                  <p className="systematic-caps text-xs text-gray-600">2,153 XP to next level</p>
+                  <div className="text-center">
+                    <div className="helvetica-bold text-xl text-pop-green mb-1">2,153</div>
+                    <div className="systematic-caps text-xs text-gray-600">XP to next level</div>
+                  </div>
                 </div>
               </CardContent>
             </Card>
