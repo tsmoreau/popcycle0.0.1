@@ -160,49 +160,43 @@ export default function Navigation() {
             </button> */}
             
             {/* User Avatar with Dropdown */}
-            <div className="relative" ref={userMenuRef}>
+            <div className="relative group" ref={userMenuRef}>
               <button
-                onClick={() => setUserMenuOpen(!userMenuOpen)}
                 className="w-10 h-10 bg-pop-green border-2 border-pop-black rounded-full flex items-center justify-center hover:bg-pop-black hover:text-pop-green transition-colors"
               >
-                <span className="text-pop-black helvetica-bold text-sm">P</span>
+                <span className="text-pop-black group-hover:text-pop-green helvetica-bold text-sm">P</span>
               </button>
 
-              {userMenuOpen && (
-                <div className="absolute top-full right-0 mt-2 w-48 bg-white border-4 border-pop-black pop-shadow-black">
-                  <div className="py-2">
-                    <div className="px-4 py-2 border-b-2 border-pop-black">
-                      <div className="systematic-caps text-sm font-bold text-pop-black">PlasticCraftAlex</div>
-                      <div className="systematic-caps text-xs text-gray-600">Level 3 Maker • 2,847 XP</div>
-                    </div>
-                    <Link
-                      href="/profile"
-                      className="flex items-center px-4 py-2 systematic-caps text-sm hover:bg-pop-green hover:text-white transition-colors"
-                      onClick={() => setUserMenuOpen(false)}
-                    >
-                      <User className="w-4 h-4 mr-3" />
-                      Profile
-                    </Link>
-                    {hasPortalAccess && (
-                      <Link
-                        href="/portal"
-                        className="flex items-center px-4 py-2 systematic-caps text-sm hover:bg-pop-blue hover:text-white transition-colors"
-                        onClick={() => setUserMenuOpen(false)}
-                      >
-                        <Settings className="w-4 h-4 mr-3" />
-                        Portal
-                      </Link>
-                    )}
-                    <button
-                      className="w-full flex items-center px-4 py-2 systematic-caps text-sm hover:bg-pop-red hover:text-white transition-colors text-left"
-                      onClick={() => setUserMenuOpen(false)}
-                    >
-                      <LogOut className="w-4 h-4 mr-3" />
-                      Sign Out
-                    </button>
+              <div className="absolute top-full right-0 mt-2 min-w-max bg-white border-4 border-pop-black pop-shadow-black opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
+                <div className="py-2">
+                  <div className="px-6 py-3 border-b-2 border-pop-black bg-pop-green/5">
+                    <div className="systematic-caps text-sm font-bold text-pop-black">PlasticCraftAlex</div>
+                    <div className="systematic-caps text-xs font-medium text-pop-green mt-1">Maker Lvl 3</div>
                   </div>
+                  <Link
+                    href="/profile"
+                    className="flex items-center px-6 py-3 systematic-caps text-sm hover:bg-pop-green hover:text-white transition-colors whitespace-nowrap"
+                  >
+                    <User className="w-4 h-4 mr-3" />
+                    Profile
+                  </Link>
+                  {hasPortalAccess && (
+                    <Link
+                      href="/portal"
+                      className="flex items-center px-6 py-3 systematic-caps text-sm hover:bg-pop-blue hover:text-white transition-colors whitespace-nowrap"
+                    >
+                      <Settings className="w-4 h-4 mr-3" />
+                      Portal
+                    </Link>
+                  )}
+                  <button
+                    className="w-full flex items-center px-6 py-3 systematic-caps text-sm hover:bg-pop-red hover:text-white transition-colors text-left whitespace-nowrap"
+                  >
+                    <LogOut className="w-4 h-4 mr-3" />
+                    Sign Out
+                  </button>
                 </div>
-              )}
+              </div>
             </div>
           </div>
 
@@ -314,7 +308,7 @@ export default function Navigation() {
                   </div>
                   <div>
                     <div className="systematic-caps text-sm font-bold text-pop-black">PlasticCraftAlex</div>
-                    <div className="systematic-caps text-xs text-gray-600">Level 3 • 2,847 XP</div>
+                    <div className="systematic-caps text-xs text-gray-600">Maker Lvl 3</div>
                   </div>
                 </div>
               </div>
