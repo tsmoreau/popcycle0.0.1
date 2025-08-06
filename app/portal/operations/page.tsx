@@ -650,7 +650,7 @@ export default function OperationsPage() {
               <BarChart3 className="h-5 w-5 text-pop-green" />
               <div className="text-left">
                 <h3 className="text-lg font-semibold text-pop-black">Operations Overview</h3>
-                <p className="text-sm text-gray-600">Real-time system metrics and status</p>
+              
               </div>
             </div>
           </AccordionTrigger>
@@ -723,8 +723,8 @@ export default function OperationsPage() {
           <div className="flex items-center gap-3">
             <Scan className="h-5 w-5 text-pop-green" />
             <div className="text-left">
-              <h3 className="text-lg font-semibold text-pop-black">Quick QR Access</h3>
-              <p className="text-sm text-gray-600">Scan any bin or batch QR code for instant access</p>
+              <h3 className="text-lg font-semibold text-pop-black">QR Scanner</h3>
+              
             </div>
           </div>
         </div>
@@ -735,16 +735,28 @@ export default function OperationsPage() {
         <div className="relative">
           <TabsList className="mb-0 relative z-10 p-0 bg-transparent h-auto gap-0 flex-nowrap overflow-visible">
             <TabsTrigger value="collections" className="folder-tab-white relative z-[4] text-xs sm:text-sm px-3 sm:px-4 py-2 sm:py-2">
-              📦 Collections
+              <div className="flex items-center gap-2">
+                <Package className="h-4 w-4 text-pop-green" />
+                <span>Collections</span>
+              </div>
             </TabsTrigger>
             <TabsTrigger value="processing" className="folder-tab-white relative z-[3] -ml-6 sm:ml-0 text-xs sm:text-sm px-3 sm:px-4 py-2 sm:py-2">
-              ⚙️ Processing
+              <div className="flex items-center gap-2">
+                <Settings className="h-4 w-4 text-pop-green" />
+                <span>Processing</span>
+              </div>
             </TabsTrigger>
             <TabsTrigger value="fulfillment" className="folder-tab-white relative z-[2] -ml-6 sm:ml-0 text-xs sm:text-sm px-3 sm:px-4 py-2 sm:py-2">
-              🚚 Fulfillment
+              <div className="flex items-center gap-2">
+                <Users className="h-4 w-4 text-pop-green" />
+                <span>Fulfillment</span>
+              </div>
             </TabsTrigger>
             <TabsTrigger value="inventory" className="folder-tab-white relative z-[1] -ml-6 sm:ml-0 text-xs sm:text-sm px-3 sm:px-4 py-2 sm:py-2">
-              📊 Inventory
+              <div className="flex items-center gap-2">
+                <Archive className="h-4 w-4 text-pop-green" />
+                <span>Inventory</span>
+              </div>
             </TabsTrigger>
           </TabsList>
         </div>
