@@ -15,11 +15,11 @@ export default function ProfilePage() {
           <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
             <div className="flex items-center space-x-6">
               <div className="w-24 h-24 bg-pop-green border-4 border-pop-black rounded-full flex items-center justify-center flex-shrink-0">
-                <span className="text-pop-black helvetica-bold text-4xl">A</span>
+                <span className="text-pop-black helvetica-bold text-4xl">P</span>
               </div>
               <div>
-                <h1 className="text-3xl helvetica-bold text-pop-black">Alex Martinez</h1>
-                <p className="systematic-caps text-gray-600 mt-1">San Francisco, CA • Joined March 2023</p>
+                <h1 className="text-3xl helvetica-bold text-pop-black">PlasticCraftAlex</h1>
+                <p className="systematic-caps text-gray-600 mt-1">Alex Martinez • San Francisco, CA • Joined March 2023</p>
                 <div className="flex items-center space-x-4 mt-2">
                   <Badge className="bg-pop-green/10 text-pop-green border-pop-green">
                     <Trophy className="w-3 h-3 mr-1" />

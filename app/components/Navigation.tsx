@@ -172,8 +172,8 @@ export default function Navigation() {
                 <div className="absolute top-full right-0 mt-2 w-48 bg-white border-4 border-pop-black pop-shadow-black">
                   <div className="py-2">
                     <div className="px-4 py-2 border-b-2 border-pop-black">
-                      <div className="systematic-caps text-sm font-bold text-pop-black">Alex Martinez</div>
-                      <div className="systematic-caps text-xs text-gray-600">Maker Level 3</div>
+                      <div className="systematic-caps text-sm font-bold text-pop-black">PlasticCraftAlex</div>
+                      <div className="systematic-caps text-xs text-gray-600">Level 3 Maker • 2,847 XP</div>
                     </div>
                     <Link
                       href="/profile"
@@ -310,11 +310,11 @@ export default function Navigation() {
               <div className="flex items-center justify-between">
                 <div className="flex items-center space-x-3">
                   <div className="w-10 h-10 bg-pop-green border-2 border-pop-black rounded-full flex items-center justify-center">
-                    <span className="text-pop-black helvetica-bold text-base">A</span>
+                    <span className="text-pop-black helvetica-bold text-base">P</span>
                   </div>
                   <div>
-                    <div className="systematic-caps text-sm font-bold text-pop-black">Alex Martinez</div>
-                    <div className="systematic-caps text-xs text-gray-600">Maker Level 3</div>
+                    <div className="systematic-caps text-sm font-bold text-pop-black">PlasticCraftAlex</div>
+                    <div className="systematic-caps text-xs text-gray-600">Level 3 • 2,847 XP</div>
                   </div>
                 </div>
               </div>
