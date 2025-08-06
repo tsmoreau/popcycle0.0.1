@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { Phone, Users, TrendingUp, AlertCircle, Calendar, MessageCircle, Building2, UserPlus, GitBranch, ChevronDown, ArrowRight, CheckCircle, Clock, FileText, Handshake, Download, Upload } from 'lucide-react'
+import { Phone, Users, TrendingUp, AlertCircle, Calendar, MessageCircle, Building2, UserPlus, GitBranch, ChevronDown, ArrowRight, CheckCircle, Clock, FileText, Handshake } from 'lucide-react'
 import { Button } from '../../components/ui/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../../components/ui/card'
 import { Badge } from '../../components/ui/badge'
@@ -173,7 +173,7 @@ export default function CRMPage() {
             <GitBranch className="h-5 w-5 text-pop-green" />
             Sales & Partnership Management
           </CardTitle>
-          <CardDescription>Lead conversion workflows, partner onboarding, and documentation management</CardDescription>
+          <CardDescription>Lead conversion workflows and partner onboarding processes</CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
           {/* Sales Workflow Dropdown */}
@@ -359,13 +359,13 @@ export default function CRMPage() {
             )}
           </div>
 
-          {/* Partner Documentation Dropdown */}
+          {/* Communication Hub Dropdown */}
           <div className="w-full border rounded-lg">
             <div className="px-4 py-4 cursor-pointer hover:bg-gray-50" onClick={() => setShowCommunications(!showCommunications)}>
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-3">
-                  <FileText className="h-5 w-5 text-pop-green" />
-                  <span className="font-medium">Partner Documentation</span>
+                  <MessageCircle className="h-5 w-5 text-pop-green" />
+                  <span className="font-medium">Communication Hub</span>
                 </div>
                 <ChevronDown className={`h-5 w-5 text-gray-400 transition-transform ${showCommunications ? 'rotate-180' : ''}`} />
               </div>
@@ -383,8 +383,8 @@ export default function CRMPage() {
                       Send Email Campaign
                     </Button>
                     <Button variant="outline" className="justify-start">
-                      <Upload className="h-4 w-4 mr-2" />
-                      Upload Document
+                      <TrendingUp className="h-4 w-4 mr-2" />
+                      Generate Impact Report
                     </Button>
                     <Button variant="outline" className="justify-start">
                       <Users className="h-4 w-4 mr-2" />
@@ -393,57 +393,30 @@ export default function CRMPage() {
                   </div>
                 </div>
                 
-                {/* Partner Documents */}
+                {/* Recent Communications */}
                 <div className="mt-4 space-y-2">
-                  <h4 className="font-medium text-sm">Partner Documents</h4>
+                  <h4 className="font-medium text-sm">Recent Communications</h4>
                   <div className="space-y-2">
                     <div className="flex items-center justify-between p-3 bg-white rounded-lg border">
                       <div>
-                        <span className="font-medium text-sm">TechCorp - Signed Contract</span>
-                        <p className="text-xs text-gray-600">Contract_TechCorp_2024.pdf • 2.4 MB</p>
+                        <span className="font-medium text-sm">Email Campaign: Q1 Impact Report</span>
+                        <p className="text-xs text-gray-600">Sent to 42 partners • 89% open rate</p>
                       </div>
-                      <div className="flex gap-2">
-                        <Badge className="bg-pop-green text-white">Active</Badge>
-                        <Button size="sm" variant="outline">
-                          <Download className="h-3 w-3" />
-                        </Button>
-                      </div>
+                      <Badge className="bg-pop-green text-white">Delivered</Badge>
                     </div>
                     <div className="flex items-center justify-between p-3 bg-white rounded-lg border">
                       <div>
-                        <span className="font-medium text-sm">Metro Facilities - Initial Waste Assessment</span>
-                        <p className="text-xs text-gray-600">Waste_Assessment_Metro_Jan2024.pdf • 1.8 MB</p>
+                        <span className="font-medium text-sm">Meeting: TechCorp Renewal</span>
+                        <p className="text-xs text-gray-600">Scheduled for tomorrow 2:00 PM</p>
                       </div>
-                      <div className="flex gap-2">
-                        <Badge className="bg-pop-blue text-white">Complete</Badge>
-                        <Button size="sm" variant="outline">
-                          <Download className="h-3 w-3" />
-                        </Button>
-                      </div>
+                      <Badge className="bg-pop-blue text-white">Upcoming</Badge>
                     </div>
                     <div className="flex items-center justify-between p-3 bg-white rounded-lg border">
                       <div>
-                        <span className="font-medium text-sm">EcoSystems - Training Documentation</span>
-                        <p className="text-xs text-gray-600">Training_Manual_EcoSystems.pdf • 3.2 MB</p>
+                        <span className="font-medium text-sm">Follow-up: Metro Facilities</span>
+                        <p className="text-xs text-gray-600">Call scheduled for Friday</p>
                       </div>
-                      <div className="flex gap-2">
-                        <Badge className="bg-orange-500 text-white">In Review</Badge>
-                        <Button size="sm" variant="outline">
-                          <Download className="h-3 w-3" />
-                        </Button>
-                      </div>
-                    </div>
-                    <div className="flex items-center justify-between p-3 bg-white rounded-lg border">
-                      <div>
-                        <span className="font-medium text-sm">Urban Dynamics - Site Layout Plans</span>
-                        <p className="text-xs text-gray-600">Site_Plans_Urban_Dynamics.dwg • 5.1 MB</p>
-                      </div>
-                      <div className="flex gap-2">
-                        <Badge className="bg-pop-green text-white">Approved</Badge>
-                        <Button size="sm" variant="outline">
-                          <Download className="h-3 w-3" />
-                        </Button>
-                      </div>
+                      <Badge className="bg-orange-500 text-white">Pending</Badge>
                     </div>
                   </div>
                 </div>
