@@ -94,107 +94,111 @@
   border-color: hsl(var(--pop-black)) !important;
 }
 
-/* Folder Tab Styles - Pseudo-element border solution */
+/* Folder Tab Styles */
 .folder-tab-green,
 .folder-tab-blue,
 .folder-tab-red,
 .folder-tab-black {
-  position: relative !important;
-  background: white !important;
-  color: #374151 !important;
-  border: none !important;
-  border-radius: 0 !important;
-  clip-path: polygon(10px 0%, calc(100% - 10px) 0%, 100% 100%, 0% 100%) !important;
+  position: relative;
+  background-color: #f9fafb;
+  color: #374151;
+  border-top: 2px solid #d1d5db;
+  border-left: 2px solid #d1d5db;
+  border-right: 2px solid #d1d5db;
+  border-bottom: none;
+  border-radius: 8px 8px 0 0;
+  padding-left: 10px !important;
+  padding-right: 10px !important;
 }
 
-/* Top border */
 .folder-tab-green::before,
 .folder-tab-blue::before,
 .folder-tab-red::before,
 .folder-tab-black::before {
-  content: '' !important;
-  position: absolute !important;
-  top: 0 !important;
-  left: 10px !important;
-  right: 10px !important;
-  height: 2px !important;
-  background: #d1d5db !important;
-  z-index: 1 !important;
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 8px;
+  height: 100%;
+  background: linear-gradient(135deg, transparent 50%, #d1d5db 50%, #d1d5db 51%, transparent 52%);
+  z-index: 1;
 }
 
-/* Left angled border */
 .folder-tab-green::after,
 .folder-tab-blue::after,
 .folder-tab-red::after,
 .folder-tab-black::after {
-  content: '' !important;
-  position: absolute !important;
-  top: 0 !important;
-  left: 0 !important;
-  width: 2px !important;
-  height: 100% !important;
-  background: linear-gradient(to bottom right, #d1d5db 0%, #d1d5db 25%, transparent 25%) !important;
-  transform: skewX(-10deg) !important;
-  transform-origin: top left !important;
-  z-index: 1 !important;
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 8px;
+  height: 100%;
+  background: linear-gradient(45deg, transparent 50%, #d1d5db 50%, #d1d5db 51%, transparent 52%);
+  z-index: 1;
 }
 
 .folder-tab-green[data-state="active"] {
   background-color: hsl(var(--pop-green)) !important;
   color: white !important;
-  margin-bottom: -2px !important;
-  z-index: 10 !important;
+  border-color: hsl(var(--pop-green)) !important;
+  margin-bottom: -2px;
+  z-index: 10;
 }
 
 .folder-tab-green[data-state="active"]::before {
-  background: hsl(var(--pop-green)) !important;
+  background: linear-gradient(135deg, transparent 50%, hsl(var(--pop-green)) 50%, hsl(var(--pop-green)) 51%, transparent 52%);
 }
 
 .folder-tab-green[data-state="active"]::after {
-  background: linear-gradient(to bottom right, hsl(var(--pop-green)) 0%, hsl(var(--pop-green)) 25%, transparent 25%) !important;
+  background: linear-gradient(45deg, transparent 50%, hsl(var(--pop-green)) 50%, hsl(var(--pop-green)) 51%, transparent 52%);
 }
 
 .folder-tab-blue[data-state="active"] {
   background-color: hsl(var(--pop-blue)) !important;
   color: white !important;
-  margin-bottom: -2px !important;
-  z-index: 10 !important;
+  border-color: hsl(var(--pop-blue)) !important;
+  margin-bottom: -2px;
+  z-index: 10;
 }
 
 .folder-tab-blue[data-state="active"]::before {
-  background: hsl(var(--pop-blue)) !important;
+  background: linear-gradient(135deg, transparent 50%, hsl(var(--pop-blue)) 50%, hsl(var(--pop-blue)) 51%, transparent 52%);
 }
 
 .folder-tab-blue[data-state="active"]::after {
-  background: linear-gradient(to bottom right, hsl(var(--pop-blue)) 0%, hsl(var(--pop-blue)) 25%, transparent 25%) !important;
+  background: linear-gradient(45deg, transparent 50%, hsl(var(--pop-blue)) 50%, hsl(var(--pop-blue)) 51%, transparent 52%);
 }
 
 .folder-tab-red[data-state="active"] {
   background-color: hsl(var(--pop-red)) !important;
   color: white !important;
-  margin-bottom: -2px !important;
-  z-index: 10 !important;
+  border-color: hsl(var(--pop-red)) !important;
+  margin-bottom: -2px;
+  z-index: 10;
 }
 
 .folder-tab-red[data-state="active"]::before {
-  background: hsl(var(--pop-red)) !important;
+  background: linear-gradient(135deg, transparent 50%, hsl(var(--pop-red)) 50%, hsl(var(--pop-red)) 51%, transparent 52%);
 }
 
 .folder-tab-red[data-state="active"]::after {
-  background: linear-gradient(to bottom right, hsl(var(--pop-red)) 0%, hsl(var(--pop-red)) 25%, transparent 25%) !important;
+  background: linear-gradient(45deg, transparent 50%, hsl(var(--pop-red)) 50%, hsl(var(--pop-red)) 51%, transparent 52%);
 }
 
 .folder-tab-black[data-state="active"] {
   background-color: hsl(var(--pop-black)) !important;
   color: white !important;
-  margin-bottom: -2px !important;
-  z-index: 10 !important;
+  border-color: hsl(var(--pop-black)) !important;
+  margin-bottom: -2px;
+  z-index: 10;
 }
 
 .folder-tab-black[data-state="active"]::before {
-  background: hsl(var(--pop-black)) !important;
+  background: linear-gradient(135deg, transparent 50%, hsl(var(--pop-black)) 50%, hsl(var(--pop-black)) 51%, transparent 52%);
 }
 
 .folder-tab-black[data-state="active"]::after {
-  background: linear-gradient(to bottom right, hsl(var(--pop-black)) 0%, hsl(var(--pop-black)) 25%, transparent 25%) !important;
+  background: linear-gradient(45deg, transparent 50%, hsl(var(--pop-black)) 50%, hsl(var(--pop-black)) 51%, transparent 52%);
 }
