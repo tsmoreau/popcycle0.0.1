@@ -181,15 +181,29 @@ export default function AdminPage() {
         </AccordionItem>
       </Accordion>
 
-      {/* Users Table */}
-      <DataTable
-        title="User Management"
-        description="Manage user roles, permissions, and partner affiliations"
-        icon={<Users className="h-5 w-5 text-pop-green" />}
-        data={usersData}
-        columns={userColumns}
-        renderModal={renderUserModal}
-      />
+      {/* User Management - Accordion */}
+      <Accordion type="single" collapsible className="w-full">
+        <AccordionItem value="user-management" className="border rounded-lg px-4">
+          <AccordionTrigger className="hover:no-underline">
+            <div className="flex items-center gap-3">
+              <Users className="h-5 w-5 text-pop-green" />
+              <div className="text-left">
+                <h3 className="text-lg font-semibold text-pop-black">User Management</h3>
+                <p className="text-sm text-gray-600">Manage user roles, permissions, and partner affiliations</p>
+              </div>
+            </div>
+          </AccordionTrigger>
+          <AccordionContent>
+            <div className="pt-2 pb-4">
+              <DataTable
+                data={usersData}
+                columns={userColumns}
+                renderModal={renderUserModal}
+              />
+            </div>
+          </AccordionContent>
+        </AccordionItem>
+      </Accordion>
 
       {/* System Administration Section */}
       <Card>
