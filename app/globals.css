@@ -100,12 +100,11 @@
 .folder-tab-red,
 .folder-tab-black {
   position: relative;
+  background-color: #f9fafb;
+  color: #374151;
   border: 2px solid #d1d5db;
   border-bottom: none;
   border-radius: 8px 8px 0 0;
-  background-color: #f9fafb;
-  color: #374151;
-  clip-path: polygon(10px 0%, calc(100% - 10px) 0%, 100% 100%, 0% 100%);
 }
 
 .folder-tab-green[data-state="active"] {
