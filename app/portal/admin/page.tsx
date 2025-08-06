@@ -27,6 +27,13 @@ interface Station {
 }
 
 export default function AdminPage() {
+  const [showOverview, setShowOverview] = useState(false)
+  const [showProductionStations, setShowProductionStations] = useState(false)
+  const [showQRSettings, setShowQRSettings] = useState(false)
+  const [showIntegrations, setShowIntegrations] = useState(false)
+  const [showBackupRecovery, setShowBackupRecovery] = useState(false)
+  const [showAuditTrail, setShowAuditTrail] = useState(false)
+
   // Sample user data
   const usersData: User[] = [
     { id: 'U-001', name: 'Sarah Chen', email: 'sarah@popcycle.io', role: 'Admin', lastActive: '2 min ago', status: 'Active' },
@@ -100,126 +107,116 @@ export default function AdminPage() {
         <h2 className="text-3xl font-bold text-pop-black">Admin Dashboard</h2>
       </div>
 
-      {/* Admin Dashboard - All Sections in One Accordion */}
+      {/* Admin Overview - Mobile-Ready Collapsible */}
+      <Accordion type="single" collapsible className="w-full">
+        <AccordionItem value="admin-overview" className="border rounded-lg px-4">
+          <AccordionTrigger className="hover:no-underline">
+            <div className="flex items-center gap-3">
+              <Shield className="h-5 w-5 text-pop-green" />
+              <div className="text-left">
+                <h3 className="text-lg font-semibold text-pop-black">Admin Overview</h3>
+              </div>
+            </div>
+          </AccordionTrigger>
+          <AccordionContent>
+            {/* Mobile-First Grid Layout */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 pt-2 pb-4">
+              {/* Total Users */}
+              <div className="bg-gray-50 border border-gray-200 rounded-lg p-4">
+                <div className="flex items-center justify-between mb-2">
+                  <Users className="h-5 w-5 text-gray-600" />
+                  <span className="text-xs font-medium text-gray-500 uppercase tracking-wide">Users</span>
+                </div>
+                <div className="text-2xl font-bold text-pop-black mb-1">2,847</div>
+                <div className="text-sm text-gray-600 mb-2">Total Users</div>
+                <div className="flex gap-2 text-xs">
+                  <span className="bg-gray-100 text-gray-700 px-2 py-1 rounded">2,793 Active</span>
+                  <span className="bg-gray-100 text-gray-700 px-2 py-1 rounded">54 Inactive</span>
+                </div>
+              </div>
+
+              {/* Active Staff */}
+              <div className="bg-gray-50 border border-gray-200 rounded-lg p-4">
+                <div className="flex items-center justify-between mb-2">
+                  <Settings className="h-5 w-5 text-gray-600" />
+                  <span className="text-xs font-medium text-gray-500 uppercase tracking-wide">Staff</span>
+                </div>
+                <div className="text-2xl font-bold text-pop-black mb-1">12</div>
+                <div className="text-sm text-gray-600 mb-2">Active Staff</div>
+                <div className="flex gap-2 text-xs">
+                  <span className="bg-gray-100 text-gray-700 px-2 py-1 rounded">8 Operations</span>
+                  <span className="bg-gray-100 text-gray-700 px-2 py-1 rounded">4 CRM</span>
+                </div>
+              </div>
+
+              {/* Partner Access */}
+              <div className="bg-gray-50 border border-gray-200 rounded-lg p-4">
+                <div className="flex items-center justify-between mb-2">
+                  <Users className="h-5 w-5 text-gray-600" />
+                  <span className="text-xs font-medium text-gray-500 uppercase tracking-wide">Partners</span>
+                </div>
+                <div className="text-2xl font-bold text-pop-black mb-1">54</div>
+                <div className="text-sm text-gray-600 mb-2">Partner Access</div>
+                <div className="flex gap-2 text-xs">
+                  <span className="bg-gray-100 text-gray-700 px-2 py-1 rounded">18 Orgs</span>
+                  <span className="bg-gray-100 text-gray-700 px-2 py-1 rounded">36 Affiliates</span>
+                </div>
+              </div>
+
+              {/* System Health */}
+              <div className="bg-gray-50 border border-gray-200 rounded-lg p-4">
+                <div className="flex items-center justify-between mb-2">
+                  <Zap className="h-5 w-5 text-gray-600" />
+                  <span className="text-xs font-medium text-gray-500 uppercase tracking-wide">System</span>
+                </div>
+                <div className="text-2xl font-bold text-pop-black mb-1">99.9%</div>
+                <div className="text-sm text-gray-600 mb-2">System Health</div>
+                <div className="flex gap-2 text-xs">
+                  <span className="bg-gray-100 text-gray-700 px-2 py-1 rounded">All Services</span>
+                  <span className="bg-gray-100 text-gray-700 px-2 py-1 rounded">0 Issues</span>
+                </div>
+              </div>
+            </div>
+          </AccordionContent>
+        </AccordionItem>
+      </Accordion>
+
+      {/* Users Table */}
+      <DataTable
+        title="User Management"
+        description="Manage user roles, permissions, and partner affiliations"
+        icon={<Users className="h-5 w-5 text-pop-green" />}
+        data={usersData}
+        columns={userColumns}
+        renderModal={renderUserModal}
+      />
+
+      {/* System Administration Section */}
       <Card>
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
-            <Shield className="h-5 w-5 text-pop-green" />
-            Admin Dashboard
+            <Cog className="h-5 w-5 text-pop-green" />
+            System Administration
           </CardTitle>
-          <CardDescription>System overview and administration tools</CardDescription>
+          <CardDescription>Core system configuration and settings</CardDescription>
         </CardHeader>
-        <CardContent>
-          <Accordion type="single" collapsible className="w-full">
-            {/* Admin Overview */}
-            <AccordionItem value="admin-overview">
-              <AccordionTrigger className="hover:no-underline">
-                <div className="flex items-center gap-3">
-                  <Shield className="h-5 w-5 text-pop-green" />
-                  <div className="text-left">
-                    <span className="font-medium">Admin Overview</span>
-                  </div>
-                </div>
-              </AccordionTrigger>
-              <AccordionContent>
-                {/* Mobile-First Grid Layout */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 pt-2 pb-4">
-                  {/* Total Users */}
-                  <div className="bg-gray-50 border border-gray-200 rounded-lg p-4">
-                    <div className="flex items-center justify-between mb-2">
-                      <Users className="h-5 w-5 text-gray-600" />
-                      <span className="text-xs font-medium text-gray-500 uppercase tracking-wide">Users</span>
-                    </div>
-                    <div className="text-2xl font-bold text-pop-black mb-1">2,847</div>
-                    <div className="text-sm text-gray-600 mb-2">Total Users</div>
-                    <div className="flex gap-2 text-xs">
-                      <span className="bg-gray-100 text-gray-700 px-2 py-1 rounded">2,793 Active</span>
-                      <span className="bg-gray-100 text-gray-700 px-2 py-1 rounded">54 Inactive</span>
-                    </div>
-                  </div>
-
-                  {/* Active Staff */}
-                  <div className="bg-gray-50 border border-gray-200 rounded-lg p-4">
-                    <div className="flex items-center justify-between mb-2">
-                      <Settings className="h-5 w-5 text-gray-600" />
-                      <span className="text-xs font-medium text-gray-500 uppercase tracking-wide">Staff</span>
-                    </div>
-                    <div className="text-2xl font-bold text-pop-black mb-1">12</div>
-                    <div className="text-sm text-gray-600 mb-2">Active Staff</div>
-                    <div className="flex gap-2 text-xs">
-                      <span className="bg-gray-100 text-gray-700 px-2 py-1 rounded">8 Operations</span>
-                      <span className="bg-gray-100 text-gray-700 px-2 py-1 rounded">4 CRM</span>
-                    </div>
-                  </div>
-
-                  {/* Partner Access */}
-                  <div className="bg-gray-50 border border-gray-200 rounded-lg p-4">
-                    <div className="flex items-center justify-between mb-2">
-                      <Users className="h-5 w-5 text-gray-600" />
-                      <span className="text-xs font-medium text-gray-500 uppercase tracking-wide">Partners</span>
-                    </div>
-                    <div className="text-2xl font-bold text-pop-black mb-1">54</div>
-                    <div className="text-sm text-gray-600 mb-2">Partner Access</div>
-                    <div className="flex gap-2 text-xs">
-                      <span className="bg-gray-100 text-gray-700 px-2 py-1 rounded">18 Orgs</span>
-                      <span className="bg-gray-100 text-gray-700 px-2 py-1 rounded">36 Affiliates</span>
-                    </div>
-                  </div>
-
-                  {/* System Health */}
-                  <div className="bg-gray-50 border border-gray-200 rounded-lg p-4">
-                    <div className="flex items-center justify-between mb-2">
-                      <Zap className="h-5 w-5 text-gray-600" />
-                      <span className="text-xs font-medium text-gray-500 uppercase tracking-wide">System</span>
-                    </div>
-                    <div className="text-2xl font-bold text-pop-black mb-1">99.9%</div>
-                    <div className="text-sm text-gray-600 mb-2">System Health</div>
-                    <div className="flex gap-2 text-xs">
-                      <span className="bg-gray-100 text-gray-700 px-2 py-1 rounded">All Services</span>
-                      <span className="bg-gray-100 text-gray-700 px-2 py-1 rounded">0 Issues</span>
-                    </div>
-                  </div>
-                </div>
-              </AccordionContent>
-            </AccordionItem>
-
-            {/* User Management */}
-            <AccordionItem value="user-management">
-              <AccordionTrigger className="hover:no-underline">
-                <div className="flex items-center gap-3">
-                  <Users className="h-5 w-5 text-pop-green" />
-                  <div className="text-left">
-                    <span className="font-medium">User Management</span>
-                  </div>
-                </div>
-              </AccordionTrigger>
-              <AccordionContent>
-                <div className="pt-2">
-                  <DataTable
-                    title=""
-                    description="Manage user roles, permissions, and partner affiliations"
-                    data={usersData}
-                    columns={userColumns}
-                    renderModal={renderUserModal}
-                  />
-                </div>
-              </AccordionContent>
-            </AccordionItem>
-
-            {/* Production Stations */}
-            <AccordionItem value="production-stations">
-              <AccordionTrigger className="hover:no-underline">
+        <CardContent className="space-y-4">
+          {/* Production Stations Dropdown */}
+          <div className="w-full border rounded-lg">
+            <div className="px-4 py-4 cursor-pointer hover:bg-gray-50" onClick={() => setShowProductionStations(!showProductionStations)}>
+              <div className="flex items-center justify-between">
                 <div className="flex items-center gap-3">
                   <Database className="h-5 w-5 text-pop-green" />
-                  <div className="text-left">
-                    <span className="font-medium">Production Stations</span>
-                  </div>
+                  <span className="font-medium">Production Stations</span>
                 </div>
-              </AccordionTrigger>
-              <AccordionContent>
-                <div className="space-y-2 pt-2">
+                <ChevronDown className={`h-5 w-5 text-gray-400 transition-transform ${showProductionStations ? 'rotate-180' : ''}`} />
+              </div>
+            </div>
+            {showProductionStations && (
+              <div className="px-4 pb-4 border-t bg-gray-50">
+                <div className="space-y-2 mt-4">
                   {stationsData.map((station) => (
-                    <div key={station.id} className="flex items-center justify-between p-3 bg-gray-50 rounded-lg border">
+                    <div key={station.id} className="flex items-center justify-between p-3 bg-white rounded-lg border">
                       <div>
                         <span className="font-medium text-sm">{station.name}: {station.type}</span>
                         <p className="text-xs text-gray-600">{station.description}</p>
@@ -233,175 +230,181 @@ export default function AdminPage() {
                       </Badge>
                     </div>
                   ))}
-                  <div className="mt-4 space-y-2">
-                    <Button variant="outline" className="w-full">Add New Station</Button>
-                    <Button variant="outline" className="w-full">Configure Access Permissions</Button>
-                  </div>
                 </div>
-              </AccordionContent>
-            </AccordionItem>
+                <div className="mt-4 space-y-2">
+                  <Button variant="outline" className="w-full">Add New Station</Button>
+                  <Button variant="outline" className="w-full">Configure Access Permissions</Button>
+                </div>
+              </div>
+            )}
+          </div>
 
-            {/* QR Code Settings */}
-            <AccordionItem value="qr-settings">
-              <AccordionTrigger className="hover:no-underline">
+          {/* QR Code Generation Settings Dropdown */}
+          <div className="w-full border rounded-lg">
+            <div className="px-4 py-4 cursor-pointer hover:bg-gray-50" onClick={() => setShowQRSettings(!showQRSettings)}>
+              <div className="flex items-center justify-between">
                 <div className="flex items-center gap-3">
                   <QrCode className="h-5 w-5 text-pop-green" />
-                  <div className="text-left">
-                    <span className="font-medium">QR Code Generation Settings</span>
-                  </div>
+                  <span className="font-medium">QR Code Generation Settings</span>
                 </div>
-              </AccordionTrigger>
-              <AccordionContent>
-                <div className="space-y-3 pt-2">
-                  <div className="flex items-center justify-between p-3 bg-gray-50 rounded-lg border">
+                <ChevronDown className={`h-5 w-5 text-gray-400 transition-transform ${showQRSettings ? 'rotate-180' : ''}`} />
+              </div>
+            </div>
+            {showQRSettings && (
+              <div className="px-4 pb-4 border-t bg-gray-50">
+                <div className="space-y-3 mt-4">
+                  <div className="flex items-center justify-between p-3 bg-white rounded-lg border">
                     <span className="text-sm">QR Code Size</span>
-                    <select className="border rounded px-2 py-1 text-sm" defaultValue="Medium (256px)">
+                    <select className="border rounded px-2 py-1 text-sm">
                       <option>Small (128px)</option>
-                      <option>Medium (256px)</option>
+                      <option selected>Medium (256px)</option>
                       <option>Large (512px)</option>
                     </select>
                   </div>
-                  <div className="flex items-center justify-between p-3 bg-gray-50 rounded-lg border">
+                  <div className="flex items-center justify-between p-3 bg-white rounded-lg border">
                     <span className="text-sm">Error Correction Level</span>
-                    <select className="border rounded px-2 py-1 text-sm" defaultValue="Medium (15%)">
+                    <select className="border rounded px-2 py-1 text-sm">
                       <option>Low (7%)</option>
-                      <option>Medium (15%)</option>
+                      <option selected>Medium (15%)</option>
                       <option>High (25%)</option>
                     </select>
                   </div>
-                  <div className="flex items-center justify-between p-3 bg-gray-50 rounded-lg border">
+                  <div className="flex items-center justify-between p-3 bg-white rounded-lg border">
                     <span className="text-sm">Logo Embedding</span>
                     <Button size="sm" variant="outline">Upload Logo</Button>
                   </div>
-                  <Button variant="outline" className="w-full mt-4">Save QR Settings</Button>
                 </div>
-              </AccordionContent>
-            </AccordionItem>
+                <Button variant="outline" className="w-full mt-4">Save QR Settings</Button>
+              </div>
+            )}
+          </div>
 
-            {/* External Integrations */}
-            <AccordionItem value="external-integrations">
-              <AccordionTrigger className="hover:no-underline">
+          {/* External Integrations Dropdown */}
+          <div className="w-full border rounded-lg">
+            <div className="px-4 py-4 cursor-pointer hover:bg-gray-50" onClick={() => setShowIntegrations(!showIntegrations)}>
+              <div className="flex items-center justify-between">
                 <div className="flex items-center gap-3">
                   <Plug className="h-5 w-5 text-pop-green" />
-                  <div className="text-left">
-                    <span className="font-medium">External Integrations</span>
-                  </div>
+                  <span className="font-medium">External Integrations</span>
                 </div>
-              </AccordionTrigger>
-              <AccordionContent>
-                <div className="space-y-2 pt-2">
-                  <div className="flex items-center justify-between p-3 bg-gray-50 rounded-lg border">
+                <ChevronDown className={`h-5 w-5 text-gray-400 transition-transform ${showIntegrations ? 'rotate-180' : ''}`} />
+              </div>
+            </div>
+            {showIntegrations && (
+              <div className="px-4 pb-4 border-t bg-gray-50">
+                <div className="space-y-2 mt-4">
+                  <div className="flex items-center justify-between p-3 bg-white rounded-lg border">
                     <div>
                       <span className="font-medium text-sm">Google Workspace</span>
                       <p className="text-xs text-gray-600">Email automation & calendar sync</p>
                     </div>
                     <Badge className="bg-pop-green text-white">Connected</Badge>
                   </div>
-                  <div className="flex items-center justify-between p-3 bg-gray-50 rounded-lg border">
+                  <div className="flex items-center justify-between p-3 bg-white rounded-lg border">
                     <div>
                       <span className="font-medium text-sm">QuickBooks</span>
-                      <p className="text-xs text-gray-600">Financial management & invoicing</p>
+                      <p className="text-xs text-gray-600">Financial data synchronization</p>
                     </div>
                     <Badge className="bg-pop-green text-white">Connected</Badge>
                   </div>
-                  <div className="flex items-center justify-between p-3 bg-gray-50 rounded-lg border">
+                  <div className="flex items-center justify-between p-3 bg-white rounded-lg border">
                     <div>
                       <span className="font-medium text-sm">Stripe</span>
                       <p className="text-xs text-gray-600">Payment processing</p>
                     </div>
                     <Badge className="bg-pop-green text-white">Connected</Badge>
                   </div>
-                  <div className="mt-4 space-y-2">
-                    <Button variant="outline" className="w-full">Add New Integration</Button>
-                    <Button variant="outline" className="w-full">Test All Connections</Button>
-                  </div>
                 </div>
-              </AccordionContent>
-            </AccordionItem>
+                <div className="mt-4 space-y-2">
+                  <Button variant="outline" className="w-full">Configure API Keys</Button>
+                  <Button variant="outline" className="w-full">Test Connections</Button>
+                </div>
+              </div>
+            )}
+          </div>
 
-            {/* Backup & Recovery */}
-            <AccordionItem value="backup-recovery">
-              <AccordionTrigger className="hover:no-underline">
+          {/* Data Backup & Recovery Dropdown */}
+          <div className="w-full border rounded-lg">
+            <div className="px-4 py-4 cursor-pointer hover:bg-gray-50" onClick={() => setShowBackupRecovery(!showBackupRecovery)}>
+              <div className="flex items-center justify-between">
                 <div className="flex items-center gap-3">
-                  <Database className="h-5 w-5 text-pop-green" />
-                  <div className="text-left">
-                    <span className="font-medium">Backup & Recovery</span>
+                  <Shield className="h-5 w-5 text-pop-green" />
+                  <span className="font-medium">Data Backup & Recovery</span>
+                </div>
+                <ChevronDown className={`h-5 w-5 text-gray-400 transition-transform ${showBackupRecovery ? 'rotate-180' : ''}`} />
+              </div>
+            </div>
+            {showBackupRecovery && (
+              <div className="px-4 pb-4 border-t bg-gray-50">
+                <div className="space-y-3 mt-4">
+                  <div className="flex items-center justify-between p-3 bg-white rounded-lg border">
+                    <span className="text-sm">Automatic Backups</span>
+                    <Badge className="bg-pop-green text-white">Enabled</Badge>
+                  </div>
+                  <div className="flex items-center justify-between p-3 bg-white rounded-lg border">
+                    <span className="text-sm">Last Backup</span>
+                    <span className="text-sm text-gray-600">2 hours ago</span>
+                  </div>
+                  <div className="flex items-center justify-between p-3 bg-white rounded-lg border">
+                    <span className="text-sm">Backup Frequency</span>
+                    <select className="border rounded px-2 py-1 text-sm">
+                      <option>Every hour</option>
+                      <option selected>Every 6 hours</option>
+                      <option>Daily</option>
+                    </select>
                   </div>
                 </div>
-              </AccordionTrigger>
-              <AccordionContent>
-                <div className="space-y-2 pt-2">
-                  <div className="flex items-center justify-between p-3 bg-gray-50 rounded-lg border">
-                    <div>
-                      <span className="font-medium text-sm">Last Backup</span>
-                      <p className="text-xs text-gray-600">Daily automated backup completed</p>
-                    </div>
-                    <span className="text-xs text-gray-500">2:30 AM PST</span>
-                  </div>
-                  <div className="flex items-center justify-between p-3 bg-gray-50 rounded-lg border">
-                    <div>
-                      <span className="font-medium text-sm">Backup Schedule</span>
-                      <p className="text-xs text-gray-600">Every day at 2:00 AM PST</p>
-                    </div>
-                    <Badge className="bg-pop-green text-white">Active</Badge>
-                  </div>
-                  <div className="flex items-center justify-between p-3 bg-gray-50 rounded-lg border">
-                    <div>
-                      <span className="font-medium text-sm">Storage Used</span>
-                      <p className="text-xs text-gray-600">Database backups for last 30 days</p>
-                    </div>
-                    <span className="text-xs text-gray-500">4.2 GB</span>
-                  </div>
-                  <div className="mt-4 space-y-2">
-                    <Button variant="outline" className="w-full">Create Manual Backup</Button>
-                    <Button variant="outline" className="w-full">Restore from Backup</Button>
-                    <Button variant="outline" className="w-full">Configure Schedule</Button>
-                  </div>
+                <div className="mt-4 space-y-2">
+                  <Button variant="outline" className="w-full">Create Manual Backup</Button>
+                  <Button variant="outline" className="w-full">Restore from Backup</Button>
                 </div>
-              </AccordionContent>
-            </AccordionItem>
+              </div>
+            )}
+          </div>
 
-            {/* Audit Trail */}
-            <AccordionItem value="audit-trail">
-              <AccordionTrigger className="hover:no-underline">
+          {/* System Audit Trail Dropdown */}
+          <div className="w-full border rounded-lg">
+            <div className="px-4 py-4 cursor-pointer hover:bg-gray-50" onClick={() => setShowAuditTrail(!showAuditTrail)}>
+              <div className="flex items-center justify-between">
                 <div className="flex items-center gap-3">
                   <Eye className="h-5 w-5 text-pop-green" />
-                  <div className="text-left">
-                    <span className="font-medium">Audit Trail</span>
-                  </div>
+                  <span className="font-medium">System Audit Trail</span>
                 </div>
-              </AccordionTrigger>
-              <AccordionContent>
-                <div className="space-y-2 pt-2">
-                  <div className="p-3 bg-gray-50 rounded-lg border">
+                <ChevronDown className={`h-5 w-5 text-gray-400 transition-transform ${showAuditTrail ? 'rotate-180' : ''}`} />
+              </div>
+            </div>
+            {showAuditTrail && (
+              <div className="px-4 pb-4 border-t bg-gray-50">
+                <div className="space-y-2 mt-4">
+                  <div className="p-3 bg-white rounded-lg border">
                     <div className="flex justify-between items-start mb-2">
                       <span className="text-sm font-medium">User Login</span>
                       <span className="text-xs text-gray-500">2 min ago</span>
                     </div>
                     <p className="text-xs text-gray-600">Sarah Chen logged into admin portal</p>
                   </div>
-                  <div className="p-3 bg-gray-50 rounded-lg border">
+                  <div className="p-3 bg-white rounded-lg border">
                     <div className="flex justify-between items-start mb-2">
                       <span className="text-sm font-medium">System Configuration</span>
                       <span className="text-xs text-gray-500">1 hour ago</span>
                     </div>
                     <p className="text-xs text-gray-600">QR code settings updated by Mike Rodriguez</p>
                   </div>
-                  <div className="p-3 bg-gray-50 rounded-lg border">
+                  <div className="p-3 bg-white rounded-lg border">
                     <div className="flex justify-between items-start mb-2">
                       <span className="text-sm font-medium">Data Export</span>
                       <span className="text-xs text-gray-500">3 hours ago</span>
                     </div>
                     <p className="text-xs text-gray-600">User data exported for partner report</p>
                   </div>
-                  <div className="mt-4 space-y-2">
-                    <Button variant="outline" className="w-full">Export Full Audit Log</Button>
-                    <Button variant="outline" className="w-full">Configure Audit Settings</Button>
-                  </div>
                 </div>
-              </AccordionContent>
-            </AccordionItem>
-          </Accordion>
+                <div className="mt-4 space-y-2">
+                  <Button variant="outline" className="w-full">Export Full Audit Log</Button>
+                  <Button variant="outline" className="w-full">Configure Audit Settings</Button>
+                </div>
+              </div>
+            )}
+          </div>
         </CardContent>
       </Card>
     </div>
