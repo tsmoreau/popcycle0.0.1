@@ -56,30 +56,18 @@ export default function ProfilePage() {
               <CardHeader>
                 <CardTitle className="systematic-caps text-pop-black">Contact Info</CardTitle>
               </CardHeader>
-              <CardContent className="space-y-5">
-                <div className="flex items-center space-x-4">
-                  <div className="flex-shrink-0 w-8 h-8 bg-pop-green/10 rounded-full flex items-center justify-center">
-                    <Mail className="h-4 w-4 text-pop-green" />
-                  </div>
-                  <div className="flex-1 min-w-0">
-                    <span className="text-sm font-medium break-all">alex.martinez@popcycle.io</span>
-                  </div>
+              <CardContent className="space-y-4">
+                <div className="flex items-center space-x-3">
+                  <Mail className="h-4 w-4 text-gray-400 flex-shrink-0" />
+                  <span className="text-sm">alex.martinez@popcycle.io</span>
                 </div>
-                <div className="flex items-center space-x-4">
-                  <div className="flex-shrink-0 w-8 h-8 bg-pop-blue/10 rounded-full flex items-center justify-center">
-                    <Phone className="h-4 w-4 text-pop-blue" />
-                  </div>
-                  <div className="flex-1">
-                    <span className="text-sm font-medium">(555) 123-4567</span>
-                  </div>
+                <div className="flex items-center space-x-3">
+                  <Phone className="h-4 w-4 text-gray-400 flex-shrink-0" />
+                  <span className="text-sm">(555) 123-4567</span>
                 </div>
-                <div className="flex items-center space-x-4">
-                  <div className="flex-shrink-0 w-8 h-8 bg-pop-red/10 rounded-full flex items-center justify-center">
-                    <MapPin className="h-4 w-4 text-pop-red" />
-                  </div>
-                  <div className="flex-1">
-                    <span className="text-sm font-medium">San Francisco, CA</span>
-                  </div>
+                <div className="flex items-center space-x-3">
+                  <MapPin className="h-4 w-4 text-gray-400 flex-shrink-0" />
+                  <span className="text-sm">San Francisco, CA</span>
                 </div>
               </CardContent>
             </Card>
@@ -89,24 +77,22 @@ export default function ProfilePage() {
               <CardHeader>
                 <CardTitle className="systematic-caps text-pop-black">Maker Stats</CardTitle>
               </CardHeader>
-              <CardContent className="space-y-6">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div className="text-center p-4 bg-pop-green/5 border-2 border-pop-green/20 rounded-lg">
-                    <div className="helvetica-bold text-3xl text-pop-green mb-1">47</div>
-                    <div className="systematic-caps text-xs text-gray-600">Projects Completed</div>
-                  </div>
-                  <div className="text-center p-4 bg-pop-blue/5 border-2 border-pop-blue/20 rounded-lg">
-                    <div className="helvetica-bold text-3xl text-pop-blue mb-1">143</div>
-                    <div className="systematic-caps text-xs text-gray-600">Plastic Transformed (lbs)</div>
-                  </div>
-                  <div className="text-center p-4 bg-pop-red/5 border-2 border-pop-red/20 rounded-lg">
-                    <div className="helvetica-bold text-3xl text-pop-red mb-1">12</div>
-                    <div className="systematic-caps text-xs text-gray-600">Skills Earned</div>
-                  </div>
-                  <div className="text-center p-4 bg-orange-50 border-2 border-orange-200 rounded-lg">
-                    <div className="helvetica-bold text-3xl text-orange-600 mb-1">8</div>
-                    <div className="systematic-caps text-xs text-gray-600">Workshops Led</div>
-                  </div>
+              <CardContent className="space-y-4">
+                <div className="flex justify-between items-center">
+                  <span className="systematic-caps text-sm text-gray-600">Projects Completed</span>
+                  <span className="helvetica-bold text-xl text-pop-green">47</span>
+                </div>
+                <div className="flex justify-between items-center">
+                  <span className="systematic-caps text-sm text-gray-600">Plastic Transformed</span>
+                  <span className="helvetica-bold text-xl text-pop-blue">143 lbs</span>
+                </div>
+                <div className="flex justify-between items-center">
+                  <span className="systematic-caps text-sm text-gray-600">Skills Earned</span>
+                  <span className="helvetica-bold text-xl text-pop-red">12</span>
+                </div>
+                <div className="flex justify-between items-center">
+                  <span className="systematic-caps text-sm text-gray-600">Workshops Led</span>
+                  <span className="helvetica-bold text-xl text-orange-600">8</span>
                 </div>
               </CardContent>
             </Card>
@@ -120,26 +106,15 @@ export default function ProfilePage() {
                 </CardTitle>
               </CardHeader>
               <CardContent>
-                <div className="space-y-4">
-                  <div className="text-center">
-                    <div className="flex items-center justify-center space-x-2 mb-2">
-                      <div className="w-8 h-8 bg-pop-green/20 border-2 border-pop-green rounded-full flex items-center justify-center">
-                        <span className="helvetica-bold text-sm text-pop-green">3</span>
-                      </div>
-                      <div className="flex-1 h-2 bg-gray-200 rounded-full border border-gray-300">
-                        <div className="bg-pop-green h-full rounded-full" style={{width: '57%'}}></div>
-                      </div>
-                      <div className="w-8 h-8 bg-gray-100 border-2 border-gray-300 rounded-full flex items-center justify-center">
-                        <span className="helvetica-bold text-sm text-gray-400">4</span>
-                      </div>
-                    </div>
-                    <div className="systematic-caps text-sm font-medium text-pop-black">Level 3 → 4</div>
-                    <div className="systematic-caps text-xs text-gray-600 mt-1">2,847 / 5,000 XP</div>
+                <div className="space-y-3">
+                  <div className="flex justify-between items-center">
+                    <span className="systematic-caps text-sm">Level 3 → 4</span>
+                    <span className="systematic-caps text-sm text-gray-600">2,847 / 5,000 XP</span>
                   </div>
-                  <div className="bg-gray-50 border border-gray-200 rounded-lg p-3 text-center">
-                    <div className="systematic-caps text-xs text-gray-600">XP to next level</div>
-                    <div className="helvetica-bold text-lg text-pop-green">2,153</div>
+                  <div className="w-full bg-gray-200 rounded-full h-3 border-2 border-pop-black">
+                    <div className="bg-pop-green h-full rounded-full border-r-2 border-pop-black" style={{width: '57%'}}></div>
                   </div>
+                  <p className="systematic-caps text-xs text-gray-600">2,153 XP to next level</p>
                 </div>
               </CardContent>
             </Card>
