@@ -63,7 +63,7 @@ export default function PortalLayout({
               {mobileMenuOpen ? <X className="h-4 w-4" /> : <Menu className="h-4 w-4" />}
             </Button>
             
-            <h1 className="text-sm md:text-2xl font-bold text-pop-black">PopCycle Portal</h1>
+            <h1 className="text-xl md:text-2xl font-bold text-pop-black">PopCycle Portal</h1>
             <Badge variant="outline" className="hidden sm:flex bg-pop-green/10 text-pop-green border-pop-green">
               Admin Access
             </Badge>
