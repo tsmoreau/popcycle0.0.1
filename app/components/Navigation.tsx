@@ -165,7 +165,7 @@ export default function Navigation() {
                 onClick={() => setUserMenuOpen(!userMenuOpen)}
                 className="w-10 h-10 bg-pop-green border-2 border-pop-black rounded-full flex items-center justify-center hover:bg-pop-black hover:text-pop-green transition-colors"
               >
-                <span className="text-pop-black helvetica-bold text-sm">A</span>
+                <span className="text-pop-black helvetica-bold text-sm">P</span>
               </button>
 
               {userMenuOpen && (
