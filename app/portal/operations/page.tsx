@@ -360,17 +360,17 @@ export default function OperationsPage() {
                 </div>
               </div>
 
-              {/* Station Status */}
+              {/* Active Orders */}
               <div className="bg-gray-50 border border-gray-200 rounded-lg p-4">
                 <div className="flex items-center justify-between mb-2">
-                  <Settings className="h-5 w-5 text-gray-600" />
-                  <span className="text-xs font-medium text-gray-500 uppercase tracking-wide">Stations</span>
+                  <Users className="h-5 w-5 text-gray-600" />
+                  <span className="text-xs font-medium text-gray-500 uppercase tracking-wide">Orders</span>
                 </div>
-                <div className="text-2xl font-bold text-pop-black mb-1">2/2</div>
-                <div className="text-sm text-gray-600 mb-2">Online</div>
+                <div className="text-2xl font-bold text-pop-black mb-1">7</div>
+                <div className="text-sm text-gray-600 mb-2">Active Orders</div>
                 <div className="flex gap-2 text-xs">
-                  <span className="bg-gray-100 text-gray-700 px-2 py-1 rounded">Weigh/Photo</span>
-                  <span className="bg-gray-100 text-gray-700 px-2 py-1 rounded">Laser</span>
+                  <span className="bg-gray-100 text-gray-700 px-2 py-1 rounded">3 Production</span>
+                  <span className="bg-gray-100 text-gray-700 px-2 py-1 rounded">4 Shipping</span>
                 </div>
               </div>
             </div>
