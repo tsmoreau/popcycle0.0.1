@@ -29,12 +29,12 @@ export default function PortalLayout({
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
 
   const sidebarItems = [
-    { id: 'profile', label: 'Profile', icon: User, color: 'text-purple-600', href: '/portal/profile' },
-    { id: 'admin', label: 'Admin', icon: Settings, color: 'text-pop-black', href: '/portal/admin' },
-    { id: 'operations', label: 'Operations', icon: Truck, color: 'text-pop-green', href: '/portal/operations' },
-    { id: 'crm', label: 'CRM', icon: Phone, color: 'text-pop-blue', href: '/portal/crm' },
-    { id: 'partner', label: 'Partner', icon: Building2, color: 'text-pop-red', href: '/portal/partner' },
-    { id: 'financial', label: 'Finance', icon: DollarSign, color: 'text-orange-600', href: '/portal/financial' },
+    { id: 'profile', label: 'Profile', icon: User, color: 'text-purple-600', activeColor: 'text-purple-600', activeBg: 'bg-purple-600/10', activeBorder: 'border-purple-600/20', href: '/portal/profile' },
+    { id: 'admin', label: 'Admin', icon: Settings, color: 'text-pop-black', activeColor: 'text-pop-black', activeBg: 'bg-pop-black/10', activeBorder: 'border-pop-black/20', href: '/portal/admin' },
+    { id: 'operations', label: 'Operations', icon: Truck, color: 'text-pop-green', activeColor: 'text-pop-green', activeBg: 'bg-pop-green/10', activeBorder: 'border-pop-green/20', href: '/portal/operations' },
+    { id: 'crm', label: 'CRM', icon: Phone, color: 'text-pop-blue', activeColor: 'text-pop-blue', activeBg: 'bg-pop-blue/10', activeBorder: 'border-pop-blue/20', href: '/portal/crm' },
+    { id: 'partner', label: 'Partner', icon: Building2, color: 'text-pop-red', activeColor: 'text-pop-red', activeBg: 'bg-pop-red/10', activeBorder: 'border-pop-red/20', href: '/portal/partner' },
+    { id: 'financial', label: 'Finance', icon: DollarSign, color: 'text-orange-600', activeColor: 'text-orange-600', activeBg: 'bg-orange-600/10', activeBorder: 'border-orange-600/20', href: '/portal/financial' },
   ]
 
   return (
@@ -96,11 +96,11 @@ export default function PortalLayout({
                       <button
                         className={`w-full flex items-center px-4 py-3 text-left rounded-lg transition-colors ${
                           isActive
-                            ? 'bg-pop-green/10 text-pop-green border border-pop-green/20'
+                            ? `${item.activeBg} ${item.activeColor} border ${item.activeBorder}`
                             : 'text-gray-600 hover:bg-gray-50'
                         }`}
                       >
-                        <Icon className={`h-5 w-5 mr-3 ${isActive ? 'text-pop-green' : item.color}`} />
+                        <Icon className={`h-5 w-5 mr-3 ${isActive ? item.activeColor : item.color}`} />
                         <span className="font-medium">{item.label}</span>
                       </button>
                     </Link>
@@ -126,12 +126,12 @@ export default function PortalLayout({
                   <button
                     className={`w-full flex items-center ${sidebarCollapsed ? 'px-2 py-3 justify-center' : 'px-4 py-3'} text-left rounded-lg transition-colors ${
                       isActive
-                        ? 'bg-pop-green/10 text-pop-green border border-pop-green/20'
+                        ? `${item.activeBg} ${item.activeColor} border ${item.activeBorder}`
                         : 'text-gray-600 hover:bg-gray-50'
                     }`}
                     title={sidebarCollapsed ? item.label : undefined}
                   >
-                    <Icon className={`h-5 w-5 ${sidebarCollapsed ? '' : 'mr-3'} ${isActive ? 'text-pop-green' : item.color}`} />
+                    <Icon className={`h-5 w-5 ${sidebarCollapsed ? '' : 'mr-3'} ${isActive ? item.activeColor : item.color}`} />
                     {!sidebarCollapsed && <span className="font-medium">{item.label}</span>}
                   </button>
                 </Link>
