@@ -86,7 +86,7 @@ const products = [
   }
 ];
 
-const categories = ['All', 'Forever Flowers', 'Kinetic Sculptures ', 'Practical Items', 'Educational Tools'];
+const categories = ['All', 'Flora & Fauna', 'Kinetic Sculptures ', 'Vehicles & Vessels', 'Pop Bots', 'Everyday Objects'];
 
 export default function Shop() {
   return (
@@ -98,7 +98,7 @@ export default function Shop() {
             SHOP
           </h1>
           <p className="text-xl text-pop-black max-w-3xl mx-auto mb-8">
-            Toys, games, models, and more, custom cut from traceable 100% recycled plastic waste. Choose your design and a sheet blank and we'll send you a unique piece of sustainability.</p>
+            Toys, games, models, and more, custom-cut from traceable, 100% recycled waste plastic. Choose your design and a sheet blank and we'll send you a unique piece of sustainability.</p>
          
         </div>
       </div>
@@ -196,12 +196,12 @@ export default function Shop() {
           <h2 className="text-4xl helvetica-bold mb-6">
             Every Purchase Tells a Story
           </h2>
-          <p className="text-lg max-w-3xl mx-auto mb-8">
-            When you buy PopCycle products, you receive complete provenance tracking from the original corporate waste source through manufacturing to your hands. Scan the QR code to see your item's transformation journey.
+          <p className="text-lg max-w-2xl mx-auto mb-8">
+            Register the assembly of your design to complete the circular journey from waste to wonder.
           </p>
           <div className="flex justify-center items-center gap-4">
             <Calendar className="w-6 h-6" />
-            <span className="systematic-caps">Track Your Impact Over Time</span>
+            <span className="systematic-caps">Start Your Maker Profile</span>
           </div>
         </div>
       </div>

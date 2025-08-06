@@ -44,7 +44,7 @@ export default function Footer() {
                 href="/track"
                 className="block text-sm text-gray-300 hover:text-white transition-colors"
               >
-                Curriculum & Guides
+                Process Guides
               </Link>
               <Link
                 href="#"

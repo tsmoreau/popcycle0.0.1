@@ -32,11 +32,6 @@ export default function Navigation() {
       label: "Community Partnerships",
     },
     { href: "/services#corporate-esg-events", label: "Corporate Services" },
-    {
-      href: "/services#educational-kits-workshops",
-      label: "Educational Kits & Workshops",
-    },
-    { href: "/services#custom-products", label: "Custom Products" },
   ];
 
   return (
@@ -138,7 +133,7 @@ export default function Navigation() {
 
           {/* Right-aligned Login Button */}
           <div className="hidden lg:block">
-            <button className="login-button systematic-caps px-4 py-2 rounded-md transition-colors">
+            <button className="login-button systematic-caps px-10 py-1.5 rounded-md transition-colors">
               Login
             </button>
           </div>
