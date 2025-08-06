@@ -542,7 +542,7 @@ export default function OperationsPage() {
           </Card>
 
           {/* Collections Workflow Diagram */}
-          <Card className="border-0">
+          <Card>
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
                 <ArrowRight className="h-5 w-5 text-pop-green" />
