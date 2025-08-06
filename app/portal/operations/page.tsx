@@ -723,12 +723,10 @@ export default function OperationsPage() {
         onClick={() => setShowScanModal(true)}
       >
         <div className="px-6 py-4">
-          <div className="flex items-center gap-4">
-            <div className="bg-gray-600 p-3 rounded-lg">
-              <Scan className="h-6 w-6 text-white" />
-            </div>
+          <div className="flex items-center gap-3">
+            <Scan className="h-5 w-5 text-gray-600" />
             <div className="flex-1">
-              <h3 className="text-lg font-semibold text-gray-700 mb-1">Quick QR Access</h3>
+              <h3 className="text-lg font-semibold text-pop-black">Quick QR Access</h3>
               <p className="text-sm text-gray-600">Scan any bin or batch QR code for instant access</p>
             </div>
             <div className="text-gray-400">
