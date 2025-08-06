@@ -376,8 +376,6 @@ export default function OperationsPage() {
               🚚 Fulfillment
             </TabsTrigger>
           </TabsList>
-          {/* Tab base line - will be covered by content border */}
-          <div className="h-px bg-gray-400 w-full absolute bottom-0 z-0"></div>
         </div>
 
         {/* Collections Tab */}
