@@ -97,30 +97,42 @@ export default function PartnerPage() {
 
         <Card>
           <CardHeader>
-            <CardTitle>Circular Impact Report</CardTitle>
-            <CardDescription>Your contribution to the circular economy</CardDescription>
+            <CardTitle>Partner Documentation</CardTitle>
+            <CardDescription>Essential documents and agreements</CardDescription>
           </CardHeader>
           <CardContent className="space-y-3">
             <div className="space-y-3">
-              <div className="flex justify-between items-center">
-                <span className="text-sm text-gray-600">Waste Diverted from Landfill</span>
-                <span className="font-medium">847 lbs</span>
+              <div className="flex items-center justify-between p-3 bg-blue-50 rounded-lg">
+                <div>
+                  <span className="font-medium text-sm">Signed Partnership Agreement</span>
+                  <p className="text-xs text-gray-600">Executed: Jan 15, 2024</p>
+                </div>
+                <Badge className="bg-green-100 text-green-700">Active</Badge>
               </div>
-              <div className="flex justify-between items-center">
-                <span className="text-sm text-gray-600">CO₂ Emissions Prevented</span>
-                <span className="font-medium">1.2 tons</span>
+              <div className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                <div>
+                  <span className="font-medium text-sm">Initial Waste Assessment</span>
+                  <p className="text-xs text-gray-600">Baseline: 2,340 lbs/month</p>
+                </div>
+                <Badge variant="outline">Complete</Badge>
               </div>
-              <div className="flex justify-between items-center">
-                <span className="text-sm text-gray-600">Products in Community</span>
-                <span className="font-medium">156 items</span>
+              <div className="flex items-center justify-between p-3 bg-orange-50 rounded-lg">
+                <div>
+                  <span className="font-medium text-sm">Service Level Agreement</span>
+                  <p className="text-xs text-gray-600">Updated: Mar 8, 2024</p>
+                </div>
+                <Badge className="bg-orange-100 text-orange-700">Current</Badge>
               </div>
-              <div className="flex justify-between items-center">
-                <span className="text-sm text-gray-600">Makers Engaged</span>
-                <span className="font-medium">23 people</span>
+              <div className="flex items-center justify-between p-3 bg-green-50 rounded-lg">
+                <div>
+                  <span className="font-medium text-sm">Compliance Certification</span>
+                  <p className="text-xs text-gray-600">Valid through Dec 2024</p>
+                </div>
+                <Badge className="bg-green-100 text-green-700">Verified</Badge>
               </div>
             </div>
-            <Button className="w-full bg-pop-green hover:bg-pop-green/90">
-              Download Full Report
+            <Button variant="outline" className="w-full">
+              View All Documents
             </Button>
           </CardContent>
         </Card>
