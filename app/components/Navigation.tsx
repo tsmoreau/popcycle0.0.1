@@ -308,7 +308,7 @@ export default function Navigation() {
                   </div>
                   <div>
                     <div className="systematic-caps text-sm font-bold text-pop-black">PlasticCraftAlex</div>
-                    <div className="systematic-caps text-xs text-gray-600">Maker Lvl 3</div>
+                    <div className="systematic-caps text-xs font-medium text-pop-green mt-1">Maker Lvl 3</div>
                   </div>
                 </div>
               </div>
@@ -335,7 +335,7 @@ export default function Navigation() {
                 )}
                 <button
                   onClick={() => setMobileMenuOpen(false)}
-                  className="w-full flex items-center px-4 py-2 systematic-caps text-sm border-2 border-pop-black rounded-md hover:bg-pop-red hover:text-white transition-colors text-left"
+                  className="w-full flex items-center px-4 py-2 systematic-caps text-sm rounded-md hover:bg-pop-red hover:text-white transition-colors text-left"
                 >
                   <LogOut className="w-4 h-4 mr-3" />
                   Sign Out
