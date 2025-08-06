@@ -38,7 +38,7 @@ export default function PortalLayout({
   return (
     <div className="h-screen bg-gray-50">
       {/* Header - Fixed */}
-      <header className="fixed top-0 left-0 right-0 bg-white border-b border-gray-200 h-20 z-50">
+      <header className="fixed top-0 left-0 right-0 bg-white border-b border-gray-200 h-16 z-50">
         <div className="px-6 py-4 flex items-center justify-between h-full">
           <div className="flex items-center space-x-4">
             {/* Desktop sidebar toggle */}
