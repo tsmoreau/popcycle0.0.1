@@ -24,7 +24,7 @@ export default function PortalLayout({
   children: React.ReactNode
 }) {
   const pathname = usePathname()
-  const [sidebarCollapsed, setSidebarCollapsed] = useState(false)
+  const [sidebarCollapsed, setSidebarCollapsed] = useState(true)
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
 
   const sidebarItems = [
@@ -83,7 +83,7 @@ export default function PortalLayout({
       {mobileMenuOpen && (
         <div className="fixed inset-0 z-50 md:hidden">
           <div className="fixed inset-0 bg-black/20" onClick={() => setMobileMenuOpen(false)} />
-          <nav className="fixed top-20 left-0 bottom-0 w-64 bg-white border-r border-gray-200 overflow-y-auto">
+          <nav className="fixed top-16 left-0 bottom-0 w-64 bg-white border-r border-gray-200 overflow-y-auto">
             <div className="p-6">
               <div className="space-y-2">
                 {sidebarItems.map((item) => {
@@ -111,7 +111,7 @@ export default function PortalLayout({
       )}
 
       {/* Desktop Sidebar - Collapsible */}
-      <nav className={`hidden md:block fixed top-20 left-0 h-[calc(100vh-5rem)] bg-white border-r border-gray-200 overflow-y-auto z-40 transition-all duration-300 ${
+      <nav className={`hidden md:block fixed top-16 left-0 h-[calc(100vh-4rem)] bg-white border-r border-gray-200 overflow-y-auto z-40 transition-all duration-300 ${
         sidebarCollapsed ? 'w-16' : 'w-64'
       }`}>
         <div className={`${sidebarCollapsed ? 'p-2' : 'p-6'}`}>
@@ -140,7 +140,7 @@ export default function PortalLayout({
       </nav>
 
       {/* Main Content */}
-      <main className={`mt-20 min-h-[calc(100vh-5rem)] overflow-y-auto transition-all duration-300 ${
+      <main className={`mt-16 min-h-[calc(100vh-4rem)] overflow-y-auto transition-all duration-300 ${
         sidebarCollapsed ? 'md:ml-16' : 'md:ml-64'
       } ml-0`}>
         <div className="p-4 md:p-6 pb-12">
