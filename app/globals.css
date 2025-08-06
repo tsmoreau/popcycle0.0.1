@@ -94,18 +94,22 @@
   border-color: hsl(var(--pop-black)) !important;
 }
 
-/* Folder Tab Styles */
+/* Folder Tab Styles - SVG Background Approach */
 .folder-tab-green,
 .folder-tab-blue,
 .folder-tab-red,
 .folder-tab-black {
   position: relative !important;
-  background-color: white !important;
+  background: white !important;
   color: #374151 !important;
-  border: 2px solid #d1d5db !important;
-  border-bottom: none !important;
+  border: none !important;
   border-radius: 0 !important;
-  clip-path: polygon(10px 0%, calc(100% - 10px) 0%, 100% 100%, 0% 100%) !important;
+  overflow: hidden !important;
+  background-image: url("data:image/svg+xml,%3Csvg width='200' height='40' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M10,2 L190,2 L198,38 L2,38 L2,10 Z' fill='white' stroke='%23d1d5db' stroke-width='2' /%3E%3C/svg%3E") !important;
+  background-size: 100% 100% !important;
+  background-repeat: no-repeat !important;
+  padding-left: 12px !important;
+  padding-right: 12px !important;
 }
 
 .folder-tab-green::before,
@@ -116,33 +120,29 @@
 }
 
 .folder-tab-green[data-state="active"] {
-  background-color: hsl(var(--pop-green)) !important;
+  background-image: url("data:image/svg+xml,%3Csvg width='200' height='40' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M10,2 L190,2 L198,38 L2,38 L2,10 Z' fill='hsl(142, 100%, 35%)' stroke='hsl(142, 100%, 35%)' stroke-width='2' /%3E%3C/svg%3E") !important;
   color: white !important;
-  border-color: hsl(var(--pop-green)) !important;
   margin-bottom: -2px !important;
   z-index: 10 !important;
 }
 
 .folder-tab-blue[data-state="active"] {
-  background-color: hsl(var(--pop-blue)) !important;
+  background-image: url("data:image/svg+xml,%3Csvg width='200' height='40' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M10,2 L190,2 L198,38 L2,38 L2,10 Z' fill='hsl(214, 100%, 50%)' stroke='hsl(214, 100%, 50%)' stroke-width='2' /%3E%3C/svg%3E") !important;
   color: white !important;
-  border-color: hsl(var(--pop-blue)) !important;
   margin-bottom: -2px !important;
   z-index: 10 !important;
 }
 
 .folder-tab-red[data-state="active"] {
-  background-color: hsl(var(--pop-red)) !important;
+  background-image: url("data:image/svg+xml,%3Csvg width='200' height='40' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M10,2 L190,2 L198,38 L2,38 L2,10 Z' fill='hsl(348, 100%, 60%)' stroke='hsl(348, 100%, 60%)' stroke-width='2' /%3E%3C/svg%3E") !important;
   color: white !important;
-  border-color: hsl(var(--pop-red)) !important;
   margin-bottom: -2px !important;
   z-index: 10 !important;
 }
 
 .folder-tab-black[data-state="active"] {
-  background-color: hsl(var(--pop-black)) !important;
+  background-image: url("data:image/svg+xml,%3Csvg width='200' height='40' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M10,2 L190,2 L198,38 L2,38 L2,10 Z' fill='hsl(0, 0%, 0%)' stroke='hsl(0, 0%, 0%)' stroke-width='2' /%3E%3C/svg%3E") !important;
   color: white !important;
-  border-color: hsl(var(--pop-black)) !important;
   margin-bottom: -2px !important;
   z-index: 10 !important;
 }
