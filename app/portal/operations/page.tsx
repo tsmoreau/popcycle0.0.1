@@ -718,23 +718,26 @@ export default function OperationsPage() {
       </Accordion>
 
       {/* Unified Quick Scan Section */}
-      <Card className="bg-gray-50 border-gray-200">
-        <CardContent className="pt-6">
-          <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
-            <div className="text-center sm:text-left">
+      <Button 
+        className="w-full bg-gray-50 hover:bg-gray-100 border border-gray-200 text-gray-700 hover:text-gray-800 h-20 sm:h-24 text-left justify-start p-6 rounded-lg"
+        variant="outline"
+        onClick={() => setShowScanModal(true)}
+      >
+        <div className="flex items-center justify-between w-full">
+          <div className="flex items-center gap-4">
+            <div className="bg-gray-600 p-3 rounded-lg">
+              <Scan className="h-6 w-6 text-white" />
+            </div>
+            <div>
               <h3 className="text-lg font-semibold text-gray-700 mb-1">Quick QR Access</h3>
               <p className="text-sm text-gray-600">Scan any bin or batch QR code for instant access</p>
             </div>
-            <Button 
-              className="bg-gray-600 hover:bg-gray-700 text-white px-8 py-3 text-base"
-              onClick={() => setShowScanModal(true)}
-            >
-              <Scan className="h-5 w-5 mr-2" />
-              Scan QR Code
-            </Button>
           </div>
-        </CardContent>
-      </Card>
+          <div className="text-gray-400 hidden sm:block">
+            <ArrowRight className="h-5 w-5" />
+          </div>
+        </div>
+      </Button>
 
       {/* Main Operations Tabs */}
       <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
