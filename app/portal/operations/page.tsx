@@ -1012,19 +1012,7 @@ export default function OperationsPage() {
                 <ArrowRight className="h-5 w-5 text-gray-400 hidden sm:block" />
                 <ChevronDown className="h-5 w-5 text-gray-400 sm:hidden" />
                 
-                {/* Step 3: Weigh & Photo */}
-                <div className="flex flex-col items-center">
-                  <Badge className="bg-indigo-500 text-white px-4 py-2 text-sm whitespace-nowrap">
-                    <Scale className="h-4 w-4 mr-2" />
-                    Weigh & Photo
-                  </Badge>
-                </div>
-                
-                {/* Arrow 2.5 */}
-                <ArrowRight className="h-5 w-5 text-gray-400 hidden sm:block" />
-                <ChevronDown className="h-5 w-5 text-gray-400 sm:hidden" />
-                
-                {/* Step 4: First Dry */}
+                {/* Step 3: First Dry */}
                 <div className="flex flex-col items-center">
                   <Badge className="bg-orange-500 text-white px-4 py-2 text-sm whitespace-nowrap">
                     <Wind className="h-4 w-4 mr-2" />
@@ -1065,6 +1053,30 @@ export default function OperationsPage() {
                   <Badge className="bg-pop-black text-white px-4 py-2 text-sm whitespace-nowrap">
                     <Archive className="h-4 w-4 mr-2" />
                     Press
+                  </Badge>
+                </div>
+                
+                {/* Arrow 6 */}
+                <ArrowRight className="h-5 w-5 text-gray-400 hidden sm:block" />
+                <ChevronDown className="h-5 w-5 text-gray-400 sm:hidden" />
+                
+                {/* Step 7: Weigh & Photo */}
+                <div className="flex flex-col items-center">
+                  <Badge className="bg-indigo-500 text-white px-4 py-2 text-sm whitespace-nowrap">
+                    <Scale className="h-4 w-4 mr-2" />
+                    Weigh & Photo
+                  </Badge>
+                </div>
+                
+                {/* Arrow 7 */}
+                <ArrowRight className="h-5 w-5 text-gray-400 hidden sm:block" />
+                <ChevronDown className="h-5 w-5 text-gray-400 sm:hidden" />
+                
+                {/* Step 8: Laser Marking */}
+                <div className="flex flex-col items-center">
+                  <Badge className="bg-amber-500 text-white px-4 py-2 text-sm whitespace-nowrap">
+                    <Zap className="h-4 w-4 mr-2" />
+                    Laser Marking
                   </Badge>
                 </div>
               </div>
