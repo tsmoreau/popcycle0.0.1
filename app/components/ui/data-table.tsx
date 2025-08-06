@@ -94,53 +94,93 @@ export function DataTable<T extends Record<string, any>>({
         <CardDescription>{description}</CardDescription>
       </CardHeader>
       <CardContent>
-        <Table>
-          <TableHeader>
-            <TableRow>
-              {columns.map((column) => (
-                <TableHead
-                  key={String(column.key)}
-                  onClick={column.sortable !== false ? () => handleSort(String(column.key)) : undefined}
-                  className={column.sortable !== false ? "cursor-pointer hover:bg-gray-50" : ""}
-                >
-                  {column.header}
-                  {column.sortable !== false && getSortIndicator(String(column.key))}
-                </TableHead>
-              ))}
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            {sortedData.map((item, index) => {
-              const RowContent = (
-                <TableRow className={renderModal ? "cursor-pointer hover:bg-gray-50" : ""}>
-                  {columns.map((column) => (
-                    <TableCell
-                      key={String(column.key)}
-                      className={column.key === columns[0].key ? "font-medium" : ""}
-                    >
-                      {getCellValue(item, column)}
-                    </TableCell>
-                  ))}
-                </TableRow>
-              )
-
-              if (renderModal) {
-                return (
-                  <Dialog key={index}>
-                    <DialogTrigger asChild>
-                      {RowContent}
-                    </DialogTrigger>
-                    <DialogContent className="max-w-md">
-                      {renderModal(item)}
-                    </DialogContent>
-                  </Dialog>
+        {/* Desktop Table View */}
+        <div className="hidden md:block">
+          <Table>
+            <TableHeader>
+              <TableRow>
+                {columns.map((column) => (
+                  <TableHead
+                    key={String(column.key)}
+                    onClick={column.sortable !== false ? () => handleSort(String(column.key)) : undefined}
+                    className={column.sortable !== false ? "cursor-pointer hover:bg-gray-50" : ""}
+                  >
+                    {column.header}
+                    {column.sortable !== false && getSortIndicator(String(column.key))}
+                  </TableHead>
+                ))}
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {sortedData.map((item, index) => {
+                const RowContent = (
+                  <TableRow className={renderModal ? "cursor-pointer hover:bg-gray-50" : ""}>
+                    {columns.map((column) => (
+                      <TableCell
+                        key={String(column.key)}
+                        className={column.key === columns[0].key ? "font-medium" : ""}
+                      >
+                        {getCellValue(item, column)}
+                      </TableCell>
+                    ))}
+                  </TableRow>
                 )
-              }
 
-              return <div key={index}>{RowContent}</div>
-            })}
-          </TableBody>
-        </Table>
+                if (renderModal) {
+                  return (
+                    <Dialog key={index}>
+                      <DialogTrigger asChild>
+                        {RowContent}
+                      </DialogTrigger>
+                      <DialogContent className="max-w-md">
+                        {renderModal(item)}
+                      </DialogContent>
+                    </Dialog>
+                  )
+                }
+
+                return <div key={index}>{RowContent}</div>
+              })}
+            </TableBody>
+          </Table>
+        </div>
+
+        {/* Mobile Card View */}
+        <div className="md:hidden space-y-3">
+          {sortedData.map((item, index) => {
+            const CardContent = (
+              <div className={`p-4 border rounded-lg bg-white ${renderModal ? "cursor-pointer hover:bg-gray-50" : ""}`}>
+                <div className="space-y-2">
+                  {columns.map((column, colIndex) => (
+                    <div key={String(column.key)} className={`flex justify-between items-start ${colIndex === 0 ? "mb-3" : ""}`}>
+                      <span className={`text-sm font-medium text-gray-600 ${colIndex === 0 ? "text-base font-semibold text-black" : ""}`}>
+                        {colIndex === 0 ? "" : `${column.header}:`}
+                      </span>
+                      <span className={`text-sm text-right ${colIndex === 0 ? "text-base font-semibold text-black w-full text-left" : "ml-2 flex-shrink-0"}`}>
+                        {getCellValue(item, column)}
+                      </span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )
+
+            if (renderModal) {
+              return (
+                <Dialog key={index}>
+                  <DialogTrigger asChild>
+                    {CardContent}
+                  </DialogTrigger>
+                  <DialogContent className="max-w-md">
+                    {renderModal(item)}
+                  </DialogContent>
+                </Dialog>
+              )
+            }
+
+            return <div key={index}>{CardContent}</div>
+          })}
+        </div>
       </CardContent>
     </Card>
   )
