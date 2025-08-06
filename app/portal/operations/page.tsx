@@ -303,58 +303,106 @@ export default function OperationsPage() {
        
       </div>
 
-      {/* Quick Stats Overview - Hidden on mobile */}
-      <div className="hidden md:grid grid-cols-1 md:grid-cols-4 gap-6">
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Active Bins</CardTitle>
-            <Package className="h-4 w-4 text-pop-green" />
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">156</div>
-            <p className="text-xs text-gray-600">12 ready for pickup</p>
-          </CardContent>
-        </Card>
+      {/* Operations Overview - Mobile-Ready Collapsible */}
+      <Accordion type="single" collapsible className="w-full">
+        <AccordionItem value="operations-overview" className="border rounded-lg px-4">
+          <AccordionTrigger className="hover:no-underline">
+            <div className="flex items-center gap-3">
+              <BarChart3 className="h-5 w-5 text-pop-green" />
+              <div className="text-left">
+                <h3 className="text-lg font-semibold text-pop-black">Operations Overview</h3>
+                <p className="text-sm text-gray-600">Real-time system metrics and status</p>
+              </div>
+            </div>
+          </AccordionTrigger>
+          <AccordionContent>
+            {/* Mobile-First Grid Layout */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 pt-2 pb-4">
+              {/* Active Bins */}
+              <div className="bg-pop-green/5 border border-pop-green/20 rounded-lg p-4">
+                <div className="flex items-center justify-between mb-2">
+                  <Package className="h-5 w-5 text-pop-green" />
+                  <span className="text-xs font-medium text-pop-green uppercase tracking-wide">Bins</span>
+                </div>
+                <div className="text-2xl font-bold text-pop-black mb-1">156</div>
+                <div className="text-sm text-gray-600 mb-2">Total Active</div>
+                <div className="flex gap-2 text-xs">
+                  <span className="bg-pop-red/10 text-pop-red px-2 py-1 rounded">12 Ready</span>
+                  <span className="bg-pop-blue/10 text-pop-blue px-2 py-1 rounded">8 Transit</span>
+                </div>
+              </div>
 
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">
-              Active Batches
-            </CardTitle>
-            <Truck className="h-4 w-4 text-pop-blue" />
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">23</div>
-            <p className="text-xs text-gray-600">8 processing, 15 complete</p>
-          </CardContent>
-        </Card>
+              {/* Active Batches */}
+              <div className="bg-pop-blue/5 border border-pop-blue/20 rounded-lg p-4">
+                <div className="flex items-center justify-between mb-2">
+                  <Truck className="h-5 w-5 text-pop-blue" />
+                  <span className="text-xs font-medium text-pop-blue uppercase tracking-wide">Batches</span>
+                </div>
+                <div className="text-2xl font-bold text-pop-black mb-1">23</div>
+                <div className="text-sm text-gray-600 mb-2">Total Active</div>
+                <div className="flex gap-2 text-xs">
+                  <span className="bg-orange-500/10 text-orange-600 px-2 py-1 rounded">8 Processing</span>
+                  <span className="bg-pop-green/10 text-pop-green px-2 py-1 rounded">15 Complete</span>
+                </div>
+              </div>
 
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">
-              Blanks in Inventory
-            </CardTitle>
-            <Settings className="h-4 w-4 text-pop-red" />
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">89</div>
-            <p className="text-xs text-gray-600">Ready for manufacture</p>
-          </CardContent>
-        </Card>
+              {/* Inventory Status */}
+              <div className="bg-pop-red/5 border border-pop-red/20 rounded-lg p-4">
+                <div className="flex items-center justify-between mb-2">
+                  <Archive className="h-5 w-5 text-pop-red" />
+                  <span className="text-xs font-medium text-pop-red uppercase tracking-wide">Inventory</span>
+                </div>
+                <div className="text-2xl font-bold text-pop-black mb-1">89</div>
+                <div className="text-sm text-gray-600 mb-2">Blanks Ready</div>
+                <div className="flex gap-2 text-xs">
+                  <span className="bg-pop-green/10 text-pop-green px-2 py-1 rounded">42 Items</span>
+                  <span className="bg-orange-500/10 text-orange-600 px-2 py-1 rounded">5 Orders</span>
+                </div>
+              </div>
 
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">
-              Station Status
-            </CardTitle>
-            <AlertCircle className="h-4 w-4 text-pop-green" />
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">2/2</div>
-            <p className="text-xs text-gray-600">All stations online</p>
-          </CardContent>
-        </Card>
-      </div>
+              {/* Station Status */}
+              <div className="bg-gray-50 border border-gray-200 rounded-lg p-4">
+                <div className="flex items-center justify-between mb-2">
+                  <Settings className="h-5 w-5 text-pop-black" />
+                  <span className="text-xs font-medium text-pop-black uppercase tracking-wide">Stations</span>
+                </div>
+                <div className="text-2xl font-bold text-pop-black mb-1">2/2</div>
+                <div className="text-sm text-gray-600 mb-2">Online</div>
+                <div className="flex gap-2 text-xs">
+                  <span className="bg-pop-green/10 text-pop-green px-2 py-1 rounded">Weigh/Photo</span>
+                  <span className="bg-pop-green/10 text-pop-green px-2 py-1 rounded">Laser</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Quick Actions Bar - Mobile Optimized */}
+            <div className="border-t pt-4 mt-2">
+              <div className="flex flex-wrap gap-2">
+                <Button 
+                  size="sm" 
+                  className="bg-pop-green hover:bg-pop-green/90 text-white"
+                  onClick={() => setShowScanModal(true)}
+                >
+                  <QrCode className="h-4 w-4 mr-2" />
+                  Scan QR
+                </Button>
+                <Button size="sm" variant="outline">
+                  <Calendar className="h-4 w-4 mr-2" />
+                  Schedule
+                </Button>
+                <Button size="sm" variant="outline">
+                  <BarChart3 className="h-4 w-4 mr-2" />
+                  Reports
+                </Button>
+                <Button size="sm" variant="outline">
+                  <AlertCircle className="h-4 w-4 mr-2" />
+                  Alerts
+                </Button>
+              </div>
+            </div>
+          </AccordionContent>
+        </AccordionItem>
+      </Accordion>
 
       {/* Main Operations Tabs */}
       <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
