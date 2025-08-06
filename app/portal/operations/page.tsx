@@ -735,16 +735,20 @@ export default function OperationsPage() {
         <div className="relative">
           <TabsList className="mb-0 relative z-10 p-0 bg-transparent h-auto gap-0 flex-nowrap overflow-visible">
             <TabsTrigger value="collections" className="folder-tab-white relative z-[4] text-xs sm:text-sm px-3 sm:px-4 py-2 sm:py-2">
-              📦 Collections
+              <Package className="w-4 h-4 mr-2 text-pop-green" />
+              Collections
             </TabsTrigger>
             <TabsTrigger value="processing" className="folder-tab-white relative z-[3] -ml-6 sm:ml-0 text-xs sm:text-sm px-3 sm:px-4 py-2 sm:py-2">
-              ⚙️ Processing
+              <Settings className="w-4 h-4 mr-2 text-pop-green" />
+              Processing
             </TabsTrigger>
             <TabsTrigger value="fulfillment" className="folder-tab-white relative z-[2] -ml-6 sm:ml-0 text-xs sm:text-sm px-3 sm:px-4 py-2 sm:py-2">
-              🚚 Fulfillment
+              <Truck className="w-4 h-4 mr-2 text-pop-green" />
+              Fulfillment
             </TabsTrigger>
             <TabsTrigger value="inventory" className="folder-tab-white relative z-[1] -ml-6 sm:ml-0 text-xs sm:text-sm px-3 sm:px-4 py-2 sm:py-2">
-              📊 Inventory
+              <BarChart3 className="w-4 h-4 mr-2 text-pop-green" />
+              Inventory
             </TabsTrigger>
           </TabsList>
         </div>
