@@ -62,30 +62,60 @@ export default function FinancialPage() {
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         <Card>
           <CardHeader>
-            <CardTitle>Revenue Streams</CardTitle>
-            <CardDescription>Breakdown by business segment</CardDescription>
+            <CardTitle className="flex items-center justify-between">
+              Revenue
+              <span className="text-2xl font-bold text-green-600">$42,847</span>
+            </CardTitle>
+            <CardDescription>Monthly income transactions</CardDescription>
           </CardHeader>
           <CardContent className="space-y-3">
             <div className="space-y-2">
-              <div className="flex justify-between items-center p-2 bg-gray-50 rounded">
-                <span className="text-sm">Partner Subscriptions</span>
-                <span className="font-medium">$28,500</span>
+              <div className="flex justify-between items-center py-2 px-3 border rounded-lg">
+                <div>
+                  <span className="text-sm font-medium">TechCorp Partnership</span>
+                  <p className="text-xs text-gray-600">Monthly service - Jan 15</p>
+                </div>
+                <span className="font-medium">$12,500.00</span>
               </div>
-              <div className="flex justify-between items-center p-2 bg-gray-50 rounded">
-                <span className="text-sm">Product Sales</span>
-                <span className="font-medium">$8,920</span>
+              <div className="flex justify-between items-center py-2 px-3 border rounded-lg">
+                <div>
+                  <span className="text-sm font-medium">Green Solutions Inc</span>
+                  <p className="text-xs text-gray-600">Q1 contract - Jan 12</p>
+                </div>
+                <span className="font-medium">$8,750.00</span>
               </div>
-              <div className="flex justify-between items-center p-2 bg-gray-50 rounded">
-                <span className="text-sm">Workshop Fees</span>
-                <span className="font-medium">$3,240</span>
+              <div className="flex justify-between items-center py-2 px-3 border rounded-lg">
+                <div>
+                  <span className="text-sm font-medium">Online Store Sales</span>
+                  <p className="text-xs text-gray-600">Product orders - Jan 10</p>
+                </div>
+                <span className="font-medium">$3,420.50</span>
               </div>
-              <div className="flex justify-between items-center p-2 bg-gray-50 rounded">
-                <span className="text-sm">Custom Manufacturing</span>
-                <span className="font-medium">$2,187</span>
+              <div className="flex justify-between items-center py-2 px-3 border rounded-lg">
+                <div>
+                  <span className="text-sm font-medium">Workshop Registration</span>
+                  <p className="text-xs text-gray-600">15 participants - Jan 8</p>
+                </div>
+                <span className="font-medium">$1,875.00</span>
+              </div>
+              <div className="flex justify-between items-center py-2 px-3 border rounded-lg">
+                <div>
+                  <span className="text-sm font-medium">Custom Manufacturing</span>
+                  <p className="text-xs text-gray-600">Special order - Jan 6</p>
+                </div>
+                <span className="font-medium">$2,650.00</span>
+              </div>
+              <div className="flex justify-between items-center py-2 px-3 border rounded-lg">
+                <div>
+                  <span className="text-sm font-medium">EcoPartners LLC</span>
+                  <p className="text-xs text-gray-600">Pickup service - Jan 3</p>
+                </div>
+                <span className="font-medium">$4,200.00</span>
               </div>
             </div>
-            <Button variant="outline" className="w-full">
-              View Detailed Breakdown
+            
+            <Button variant="outline" className="w-full mt-3">
+              View All Revenue
             </Button>
           </CardContent>
         </Card>
