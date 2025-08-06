@@ -362,18 +362,22 @@ export default function OperationsPage() {
       {/* Main Operations Tabs */}
       <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
         <div className="relative">
-          <TabsList className="mb-0 relative z-10">
-            <TabsTrigger value="collections" className="folder-tab-green">
-              📦 Collections
+          <TabsList className="mb-0 relative z-10 p-0 bg-transparent h-auto gap-0 flex-nowrap overflow-visible">
+            <TabsTrigger value="collections" className="folder-tab-green relative z-[4]">
+              <span className="sm:hidden">📦</span>
+              <span className="hidden sm:inline">📦 Collections</span>
             </TabsTrigger>
-            <TabsTrigger value="processing" className="folder-tab-blue">
-              ⚙️ Processing
+            <TabsTrigger value="processing" className="folder-tab-blue relative z-[3] -ml-4 sm:ml-0">
+              <span className="sm:hidden">⚙️</span>
+              <span className="hidden sm:inline">⚙️ Processing</span>
             </TabsTrigger>
-            <TabsTrigger value="inventory" className="folder-tab-red">
-              📊 Inventory
+            <TabsTrigger value="inventory" className="folder-tab-red relative z-[2] -ml-4 sm:ml-0">
+              <span className="sm:hidden">📊</span>
+              <span className="hidden sm:inline">📊 Inventory</span>
             </TabsTrigger>
-            <TabsTrigger value="fulfillment" className="folder-tab-black">
-              🚚 Fulfillment
+            <TabsTrigger value="fulfillment" className="folder-tab-black relative z-[1] -ml-4 sm:ml-0">
+              <span className="sm:hidden">🚚</span>
+              <span className="hidden sm:inline">🚚 Fulfillment</span>
             </TabsTrigger>
           </TabsList>
           {/* Tab base line - will be covered by content border */}
