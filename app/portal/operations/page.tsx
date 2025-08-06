@@ -298,9 +298,9 @@ export default function OperationsPage() {
     <div className="space-y-6">
       <div>
         <h2 className="text-3xl font-bold text-pop-black">
-          Operations Management
+          Operations Dashboard
         </h2>
-
+       
       </div>
 
       {/* Quick Stats Overview - Hidden on mobile */}
@@ -1012,7 +1012,19 @@ export default function OperationsPage() {
                 <ArrowRight className="h-5 w-5 text-gray-400 hidden sm:block" />
                 <ChevronDown className="h-5 w-5 text-gray-400 sm:hidden" />
                 
-                {/* Step 3: First Dry */}
+                {/* Step 3: Weigh & Photo */}
+                <div className="flex flex-col items-center">
+                  <Badge className="bg-indigo-500 text-white px-4 py-2 text-sm whitespace-nowrap">
+                    <Scale className="h-4 w-4 mr-2" />
+                    Weigh & Photo
+                  </Badge>
+                </div>
+                
+                {/* Arrow 2.5 */}
+                <ArrowRight className="h-5 w-5 text-gray-400 hidden sm:block" />
+                <ChevronDown className="h-5 w-5 text-gray-400 sm:hidden" />
+                
+                {/* Step 4: First Dry */}
                 <div className="flex flex-col items-center">
                   <Badge className="bg-orange-500 text-white px-4 py-2 text-sm whitespace-nowrap">
                     <Wind className="h-4 w-4 mr-2" />
