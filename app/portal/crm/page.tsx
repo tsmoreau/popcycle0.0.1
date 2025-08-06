@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { Phone, Users, TrendingUp, AlertCircle, Calendar, MessageCircle, Building2 } from 'lucide-react'
+import { Phone, Users, TrendingUp, AlertCircle, Calendar, MessageCircle, Building2, UserPlus, GitBranch, ChevronDown, ArrowRight, CheckCircle, Clock, FileText, Handshake } from 'lucide-react'
 import { Button } from '../../components/ui/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../../components/ui/card'
 import { Badge } from '../../components/ui/badge'
@@ -20,6 +20,9 @@ interface Organization {
 }
 
 export default function CRMPage() {
+  const [showOnboarding, setShowOnboarding] = useState(false)
+  const [showSalesWorkflow, setShowSalesWorkflow] = useState(false)
+
   // Sample organization data
   const organizationsData: Organization[] = [
     { id: 'O-001', name: 'TechCorp Industries', contact: 'Sarah Miller', stage: 'Active Partnership', status: 'Active', bins: 12, lastContact: '2 days ago', value: '$45,000' },
@@ -161,6 +164,201 @@ export default function CRMPage() {
         columns={organizationColumns}
         renderModal={renderOrganizationModal}
       />
+
+      {/* Sales & Partnership Management Section */}
+      <Card>
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2">
+            <GitBranch className="h-5 w-5 text-pop-green" />
+            Sales & Partnership Management
+          </CardTitle>
+          <CardDescription>Lead conversion workflows and partner onboarding processes</CardDescription>
+        </CardHeader>
+        <CardContent className="space-y-4">
+          {/* Sales Workflow Dropdown */}
+          <div className="w-full border rounded-lg">
+            <div className="px-4 py-4 cursor-pointer hover:bg-gray-50" onClick={() => setShowSalesWorkflow(!showSalesWorkflow)}>
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-3">
+                  <TrendingUp className="h-5 w-5 text-pop-green" />
+                  <span className="font-medium">Sales Workflow</span>
+                </div>
+                <ChevronDown className={`h-5 w-5 text-gray-400 transition-transform ${showSalesWorkflow ? 'rotate-180' : ''}`} />
+              </div>
+            </div>
+            {showSalesWorkflow && (
+              <div className="px-4 pb-4 border-t bg-gray-50">
+                <div className="mt-4">
+                  {/* Sales Workflow Diagram */}
+                  <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-4 py-4">
+                    {/* Step 1: Lead */}
+                    <div className="flex flex-col items-center">
+                      <Badge className="bg-pop-blue text-white px-4 py-2 text-sm whitespace-nowrap">
+                        <Phone className="h-4 w-4 mr-2" />
+                        Initial Lead
+                      </Badge>
+                    </div>
+                    
+                    <ArrowRight className="h-5 w-5 text-gray-400 hidden sm:block" />
+                    <ChevronDown className="h-5 w-5 text-gray-400 sm:hidden" />
+                    
+                    {/* Step 2: Contact */}
+                    <div className="flex flex-col items-center">
+                      <Badge className="bg-orange-500 text-white px-4 py-2 text-sm whitespace-nowrap">
+                        <MessageCircle className="h-4 w-4 mr-2" />
+                        First Contact
+                      </Badge>
+                    </div>
+                    
+                    <ArrowRight className="h-5 w-5 text-gray-400 hidden sm:block" />
+                    <ChevronDown className="h-5 w-5 text-gray-400 sm:hidden" />
+                    
+                    {/* Step 3: Proposal */}
+                    <div className="flex flex-col items-center">
+                      <Badge className="bg-pop-red text-white px-4 py-2 text-sm whitespace-nowrap">
+                        <FileText className="h-4 w-4 mr-2" />
+                        Proposal Sent
+                      </Badge>
+                    </div>
+                    
+                    <ArrowRight className="h-5 w-5 text-gray-400 hidden sm:block" />
+                    <ChevronDown className="h-5 w-5 text-gray-400 sm:hidden" />
+                    
+                    {/* Step 4: Negotiation */}
+                    <div className="flex flex-col items-center">
+                      <Badge className="bg-purple-600 text-white px-4 py-2 text-sm whitespace-nowrap">
+                        <Users className="h-4 w-4 mr-2" />
+                        Negotiation
+                      </Badge>
+                    </div>
+                    
+                    <ArrowRight className="h-5 w-5 text-gray-400 hidden sm:block" />
+                    <ChevronDown className="h-5 w-5 text-gray-400 sm:hidden" />
+                    
+                    {/* Step 5: Contract */}
+                    <div className="flex flex-col items-center">
+                      <Badge className="bg-pop-green text-white px-4 py-2 text-sm whitespace-nowrap">
+                        <Handshake className="h-4 w-4 mr-2" />
+                        Contract Signed
+                      </Badge>
+                    </div>
+                  </div>
+                </div>
+                
+                {/* Current Pipeline Status */}
+                <div className="space-y-2 mt-4">
+                  <div className="flex items-center justify-between p-3 bg-white rounded-lg border">
+                    <span className="text-sm">Initial Leads: 24</span>
+                    <Badge variant="outline">Active</Badge>
+                  </div>
+                  <div className="flex items-center justify-between p-3 bg-white rounded-lg border">
+                    <span className="text-sm">First Contact: 18</span>
+                    <Badge className="bg-orange-500 text-white">In Progress</Badge>
+                  </div>
+                  <div className="flex items-center justify-between p-3 bg-white rounded-lg border">
+                    <span className="text-sm">Proposals Sent: 12</span>
+                    <Badge className="bg-pop-red text-white">Pending</Badge>
+                  </div>
+                  <div className="flex items-center justify-between p-3 bg-white rounded-lg border">
+                    <span className="text-sm">Negotiation: 8</span>
+                    <Badge className="bg-purple-600 text-white">Active</Badge>
+                  </div>
+                  <div className="flex items-center justify-between p-3 bg-white rounded-lg border">
+                    <span className="text-sm">Contracts: 3</span>
+                    <Badge className="bg-pop-green text-white">Closing</Badge>
+                  </div>
+                </div>
+                
+                <div className="mt-4 space-y-2">
+                  <Button variant="outline" className="w-full">Add New Lead</Button>
+                  <Button variant="outline" className="w-full">Update Pipeline Status</Button>
+                </div>
+              </div>
+            )}
+          </div>
+
+          {/* Partner Onboarding Dropdown */}
+          <div className="w-full border rounded-lg">
+            <div className="px-4 py-4 cursor-pointer hover:bg-gray-50" onClick={() => setShowOnboarding(!showOnboarding)}>
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-3">
+                  <UserPlus className="h-5 w-5 text-pop-green" />
+                  <span className="font-medium">Partner Onboarding</span>
+                </div>
+                <ChevronDown className={`h-5 w-5 text-gray-400 transition-transform ${showOnboarding ? 'rotate-180' : ''}`} />
+              </div>
+            </div>
+            {showOnboarding && (
+              <div className="px-4 pb-4 border-t bg-gray-50">
+                <div className="space-y-2 mt-4">
+                  {/* Active Onboarding Cases */}
+                  <div className="flex items-center justify-between p-3 bg-white rounded-lg border">
+                    <div>
+                      <span className="font-medium text-sm">Metro Facilities</span>
+                      <p className="text-xs text-gray-600">Step 3/7: Bin delivery scheduled</p>
+                    </div>
+                    <Badge className="bg-pop-blue text-white">In Progress</Badge>
+                  </div>
+                  <div className="flex items-center justify-between p-3 bg-white rounded-lg border">
+                    <div>
+                      <span className="font-medium text-sm">Urban Dynamics</span>
+                      <p className="text-xs text-gray-600">Step 1/7: Contract signed</p>
+                    </div>
+                    <Badge className="bg-orange-500 text-white">Started</Badge>
+                  </div>
+                  <div className="flex items-center justify-between p-3 bg-white rounded-lg border">
+                    <div>
+                      <span className="font-medium text-sm">EcoSystems Ltd</span>
+                      <p className="text-xs text-gray-600">Step 6/7: Training completed</p>
+                    </div>
+                    <Badge className="bg-pop-green text-white">Almost Done</Badge>
+                  </div>
+                </div>
+                
+                {/* Onboarding Checklist Template */}
+                <div className="mt-4 p-3 bg-white rounded-lg border">
+                  <h4 className="font-medium text-sm mb-3">Standard Onboarding Steps</h4>
+                  <div className="space-y-2 text-xs">
+                    <div className="flex items-center gap-2">
+                      <CheckCircle className="h-3 w-3 text-pop-green" />
+                      <span>Contract signed & welcome packet sent</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <CheckCircle className="h-3 w-3 text-pop-green" />
+                      <span>Site assessment & bin placement planning</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <Clock className="h-3 w-3 text-orange-500" />
+                      <span>Bin delivery & installation</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <Clock className="h-3 w-3 text-gray-400" />
+                      <span>Staff training & QR code education</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <Clock className="h-3 w-3 text-gray-400" />
+                      <span>First pickup scheduled</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <Clock className="h-3 w-3 text-gray-400" />
+                      <span>30-day check-in & optimization</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <Clock className="h-3 w-3 text-gray-400" />
+                      <span>Partnership fully active</span>
+                    </div>
+                  </div>
+                </div>
+                
+                <div className="mt-4 space-y-2">
+                  <Button variant="outline" className="w-full">Start New Onboarding</Button>
+                  <Button variant="outline" className="w-full">View All Active Cases</Button>
+                </div>
+              </div>
+            )}
+          </div>
+        </CardContent>
+      </Card>
 
       {/* Communication Hub Section */}
       <Card>
