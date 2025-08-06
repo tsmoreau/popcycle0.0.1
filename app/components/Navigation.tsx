@@ -318,7 +318,7 @@ export default function Navigation() {
                 <Link
                   href="/profile"
                   onClick={() => setMobileMenuOpen(false)}
-                  className="w-full flex items-center px-4 py-2 systematic-caps text-sm border-2 border-pop-black rounded-md hover:bg-pop-green hover:text-white transition-colors"
+                  className="w-full flex items-center px-4 py-2 systematic-caps text-sm rounded-md hover:bg-pop-green hover:text-white transition-colors"
                 >
                   <User className="w-4 h-4 mr-3" />
                   Profile
@@ -327,7 +327,7 @@ export default function Navigation() {
                   <Link
                     href="/portal"
                     onClick={() => setMobileMenuOpen(false)}
-                    className="w-full flex items-center px-4 py-2 systematic-caps text-sm border-2 border-pop-black rounded-md hover:bg-pop-blue hover:text-white transition-colors"
+                    className="w-full flex items-center px-4 py-2 systematic-caps text-sm rounded-md hover:bg-pop-blue hover:text-white transition-colors"
                   >
                     <Settings className="w-4 h-4 mr-3" />
                     Portal

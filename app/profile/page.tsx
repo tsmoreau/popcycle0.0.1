@@ -12,19 +12,19 @@ export default function ProfilePage() {
       {/* Profile Header */}
       <div className="bg-white border-b-4 border-pop-black">
         <div className="max-w-4xl mx-auto px-4 py-8">
-          <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
-            <div className="flex items-center space-x-6">
+          <div className="flex flex-col md:flex-row items-center md:items-center justify-between gap-6">
+            <div className="flex flex-col md:flex-row items-center space-y-4 md:space-y-0 md:space-x-6">
               <div className="w-24 h-24 bg-pop-green border-4 border-pop-black rounded-full flex items-center justify-center flex-shrink-0">
                 <span className="text-pop-black helvetica-bold text-4xl">P</span>
               </div>
-              <div>
+              <div className="text-center md:text-left">
                 <h1 className="text-3xl helvetica-bold text-pop-black">PlasticCraftAlex</h1>
                 <div className="systematic-caps text-gray-600 mt-1 space-y-1">
                   <div>Alex Martinez</div>
                   <div>San Francisco, CA</div>
                   <div>Joined March 2023</div>
                 </div>
-                <div className="flex items-center space-x-4 mt-2">
+                <div className="flex items-center justify-center md:justify-start space-x-4 mt-2">
                   <Badge className="bg-pop-green/10 text-pop-green border-pop-green">
                     <Trophy className="w-3 h-3 mr-1" />
                     Maker Level 3
@@ -36,7 +36,7 @@ export default function ProfilePage() {
                 </div>
               </div>
             </div>
-            <div className="flex space-x-3">
+            <div className="flex flex-col md:flex-row space-y-3 md:space-y-0 md:space-x-3">
               <Button variant="outline" className="systematic-caps border-2 border-pop-black hover:bg-pop-green hover:text-white">
                 <Eye className="w-4 h-4 mr-2" />
                 View Public Profile
