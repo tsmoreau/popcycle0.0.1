@@ -41,7 +41,7 @@ export default function PortalLayout({
     <div className="h-screen bg-gray-50">
       {/* Header - Fixed */}
       <header className="fixed top-0 left-0 right-0 bg-white border-b border-gray-200 h-16 z-50">
-        <div className="px-1 md:px-6 py-4 flex items-center justify-between h-full w-full">
+        <div className="px-2 md:px-6 py-4 flex items-center justify-between h-full w-full">
           <div className="flex items-center space-x-1 md:space-x-4">
             {/* Desktop sidebar toggle */}
             <Button 
@@ -57,23 +57,23 @@ export default function PortalLayout({
             <Button 
               variant="ghost" 
               size="sm" 
-              className="md:hidden p-1"
+              className="md:hidden p-1.5"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             >
               {mobileMenuOpen ? <X className="h-4 w-4" /> : <Menu className="h-4 w-4" />}
             </Button>
             
-            <h1 className="text-base md:text-2xl font-bold text-pop-black">PopCycle Portal</h1>
+            <h1 className="text-sm md:text-2xl font-bold text-pop-black">PopCycle Portal</h1>
             <Badge variant="outline" className="hidden sm:flex bg-pop-green/10 text-pop-green border-pop-green">
               Admin Access
             </Badge>
           </div>
-          <div className="flex items-center space-x-0 md:space-x-4">
-            <Button variant="ghost" size="sm" className="p-1 md:px-3 md:py-2" onClick={() => window.location.href = '/'}>
+          <div className="flex items-center space-x-0.5 md:space-x-4">
+            <Button variant="ghost" size="sm" className="p-1.5 md:px-3 md:py-2" onClick={() => window.location.href = '/'}>
               <Home className="h-4 w-4 md:mr-2" />
               <span className="hidden md:inline">Public Site</span>
             </Button>
-            <Button variant="ghost" size="sm" className="p-1 md:px-3 md:py-2">
+            <Button variant="ghost" size="sm" className="p-1.5 md:px-3 md:py-2">
               <LogOut className="h-4 w-4 md:mr-2" />
               <span className="hidden md:inline">Logout</span>
             </Button>
