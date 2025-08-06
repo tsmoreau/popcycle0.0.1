@@ -49,9 +49,126 @@ import {
 import { Input } from "../../components/ui/input";
 import { Label } from "../../components/ui/label";
 import { Textarea } from "../../components/ui/textarea";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "../../components/ui/table";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "../../components/ui/dialog";
 
 export default function OperationsPage() {
   const [activeTab, setActiveTab] = useState("collections");
+  const [selectedBin, setSelectedBin] = useState(null);
+  const [sortField, setSortField] = useState("id");
+  const [sortDirection, setSortDirection] = useState("asc");
+
+  // Mock data for Collections Queue - this should come from your MongoDB API
+  const collectionsQueue = [
+    {
+      id: "BI-7829",
+      qrCode: "QR-BI-7829",
+      orgId: "ORG-001",
+      orgName: "TechCorp",
+      location: "Floor 3 Kitchen",
+      status: "Ready for Pickup",
+      capacity: 50,
+      currentLevel: 85,
+      type: "permanent",
+      collectionDate: "2025-01-15",
+      isActive: true,
+      adoptedBy: "Engineering Team"
+    },
+    {
+      id: "BI-7830",
+      qrCode: "QR-BI-7830", 
+      orgId: "ORG-002",
+      orgName: "GreenOffice",
+      location: "Main Kitchen",
+      status: "Collected",
+      capacity: 30,
+      currentLevel: 100,
+      type: "permanent",
+      collectionDate: "2025-01-14",
+      isActive: true,
+      adoptedBy: null
+    },
+    {
+      id: "BI-7831",
+      qrCode: "QR-BI-7831",
+      orgId: "ORG-003", 
+      orgName: "Metro Facilities",
+      location: "Building A Lobby",
+      status: "Awaiting Rough Wash",
+      capacity: 40,
+      currentLevel: 78,
+      type: "permanent",
+      collectionDate: "2025-01-13",
+      isActive: true,
+      adoptedBy: "Facilities Team"
+    },
+    {
+      id: "BI-7832",
+      qrCode: "QR-BI-7832",
+      orgId: "ORG-004",
+      orgName: "Creative Studios",
+      location: "Event Space",
+      status: "Ready for Pickup",
+      capacity: 25,
+      currentLevel: 92,
+      type: "temporary",
+      collectionDate: "2025-01-16",
+      isActive: true,
+      adoptedBy: null
+    }
+  ];
+
+  const handleSort = (field: string) => {
+    if (sortField === field) {
+      setSortDirection(sortDirection === "asc" ? "desc" : "asc");
+    } else {
+      setSortField(field);
+      setSortDirection("asc");
+    }
+  };
+
+  const sortedQueue = [...collectionsQueue].sort((a, b) => {
+    let aVal = a[sortField as keyof typeof a];
+    let bVal = b[sortField as keyof typeof b];
+    
+    if (typeof aVal === "string") {
+      aVal = aVal.toLowerCase();
+      bVal = bVal.toLowerCase();
+    }
+    
+    if (sortDirection === "asc") {
+      return aVal < bVal ? -1 : aVal > bVal ? 1 : 0;
+    } else {
+      return aVal > bVal ? -1 : aVal < bVal ? 1 : 0;
+    }
+  });
+
+  const getStatusBadge = (status: string) => {
+    switch (status) {
+      case "Ready for Pickup":
+        return <Badge className="bg-pop-red text-white">Ready for Pickup</Badge>;
+      case "Collected":
+        return <Badge className="bg-pop-blue text-white">Collected</Badge>;
+      case "Awaiting Rough Wash":
+        return <Badge className="bg-pop-green text-white">Awaiting Wash</Badge>;
+      default:
+        return <Badge variant="outline">{status}</Badge>;
+    }
+  };
 
   return (
     <div className="space-y-6">
@@ -154,6 +271,146 @@ export default function OperationsPage() {
                   Scan Bin
                 </Button>
               </div>
+            </CardContent>
+          </Card>
+
+          {/* Collections Queue */}
+          <Card>
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <Package className="h-5 w-5 text-pop-green" />
+                Collections Queue
+              </CardTitle>
+              <CardDescription>
+                Live status overview of all bins assigned for pickup and collected materials awaiting processing
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <Table>
+                <TableHeader>
+                  <TableRow>
+                    <TableHead onClick={() => handleSort("id")} className="cursor-pointer hover:bg-gray-50">
+                      Bin ID {sortField === "id" && (sortDirection === "asc" ? "↑" : "↓")}
+                    </TableHead>
+                    <TableHead onClick={() => handleSort("orgName")} className="cursor-pointer hover:bg-gray-50">
+                      Organization {sortField === "orgName" && (sortDirection === "asc" ? "↑" : "↓")}
+                    </TableHead>
+                    <TableHead onClick={() => handleSort("location")} className="cursor-pointer hover:bg-gray-50">
+                      Location {sortField === "location" && (sortDirection === "asc" ? "↑" : "↓")}
+                    </TableHead>
+                    <TableHead onClick={() => handleSort("status")} className="cursor-pointer hover:bg-gray-50">
+                      Status {sortField === "status" && (sortDirection === "asc" ? "↑" : "↓")}
+                    </TableHead>
+                    <TableHead onClick={() => handleSort("currentLevel")} className="cursor-pointer hover:bg-gray-50">
+                      Level {sortField === "currentLevel" && (sortDirection === "asc" ? "↑" : "↓")}
+                    </TableHead>
+                    <TableHead onClick={() => handleSort("type")} className="cursor-pointer hover:bg-gray-50">
+                      Type {sortField === "type" && (sortDirection === "asc" ? "↑" : "↓")}
+                    </TableHead>
+                  </TableRow>
+                </TableHeader>
+                <TableBody>
+                  {sortedQueue.map((bin) => (
+                    <Dialog key={bin.id}>
+                      <DialogTrigger asChild>
+                        <TableRow className="cursor-pointer hover:bg-gray-50">
+                          <TableCell className="font-medium">{bin.id}</TableCell>
+                          <TableCell>{bin.orgName}</TableCell>
+                          <TableCell>{bin.location}</TableCell>
+                          <TableCell>{getStatusBadge(bin.status)}</TableCell>
+                          <TableCell>
+                            <div className="flex items-center gap-2">
+                              <div className="w-20 bg-gray-200 rounded-full h-2">
+                                <div 
+                                  className={`h-2 rounded-full ${
+                                    bin.currentLevel >= 85 ? 'bg-pop-red' : 
+                                    bin.currentLevel >= 60 ? 'bg-orange-500' : 'bg-pop-green'
+                                  }`}
+                                  style={{ width: `${bin.currentLevel}%` }}
+                                ></div>
+                              </div>
+                              <span className="text-sm text-gray-600">{bin.currentLevel}%</span>
+                            </div>
+                          </TableCell>
+                          <TableCell>
+                            <Badge variant={bin.type === "permanent" ? "default" : "secondary"}>
+                              {bin.type}
+                            </Badge>
+                          </TableCell>
+                        </TableRow>
+                      </DialogTrigger>
+                      <DialogContent className="max-w-md">
+                        <DialogHeader>
+                          <DialogTitle>Bin Details - {bin.id}</DialogTitle>
+                          <DialogDescription>
+                            Universal scan modal - same interface as QR code scanning
+                          </DialogDescription>
+                        </DialogHeader>
+                        <div className="space-y-4">
+                          <div className="grid grid-cols-2 gap-4">
+                            <div>
+                              <Label className="text-sm font-medium text-gray-700">Organization</Label>
+                              <p className="text-sm">{bin.orgName}</p>
+                            </div>
+                            <div>
+                              <Label className="text-sm font-medium text-gray-700">Location</Label>
+                              <p className="text-sm">{bin.location}</p>
+                            </div>
+                          </div>
+                          <div className="grid grid-cols-2 gap-4">
+                            <div>
+                              <Label className="text-sm font-medium text-gray-700">Current Status</Label>
+                              <div className="mt-1">{getStatusBadge(bin.status)}</div>
+                            </div>
+                            <div>
+                              <Label className="text-sm font-medium text-gray-700">Capacity</Label>
+                              <p className="text-sm">{bin.currentLevel}% of {bin.capacity}kg</p>
+                            </div>
+                          </div>
+                          <div className="grid grid-cols-2 gap-4">
+                            <div>
+                              <Label className="text-sm font-medium text-gray-700">Type</Label>
+                              <p className="text-sm capitalize">{bin.type}</p>
+                            </div>
+                            <div>
+                              <Label className="text-sm font-medium text-gray-700">QR Code</Label>
+                              <p className="text-sm font-mono">{bin.qrCode}</p>
+                            </div>
+                          </div>
+                          {bin.adoptedBy && (
+                            <div>
+                              <Label className="text-sm font-medium text-gray-700">Adopted By</Label>
+                              <p className="text-sm">{bin.adoptedBy}</p>
+                            </div>
+                          )}
+                          <div className="pt-4 border-t">
+                            <div className="space-y-2">
+                              {bin.status === "Ready for Pickup" && (
+                                <Button className="w-full bg-pop-green hover:bg-pop-green/90">
+                                  <CheckCircle className="h-4 w-4 mr-2" />
+                                  Check-in Bin
+                                </Button>
+                              )}
+                              {bin.status === "Collected" && (
+                                <Button className="w-full bg-pop-blue hover:bg-pop-blue/90">
+                                  <ArrowRight className="h-4 w-4 mr-2" />
+                                  Start Rough Wash
+                                </Button>
+                              )}
+                              {bin.status === "Awaiting Rough Wash" && (
+                                <Button className="w-full bg-pop-red hover:bg-pop-red/90">
+                                  <Droplets className="h-4 w-4 mr-2" />
+                                  Begin Processing
+                                </Button>
+                              )}
+                            </div>
+                          </div>
+                        </div>
+                      </DialogContent>
+                    </Dialog>
+                  ))}
+                </TableBody>
+              </Table>
             </CardContent>
           </Card>
 
