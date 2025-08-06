@@ -87,8 +87,7 @@ export default function PortalLayout({
           <div className="fixed inset-0 bg-black/20" onClick={() => setMobileMenuOpen(false)} />
           <nav className="fixed top-0 left-0 bottom-0 w-64 bg-white border-r border-gray-200 overflow-y-auto">
             {/* Close button in top corner */}
-            <div className="flex justify-between items-center p-4 border-b border-gray-200">
-              <h2 className="text-lg font-bold text-pop-black">PopCycle Portal</h2>
+            <div className="flex justify-start items-center p-4">
               <Button 
                 variant="ghost" 
                 size="sm"
