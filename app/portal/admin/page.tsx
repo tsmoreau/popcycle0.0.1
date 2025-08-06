@@ -6,6 +6,7 @@ import { Button } from '../../components/ui/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../../components/ui/card'
 import { Badge } from '../../components/ui/badge'
 import { DataTable, Column } from '../../components/ui/data-table'
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '../../components/ui/accordion'
 
 interface User {
   id: string
@@ -106,61 +107,79 @@ export default function AdminPage() {
         <h2 className="text-3xl font-bold text-pop-black">Admin Dashboard</h2>
       </div>
 
-      {/* Admin Overview Dropdown */}
-      <div className="w-full border rounded-lg px-4 cursor-pointer hover:bg-gray-50" onClick={() => setShowOverview(!showOverview)}>
-        <div className="py-4">
-          <div className="flex items-center justify-between">
+      {/* Admin Overview - Mobile-Ready Collapsible */}
+      <Accordion type="single" collapsible className="w-full">
+        <AccordionItem value="admin-overview" className="border rounded-lg px-4">
+          <AccordionTrigger className="hover:no-underline">
             <div className="flex items-center gap-3">
               <Shield className="h-5 w-5 text-pop-green" />
               <div className="text-left">
                 <h3 className="text-lg font-semibold text-pop-black">Admin Overview</h3>
               </div>
             </div>
-            <ChevronDown className={`h-5 w-5 text-gray-400 transition-transform ${showOverview ? 'rotate-180' : ''}`} />
-          </div>
-        </div>
-      </div>
+          </AccordionTrigger>
+          <AccordionContent>
+            {/* Mobile-First Grid Layout */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 pt-2 pb-4">
+              {/* Total Users */}
+              <div className="bg-gray-50 border border-gray-200 rounded-lg p-4">
+                <div className="flex items-center justify-between mb-2">
+                  <Users className="h-5 w-5 text-gray-600" />
+                  <span className="text-xs font-medium text-gray-500 uppercase tracking-wide">Users</span>
+                </div>
+                <div className="text-2xl font-bold text-pop-black mb-1">2,847</div>
+                <div className="text-sm text-gray-600 mb-2">Total Users</div>
+                <div className="flex gap-2 text-xs">
+                  <span className="bg-gray-100 text-gray-700 px-2 py-1 rounded">2,793 Active</span>
+                  <span className="bg-gray-100 text-gray-700 px-2 py-1 rounded">54 Inactive</span>
+                </div>
+              </div>
 
-      {showOverview && (
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-          <Card>
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">Total Users</CardTitle>
-              <Users className="h-4 w-4 text-pop-green" />
-            </CardHeader>
-            <CardContent>
-              <div className="text-2xl font-bold">2,847</div>
-            </CardContent>
-          </Card>
-          <Card>
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">Active Staff</CardTitle>
-              <Settings className="h-4 w-4 text-pop-green" />
-            </CardHeader>
-            <CardContent>
-              <div className="text-2xl font-bold">12</div>
-            </CardContent>
-          </Card>
-          <Card>
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">Partner Access</CardTitle>
-              <Users className="h-4 w-4 text-pop-green" />
-            </CardHeader>
-            <CardContent>
-              <div className="text-2xl font-bold">54</div>
-            </CardContent>
-          </Card>
-          <Card>
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">System Health</CardTitle>
-              <Zap className="h-4 w-4 text-pop-green" />
-            </CardHeader>
-            <CardContent>
-              <div className="text-2xl font-bold">99.9%</div>
-            </CardContent>
-          </Card>
-        </div>
-      )}
+              {/* Active Staff */}
+              <div className="bg-gray-50 border border-gray-200 rounded-lg p-4">
+                <div className="flex items-center justify-between mb-2">
+                  <Settings className="h-5 w-5 text-gray-600" />
+                  <span className="text-xs font-medium text-gray-500 uppercase tracking-wide">Staff</span>
+                </div>
+                <div className="text-2xl font-bold text-pop-black mb-1">12</div>
+                <div className="text-sm text-gray-600 mb-2">Active Staff</div>
+                <div className="flex gap-2 text-xs">
+                  <span className="bg-gray-100 text-gray-700 px-2 py-1 rounded">8 Operations</span>
+                  <span className="bg-gray-100 text-gray-700 px-2 py-1 rounded">4 CRM</span>
+                </div>
+              </div>
+
+              {/* Partner Access */}
+              <div className="bg-gray-50 border border-gray-200 rounded-lg p-4">
+                <div className="flex items-center justify-between mb-2">
+                  <Users className="h-5 w-5 text-gray-600" />
+                  <span className="text-xs font-medium text-gray-500 uppercase tracking-wide">Partners</span>
+                </div>
+                <div className="text-2xl font-bold text-pop-black mb-1">54</div>
+                <div className="text-sm text-gray-600 mb-2">Partner Access</div>
+                <div className="flex gap-2 text-xs">
+                  <span className="bg-gray-100 text-gray-700 px-2 py-1 rounded">18 Orgs</span>
+                  <span className="bg-gray-100 text-gray-700 px-2 py-1 rounded">36 Affiliates</span>
+                </div>
+              </div>
+
+              {/* System Health */}
+              <div className="bg-gray-50 border border-gray-200 rounded-lg p-4">
+                <div className="flex items-center justify-between mb-2">
+                  <Zap className="h-5 w-5 text-gray-600" />
+                  <span className="text-xs font-medium text-gray-500 uppercase tracking-wide">System</span>
+                </div>
+                <div className="text-2xl font-bold text-pop-black mb-1">99.9%</div>
+                <div className="text-sm text-gray-600 mb-2">System Health</div>
+                <div className="flex gap-2 text-xs">
+                  <span className="bg-gray-100 text-gray-700 px-2 py-1 rounded">All Services</span>
+                  <span className="bg-gray-100 text-gray-700 px-2 py-1 rounded">0 Issues</span>
+                </div>
+              </div>
+            </div>
+          </AccordionContent>
+        </AccordionItem>
+      </Accordion>
 
       {/* Users Table */}
       <DataTable
