@@ -29,12 +29,12 @@ export default function PortalLayout({
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
 
   const sidebarItems = [
-    { id: 'profile', label: 'Profile', icon: User, color: 'text-pop-red', href: '/portal/profile' },
-    { id: 'admin', label: 'Admin', icon: Settings, color: 'text-pop-gray', href: '/portal/admin' },
+    { id: 'profile', label: 'Profile', icon: User, color: 'text-purple-600', href: '/portal/profile' },
+    { id: 'admin', label: 'Admin', icon: Settings, color: 'text-pop-black', href: '/portal/admin' },
     { id: 'operations', label: 'Operations', icon: Truck, color: 'text-pop-green', href: '/portal/operations' },
     { id: 'crm', label: 'CRM', icon: Phone, color: 'text-pop-blue', href: '/portal/crm' },
-    { id: 'partner', label: 'Partner', icon: Building2, color: 'text-pop-black', href: '/portal/partner' },
-    { id: 'financial', label: 'Finance', icon: DollarSign, color: 'text-pop-red', href: '/portal/financial' },
+    { id: 'partner', label: 'Partner', icon: Building2, color: 'text-pop-red', href: '/portal/partner' },
+    { id: 'financial', label: 'Finance', icon: DollarSign, color: 'text-orange-600', href: '/portal/financial' },
   ]
 
   return (
