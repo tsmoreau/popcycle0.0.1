@@ -719,10 +719,10 @@ export default function OperationsPage() {
 
       {/* Unified Quick Scan Section */}
       <div 
-        className="w-full border border-gray-200 rounded-lg bg-gray-50 hover:bg-gray-100 cursor-pointer transition-colors"
+        className="w-full border border-gray-200 rounded-lg bg-gray-50 hover:bg-gray-100 cursor-pointer transition-colors px-4"
         onClick={() => setShowScanModal(true)}
       >
-        <div className="px-6 py-4">
+        <div className="py-4">
           <div className="flex items-center gap-3">
             <Scan className="h-5 w-5 text-pop-green" />
             <div className="text-left">
