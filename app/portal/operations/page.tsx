@@ -65,16 +65,11 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "../../components/ui/dialog";
+import { DataTable, Column } from "../../components/ui/data-table";
 
 export default function OperationsPage() {
   const [activeTab, setActiveTab] = useState("collections");
   const [selectedBin, setSelectedBin] = useState(null);
-  const [sortField, setSortField] = useState("id");
-  const [sortDirection, setSortDirection] = useState("asc");
-  const [processingSortField, setProcessingSortField] = useState("id");
-  const [processingSortDirection, setProcessingSortDirection] = useState("asc");
-  const [fulfillmentSortField, setFulfillmentSortField] = useState("id");
-  const [fulfillmentSortDirection, setFulfillmentSortDirection] = useState("asc");
   const [showScanModal, setShowScanModal] = useState(false);
 
   // Mock data for Collections Queue - this should come from your MongoDB API
@@ -262,95 +257,321 @@ export default function OperationsPage() {
     }
   ];
 
-  const handleSort = (field: string) => {
-    if (sortField === field) {
-      setSortDirection(sortDirection === "asc" ? "desc" : "asc");
-    } else {
-      setSortField(field);
-      setSortDirection("asc");
+  // Column definitions for DataTable components
+  const collectionsColumns: Column<any>[] = [
+    { key: "id", header: "Bin ID" },
+    { key: "orgName", header: "Organization" },
+    { key: "location", header: "Location" },
+    { 
+      key: "status", 
+      header: "Status",
+      render: (item) => getStatusBadge(item.status)
+    },
+    { 
+      key: "currentLevel", 
+      header: "Capacity",
+      render: (item) => (
+        <div className="flex items-center gap-2">
+          <div className="w-20 bg-gray-200 rounded-full h-2">
+            <div 
+              className={`h-2 rounded-full ${
+                item.currentLevel >= 85 ? 'bg-pop-red' : 
+                item.currentLevel >= 60 ? 'bg-orange-500' : 'bg-pop-green'
+              }`}
+              style={{ width: `${item.currentLevel}%` }}
+            ></div>
+          </div>
+          <span className="text-sm text-gray-600">{item.currentLevel}%</span>
+        </div>
+      )
+    },
+    { 
+      key: "type", 
+      header: "Type",
+      render: (item) => (
+        <Badge variant={item.type === "permanent" ? "default" : "secondary"}>
+          {item.type}
+        </Badge>
+      )
     }
-  };
+  ];
 
-  const handleProcessingSort = (field: string) => {
-    if (processingSortField === field) {
-      setProcessingSortDirection(processingSortDirection === "asc" ? "desc" : "asc");
-    } else {
-      setProcessingSortField(field);
-      setProcessingSortDirection("asc");
-    }
-  };
+  const processingColumns: Column<any>[] = [
+    { key: "id", header: "Batch ID" },
+    { key: "orgName", header: "Organization" },
+    { 
+      key: "weight", 
+      header: "Weight",
+      render: (item) => `${item.weight} lbs`
+    },
+    { 
+      key: "materialType", 
+      header: "Material",
+      render: (item) => getMaterialTypeBadge(item.materialType)
+    },
+    { 
+      key: "status", 
+      header: "Status",
+      render: (item) => getProcessingStatusBadge(item.status)
+    },
+    { key: "collectedBy", header: "Collector" }
+  ];
 
-  const handleFulfillmentSort = (field: string) => {
-    if (fulfillmentSortField === field) {
-      setFulfillmentSortDirection(fulfillmentSortDirection === "asc" ? "desc" : "asc");
-    } else {
-      setFulfillmentSortField(field);
-      setFulfillmentSortDirection("asc");
-    }
-  };
+  const fulfillmentColumns: Column<any>[] = [
+    { key: "id", header: "Order ID" },
+    { key: "customerName", header: "Customer" },
+    { key: "itemType", header: "Item" },
+    { key: "quantity", header: "Qty" },
+    { 
+      key: "status", 
+      header: "Status",
+      render: (item) => getFulfillmentStatusBadge(item.status)
+    },
+    { key: "dueDate", header: "Due Date" }
+  ];
 
-  const sortedQueue = [...collectionsQueue].sort((a, b) => {
-    let aVal: any = a[sortField as keyof typeof a];
-    let bVal: any = b[sortField as keyof typeof b];
-    
-    // Handle null/undefined values
-    if (aVal == null) aVal = "";
-    if (bVal == null) bVal = "";
-    
-    // Convert to string for comparison if needed
-    if (typeof aVal === "string" && typeof bVal === "string") {
-      aVal = aVal.toLowerCase();
-      bVal = bVal.toLowerCase();
-    }
-    
-    if (sortDirection === "asc") {
-      return aVal < bVal ? -1 : aVal > bVal ? 1 : 0;
-    } else {
-      return aVal > bVal ? -1 : aVal < bVal ? 1 : 0;
-    }
-  });
+  // Modal render functions
+  const renderCollectionsModal = (bin: any) => (
+    <>
+      <DialogHeader>
+        <DialogTitle>Bin Details - {bin.id}</DialogTitle>
+        <DialogDescription>
+          Universal scan modal - same interface as QR code scanning
+        </DialogDescription>
+      </DialogHeader>
+      <div className="space-y-4">
+        <div className="grid grid-cols-2 gap-4">
+          <div>
+            <Label className="text-sm font-medium text-gray-700">Organization</Label>
+            <p className="text-sm">{bin.orgName}</p>
+          </div>
+          <div>
+            <Label className="text-sm font-medium text-gray-700">Location</Label>
+            <p className="text-sm">{bin.location}</p>
+          </div>
+        </div>
+        <div className="grid grid-cols-2 gap-4">
+          <div>
+            <Label className="text-sm font-medium text-gray-700">Current Status</Label>
+            <div className="mt-1">{getStatusBadge(bin.status)}</div>
+          </div>
+          <div>
+            <Label className="text-sm font-medium text-gray-700">Capacity</Label>
+            <p className="text-sm">{bin.currentLevel}% of {bin.capacity}kg</p>
+          </div>
+        </div>
+        <div className="grid grid-cols-2 gap-4">
+          <div>
+            <Label className="text-sm font-medium text-gray-700">Type</Label>
+            <p className="text-sm capitalize">{bin.type}</p>
+          </div>
+          <div>
+            <Label className="text-sm font-medium text-gray-700">QR Code</Label>
+            <p className="text-sm font-mono">{bin.qrCode}</p>
+          </div>
+        </div>
+        {bin.adoptedBy && (
+          <div>
+            <Label className="text-sm font-medium text-gray-700">Adopted By</Label>
+            <p className="text-sm">{bin.adoptedBy}</p>
+          </div>
+        )}
+        <div className="pt-4 border-t">
+          <div className="space-y-2">
+            {bin.status === "Ready for Pickup" && (
+              <Button className="w-full bg-pop-green hover:bg-pop-green/90">
+                <CheckCircle className="h-4 w-4 mr-2" />
+                Check-in Bin
+              </Button>
+            )}
+            {bin.status === "Collected" && (
+              <Button className="w-full bg-pop-blue hover:bg-pop-blue/90">
+                <ArrowRight className="h-4 w-4 mr-2" />
+                Start Rough Wash
+              </Button>
+            )}
+            {bin.status === "Awaiting Rough Wash" && (
+              <Button className="w-full bg-pop-red hover:bg-pop-red/90">
+                <Droplets className="h-4 w-4 mr-2" />
+                Begin Processing
+              </Button>
+            )}
+          </div>
+        </div>
+      </div>
+    </>
+  );
 
-  const sortedProcessingQueue = [...processingQueue].sort((a, b) => {
-    let aVal: any = a[processingSortField as keyof typeof a];
-    let bVal: any = b[processingSortField as keyof typeof b];
-    
-    // Handle null/undefined values
-    if (aVal == null) aVal = "";
-    if (bVal == null) bVal = "";
-    
-    // Convert to string for comparison if needed
-    if (typeof aVal === "string" && typeof bVal === "string") {
-      aVal = aVal.toLowerCase();
-      bVal = bVal.toLowerCase();
-    }
-    
-    if (processingSortDirection === "asc") {
-      return aVal < bVal ? -1 : aVal > bVal ? 1 : 0;
-    } else {
-      return aVal > bVal ? -1 : aVal < bVal ? 1 : 0;
-    }
-  });
+  const renderProcessingModal = (batch: any) => (
+    <>
+      <DialogHeader>
+        <DialogTitle>Batch Details - {batch.id}</DialogTitle>
+        <DialogDescription>
+          Universal scan modal - same interface as QR code scanning
+        </DialogDescription>
+      </DialogHeader>
+      <div className="space-y-4">
+        <div className="grid grid-cols-2 gap-4">
+          <div>
+            <Label className="text-sm font-medium text-gray-700">Organization</Label>
+            <p className="text-sm">{batch.orgName}</p>
+          </div>
+          <div>
+            <Label className="text-sm font-medium text-gray-700">Collection Date</Label>
+            <p className="text-sm">{new Date(batch.collectionDate).toLocaleDateString()}</p>
+          </div>
+        </div>
+        <div className="grid grid-cols-2 gap-4">
+          <div>
+            <Label className="text-sm font-medium text-gray-700">Weight</Label>
+            <p className="text-sm">{batch.weight} lbs</p>
+          </div>
+          <div>
+            <Label className="text-sm font-medium text-gray-700">Material Type</Label>
+            <div className="mt-1">{getMaterialTypeBadge(batch.materialType)}</div>
+          </div>
+        </div>
+        <div className="grid grid-cols-2 gap-4">
+          <div>
+            <Label className="text-sm font-medium text-gray-700">Current Status</Label>
+            <div className="mt-1">{getProcessingStatusBadge(batch.status)}</div>
+          </div>
+          <div>
+            <Label className="text-sm font-medium text-gray-700">Collected By</Label>
+            <p className="text-sm">{batch.collectedBy}</p>
+          </div>
+        </div>
+        <div className="grid grid-cols-2 gap-4">
+          <div>
+            <Label className="text-sm font-medium text-gray-700">Source Bin</Label>
+            <p className="text-sm font-mono">{batch.binId}</p>
+          </div>
+          <div>
+            <Label className="text-sm font-medium text-gray-700">QR Code</Label>
+            <p className="text-sm font-mono">{batch.qrCode}</p>
+          </div>
+        </div>
+        {batch.notes && (
+          <div>
+            <Label className="text-sm font-medium text-gray-700">Processing Notes</Label>
+            <p className="text-sm">{batch.notes}</p>
+          </div>
+        )}
+        <div className="pt-4 border-t">
+          <div className="space-y-2">
+            {batch.status === "collected" && (
+              <Button className="w-full bg-pop-blue hover:bg-pop-blue/90">
+                <Droplets className="h-4 w-4 mr-2" />
+                Start Rough Wash
+              </Button>
+            )}
+            {batch.status === "sorted" && (
+              <Button className="w-full bg-pop-green hover:bg-pop-green/90">
+                <Scissors className="h-4 w-4 mr-2" />
+                Begin Sorting
+              </Button>
+            )}
+            {batch.status === "cleaned" && (
+              <Button className="w-full bg-pop-red hover:bg-pop-red/90">
+                <ShredIcon className="h-4 w-4 mr-2" />
+                Start Shredding
+              </Button>
+            )}
+            {batch.status === "processed" && (
+              <div className="text-center">
+                <Badge className="bg-green-500 text-white">
+                  <CheckCircle className="h-3 w-3 mr-1" />
+                  Processing Complete
+                </Badge>
+                <Button className="w-full mt-2 bg-pop-black hover:bg-pop-black/90 text-white">
+                  <Archive className="h-4 w-4 mr-2" />
+                  Create Inventory Items
+                </Button>
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
+    </>
+  );
 
-  const sortedFulfillmentQueue = [...fulfillmentQueue].sort((a, b) => {
-    let aVal: any = a[fulfillmentSortField as keyof typeof a];
-    let bVal: any = b[fulfillmentSortField as keyof typeof b];
-    
-    // Handle null/undefined values
-    if (aVal == null) aVal = "";
-    if (bVal == null) bVal = "";
-    
-    // Convert to string for comparison if needed
-    if (typeof aVal === "string" && typeof bVal === "string") {
-      aVal = aVal.toLowerCase();
-      bVal = bVal.toLowerCase();
-    }
-    
-    if (fulfillmentSortDirection === "asc") {
-      return aVal < bVal ? -1 : aVal > bVal ? 1 : 0;
-    } else {
-      return aVal > bVal ? -1 : aVal < bVal ? 1 : 0;
-    }
-  });
+  const renderFulfillmentModal = (order: any) => (
+    <>
+      <DialogHeader>
+        <DialogTitle>Order Details - {order.id}</DialogTitle>
+        <DialogDescription>
+          Customer order tracking and maker assignment
+        </DialogDescription>
+      </DialogHeader>
+      <div className="space-y-4">
+        <div className="grid grid-cols-2 gap-4">
+          <div>
+            <Label className="text-sm font-medium text-gray-700">Customer</Label>
+            <p className="text-sm">{order.customerName}</p>
+          </div>
+          <div>
+            <Label className="text-sm font-medium text-gray-700">Item Type</Label>
+            <p className="text-sm">{order.itemType}</p>
+          </div>
+        </div>
+        <div className="grid grid-cols-2 gap-4">
+          <div>
+            <Label className="text-sm font-medium text-gray-700">Quantity</Label>
+            <p className="text-sm">{order.quantity} units</p>
+          </div>
+          <div>
+            <Label className="text-sm font-medium text-gray-700">Due Date</Label>
+            <p className="text-sm">{order.dueDate}</p>
+          </div>
+        </div>
+        <div className="grid grid-cols-2 gap-4">
+          <div>
+            <Label className="text-sm font-medium text-gray-700">Status</Label>
+            <div className="mt-1">{getFulfillmentStatusBadge(order.status)}</div>
+          </div>
+          <div>
+            <Label className="text-sm font-medium text-gray-700">Priority</Label>
+            <p className="text-sm capitalize">{order.priority}</p>
+          </div>
+        </div>
+        <div className="grid grid-cols-2 gap-4">
+          <div>
+            <Label className="text-sm font-medium text-gray-700">Assigned Maker</Label>
+            <p className="text-sm">{order.assignedMaker || "Unassigned"}</p>
+          </div>
+          <div>
+            <Label className="text-sm font-medium text-gray-700">Batch ID</Label>
+            <p className="text-sm font-mono">{order.batchId}</p>
+          </div>
+        </div>
+        {order.notes && (
+          <div>
+            <Label className="text-sm font-medium text-gray-700">Notes</Label>
+            <p className="text-sm text-gray-600">{order.notes}</p>
+          </div>
+        )}
+        <div className="flex gap-2 pt-2">
+          {order.status === "ready" && (
+            <Button className="bg-pop-green hover:bg-pop-green/90">
+              Assign Maker
+            </Button>
+          )}
+          {order.status === "assembly" && (
+            <Button className="bg-pop-blue hover:bg-pop-blue/90">
+              Mark Complete
+            </Button>
+          )}
+          {order.status === "urgent" && (
+            <Button className="bg-pop-red hover:bg-pop-red/90">
+              Prioritize
+            </Button>
+          )}
+        </div>
+      </div>
+    </>
+  );
+
+  // Badge helper functions
 
   const getStatusBadge = (status: string) => {
     switch (status) {
@@ -537,144 +758,14 @@ export default function OperationsPage() {
           </Card>
 
           {/* Collections Queue */}
-          <Card>
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2">
-                <Package className="h-5 w-5 text-pop-green" />
-                Collections Queue
-              </CardTitle>
-              <CardDescription>
-                Live status overview of all bins assigned for pickup and collected materials awaiting processing
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              <Table>
-                <TableHeader>
-                  <TableRow>
-                    <TableHead onClick={() => handleSort("id")} className="cursor-pointer hover:bg-gray-50">
-                      Bin ID {sortField === "id" && (sortDirection === "asc" ? "↑" : "↓")}
-                    </TableHead>
-                    <TableHead onClick={() => handleSort("orgName")} className="cursor-pointer hover:bg-gray-50">
-                      Organization {sortField === "orgName" && (sortDirection === "asc" ? "↑" : "↓")}
-                    </TableHead>
-                    <TableHead onClick={() => handleSort("location")} className="cursor-pointer hover:bg-gray-50">
-                      Location {sortField === "location" && (sortDirection === "asc" ? "↑" : "↓")}
-                    </TableHead>
-                    <TableHead onClick={() => handleSort("status")} className="cursor-pointer hover:bg-gray-50">
-                      Status {sortField === "status" && (sortDirection === "asc" ? "↑" : "↓")}
-                    </TableHead>
-                    <TableHead onClick={() => handleSort("currentLevel")} className="cursor-pointer hover:bg-gray-50">
-                      Level {sortField === "currentLevel" && (sortDirection === "asc" ? "↑" : "↓")}
-                    </TableHead>
-                    <TableHead onClick={() => handleSort("type")} className="cursor-pointer hover:bg-gray-50">
-                      Type {sortField === "type" && (sortDirection === "asc" ? "↑" : "↓")}
-                    </TableHead>
-                  </TableRow>
-                </TableHeader>
-                <TableBody>
-                  {sortedQueue.map((bin) => (
-                    <Dialog key={bin.id}>
-                      <DialogTrigger asChild>
-                        <TableRow className="cursor-pointer hover:bg-gray-50">
-                          <TableCell className="font-medium">{bin.id}</TableCell>
-                          <TableCell>{bin.orgName}</TableCell>
-                          <TableCell>{bin.location}</TableCell>
-                          <TableCell>{getStatusBadge(bin.status)}</TableCell>
-                          <TableCell>
-                            <div className="flex items-center gap-2">
-                              <div className="w-20 bg-gray-200 rounded-full h-2">
-                                <div 
-                                  className={`h-2 rounded-full ${
-                                    bin.currentLevel >= 85 ? 'bg-pop-red' : 
-                                    bin.currentLevel >= 60 ? 'bg-orange-500' : 'bg-pop-green'
-                                  }`}
-                                  style={{ width: `${bin.currentLevel}%` }}
-                                ></div>
-                              </div>
-                              <span className="text-sm text-gray-600">{bin.currentLevel}%</span>
-                            </div>
-                          </TableCell>
-                          <TableCell>
-                            <Badge variant={bin.type === "permanent" ? "default" : "secondary"}>
-                              {bin.type}
-                            </Badge>
-                          </TableCell>
-                        </TableRow>
-                      </DialogTrigger>
-                      <DialogContent className="max-w-md">
-                        <DialogHeader>
-                          <DialogTitle>Bin Details - {bin.id}</DialogTitle>
-                          <DialogDescription>
-                            Universal scan modal - same interface as QR code scanning
-                          </DialogDescription>
-                        </DialogHeader>
-                        <div className="space-y-4">
-                          <div className="grid grid-cols-2 gap-4">
-                            <div>
-                              <Label className="text-sm font-medium text-gray-700">Organization</Label>
-                              <p className="text-sm">{bin.orgName}</p>
-                            </div>
-                            <div>
-                              <Label className="text-sm font-medium text-gray-700">Location</Label>
-                              <p className="text-sm">{bin.location}</p>
-                            </div>
-                          </div>
-                          <div className="grid grid-cols-2 gap-4">
-                            <div>
-                              <Label className="text-sm font-medium text-gray-700">Current Status</Label>
-                              <div className="mt-1">{getStatusBadge(bin.status)}</div>
-                            </div>
-                            <div>
-                              <Label className="text-sm font-medium text-gray-700">Capacity</Label>
-                              <p className="text-sm">{bin.currentLevel}% of {bin.capacity}kg</p>
-                            </div>
-                          </div>
-                          <div className="grid grid-cols-2 gap-4">
-                            <div>
-                              <Label className="text-sm font-medium text-gray-700">Type</Label>
-                              <p className="text-sm capitalize">{bin.type}</p>
-                            </div>
-                            <div>
-                              <Label className="text-sm font-medium text-gray-700">QR Code</Label>
-                              <p className="text-sm font-mono">{bin.qrCode}</p>
-                            </div>
-                          </div>
-                          {bin.adoptedBy && (
-                            <div>
-                              <Label className="text-sm font-medium text-gray-700">Adopted By</Label>
-                              <p className="text-sm">{bin.adoptedBy}</p>
-                            </div>
-                          )}
-                          <div className="pt-4 border-t">
-                            <div className="space-y-2">
-                              {bin.status === "Ready for Pickup" && (
-                                <Button className="w-full bg-pop-green hover:bg-pop-green/90">
-                                  <CheckCircle className="h-4 w-4 mr-2" />
-                                  Check-in Bin
-                                </Button>
-                              )}
-                              {bin.status === "Collected" && (
-                                <Button className="w-full bg-pop-blue hover:bg-pop-blue/90">
-                                  <ArrowRight className="h-4 w-4 mr-2" />
-                                  Start Rough Wash
-                                </Button>
-                              )}
-                              {bin.status === "Awaiting Rough Wash" && (
-                                <Button className="w-full bg-pop-red hover:bg-pop-red/90">
-                                  <Droplets className="h-4 w-4 mr-2" />
-                                  Begin Processing
-                                </Button>
-                              )}
-                            </div>
-                          </div>
-                        </div>
-                      </DialogContent>
-                    </Dialog>
-                  ))}
-                </TableBody>
-              </Table>
-            </CardContent>
-          </Card>
+          <DataTable
+            title="Collections Queue"
+            description="Live status overview of all bins assigned for pickup and collected materials awaiting processing"
+            icon={<Package className="h-5 w-5 text-pop-green" />}
+            data={collectionsQueue}
+            columns={collectionsColumns}
+            renderModal={renderCollectionsModal}
+          />
 
           {/* Collections Workflow Diagram */}
           <Card>
@@ -959,149 +1050,14 @@ export default function OperationsPage() {
           </Card>
 
           {/* Processing Queue */}
-          <Card>
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2">
-                <Settings className="h-5 w-5 text-pop-blue" />
-                Processing Queue
-              </CardTitle>
-              <CardDescription>
-                Live status overview of all batches in various processing stages
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              <Table>
-                <TableHeader>
-                  <TableRow>
-                    <TableHead onClick={() => handleProcessingSort("id")} className="cursor-pointer hover:bg-gray-50">
-                      Batch ID {processingSortField === "id" && (processingSortDirection === "asc" ? "↑" : "↓")}
-                    </TableHead>
-                    <TableHead onClick={() => handleProcessingSort("orgName")} className="cursor-pointer hover:bg-gray-50">
-                      Organization {processingSortField === "orgName" && (processingSortDirection === "asc" ? "↑" : "↓")}
-                    </TableHead>
-                    <TableHead onClick={() => handleProcessingSort("weight")} className="cursor-pointer hover:bg-gray-50">
-                      Weight {processingSortField === "weight" && (processingSortDirection === "asc" ? "↑" : "↓")}
-                    </TableHead>
-                    <TableHead onClick={() => handleProcessingSort("materialType")} className="cursor-pointer hover:bg-gray-50">
-                      Material {processingSortField === "materialType" && (processingSortDirection === "asc" ? "↑" : "↓")}
-                    </TableHead>
-                    <TableHead onClick={() => handleProcessingSort("status")} className="cursor-pointer hover:bg-gray-50">
-                      Status {processingSortField === "status" && (processingSortDirection === "asc" ? "↑" : "↓")}
-                    </TableHead>
-                    <TableHead onClick={() => handleProcessingSort("collectedBy")} className="cursor-pointer hover:bg-gray-50">
-                      Collector {processingSortField === "collectedBy" && (processingSortDirection === "asc" ? "↑" : "↓")}
-                    </TableHead>
-                  </TableRow>
-                </TableHeader>
-                <TableBody>
-                  {sortedProcessingQueue.map((batch) => (
-                    <Dialog key={batch.id}>
-                      <DialogTrigger asChild>
-                        <TableRow className="cursor-pointer hover:bg-gray-50">
-                          <TableCell className="font-medium">{batch.id}</TableCell>
-                          <TableCell>{batch.orgName}</TableCell>
-                          <TableCell>{batch.weight} lbs</TableCell>
-                          <TableCell>{getMaterialTypeBadge(batch.materialType)}</TableCell>
-                          <TableCell>{getProcessingStatusBadge(batch.status)}</TableCell>
-                          <TableCell>{batch.collectedBy}</TableCell>
-                        </TableRow>
-                      </DialogTrigger>
-                      <DialogContent className="max-w-lg">
-                        <DialogHeader>
-                          <DialogTitle>Batch Details - {batch.id}</DialogTitle>
-                          <DialogDescription>
-                            Universal scan modal - same interface as QR code scanning
-                          </DialogDescription>
-                        </DialogHeader>
-                        <div className="space-y-4">
-                          <div className="grid grid-cols-2 gap-4">
-                            <div>
-                              <Label className="text-sm font-medium text-gray-700">Organization</Label>
-                              <p className="text-sm">{batch.orgName}</p>
-                            </div>
-                            <div>
-                              <Label className="text-sm font-medium text-gray-700">Collection Date</Label>
-                              <p className="text-sm">{new Date(batch.collectionDate).toLocaleDateString()}</p>
-                            </div>
-                          </div>
-                          <div className="grid grid-cols-2 gap-4">
-                            <div>
-                              <Label className="text-sm font-medium text-gray-700">Weight</Label>
-                              <p className="text-sm">{batch.weight} lbs</p>
-                            </div>
-                            <div>
-                              <Label className="text-sm font-medium text-gray-700">Material Type</Label>
-                              <div className="mt-1">{getMaterialTypeBadge(batch.materialType)}</div>
-                            </div>
-                          </div>
-                          <div className="grid grid-cols-2 gap-4">
-                            <div>
-                              <Label className="text-sm font-medium text-gray-700">Current Status</Label>
-                              <div className="mt-1">{getProcessingStatusBadge(batch.status)}</div>
-                            </div>
-                            <div>
-                              <Label className="text-sm font-medium text-gray-700">Collected By</Label>
-                              <p className="text-sm">{batch.collectedBy}</p>
-                            </div>
-                          </div>
-                          <div className="grid grid-cols-2 gap-4">
-                            <div>
-                              <Label className="text-sm font-medium text-gray-700">Source Bin</Label>
-                              <p className="text-sm font-mono">{batch.binId}</p>
-                            </div>
-                            <div>
-                              <Label className="text-sm font-medium text-gray-700">QR Code</Label>
-                              <p className="text-sm font-mono">{batch.qrCode}</p>
-                            </div>
-                          </div>
-                          {batch.notes && (
-                            <div>
-                              <Label className="text-sm font-medium text-gray-700">Processing Notes</Label>
-                              <p className="text-sm">{batch.notes}</p>
-                            </div>
-                          )}
-                          <div className="pt-4 border-t">
-                            <div className="space-y-2">
-                              {batch.status === "collected" && (
-                                <Button className="w-full bg-pop-blue hover:bg-pop-blue/90">
-                                  <Droplets className="h-4 w-4 mr-2" />
-                                  Start Rough Wash
-                                </Button>
-                              )}
-                              {batch.status === "sorted" && (
-                                <Button className="w-full bg-pop-green hover:bg-pop-green/90">
-                                  <Scissors className="h-4 w-4 mr-2" />
-                                  Begin Sorting
-                                </Button>
-                              )}
-                              {batch.status === "cleaned" && (
-                                <Button className="w-full bg-pop-red hover:bg-pop-red/90">
-                                  <ShredIcon className="h-4 w-4 mr-2" />
-                                  Start Shredding
-                                </Button>
-                              )}
-                              {batch.status === "processed" && (
-                                <div className="text-center">
-                                  <Badge className="bg-green-500 text-white">
-                                    <CheckCircle className="h-3 w-3 mr-1" />
-                                    Processing Complete
-                                  </Badge>
-                                  <Button className="w-full mt-2 bg-pop-black hover:bg-pop-black/90 text-white">
-                                    <Archive className="h-4 w-4 mr-2" />
-                                    Create Inventory Items
-                                  </Button>
-                                </div>
-                              )}
-                            </div>
-                          </div>
-                        </div>
-                      </DialogContent>
-                    </Dialog>
-                  ))}
-                </TableBody>
-              </Table>
-            </CardContent>
-          </Card>
+          <DataTable
+            title="Processing Queue"
+            description="Live status overview of all batches in various processing stages"
+            icon={<Settings className="h-5 w-5 text-pop-blue" />}
+            data={processingQueue}
+            columns={processingColumns}
+            renderModal={renderProcessingModal}
+          />
 
           {/* Processing Workflow Diagram */}
           <Card>
@@ -1800,132 +1756,14 @@ export default function OperationsPage() {
         {/* Fulfillment Tab */}
         <TabsContent value="fulfillment" className="space-y-6">
           {/* Fulfillment Queue */}
-          <Card>
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2">
-                <Users className="h-5 w-5 text-pop-green" />
-                Order Queue
-              </CardTitle>
-              <CardDescription>
-                Customer orders and maker assignments with fulfillment status tracking
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              <Table>
-                <TableHeader>
-                  <TableRow>
-                    <TableHead onClick={() => handleFulfillmentSort("id")} className="cursor-pointer hover:bg-gray-50">
-                      Order ID {fulfillmentSortField === "id" && (fulfillmentSortDirection === "asc" ? "↑" : "↓")}
-                    </TableHead>
-                    <TableHead onClick={() => handleFulfillmentSort("customerName")} className="cursor-pointer hover:bg-gray-50">
-                      Customer {fulfillmentSortField === "customerName" && (fulfillmentSortDirection === "asc" ? "↑" : "↓")}
-                    </TableHead>
-                    <TableHead onClick={() => handleFulfillmentSort("itemType")} className="cursor-pointer hover:bg-gray-50">
-                      Item {fulfillmentSortField === "itemType" && (fulfillmentSortDirection === "asc" ? "↑" : "↓")}
-                    </TableHead>
-                    <TableHead onClick={() => handleFulfillmentSort("quantity")} className="cursor-pointer hover:bg-gray-50">
-                      Qty {fulfillmentSortField === "quantity" && (fulfillmentSortDirection === "asc" ? "↑" : "↓")}
-                    </TableHead>
-                    <TableHead onClick={() => handleFulfillmentSort("status")} className="cursor-pointer hover:bg-gray-50">
-                      Status {fulfillmentSortField === "status" && (fulfillmentSortDirection === "asc" ? "↑" : "↓")}
-                    </TableHead>
-                    <TableHead onClick={() => handleFulfillmentSort("dueDate")} className="cursor-pointer hover:bg-gray-50">
-                      Due Date {fulfillmentSortField === "dueDate" && (fulfillmentSortDirection === "asc" ? "↑" : "↓")}
-                    </TableHead>
-                  </TableRow>
-                </TableHeader>
-                <TableBody>
-                  {sortedFulfillmentQueue.map((order) => (
-                    <Dialog key={order.id}>
-                      <DialogTrigger asChild>
-                        <TableRow className="cursor-pointer hover:bg-gray-50">
-                          <TableCell className="font-medium">{order.id}</TableCell>
-                          <TableCell>{order.customerName}</TableCell>
-                          <TableCell>{order.itemType}</TableCell>
-                          <TableCell>{order.quantity}</TableCell>
-                          <TableCell>{getFulfillmentStatusBadge(order.status)}</TableCell>
-                          <TableCell>{order.dueDate}</TableCell>
-                        </TableRow>
-                      </DialogTrigger>
-                      <DialogContent className="max-w-md">
-                        <DialogHeader>
-                          <DialogTitle>Order Details - {order.id}</DialogTitle>
-                          <DialogDescription>
-                            Customer order tracking and maker assignment
-                          </DialogDescription>
-                        </DialogHeader>
-                        <div className="space-y-4">
-                          <div className="grid grid-cols-2 gap-4">
-                            <div>
-                              <Label className="text-sm font-medium text-gray-700">Customer</Label>
-                              <p className="text-sm">{order.customerName}</p>
-                            </div>
-                            <div>
-                              <Label className="text-sm font-medium text-gray-700">Item Type</Label>
-                              <p className="text-sm">{order.itemType}</p>
-                            </div>
-                          </div>
-                          <div className="grid grid-cols-2 gap-4">
-                            <div>
-                              <Label className="text-sm font-medium text-gray-700">Quantity</Label>
-                              <p className="text-sm">{order.quantity} units</p>
-                            </div>
-                            <div>
-                              <Label className="text-sm font-medium text-gray-700">Due Date</Label>
-                              <p className="text-sm">{order.dueDate}</p>
-                            </div>
-                          </div>
-                          <div className="grid grid-cols-2 gap-4">
-                            <div>
-                              <Label className="text-sm font-medium text-gray-700">Status</Label>
-                              <div className="mt-1">{getFulfillmentStatusBadge(order.status)}</div>
-                            </div>
-                            <div>
-                              <Label className="text-sm font-medium text-gray-700">Priority</Label>
-                              <p className="text-sm capitalize">{order.priority}</p>
-                            </div>
-                          </div>
-                          <div className="grid grid-cols-2 gap-4">
-                            <div>
-                              <Label className="text-sm font-medium text-gray-700">Assigned Maker</Label>
-                              <p className="text-sm">{order.assignedMaker || "Unassigned"}</p>
-                            </div>
-                            <div>
-                              <Label className="text-sm font-medium text-gray-700">Batch ID</Label>
-                              <p className="text-sm font-mono">{order.batchId}</p>
-                            </div>
-                          </div>
-                          {order.notes && (
-                            <div>
-                              <Label className="text-sm font-medium text-gray-700">Notes</Label>
-                              <p className="text-sm text-gray-600">{order.notes}</p>
-                            </div>
-                          )}
-                          <div className="flex gap-2 pt-2">
-                            {order.status === "ready" && (
-                              <Button className="bg-pop-green hover:bg-pop-green/90">
-                                Assign Maker
-                              </Button>
-                            )}
-                            {order.status === "assembly" && (
-                              <Button className="bg-pop-blue hover:bg-pop-blue/90">
-                                Mark Complete
-                              </Button>
-                            )}
-                            {order.status === "urgent" && (
-                              <Button className="bg-pop-red hover:bg-pop-red/90">
-                                Prioritize
-                              </Button>
-                            )}
-                          </div>
-                        </div>
-                      </DialogContent>
-                    </Dialog>
-                  ))}
-                </TableBody>
-              </Table>
-            </CardContent>
-          </Card>
+          <DataTable
+            title="Order Queue"
+            description="Customer orders and maker assignments with fulfillment status tracking"
+            icon={<Users className="h-5 w-5 text-pop-green" />}
+            data={fulfillmentQueue}
+            columns={fulfillmentColumns}
+            renderModal={renderFulfillmentModal}
+          />
 
             <Card>
               <CardHeader>
