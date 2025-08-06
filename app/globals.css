@@ -102,6 +102,10 @@
   position: relative;
   background-color: #f9fafb;
   color: #374151;
+  border-top: 2px solid #d1d5db;
+  border-left: 2px solid #d1d5db;
+  border-right: 2px solid #d1d5db;
+  border-bottom: none;
   border-radius: 8px 8px 0 0;
   padding-left: 10px !important;
   padding-right: 10px !important;
@@ -117,7 +121,7 @@
   left: 0;
   width: 8px;
   height: 100%;
-  background: transparent;
+  background: linear-gradient(135deg, transparent 50%, #d1d5db 50%, #d1d5db 51%, transparent 52%);
   z-index: 1;
 }
 
@@ -131,38 +135,40 @@
   right: 0;
   width: 8px;
   height: 100%;
-  background: transparent;
+  background: linear-gradient(45deg, transparent 50%, #d1d5db 50%, #d1d5db 51%, transparent 52%);
   z-index: 1;
 }
 
 .folder-tab-green[data-state="active"] {
   background-color: hsl(var(--pop-green)) !important;
   color: white !important;
+  border-color: hsl(var(--pop-green)) !important;
   margin-bottom: -2px;
   z-index: 10;
 }
 
 .folder-tab-green[data-state="active"]::before {
-  background: transparent;
+  background: linear-gradient(135deg, transparent 50%, hsl(var(--pop-green)) 50%, hsl(var(--pop-green)) 51%, transparent 52%);
 }
 
 .folder-tab-green[data-state="active"]::after {
-  background: transparent;
+  background: linear-gradient(45deg, transparent 50%, hsl(var(--pop-green)) 50%, hsl(var(--pop-green)) 51%, transparent 52%);
 }
 
 .folder-tab-blue[data-state="active"] {
   background-color: hsl(var(--pop-blue)) !important;
   color: white !important;
+  border-color: hsl(var(--pop-blue)) !important;
   margin-bottom: -2px;
   z-index: 10;
 }
 
 .folder-tab-blue[data-state="active"]::before {
-  background: transparent;
+  background: linear-gradient(135deg, transparent 50%, hsl(var(--pop-blue)) 50%, hsl(var(--pop-blue)) 51%, transparent 52%);
 }
 
 .folder-tab-blue[data-state="active"]::after {
-  background: transparent;
+  background: linear-gradient(45deg, transparent 50%, hsl(var(--pop-blue)) 50%, hsl(var(--pop-blue)) 51%, transparent 52%);
 }
 
 .folder-tab-red[data-state="active"] {
