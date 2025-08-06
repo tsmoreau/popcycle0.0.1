@@ -21,7 +21,8 @@ export default function ProfilePage() {
                 <h1 className="text-3xl helvetica-bold text-pop-black">PlasticCraftAlex</h1>
                 <div className="systematic-caps text-gray-600 mt-1 space-y-1">
                   <div>Alex Martinez</div>
-                  <div>San Francisco, CA • Joined March 2023</div>
+                  <div>San Francisco, CA</div>
+                  <div>Joined March 2023</div>
                 </div>
                 <div className="flex items-center space-x-4 mt-2">
                   <Badge className="bg-pop-green/10 text-pop-green border-pop-green">
