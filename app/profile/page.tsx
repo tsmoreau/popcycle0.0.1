@@ -130,48 +130,32 @@ export default function ProfilePage() {
                 <CardDescription>Latest maker creations and assemblies</CardDescription>
               </CardHeader>
               <CardContent>
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <div className="space-y-3">
                   {[
                     { name: 'Office Desk Organizer', date: 'Jan 15, 2025', plastic: '2.3 lbs', status: 'Completed' },
                     { name: 'Phone Stand Set', date: 'Jan 12, 2025', plastic: '0.8 lbs', status: 'Completed' },
                     { name: 'Custom Planters', date: 'Jan 8, 2025', plastic: '4.1 lbs', status: 'In Progress' },
                     { name: 'Workshop Demo Kit', date: 'Jan 5, 2025', plastic: '1.5 lbs', status: 'Completed' },
                   ].map((project, index) => (
-                    <div key={index} className="border-2 border-pop-black rounded-lg p-5 hover:bg-pop-green/5 transition-colors group">
-                      <div className="flex items-start justify-between mb-3">
-                        <div className="flex-1">
-                          <h4 className="helvetica-bold text-base text-pop-black group-hover:text-pop-green transition-colors mb-1">
-                            {project.name}
-                          </h4>
-                          <p className="systematic-caps text-xs text-gray-500">{project.date}</p>
+                    <div key={index} className="flex items-center justify-between p-4 border-2 border-pop-black rounded-lg hover:bg-pop-green/5 transition-colors">
+                      <div className="flex-1">
+                        <div className="flex items-center justify-between">
+                          <h4 className="helvetica-bold text-sm">{project.name}</h4>
+                          <Badge variant={project.status === 'Completed' ? 'default' : 'secondary'} className="systematic-caps text-xs">
+                            {project.status}
+                          </Badge>
                         </div>
-                        <Badge 
-                          variant={project.status === 'Completed' ? 'default' : 'secondary'} 
-                          className={`systematic-caps text-xs ml-3 ${
-                            project.status === 'Completed' 
-                              ? 'bg-pop-green/10 text-pop-green border-pop-green' 
-                              : 'bg-pop-blue/10 text-pop-blue border-pop-blue'
-                          }`}
-                        >
-                          {project.status}
-                        </Badge>
-                      </div>
-                      <div className="flex items-center justify-between pt-2 border-t border-gray-100">
-                        <div className="flex items-center space-x-2">
-                          <Activity className="w-3 h-3 text-gray-400" />
-                          <span className="systematic-caps text-xs text-gray-600">Plastic Used</span>
+                        <div className="flex items-center justify-between mt-1">
+                          <p className="systematic-caps text-xs text-gray-600">{project.date}</p>
+                          <span className="systematic-caps text-xs text-gray-600">Plastic: {project.plastic}</span>
                         </div>
-                        <span className="helvetica-bold text-sm text-pop-black">{project.plastic}</span>
                       </div>
                     </div>
                   ))}
                 </div>
-                <div className="mt-6 pt-4 border-t border-gray-100">
-                  <Button variant="outline" className="w-full systematic-caps border-2 border-pop-black hover:bg-pop-green hover:text-white transition-all">
-                    <BookOpen className="w-4 h-4 mr-2" />
-                    View All Projects
-                  </Button>
-                </div>
+                <Button variant="outline" className="w-full mt-4 systematic-caps border-2 border-pop-black hover:bg-pop-green hover:text-white">
+                  View All Projects
+                </Button>
               </CardContent>
             </Card>
 
