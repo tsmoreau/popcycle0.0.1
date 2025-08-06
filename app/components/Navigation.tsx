@@ -176,7 +176,7 @@ export default function Navigation() {
                       <div className="systematic-caps text-xs text-gray-600">Maker Level 3</div>
                     </div>
                     <Link
-                      href="/portal/profile"
+                      href="/profile"
                       className="flex items-center px-4 py-2 systematic-caps text-sm hover:bg-pop-green hover:text-white transition-colors"
                       onClick={() => setUserMenuOpen(false)}
                     >
@@ -322,7 +322,7 @@ export default function Navigation() {
               {/* User Menu Items */}
               <div className="space-y-2">
                 <Link
-                  href="/portal/profile"
+                  href="/profile"
                   onClick={() => setMobileMenuOpen(false)}
                   className="w-full flex items-center px-4 py-2 systematic-caps text-sm border-2 border-pop-black rounded-md hover:bg-pop-green hover:text-white transition-colors"
                 >
