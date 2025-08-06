@@ -746,11 +746,11 @@ export default function OperationsPage() {
             <TabsTrigger value="processing" className="folder-tab-white relative z-[3] -ml-6 sm:ml-0 text-xs sm:text-sm px-3 sm:px-4 py-2 sm:py-2">
               ⚙️ Processing
             </TabsTrigger>
-            <TabsTrigger value="inventory" className="folder-tab-white relative z-[2] -ml-6 sm:ml-0 text-xs sm:text-sm px-3 sm:px-4 py-2 sm:py-2">
-              📊 Inventory
-            </TabsTrigger>
-            <TabsTrigger value="fulfillment" className="folder-tab-white relative z-[1] -ml-6 sm:ml-0 text-xs sm:text-sm px-3 sm:px-4 py-2 sm:py-2">
+            <TabsTrigger value="fulfillment" className="folder-tab-white relative z-[2] -ml-6 sm:ml-0 text-xs sm:text-sm px-3 sm:px-4 py-2 sm:py-2">
               🚚 Fulfillment
+            </TabsTrigger>
+            <TabsTrigger value="inventory" className="folder-tab-white relative z-[1] -ml-6 sm:ml-0 text-xs sm:text-sm px-3 sm:px-4 py-2 sm:py-2">
+              📊 Inventory
             </TabsTrigger>
           </TabsList>
         </div>
