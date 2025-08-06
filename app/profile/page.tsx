@@ -14,8 +14,8 @@ export default function ProfilePage() {
         <div className="max-w-4xl mx-auto px-4 py-8">
           <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
             <div className="flex items-center space-x-6">
-              <div className="w-20 h-20 bg-pop-green border-4 border-pop-black rounded-full flex items-center justify-center">
-                <span className="text-pop-black helvetica-bold text-3xl">A</span>
+              <div className="w-24 h-24 bg-pop-green border-4 border-pop-black rounded-full flex items-center justify-center flex-shrink-0">
+                <span className="text-pop-black helvetica-bold text-4xl">A</span>
               </div>
               <div>
                 <h1 className="text-3xl helvetica-bold text-pop-black">Alex Martinez</h1>
