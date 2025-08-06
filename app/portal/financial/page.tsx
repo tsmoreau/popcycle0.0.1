@@ -92,31 +92,53 @@ export default function FinancialPage() {
 
         <Card>
           <CardHeader>
-            <CardTitle>Cost Analysis</CardTitle>
-            <CardDescription>Operational expense breakdown</CardDescription>
+            <CardTitle className="flex items-center justify-between">
+              Expenses
+              <span className="text-2xl font-bold text-red-600">$23,190</span>
+            </CardTitle>
+            <CardDescription>Monthly operational expenses</CardDescription>
           </CardHeader>
-          <CardContent className="space-y-3">
+          <CardContent className="space-y-4">
             <div className="space-y-3">
-              <div className="flex justify-between items-center">
-                <span className="text-sm text-gray-600">Material Processing</span>
-                <span className="font-medium">$18,089</span>
+              <div className="flex justify-between items-center p-3 bg-red-50 rounded-lg">
+                <div>
+                  <span className="text-sm font-medium">Collection & Logistics</span>
+                  <p className="text-xs text-gray-600">Fuel, vehicles, pickup labor</p>
+                </div>
+                <span className="font-medium">$8,450</span>
               </div>
-              <div className="flex justify-between items-center">
-                <span className="text-sm text-gray-600">Labor & Makers</span>
-                <span className="font-medium">$3,240</span>
+              <div className="flex justify-between items-center p-3 bg-orange-50 rounded-lg">
+                <div>
+                  <span className="text-sm font-medium">Manufacturing</span>
+                  <p className="text-xs text-gray-600">Materials, utilities, equipment</p>
+                </div>
+                <span className="font-medium">$6,720</span>
               </div>
-              <div className="flex justify-between items-center">
-                <span className="text-sm text-gray-600">Equipment & Facilities</span>
-                <span className="font-medium">$1,236</span>
+              <div className="flex justify-between items-center p-3 bg-yellow-50 rounded-lg">
+                <div>
+                  <span className="text-sm font-medium">Staff & Makers</span>
+                  <p className="text-xs text-gray-600">Wages, workshops, certifications</p>
+                </div>
+                <span className="font-medium">$4,890</span>
               </div>
-              <div className="flex justify-between items-center">
-                <span className="text-sm text-gray-600">Transportation</span>
-                <span className="font-medium">$625</span>
+              <div className="flex justify-between items-center p-3 bg-blue-50 rounded-lg">
+                <div>
+                  <span className="text-sm font-medium">Operations</span>
+                  <p className="text-xs text-gray-600">Software, insurance, admin</p>
+                </div>
+                <span className="font-medium">$3,130</span>
               </div>
             </div>
-            <Button variant="outline" className="w-full">
-              Export Cost Report
-            </Button>
+            
+            <div className="pt-2 border-t">
+              <div className="flex justify-between items-center mb-3">
+                <span className="text-sm font-medium">vs. Last Month</span>
+                <Badge variant="secondary" className="bg-green-100 text-green-700">-8.3%</Badge>
+              </div>
+              <Button variant="outline" className="w-full">
+                View Detailed Breakdown
+              </Button>
+            </div>
           </CardContent>
         </Card>
 
