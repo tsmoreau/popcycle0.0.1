@@ -735,28 +735,16 @@ export default function OperationsPage() {
         <div className="relative">
           <TabsList className="mb-0 relative z-10 p-0 bg-transparent h-auto gap-0 flex-nowrap overflow-visible">
             <TabsTrigger value="collections" className="folder-tab-white relative z-[4] text-xs sm:text-sm px-3 sm:px-4 py-2 sm:py-2">
-              <div className="flex items-center gap-2">
-                <Package className="h-4 w-4 text-pop-green" />
-                <span>Collections</span>
-              </div>
+              📦 Collections
             </TabsTrigger>
             <TabsTrigger value="processing" className="folder-tab-white relative z-[3] -ml-6 sm:ml-0 text-xs sm:text-sm px-3 sm:px-4 py-2 sm:py-2">
-              <div className="flex items-center gap-2">
-                <Settings className="h-4 w-4 text-pop-green" />
-                <span>Processing</span>
-              </div>
+              ⚙️ Processing
             </TabsTrigger>
             <TabsTrigger value="fulfillment" className="folder-tab-white relative z-[2] -ml-6 sm:ml-0 text-xs sm:text-sm px-3 sm:px-4 py-2 sm:py-2">
-              <div className="flex items-center gap-2">
-                <Users className="h-4 w-4 text-pop-green" />
-                <span>Fulfillment</span>
-              </div>
+              🚚 Fulfillment
             </TabsTrigger>
             <TabsTrigger value="inventory" className="folder-tab-white relative z-[1] -ml-6 sm:ml-0 text-xs sm:text-sm px-3 sm:px-4 py-2 sm:py-2">
-              <div className="flex items-center gap-2">
-                <Archive className="h-4 w-4 text-pop-green" />
-                <span>Inventory</span>
-              </div>
+              📊 Inventory
             </TabsTrigger>
           </TabsList>
         </div>

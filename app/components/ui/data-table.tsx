@@ -18,8 +18,6 @@ import {
   DialogTrigger,
 } from "./dialog"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "./card"
-import { Button } from "./button"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "./select"
 import { ArrowUpDown } from "lucide-react"
 
 export interface Column<T> {
@@ -48,18 +46,10 @@ export function DataTable<T extends Record<string, any>>({
   data,
   columns,
   renderModal,
-  className = "",
-  allowReorder = false,
-  onReorder
+  className = ""
 }: DataTableProps<T>) {
   const [sortField, setSortField] = useState<string>("")
   const [sortDirection, setSortDirection] = useState<SortDirection>("asc")
-  const [localData, setLocalData] = useState<T[]>(data)
-
-  // Update local data when prop changes
-  useState(() => {
-    setLocalData(data)
-  })
 
   const handleSort = (field: string) => {
     if (sortField === field) {
@@ -70,30 +60,13 @@ export function DataTable<T extends Record<string, any>>({
     }
   }
 
-  const moveItem = (fromIndex: number, toIndex: number) => {
-    if (!allowReorder || !onReorder) return
-    
-    const newData = [...localData]
-    const [movedItem] = newData.splice(fromIndex, 1)
-    newData.splice(toIndex, 0, movedItem)
-    
-    setLocalData(newData)
-    onReorder(newData)
+  const handleMobileSort = (value: string) => {
+    const [field, direction] = value.split('-')
+    setSortField(field)
+    setSortDirection(direction as SortDirection)
   }
 
-  const moveUp = (index: number) => {
-    if (index > 0) {
-      moveItem(index, index - 1)
-    }
-  }
-
-  const moveDown = (index: number) => {
-    if (index < localData.length - 1) {
-      moveItem(index, index + 1)
-    }
-  }
-
-  const sortedData = allowReorder ? localData : [...localData].sort((a, b) => {
+  const sortedData = [...data].sort((a, b) => {
     if (!sortField) return 0
     
     const aValue = a[sortField]
@@ -180,11 +153,33 @@ export function DataTable<T extends Record<string, any>>({
         </div>
 
         {/* Mobile Card View */}
-        <div className="md:hidden space-y-3">
-          {sortedData.map((item, index) => {
-            const CardContent = (
-              <div className="relative">
-                <div className={`p-4 border rounded-lg bg-white ${renderModal ? "cursor-pointer hover:bg-gray-50" : ""} ${allowReorder ? "pr-16" : ""}`}>
+        <div className="md:hidden">
+          {/* Mobile Sort Controls */}
+          <div className="mb-4 flex items-center gap-2">
+            <ArrowUpDown className="h-4 w-4 text-pop-green" />
+            <select 
+              value={sortField ? `${sortField}-${sortDirection}` : ""} 
+              onChange={(e) => handleMobileSort(e.target.value)}
+              className="border rounded px-3 py-2 text-sm w-48"
+            >
+              <option value="">Sort by...</option>
+              {columns.filter(col => col.sortable !== false).map((column) => (
+                <optgroup key={String(column.key)} label={column.header}>
+                  <option value={`${String(column.key)}-asc`}>
+                    {column.header} (A-Z)
+                  </option>
+                  <option value={`${String(column.key)}-desc`}>
+                    {column.header} (Z-A)
+                  </option>
+                </optgroup>
+              ))}
+            </select>
+          </div>
+
+          <div className="space-y-3">
+            {sortedData.map((item, index) => {
+              const CardContent = (
+                <div className={`p-4 border rounded-lg bg-white ${renderModal ? "cursor-pointer hover:bg-gray-50" : ""}`}>
                   <div className="space-y-2">
                     {columns.map((column, colIndex) => (
                       <div key={String(column.key)} className={`flex justify-between items-start ${colIndex === 0 ? "mb-3" : ""}`}>
@@ -198,54 +193,24 @@ export function DataTable<T extends Record<string, any>>({
                     ))}
                   </div>
                 </div>
-                
-                {/* Mobile Reorder Controls */}
-                {allowReorder && (
-                  <div className="absolute right-2 top-1/2 transform -translate-y-1/2 flex flex-col gap-1">
-                    <Button
-                      variant="ghost"
-                      size="sm"
-                      className="h-8 w-8 p-0"
-                      onClick={(e) => {
-                        e.stopPropagation()
-                        moveUp(index)
-                      }}
-                      disabled={index === 0}
-                    >
-                      <ArrowUp className="h-4 w-4 text-pop-green" />
-                    </Button>
-                    <Button
-                      variant="ghost"
-                      size="sm"
-                      className="h-8 w-8 p-0"
-                      onClick={(e) => {
-                        e.stopPropagation()
-                        moveDown(index)
-                      }}
-                      disabled={index === sortedData.length - 1}
-                    >
-                      <ArrowDown className="h-4 w-4 text-pop-green" />
-                    </Button>
-                  </div>
-                )}
-              </div>
-            )
-
-            if (renderModal) {
-              return (
-                <Dialog key={index}>
-                  <DialogTrigger asChild>
-                    {CardContent}
-                  </DialogTrigger>
-                  <DialogContent className="max-w-md">
-                    {renderModal(item)}
-                  </DialogContent>
-                </Dialog>
               )
-            }
 
-            return <div key={index}>{CardContent}</div>
-          })}
+              if (renderModal) {
+                return (
+                  <Dialog key={index}>
+                    <DialogTrigger asChild>
+                      {CardContent}
+                    </DialogTrigger>
+                    <DialogContent className="max-w-md">
+                      {renderModal(item)}
+                    </DialogContent>
+                  </Dialog>
+                )
+              }
+
+              return <div key={index}>{CardContent}</div>
+            })}
+          </div>
         </div>
       </CardContent>
     </Card>
