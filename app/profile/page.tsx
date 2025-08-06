@@ -46,11 +46,11 @@ export default function ProfilePage() {
         </div>
       </div>
 
-      <div className="max-w-7xl bg-gray-50 mx-auto px-4 py-8 lg:py-12">
-        <div className="grid grid-cols-1 lg:grid-cols-4 gap-6 lg:gap-8">
+      <div className="max-w-4xl bg-gray-50 mx-auto px-4 py-12">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           
           {/* Left Column - Stats & Contact */}
-          <div className="lg:col-span-1 space-y-6">
+          <div className="space-y-6">
             {/* Contact Information */}
             <Card className="bg-white border-2 border-pop-black">
               <CardHeader>
@@ -121,7 +121,7 @@ export default function ProfilePage() {
           </div>
 
           {/* Right Columns - Activities & Achievements */}
-          <div className="lg:col-span-3 space-y-6">
+          <div className="lg:col-span-2 space-y-6">
             
             {/* Recent Projects */}
             <Card className="bg-white border-2 border-pop-black">
@@ -130,23 +130,25 @@ export default function ProfilePage() {
                 <CardDescription>Latest maker creations and assemblies</CardDescription>
               </CardHeader>
               <CardContent>
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                <div className="space-y-3">
                   {[
                     { name: 'Office Desk Organizer', date: 'Jan 15, 2025', plastic: '2.3 lbs', status: 'Completed' },
                     { name: 'Phone Stand Set', date: 'Jan 12, 2025', plastic: '0.8 lbs', status: 'Completed' },
                     { name: 'Custom Planters', date: 'Jan 8, 2025', plastic: '4.1 lbs', status: 'In Progress' },
                     { name: 'Workshop Demo Kit', date: 'Jan 5, 2025', plastic: '1.5 lbs', status: 'Completed' },
                   ].map((project, index) => (
-                    <div key={index} className="p-4 border-2 border-pop-black rounded-lg hover:bg-pop-green/5 transition-colors">
-                      <div className="flex items-start justify-between mb-2">
-                        <h4 className="helvetica-bold text-sm flex-1 pr-2">{project.name}</h4>
-                        <Badge variant={project.status === 'Completed' ? 'default' : 'secondary'} className="systematic-caps text-xs flex-shrink-0">
-                          {project.status}
-                        </Badge>
-                      </div>
-                      <div className="flex items-center justify-between text-xs text-gray-600">
-                        <p className="systematic-caps">{project.date}</p>
-                        <span className="systematic-caps">Plastic: {project.plastic}</span>
+                    <div key={index} className="flex items-center justify-between p-4 border-2 border-pop-black rounded-lg hover:bg-pop-green/5 transition-colors">
+                      <div className="flex-1">
+                        <div className="flex items-center justify-between">
+                          <h4 className="helvetica-bold text-sm">{project.name}</h4>
+                          <Badge variant={project.status === 'Completed' ? 'default' : 'secondary'} className="systematic-caps text-xs">
+                            {project.status}
+                          </Badge>
+                        </div>
+                        <div className="flex items-center justify-between mt-1">
+                          <p className="systematic-caps text-xs text-gray-600">{project.date}</p>
+                          <span className="systematic-caps text-xs text-gray-600">Plastic: {project.plastic}</span>
+                        </div>
                       </div>
                     </div>
                   ))}
@@ -167,7 +169,7 @@ export default function ProfilePage() {
                 <div className="space-y-8">
                   <div>
                     <h4 className="systematic-caps font-medium text-pop-black mb-4 pb-2 border-b border-gray-100">Recent Achievements</h4>
-                    <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+                    <div className="grid grid-cols-2 lg:grid-cols-3 gap-4">
                       {[
                         { name: 'Workshop Leader', icon: '👨‍🏫', date: 'Jan 2025', color: 'pop-green' },
                         { name: 'Level 3 Maker', icon: '🏆', date: 'Dec 2024', color: 'pop-blue' },
@@ -176,9 +178,9 @@ export default function ProfilePage() {
                         { name: 'Precision Assembly', icon: '🎯', date: 'Sep 2024', color: 'pop-blue' },
                         { name: 'First Project', icon: '⭐', date: 'Mar 2023', color: 'pop-red' },
                       ].map((achievement, index) => (
-                        <div key={index} className={`text-center p-3 border-2 border-${achievement.color}/20 bg-${achievement.color}/5 rounded-lg hover:bg-${achievement.color}/10 transition-all group cursor-pointer`}>
-                          <div className="text-2xl mb-2 group-hover:scale-110 transition-transform">{achievement.icon}</div>
-                          <div className="systematic-caps text-xs font-medium text-pop-black mb-1 leading-tight">{achievement.name}</div>
+                        <div key={index} className={`text-center p-4 border-2 border-${achievement.color}/20 bg-${achievement.color}/5 rounded-lg hover:bg-${achievement.color}/10 transition-all group cursor-pointer`}>
+                          <div className="text-3xl mb-2 group-hover:scale-110 transition-transform">{achievement.icon}</div>
+                          <div className="systematic-caps text-xs font-medium text-pop-black mb-1">{achievement.name}</div>
                           <div className="systematic-caps text-xs text-gray-500">{achievement.date}</div>
                         </div>
                       ))}
@@ -187,7 +189,7 @@ export default function ProfilePage() {
 
                   <div>
                     <h4 className="systematic-caps font-medium text-pop-black mb-4 pb-2 border-b border-gray-100">Skills & Certifications</h4>
-                    <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3">
+                    <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
                       {[
                         'Basic Assembly', 'Advanced Techniques', 'Quality Control', 'Workshop Teaching', 
                         'Team Leadership', 'Design Thinking', 'Material Knowledge', 'Safety Protocols',
