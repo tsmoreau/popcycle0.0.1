@@ -26,8 +26,7 @@ export default function Home() {
           </h1>
           
           <p className="text-xl lg:text-2xl max-w-4xl mx-auto mb-12 leading-relaxed text-pop-black">
-            Every QR code tells the complete story of transformation: from corporate waste to educational wonder. 
-            Scan. Learn. Make.
+            Closing the loop on the plastic lifecycle. From collection to creation, every piece is tracked, every step is transparent.
           </p>
           
           <div className="flex justify-center items-center gap-4 text-pop-black mb-8">

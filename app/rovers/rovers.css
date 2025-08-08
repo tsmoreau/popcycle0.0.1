@@ -1,0 +1,129 @@
+/* Rover-specific color scheme and design system */
+:root {
+  /* Diagrammatic/schematic color palette */
+  --rover-slate: hsl(210, 16%, 98%);
+  --rover-slate-dark: hsl(210, 20%, 2%);
+  --rover-steel: hsl(210, 12%, 16%);
+  --rover-steel-light: hsl(210, 8%, 85%);
+  --rover-blue: hsl(210, 100%, 45%);
+  --rover-orange: hsl(20, 100%, 60%);
+  --rover-green: hsl(120, 100%, 35%);
+  --rover-red: hsl(0, 100%, 60%);
+  
+  /* Grid and schematic patterns */
+  --grid-size: 20px;
+  --grid-color: hsl(210, 8%, 92%);
+  --line-weight: 1px;
+  --accent-weight: 2px;
+}
+
+.rover-theme {
+  background-color: var(--rover-slate);
+  color: var(--rover-steel);
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Grid background for schematic feel */
+.rover-grid {
+  background-image: 
+    linear-gradient(var(--grid-color) var(--line-weight), transparent var(--line-weight)),
+    linear-gradient(90deg, var(--grid-color) var(--line-weight), transparent var(--line-weight));
+  background-size: var(--grid-size) var(--grid-size);
+}
+
+/* Schematic-style borders and lines */
+.rover-border {
+  border: var(--line-weight) solid var(--rover-steel-light);
+}
+
+.rover-border-accent {
+  border: var(--accent-weight) solid var(--rover-blue);
+}
+
+/* Component status indicators */
+.rover-status-online { color: var(--rover-green); }
+.rover-status-offline { color: var(--rover-steel-light); }
+.rover-status-busy { color: var(--rover-orange); }
+.rover-status-error { color: var(--rover-red); }
+
+/* Technical typography */
+.rover-mono {
+  font-family: 'SF Mono', 'Monaco', 'Inconsolata', 'Roboto Mono', 'Source Code Pro', monospace;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Minimal button styles with technical feel */
+.rover-btn {
+  background: transparent;
+  border: var(--line-weight) solid var(--rover-steel-light);
+  color: var(--rover-steel);
+  padding: 8px 16px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.rover-btn:hover {
+  border-color: var(--rover-blue);
+  background: hsl(210, 100%, 45%, 0.05);
+}
+
+.rover-btn-primary {
+  background: var(--rover-blue);
+  border-color: var(--rover-blue);
+  color: white;
+}
+
+.rover-btn-primary:hover {
+  background: hsl(210, 100%, 40%);
+}
+
+/* Card component with technical styling */
+.rover-card {
+  background: white;
+  border: var(--line-weight) solid var(--rover-steel-light);
+  padding: 24px;
+  position: relative;
+}
+
+.rover-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: var(--rover-blue);
+}
+
+/* Technical specs layout */
+.rover-specs {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 8px 16px;
+  font-size: 14px;
+}
+
+.rover-specs dt {
+  font-weight: 600;
+  color: var(--rover-steel);
+}
+
+.rover-specs dd {
+  font-family: 'SF Mono', monospace;
+  color: var(--rover-blue);
+  margin: 0;
+}
+
+/* Responsive breakpoints */
+@media (max-width: 768px) {
+  :root {
+    --grid-size: 16px;
+  }
+  
+  .rover-card {
+    padding: 16px;
+  }
+}
