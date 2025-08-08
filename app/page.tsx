@@ -20,25 +20,26 @@ export default function Home() {
       <section className="py-32 px-4 bg-white">
         <div className="max-w-6xl mx-auto text-center">
           <h1 className="text-6xl lg:text-8xl helvetica-bold mb-8 tracking-tight">
-            <span className="text-pop-green">WASTE</span><br />
-            BECOMES<br />
-            <span className="text-pop-blue">WONDER</span>
+            <span className="text-pop-green">TRACK</span><br />
+            YOUR PLASTIC'S<br />
+            JOURNEY
           </h1>
           
-          <p className="text-xl lg:text-2xl max-w-4xl mx-auto mb-12 leading-relaxed text-pop-gray">
-            Turn corporate plastic waste into trackable educational products.
+          <p className="text-xl lg:text-2xl max-w-4xl mx-auto mb-12 leading-relaxed text-pop-black">
+            Each PopCycle product tells an essential story of transformation from plastic waste to enduring engagement. 
+            Scan. Learn. Make.
           </p>
           
           <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
-            <Link href="/about#contact">
-              <Button size="lg" className="bg-pop-green text-white hover:bg-pop-black systematic-caps text-lg px-8 py-4">
-                START PARTNERSHIP
+            <Link href="/track">
+              <Button size="lg" className="bg-pop-green text-white hover:bg-white hover:text-pop-black systematic-caps text-lg px-8 py-4">
+                Track Plastic
               </Button>
             </Link>
-            
-            <Link href="/track">
+
+            <Link href="/about#faq">
               <Button variant="outline" size="lg" className="border-2 border-pop-black text-pop-black hover:bg-pop-black hover:text-white systematic-caps text-lg px-8 py-4">
-                TRACK PRODUCT
+                Learn More
               </Button>
             </Link>
           </div>

@@ -69,7 +69,7 @@ export default function Track() {
                 "ALL",
                 "COLLECTED BATCHES",
                 "PRESSED BLANKS",
-                "FINISHED ITEMS",
+                "MANUFACTURED ITEMS",
                 "ASSEMBLED ITEMS",
               ].map((category) => (
                 <button
