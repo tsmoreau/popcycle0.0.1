@@ -35,8 +35,7 @@ export interface Org {
 // Bin - Physical branded containers with QR codes at partner locations
 // Can be permanent office bins or temporary event bags
 export interface Bin {
-  _id: ObjectId;
-  qrCode: string; // Unique QR code identifier
+  binId: ObjectId;
   orgId: ObjectId; // Reference to Org
   eventId?: string; // Reference to Event within the org (for event-specific bins)
   name: string; // e.g., "Discovery Cube Main Entrance Bin" or "Beach Cleanup Bag #1"
@@ -53,8 +52,7 @@ export interface Bin {
 // Batch - Collection record when bins are emptied
 export interface Batch {
   
-  _id: ObjectId;
-  qrCode: string; // Unique QR code identifier
+  batchId: ObjectId;
   binId: ObjectId; // Reference to Bin (inherits org provenance)
   collectionDate: Date;
   weight: number; // in kg
@@ -70,8 +68,7 @@ export interface Batch {
 // Item - Individual physical blank or finished product
 export interface Item {
   
-  _id: ObjectId;
-  qrCode: string; // Unique QR code identifier
+  itemId: ObjectId;
   batchId: ObjectId; // Reference to Batch
   productId?: ObjectId; // Reference to Product (if finished)
   userId?: ObjectId; // Reference to User (if assembled)
