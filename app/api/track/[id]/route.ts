@@ -18,9 +18,9 @@ const sampleItems = {
     event: 'Annual Sustainability Summit',
     message: 'From our cafeteria to your classroom - building the future together!',
     // ID hierarchy based on schema - all processing stages complete
-    binId: 'BIN-CAFE-001',
-    batchId: 'BAT-240115-001',
-    blankId: 'BLK-240120-001',
+    binId: 'BIN-A1B2C3',
+    batchId: 'BAT-D4E5F6',
+    blankId: 'BLK-G7H8I9',
     makerDetails: {
       userId: 'user_001',
       name: 'Sarah Chen',
@@ -46,9 +46,9 @@ const sampleItems = {
     carbonOffset: 4.2,
     event: 'Earth Day Corporate Challenge',
     // ID hierarchy - processed into blank
-    binId: 'BIN-TECH-002',
-    batchId: 'BAT-240112-002',
-    blankId: 'BLK-240118-002',
+    binId: 'BIN-J1K2L3',
+    batchId: 'BAT-M4N5O6',
+    blankId: 'BLK-P7Q8R9',
     makerDetails: null
   },
   'GHI789': {
@@ -66,9 +66,9 @@ const sampleItems = {
     carbonOffset: 7.8,
     message: 'From park cleanup to learning tool - community action creates change.',
     // ID hierarchy - processed into blank
-    binId: 'BIN-PARK-003',
-    batchId: 'BAT-240110-003',
-    blankId: 'BLK-240116-003',
+    binId: 'BIN-S1T2U3',
+    batchId: 'BAT-V4W5X6',
+    blankId: 'BLK-Y7Z8A9',
     makerDetails: null
   },
   'JKL012': {
@@ -86,9 +86,9 @@ const sampleItems = {
     carbonOffset: 4.7,
     event: 'Green Living Expo',
     // ID hierarchy - processed into blank
-    binId: 'BIN-START-004',
-    batchId: 'BAT-240108-004',
-    blankId: 'BLK-240114-004',
+    binId: 'BIN-B1C2D3',
+    batchId: 'BAT-E4F5G6',
+    blankId: 'BLK-H7I8J9',
     makerDetails: null
   },
   'MNO345': {
@@ -107,8 +107,8 @@ const sampleItems = {
     event: 'Corporate Cleanup Day',
     message: 'Processed into clean plastic pellets - ready for manufacturing into educational products.',
     // ID hierarchy - processed into batch, but not yet into blanks
-    binId: 'BIN-GREEN-005',
-    batchId: 'BAT-240129-005',
+    binId: 'BIN-K1L2M3',
+    batchId: 'BAT-N4O5P6',
     blankId: null, // No blank created yet
     makerDetails: null
   },
@@ -128,7 +128,7 @@ const sampleItems = {
     event: 'Weekend Volunteer Drive',
     message: 'Collected during our community volunteer cleanup - awaiting transformation into educational materials.',
     // ID hierarchy - only bin collected, no processing yet
-    binId: 'BIN-RIVER-006',
+    binId: 'BIN-Q1R2S3',
     batchId: null, // No batch created yet
     blankId: null, // No blank created yet
     makerDetails: null
