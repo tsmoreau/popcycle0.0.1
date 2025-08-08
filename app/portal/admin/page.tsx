@@ -330,6 +330,13 @@ export default function AdminPage() {
                     </div>
                     <Badge className="bg-pop-green text-white">Connected</Badge>
                   </div>
+                  <div className="flex items-center justify-between p-3 bg-white rounded-lg border">
+                    <div>
+                      <span className="font-medium text-sm">AWS S3</span>
+                      <p className="text-xs text-gray-600">Private file & image storage</p>
+                    </div>
+                    <Badge className="bg-pop-green text-white">Connected</Badge>
+                  </div>
                 </div>
                 <div className="mt-4 space-y-2">
                   <Button variant="outline" className="w-full">Configure API Keys</Button>
