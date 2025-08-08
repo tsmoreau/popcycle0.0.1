@@ -223,31 +223,6 @@ export default function Home() {
                 </PopArtContainer>
               </div>
             </div>
-
-            <div className="text-center bg-pop-black p-12">
-              <h3 className="text-3xl lg:text-4xl helvetica-bold mb-6 text-white">
-                READY TO START YOUR <span className="text-pop-green">MATERIAL STORY?</span>
-              </h3>
-              <p className="text-xl text-white/90 mb-8 max-w-3xl mx-auto">
-                Join forward-thinking companies who are transforming their waste streams into educational impact. 
-                Your plastic has potential—let's unlock it together.
-              </p>
-              <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
-                <Link href="/about#contact">
-                  <Button size="lg" className="bg-pop-green text-pop-black hover:bg-white hover:text-pop-black systematic-caps text-lg px-12 py-4">
-                    START PARTNERSHIP
-                    <ArrowRight className="ml-2 w-5 h-5" />
-                  </Button>
-                </Link>
-                
-                <Link href="/track">
-                  <Button variant="outline" size="lg" className="border-2 border-white text-white hover:bg-white hover:text-pop-black systematic-caps text-lg px-8 py-4">
-                    <Scan className="mr-2 w-5 h-5" />
-                    TRACK A PRODUCT
-                  </Button>
-                </Link>
-              </div>
-            </div>
           </div>
         </div>
       </section>
