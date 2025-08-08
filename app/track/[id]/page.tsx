@@ -232,17 +232,17 @@ export default function TrackItem() {
           <div className="mb-12">
             <div className="flex gap-2 justify-center max-w-2xl mx-auto">
               <div className="text-center flex-1 max-w-[120px]">
-                <div className="w-16 h-16 mx-auto mb-4 border-2 border-pop-black flex items-center justify-center bg-pop-gray">
-                  <Package className="w-8 h-8 text-white" strokeWidth={1.5} />
+                <div className="w-16 h-16 mx-auto mb-4 border-2 border-pop-black flex items-center justify-center bg-pop-green">
+                  <Package className="w-8 h-8 text-black" strokeWidth={1.5} />
                 </div>
                 <h3 className="systematic-caps text-sm mb-1">Awaiting Collection</h3>
-                <p className="text-xs text-pop-gray truncate">Active Bin</p>
+                <p className="text-xs text-pop-gray truncate">2025-8-20 </p>
               </div>
             </div>
 
             <div className="text-center mt-4">
               <p className="text-xs text-pop-gray systematic-caps">
-                Ready for Collection
+                Active Bin
               </p>
             </div>
           </div>
