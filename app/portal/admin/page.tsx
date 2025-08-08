@@ -33,6 +33,7 @@ export default function AdminPage() {
   const [showIntegrations, setShowIntegrations] = useState(false)
   const [showBackupRecovery, setShowBackupRecovery] = useState(false)
   const [showAuditTrail, setShowAuditTrail] = useState(false)
+  const [showDatabaseOperations, setDatabaseOperations] = useState(false)
 
   // Sample user data
   const usersData: User[] = [
@@ -115,6 +116,7 @@ export default function AdminPage() {
               <Shield className="h-5 w-5 text-pop-green" />
               <div className="text-left">
                 <h3 className="text-lg font-semibold text-pop-black">Admin Overview</h3>
+                 <p className="text-sm text-gray-600">User stats, data, and integration overviews</p>
               </div>
             </div>
           </AccordionTrigger>
@@ -208,11 +210,11 @@ export default function AdminPage() {
       {/* System Administration Section */}
       <Card>
         <CardHeader>
-          <CardTitle className="flex items-center gap-2">
+          <CardTitle className="flex items-center gap-2 ">
             <Cog className="h-5 w-5 text-pop-green" />
             System Administration
           </CardTitle>
-          <CardDescription>Core system configuration and settings</CardDescription>
+          <CardDescription className="text-sm text-gray-60">Core system configuration and settings</CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
           {/* Production Stations Dropdown */}
@@ -415,6 +417,47 @@ export default function AdminPage() {
                 <div className="mt-4 space-y-2">
                   <Button variant="outline" className="w-full">Export Full Audit Log</Button>
                   <Button variant="outline" className="w-full">Configure Audit Settings</Button>
+                </div>
+              </div>
+            )}
+          </div>
+
+          {/* Database Operations Dropdown */}
+          <div className="w-full border rounded-lg">
+            <div className="px-4 py-4 cursor-pointer hover:bg-gray-50" onClick={() => setDatabaseOperations(!showDatabaseOperations)}>
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-3">
+                  <Database className="h-5 w-5 text-pop-green" />
+                  <span className="font-medium">Manual Data Operations</span>
+                </div>
+                <ChevronDown className={`h-5 w-5 text-gray-400 transition-transform ${showDatabaseOperations ? 'rotate-180' : ''}`} />
+              </div>
+            </div>
+            {showDatabaseOperations && (
+              <div className="px-4 pb-4 border-t bg-gray-50">
+                <div className="space-y-3 mt-4">
+                  <div className="flex items-center justify-between p-3 bg-white rounded-lg border">
+                    <span className="text-sm">Database Status</span>
+                    <Badge className="bg-pop-green text-white">Connected</Badge>
+                  </div>
+                  <div className="flex items-center justify-between p-3 bg-white rounded-lg border">
+                    <span className="text-sm">Total Records</span>
+                    <span className="text-sm font-medium text-gray-900">47,293</span>
+                  </div>
+                  <div className="flex items-center justify-between p-3 bg-white rounded-lg border">
+                    <span className="text-sm">Storage Used</span>
+                    <span className="text-sm font-medium text-gray-900">2.4 GB</span>
+                  </div>
+                  <div className="flex items-center justify-between p-3 bg-white rounded-lg border">
+                    <span className="text-sm">Last Maintenance</span>
+                    <span className="text-sm text-gray-600">Jan 12, 2025</span>
+                  </div>
+                </div>
+                <div className="mt-4 space-y-2">
+                  <Button variant="outline" className="w-full">Run Database Query</Button>
+                  <Button variant="outline" className="w-full">Export Database Records</Button>
+                  <Button variant="outline" className="w-full">Database Maintenance Tools</Button>
+                  <Button variant="outline" className="w-full text-pop-red">Reset Development Data</Button>
                 </div>
               </div>
             )}

@@ -650,7 +650,7 @@ export default function OperationsPage() {
               <BarChart3 className="h-5 w-5 text-pop-green" />
               <div className="text-left">
                 <h3 className="text-lg font-semibold text-pop-black">Operations Overview</h3>
-              
+                 <p className="text-sm text-gray-600">Bins, batches, orders and inventory</p>
               </div>
             </div>
           </AccordionTrigger>
@@ -685,6 +685,20 @@ export default function OperationsPage() {
                 </div>
               </div>
 
+              {/* Active Orders */}
+              <div className="bg-gray-50 border border-gray-200 rounded-lg p-4">
+                <div className="flex items-center justify-between mb-2">
+                  <Users className="h-5 w-5 text-gray-600" />
+                  <span className="text-xs font-medium text-gray-500 uppercase tracking-wide">Orders</span>
+                </div>
+                <div className="text-2xl font-bold text-pop-black mb-1">7</div>
+                <div className="text-sm text-gray-600 mb-2">Active Orders</div>
+                <div className="flex gap-2 text-xs">
+                  <span className="bg-gray-100 text-gray-700 px-2 py-1 rounded">3 Production</span>
+                  <span className="bg-gray-100 text-gray-700 px-2 py-1 rounded">4 Shipping</span>
+                </div>
+              </div>
+
               {/* Inventory Status */}
               <div className="bg-gray-50 border border-gray-200 rounded-lg p-4">
                 <div className="flex items-center justify-between mb-2">
@@ -699,19 +713,7 @@ export default function OperationsPage() {
                 </div>
               </div>
 
-              {/* Active Orders */}
-              <div className="bg-gray-50 border border-gray-200 rounded-lg p-4">
-                <div className="flex items-center justify-between mb-2">
-                  <Users className="h-5 w-5 text-gray-600" />
-                  <span className="text-xs font-medium text-gray-500 uppercase tracking-wide">Orders</span>
-                </div>
-                <div className="text-2xl font-bold text-pop-black mb-1">7</div>
-                <div className="text-sm text-gray-600 mb-2">Active Orders</div>
-                <div className="flex gap-2 text-xs">
-                  <span className="bg-gray-100 text-gray-700 px-2 py-1 rounded">3 Production</span>
-                  <span className="bg-gray-100 text-gray-700 px-2 py-1 rounded">4 Shipping</span>
-                </div>
-              </div>
+             
             </div>
           </AccordionContent>
         </AccordionItem>
@@ -738,6 +740,7 @@ export default function OperationsPage() {
               <Settings className="h-5 w-5 text-pop-green" />
               <div className="text-left">
                 <h3 className="text-lg font-semibold text-pop-black">Operations Management</h3>
+                <p className="text-sm text-gray-600">Unified location for main operations processes</p>
               </div>
             </div>
           </AccordionTrigger>
@@ -1059,7 +1062,7 @@ export default function OperationsPage() {
                 Processing Workflow
               </CardTitle>
               <CardDescription>
-                Complete processing pipeline from collection to finished material
+                Ten step complete processing pipeline from collection to finished materials.
               </CardDescription>
             </CardHeader>
             <CardContent>
@@ -1165,6 +1168,15 @@ export default function OperationsPage() {
                   <Badge className="bg-pop-red text-white px-4 py-2 text-sm whitespace-nowrap">
                     <Zap className="h-4 w-4 mr-2" />
                     Laser Marking
+                  </Badge>
+                </div>
+                <ArrowRight className="h-5 w-5 text-gray-400 hidden sm:block" />
+                 <ChevronDown className="h-5 w-5 text-gray-400 sm:hidden" />
+                {/* Step 10: inventory Creation */}
+                <div className="flex flex-col items-center">
+                  <Badge className="bg-black text-white px-4 py-2 text-sm whitespace-nowrap">
+                    <Package className="h-4 w-4 mr-2" />
+                    Inventory Creation
                   </Badge>
                 </div>
               </div>
