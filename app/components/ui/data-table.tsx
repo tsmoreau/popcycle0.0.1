@@ -35,6 +35,10 @@ export interface DataTableProps<T> {
   columns: Column<T>[]
   renderModal?: (item: T) => React.ReactNode
   className?: string
+  // External sorting state (optional)
+  sortField?: string
+  sortDirection?: SortDirection
+  onSort?: (field: string, direction: SortDirection) => void
 }
 
 type SortDirection = "asc" | "desc"
@@ -46,24 +50,46 @@ export function DataTable<T extends Record<string, any>>({
   data,
   columns,
   renderModal,
-  className = ""
+  className = "",
+  sortField: externalSortField,
+  sortDirection: externalSortDirection,
+  onSort
 }: DataTableProps<T>) {
-  const [sortField, setSortField] = useState<string>("")
-  const [sortDirection, setSortDirection] = useState<SortDirection>("asc")
+  const [internalSortField, setInternalSortField] = useState<string>("")
+  const [internalSortDirection, setInternalSortDirection] = useState<SortDirection>("asc")
+  
+  // Use external state if provided, otherwise use internal state
+  const sortField = externalSortField !== undefined ? externalSortField : internalSortField
+  const sortDirection = externalSortDirection !== undefined ? externalSortDirection : internalSortDirection
 
   const handleSort = (field: string) => {
-    if (sortField === field) {
-      setSortDirection(sortDirection === "asc" ? "desc" : "asc")
+    const newDirection = sortField === field ? (sortDirection === "asc" ? "desc" : "asc") : "asc"
+    
+    if (onSort) {
+      // Use external state handler
+      onSort(field, newDirection)
     } else {
-      setSortField(field)
-      setSortDirection("asc")
+      // Use internal state
+      if (sortField === field) {
+        setInternalSortDirection(sortDirection === "asc" ? "desc" : "asc")
+      } else {
+        setInternalSortField(field)
+        setInternalSortDirection("asc")
+      }
     }
   }
 
   const handleMobileSort = (value: string) => {
     const [field, direction] = value.split('-')
-    setSortField(field)
-    setSortDirection(direction as SortDirection)
+    
+    if (onSort) {
+      // Use external state handler
+      onSort(field, direction as SortDirection)
+    } else {
+      // Use internal state
+      setInternalSortField(field)
+      setInternalSortDirection(direction as SortDirection)
+    }
   }
 
   const sortedData = [...data].sort((a, b) => {

@@ -75,6 +75,14 @@ export default function OperationsPage() {
   const [selectedBin, setSelectedBin] = useState(null);
   const [showScanModal, setShowScanModal] = useState(false);
   const [isLogisticsFullscreen, setIsLogisticsFullscreen] = useState(false);
+  
+  // Shared sorting state for data tables
+  const [collectionsSortField, setCollectionsSortField] = useState<string>("");
+  const [collectionsSortDirection, setCollectionsSortDirection] = useState<"asc" | "desc">("asc");
+  const [processingSortField, setProcessingSortField] = useState<string>("");
+  const [processingSortDirection, setProcessingSortDirection] = useState<"asc" | "desc">("asc");
+  const [fulfillmentSortField, setFulfillmentSortField] = useState<string>("");
+  const [fulfillmentSortDirection, setFulfillmentSortDirection] = useState<"asc" | "desc">("asc");
 
   // Mock data for Collections Queue - this should come from your MongoDB API
   const collectionsQueue = [
@@ -792,6 +800,12 @@ export default function OperationsPage() {
             data={collectionsQueue}
             columns={collectionsColumns}
             renderModal={renderCollectionsModal}
+            sortField={collectionsSortField}
+            sortDirection={collectionsSortDirection}
+            onSort={(field, direction) => {
+              setCollectionsSortField(field);
+              setCollectionsSortDirection(direction);
+            }}
           />
 
           {/* Collections Workflow Diagram */}
@@ -1066,6 +1080,12 @@ export default function OperationsPage() {
             data={processingQueue}
             columns={processingColumns}
             renderModal={renderProcessingModal}
+            sortField={processingSortField}
+            sortDirection={processingSortDirection}
+            onSort={(field, direction) => {
+              setProcessingSortField(field);
+              setProcessingSortDirection(direction);
+            }}
           />
 
           {/* Processing Workflow Diagram */}
@@ -1781,6 +1801,12 @@ export default function OperationsPage() {
             data={fulfillmentQueue}
             columns={fulfillmentColumns}
             renderModal={renderFulfillmentModal}
+            sortField={fulfillmentSortField}
+            sortDirection={fulfillmentSortDirection}
+            onSort={(field, direction) => {
+              setFulfillmentSortField(field);
+              setFulfillmentSortDirection(direction);
+            }}
           />
 
             <Card>
@@ -1974,6 +2000,12 @@ export default function OperationsPage() {
                     data={collectionsQueue}
                     columns={collectionsColumns}
                     renderModal={renderCollectionsModal}
+                    sortField={collectionsSortField}
+                    sortDirection={collectionsSortDirection}
+                    onSort={(field, direction) => {
+                      setCollectionsSortField(field);
+                      setCollectionsSortDirection(direction);
+                    }}
                   />
                 </TabsContent>
 
@@ -1986,6 +2018,12 @@ export default function OperationsPage() {
                     data={processingQueue}
                     columns={processingColumns}
                     renderModal={renderProcessingModal}
+                    sortField={processingSortField}
+                    sortDirection={processingSortDirection}
+                    onSort={(field, direction) => {
+                      setProcessingSortField(field);
+                      setProcessingSortDirection(direction);
+                    }}
                   />
                 </TabsContent>
 
@@ -1998,6 +2036,12 @@ export default function OperationsPage() {
                     data={fulfillmentQueue}
                     columns={fulfillmentColumns}
                     renderModal={renderFulfillmentModal}
+                    sortField={fulfillmentSortField}
+                    sortDirection={fulfillmentSortDirection}
+                    onSort={(field, direction) => {
+                      setFulfillmentSortField(field);
+                      setFulfillmentSortDirection(direction);
+                    }}
                   />
                 </TabsContent>
 
