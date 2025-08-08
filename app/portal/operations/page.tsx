@@ -735,7 +735,7 @@ export default function OperationsPage() {
       <div className="w-full border rounded-lg px-4 cursor-pointer hover:bg-gray-50" onClick={() => setShowScanModal(true)}>
         <div className="py-4">
           <div className="flex items-center gap-3">
-            <Scan className="h-5 w-5 text-pop-green" />
+            <QrCode className="h-5 w-5 text-pop-green" />
             <div className="text-left">
               <h3 className="text-lg font-semibold text-pop-black">QR Scanner</h3>
               
