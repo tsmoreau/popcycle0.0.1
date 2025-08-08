@@ -17,6 +17,10 @@ const sampleItems = {
     carbonOffset: 5.8,
     event: 'Annual Sustainability Summit',
     message: 'From our cafeteria to your classroom - building the future together!',
+    // ID hierarchy based on schema - all processing stages complete
+    binId: 'BIN-CAFE-001',
+    batchId: 'BAT-240115-001',
+    blankId: 'BLK-240120-001',
     makerDetails: {
       userId: 'user_001',
       name: 'Sarah Chen',
@@ -41,6 +45,10 @@ const sampleItems = {
     destination: null,
     carbonOffset: 4.2,
     event: 'Earth Day Corporate Challenge',
+    // ID hierarchy - processed into blank
+    binId: 'BIN-TECH-002',
+    batchId: 'BAT-240112-002',
+    blankId: 'BLK-240118-002',
     makerDetails: null
   },
   'GHI789': {
@@ -57,6 +65,10 @@ const sampleItems = {
     destination: 'YMCA Summer Camp',
     carbonOffset: 7.8,
     message: 'From park cleanup to learning tool - community action creates change.',
+    // ID hierarchy - processed into blank
+    binId: 'BIN-PARK-003',
+    batchId: 'BAT-240110-003',
+    blankId: 'BLK-240116-003',
     makerDetails: null
   },
   'JKL012': {
@@ -73,6 +85,10 @@ const sampleItems = {
     destination: null,
     carbonOffset: 4.7,
     event: 'Green Living Expo',
+    // ID hierarchy - processed into blank
+    binId: 'BIN-START-004',
+    batchId: 'BAT-240108-004',
+    blankId: 'BLK-240114-004',
     makerDetails: null
   },
   'MNO345': {
@@ -90,6 +106,10 @@ const sampleItems = {
     carbonOffset: null,
     event: 'Corporate Cleanup Day',
     message: 'Processed into clean plastic pellets - ready for manufacturing into educational products.',
+    // ID hierarchy - processed into batch, but not yet into blanks
+    binId: 'BIN-GREEN-005',
+    batchId: 'BAT-240129-005',
+    blankId: null, // No blank created yet
     makerDetails: null
   },
   'PQR678': {
@@ -107,6 +127,10 @@ const sampleItems = {
     carbonOffset: null,
     event: 'Weekend Volunteer Drive',
     message: 'Collected during our community volunteer cleanup - awaiting transformation into educational materials.',
+    // ID hierarchy - only bin collected, no processing yet
+    binId: 'BIN-RIVER-006',
+    batchId: null, // No batch created yet
+    blankId: null, // No blank created yet
     makerDetails: null
   }
 };
@@ -138,6 +162,10 @@ export async function GET(
     event: item.event,
     message: item.message,
     makerDetails: item.makerDetails,
+    // ID hierarchy based on processing stage
+    binId: item.binId,
+    batchId: item.batchId,
+    blankId: item.blankId,
     impactMetrics: {
       carbonSaved: item.carbonOffset || 0,
       wasteReduced: item.weight
