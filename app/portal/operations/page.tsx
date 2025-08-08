@@ -24,6 +24,8 @@ import {
   Wind,
   Archive,
   ChevronDown,
+  Maximize,
+  Minimize,
 } from "lucide-react";
 import { Button } from "../../components/ui/button";
 import {
@@ -71,6 +73,8 @@ export default function OperationsPage() {
   const [activeTab, setActiveTab] = useState("collections");
   const [selectedBin, setSelectedBin] = useState(null);
   const [showScanModal, setShowScanModal] = useState(false);
+  const [collectionsFullscreen, setCollectionsFullscreen] = useState(false);
+  const [processingFullscreen, setProcessingFullscreen] = useState(false);
 
   // Mock data for Collections Queue - this should come from your MongoDB API
   const collectionsQueue = [
@@ -771,14 +775,24 @@ export default function OperationsPage() {
         {/* Collections Tab */}
         <TabsContent value="collections" className="space-y-6">
           {/* Collections Queue */}
-          <DataTable
-            title="Collections Queue"
-            description="Live status overview of all bins assigned for pickup and collected materials awaiting processing"
-            icon={<Package className="h-5 w-5 text-pop-green" />}
-            data={collectionsQueue}
-            columns={collectionsColumns}
-            renderModal={renderCollectionsModal}
-          />
+          <div className="relative">
+            <DataTable
+              title="Collections Queue"
+              description="Live status overview of all bins assigned for pickup and collected materials awaiting processing"
+              icon={<Package className="h-5 w-5 text-pop-green" />}
+              data={collectionsQueue}
+              columns={collectionsColumns}
+              renderModal={renderCollectionsModal}
+            />
+            <Button
+              size="sm"
+              variant="outline"
+              className="absolute top-4 right-4 z-10"
+              onClick={() => setCollectionsFullscreen(true)}
+            >
+              <Maximize className="h-4 w-4" />
+            </Button>
+          </div>
 
           {/* Collections Workflow Diagram */}
           <Card>
@@ -1045,14 +1059,24 @@ export default function OperationsPage() {
         {/* Processing Tab */}
         <TabsContent value="processing" className="space-y-6">
           {/* Processing Queue */}
-          <DataTable
-            title="Processing Queue"
-            description="Live status overview of all batches in various processing stages"
-            icon={<Settings className="h-5 w-5 text-pop-blue" />}
-            data={processingQueue}
-            columns={processingColumns}
-            renderModal={renderProcessingModal}
-          />
+          <div className="relative">
+            <DataTable
+              title="Processing Queue"
+              description="Live status overview of all batches in various processing stages"
+              icon={<Settings className="h-5 w-5 text-pop-blue" />}
+              data={processingQueue}
+              columns={processingColumns}
+              renderModal={renderProcessingModal}
+            />
+            <Button
+              size="sm"
+              variant="outline"
+              className="absolute top-4 right-4 z-10"
+              onClick={() => setProcessingFullscreen(true)}
+            >
+              <Maximize className="h-4 w-4" />
+            </Button>
+          </div>
 
           {/* Processing Workflow Diagram */}
           <Card>
@@ -1985,6 +2009,68 @@ export default function OperationsPage() {
                   Collection
                 </Button>
               </div>
+            </div>
+          </div>
+        </DialogContent>
+      </Dialog>
+
+      {/* Collections Fullscreen Dialog */}
+      <Dialog open={collectionsFullscreen} onOpenChange={setCollectionsFullscreen}>
+        <DialogContent className="max-w-screen max-h-screen w-screen h-screen p-0 m-0">
+          <div className="flex flex-col h-full">
+            <div className="flex items-center justify-between p-6 border-b">
+              <div className="flex items-center gap-3">
+                <Package className="h-6 w-6 text-pop-green" />
+                <div>
+                  <h2 className="text-2xl font-bold text-pop-black">Collections Queue</h2>
+                  <p className="text-sm text-gray-600">Live status overview of all bins assigned for pickup and collected materials awaiting processing</p>
+                </div>
+              </div>
+              <Button
+                size="sm"
+                variant="outline"
+                onClick={() => setCollectionsFullscreen(false)}
+              >
+                <Minimize className="h-4 w-4" />
+              </Button>
+            </div>
+            <div className="flex-1 p-6 overflow-auto">
+              <DataTable
+                data={collectionsQueue}
+                columns={collectionsColumns}
+                renderModal={renderCollectionsModal}
+              />
+            </div>
+          </div>
+        </DialogContent>
+      </Dialog>
+
+      {/* Processing Fullscreen Dialog */}
+      <Dialog open={processingFullscreen} onOpenChange={setProcessingFullscreen}>
+        <DialogContent className="max-w-screen max-h-screen w-screen h-screen p-0 m-0">
+          <div className="flex flex-col h-full">
+            <div className="flex items-center justify-between p-6 border-b">
+              <div className="flex items-center gap-3">
+                <Settings className="h-6 w-6 text-pop-blue" />
+                <div>
+                  <h2 className="text-2xl font-bold text-pop-black">Processing Queue</h2>
+                  <p className="text-sm text-gray-600">Live status overview of all batches in various processing stages</p>
+                </div>
+              </div>
+              <Button
+                size="sm"
+                variant="outline"
+                onClick={() => setProcessingFullscreen(false)}
+              >
+                <Minimize className="h-4 w-4" />
+              </Button>
+            </div>
+            <div className="flex-1 p-6 overflow-auto">
+              <DataTable
+                data={processingQueue}
+                columns={processingColumns}
+                renderModal={renderProcessingModal}
+              />
             </div>
           </div>
         </DialogContent>
