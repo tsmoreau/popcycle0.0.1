@@ -17,33 +17,28 @@ export default function Home() {
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
-      <section className="py-20 px-4">
+      <section className="py-32 px-4 bg-white">
         <div className="max-w-6xl mx-auto text-center">
           <h1 className="text-6xl lg:text-8xl helvetica-bold mb-8 tracking-tight">
-            <span className="text-pop-green">TRACK</span><br />
-            YOUR PLASTIC'S<br />
-            JOURNEY
+            <span className="text-pop-green">TRACK YOUR PLASTIC'S JOURNEY</span><br />
+            BECOMES<br />
+            <span className="text-pop-blue">WONDER</span>
           </h1>
           
-          <p className="text-xl lg:text-2xl max-w-4xl mx-auto mb-12 leading-relaxed text-pop-black">
-            Every QR code tells the complete story of transformation: from corporate waste to educational wonder. 
-            Scan. Learn. Make.
+          <p className="text-xl lg:text-2xl max-w-4xl mx-auto mb-12 leading-relaxed text-pop-gray">
+            Turn corporate plastic waste into trackable educational products.
           </p>
           
-          <div className="flex justify-center items-center gap-4 text-pop-black mb-8">
-            <Recycle className="w-6 h-6" />
-            <span className="systematic-caps">Complete Provenance Tracking</span>
-          </div>
           <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
-            <Link href="/track">
-              <Button size="lg" className="bg-pop-green text-white hover:bg-white hover:text-pop-black systematic-caps text-lg px-8 py-4">
-                Track Plastic
+            <Link href="/about#contact">
+              <Button size="lg" className="bg-pop-green text-white hover:bg-pop-black systematic-caps text-lg px-8 py-4">
+                START PARTNERSHIP
               </Button>
             </Link>
             
-            <Link href="/about#faq">
+            <Link href="/track">
               <Button variant="outline" size="lg" className="border-2 border-pop-black text-pop-black hover:bg-pop-black hover:text-white systematic-caps text-lg px-8 py-4">
-                FAQ
+                TRACK PRODUCT
               </Button>
             </Link>
           </div>
@@ -103,7 +98,7 @@ export default function Home() {
 
       {/* The PopCycle Way */}
       <section className="py-24 px-4">
-        <div className="max-w-6xl mx-auto">
+        <div className="max-w-4xl mx-auto">
           <div className="text-center mb-20">
             <h2 className="text-4xl lg:text-6xl helvetica-bold mb-8">
               DON'T JUST RECYCLE.<br />
@@ -158,7 +153,7 @@ export default function Home() {
                     <div className="w-16 h-16 bg-white rounded-full flex items-center justify-center mx-auto mb-6">
                       <Target className="w-8 h-8 text-pop-red" />
                     </div>
-                    <h3 className="text-2xl helvetica-bold mb-4 systematic-caps">MAKE & MATTER</h3>
+                    <h3 className="text-2xl helvetica-bold mb-4 systematic-caps">MAKE & ENGAGE</h3>
                     <p className="leading-relaxed">
                       Durable, educational products that prove sustainability doesn't have to be a buzzword. 
                       Your material becomes stories of hands-on learning and real impact.
@@ -173,7 +168,7 @@ export default function Home() {
 
       {/* Why It Matters */}
       <section className="py-24 px-4 bg-white">
-        <div className="max-w-6xl mx-auto">
+        <div className="max-w-4xl mx-auto">
           <div className="text-center mb-20">
             <h2 className="text-4xl lg:text-6xl helvetica-bold mb-8 text-pop-black">
               WHY THIS <span className="text-pop-red">MATTERS</span>
