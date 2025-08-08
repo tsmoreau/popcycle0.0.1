@@ -24,6 +24,9 @@ import {
   Wind,
   Archive,
   ChevronDown,
+  Maximize,
+  Minimize,
+  X,
 } from "lucide-react";
 import { Button } from "../../components/ui/button";
 import {
@@ -71,6 +74,7 @@ export default function OperationsPage() {
   const [activeTab, setActiveTab] = useState("collections");
   const [selectedBin, setSelectedBin] = useState(null);
   const [showScanModal, setShowScanModal] = useState(false);
+  const [isLogisticsFullscreen, setIsLogisticsFullscreen] = useState(false);
 
   // Mock data for Collections Queue - this should come from your MongoDB API
   const collectionsQueue = [
@@ -748,24 +752,34 @@ export default function OperationsPage() {
             {/* Main Operations Tabs */}
             <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
         <div className="relative">
-          <TabsList className="mb-0 relative z-10 p-0 bg-transparent h-auto gap-0 flex-nowrap overflow-visible">
-            <TabsTrigger value="collections" className="folder-tab-white relative z-[4] text-xs sm:text-sm px-3 sm:px-4 py-2 sm:py-2">
-              <Package className="w-4 h-4 mr-2 text-pop-green" />
-              Collections
-            </TabsTrigger>
-            <TabsTrigger value="processing" className="folder-tab-white relative z-[3] -ml-6 sm:ml-0 text-xs sm:text-sm px-3 sm:px-4 py-2 sm:py-2">
-              <Settings className="w-4 h-4 mr-2 text-pop-green" />
-              Processing
-            </TabsTrigger>
-            <TabsTrigger value="fulfillment" className="folder-tab-white relative z-[2] -ml-6 sm:ml-0 text-xs sm:text-sm px-3 sm:px-4 py-2 sm:py-2">
-              <Truck className="w-4 h-4 mr-2 text-pop-green" />
-              Fulfillment
-            </TabsTrigger>
-            <TabsTrigger value="inventory" className="folder-tab-white relative z-[1] -ml-6 sm:ml-0 text-xs sm:text-sm px-3 sm:px-4 py-2 sm:py-2">
-              <BarChart3 className="w-4 h-4 mr-2 text-pop-green" />
-              Inventory
-            </TabsTrigger>
-          </TabsList>
+          <div className="flex items-center justify-between mb-4">
+            <TabsList className="relative z-10 p-0 bg-transparent h-auto gap-0 flex-nowrap overflow-visible">
+              <TabsTrigger value="collections" className="folder-tab-white relative z-[4] text-xs sm:text-sm px-3 sm:px-4 py-2 sm:py-2">
+                <Package className="w-4 h-4 mr-2 text-pop-green" />
+                Collections
+              </TabsTrigger>
+              <TabsTrigger value="processing" className="folder-tab-white relative z-[3] -ml-6 sm:ml-0 text-xs sm:text-sm px-3 sm:px-4 py-2 sm:py-2">
+                <Settings className="w-4 h-4 mr-2 text-pop-green" />
+                Processing
+              </TabsTrigger>
+              <TabsTrigger value="fulfillment" className="folder-tab-white relative z-[2] -ml-6 sm:ml-0 text-xs sm:text-sm px-3 sm:px-4 py-2 sm:py-2">
+                <Truck className="w-4 h-4 mr-2 text-pop-green" />
+                Fulfillment
+              </TabsTrigger>
+              <TabsTrigger value="inventory" className="folder-tab-white relative z-[1] -ml-6 sm:ml-0 text-xs sm:text-sm px-3 sm:px-4 py-2 sm:py-2">
+                <BarChart3 className="w-4 h-4 mr-2 text-pop-green" />
+                Inventory
+              </TabsTrigger>
+            </TabsList>
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => setIsLogisticsFullscreen(true)}
+              className="ml-4 border-pop-green hover:bg-pop-green hover:text-white"
+            >
+              <Maximize className="h-4 w-4" />
+            </Button>
+          </div>
         </div>
 
         {/* Collections Tab */}
@@ -1911,6 +1925,95 @@ export default function OperationsPage() {
           </AccordionContent>
         </AccordionItem>
       </Accordion>
+
+      {/* Fullscreen Logistics Management Dialog */}
+      <Dialog open={isLogisticsFullscreen} onOpenChange={setIsLogisticsFullscreen}>
+        <DialogContent className="max-w-none w-screen h-screen m-0 p-0 bg-gray-50">
+          <div className="flex flex-col h-full">
+            <div className="flex items-center justify-between p-6 bg-white border-b">
+              <h2 className="text-2xl font-bold text-pop-black">Logistics Management</h2>
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => setIsLogisticsFullscreen(false)}
+                className="border-pop-red hover:bg-pop-red hover:text-white"
+              >
+                <X className="h-4 w-4" />
+              </Button>
+            </div>
+            
+            <div className="flex-1 overflow-auto p-6">
+              <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full h-full">
+                <div className="flex items-center justify-between mb-6">
+                  <TabsList className="relative z-10 p-0 bg-transparent h-auto gap-0 flex-nowrap overflow-visible">
+                    <TabsTrigger value="collections" className="folder-tab-white relative z-[4] text-sm px-6 py-3">
+                      <Package className="w-4 h-4 mr-2 text-pop-green" />
+                      Collections
+                    </TabsTrigger>
+                    <TabsTrigger value="processing" className="folder-tab-white relative z-[3] -ml-6 text-sm px-6 py-3">
+                      <Settings className="w-4 h-4 mr-2 text-pop-green" />
+                      Processing
+                    </TabsTrigger>
+                    <TabsTrigger value="fulfillment" className="folder-tab-white relative z-[2] -ml-6 text-sm px-6 py-3">
+                      <Truck className="w-4 h-4 mr-2 text-pop-green" />
+                      Fulfillment
+                    </TabsTrigger>
+                    <TabsTrigger value="inventory" className="folder-tab-white relative z-[1] -ml-6 text-sm px-6 py-3">
+                      <BarChart3 className="w-4 h-4 mr-2 text-pop-green" />
+                      Inventory
+                    </TabsTrigger>
+                  </TabsList>
+                </div>
+
+                {/* Collections Tab Fullscreen */}
+                <TabsContent value="collections" className="space-y-6 h-full">
+                  <DataTable
+                    title="Collections Queue"
+                    description="Live status overview of all bins assigned for pickup and collected materials awaiting processing"
+                    icon={<Package className="h-5 w-5 text-pop-green" />}
+                    data={collectionsQueue}
+                    columns={collectionsColumns}
+                    renderModal={renderCollectionsModal}
+                  />
+                </TabsContent>
+
+                {/* Processing Tab Fullscreen */}
+                <TabsContent value="processing" className="space-y-6 h-full">
+                  <DataTable
+                    title="Processing Queue"
+                    description="Active batches moving through sorting, cleaning, and shredding stages"
+                    icon={<Settings className="h-5 w-5 text-pop-green" />}
+                    data={processingQueue}
+                    columns={processingColumns}
+                    renderModal={renderProcessingModal}
+                  />
+                </TabsContent>
+
+                {/* Fulfillment Tab Fullscreen */}
+                <TabsContent value="fulfillment" className="space-y-6 h-full">
+                  <DataTable
+                    title="Fulfillment Queue"
+                    description="Customer orders and maker assignments for item assembly and delivery"
+                    icon={<Truck className="h-5 w-5 text-pop-green" />}
+                    data={fulfillmentQueue}
+                    columns={fulfillmentColumns}
+                    renderModal={renderFulfillmentModal}
+                  />
+                </TabsContent>
+
+                {/* Inventory Tab Fullscreen */}
+                <TabsContent value="inventory" className="space-y-6 h-full">
+                  <div className="text-center py-8">
+                    <BarChart3 className="h-12 w-12 text-pop-green mx-auto mb-4" />
+                    <h3 className="text-lg font-semibold text-pop-black mb-2">Inventory Management</h3>
+                    <p className="text-gray-600">Inventory tracking functionality will be implemented here</p>
+                  </div>
+                </TabsContent>
+              </Tabs>
+            </div>
+          </div>
+        </DialogContent>
+      </Dialog>
 
       {/* Scan Modal */}
       <Dialog open={showScanModal} onOpenChange={setShowScanModal}>
