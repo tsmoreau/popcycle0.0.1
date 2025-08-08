@@ -18,6 +18,7 @@ export default function Track() {
     "JKL012",
     "MNO345",
     "PQR678",
+    "STU901",
   ];
 
   return (
@@ -94,6 +95,7 @@ export default function Track() {
                   "black",
                   "green",
                   "blue",
+                  "red",
                 ] as const;
                 return (
                   <Link key={code} href={`/track/${code}`}>
