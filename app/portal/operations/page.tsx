@@ -739,8 +739,8 @@ export default function OperationsPage() {
             <div className="flex items-center gap-3">
               <Settings className="h-5 w-5 text-pop-green" />
               <div className="text-left">
-                <h3 className="text-lg font-semibold text-pop-black">Operations Management</h3>
-                <p className="text-sm text-gray-600">Unified location for main operations processes</p>
+                <h3 className="text-lg font-semibold text-pop-black">Logistics Management</h3>
+                <p className="text-sm text-gray-600">Sort tables for materials processing and storage</p>
               </div>
             </div>
           </AccordionTrigger>
