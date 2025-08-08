@@ -18,60 +18,29 @@ export default function Home() {
     <div className="min-h-screen">
       {/* Hero Section */}
       <section className="py-32 px-4 bg-white">
-        <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-16">
-            <h1 className="text-7xl lg:text-9xl helvetica-bold mb-8 tracking-tight leading-none">
-              <span className="text-pop-green">WASTE</span><br />
-              BECOMES<br />
-              <span className="text-pop-blue">WONDER</span>
-            </h1>
-            
-            <p className="text-2xl lg:text-3xl max-w-5xl mx-auto mb-8 leading-relaxed text-pop-black">
-              Turn your corporate plastic waste into trackable educational products. 
-              Every item tells the complete story—from bin to brilliance.
-            </p>
-            
-            <div className="max-w-3xl mx-auto mb-12">
-              <div className="flex flex-col sm:flex-row gap-6 justify-center items-center text-pop-gray">
-                <div className="flex items-center gap-3">
-                  <div className="w-3 h-3 bg-pop-green rounded-full"></div>
-                  <span className="systematic-caps text-lg">Complete Transparency</span>
-                </div>
-                <div className="flex items-center gap-3">
-                  <div className="w-3 h-3 bg-pop-blue rounded-full"></div>
-                  <span className="systematic-caps text-lg">Local Manufacturing</span>
-                </div>
-                <div className="flex items-center gap-3">
-                  <div className="w-3 h-3 bg-pop-red rounded-full"></div>
-                  <span className="systematic-caps text-lg">Educational Impact</span>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div className="flex flex-col lg:flex-row gap-8 justify-center items-center">
+        <div className="max-w-6xl mx-auto text-center">
+          <h1 className="text-6xl lg:text-8xl helvetica-bold mb-8 tracking-tight">
+            <span className="text-pop-green">WASTE</span><br />
+            BECOMES<br />
+            <span className="text-pop-blue">WONDER</span>
+          </h1>
+          
+          <p className="text-xl lg:text-2xl max-w-4xl mx-auto mb-12 leading-relaxed text-pop-gray">
+            Turn corporate plastic waste into trackable educational products.
+          </p>
+          
+          <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
             <Link href="/about#contact">
-              <Button size="lg" className="bg-pop-green text-white hover:bg-pop-black hover:text-white systematic-caps text-xl px-12 py-6 h-auto">
-                START YOUR TRANSFORMATION
-                <ArrowRight className="ml-3 w-6 h-6" />
+              <Button size="lg" className="bg-pop-green text-white hover:bg-pop-black systematic-caps text-lg px-8 py-4">
+                START PARTNERSHIP
               </Button>
             </Link>
             
             <Link href="/track">
-              <Button variant="outline" size="lg" className="border-3 border-pop-black text-pop-black hover:bg-pop-black hover:text-white systematic-caps text-xl px-10 py-6 h-auto">
-                <Scan className="mr-3 w-6 h-6" />
-                TRACK A PRODUCT
+              <Button variant="outline" size="lg" className="border-2 border-pop-black text-pop-black hover:bg-pop-black hover:text-white systematic-caps text-lg px-8 py-4">
+                TRACK PRODUCT
               </Button>
             </Link>
-          </div>
-
-          <div className="mt-20 text-center">
-            <div className="inline-flex items-center gap-4 bg-pop-green/10 px-8 py-4 rounded-full">
-              <QRCodeElement qrCode="DEMO" size="sm" />
-              <span className="text-lg font-medium text-pop-black">
-                Scan any PopCycle QR code to follow the complete journey
-              </span>
-            </div>
           </div>
         </div>
       </section>
