@@ -2017,30 +2017,28 @@ export default function OperationsPage() {
       {/* Collections Fullscreen Dialog */}
       <Dialog open={collectionsFullscreen} onOpenChange={setCollectionsFullscreen}>
         <DialogContent className="max-w-screen max-h-screen w-screen h-screen p-0 m-0">
-          <div className="flex flex-col h-full">
-            <div className="flex items-center justify-between p-6 border-b">
-              <div className="flex items-center gap-3">
-                <Package className="h-6 w-6 text-pop-green" />
-                <div>
-                  <h2 className="text-2xl font-bold text-pop-black">Collections Queue</h2>
-                  <p className="text-sm text-gray-600">Live status overview of all bins assigned for pickup and collected materials awaiting processing</p>
-                </div>
+          <DialogHeader className="flex flex-row items-center justify-between p-6 border-b space-y-0">
+            <div className="flex items-center gap-3">
+              <Package className="h-6 w-6 text-pop-green" />
+              <div>
+                <DialogTitle className="text-2xl font-bold text-pop-black">Collections Queue</DialogTitle>
+                <DialogDescription className="text-sm text-gray-600">Live status overview of all bins assigned for pickup and collected materials awaiting processing</DialogDescription>
               </div>
-              <Button
-                size="sm"
-                variant="outline"
-                onClick={() => setCollectionsFullscreen(false)}
-              >
-                <Minimize className="h-4 w-4" />
-              </Button>
             </div>
-            <div className="flex-1 p-6 overflow-auto">
-              <DataTable
-                data={collectionsQueue}
-                columns={collectionsColumns}
-                renderModal={renderCollectionsModal}
-              />
-            </div>
+            <Button
+              size="sm"
+              variant="outline"
+              onClick={() => setCollectionsFullscreen(false)}
+            >
+              <Minimize className="h-4 w-4" />
+            </Button>
+          </DialogHeader>
+          <div className="flex-1 p-6 overflow-auto">
+            <DataTable
+              data={collectionsQueue}
+              columns={collectionsColumns}
+              renderModal={renderCollectionsModal}
+            />
           </div>
         </DialogContent>
       </Dialog>
@@ -2048,30 +2046,28 @@ export default function OperationsPage() {
       {/* Processing Fullscreen Dialog */}
       <Dialog open={processingFullscreen} onOpenChange={setProcessingFullscreen}>
         <DialogContent className="max-w-screen max-h-screen w-screen h-screen p-0 m-0">
-          <div className="flex flex-col h-full">
-            <div className="flex items-center justify-between p-6 border-b">
-              <div className="flex items-center gap-3">
-                <Settings className="h-6 w-6 text-pop-blue" />
-                <div>
-                  <h2 className="text-2xl font-bold text-pop-black">Processing Queue</h2>
-                  <p className="text-sm text-gray-600">Live status overview of all batches in various processing stages</p>
-                </div>
+          <DialogHeader className="flex flex-row items-center justify-between p-6 border-b space-y-0">
+            <div className="flex items-center gap-3">
+              <Settings className="h-6 w-6 text-pop-blue" />
+              <div>
+                <DialogTitle className="text-2xl font-bold text-pop-black">Processing Queue</DialogTitle>
+                <DialogDescription className="text-sm text-gray-600">Live status overview of all batches in various processing stages</DialogDescription>
               </div>
-              <Button
-                size="sm"
-                variant="outline"
-                onClick={() => setProcessingFullscreen(false)}
-              >
-                <Minimize className="h-4 w-4" />
-              </Button>
             </div>
-            <div className="flex-1 p-6 overflow-auto">
-              <DataTable
-                data={processingQueue}
-                columns={processingColumns}
-                renderModal={renderProcessingModal}
-              />
-            </div>
+            <Button
+              size="sm"
+              variant="outline"
+              onClick={() => setProcessingFullscreen(false)}
+            >
+              <Minimize className="h-4 w-4" />
+            </Button>
+          </DialogHeader>
+          <div className="flex-1 p-6 overflow-auto">
+            <DataTable
+              data={processingQueue}
+              columns={processingColumns}
+              renderModal={renderProcessingModal}
+            />
           </div>
         </DialogContent>
       </Dialog>
