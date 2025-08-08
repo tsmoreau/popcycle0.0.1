@@ -25,6 +25,7 @@ import {
   Heart,
   Plus,
   HeartHandshake,
+  Circle,
 } from "lucide-react";
 
 interface MakerDetails {
@@ -232,7 +233,7 @@ export default function TrackItem() {
             <div className="flex gap-2 justify-center max-w-2xl mx-auto">
               <div className="text-center flex-1 max-w-[120px]">
                 <div className="w-16 h-16 mx-auto mb-4 border-2 border-pop-black flex items-center justify-center bg-pop-gray">
-                  <Package className="w-8 h-8 text-white" />
+                  <Circle className="w-8 h-8 text-white" />
                 </div>
                 <h3 className="systematic-caps text-sm mb-1">Awaiting Collection</h3>
                 <p className="text-xs text-pop-gray truncate">Active Bin</p>
@@ -359,7 +360,7 @@ export default function TrackItem() {
                   <div className="flex justify-between items-center">
                     <span className="systematic-caps text-sm">Status</span>
                     <span className="flex items-center text-pop-gray">
-                      <Package className="w-4 h-4 mr-1" />
+                      <Circle className="w-4 h-4 mr-1" />
                       Awaiting Collection
                     </span>
                   </div>
@@ -390,7 +391,7 @@ export default function TrackItem() {
                 {isUncollected && (
                   <div className="border-t pt-4 text-center border-pop-gray">
                     <div className="flex items-center justify-center text-sm text-pop-gray">
-                      <Package className="w-4 h-4 mr-1" />
+                      <Circle className="w-4 h-4 mr-1" />
                       <span className="systematic-caps">
                         Ready for Collection
                       </span>
