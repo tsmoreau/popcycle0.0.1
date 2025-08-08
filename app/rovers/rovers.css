@@ -1,6 +1,0 @@
-/* Simple rover styling */
-.rover-mono {
-  font-family: 'SF Mono', 'Monaco', 'Inconsolata', 'Roboto Mono', 'Source Code Pro', monospace;
-  font-variant-numeric: tabular-nums;
-  letter-spacing: 0.025em;
-}
