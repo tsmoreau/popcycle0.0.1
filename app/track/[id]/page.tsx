@@ -109,7 +109,7 @@ export default function TrackItem() {
               </p>
               <p className="text-sm text-pop-gray">
                 Try one of our sample item codes: ABC123, DEF456, GHI789,
-                JKL012, MNO345, PQR678
+                JKL012, MNO345, PQR678, STU901
               </p>
             </CardContent>
           </Card>
@@ -119,6 +119,7 @@ export default function TrackItem() {
   }
 
   // Derived logic from streamlined schema
+  const isUncollected = !item.collectionDate; // New state for uncollected bins
   const isSourceOnly = !item.productType;
   const isProcessed = !!item.processedDate;
   const isCharity = !!item.donatingEntity;
@@ -157,7 +158,9 @@ export default function TrackItem() {
             <span className="text-pop-green"></span> {item.id}
           </h1>
           <p className="text-lg text-pop-gray">
-            {isSourceOnly
+            {isUncollected
+              ? `Active collection bin at ${item.originPoint}`
+              : isSourceOnly
               ? isProcessed
                 ? `Processed plastic from ${item.originPoint}`
                 : `Fresh plastic collection from ${item.originPoint}`
@@ -223,8 +226,29 @@ export default function TrackItem() {
           </div>
         )}
 
+        {/* Uncollected Bin Status */}
+        {isUncollected && (
+          <div className="mb-12">
+            <div className="flex gap-2 justify-center max-w-2xl mx-auto">
+              <div className="text-center flex-1 max-w-[120px]">
+                <div className="w-16 h-16 mx-auto mb-4 border-2 border-pop-black flex items-center justify-center bg-pop-gray">
+                  <Package className="w-8 h-8 text-white" />
+                </div>
+                <h3 className="systematic-caps text-sm mb-1">Awaiting Collection</h3>
+                <p className="text-xs text-pop-gray truncate">Active Bin</p>
+              </div>
+            </div>
+
+            <div className="text-center mt-4">
+              <p className="text-xs text-pop-gray systematic-caps">
+                Ready for Collection
+              </p>
+            </div>
+          </div>
+        )}
+
         {/* Source-Only Status */}
-        {isSourceOnly && (
+        {isSourceOnly && !isUncollected && (
           <div className="mb-12">
             <div className="flex gap-2 justify-center max-w-2xl mx-auto">
               <div className="text-center flex-1 max-w-[120px]">
@@ -305,26 +329,41 @@ export default function TrackItem() {
                   <span className="systematic-caps text-sm">Origin</span>
                   <span>{item.originPoint}</span>
                 </div>
-                <div className="flex justify-between">
-                  <span className="systematic-caps text-sm">Material</span>
-                  <Badge className="bg-pop-green text-pop-black">
-                    {item.materialType}
-                  </Badge>
-                </div>
-                <div className="flex justify-between items-center">
-                  <span className="systematic-caps text-sm">Weight</span>
-                  <span className="flex items-center">
-                    <Weight className="w-4 h-4 mr-1" />
-                    {item.weight}kg
-                  </span>
-                </div>
-                <div className="flex justify-between items-center">
-                  <span className="systematic-caps text-sm">Collected</span>
-                  <span className="flex items-center">
-                    <Calendar className="w-4 h-4 mr-1" />
-                    {item.collectionDate}
-                  </span>
-                </div>
+                {item.materialType && (
+                  <div className="flex justify-between">
+                    <span className="systematic-caps text-sm">Material</span>
+                    <Badge className="bg-pop-green text-pop-black">
+                      {item.materialType}
+                    </Badge>
+                  </div>
+                )}
+                {item.weight && (
+                  <div className="flex justify-between items-center">
+                    <span className="systematic-caps text-sm">Weight</span>
+                    <span className="flex items-center">
+                      <Weight className="w-4 h-4 mr-1" />
+                      {item.weight}kg
+                    </span>
+                  </div>
+                )}
+                {item.collectionDate && (
+                  <div className="flex justify-between items-center">
+                    <span className="systematic-caps text-sm">Collected</span>
+                    <span className="flex items-center">
+                      <Calendar className="w-4 h-4 mr-1" />
+                      {item.collectionDate}
+                    </span>
+                  </div>
+                )}
+                {!item.collectionDate && (
+                  <div className="flex justify-between items-center">
+                    <span className="systematic-caps text-sm">Status</span>
+                    <span className="flex items-center text-pop-gray">
+                      <Package className="w-4 h-4 mr-1" />
+                      Awaiting Collection
+                    </span>
+                  </div>
+                )}
                 {item.processedDate && (
                   <div className="flex justify-between items-center">
                     <span className="systematic-caps text-sm">Processed</span>
@@ -348,7 +387,17 @@ export default function TrackItem() {
                     <p className="text-sm italic">{item.message}</p>
                   </div>
                 )}
-                {isSourceOnly && (
+                {isUncollected && (
+                  <div className="border-t pt-4 text-center border-pop-gray">
+                    <div className="flex items-center justify-center text-sm text-pop-gray">
+                      <Package className="w-4 h-4 mr-1" />
+                      <span className="systematic-caps">
+                        Ready for Collection
+                      </span>
+                    </div>
+                  </div>
+                )}
+                {isSourceOnly && !isUncollected && (
                   <div
                     className={`border-t pt-4 text-center ${isProcessed ? "border-pop-blue" : "border-pop-red"}`}
                   >

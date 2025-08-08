@@ -132,6 +132,27 @@ const sampleItems = {
     batchId: null, // No batch created yet
     blankId: null, // No blank created yet
     makerDetails: null
+  },
+  'STU901': {
+    id: 'STU901',
+    originPoint: 'Downtown Office Plaza',
+    collectionDate: null,
+    materialType: null,
+    weight: null,
+    processedDate: null,
+    transactionDate: null,
+    deliveredDate: null,
+    productType: null,
+    donatingEntity: null,
+    destination: null,
+    carbonOffset: null,
+    event: null,
+    message: 'Bin is active and ready for collection. Located at main lobby - please use designated plastic waste only.',
+    // ID hierarchy - only bin exists, not collected yet
+    binId: 'BIN-T1U2V3',
+    batchId: null, // No collection yet
+    blankId: null, // No collection yet
+    makerDetails: null
   }
 };
 
