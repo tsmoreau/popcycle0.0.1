@@ -10,7 +10,7 @@ User preference confirmed: Operations functions contained in single file rather 
 User preference: Individual transaction lists preferred over categorized summaries for financial data visibility.
 
 ## System Architecture
-PopCycle is built as a unified Next.js PWA with MongoDB, managing all core operations.
+PopCycle is built as a unified Next.js PWA with MongoDB, managing all core operations. The system now includes a separate rover subsite at `/rovers/` for the Insight Rovers educational robotics platform.
 
 ### Frontend Architecture
 - **Framework**: Next.js 15 with App Router and TypeScript.

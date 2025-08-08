@@ -2,14 +2,11 @@
 
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { Bot, Home, Wrench, BookOpen, Users, Zap } from 'lucide-react'
+import { Bot, Wrench } from 'lucide-react'
 
 const navigation = [
   { name: 'Control', href: '/rovers', icon: Bot },
   { name: 'Build', href: '/rovers/build', icon: Wrench },
-  { name: 'Docs', href: '/rovers/docs', icon: BookOpen },
-  { name: 'Community', href: '/rovers/community', icon: Users },
-  { name: 'Systems', href: '/rovers/systems', icon: Zap },
 ]
 
 export default function RoverNavigation() {
