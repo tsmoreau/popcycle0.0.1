@@ -778,15 +778,15 @@ export default function OperationsPage() {
                 <BarChart3 className="w-4 h-4 mr-2 text-pop-green" />
                 Inventory
               </TabsTrigger>
+              <Button
+                size="sm"
+                onClick={() => setIsLogisticsFullscreen(true)}
+                className="ml-4 border-0 hover:bg-pop-green hover:text-white"
+              >
+                <Maximize className="h-4 w-4" />
+              </Button>
             </TabsList>
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={() => setIsLogisticsFullscreen(true)}
-              className="ml-4 border-pop-green hover:bg-pop-green hover:text-white"
-            >
-              <Maximize className="h-4 w-4" />
-            </Button>
+           
           </div>
         </div>
 
