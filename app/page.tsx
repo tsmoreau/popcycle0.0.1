@@ -159,79 +159,93 @@ export default function Home() {
       </section>
 
       {/* Journey Follow */}
-      <section className="py-24 px-4 bg-pop-gray">
+      <section className="py-24 px-4 bg-white">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-20">
-            <h2 className="text-4xl lg:text-6xl helvetica-bold mb-8 text-white">
+            <h2 className="text-4xl lg:text-6xl helvetica-bold mb-8 text-pop-black">
               FOLLOW THE JOURNEY
             </h2>
-            <p className="text-xl lg:text-2xl text-white/90 max-w-4xl mx-auto leading-relaxed">
+            <p className="text-xl lg:text-2xl text-pop-gray max-w-4xl mx-auto leading-relaxed">
               Every PopCycle product has a journey you can follow. Scan any QR code to witness 
               the complete transformation from waste stream to learning tool.
             </p>
           </div>
           
-          <div className="space-y-16">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-              <div className="bg-white p-10 border-4 border-pop-green">
-                <div className="flex items-center mb-6">
-                  <div className="w-16 h-16 bg-pop-green rounded-full flex items-center justify-center mr-6">
-                    <Eye className="w-8 h-8 text-white" />
+          <div className="space-y-20">
+            <div className="relative">
+              <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <PopArtContainer color="green" className="bg-pop-green text-white p-8 relative">
+                  <div className="absolute -top-4 -left-4 w-12 h-12 bg-white text-pop-green rounded-full flex items-center justify-center font-bold text-xl">
+                    01
                   </div>
-                  <h3 className="text-3xl helvetica-bold systematic-caps text-pop-green">SEE THE SOURCE</h3>
-                </div>
-                <p className="text-lg text-pop-gray leading-relaxed">
-                  Your journey begins at our partner's collection bin, where every kilogram of plastic starts its new life. 
-                  GPS coordinates, collection date, batch weight—the story begins here.
-                </p>
-              </div>
-              <div className="bg-pop-green p-10 text-white">
-                <div className="text-center">
-                  <div className="text-6xl helvetica-bold mb-4">01</div>
-                  <p className="text-xl">COLLECTION POINT</p>
-                </div>
+                  <div className="text-center pt-4">
+                    <div className="w-16 h-16 bg-white rounded-full flex items-center justify-center mx-auto mb-6">
+                      <Eye className="w-8 h-8 text-pop-green" />
+                    </div>
+                    <h3 className="text-2xl helvetica-bold mb-4 systematic-caps">SEE THE SOURCE</h3>
+                    <p className="leading-relaxed">
+                      Your journey begins at our partner's collection bin, where every kilogram of plastic starts its new life. 
+                      GPS coordinates, collection date, batch weight—the story begins here.
+                    </p>
+                  </div>
+                </PopArtContainer>
+
+                <PopArtContainer color="blue" className="bg-pop-blue text-white p-8 relative">
+                  <div className="absolute -top-4 -left-4 w-12 h-12 bg-white text-pop-blue rounded-full flex items-center justify-center font-bold text-xl">
+                    02
+                  </div>
+                  <div className="text-center pt-4">
+                    <div className="w-16 h-16 bg-white rounded-full flex items-center justify-center mx-auto mb-6">
+                      <RotateCcw className="w-8 h-8 text-pop-blue" />
+                    </div>
+                    <h3 className="text-2xl helvetica-bold mb-4 systematic-caps">FOLLOW THE TRANSFORMATION</h3>
+                    <p className="leading-relaxed">
+                      Each batch gets a unique QR code. Follow it as it's cleaned, pressed into sheets, 
+                      and precision-cut into new designs. Every step documented and traceable.
+                    </p>
+                  </div>
+                </PopArtContainer>
+
+                <PopArtContainer color="red" className="bg-pop-red text-white p-8 relative">
+                  <div className="absolute -top-4 -left-4 w-12 h-12 bg-white text-pop-red rounded-full flex items-center justify-center font-bold text-xl">
+                    03
+                  </div>
+                  <div className="text-center pt-4">
+                    <div className="w-16 h-16 bg-white rounded-full flex items-center justify-center mx-auto mb-6">
+                      <Users className="w-8 h-8 text-pop-red" />
+                    </div>
+                    <h3 className="text-2xl helvetica-bold mb-4 systematic-caps">COMPLETE THE CIRCLE</h3>
+                    <p className="leading-relaxed">
+                      When you get a PopCycle product, you become part of the story. Register your item 
+                      and add your own maker journey to its history.
+                    </p>
+                  </div>
+                </PopArtContainer>
               </div>
             </div>
 
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-              <div className="bg-pop-blue p-10 text-white order-2 lg:order-1">
-                <div className="text-center">
-                  <div className="text-6xl helvetica-bold mb-4">02</div>
-                  <p className="text-xl">TRANSFORMATION</p>
-                </div>
-              </div>
-              <div className="bg-white p-10 border-4 border-pop-blue order-1 lg:order-2">
-                <div className="flex items-center mb-6">
-                  <div className="w-16 h-16 bg-pop-blue rounded-full flex items-center justify-center mr-6">
-                    <RotateCcw className="w-8 h-8 text-white" />
-                  </div>
-                  <h3 className="text-3xl helvetica-bold systematic-caps text-pop-blue">FOLLOW THE TRANSFORMATION</h3>
-                </div>
-                <p className="text-lg text-pop-gray leading-relaxed">
-                  Each batch gets a unique QR code. Follow it as it's cleaned, pressed into sheets, 
-                  and precision-cut into new designs. Every step documented and traceable.
-                </p>
-              </div>
-            </div>
-
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-              <div className="bg-white p-10 border-4 border-pop-red">
-                <div className="flex items-center mb-6">
-                  <div className="w-16 h-16 bg-pop-red rounded-full flex items-center justify-center mr-6">
-                    <Users className="w-8 h-8 text-white" />
-                  </div>
-                  <h3 className="text-3xl helvetica-bold systematic-caps text-pop-red">COMPLETE THE CIRCLE</h3>
-                </div>
-                <p className="text-lg text-pop-gray leading-relaxed">
-                  When you get a PopCycle product, you become part of the story. Register your item 
-                  and add your own maker journey to its history.
-                </p>
-              </div>
-              <div className="bg-pop-red p-10 text-white">
-                <div className="text-center">
-                  <div className="text-6xl helvetica-bold mb-4">03</div>
-                  <p className="text-xl">IMPACT CREATED</p>
-                </div>
+            <div className="text-center bg-pop-black p-12">
+              <h3 className="text-3xl lg:text-4xl helvetica-bold mb-6 text-white">
+                READY TO START YOUR <span className="text-pop-green">MATERIAL STORY?</span>
+              </h3>
+              <p className="text-xl text-white/90 mb-8 max-w-3xl mx-auto">
+                Join forward-thinking companies who are transforming their waste streams into educational impact. 
+                Your plastic has potential—let's unlock it together.
+              </p>
+              <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
+                <Link href="/about#contact">
+                  <Button size="lg" className="bg-pop-green text-pop-black hover:bg-white hover:text-pop-black systematic-caps text-lg px-12 py-4">
+                    START PARTNERSHIP
+                    <ArrowRight className="ml-2 w-5 h-5" />
+                  </Button>
+                </Link>
+                
+                <Link href="/track">
+                  <Button variant="outline" size="lg" className="border-2 border-white text-white hover:bg-white hover:text-pop-black systematic-caps text-lg px-8 py-4">
+                    <Scan className="mr-2 w-5 h-5" />
+                    TRACK A PRODUCT
+                  </Button>
+                </Link>
               </div>
             </div>
           </div>
