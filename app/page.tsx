@@ -20,7 +20,7 @@ export default function Home() {
       <section className="py-32 px-4 bg-white">
         <div className="max-w-6xl mx-auto text-center">
           <h1 className="text-6xl lg:text-8xl helvetica-bold mb-8 tracking-tight">
-            <span className="text-pop-green">TRACK YOUR PLASTIC'S JOURNEY</span><br />
+            <span className="text-pop-green">WASTE</span><br />
             BECOMES<br />
             <span className="text-pop-blue">WONDER</span>
           </h1>
