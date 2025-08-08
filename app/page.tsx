@@ -3,7 +3,7 @@ import { Button } from "./components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "./components/ui/card";
 import { Badge } from "./components/ui/badge";
 import { PopArtContainer, QRCodeElement } from "./components/PopArtElements";
-import { ArrowRight, Recycle, Factory, Zap, Users } from "lucide-react";
+import { ArrowRight, Recycle, Factory, Zap, Users, Eye, RotateCcw, Target, Scan } from "lucide-react";
 
 // Mock data for MVP
 const impactMetrics = {
@@ -20,30 +20,31 @@ export default function Home() {
       <section className="py-20 px-4">
         <div className="max-w-6xl mx-auto text-center">
           <h1 className="text-6xl lg:text-8xl helvetica-bold mb-8 tracking-tight">
-            <span className="text-pop-green">TRACK</span><br />
-            YOUR PLASTIC'S<br />
-            JOURNEY
+            <span className="text-pop-green">PLASTIC HAS A STORY.</span><br />
+            WE HELP YOU TELL IT.
           </h1>
           
-          <p className="text-xl lg:text-2xl max-w-4xl mx-auto mb-12 leading-relaxed text-pop-black">
-            Every QR code tells the complete story of transformation: from corporate waste to educational wonder. 
-            Scan. Learn. Make.
+          <p className="text-xl lg:text-2xl max-w-4xl mx-auto mb-8 leading-relaxed text-pop-black">
+            We are PopCycle. We turn corporate plastic waste into trackable, educational products. 
+            This isn't recycling. This is material storytelling.
           </p>
           
-          <div className="flex justify-center items-center gap-4 text-pop-black mb-8">
-            <Recycle className="w-6 h-6" />
-            <span className="systematic-caps">Complete Provenance Tracking</span>
+          <div className="text-lg lg:text-xl max-w-3xl mx-auto mb-12 text-pop-gray font-medium">
+            Every piece of plastic holds a history. We make that history visible.
           </div>
+          
           <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
             <Link href="/track">
               <Button size="lg" className="bg-pop-green text-white hover:bg-white hover:text-pop-black systematic-caps text-lg px-8 py-4">
-                Track Plastic
+                <Scan className="mr-2 w-5 h-5" />
+                Track Your Story
               </Button>
             </Link>
             
-            <Link href="/about#faq">
+            <Link href="/about#contact">
               <Button variant="outline" size="lg" className="border-2 border-pop-black text-pop-black hover:bg-pop-black hover:text-white systematic-caps text-lg px-8 py-4">
-                FAQ
+                Start Partnership
+                <ArrowRight className="ml-2 w-5 h-5" />
               </Button>
             </Link>
           </div>
@@ -85,12 +86,17 @@ export default function Home() {
         </div>
       </section>
 
-      {/* How It Works */}
+      {/* Process Section */}
       <section className="py-20 px-4">
         <div className="max-w-6xl mx-auto">
-          <h2 className="text-4xl lg:text-6xl helvetica-bold text-center mb-16">
-            HOW IT <span className="text-pop-green">WORKS</span>
-          </h2>
+          <div className="text-center mb-16">
+            <h2 className="text-3xl lg:text-4xl helvetica-bold mb-6">
+              Don't just recycle. <span className="text-pop-green">Recirculate.</span>
+            </h2>
+            <p className="text-lg lg:text-xl max-w-4xl mx-auto text-pop-gray leading-relaxed">
+              Every PopCycle product has a journey you can follow. We use a material-honest approach to turn what's been discarded into something that inspires. Our process is local, regenerative, and transparent from start to finish.
+            </p>
+          </div>
           
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
             <PopArtContainer color="green" className="bg-white border-4 border-pop-green p-8">
@@ -98,9 +104,9 @@ export default function Home() {
                 <div className="w-16 h-16 bg-pop-green rounded-full flex items-center justify-center mx-auto mb-6">
                   <Recycle className="w-8 h-8 text-white" />
                 </div>
-                <h3 className="text-2xl helvetica-bold mb-4 systematic-caps">01. Collect</h3>
+                <h3 className="text-2xl helvetica-bold mb-4 systematic-caps text-pop-green">COLLECT & CONNECT</h3>
                 <p className="text-pop-gray leading-relaxed">
-                  Corporate partners provide waste plastic. We collect, sort, and prepare materials for transformation.
+                  Your waste becomes a traceable resource. We install our branded bins and collect plastic, creating a direct link from your organization to the final product.
                 </p>
               </div>
             </PopArtContainer>
@@ -110,9 +116,9 @@ export default function Home() {
                 <div className="w-16 h-16 bg-pop-blue rounded-full flex items-center justify-center mx-auto mb-6">
                   <Factory className="w-8 h-8 text-white" />
                 </div>
-                <h3 className="text-2xl helvetica-bold mb-4 systematic-caps">02. Transform</h3>
+                <h3 className="text-2xl helvetica-bold mb-4 systematic-caps text-pop-blue">TRANSFORM & TRACE</h3>
                 <p className="text-pop-gray leading-relaxed">
-                  Heat press into sheets, CNC cut custom designs, laser etch QR codes. Every step tracked.
+                  We use minimal, non-destructive processes to clean and shape the plastic. Our laser-etched QR codes ensure every object carries its full provenance—from raw material to finished product.
                 </p>
               </div>
             </PopArtContainer>
@@ -120,14 +126,63 @@ export default function Home() {
             <PopArtContainer color="red" className="bg-white border-4 border-pop-red p-8">
               <div className="text-center">
                 <div className="w-16 h-16 bg-pop-red rounded-full flex items-center justify-center mx-auto mb-6">
-                  <Zap className="w-8 h-8 text-white" />
+                  <Target className="w-8 h-8 text-white" />
                 </div>
-                <h3 className="text-2xl helvetica-bold mb-4 systematic-caps">03. Learn</h3>
+                <h3 className="text-2xl helvetica-bold mb-4 systematic-caps text-pop-red">MAKE & MATTER</h3>
                 <p className="text-pop-gray leading-relaxed">
-                  Educational products with complete provenance. Students learn through making and building.
+                  We deliver durable, educational products that prove sustainability doesn't have to be a buzzword. Your material becomes a story of hands-on learning and real, local impact.
                 </p>
               </div>
             </PopArtContainer>
+          </div>
+        </div>
+      </section>
+
+      {/* Journey Tracking Section */}
+      <section className="py-20 px-4 bg-pop-gray">
+        <div className="max-w-6xl mx-auto">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl lg:text-6xl helvetica-bold mb-8 text-white">
+              FOLLOW THE <span className="text-pop-green">JOURNEY</span>
+            </h2>
+          </div>
+          
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
+            <div className="bg-white p-8 border-4 border-white">
+              <div className="text-center">
+                <div className="w-16 h-16 bg-pop-green rounded-full flex items-center justify-center mx-auto mb-6">
+                  <Eye className="w-8 h-8 text-white" />
+                </div>
+                <h3 className="text-2xl helvetica-bold mb-4 systematic-caps text-pop-green">SEE THE SOURCE</h3>
+                <p className="text-pop-gray leading-relaxed">
+                  Your journey begins at our partner's collection bin, where every kilogram of plastic starts its new life.
+                </p>
+              </div>
+            </div>
+            
+            <div className="bg-white p-8 border-4 border-white">
+              <div className="text-center">
+                <div className="w-16 h-16 bg-pop-blue rounded-full flex items-center justify-center mx-auto mb-6">
+                  <RotateCcw className="w-8 h-8 text-white" />
+                </div>
+                <h3 className="text-2xl helvetica-bold mb-4 systematic-caps text-pop-blue">FOLLOW THE TRANSFORMATION</h3>
+                <p className="text-pop-gray leading-relaxed">
+                  We give each batch of plastic a unique QR code. You can follow it as it is cleaned, pressed into sheets, and precision-cut into a new design.
+                </p>
+              </div>
+            </div>
+            
+            <div className="bg-white p-8 border-4 border-white">
+              <div className="text-center">
+                <div className="w-16 h-16 bg-pop-red rounded-full flex items-center justify-center mx-auto mb-6">
+                  <Users className="w-8 h-8 text-white" />
+                </div>
+                <h3 className="text-2xl helvetica-bold mb-4 systematic-caps text-pop-red">COMPLETE THE CIRCLE</h3>
+                <p className="text-pop-gray leading-relaxed">
+                  When you get a PopCycle product, you become part of the story. You can register your item and add your own maker journey to its history.
+                </p>
+              </div>
+            </div>
           </div>
         </div>
       </section>
