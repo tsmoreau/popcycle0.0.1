@@ -115,45 +115,58 @@ export default function Home() {
             </p>
           </div>
           
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-            <PopArtContainer color="green" className="bg-white border-4 border-pop-green p-10 hover:bg-pop-green hover:text-white transition-all duration-300">
-              <div className="text-center">
-                <div className="w-20 h-20 bg-pop-green rounded-full flex items-center justify-center mx-auto mb-8">
-                  <Recycle className="w-10 h-10 text-white" />
-                </div>
-                <h3 className="text-2xl helvetica-bold mb-6 systematic-caps">COLLECT & CONNECT</h3>
-                <p className="leading-relaxed text-lg">
-                  Your waste becomes a traceable resource. We install branded bins and collect plastic, 
-                  creating a direct link from your organization to the final product.
-                </p>
+          <div className="space-y-20">
+            <div className="relative">
+              <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <PopArtContainer color="green" className="bg-pop-green text-white p-8 relative">
+                  <div className="absolute -top-4 -left-4 w-12 h-12 bg-white text-pop-green rounded-full flex items-center justify-center font-bold text-xl">
+                    01
+                  </div>
+                  <div className="text-center pt-4">
+                    <div className="w-16 h-16 bg-white rounded-full flex items-center justify-center mx-auto mb-6">
+                      <Recycle className="w-8 h-8 text-pop-green" />
+                    </div>
+                    <h3 className="text-2xl helvetica-bold mb-4 systematic-caps">COLLECT & CONNECT</h3>
+                    <p className="leading-relaxed">
+                      Your waste becomes a traceable resource. We install branded bins and collect plastic, 
+                      creating a direct link from your organization to the final product.
+                    </p>
+                  </div>
+                </PopArtContainer>
+
+                <PopArtContainer color="blue" className="bg-pop-blue text-white p-8 relative">
+                  <div className="absolute -top-4 -left-4 w-12 h-12 bg-white text-pop-blue rounded-full flex items-center justify-center font-bold text-xl">
+                    02
+                  </div>
+                  <div className="text-center pt-4">
+                    <div className="w-16 h-16 bg-white rounded-full flex items-center justify-center mx-auto mb-6">
+                      <Factory className="w-8 h-8 text-pop-blue" />
+                    </div>
+                    <h3 className="text-2xl helvetica-bold mb-4 systematic-caps">TRANSFORM & TRACE</h3>
+                    <p className="leading-relaxed">
+                      Minimal, non-destructive processes clean and shape plastic. Laser-etched QR codes 
+                      ensure every object carries its full provenance—raw material to finished product.
+                    </p>
+                  </div>
+                </PopArtContainer>
+
+                <PopArtContainer color="red" className="bg-pop-red text-white p-8 relative">
+                  <div className="absolute -top-4 -left-4 w-12 h-12 bg-white text-pop-red rounded-full flex items-center justify-center font-bold text-xl">
+                    03
+                  </div>
+                  <div className="text-center pt-4">
+                    <div className="w-16 h-16 bg-white rounded-full flex items-center justify-center mx-auto mb-6">
+                      <Target className="w-8 h-8 text-pop-red" />
+                    </div>
+                    <h3 className="text-2xl helvetica-bold mb-4 systematic-caps">MAKE & MATTER</h3>
+                    <p className="leading-relaxed">
+                      Durable, educational products that prove sustainability doesn't have to be a buzzword. 
+                      Your material becomes stories of hands-on learning and real impact.
+                    </p>
+                  </div>
+                </PopArtContainer>
               </div>
-            </PopArtContainer>
-            
-            <PopArtContainer color="blue" className="bg-white border-4 border-pop-blue p-10 hover:bg-pop-blue hover:text-white transition-all duration-300">
-              <div className="text-center">
-                <div className="w-20 h-20 bg-pop-blue rounded-full flex items-center justify-center mx-auto mb-8">
-                  <Factory className="w-10 h-10 text-white" />
-                </div>
-                <h3 className="text-2xl helvetica-bold mb-6 systematic-caps">TRANSFORM & TRACE</h3>
-                <p className="leading-relaxed text-lg">
-                  Minimal, non-destructive processes clean and shape plastic. Laser-etched QR codes 
-                  ensure every object carries its full provenance—raw material to finished product.
-                </p>
-              </div>
-            </PopArtContainer>
-            
-            <PopArtContainer color="red" className="bg-white border-4 border-pop-red p-10 hover:bg-pop-red hover:text-white transition-all duration-300">
-              <div className="text-center">
-                <div className="w-20 h-20 bg-pop-red rounded-full flex items-center justify-center mx-auto mb-8">
-                  <Target className="w-10 h-10 text-white" />
-                </div>
-                <h3 className="text-2xl helvetica-bold mb-6 systematic-caps">MAKE & MATTER</h3>
-                <p className="leading-relaxed text-lg">
-                  Durable, educational products that prove sustainability doesn't have to be a buzzword. 
-                  Your material becomes stories of hands-on learning and real impact.
-                </p>
-              </div>
-            </PopArtContainer>
+            </div>
           </div>
         </div>
       </section>
