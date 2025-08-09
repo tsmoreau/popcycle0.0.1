@@ -589,7 +589,7 @@ export default function TrackItem() {
                 <div className="grid md:grid-cols-2 gap-8 text-center">
                   <div>
                     <div className="text-4xl helvetica-bold text-pop-red mb-2">
-                      {impactMetrics.carbonSaved}kg
+                      {impactMetrics?.carbonSaved}kg
                     </div>
                     <div className="systematic-caps text-sm text-pop-gray">
                       CO₂ Offset Generated
@@ -600,7 +600,7 @@ export default function TrackItem() {
                   </div>
                   <div>
                     <div className="text-4xl helvetica-bold text-pop-red mb-2">
-                      {impactMetrics.wasteReduced}kg
+                      {impactMetrics?.wasteReduced}kg
                     </div>
                     <div className="systematic-caps text-sm text-pop-gray">
                       Plastic Waste Diverted
