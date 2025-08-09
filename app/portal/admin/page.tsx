@@ -31,6 +31,7 @@ export default function AdminPage() {
   const [showProductionStations, setShowProductionStations] = useState(false)
   const [showQRSettings, setShowQRSettings] = useState(false)
   const [showIntegrations, setShowIntegrations] = useState(false)
+  const [showMongoDBOperations, setShowMongoDBOperations] = useState(false)
   const [showBackupRecovery, setShowBackupRecovery] = useState(false)
   const [showAuditTrail, setShowAuditTrail] = useState(false)
   const [showDatabaseOperations, setDatabaseOperations] = useState(false)
@@ -320,6 +321,13 @@ export default function AdminPage() {
                   </div>
                   <div className="flex items-center justify-between p-3 bg-white rounded-lg border">
                     <div>
+                      <span className="font-medium text-sm">MongoDB Atlas</span>
+                      <p className="text-xs text-gray-600">Primary database & document storage</p>
+                    </div>
+                    <Badge className="bg-pop-green text-white">Connected</Badge>
+                  </div>
+                  <div className="flex items-center justify-between p-3 bg-white rounded-lg border">
+                    <div>
                       <span className="font-medium text-sm">QuickBooks</span>
                       <p className="text-xs text-gray-600">Financial data synchronization</p>
                     </div>
@@ -343,6 +351,59 @@ export default function AdminPage() {
                 <div className="mt-4 space-y-2">
                   <Button variant="outline" className="w-full">Configure API Keys</Button>
                   <Button variant="outline" className="w-full">Test Connections</Button>
+                </div>
+              </div>
+            )}
+          </div>
+
+          {/* MongoDB Database Operations Dropdown */}
+          <div className="w-full border rounded-lg">
+            <div className="px-4 py-4 cursor-pointer hover:bg-gray-50" onClick={() => setShowMongoDBOperations(!showMongoDBOperations)}>
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-3">
+                  <Database className="h-5 w-5 text-pop-green" />
+                  <span className="font-medium">MongoDB Database Operations</span>
+                </div>
+                <ChevronDown className={`h-5 w-5 text-gray-400 transition-transform ${showMongoDBOperations ? 'rotate-180' : ''}`} />
+              </div>
+            </div>
+            {showMongoDBOperations && (
+              <div className="px-4 pb-4 border-t bg-gray-50">
+                <div className="space-y-2 mt-4">
+                  <div className="flex items-center justify-between p-3 bg-white rounded-lg border">
+                    <div>
+                      <span className="font-medium text-sm">Database Status</span>
+                      <p className="text-xs text-gray-600">popcycle.esldhpo.mongodb.net</p>
+                    </div>
+                    <Badge className="bg-pop-green text-white">Connected</Badge>
+                  </div>
+                  <div className="flex items-center justify-between p-3 bg-white rounded-lg border">
+                    <div>
+                      <span className="font-medium text-sm">Collection Count</span>
+                      <p className="text-xs text-gray-600">Core data collections</p>
+                    </div>
+                    <span className="text-sm font-medium text-gray-900">7</span>
+                  </div>
+                  <div className="flex items-center justify-between p-3 bg-white rounded-lg border">
+                    <div>
+                      <span className="font-medium text-sm">Database Size</span>
+                      <p className="text-xs text-gray-600">Current storage usage</p>
+                    </div>
+                    <span className="text-sm font-medium text-gray-900">2.4 MB</span>
+                  </div>
+                  <div className="flex items-center justify-between p-3 bg-white rounded-lg border">
+                    <div>
+                      <span className="font-medium text-sm">User Permissions</span>
+                      <p className="text-xs text-gray-600">popcycleapp user access level</p>
+                    </div>
+                    <Badge className="bg-pop-blue text-white">dbAdmin</Badge>
+                  </div>
+                </div>
+                <div className="mt-4 space-y-2">
+                  <Button variant="outline" className="w-full">Test Connection</Button>
+                  <Button variant="outline" className="w-full">Initialize Sample Data</Button>
+                  <Button variant="outline" className="w-full">View Collection Stats</Button>
+                  <Button variant="outline" className="w-full text-pop-red">Reset Development Data</Button>
                 </div>
               </div>
             )}
