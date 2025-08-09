@@ -34,10 +34,11 @@ export async function GET() {
         // Stats might require additional permissions
       }
       
+      let listCollectionsError = null
       try {
         collections = await db.listCollections().toArray()
       } catch (error) {
-        // ListCollections might require additional permissions
+        listCollectionsError = error instanceof Error ? error.message : 'Unknown error'
         collections = []
       }
       
@@ -49,6 +50,8 @@ export async function GET() {
         database: 'popcycle',
         hostname: uri.split('@')[1]?.split('/')[0] || 'unknown',
         collections: collections.length,
+        collectionsDetail: collections.map(c => c.name),
+        listCollectionsError,
         dataSize: Math.round(stats.dataSize / 1024 / 1024 * 100) / 100, // MB
         storageSize: Math.round(stats.storageSize / 1024 / 1024 * 100) / 100, // MB
         lastChecked: new Date().toISOString()
