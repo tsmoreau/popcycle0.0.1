@@ -27,6 +27,13 @@ export interface Org {
     address?: string;
     website?: string;
   };
+  branding: {
+    primaryColor?: string;
+    secondaryColor?: string;
+    logoS3Key?: string;
+    customDomain?: string;
+    trackingPageMessage?: string;
+  };
   events: Event[]; // Nested events array
   createdAt: Date;
   updatedAt: Date;
