@@ -33,7 +33,7 @@ PopCycle is built as a unified Next.js PWA with MongoDB, managing all core opera
     - **User**: Capability-based identity system with maker progression.
     - **Product**: Design templates and assembly guides.
 - **Core System Architecture**:
-    - **Universal QR Code System**: Pure alphanumeric IDs serve as both QR codes and database primary keys (BINXXXXXX, BATXXXXXX, BLKXXXXXX). Universal tracking system supports three distinct views: Bin tracking (shows all batches from that bin), Batch tracking (shows processing status and resulting blanks), Blank tracking (full item provenance). The system tracks the transformation chain from waste collection to delivery with real-time status updates.
+    - **Universal QR Code System**: Pure alphanumeric IDs serve as both QR codes and database primary keys with embedded partner branding. Format: First 3 characters = Base36 partner hash (supports 46,655 partners), followed by item type prefix (BIN/BAT/BLK), then sequence. Examples: `2JKBLKA1B2C3`, `ABBIND4E5F6`. Universal tracking system supports three distinct views: Bin tracking (shows all batches from that bin), Batch tracking (shows processing status and resulting blanks), Blank tracking (full item provenance). The system tracks the transformation chain from waste collection to delivery with real-time status updates.
     - **Logistics & Operations Management**: Includes pickup scheduling with route optimization, mobile staff apps for collection and inventory, and PWA thin clients at production stations for coordination (e.g., weighing/photo station with HID scale integration, laser station).
     - **Community & Education Platform**: Features a universal maker identity, skill trees, achievement systems, step-by-step assembly guides, and workshop management.
     - **E-commerce & Product Systems**: Manages product catalog, order fulfillment, customer communication, and impact reporting.
@@ -73,6 +73,13 @@ PopCycle is built as a unified Next.js PWA with MongoDB, managing all core opera
 - **API Pattern**: `/api/images/[key]` endpoint generates presigned URLs for frontend
 - **Upload Flow**: Frontend requests presigned POST URL, uploads directly to S3
 - **View Flow**: Frontend requests presigned GET URL for image display
+
+### Partner Branding System
+- **Partner Hash Encoding**: First 3 characters of all item IDs encode partner identity using Base36 (Partner ID 1 = `001`, Partner 99 = `2R0`, Partner 999 = `RR3`)
+- **Dynamic Tracking Pages**: `/track/[id]` parses first 3 characters to determine partner, applies custom branding (logo, colors, messaging) without requiring separate domains
+- **Branded QR Experience**: Each partner gets fully customized tracking pages on `popcycle.io/track/ID` with their branding and messaging
+- **Partner Database Schema**: Stores partner hash, branding configuration, and custom domain settings for dynamic page rendering
+- **Scalable Architecture**: Supports up to 46,655 partners before requiring system refactor
 
 ## Current Implementation Status
 
