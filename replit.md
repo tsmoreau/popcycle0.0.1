@@ -33,25 +33,46 @@ PopCycle is built as a unified Next.js PWA with MongoDB, managing all core opera
     - **User**: Capability-based identity system with maker progression.
     - **Product**: Design templates and assembly guides.
 - **Core System Architecture**:
-    - **Dual QR Code System**: Each item has an offline backup QR code (minimal JSON) and a customer-facing QR code linking to `https://popcycle.io/track/ABC123`. IDs are human-readable, prefixed UUIDs (e.g., `BI-`, `BA-`, `IT-`). QR codes are re-lasered post-manufacturing. The system tracks the transformation chain from waste collection to delivery with real-time status updates.
+    - **Universal QR Code System**: Pure alphanumeric IDs serve as both QR codes and database primary keys (BINXXXXXX, BATXXXXXX, BLKXXXXXX). Universal tracking system supports three distinct views: Bin tracking (shows all batches from that bin), Batch tracking (shows processing status and resulting blanks), Blank tracking (full item provenance). The system tracks the transformation chain from waste collection to delivery with real-time status updates.
     - **Logistics & Operations Management**: Includes pickup scheduling with route optimization, mobile staff apps for collection and inventory, and PWA thin clients at production stations for coordination (e.g., weighing/photo station with HID scale integration, laser station).
     - **Community & Education Platform**: Features a universal maker identity, skill trees, achievement systems, step-by-step assembly guides, and workshop management.
     - **E-commerce & Product Systems**: Manages product catalog, order fulfillment, customer communication, and impact reporting.
 
 ### User Access Architecture
 - **User Identity System**: All users begin as makers; access is capability-based. Staff roles (`admin`, `operations_staff`, `crm_staff`) grant additional dashboard access. `orgId` provides read-only access to partner reporting.
-- **Authentication Strategy**: Single Sign-On across authorized areas. Production stations use quick staff authentication. Universal provenance access is available via QR codes.
+- **Authentication Strategy**: NextAuth handles authentication only (Google Workspace SSO for staff, magic link support). All user data stored in MongoDB User schema. Session management via JWT tokens (no additional database storage). Email-based linking between NextAuth session and MongoDB User records.
 - **Dashboard Architecture**: Route-based portal navigation under `/portal/` with color-coded themes for different dashboards: Main, Profile, Admin, Operations, CRM, Partner, and Financial. Operations functions are consolidated into a single page. Production workflow is streamlined across two stations: Weighing/Photo/Creation and Laser Processing, both integrated via PWA thin clients.
 
 ## External Dependencies
 
 - **Database**: MongoDB serves as the single source of truth for all business operations data, including CRM, logistics, user progression, and provenance tracking.
+- **Authentication**: NextAuth for authentication only (JWT-based sessions, Google Workspace SSO for staff). User data stored entirely in MongoDB User collection, linked by email.
+- **File Storage**: Private AWS S3 bucket for secure asset storage (partner logos, product images, design files). MongoDB stores S3 keys, presigned URLs generated on-demand for secure access.
 - **UI Components**: shadcn/ui built on Radix UI primitives, styled with Tailwind CSS, and using Lucide React icons.
-- **Communication**: Google Workspace for email automation, calendar synchronization, and communication workflows.
+- **Communication**: Google Workspace for email automation, calendar synchronization, and communication workflows (also used for NextAuth magic link emails via SMTP).
 - **Financial Management**: QuickBooks for comprehensive accounting, invoice generation, and revenue tracking.
 - **Payment Processing**: Stripe for secure transactions and subscription management.
 - **Hardware Integration**: USB HID scales and external USB cameras integrated directly into production station PWAs.
-- **File Storage**: Asset management via `attached_assets` directory structure.
+
+## Technical Architecture Details
+
+### Authentication System (NextAuth + MongoDB)
+- **NextAuth Role**: Authentication only, JWT-based sessions, no database storage
+- **Google Workspace SSO**: Staff authentication through business Google accounts
+- **Magic Link Support**: Email-based authentication via Google Workspace SMTP
+- **User Data Storage**: All user profiles, roles, and business data in MongoDB User collection
+- **Session Management**: JWT tokens stored as HTTP-only cookies in browser
+- **User Linking**: NextAuth session email matches MongoDB User.email field
+
+### File Storage System (Private S3)
+- **S3 Bucket Configuration**: Private bucket, no public read access
+- **File Organization**: Structured paths (partner-logos/org-123/, product-images/, design-files/)
+- **MongoDB Storage**: S3 keys only (e.g., "partner-logos/org-123/logo.jpg")
+- **Secure Access**: Presigned URLs generated on-demand for viewing/uploading
+- **Security Model**: Temporary URLs (15-60 minute expiration), audit trail, revocable access
+- **API Pattern**: `/api/images/[key]` endpoint generates presigned URLs for frontend
+- **Upload Flow**: Frontend requests presigned POST URL, uploads directly to S3
+- **View Flow**: Frontend requests presigned GET URL for image display
 
 ## Current Implementation Status
 
