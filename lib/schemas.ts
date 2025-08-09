@@ -18,6 +18,7 @@ export interface Event {
 export interface Org {
   _id: ObjectId;
   name: string;
+  slug: string; // URL-friendly identifier for partner routing (e.g., "museumofscience", "discoverycube")
   type: 'corporate' | 'educational' | 'community';
   description: string;
   logoUrl?: string;

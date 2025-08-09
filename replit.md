@@ -76,9 +76,11 @@ PopCycle is built as a unified Next.js PWA with MongoDB, managing all core opera
 
 ### Partner Branding System
 - **Partner ID Encoding**: First 3 characters of all item IDs encode partner identity using Base36 transformation of partner primary key (Partner ID 1 = `001`, Partner ID 99 = `2R0`, Partner ID 999 = `RR3`)
-- **Dynamic Tracking Pages**: `/track/[id]` parses first 3 characters to determine partner, applies custom branding (logo, colors, messaging) without requiring separate domains
-- **Branded QR Experience**: Each partner gets fully customized tracking pages on `popcycle.io/track/ID` with their branding and messaging
-- **Partner Database Schema**: Stores partner branding configuration and custom domain settings for dynamic page rendering
+- **Branded URL Structure**: Dynamic routing via `popcycle.io/[partner]/track/[id]` using partner slug for branded URLs (e.g., `popcycle.io/museumofscience/track/2JKBLKA1B2C3`)
+- **Single Page Architecture**: One dynamic page file `/app/[partner]/track/[id]/page.tsx` handles all partner tracking pages with contextual branding
+- **Partner Lookup**: Page queries Org collection by slug to retrieve partner branding configuration (logo, colors, messaging)
+- **Data Validation**: Item ID encoding provides secondary validation of partner identity for data integrity
+- **QR Code URLs**: QR codes point directly to branded partner URLs without redirects for optimal user experience
 - **Scalable Architecture**: Supports up to 46,655 partners before requiring system refactor
 
 ## Current Implementation Status
