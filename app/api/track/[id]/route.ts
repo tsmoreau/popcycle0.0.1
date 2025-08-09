@@ -1,7 +1,37 @@
 import { NextRequest, NextResponse } from 'next/server';
 
+// Interface for sample item structure
+interface SampleItem {
+  id: string;
+  originPoint?: string | null;
+  collectionDate?: string | null;
+  materialType?: string | null;
+  weight?: number | null;
+  processedDate?: string | null;
+  transactionDate?: string | null;
+  deliveredDate?: string | null;
+  productType?: string | null;
+  donatingEntity?: string | null;
+  destination?: string | null;
+  carbonOffset?: number | null;
+  event?: string | null;
+  message?: string | null;
+  binId?: string | null;
+  batchId?: string | null;
+  blankId?: string | null;
+  makerDetails?: {
+    userId: string;
+    name: string;
+    location: string;
+    assemblyDate: string;
+    story: string;
+    registeredAt: string;
+    verifiedEmail: string;
+  } | null;
+}
+
 // Sample data for demonstration - in production this would come from MongoDB
-const sampleItems = {
+const sampleItems: Record<string, SampleItem> = {
   'ABC123': {
     id: 'ABC123',
     originPoint: 'Cafe Luna',
@@ -64,6 +94,7 @@ const sampleItems = {
     donatingEntity: 'Local Community Fund',
     destination: 'YMCA Summer Camp',
     carbonOffset: 7.8,
+    event: 'Community Cleanup Initiative',
     message: 'From park cleanup to learning tool - community action creates change.',
     // ID hierarchy - processed into blank
     binId: 'BIN-S1T2U3',
@@ -180,8 +211,8 @@ export async function GET(
     donatingEntity: item.donatingEntity,
     carbonOffset: item.carbonOffset,
     productType: item.productType,
-    event: item.event,
-    message: item.message,
+    event: item.event || null,
+    message: item.message || null,
     makerDetails: item.makerDetails,
     // ID hierarchy based on processing stage
     binId: item.binId,
@@ -189,7 +220,7 @@ export async function GET(
     blankId: item.blankId,
     impactMetrics: {
       carbonSaved: item.carbonOffset || 0,
-      wasteReduced: item.weight
+      wasteReduced: item.weight || 0
     }
   });
 }

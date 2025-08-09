@@ -198,6 +198,8 @@ export default function AdminPage() {
           <AccordionContent>
             <div className="pt-2 pb-4">
               <DataTable
+                title="User Management"
+                description="Manage user roles, permissions, and partner affiliations"
                 data={usersData}
                 columns={userColumns}
                 renderModal={renderUserModal}

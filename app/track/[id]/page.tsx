@@ -219,7 +219,7 @@ export default function TrackItem() {
                   </div>
                   <h3 className="systematic-caps text-sm mb-1">Assembled</h3>
                   <p className="text-xs text-pop-gray truncate">
-                    {item.makerDetails.assemblyDate}
+                    {item.makerDetails?.assemblyDate}
                   </p>
                 </div>
               )}
