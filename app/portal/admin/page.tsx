@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Users, Settings, Shield, ChevronDown, Database, Cog, Eye, Zap, QrCode, Plug } from 'lucide-react'
 import { Button } from '../../components/ui/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../../components/ui/card'
@@ -26,6 +26,18 @@ interface Station {
   description: string
 }
 
+interface MongoDBStatus {
+  connected: boolean
+  status: string
+  database?: string
+  hostname?: string
+  collections?: number
+  dataSize?: number
+  storageSize?: number
+  error?: string
+  lastChecked?: string
+}
+
 export default function AdminPage() {
   const [showOverview, setShowOverview] = useState(false)
   const [showProductionStations, setShowProductionStations] = useState(false)
@@ -35,6 +47,30 @@ export default function AdminPage() {
   const [showBackupRecovery, setShowBackupRecovery] = useState(false)
   const [showAuditTrail, setShowAuditTrail] = useState(false)
   const [showDatabaseOperations, setDatabaseOperations] = useState(false)
+  const [mongoStatus, setMongoStatus] = useState<MongoDBStatus | null>(null)
+  const [loadingMongo, setLoadingMongo] = useState(true)
+
+  // Fetch MongoDB status on component mount
+  useEffect(() => {
+    fetchMongoStatus()
+  }, [])
+
+  const fetchMongoStatus = async () => {
+    try {
+      setLoadingMongo(true)
+      const response = await fetch('/api/admin/mongodb-status')
+      const data = await response.json()
+      setMongoStatus(data)
+    } catch (error) {
+      setMongoStatus({
+        connected: false,
+        status: 'Connection Error',
+        error: 'Failed to check MongoDB status'
+      })
+    } finally {
+      setLoadingMongo(false)
+    }
+  }
 
   // Sample user data
   const usersData: User[] = [
@@ -317,35 +353,45 @@ export default function AdminPage() {
                       <span className="font-medium text-sm">Google Workspace</span>
                       <p className="text-xs text-gray-600">Email automation & calendar sync</p>
                     </div>
-                    <Badge className="bg-pop-green text-white">Connected</Badge>
+                    <Badge className="bg-gray-100 text-gray-800">Not Set Up</Badge>
                   </div>
                   <div className="flex items-center justify-between p-3 bg-white rounded-lg border">
                     <div>
                       <span className="font-medium text-sm">MongoDB Atlas</span>
                       <p className="text-xs text-gray-600">Primary database & document storage</p>
                     </div>
-                    <Badge className="bg-pop-green text-white">Connected</Badge>
+                    {loadingMongo ? (
+                      <Badge className="bg-yellow-100 text-yellow-800">Checking...</Badge>
+                    ) : (
+                      <Badge className={
+                        mongoStatus?.connected 
+                          ? "bg-pop-green text-white" 
+                          : "bg-pop-red text-white"
+                      }>
+                        {mongoStatus?.status || 'Unknown'}
+                      </Badge>
+                    )}
                   </div>
                   <div className="flex items-center justify-between p-3 bg-white rounded-lg border">
                     <div>
                       <span className="font-medium text-sm">QuickBooks</span>
                       <p className="text-xs text-gray-600">Financial data synchronization</p>
                     </div>
-                    <Badge className="bg-pop-green text-white">Connected</Badge>
+                    <Badge className="bg-gray-100 text-gray-800">Not Set Up</Badge>
                   </div>
                   <div className="flex items-center justify-between p-3 bg-white rounded-lg border">
                     <div>
                       <span className="font-medium text-sm">Stripe</span>
                       <p className="text-xs text-gray-600">Payment processing</p>
                     </div>
-                    <Badge className="bg-pop-green text-white">Connected</Badge>
+                    <Badge className="bg-gray-100 text-gray-800">Not Set Up</Badge>
                   </div>
                   <div className="flex items-center justify-between p-3 bg-white rounded-lg border">
                     <div>
                       <span className="font-medium text-sm">AWS S3</span>
                       <p className="text-xs text-gray-600">Private file & image storage</p>
                     </div>
-                    <Badge className="bg-pop-green text-white">Connected</Badge>
+                    <Badge className="bg-gray-100 text-gray-800">Not Set Up</Badge>
                   </div>
                 </div>
                 <div className="mt-4 space-y-2">
@@ -373,23 +419,39 @@ export default function AdminPage() {
                   <div className="flex items-center justify-between p-3 bg-white rounded-lg border">
                     <div>
                       <span className="font-medium text-sm">Database Status</span>
-                      <p className="text-xs text-gray-600">popcycle.esldhpo.mongodb.net</p>
+                      <p className="text-xs text-gray-600">
+                        {mongoStatus?.hostname || 'popcycle.esldhpo.mongodb.net'}
+                      </p>
                     </div>
-                    <Badge className="bg-pop-green text-white">Connected</Badge>
+                    {loadingMongo ? (
+                      <Badge className="bg-yellow-100 text-yellow-800">Checking...</Badge>
+                    ) : (
+                      <Badge className={
+                        mongoStatus?.connected 
+                          ? "bg-pop-green text-white" 
+                          : "bg-pop-red text-white"
+                      }>
+                        {mongoStatus?.status || 'Unknown'}
+                      </Badge>
+                    )}
                   </div>
                   <div className="flex items-center justify-between p-3 bg-white rounded-lg border">
                     <div>
                       <span className="font-medium text-sm">Collection Count</span>
                       <p className="text-xs text-gray-600">Core data collections</p>
                     </div>
-                    <span className="text-sm font-medium text-gray-900">7</span>
+                    <span className="text-sm font-medium text-gray-900">
+                      {loadingMongo ? '...' : (mongoStatus?.collections || 0)}
+                    </span>
                   </div>
                   <div className="flex items-center justify-between p-3 bg-white rounded-lg border">
                     <div>
                       <span className="font-medium text-sm">Database Size</span>
                       <p className="text-xs text-gray-600">Current storage usage</p>
                     </div>
-                    <span className="text-sm font-medium text-gray-900">2.4 MB</span>
+                    <span className="text-sm font-medium text-gray-900">
+                      {loadingMongo ? '...' : `${mongoStatus?.dataSize || 0} MB`}
+                    </span>
                   </div>
                   <div className="flex items-center justify-between p-3 bg-white rounded-lg border">
                     <div>
@@ -400,7 +462,14 @@ export default function AdminPage() {
                   </div>
                 </div>
                 <div className="mt-4 space-y-2">
-                  <Button variant="outline" className="w-full">Test Connection</Button>
+                  <Button 
+                    variant="outline" 
+                    className="w-full"
+                    onClick={fetchMongoStatus}
+                    disabled={loadingMongo}
+                  >
+                    {loadingMongo ? 'Testing...' : 'Test Connection'}
+                  </Button>
                   <Button variant="outline" className="w-full">Initialize Sample Data</Button>
                   <Button variant="outline" className="w-full">View Collection Stats</Button>
                   <Button variant="outline" className="w-full text-pop-red">Reset Development Data</Button>
