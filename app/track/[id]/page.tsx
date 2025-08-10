@@ -346,7 +346,7 @@ export default function TrackItem() {
                   {item.id.startsWith('T') ? (item.event === 'inventory_creation' ? 'Processed' : 'Processing') : 'Processed'}
                 </h3>
                 <p className="text-xs text-pop-gray truncate">
-                  {item.id.startsWith('T') ? getBatchStatusLabel(item.event || 'collected') : item.processedDate}
+                  {item.id.startsWith('T') ? (item.event === 'inventory_creation' ? 'Complete' : 'In Progress') : item.processedDate}
                 </p>
               </div>
 
