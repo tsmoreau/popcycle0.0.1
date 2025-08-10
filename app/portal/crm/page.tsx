@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Phone, Users, TrendingUp, AlertCircle, Calendar, MessageCircle, Building2, UserPlus, GitBranch, ChevronDown, ArrowRight, CheckCircle, Clock, FileText, Handshake, Download, Upload } from 'lucide-react'
 import { Button } from '../../components/ui/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../../components/ui/card'
@@ -9,68 +9,115 @@ import { DataTable, Column } from '../../components/ui/data-table'
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '../../components/ui/accordion'
 
 interface Organization {
-  id: string
+  _id: string
   name: string
-  contact: string
-  stage: string
-  status: 'Active' | 'Pending' | 'Renewal' | 'Closed'
-  bins: number
-  lastContact: string
-  value: string
+  slug: string
+  type: 'corporate' | 'educational' | 'community'
+  description: string
+  logoUrl?: string
+  contactInfo: {
+    email?: string
+    phone?: string
+    address?: string
+    website?: string
+  }
+  branding: {
+    primaryColor?: string
+    secondaryColor?: string
+    logoS3Key?: string
+    customDomain?: string
+    trackingPageMessage?: string
+  }
+  events: any[]
+  createdAt: Date
+  updatedAt: Date
 }
 
 export default function CRMPage() {
   const [showOnboarding, setShowOnboarding] = useState(false)
   const [showSalesWorkflow, setShowSalesWorkflow] = useState(false)
   const [showCommunications, setShowCommunications] = useState(false)
+  const [organizations, setOrganizations] = useState<Organization[]>([])
+  const [loadingOrganizations, setLoadingOrganizations] = useState(true)
 
-  // Sample organization data
-  const organizationsData: Organization[] = [
-    { id: 'O-001', name: 'TechCorp Industries', contact: 'Sarah Miller', stage: 'Active Partnership', status: 'Active', bins: 12, lastContact: '2 days ago', value: '$45,000' },
-    { id: 'O-002', name: 'GreenOffice Solutions', contact: 'Mike Chen', stage: 'Contract Renewal', status: 'Renewal', bins: 8, lastContact: '1 week ago', value: '$28,000' },
-    { id: 'O-003', name: 'Metro Facilities', contact: 'Jessica Brown', stage: 'Follow-up Required', status: 'Pending', bins: 0, lastContact: '3 weeks ago', value: '$15,000' },
-    { id: 'O-004', name: 'Urban Dynamics', contact: 'David Rodriguez', stage: 'Proposal Sent', status: 'Pending', bins: 0, lastContact: '5 days ago', value: '$22,000' },
-    { id: 'O-005', name: 'EcoSystems Ltd', contact: 'Lisa Thompson', stage: 'Negotiation', status: 'Active', bins: 15, lastContact: '1 day ago', value: '$67,000' }
-  ]
+  // Fetch organizations on component mount
+  useEffect(() => {
+    fetchOrganizations()
+  }, [])
+
+  const fetchOrganizations = async () => {
+    try {
+      setLoadingOrganizations(true)
+      const response = await fetch('/api/crm/organizations')
+      const data = await response.json()
+      
+      if (response.ok && Array.isArray(data)) {
+        setOrganizations(data)
+      } else {
+        console.error('Error fetching organizations:', data.error || 'Invalid response')
+        setOrganizations([])
+      }
+    } catch (error) {
+      console.error('Error fetching organizations:', error)
+      setOrganizations([])
+    } finally {
+      setLoadingOrganizations(false)
+    }
+  }
 
   const organizationColumns: Column<Organization>[] = [
-    { key: 'id', header: 'Org ID' },
+    { key: '_id', header: 'Org ID' },
     { key: 'name', header: 'Organization' },
-    { key: 'contact', header: 'Primary Contact' },
-    { key: 'stage', header: 'Stage' },
+    { 
+      key: 'contactInfo', 
+      header: 'Primary Contact',
+      render: (org) => org.contactInfo.email || 'No contact info'
+    },
     {
-      key: 'status',
-      header: 'Status',
+      key: 'type',
+      header: 'Type',
       render: (org) => (
         <Badge className={
-          org.status === 'Active' ? 'bg-pop-green text-white' :
-          org.status === 'Renewal' ? 'bg-pop-blue text-white' :
-          org.status === 'Pending' ? 'bg-orange-500 text-white' :
-          'bg-gray-100 text-gray-800'
+          org.type === 'corporate' ? 'bg-pop-blue text-white' :
+          org.type === 'educational' ? 'bg-pop-green text-white' :
+          'bg-purple-600 text-white'
         }>
-          {org.status}
+          {org.type}
         </Badge>
       )
     },
-    { key: 'bins', header: 'Active Bins' },
-    { key: 'lastContact', header: 'Last Contact' },
-    { key: 'value', header: 'Contract Value' }
+    { key: 'slug', header: 'Slug' },
+    { 
+      key: 'createdAt', 
+      header: 'Created',
+      render: (org) => new Date(org.createdAt).toLocaleDateString()
+    },
+    { 
+      key: 'events', 
+      header: 'Events',
+      render: (org) => org.events.length
+    }
   ]
 
   const renderOrganizationModal = (org: Organization) => (
     <div>
       <h3 className="text-lg font-semibold mb-4">{org.name}</h3>
       <div className="space-y-3">
-        <div><strong>Contact:</strong> {org.contact}</div>
-        <div><strong>Stage:</strong> {org.stage}</div>
-        <div><strong>Status:</strong> {org.status}</div>
-        <div><strong>Active Bins:</strong> {org.bins}</div>
-        <div><strong>Contract Value:</strong> {org.value}</div>
-        <div><strong>Last Contact:</strong> {org.lastContact}</div>
+        <div><strong>Type:</strong> {org.type}</div>
+        <div><strong>Description:</strong> {org.description}</div>
+        <div><strong>Slug:</strong> {org.slug}</div>
+        <div><strong>Email:</strong> {org.contactInfo.email || 'Not provided'}</div>
+        <div><strong>Phone:</strong> {org.contactInfo.phone || 'Not provided'}</div>
+        <div><strong>Website:</strong> {org.contactInfo.website || 'Not provided'}</div>
+        <div><strong>Address:</strong> {org.contactInfo.address || 'Not provided'}</div>
+        <div><strong>Events:</strong> {org.events.length}</div>
+        <div><strong>Tracking Message:</strong> {org.branding.trackingPageMessage || 'Default message'}</div>
+        <div><strong>Created:</strong> {new Date(org.createdAt).toLocaleDateString()}</div>
         <div className="pt-4 space-y-2">
           <Button className="w-full bg-pop-green hover:bg-pop-green/90">Edit Organization</Button>
           <Button variant="outline" className="w-full">Schedule Follow-up</Button>
           <Button variant="outline" className="w-full">Generate Report</Button>
+          <Button variant="outline" className="w-full">View Partner Portal</Button>
         </div>
       </div>
     </div>
@@ -157,14 +204,22 @@ export default function CRMPage() {
       </Accordion>
 
       {/* Organization Management Table */}
-      <DataTable
-        title="Organization Management"
-        description="Sales pipeline, partner relationships, and contract management"
-        icon={<Building2 className="h-5 w-5 text-pop-green" />}
-        data={organizationsData}
-        columns={organizationColumns}
-        renderModal={renderOrganizationModal}
-      />
+      {loadingOrganizations ? (
+        <Card>
+          <CardContent className="flex items-center justify-center p-8">
+            <div className="text-sm text-gray-600">Loading organizations...</div>
+          </CardContent>
+        </Card>
+      ) : (
+        <DataTable
+          title="Organization Management"
+          description="Sales pipeline, partner relationships, and contract management"
+          icon={<Building2 className="h-5 w-5 text-pop-green" />}
+          data={organizations}
+          columns={organizationColumns}
+          renderModal={renderOrganizationModal}
+        />
+      )}
 
       {/* Sales & Partnership Management Section */}
       <Card>
