@@ -566,9 +566,9 @@ export function DataTable<T extends Record<string, any>>({
           </div>
         </div>
       </CardHeader>
-      <CardContent>
+      <CardContent className={className?.includes('flex-1') ? 'flex-1 overflow-hidden flex flex-col' : ''}>
         {/* Desktop Table View */}
-        <div className="hidden md:block">
+        <div className={`hidden md:block ${className?.includes('flex-1') ? 'flex-1 overflow-y-auto' : ''}`}>
           <Table>
             <TableHeader>
               {/* Filter Row */}
@@ -639,7 +639,7 @@ export function DataTable<T extends Record<string, any>>({
         </div>
 
         {/* Mobile Card View */}
-        <div className="md:hidden">
+        <div className={`md:hidden ${className?.includes('flex-1') ? 'flex-1 overflow-y-auto' : ''}`}>
           {/* Mobile Sort Controls */}
           <div className="mb-4 flex items-center gap-2">
             <ArrowUpDown className="h-4 w-4 text-pop-green" />
