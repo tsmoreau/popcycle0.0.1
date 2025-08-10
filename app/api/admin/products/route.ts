@@ -5,7 +5,7 @@ export async function GET(request: NextRequest) {
   try {
     const client = new MongoClient(process.env.MONGODB_URI!)
     await client.connect()
-    const db = client.db('popcycle')
+    const db = client.db('PopCycle')
     
     const products = await db.collection('products').find({}).toArray()
     
@@ -26,7 +26,7 @@ export async function POST(request: NextRequest) {
     const body = await request.json()
     const client = new MongoClient(process.env.MONGODB_URI!)
     await client.connect()
-    const db = client.db('popcycle')
+    const db = client.db('PopCycle')
     
     const newProduct = {
       _id: new ObjectId(),
@@ -75,7 +75,7 @@ export async function PUT(request: NextRequest) {
     const body = await request.json()
     const client = new MongoClient(process.env.MONGODB_URI!)
     await client.connect()
-    const db = client.db('popcycle')
+    const db = client.db('PopCycle')
     
     const { _id, ...updateData } = body
     updateData.updatedAt = new Date()
@@ -128,7 +128,7 @@ export async function DELETE(request: NextRequest) {
     
     const client = new MongoClient(process.env.MONGODB_URI!)
     await client.connect()
-    const db = client.db('popcycle')
+    const db = client.db('PopCycle')
     
     const result = await db.collection('products').deleteOne({
       _id: new ObjectId(productId)
