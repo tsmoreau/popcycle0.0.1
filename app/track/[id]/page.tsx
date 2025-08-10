@@ -345,29 +345,26 @@ export default function TrackItem() {
                 <h3 className="systematic-caps text-sm mb-1">
                   {item.id.startsWith('T') ? (item.event === 'inventory_creation' ? 'Processed' : 'Processing') : 'Processed'}
                 </h3>
-                <div className="flex justify-center mb-1">
-                  {item.id.startsWith('T') ? getProcessingStatusBadge(item.event || 'collected') : (
-                    <p className="text-xs text-pop-gray truncate">{item.processedDate}</p>
-                  )}
-                </div>
-                {item.id.startsWith('T') && item.event === 'inventory_creation' && (
-                  <p className="text-xs text-pop-blue systematic-caps">Ready for Purchase</p>
-                )}
+                <p className="text-xs text-pop-gray truncate">
+                  {item.id.startsWith('T') ? getBatchStatusLabel(item.event || 'collected') : item.processedDate}
+                </p>
               </div>
 
-              <div className="text-center flex-1 max-w-[120px]">
-                <div className="w-16 h-16 mx-auto mb-4 border-2 border-pop-black flex items-center justify-center bg-pop-red">
-                  {isCharity ? (
-                    <HeartHandshake className="w-8 h-8 text-pop-black" />
-                  ) : (
-                    <CheckCircle className="w-8 h-8 text-pop-black" />
-                  )}
+              {(item.transactionDate || !item.id.startsWith('T')) && (
+                <div className="text-center flex-1 max-w-[120px]">
+                  <div className="w-16 h-16 mx-auto mb-4 border-2 border-pop-black flex items-center justify-center bg-pop-red">
+                    {isCharity ? (
+                      <HeartHandshake className="w-8 h-8 text-pop-black" />
+                    ) : (
+                      <CheckCircle className="w-8 h-8 text-pop-black" />
+                    )}
+                  </div>
+                  <h3 className="systematic-caps text-sm mb-1">
+                    {isCharity ? "Donated" : "Purchased"}
+                  </h3>
+                  <p className="text-xs text-pop-gray truncate">{item.transactionDate}</p>
                 </div>
-                <h3 className="systematic-caps text-sm mb-1">
-                  {isCharity ? "Donated" : "Purchased"}
-                </h3>
-                <p className="text-xs text-pop-gray truncate">{item.transactionDate}</p>
-              </div>
+              )}
 
               {hasMaker && (
                 <div className="text-center flex-1 max-w-[120px]">
@@ -381,6 +378,15 @@ export default function TrackItem() {
                 </div>
               )}
             </div>
+            
+            {/* Ready for Purchase text for completed batches */}
+            {item.id.startsWith('T') && item.event === 'inventory_creation' && (
+              <div className="text-center mt-4">
+                <p className="text-xs text-pop-blue systematic-caps">
+                  Ready for Purchase
+                </p>
+              </div>
+            )}
           </div>
         )}
 
