@@ -908,7 +908,7 @@ export default function OperationsPage() {
             
             <div className="flex-1 overflow-y-auto min-h-0">
               <div className="p-6">
-              <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full h-full">
+              <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
                 <div className="flex items-center justify-between mb-6">
                   <TabsList className="relative z-10 p-0 bg-transparent h-auto gap-0 flex-nowrap overflow-visible">
                     <TabsTrigger value="collections" className="folder-tab-white relative z-[4] text-sm px-6 py-3">
@@ -937,7 +937,7 @@ export default function OperationsPage() {
                 </div>
 
                 {/* Collections Tab Fullscreen */}
-                <TabsContent value="collections" className="space-y-6">
+                <TabsContent value="collections" className="space-y-6 overflow-y-auto">
                   <CollectionsTabContent
                     bins={bins}
                     loadingBins={loadingBins}
@@ -952,7 +952,7 @@ export default function OperationsPage() {
                 </TabsContent>
 
                 {/* Processing Tab Fullscreen */}
-                <TabsContent value="processing" className="space-y-6">
+                <TabsContent value="processing" className="space-y-6 overflow-y-auto">
                   <ProcessingTabContent
                     batches={batches}
                     loadingBatches={loadingBatches}
@@ -967,7 +967,7 @@ export default function OperationsPage() {
                 </TabsContent>
 
                 {/* Fulfillment Tab Fullscreen */}
-                <TabsContent value="fulfillment" className="space-y-6">
+                <TabsContent value="fulfillment" className="space-y-6 overflow-y-auto">
                   <FulfillmentTabContent
                     orders={orders}
                     loadingOrders={loadingOrders}
@@ -982,7 +982,7 @@ export default function OperationsPage() {
                 </TabsContent>
 
                 {/* Inventory Tab Fullscreen */}
-                <TabsContent value="inventory" className="space-y-6">
+                <TabsContent value="inventory" className="space-y-6 overflow-y-auto">
                   <InventoryTabContent
                     blanks={blanks}
                     loadingBlanks={loadingBlanks}
