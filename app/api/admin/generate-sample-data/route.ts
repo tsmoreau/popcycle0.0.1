@@ -146,6 +146,8 @@ export async function POST() {
         const lastCollectionDate = new Date(Date.now() - Math.random() * 10 * 24 * 60 * 60 * 1000);
         const nextCollectionDate = new Date(Date.now() + Math.random() * 7 * 24 * 60 * 60 * 1000);
         
+        const binStatuses = ['bin_on_vehicle', 'bin_on_site', 'ready_for_processing'] as const;
+        
         bins.push({
           _id: qrCode,
           orgId: org._id,
@@ -156,6 +158,7 @@ export async function POST() {
           isActive: true,
           canBeAdopted: true,
           adoptedBy: i === 0 ? 'Education Team' : undefined,
+          status: binStatuses[Math.floor(Math.random() * binStatuses.length)],
           lastCollectionDate,
           nextCollectionDate,
           createdAt: new Date(),

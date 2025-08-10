@@ -51,6 +51,7 @@ export interface Bin {
   location: string; // Physical location description
   capacity?: number; // in kg (may not apply to temporary bags)
   isActive: boolean;
+  status: 'bin_on_vehicle' | 'bin_on_site' | 'ready_for_processing';
   canBeAdopted: boolean; // Whether teams/departments can "adopt" and name this bin
   adoptedBy?: string; // Team/department that adopted this bin
   lastCollectionDate?: Date; // When this bin was last emptied
