@@ -69,6 +69,7 @@ interface PlasticItem {
   userId?: string;
   // ID hierarchy based on processing stage
   binId?: string;
+  binIds?: string[]; // For batches that come from multiple bins
   batchId?: string;
   blankId?: string;
 }
@@ -382,7 +383,7 @@ export default function TrackItem() {
                 <h3 className="systematic-caps text-sm mb-1">
                   {isCharity ? "Donated" : "Purchased"}
                 </h3>
-                <p className="text-xs text-pop-gray truncate">{item.deliveryDate || '2025-02-01'}</p>
+                <p className="text-xs text-pop-gray truncate">{item.deliveredDate || '2025-02-01'}</p>
               </div>
             )}
 

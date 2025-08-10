@@ -44,8 +44,8 @@ export async function GET(
     let org;
     
     if (collectionType === 'bin') {
-      // Look up bin record
-      record = await db.collection('bins').findOne({ _id: new ObjectId(id) });
+      // Look up bin record using string ID (QR code)
+      record = await db.collection('bins').findOne({ _id: id } as any);
       if (record) {
         org = await db.collection('orgs').findOne({ _id: new ObjectId(record.orgId) });
       }
@@ -82,10 +82,10 @@ export async function GET(
       });
       
     } else if (collectionType === 'batch') {
-      // Look up batch record
-      record = await db.collection('batches').findOne({ _id: new ObjectId(id) });
+      // Look up batch record using string ID (QR code)
+      record = await db.collection('batches').findOne({ _id: id } as any);
       if (record) {
-        const bin = await db.collection('bins').findOne({ _id: new ObjectId(record.binId) });
+        const bin = await db.collection('bins').findOne({ _id: record.binId } as any);
         if (bin) {
           org = await db.collection('orgs').findOne({ _id: new ObjectId(bin.orgId) });
         }
@@ -122,11 +122,11 @@ export async function GET(
       });
       
     } else if (collectionType === 'blank') {
-      // Look up blank record
-      record = await db.collection('blanks').findOne({ _id: new ObjectId(id) });
+      // Look up blank record using string ID (QR code)
+      record = await db.collection('blanks').findOne({ _id: id } as any);
       let batch = null;
       if (record) {
-        batch = await db.collection('batches').findOne({ _id: new ObjectId(record.batchId) });
+        batch = await db.collection('batches').findOne({ _id: record.batchId } as any);
         if (batch) {
           const bin = await db.collection('bins').findOne({ _id: new ObjectId(batch.binId) });
           if (bin) {
