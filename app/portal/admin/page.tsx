@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { Users, Settings, Shield, ChevronDown, Database, Cog, Eye, Zap, QrCode, Plug } from 'lucide-react'
+import { Users, Settings, Shield, ChevronDown, Database, Cog, Eye, Zap, QrCode, Plug, Package } from 'lucide-react'
 import { Button } from '../../components/ui/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../../components/ui/card'
 import { Badge } from '../../components/ui/badge'
@@ -38,20 +38,63 @@ interface MongoDBStatus {
   lastChecked?: string
 }
 
+interface Product {
+  _id: string
+  name: string
+  description: string
+  category: 'educational_kit' | 'assembly_toy' | 'practical_item' | 'decoration'
+  difficulty: 'easy' | 'medium' | 'hard'
+  estimatedAssemblyTime: number
+  materialRequirements: {
+    plasticType: 'HDPE' | 'PET' | 'PP'
+    weight: number
+  }
+  price: number
+  inStock: boolean
+  rating: number
+  reviewCount: number
+  createdAt: Date
+  updatedAt: Date
+}
+
 export default function AdminPage() {
   const [showOverview, setShowOverview] = useState(false)
   const [showProductionStations, setShowProductionStations] = useState(false)
   const [showQRSettings, setShowQRSettings] = useState(false)
+  const [showProductConfiguration, setShowProductConfiguration] = useState(false)
   const [showIntegrations, setShowIntegrations] = useState(false)
   const [showMongoDBOperations, setShowMongoDBOperations] = useState(false)
   const [mongoStatus, setMongoStatus] = useState<MongoDBStatus | null>(null)
   const [loadingMongo, setLoadingMongo] = useState(true)
   const [generatingData, setGeneratingData] = useState(false)
+  const [products, setProducts] = useState<Product[]>([])
+  const [loadingProducts, setLoadingProducts] = useState(false)
 
-  // Fetch MongoDB status on component mount
+  // Fetch MongoDB status and products on component mount
   useEffect(() => {
     fetchMongoStatus()
   }, [])
+
+  const fetchProducts = async () => {
+    try {
+      setLoadingProducts(true)
+      const response = await fetch('/api/admin/products')
+      const data = await response.json()
+      setProducts(data)
+    } catch (error) {
+      console.error('Error fetching products:', error)
+      setProducts([])
+    } finally {
+      setLoadingProducts(false)
+    }
+  }
+
+  // Fetch products when the dropdown is opened
+  useEffect(() => {
+    if (showProductConfiguration && products.length === 0) {
+      fetchProducts()
+    }
+  }, [showProductConfiguration])
 
   const fetchMongoStatus = async () => {
     try {
@@ -141,6 +184,52 @@ export default function AdminPage() {
     }
   ]
 
+  const productColumns: Column<Product>[] = [
+    { key: '_id', header: 'Product ID' },
+    { key: 'name', header: 'Name' },
+    {
+      key: 'category',
+      header: 'Category',
+      render: (product) => (
+        <Badge className="bg-pop-blue text-white">
+          {product.category.replace('_', ' ')}
+        </Badge>
+      )
+    },
+    {
+      key: 'difficulty',
+      header: 'Difficulty',
+      render: (product) => (
+        <Badge className={
+          product.difficulty === 'easy' ? 'bg-pop-green text-white' :
+          product.difficulty === 'medium' ? 'bg-yellow-500 text-white' :
+          'bg-pop-red text-white'
+        }>
+          {product.difficulty}
+        </Badge>
+      )
+    },
+    { 
+      key: 'estimatedAssemblyTime', 
+      header: 'Assembly Time',
+      render: (product) => `${product.estimatedAssemblyTime} min`
+    },
+    { 
+      key: 'price', 
+      header: 'Price',
+      render: (product) => `$${product.price.toFixed(2)}`
+    },
+    {
+      key: 'inStock',
+      header: 'Status',
+      render: (product) => (
+        <Badge className={product.inStock ? 'bg-pop-green text-white' : 'bg-gray-100 text-gray-800'}>
+          {product.inStock ? 'In Stock' : 'Out of Stock'}
+        </Badge>
+      )
+    }
+  ]
+
   const renderUserModal = (user: User) => (
     <div>
       <h3 className="text-lg font-semibold mb-4">{user.name}</h3>
@@ -154,6 +243,28 @@ export default function AdminPage() {
           <Button className="w-full bg-pop-green hover:bg-pop-green/90">Edit User</Button>
           <Button variant="outline" className="w-full">Reset Password</Button>
           <Button variant="outline" className="w-full text-pop-red">Deactivate User</Button>
+        </div>
+      </div>
+    </div>
+  )
+
+  const renderProductModal = (product: Product) => (
+    <div>
+      <h3 className="text-lg font-semibold mb-4">{product.name}</h3>
+      <div className="space-y-3">
+        <div><strong>Description:</strong> {product.description}</div>
+        <div><strong>Category:</strong> {product.category.replace('_', ' ')}</div>
+        <div><strong>Difficulty:</strong> {product.difficulty}</div>
+        <div><strong>Assembly Time:</strong> {product.estimatedAssemblyTime} minutes</div>
+        <div><strong>Material:</strong> {product.materialRequirements.plasticType} ({product.materialRequirements.weight}kg)</div>
+        <div><strong>Price:</strong> ${product.price.toFixed(2)}</div>
+        <div><strong>Rating:</strong> {product.rating}/5 ({product.reviewCount} reviews)</div>
+        <div><strong>Stock Status:</strong> {product.inStock ? 'In Stock' : 'Out of Stock'}</div>
+        <div className="pt-4 space-y-2">
+          <Button className="w-full bg-pop-green hover:bg-pop-green/90">Edit Product</Button>
+          <Button variant="outline" className="w-full">View Design Files</Button>
+          <Button variant="outline" className="w-full">Duplicate Product</Button>
+          <Button variant="outline" className="w-full text-pop-red">Delete Product</Button>
         </div>
       </div>
     </div>
@@ -350,6 +461,46 @@ export default function AdminPage() {
                   </div>
                 </div>
                 <Button variant="outline" className="w-full mt-4">Save QR Settings</Button>
+              </div>
+            )}
+          </div>
+
+          {/* Product Configuration Dropdown */}
+          <div className="w-full border rounded-lg">
+            <div className="px-4 py-4 cursor-pointer hover:bg-gray-50" onClick={() => setShowProductConfiguration(!showProductConfiguration)}>
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-3">
+                  <Package className="h-5 w-5 text-pop-green" />
+                  <span className="font-medium">Product Configuration</span>
+                </div>
+                <ChevronDown className={`h-5 w-5 text-gray-400 transition-transform ${showProductConfiguration ? 'rotate-180' : ''}`} />
+              </div>
+            </div>
+            {showProductConfiguration && (
+              <div className="px-4 pb-4 border-t bg-gray-50">
+                <div className="mt-4">
+                  {loadingProducts ? (
+                    <div className="flex items-center justify-center p-8">
+                      <div className="text-sm text-gray-600">Loading products...</div>
+                    </div>
+                  ) : (
+                    <DataTable
+                      title="Product Management"
+                      description="Configure and manage product catalog"
+                      data={products}
+                      columns={productColumns}
+                      renderModal={renderProductModal}
+                    />
+                  )}
+                </div>
+                <div className="mt-4 space-y-2">
+                  <Button variant="outline" className="w-full" onClick={fetchProducts}>
+                    {loadingProducts ? 'Refreshing...' : 'Refresh Products'}
+                  </Button>
+                  <Button className="w-full bg-pop-green hover:bg-pop-green/90">Add New Product</Button>
+                  <Button variant="outline" className="w-full">Import Products from CSV</Button>
+                  <Button variant="outline" className="w-full">Export Product Catalog</Button>
+                </div>
               </div>
             )}
           </div>
