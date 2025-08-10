@@ -74,12 +74,12 @@ export default function Track() {
         codes = sampleCodes.blanks.filter(blank => blank.status === 'blank').map(blank => ({ id: blank.id, type: "pressed blank" }));
         break;
       case "MANUFACTURED ITEMS":
-        // Filter blanks that have been processed but not yet assembled
-        codes = sampleCodes.blanks.filter(blank => blank.status === 'blank' && blank.userId).map(blank => ({ id: blank.id, type: "manufactured item" }));
+        // Filter blanks that are ready for makers to claim (blank status, no userId)
+        codes = sampleCodes.blanks.filter(blank => blank.status === 'blank' && !blank.userId).map(blank => ({ id: blank.id, type: "manufactured item" }));
         break;
       case "ASSEMBLED ITEMS":
-        // Filter blanks that have been assembled
-        codes = sampleCodes.blanks.filter(blank => blank.status === 'assembled').map(blank => ({ id: blank.id, type: "assembled item" }));
+        // Filter blanks that have been claimed and assembled by makers
+        codes = sampleCodes.blanks.filter(blank => blank.status === 'assembled' && blank.userId).map(blank => ({ id: blank.id, type: "assembled item" }));
         break;
       default: // "ALL"
         codes = [
