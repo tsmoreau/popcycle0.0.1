@@ -98,6 +98,10 @@ import {
   allBlankColumns,
   defaultBlankColumns,
 } from "../../components/operations/TableConfigurations";
+import { CollectionsTabContent } from "../../components/operations/CollectionsTabContent";
+import { ProcessingTabContent } from "../../components/operations/ProcessingTabContent";
+import { FulfillmentTabContent } from "../../components/operations/FulfillmentTabContent";
+import { InventoryTabContent } from "../../components/operations/InventoryTabContent";
 
 export default function OperationsPage() {
   const [activeTab, setActiveTab] = useState("collections");
@@ -608,517 +612,54 @@ export default function OperationsPage() {
 
         {/* Collections Tab */}
         <TabsContent value="collections" className="space-y-6">
-          <CollectionsWorkflow
+          <CollectionsTabContent
             bins={bins}
             loadingBins={loadingBins}
-            allBinColumns={allBinColumns}
-            defaultBinColumns={defaultBinColumns}
-            binEditableFields={binEditableFields}
             handleBinSave={handleBinSave}
             handleBinDelete={handleBinDelete}
             collectionsSortField={collectionsSortField}
             collectionsSortDirection={collectionsSortDirection}
-            onSort={(field, direction) => {
-              setCollectionsSortField(field);
-              setCollectionsSortDirection(direction);
-            }}
+            setCollectionsSortField={setCollectionsSortField}
+            setCollectionsSortDirection={setCollectionsSortDirection}
           />
         </TabsContent>
 
         {/* Processing Tab */}
         <TabsContent value="processing" className="space-y-6">
-          {/* Processing Queue */}
-          {loadingBatches ? (
-            <div className="flex items-center justify-center p-8">
-              <div className="text-sm text-gray-600">Loading batches...</div>
-            </div>
-          ) : (
-            <DataTable
-              title="Processing Queue"
-              description="Live status overview of all batches in various processing stages"
-              icon={<Settings className="h-5 w-5 text-pop-blue" />}
-              data={batches}
-              columns={allBatchColumns.filter(col => defaultBatchColumns.includes(String(col.key)))}
-              availableColumns={allBatchColumns}
-              defaultVisibleColumns={defaultBatchColumns}
-              enableColumnSelection={true}
-              enableFiltering={true}
-              editableFields={batchEditableFields}
-              onSave={handleBatchSave}
-              onDelete={handleBatchDelete}
-              sortField={processingSortField}
-              sortDirection={processingSortDirection}
-              onSort={(field, direction) => {
-                setProcessingSortField(field);
-                setProcessingSortDirection(direction);
-              }}
-            />
-          )}
-
-          {/* Processing Workflow Diagram */}
-          <Card>
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2">
-                <ArrowRight className="h-5 w-5 text-pop-blue" />
-                Processing Workflow
-              </CardTitle>
-              <CardDescription>
-                Ten step complete processing pipeline from collection to finished materials.
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-4 py-4">
-                {/* Step 1: Rough Wash */}
-                <div className="flex flex-col items-center">
-                  <Badge className="bg-pop-blue text-white px-4 py-2 text-sm whitespace-nowrap">
-                    <Droplets className="h-4 w-4 mr-2" />
-                    Rough Wash
-                  </Badge>
-                </div>
-                
-                {/* Arrow 1 */}
-                <ArrowRight className="h-5 w-5 text-gray-400 hidden sm:block" />
-                <ChevronDown className="h-5 w-5 text-gray-400 sm:hidden" />
-                
-                {/* Step 2: Sort */}
-                <div className="flex flex-col items-center">
-                  <Badge className="bg-pop-green text-white px-4 py-2 text-sm whitespace-nowrap">
-                    <Scissors className="h-4 w-4 mr-2" />
-                    Sort
-                  </Badge>
-                </div>
-                
-                {/* Arrow 2 */}
-                <ArrowRight className="h-5 w-5 text-gray-400 hidden sm:block" />
-                <ChevronDown className="h-5 w-5 text-gray-400 sm:hidden" />
-                
-                {/* Step 3: First Dry */}
-                <div className="flex flex-col items-center">
-                  <Badge className="bg-orange-500 text-white px-4 py-2 text-sm whitespace-nowrap">
-                    <Wind className="h-4 w-4 mr-2" />
-                    First Dry
-                  </Badge>
-                </div>
-                
-                {/* Arrow 3 */}
-                <ArrowRight className="h-5 w-5 text-gray-400 hidden sm:block" />
-                <ChevronDown className="h-5 w-5 text-gray-400 sm:hidden" />
-                
-                {/* Step 4: Shred */}
-                <div className="flex flex-col items-center">
-                  <Badge className="bg-red-600 text-white px-4 py-2 text-sm whitespace-nowrap">
-                    <ShredIcon className="h-4 w-4 mr-2" />
-                    Shred
-                  </Badge>
-                </div>
-                
-                {/* Arrow 4 */}
-                <ArrowRight className="h-5 w-5 text-gray-400 hidden sm:block" />
-                <ChevronDown className="h-5 w-5 text-gray-400 sm:hidden" />
-                
-                {/* Step 5: Fine Wash */}
-                <div className="flex flex-col items-center">
-                  <Badge className="bg-pop-blue text-white px-4 py-2 text-sm whitespace-nowrap">
-                    <Droplets className="h-4 w-4 mr-2" />
-                    Fine Wash
-                  </Badge>
-                </div>
-                
-                {/* Arrow 5 */}
-                <ArrowRight className="h-5 w-5 text-gray-400 hidden sm:block" />
-                <ChevronDown className="h-5 w-5 text-gray-400 sm:hidden" />
-                
-                {/* Step 6: Second Dry */}
-                <div className="flex flex-col items-center">
-                  <Badge className="bg-orange-500 text-white px-4 py-2 text-sm whitespace-nowrap">
-                    <Wind className="h-4 w-4 mr-2" />
-                    Second Dry
-                  </Badge>
-                </div>
-                
-                {/* Arrow 6 */}
-                <ArrowRight className="h-5 w-5 text-gray-400 hidden sm:block" />
-                <ChevronDown className="h-5 w-5 text-gray-400 sm:hidden" />
-                
-                {/* Step 7: Press */}
-                <div className="flex flex-col items-center">
-                  <Badge className="bg-pop-black text-white px-4 py-2 text-sm whitespace-nowrap">
-                    <Archive className="h-4 w-4 mr-2" />
-                    Press
-                  </Badge>
-                </div>
-                
-                {/* Arrow 7 */}
-                <ArrowRight className="h-5 w-5 text-gray-400 hidden sm:block" />
-                <ChevronDown className="h-5 w-5 text-gray-400 sm:hidden" />
-                
-                {/* Step 8: Weigh & Photo */}
-                <div className="flex flex-col items-center">
-                  <Badge className="bg-pop-green text-white px-4 py-2 text-sm whitespace-nowrap">
-                    <Scale className="h-4 w-4 mr-2" />
-                    Weigh & Photo
-                  </Badge>
-                </div>
-                
-                {/* Arrow 8 */}
-                <ArrowRight className="h-5 w-5 text-gray-400 hidden sm:block" />
-                <ChevronDown className="h-5 w-5 text-gray-400 sm:hidden" />
-                
-                {/* Step 9: Laser Marking */}
-                <div className="flex flex-col items-center">
-                  <Badge className="bg-pop-red text-white px-4 py-2 text-sm whitespace-nowrap">
-                    <Zap className="h-4 w-4 mr-2" />
-                    Laser Marking
-                  </Badge>
-                </div>
-                <ArrowRight className="h-5 w-5 text-gray-400 hidden sm:block" />
-                 <ChevronDown className="h-5 w-5 text-gray-400 sm:hidden" />
-                {/* Step 10: inventory Creation */}
-                <div className="flex flex-col items-center">
-                  <Badge className="bg-black text-white px-4 py-2 text-sm whitespace-nowrap">
-                    <Package className="h-4 w-4 mr-2" />
-                    Inventory Creation
-                  </Badge>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          
+          <ProcessingTabContent
+            batches={batches}
+            loadingBatches={loadingBatches}
+            handleBatchSave={handleBatchSave}
+            handleBatchDelete={handleBatchDelete}
+            processingSortField={processingSortField}
+            processingSortDirection={processingSortDirection}
+            setProcessingSortField={setProcessingSortField}
+            setProcessingSortDirection={setProcessingSortDirection}
+          />
         </TabsContent>
 
         {/* Inventory Tab */}
         <TabsContent value="inventory" className="space-y-6">
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-            <Card>
-              <CardHeader>
-                <CardTitle>Material Inventory</CardTitle>
-                <CardDescription>Raw plastic material tracking</CardDescription>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <div className="space-y-3">
-                  <div className="flex justify-between items-center">
-                    <span className="text-sm text-gray-600">
-                      Processed Plastic Stock
-                    </span>
-                    <span className="font-medium">847 lbs</span>
-                  </div>
-                  <div className="flex justify-between items-center">
-                    <span className="text-sm text-gray-600">
-                      Pending Processing
-                    </span>
-                    <span className="font-medium">156 lbs</span>
-                  </div>
-                  <div className="flex justify-between items-center">
-                    <span className="text-sm text-gray-600">
-                      Ready for Production
-                    </span>
-                    <span className="font-medium text-pop-green">691 lbs</span>
-                  </div>
-                  <div className="flex justify-between items-center">
-                    <span className="text-sm text-gray-600">Quality Hold</span>
-                    <span className="font-medium text-pop-red">12 lbs</span>
-                  </div>
-                </div>
-                <Button variant="outline" className="w-full">
-                  Update Material Levels
-                </Button>
-              </CardContent>
-            </Card>
-
-            <Card>
-              <CardHeader>
-                <CardTitle>Production Inventory</CardTitle>
-                <CardDescription>Finished goods and blanks</CardDescription>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <div className="space-y-2">
-                  <div className="flex justify-between items-center p-2 bg-gray-50 rounded">
-                    <span className="text-sm">Phone Stand Blanks</span>
-                    <span className="font-medium">45 units</span>
-                  </div>
-                  <div className="flex justify-between items-center p-2 bg-gray-50 rounded">
-                    <span className="text-sm">Desk Organizer Blanks</span>
-                    <span className="font-medium">28 units</span>
-                  </div>
-                  <div className="flex justify-between items-center p-2 bg-gray-50 rounded">
-                    <span className="text-sm">Plant Holder Blanks</span>
-                    <span className="font-medium">19 units</span>
-                  </div>
-                  <div className="flex justify-between items-center p-2 bg-gray-50 rounded">
-                    <span className="text-sm">Custom Order Blanks</span>
-                    <span className="font-medium">7 units</span>
-                  </div>
-                </div>
-                <Button className="w-full bg-pop-blue hover:bg-pop-blue/90">
-                  Generate Production Report
-                </Button>
-              </CardContent>
-            </Card>
-
-            <Card>
-              <CardHeader>
-                <CardTitle>Quality Control</CardTitle>
-                <CardDescription>Batch tracking and compliance</CardDescription>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <div className="space-y-2">
-                  <div className="flex items-center justify-between p-3 bg-pop-green/5 rounded-lg">
-                    <div>
-                      <span className="font-medium text-sm">Batch BA-8471</span>
-                      <p className="text-xs text-gray-600">
-                        All QC checks passed
-                      </p>
-                    </div>
-                    <Badge className="bg-pop-green text-white">Approved</Badge>
-                  </div>
-                  <div className="flex items-center justify-between p-3 bg-pop-blue/5 rounded-lg">
-                    <div>
-                      <span className="font-medium text-sm">Batch BA-8472</span>
-                      <p className="text-xs text-gray-600">
-                        Pending final inspection
-                      </p>
-                    </div>
-                    <Badge className="bg-pop-blue text-white">Review</Badge>
-                  </div>
-                  <div className="flex items-center justify-between p-3 bg-pop-red/5 rounded-lg">
-                    <div>
-                      <span className="font-medium text-sm">Batch BA-8469</span>
-                      <p className="text-xs text-gray-600">
-                        Material defect noted
-                      </p>
-                    </div>
-                    <Badge className="bg-pop-red text-white">Hold</Badge>
-                  </div>
-                </div>
-                <Button variant="outline" className="w-full">
-                  View QC Documentation
-                </Button>
-              </CardContent>
-            </Card>
-          </div>
-
-          <Card>
-            <CardHeader>
-              <CardTitle>Inventory Movements</CardTitle>
-              <CardDescription>
-                Recent stock changes and transfers
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              <div className="space-y-3">
-                <div className="flex items-center justify-between p-3 border rounded-lg">
-                  <div>
-                    <span className="font-medium text-sm">
-                      Material Addition
-                    </span>
-                    <p className="text-xs text-gray-600">
-                      +45 lbs from Batch BA-8472
-                    </p>
-                  </div>
-                  <div className="text-right">
-                    <span className="text-xs text-gray-500">2 hours ago</span>
-                    <p className="text-xs text-pop-green">Station 1</p>
-                  </div>
-                </div>
-                <div className="flex items-center justify-between p-3 border rounded-lg">
-                  <div>
-                    <span className="font-medium text-sm">
-                      Production Consumption
-                    </span>
-                    <p className="text-xs text-gray-600">
-                      -12 lbs for Phone Stand Blanks
-                    </p>
-                  </div>
-                  <div className="text-right">
-                    <span className="text-xs text-gray-500">4 hours ago</span>
-                    <p className="text-xs text-pop-blue">Manufacturing</p>
-                  </div>
-                </div>
-                <div className="flex items-center justify-between p-3 border rounded-lg">
-                  <div>
-                    <span className="font-medium text-sm">Quality Hold</span>
-                    <p className="text-xs text-gray-600">
-                      -12 lbs from Batch BA-8469
-                    </p>
-                  </div>
-                  <div className="text-right">
-                    <span className="text-xs text-gray-500">1 day ago</span>
-                    <p className="text-xs text-pop-red">QC Hold</p>
-                  </div>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
+          <InventoryTabContent
+            blanks={blanks}
+            loadingBlanks={loadingBlanks}
+            handleBlankSave={handleBlankSave}
+            handleBlankDelete={handleBlankDelete}
+          />
         </TabsContent>
 
         {/* Fulfillment Tab */}
         <TabsContent value="fulfillment" className="space-y-6">
-          {/* Fulfillment Queue */}
-          {loadingOrders ? (
-            <div className="flex items-center justify-center p-8">
-              <div className="text-sm text-gray-600">Loading orders...</div>
-            </div>
-          ) : (
-            <DataTable
-              title="Order Queue"
-              description="Customer orders and maker assignments with fulfillment status tracking"
-              icon={<Users className="h-5 w-5 text-pop-green" />}
-              data={orders}
-              columns={allOrderColumns.filter(col => defaultOrderColumns.includes(String(col.key)))}
-              availableColumns={allOrderColumns}
-              defaultVisibleColumns={defaultOrderColumns}
-              enableColumnSelection={true}
-              enableFiltering={true}
-              editableFields={orderEditableFields}
-              onSave={handleOrderSave}
-              onDelete={handleOrderDelete}
-              sortField={fulfillmentSortField}
-              sortDirection={fulfillmentSortDirection}
-              onSort={(field, direction) => {
-                setFulfillmentSortField(field);
-                setFulfillmentSortDirection(direction);
-              }}
-            />
-          )}
-
-            <Card>
-              <CardHeader>
-                <CardTitle>Maker Assembly Status</CardTitle>
-                <CardDescription>
-                  Active maker projects and progress
-                </CardDescription>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <div className="space-y-2">
-                  <div className="flex items-center justify-between p-2 bg-gray-50 rounded">
-                    <div>
-                      <span className="text-sm font-medium">Alex Chen</span>
-                      <p className="text-xs text-gray-600">
-                        Phone Stand Assembly
-                      </p>
-                    </div>
-                    <Badge className="bg-pop-blue text-white">Active</Badge>
-                  </div>
-                  <div className="flex items-center justify-between p-2 bg-gray-50 rounded">
-                    <div>
-                      <span className="text-sm font-medium">Maria Santos</span>
-                      <p className="text-xs text-gray-600">
-                        Desk Organizer Assembly
-                      </p>
-                    </div>
-                    <Badge className="bg-pop-green text-white">Complete</Badge>
-                  </div>
-                  <div className="flex items-center justify-between p-2 bg-gray-50 rounded">
-                    <div>
-                      <span className="text-sm font-medium">Jordan Kim</span>
-                      <p className="text-xs text-gray-600">
-                        Available for assignment
-                      </p>
-                    </div>
-                    <Badge variant="outline">Available</Badge>
-                  </div>
-                </div>
-                <Button variant="outline" className="w-full">
-                  View Maker Dashboard
-                </Button>
-              </CardContent>
-            </Card>
-
-            <Card>
-              <CardHeader>
-                <CardTitle>Shipping & Delivery</CardTitle>
-                <CardDescription>
-                  Order fulfillment coordination
-                </CardDescription>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <div className="space-y-3">
-                  <div className="flex justify-between items-center">
-                    <span className="text-sm text-gray-600">
-                      Orders Ready to Ship
-                    </span>
-                    <span className="font-medium text-pop-green">8 orders</span>
-                  </div>
-                  <div className="flex justify-between items-center">
-                    <span className="text-sm text-gray-600">In Assembly</span>
-                    <span className="font-medium">5 orders</span>
-                  </div>
-                  <div className="flex justify-between items-center">
-                    <span className="text-sm text-gray-600">Shipped Today</span>
-                    <span className="font-medium">12 orders</span>
-                  </div>
-                  <div className="flex justify-between items-center">
-                    <span className="text-sm text-gray-600">
-                      Average Fulfillment
-                    </span>
-                    <span className="font-medium">2.3 days</span>
-                  </div>
-                </div>
-                <Button className="w-full bg-pop-blue hover:bg-pop-blue/90">
-                  Generate Shipping Labels
-                </Button>
-              </CardContent>
-            </Card>
-
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-            <Card>
-            <CardHeader>
-              <CardTitle>Recent Fulfillment Activity</CardTitle>
-              <CardDescription>
-                Order completion and customer updates
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              <div className="space-y-3">
-                <div className="flex items-center justify-between p-3 border rounded-lg">
-                  <div>
-                    <span className="font-medium text-sm">
-                      Order #2843 Shipped
-                    </span>
-                    <p className="text-xs text-gray-600">
-                      2x Phone Stand to GreenTech Corp
-                    </p>
-                  </div>
-                  <div className="text-right">
-                    <span className="text-xs text-gray-500">1 hour ago</span>
-                    <p className="text-xs text-pop-green">Maker: Alex Chen</p>
-                  </div>
-                </div>
-                <div className="flex items-center justify-between p-3 border rounded-lg">
-                  <div>
-                    <span className="font-medium text-sm">
-                      Order #2844 Completed
-                    </span>
-                    <p className="text-xs text-gray-600">
-                      1x Desk Organizer - Ready for shipping
-                    </p>
-                  </div>
-                  <div className="text-right">
-                    <span className="text-xs text-gray-500">3 hours ago</span>
-                    <p className="text-xs text-pop-green">
-                      Maker: Maria Santos
-                    </p>
-                  </div>
-                </div>
-                <div className="flex items-center justify-between p-3 border rounded-lg">
-                  <div>
-                    <span className="font-medium text-sm">
-                      Order #2842 Assembly Started
-                    </span>
-                    <p className="text-xs text-gray-600">
-                      3x Plant Holder - Estimated completion Friday
-                    </p>
-                  </div>
-                  <div className="text-right">
-                    <span className="text-xs text-gray-500">5 hours ago</span>
-                    <p className="text-xs text-pop-blue">Maker: Jordan Kim</p>
-                  </div>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-          </div>
+          <FulfillmentTabContent
+            orders={orders}
+            loadingOrders={loadingOrders}
+            handleOrderSave={handleOrderSave}
+            handleOrderDelete={handleOrderDelete}
+            fulfillmentSortField={fulfillmentSortField}
+            fulfillmentSortDirection={fulfillmentSortDirection}
+            setFulfillmentSortField={setFulfillmentSortField}
+            setFulfillmentSortDirection={setFulfillmentSortDirection}
+          />
         </TabsContent>
             </Tabs>
           </AccordionContent>
@@ -1140,79 +681,71 @@ export default function OperationsPage() {
           <AccordionContent>
             {/* Manufacturing Workflow Stations */}
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-              {/* Station 1: Rough Wash */}
               <Card>
                 <CardHeader>
-                  <CardTitle className="flex items-center">
-                    <Droplets className="h-5 w-5 mr-2 text-pop-blue" />
-                    Wash Station
-                  </CardTitle>
-                  <CardDescription>Initial cleaning and contaminant removal</CardDescription>
+                  <CardTitle>Station 1: Sorting & Cleaning</CardTitle>
+                  <CardDescription>
+                    Initial plastic sorting and washing operations
+                  </CardDescription>
                 </CardHeader>
                 <CardContent className="space-y-4">
                   <div className="space-y-2">
                     <Label>Current Batch</Label>
-                    <Input value="BA-8473" readOnly />
-                  </div>
-                  <div className="flex items-center justify-between p-3 bg-pop-blue/5 rounded-lg">
-                    <span className="text-sm">Station Status</span>
-                    <Badge className="bg-pop-blue text-white">Processing</Badge>
+                    <Input value="BA-8473 - Mixed Plastics" readOnly />
                   </div>
                   <div className="space-y-2">
-                    <div className="flex justify-between text-sm">
-                      <span>Progress</span>
-                      <span>78%</span>
-                    </div>
-                    <div className="w-full bg-gray-200 rounded-full h-2">
-                      <div className="bg-pop-blue h-2 rounded-full" style={{width: '78%'}}></div>
-                    </div>
-                  </div>
-                  <Button className="w-full bg-pop-blue hover:bg-pop-blue/90">
-                    Complete Wash Cycle
-                  </Button>
-                </CardContent>
-              </Card>
-
-              {/* Station 2: Sort */}
-              <Card>
-                <CardHeader>
-                  <CardTitle className="flex items-center">
-                    <Scissors className="h-5 w-5 mr-2 text-pop-green" />
-                    Sort Station
-                  </CardTitle>
-                  <CardDescription>Material separation and quality control</CardDescription>
-                </CardHeader>
-                <CardContent className="space-y-4">
-                  <div className="space-y-2">
-                    <Label>Queue</Label>
+                    <Label>Next in Queue</Label>
                     <div className="space-y-1">
-                      <div className="text-sm p-2 bg-gray-50 rounded">BA-8472 - Ready</div>
-                      <div className="text-sm p-2 bg-gray-50 rounded">BA-8471 - Ready</div>
+                      <div className="text-sm p-2 bg-gray-50 rounded">BA-8472 - PET Only</div>
+                      <div className="text-sm p-2 bg-gray-50 rounded">BA-8471 - HDPE Mix</div>
                     </div>
                   </div>
                   <div className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
                     <span className="text-sm">Station Status</span>
-                    <Badge variant="outline">Idle</Badge>
-                  </div>
-                  <div className="grid grid-cols-2 gap-2">
-                    <Button variant="outline" size="sm">PET</Button>
-                    <Button variant="outline" size="sm">HDPE</Button>
-                    <Button variant="outline" size="sm">PP</Button>
-                    <Button variant="outline" size="sm">Reject</Button>
+                    <Badge className="bg-pop-green text-white">Active</Badge>
                   </div>
                   <Button className="w-full bg-pop-green hover:bg-pop-green/90">
-                    Start Sort Process
+                    Mark Batch Complete
                   </Button>
                 </CardContent>
               </Card>
 
-              {/* Station 3: Shred */}
               <Card>
                 <CardHeader>
-                  <CardTitle className="flex items-center">
-                    <ShredIcon className="h-5 w-5 mr-2 text-pop-red" />
-                    Shred Station
-                  </CardTitle>
+                  <CardTitle>Station 2: Material Sorting</CardTitle>
+                  <CardDescription>Automated plastic type sorting</CardDescription>
+                </CardHeader>
+              <CardContent className="space-y-4">
+                <div className="space-y-2">
+                  <div className="flex justify-between items-center p-2 bg-gray-50 rounded">
+                    <span className="text-sm">Phone Stand Blanks</span>
+                    <span className="font-medium">45 units</span>
+                  </div>
+                  <div className="flex justify-between items-center p-2 bg-gray-50 rounded">
+                    <span className="text-sm">Desk Organizer Blanks</span>
+                    <span className="font-medium">28 units</span>
+                  </div>
+                  <div className="flex justify-between items-center p-2 bg-gray-50 rounded">
+                    <span className="text-sm">Plant Holder Blanks</span>
+                    <span className="font-medium">19 units</span>
+                  </div>
+                  <div className="flex justify-between items-center p-2 bg-gray-50 rounded">
+                    <span className="text-sm">Custom Order Blanks</span>
+                    <span className="font-medium">7 units</span>
+                  </div>
+                </div>
+                <Button className="w-full bg-pop-blue hover:bg-pop-blue/90">
+                  Generate Production Report
+                  </Button>
+                </CardContent>
+              </Card>
+            </div>
+
+            {/* Additional Production Workflow Cards */}
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+              <Card>
+                <CardHeader>
+                  <CardTitle>Station 3: Shredding</CardTitle>
                   <CardDescription>Size reduction processing</CardDescription>
                 </CardHeader>
                 <CardContent className="space-y-4">
@@ -1225,7 +758,7 @@ export default function OperationsPage() {
                   </div>
                   <div className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
                     <span className="text-sm">Shredder Status</span>
-                    <Badge variant="outline">Ready</Badge>
+                    <Badge className="bg-pop-green text-white">Ready</Badge>
                   </div>
                   <div className="space-y-2">
                     <div className="flex justify-between text-sm">
@@ -1238,16 +771,10 @@ export default function OperationsPage() {
                   </Button>
                 </CardContent>
               </Card>
-            </div>
 
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-              {/* Station 4: Fine Wash */}
               <Card>
                 <CardHeader>
-                  <CardTitle className="flex items-center">
-                    <Droplets className="h-5 w-5 mr-2 text-pop-blue" />
-                    Fine Wash Station
-                  </CardTitle>
+                  <CardTitle>Station 4: Fine Wash</CardTitle>
                   <CardDescription>Post-shred cleaning and debris removal</CardDescription>
                 </CardHeader>
                 <CardContent className="space-y-4">
@@ -1256,418 +783,91 @@ export default function OperationsPage() {
                     <Input value="PET Flakes - 5mm" readOnly />
                   </div>
                   <div className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
-                    <span className="text-sm">Station Status</span>
-                    <Badge variant="outline">Ready</Badge>
-                  </div>
-                  <div className="space-y-2">
-                    <div className="flex justify-between text-sm">
-                      <span>Water Temperature</span>
-                      <span>60°C</span>
-                    </div>
-                    <div className="flex justify-between text-sm">
-                      <span>Rinse Cycles</span>
-                      <span>3x planned</span>
-                    </div>
+                    <span className="text-sm">Wash Status</span>
+                    <Badge className="bg-pop-blue text-white">Processing</Badge>
                   </div>
                   <Button className="w-full bg-pop-blue hover:bg-pop-blue/90">
-                    Start Fine Wash
+                    Complete Wash Cycle
                   </Button>
                 </CardContent>
               </Card>
 
-              {/* Station 5: Dry */}
               <Card>
                 <CardHeader>
-                  <CardTitle className="flex items-center">
-                    <Wind className="h-5 w-5 mr-2 text-gray-600" />
-                    Dry Station
-                  </CardTitle>
-                  <CardDescription>Moisture removal</CardDescription>
+                  <CardTitle>Station 5: Drying</CardTitle>
+                  <CardDescription>Final material preparation</CardDescription>
                 </CardHeader>
                 <CardContent className="space-y-4">
                   <div className="space-y-2">
                     <Label>Temperature Control</Label>
-                    <div className="flex items-center space-x-2">
+                    <div className="flex space-x-2">
                       <Input value="85°C" readOnly className="flex-1" />
-                      <Badge className="bg-pop-green text-white">Optimal</Badge>
+                      <Button size="sm" variant="outline">Monitor</Button>
                     </div>
                   </div>
-                  <div className="space-y-2">
-                    <div className="flex justify-between text-sm">
-                      <span>Drying Time</span>
-                      <span>45 min remaining</span>
-                    </div>
-                    <div className="w-full bg-gray-200 rounded-full h-2">
-                      <div className="bg-gray-600 h-2 rounded-full" style={{width: '60%'}}></div>
-                    </div>
+                  <div className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                    <span className="text-sm">Dryer Status</span>
+                    <Badge variant="outline">Idle</Badge>
                   </div>
-                  <Button className="w-full" variant="outline">
-                    Monitor Cycle
-                  </Button>
-                </CardContent>
-              </Card>
-
-              {/* Station 6: Storage */}
-              <Card>
-                <CardHeader>
-                  <CardTitle className="flex items-center">
-                    <Archive className="h-5 w-5 mr-2 text-gray-500" />
-                    Storage Bins
-                  </CardTitle>
-                  <CardDescription>Material inventory management</CardDescription>
-                </CardHeader>
-                <CardContent className="space-y-4">
-                  <div className="space-y-2">
-                    <div className="grid grid-cols-2 gap-2 text-sm">
-                      <div className="p-2 bg-pop-blue/10 rounded">
-                        <div className="font-medium">PET</div>
-                        <div className="text-xs">156 lbs</div>
-                      </div>
-                      <div className="p-2 bg-pop-green/10 rounded">
-                        <div className="font-medium">HDPE</div>
-                        <div className="text-xs">89 lbs</div>
-                      </div>
-                      <div className="p-2 bg-pop-red/10 rounded">
-                        <div className="font-medium">PP</div>
-                        <div className="text-xs">67 lbs</div>
-                      </div>
-                      <div className="p-2 bg-gray-100 rounded">
-                        <div className="font-medium">Mixed</div>
-                        <div className="text-xs">23 lbs</div>
-                      </div>
-                    </div>
-                  </div>
-                  <Button className="w-full" variant="outline">
-                    Update Inventory
-                  </Button>
-                </CardContent>
-              </Card>
-
-              {/* Station 7: Pressing */}
-              <Card>
-                <CardHeader>
-                  <CardTitle className="flex items-center">
-                    <ChevronDown className="h-5 w-5 mr-2 text-pop-black" />
-                    Press Station
-                  </CardTitle>
-                  <CardDescription>Blank formation</CardDescription>
-                </CardHeader>
-                <CardContent className="space-y-4">
-                  <div className="space-y-2">
-                    <Label>Press Settings</Label>
-                    <div className="grid grid-cols-2 gap-2">
-                      <div>
-                        <div className="text-xs text-gray-600">Temperature</div>
-                        <div className="text-sm font-medium">180°C</div>
-                      </div>
-                      <div>
-                        <div className="text-xs text-gray-600">Pressure</div>
-                        <div className="text-sm font-medium">2500 PSI</div>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="flex items-center justify-between p-3 bg-pop-black/5 rounded-lg">
-                    <span className="text-sm">Press Status</span>
-                    <Badge className="bg-pop-black text-white">Ready</Badge>
-                  </div>
-                  <Button className="w-full bg-pop-black hover:bg-pop-black/90 text-white">
-                    Start Press Cycle
+                  <Button className="w-full">
+                    Start Drying Process
                   </Button>
                 </CardContent>
               </Card>
             </div>
-
-            {/* Production Stations */}
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-              <Card>
-                <CardHeader>
-                  <CardTitle className="flex items-center">
-                    <Scale className="h-5 w-5 mr-2 text-pop-green" />
-                    Station 8: Weighing/Photo/Creation
-                  </CardTitle>
-                  <CardDescription>
-                    Item creation from pressed blanks
-                  </CardDescription>
-                </CardHeader>
-                <CardContent className="space-y-4">
-                  <div className="space-y-4">
-                    <div>
-                      <Label htmlFor="batch-id">Batch ID Input</Label>
-                      <Input
-                        id="batch-id"
-                        placeholder="BA-XXXX"
-                        className="mt-1"
-                      />
-                    </div>
-                    <div className="flex items-center justify-between p-3 bg-pop-green/5 rounded-lg">
-                      <div>
-                        <span className="font-medium text-sm">
-                          HID Scale Integration
-                        </span>
-                        <p className="text-xs text-gray-600">
-                          Auto-weight capture ready
-                        </p>
-                      </div>
-                      <Badge className="bg-pop-green text-white">
-                        <Scale className="h-3 w-3 mr-1" />
-                        Connected
-                      </Badge>
-                    </div>
-                    <div className="flex items-center justify-between p-3 bg-pop-blue/5 rounded-lg">
-                      <div>
-                        <span className="font-medium text-sm">
-                          Webcam Capture
-                        </span>
-                        <p className="text-xs text-gray-600">USB camera ready</p>
-                      </div>
-                      <Badge className="bg-pop-blue text-white">
-                        <Camera className="h-3 w-3 mr-1" />
-                        Ready
-                      </Badge>
-                    </div>
-                  </div>
-                  <Button className="w-full bg-pop-green hover:bg-pop-green/90">
-                    <Package className="h-4 w-4 mr-2" />
-                    Create New Item
-                  </Button>
-                </CardContent>
-              </Card>
-
-              <Card>
-                <CardHeader>
-                  <CardTitle className="flex items-center">
-                    <Zap className="h-5 w-5 mr-2 text-pop-blue" />
-                    Station 9: Laser Processing
-                  </CardTitle>
-                  <CardDescription>
-                    QR code engraving and completion
-                  </CardDescription>
-                </CardHeader>
-                <CardContent className="space-y-4">
-                  <div className="space-y-4">
-                    <div className="space-y-2">
-                      <Label>Queue Management</Label>
-                      <div className="space-y-2">
-                        <div className="flex items-center justify-between p-2 bg-gray-50 rounded">
-                          <span className="text-sm">
-                            IT-8472-001 - Phone Stand
-                          </span>
-                          <Badge variant="outline">Queued</Badge>
-                        </div>
-                        <div className="flex items-center justify-between p-2 bg-pop-blue/5 rounded">
-                          <span className="text-sm">
-                            IT-8471-003 - Desk Organizer
-                          </span>
-                          <Badge className="bg-pop-blue text-white">
-                            Processing
-                          </Badge>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="p-3 bg-pop-green/5 rounded-lg">
-                      <div className="flex items-center justify-between mb-2">
-                        <span className="font-medium text-sm">
-                          Lightburn Integration
-                        </span>
-                        <Badge className="bg-pop-green text-white">
-                          <Zap className="h-3 w-3 mr-1" />
-                          Active
-                        </Badge>
-                      </div>
-                      <p className="text-xs text-gray-600 mb-2">
-                        Copy QR codes for laser engraving
-                      </p>
-                      <div className="flex space-x-2">
-                        <Input
-                          placeholder="Offline QR: ABC123"
-                          className="text-xs"
-                          readOnly
-                        />
-                        <Button size="sm" variant="outline">
-                          Copy
-                        </Button>
-                      </div>
-                    </div>
-                  </div>
-                  <Button className="w-full bg-pop-blue hover:bg-pop-blue/90">
-                    <QrCode className="h-4 w-4 mr-2" />
-                    Mark Laser Complete
-                  </Button>
-                </CardContent>
-              </Card>
-            </div>
-
-            
           </AccordionContent>
         </AccordionItem>
       </Accordion>
 
-      {/* Pickup Scheduling Accordion */}
+      {/* Logistics & Collections Accordion */}
       <Accordion type="single" collapsible className="w-full">
-        <AccordionItem value="pickup-scheduling" className="border rounded-lg px-4">
+        <AccordionItem value="logistics-collections" className="border rounded-lg px-4">
           <AccordionTrigger className="hover:no-underline">
             <div className="flex items-center gap-3">
-              <Calendar className="h-5 w-5 text-pop-green" />
+              <Calendar className="h-5 w-5 text-pop-blue" />
               <div className="text-left">
-                <h3 className="text-lg font-semibold text-pop-black">Pickup Scheduling</h3>
-                <p className="text-sm text-gray-600">Route planning and logistics coordination</p>
+                <h3 className="text-lg font-semibold text-pop-black">Logistics & Collections</h3>
+                <p className="text-sm text-gray-600">Pickup scheduling and route optimization</p>
               </div>
             </div>
           </AccordionTrigger>
           <AccordionContent>
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 pt-2 pb-4">
-              {/* Today's Schedule */}
-              <Card>
-                <CardHeader>
-                  <CardTitle className="flex items-center gap-2">
-                    <Clock className="h-5 w-5 text-pop-blue" />
-                    Today's Schedule
-                  </CardTitle>
-                  <CardDescription>Active pickup routes</CardDescription>
-                </CardHeader>
-                <CardContent className="space-y-3">
-                  <div className="flex items-center justify-between p-3 bg-pop-red/5 rounded-lg border-l-4 border-pop-red">
-                    <div>
-                      <div className="font-medium text-sm">TechCorp - Floor 3</div>
-                      <div className="text-xs text-gray-600">BI-7829 - 85% Full</div>
-                      <div className="text-xs text-gray-500">9:30 AM</div>
-                    </div>
-                    <Badge className="bg-pop-red text-white">Urgent</Badge>
-                  </div>
-                  <div className="flex items-center justify-between p-3 bg-pop-blue/5 rounded-lg border-l-4 border-pop-blue">
-                    <div>
-                      <div className="font-medium text-sm">GreenTech Industries</div>
-                      <div className="text-xs text-gray-600">BI-5432 - 65% Full</div>
-                      <div className="text-xs text-gray-500">11:00 AM</div>
-                    </div>
-                    <Badge className="bg-pop-blue text-white">Scheduled</Badge>
-                  </div>
-                  <div className="flex items-center justify-between p-3 bg-pop-green/5 rounded-lg border-l-4 border-pop-green">
-                    <div>
-                      <div className="font-medium text-sm">Innovation Hub</div>
-                      <div className="text-xs text-gray-600">BI-9876 - 45% Full</div>
-                      <div className="text-xs text-gray-500">2:15 PM</div>
-                    </div>
-                    <Badge className="bg-pop-green text-white">Confirmed</Badge>
-                  </div>
-                </CardContent>
-              </Card>
-
-              {/* Route Optimization */}
-              <Card>
-                <CardHeader>
-                  <CardTitle className="flex items-center gap-2">
-                    <Route className="h-5 w-5 text-pop-green" />
-                    Route Planning
-                  </CardTitle>
-                  <CardDescription>Optimized pickup routes</CardDescription>
-                </CardHeader>
-                <CardContent className="space-y-4">
-                  <div className="bg-gray-50 p-3 rounded-lg">
-                    <div className="text-sm font-medium text-gray-700">Route A</div>
-                    <div className="text-xs text-gray-600 mt-1">3 stops • 12.5 miles • 2h 15m</div>
-                    <div className="flex gap-1 mt-2">
-                      <Badge variant="outline" className="text-xs">TechCorp</Badge>
-                      <Badge variant="outline" className="text-xs">GreenTech</Badge>
-                      <Badge variant="outline" className="text-xs">Innovation</Badge>
-                    </div>
-                  </div>
-                  <div className="bg-gray-50 p-3 rounded-lg">
-                    <div className="text-sm font-medium text-gray-700">Route B</div>
-                    <div className="text-xs text-gray-600 mt-1">2 stops • 8.3 miles • 1h 30m</div>
-                    <div className="flex gap-1 mt-2">
-                      <Badge variant="outline" className="text-xs">StartupCo</Badge>
-                      <Badge variant="outline" className="text-xs">EcoSpace</Badge>
-                    </div>
-                  </div>
-                  <Button size="sm" className="w-full bg-pop-green hover:bg-pop-green/90">
-                    <Route className="h-4 w-4 mr-2" />
-                    Optimize Routes
-                  </Button>
-                </CardContent>
-              </Card>
-
-              {/* Driver Management */}
-              <Card>
-                <CardHeader>
-                  <CardTitle className="flex items-center gap-2">
-                    <Users className="h-5 w-5 text-pop-blue" />
-                    Driver Assignments
-                  </CardTitle>
-                  <CardDescription>Team availability and assignments</CardDescription>
-                </CardHeader>
-                <CardContent className="space-y-3">
-                  <div className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
-                    <div>
-                      <div className="font-medium text-sm">Mike Rodriguez</div>
-                      <div className="text-xs text-gray-600">Route A - On Route</div>
-                    </div>
-                    <Badge className="bg-pop-green text-white">Active</Badge>
-                  </div>
-                  <div className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
-                    <div>
-                      <div className="font-medium text-sm">Sarah Chen</div>
-                      <div className="text-xs text-gray-600">Route B - Available</div>
-                    </div>
-                    <Badge variant="outline">Standby</Badge>
-                  </div>
-                  <div className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
-                    <div>
-                      <div className="font-medium text-sm">Alex Kim</div>
-                      <div className="text-xs text-gray-600">Processing Station</div>
-                    </div>
-                    <Badge className="bg-pop-blue text-white">Busy</Badge>
-                  </div>
-                </CardContent>
-              </Card>
-            </div>
-
-            {/* Calendar Integration */}
-            <Card className="mt-4">
+            <Card>
               <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <Calendar className="h-5 w-5 text-pop-green" />
-                  Weekly Schedule Overview
-                </CardTitle>
-                <CardDescription>Upcoming pickups and scheduling coordination</CardDescription>
+                <CardTitle>Today's Collections Schedule</CardTitle>
+                <CardDescription>Pickup routes and partner locations</CardDescription>
               </CardHeader>
               <CardContent>
-                <div className="grid grid-cols-7 gap-2 text-center">
-                  <div className="font-semibold text-sm text-gray-600 p-2">Mon</div>
-                  <div className="font-semibold text-sm text-gray-600 p-2">Tue</div>
-                  <div className="font-semibold text-sm text-gray-600 p-2">Wed</div>
-                  <div className="font-semibold text-sm text-gray-600 p-2">Thu</div>
-                  <div className="font-semibold text-sm text-gray-600 p-2">Fri</div>
-                  <div className="font-semibold text-sm text-gray-600 p-2">Sat</div>
-                  <div className="font-semibold text-sm text-gray-600 p-2">Sun</div>
-                  
-                  <div className="p-2 bg-pop-green/10 rounded text-sm">
-                    <div className="font-bold">12</div>
-                    <div className="text-xs">3 pickups</div>
+                <div className="grid grid-cols-7 gap-2 mb-4">
+                  <div className="p-2 bg-gray-50 rounded text-sm text-center">
+                    <div className="font-bold">Mon</div>
+                    <div className="text-xs">11</div>
                   </div>
-                  <div className="p-2 bg-pop-blue/10 rounded text-sm">
-                    <div className="font-bold">13</div>
-                    <div className="text-xs">2 pickups</div>
+                  <div className="p-2 bg-pop-green/10 rounded text-sm text-center">
+                    <div className="font-bold">Tue</div>
+                    <div className="text-xs">12</div>
+                    <div className="w-2 h-2 bg-pop-green rounded-full mx-auto mt-1"></div>
+                  </div>
+                  <div className="p-2 bg-pop-blue/10 rounded text-sm text-center">
+                    <div className="font-bold">Wed</div>
+                    <div className="text-xs">13</div>
+                    <div className="w-2 h-2 bg-pop-blue rounded-full mx-auto mt-1"></div>
                   </div>
                   <div className="p-2 bg-gray-50 rounded text-sm">
-                    <div className="font-bold text-pop-red">14</div>
-                    <div className="text-xs">Today</div>
-                  </div>
-                  <div className="p-2 bg-pop-red/10 rounded text-sm">
-                    <div className="font-bold">15</div>
-                    <div className="text-xs">5 pickups</div>
+                    <div className="font-bold">Thu</div>
+                    <div className="text-xs">14</div>
                   </div>
                   <div className="p-2 bg-gray-50 rounded text-sm">
-                    <div className="font-bold">16</div>
-                    <div className="text-xs">1 pickup</div>
+                    <div className="font-bold">Fri</div>
+                    <div className="text-xs">15</div>
                   </div>
                   <div className="p-2 bg-gray-50 rounded text-sm">
-                    <div className="font-bold">17</div>
-                    <div className="text-xs">-</div>
+                    <div className="font-bold">Sat</div>
+                    <div className="text-xs">16</div>
                   </div>
                   <div className="p-2 bg-gray-50 rounded text-sm">
-                    <div className="font-bold">18</div>
-                    <div className="text-xs">-</div>
+                    <div className="font-bold">Sun</div>
+                    <div className="text-xs">17</div>
                   </div>
                 </div>
                 <div className="flex gap-2 mt-4">
@@ -1685,7 +885,7 @@ export default function OperationsPage() {
                   </Button>
                 </div>
               </CardContent>
-            </Card>
+          </Card>
           </AccordionContent>
         </AccordionItem>
       </Accordion>
@@ -1727,318 +927,70 @@ export default function OperationsPage() {
                       Inventory
                     </TabsTrigger>
                   </TabsList>
+                  <div className="flex gap-2">
+                    <Button variant="outline" size="sm">
+                      <QrCode className="h-4 w-4 mr-2" />
+                      Scan QR
+                    </Button>
+                  </div>
                 </div>
 
                 {/* Collections Tab Fullscreen */}
-                <TabsContent value="collections" className="space-y-6 h-full">
-                  <CollectionsWorkflow
+                <TabsContent value="collections" className="space-y-6">
+                  <CollectionsTabContent
                     bins={bins}
                     loadingBins={loadingBins}
-                    allBinColumns={allBinColumns}
-                    defaultBinColumns={defaultBinColumns}
-                    binEditableFields={binEditableFields}
                     handleBinSave={handleBinSave}
                     handleBinDelete={handleBinDelete}
                     collectionsSortField={collectionsSortField}
                     collectionsSortDirection={collectionsSortDirection}
-                    onSort={(field, direction) => {
-                      setCollectionsSortField(field);
-                      setCollectionsSortDirection(direction);
-                    }}
+                    setCollectionsSortField={setCollectionsSortField}
+                    setCollectionsSortDirection={setCollectionsSortDirection}
+                    isFullscreen={true}
                   />
                 </TabsContent>
 
                 {/* Processing Tab Fullscreen */}
-                <TabsContent value="processing" className="space-y-6 h-full">
-                  <DataTable
-                    title="Processing Queue"
-                    description="Active batches moving through sorting, cleaning, and shredding stages"
-                    icon={<Settings className="h-5 w-5 text-pop-green" />}
-                    data={batches}
-                    columns={allBatchColumns.filter(col => defaultBatchColumns.includes(String(col.key)))}
-                    availableColumns={allBatchColumns}
-                    defaultVisibleColumns={defaultBatchColumns}
-                    enableColumnSelection={true}
-                    enableFiltering={true}
-                    editableFields={batchEditableFields}
-                    onSave={handleBatchSave}
-                    onDelete={handleBatchDelete}
-                    sortField={processingSortField}
-                    sortDirection={processingSortDirection}
-                    onSort={(field, direction) => {
-                      setProcessingSortField(field);
-                      setProcessingSortDirection(direction);
-                    }}
+                <TabsContent value="processing" className="space-y-6">
+                  <ProcessingTabContent
+                    batches={batches}
+                    loadingBatches={loadingBatches}
+                    handleBatchSave={handleBatchSave}
+                    handleBatchDelete={handleBatchDelete}
+                    processingSortField={processingSortField}
+                    processingSortDirection={processingSortDirection}
+                    setProcessingSortField={setProcessingSortField}
+                    setProcessingSortDirection={setProcessingSortDirection}
+                    isFullscreen={true}
                   />
                 </TabsContent>
 
                 {/* Fulfillment Tab Fullscreen */}
-                <TabsContent value="fulfillment" className="space-y-6 h-full">
-                  <DataTable
-                    title="Fulfillment Queue"
-                    description="Customer orders and maker assignments for item assembly and delivery"
-                    icon={<Truck className="h-5 w-5 text-pop-green" />}
-                    data={orders}
-                    columns={allOrderColumns.filter(col => defaultOrderColumns.includes(String(col.key)))}
-                    availableColumns={allOrderColumns}
-                    defaultVisibleColumns={defaultOrderColumns}
-                    enableColumnSelection={true}
-                    enableFiltering={true}
-                    editableFields={orderEditableFields}
-                    onSave={handleOrderSave}
-                    onDelete={handleOrderDelete}
-                    sortField={fulfillmentSortField}
-                    sortDirection={fulfillmentSortDirection}
-                    onSort={(field, direction) => {
-                      setFulfillmentSortField(field);
-                      setFulfillmentSortDirection(direction);
-                    }}
+                <TabsContent value="fulfillment" className="space-y-6">
+                  <FulfillmentTabContent
+                    orders={orders}
+                    loadingOrders={loadingOrders}
+                    handleOrderSave={handleOrderSave}
+                    handleOrderDelete={handleOrderDelete}
+                    fulfillmentSortField={fulfillmentSortField}
+                    fulfillmentSortDirection={fulfillmentSortDirection}
+                    setFulfillmentSortField={setFulfillmentSortField}
+                    setFulfillmentSortDirection={setFulfillmentSortDirection}
+                    isFullscreen={true}
                   />
                 </TabsContent>
 
                 {/* Inventory Tab Fullscreen */}
-                <TabsContent value="inventory" className="space-y-6 h-full">
-                  <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                    <Card>
-                      <CardHeader>
-                        <CardTitle>Material Inventory</CardTitle>
-                        <CardDescription>Raw plastic material tracking</CardDescription>
-                      </CardHeader>
-                      <CardContent className="space-y-4">
-                        <div className="space-y-3">
-                          <div className="flex justify-between items-center">
-                            <span className="text-sm text-gray-600">
-                              Processed Plastic Stock
-                            </span>
-                            <span className="font-medium">847 lbs</span>
-                          </div>
-                          <div className="flex justify-between items-center">
-                            <span className="text-sm text-gray-600">
-                              Pending Processing
-                            </span>
-                            <span className="font-medium">156 lbs</span>
-                          </div>
-                          <div className="flex justify-between items-center">
-                            <span className="text-sm text-gray-600">
-                              Ready for Production
-                            </span>
-                            <span className="font-medium text-pop-green">691 lbs</span>
-                          </div>
-                          <div className="flex justify-between items-center">
-                            <span className="text-sm text-gray-600">Quality Hold</span>
-                            <span className="font-medium text-pop-red">12 lbs</span>
-                          </div>
-                        </div>
-                        <Button variant="outline" className="w-full">
-                          Update Material Levels
-                        </Button>
-                      </CardContent>
-                    </Card>
-
-                    <Card>
-                      <CardHeader>
-                        <CardTitle>Production Inventory</CardTitle>
-                        <CardDescription>Finished goods and blanks</CardDescription>
-                      </CardHeader>
-                      <CardContent className="space-y-4">
-                        <div className="space-y-2">
-                          <div className="flex justify-between items-center p-2 bg-gray-50 rounded">
-                            <span className="text-sm">Phone Stand Blanks</span>
-                            <span className="font-medium">45 units</span>
-                          </div>
-                          <div className="flex justify-between items-center p-2 bg-gray-50 rounded">
-                            <span className="text-sm">Desk Organizer Blanks</span>
-                            <span className="font-medium">28 units</span>
-                          </div>
-                          <div className="flex justify-between items-center p-2 bg-gray-50 rounded">
-                            <span className="text-sm">Plant Holder Blanks</span>
-                            <span className="font-medium">19 units</span>
-                          </div>
-                          <div className="flex justify-between items-center p-2 bg-gray-50 rounded">
-                            <span className="text-sm">Custom Order Blanks</span>
-                            <span className="font-medium">7 units</span>
-                          </div>
-                        </div>
-                        <Button className="w-full bg-pop-blue hover:bg-pop-blue/90">
-                          Generate Production Report
-                        </Button>
-                      </CardContent>
-                    </Card>
-
-                    <Card>
-                      <CardHeader>
-                        <CardTitle>Quality Control</CardTitle>
-                        <CardDescription>Batch tracking and compliance</CardDescription>
-                      </CardHeader>
-                      <CardContent className="space-y-4">
-                        <div className="space-y-2">
-                          <div className="flex items-center justify-between p-3 bg-pop-green/5 rounded-lg">
-                            <div>
-                              <span className="font-medium text-sm">Batch BA-8471</span>
-                              <p className="text-xs text-gray-600">
-                                All QC checks passed
-                              </p>
-                            </div>
-                            <Badge className="bg-pop-green text-white">Approved</Badge>
-                          </div>
-                          <div className="flex items-center justify-between p-3 bg-pop-blue/5 rounded-lg">
-                            <div>
-                              <span className="font-medium text-sm">Batch BA-8472</span>
-                              <p className="text-xs text-gray-600">
-                                Pending final inspection
-                              </p>
-                            </div>
-                            <Badge className="bg-pop-blue text-white">Review</Badge>
-                          </div>
-                          <div className="flex items-center justify-between p-3 bg-pop-red/5 rounded-lg">
-                            <div>
-                              <span className="font-medium text-sm">Batch BA-8469</span>
-                              <p className="text-xs text-gray-600">
-                                Material defect noted
-                              </p>
-                            </div>
-                            <Badge className="bg-pop-red text-white">Hold</Badge>
-                          </div>
-                        </div>
-                        <Button variant="outline" className="w-full">
-                          View QC Documentation
-                        </Button>
-                      </CardContent>
-                    </Card>
-                  </div>
-
-                  <Card>
-                    <CardHeader>
-                      <CardTitle>Inventory Movements</CardTitle>
-                      <CardDescription>
-                        Recent stock changes and transfers
-                      </CardDescription>
-                    </CardHeader>
-                    <CardContent>
-                      <div className="space-y-3">
-                        <div className="flex items-center justify-between p-3 border rounded-lg">
-                          <div>
-                            <span className="font-medium text-sm">
-                              Material Addition
-                            </span>
-                            <p className="text-xs text-gray-600">
-                              +45 lbs from Batch BA-8472
-                            </p>
-                          </div>
-                          <div className="text-right">
-                            <span className="text-xs text-gray-500">2 hours ago</span>
-                            <p className="text-xs text-pop-green">Station 1</p>
-                          </div>
-                        </div>
-                        <div className="flex items-center justify-between p-3 border rounded-lg">
-                          <div>
-                            <span className="font-medium text-sm">
-                              Production Consumption
-                            </span>
-                            <p className="text-xs text-gray-600">
-                              -12 lbs for Phone Stand Blanks
-                            </p>
-                          </div>
-                          <div className="text-right">
-                            <span className="text-xs text-gray-500">4 hours ago</span>
-                            <p className="text-xs text-pop-blue">Manufacturing</p>
-                          </div>
-                        </div>
-                        <div className="flex items-center justify-between p-3 border rounded-lg">
-                          <div>
-                            <span className="font-medium text-sm">Quality Hold</span>
-                            <p className="text-xs text-gray-600">
-                              -12 lbs from Batch BA-8469
-                            </p>
-                          </div>
-                          <div className="text-right">
-                            <span className="text-xs text-gray-500">1 day ago</span>
-                            <p className="text-xs text-pop-red">QC Hold</p>
-                          </div>
-                        </div>
-                      </div>
-                    </CardContent>
-                  </Card>
+                <TabsContent value="inventory" className="space-y-6">
+                  <InventoryTabContent
+                    blanks={blanks}
+                    loadingBlanks={loadingBlanks}
+                    handleBlankSave={handleBlankSave}
+                    handleBlankDelete={handleBlankDelete}
+                    isFullscreen={true}
+                  />
                 </TabsContent>
               </Tabs>
-            </div>
-          </div>
-        </DialogContent>
-      </Dialog>
-
-      {/* Scan Modal */}
-      <Dialog open={showScanModal} onOpenChange={setShowScanModal}>
-        <DialogContent className="max-w-lg">
-          <DialogHeader>
-            <DialogTitle className="flex items-center gap-2">
-              <Scan className="h-5 w-5 text-pop-green" />
-              QR Code Scanner
-            </DialogTitle>
-            <DialogDescription>
-              Scan any QR code for bin status, batch processing, or item tracking
-            </DialogDescription>
-          </DialogHeader>
-          <div className="space-y-4">
-            {/* Camera placeholder */}
-            <div className="relative aspect-square bg-gray-100 rounded-lg border-2 border-dashed border-gray-300 flex items-center justify-center">
-              <div className="text-center">
-                <Camera className="h-12 w-12 text-gray-400 mx-auto mb-2" />
-                <p className="text-sm text-gray-500">Camera feed will appear here</p>
-                <p className="text-xs text-gray-400 mt-1">Position QR code within frame</p>
-              </div>
-              
-              {/* Scanning overlay */}
-              <div className="absolute inset-4 border-2 border-pop-green rounded-lg">
-                <div className="absolute top-0 left-0 w-4 h-4 border-t-2 border-l-2 border-pop-green"></div>
-                <div className="absolute top-0 right-0 w-4 h-4 border-t-2 border-r-2 border-pop-green"></div>
-                <div className="absolute bottom-0 left-0 w-4 h-4 border-b-2 border-l-2 border-pop-green"></div>
-                <div className="absolute bottom-0 right-0 w-4 h-4 border-b-2 border-r-2 border-pop-green"></div>
-              </div>
-            </div>
-
-            {/* Scan controls */}
-            <div className="flex gap-2">
-              <Button 
-                variant="outline" 
-                className="flex-1"
-                onClick={() => setShowScanModal(false)}
-              >
-                Cancel
-              </Button>
-              <Button 
-                className="flex-1 bg-pop-green hover:bg-pop-green/90"
-                onClick={() => {
-                  // Simulate successful scan - in real implementation this would process the QR code
-                  setShowScanModal(false);
-                  // Here you would handle the scanned code and open the appropriate modal/action
-                }}
-              >
-                <Scan className="h-4 w-4 mr-2" />
-                Scan
-              </Button>
-            </div>
-
-            {/* Quick access buttons */}
-            <div className="pt-4 border-t">
-              <p className="text-sm text-gray-600 mb-3">Quick Access:</p>
-              <div className="grid grid-cols-2 gap-2">
-                <Button variant="outline" size="sm" className="text-xs">
-                  <Package className="h-3 w-3 mr-1" />
-                  Bin Status
-                </Button>
-                <Button variant="outline" size="sm" className="text-xs">
-                  <Settings className="h-3 w-3 mr-1" />
-                  Batch Process
-                </Button>
-                <Button variant="outline" size="sm" className="text-xs">
-                  <Archive className="h-3 w-3 mr-1" />
-                  Item Track
-                </Button>
-                <Button variant="outline" size="sm" className="text-xs">
-                  <Truck className="h-3 w-3 mr-1" />
-                  Collection
-                </Button>
-              </div>
             </div>
           </div>
         </DialogContent>
