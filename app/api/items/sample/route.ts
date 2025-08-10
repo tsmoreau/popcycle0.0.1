@@ -1,53 +1,55 @@
 import { NextResponse } from 'next/server';
+import { MongoClient } from 'mongodb';
 
-// Sample data for demonstration
-const sampleItems = {
-  'ABC123': {
-    qrCode: 'ABC123',
-    sourceCompany: 'Cafe Luna',
-    collectionDate: '2025-01-15',
-    materialType: 'HDPE',
-    weight: 2.3,
-    processedDate: '2025-01-20',
-    carbonOffset: 5.8,
-    status: 'delivered',
-    productType: 'rover_chassis'
-  },
-  'DEF456': {
-    qrCode: 'DEF456', 
-    sourceCompany: 'TechCorp',
-    collectionDate: '2025-01-12',
-    materialType: 'PET',
-    weight: 1.7,
-    processedDate: '2025-01-18',
-    carbonOffset: 4.2,
-    status: 'assembled',
-    productType: 'assembly_toy'
-  },
-  'GHI789': {
-    qrCode: 'GHI789',
-    sourceCompany: 'Green Office',
-    collectionDate: '2025-01-10',
-    materialType: 'HDPE',
-    weight: 3.1,
-    processedDate: '2025-01-16',
-    carbonOffset: 7.8,
-    status: 'processed',
-    productType: 'educational_kit'
-  },
-  'JKL012': {
-    qrCode: 'JKL012',
-    sourceCompany: 'Startup Hub',
-    collectionDate: '2025-01-08',
-    materialType: 'PP',
-    weight: 1.9,
-    processedDate: '2025-01-14',
-    carbonOffset: 4.7,
-    status: 'delivered',
-    productType: 'dinnerware'
+const MONGODB_URI = process.env.MONGODB_URI!;
+
+export async function GET(request: Request) {
+  try {
+    const url = new URL(request.url);
+    const type = url.searchParams.get('type');
+
+    const client = new MongoClient(MONGODB_URI);
+    await client.connect();
+    const db = client.db('popcycle');
+
+    let items: any[] = [];
+
+    if (type === 'bins') {
+      items = await db.collection('bins').find({}).limit(20).toArray();
+      items = items.map(bin => ({ id: bin._id, name: bin.name }));
+    } else if (type === 'batches') {
+      items = await db.collection('batches').find({}).limit(20).toArray();
+      items = items.map(batch => ({ id: batch._id, binId: batch.binId }));
+    } else if (type === 'blanks') {
+      items = await db.collection('blanks').find({}).limit(20).toArray();
+      items = items.map(blank => ({ id: blank._id, batchId: blank.batchId }));
+    } else {
+      // Return all types
+      const [bins, batches, blanks] = await Promise.all([
+        db.collection('bins').find({}).limit(10).toArray(),
+        db.collection('batches').find({}).limit(10).toArray(),
+        db.collection('blanks').find({}).limit(10).toArray()
+      ]);
+
+      items = {
+        bins: bins.map(bin => ({ id: bin._id, name: bin.name })),
+        batches: batches.map(batch => ({ id: batch._id, binId: batch.binId })),
+        blanks: blanks.map(blank => ({ id: blank._id, batchId: blank.batchId }))
+      };
+    }
+
+    await client.close();
+
+    return NextResponse.json({
+      success: true,
+      items
+    });
+
+  } catch (error) {
+    console.error('Error fetching sample items:', error);
+    return NextResponse.json({
+      success: false,
+      error: 'Failed to fetch items'
+    }, { status: 500 });
   }
-};
-
-export async function GET() {
-  return NextResponse.json(sampleItems);
 }

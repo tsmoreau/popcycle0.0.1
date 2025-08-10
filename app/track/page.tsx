@@ -1,3 +1,5 @@
+"use client";
+
 import {
   Card,
   CardContent,
@@ -9,17 +11,92 @@ import { Input } from "../components/ui/input";
 import { PopArtContainer, QRCodeElement } from "../components/PopArtElements";
 import { Search, QrCode, ArrowRight } from "lucide-react";
 import Link from "next/link";
+import { useState, useEffect } from "react";
+
+interface SampleQRCodes {
+  bins: Array<{ id: string; name: string }>;
+  batches: Array<{ id: string; binId: string }>;
+  blanks: Array<{ id: string; batchId: string }>;
+}
 
 export default function Track() {
-  const sampleCodes = [
-    "ABC123",
-    "DEF456",
-    "GHI789",
-    "JKL012",
-    "MNO345",
-    "PQR678",
-    "STU901",
-  ];
+  const [sampleCodes, setSampleCodes] = useState<SampleQRCodes>({
+    bins: [],
+    batches: [],
+    blanks: []
+  });
+  const [selectedFilter, setSelectedFilter] = useState<string>("ALL");
+  const [searchTerm, setSearchTerm] = useState<string>("");
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    // Fetch existing QR codes from the database
+    const fetchExistingCodes = async () => {
+      try {
+        // Fetch existing bins, batches, and blanks
+        const [binsRes, batchesRes, blanksRes] = await Promise.all([
+          fetch('/api/items/sample?type=bins'),
+          fetch('/api/items/sample?type=batches'), 
+          fetch('/api/items/sample?type=blanks')
+        ]);
+
+        const bins = await binsRes.json();
+        const batches = await batchesRes.json();
+        const blanks = await blanksRes.json();
+
+        setSampleCodes({
+          bins: bins.success ? bins.items : [],
+          batches: batches.success ? batches.items : [],
+          blanks: blanks.success ? blanks.items : []
+        });
+      } catch (error) {
+        console.error('Failed to fetch existing codes:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchExistingCodes();
+  }, []);
+
+  // Filter and combine codes based on selected filter
+  const getFilteredCodes = () => {
+    let codes: Array<{ id: string; type: string; name?: string }> = [];
+    
+    switch (selectedFilter) {
+      case "BINS":
+        codes = sampleCodes.bins.map(bin => ({ id: bin.id, type: "bin", name: bin.name }));
+        break;
+      case "BATCHES":
+        codes = sampleCodes.batches.map(batch => ({ id: batch.id, type: "batch" }));
+        break;
+      case "BLANKS":
+        codes = sampleCodes.blanks.map(blank => ({ id: blank.id, type: "blank" }));
+        break;
+      default: // "ALL"
+        codes = [
+          ...sampleCodes.bins.map(bin => ({ id: bin.id, type: "bin", name: bin.name })),
+          ...sampleCodes.batches.map(batch => ({ id: batch.id, type: "batch" })),
+          ...sampleCodes.blanks.map(blank => ({ id: blank.id, type: "blank" }))
+        ];
+    }
+
+    // Apply search filter if search term exists
+    if (searchTerm) {
+      codes = codes.filter(code => 
+        code.id.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        code.name?.toLowerCase().includes(searchTerm.toLowerCase())
+      );
+    }
+
+    return codes.slice(0, 9); // Limit to 9 items for grid display
+  };
+
+  const handleSearch = () => {
+    if (searchTerm.trim()) {
+      window.location.href = `/track/${searchTerm.trim()}`;
+    }
+  };
 
   return (
     <div className="min-h-screen">
@@ -46,13 +123,17 @@ export default function Track() {
                   <div className="flex flex-col sm:flex-row gap-4">
                     <div className="flex-1">
                       <Input
-                        placeholder="Enter item code (e.g. ABC123)"
+                        placeholder="Enter item code (e.g. B1234567)"
                         className="border-2 border-pop-black text-lg h-12"
+                        value={searchTerm}
+                        onChange={(e) => setSearchTerm(e.target.value)}
+                        onKeyPress={(e) => e.key === 'Enter' && handleSearch()}
                       />
                     </div>
                     <Button
                       size="lg"
                       className="bg-pop-green text-pop-black hover:bg-pop-black hover:text-white systematic-caps h-12 px-8"
+                      onClick={handleSearch}
                     >
                       <Search className="w-5 h-5 mr-2" />
                       Track Item
@@ -68,14 +149,18 @@ export default function Track() {
             <div className="flex flex-wrap gap-4 justify-center">
               {[
                 "ALL",
-                "COLLECTED BATCHES",
-                "PRESSED BLANKS",
-                "MANUFACTURED ITEMS",
-                "ASSEMBLED ITEMS",
+                "BINS",
+                "BATCHES", 
+                "BLANKS",
               ].map((category) => (
                 <button
                   key={category}
-                  className="px-6 py-3 border-2 border-pop-black bg-white hover:bg-pop-black hover:text-white transition-colors systematic-caps"
+                  className={`px-6 py-3 border-2 border-pop-black transition-colors systematic-caps ${
+                    selectedFilter === category
+                      ? "bg-pop-black text-white"
+                      : "bg-white hover:bg-pop-black hover:text-white"
+                  }`}
+                  onClick={() => setSelectedFilter(category)}
                 >
                   {category}
                 </button>
@@ -83,11 +168,14 @@ export default function Track() {
             </div>
           </div>
 
-          {/* Sample QR Codes */}
+          {/* QR Codes */}
           <div className="mb-16 mt-32">
            
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 max-w-4xl mx-auto px-12">
-              {sampleCodes.map((code, index) => {
+              {loading ? (
+                <div className="col-span-full text-center text-pop-gray">Loading QR codes...</div>
+              ) : (
+                getFilteredCodes().map((code, index) => {
                 const colors = [
                   "green",
                   "blue",
@@ -98,27 +186,28 @@ export default function Track() {
                   "red",
                 ] as const;
                 return (
-                  <Link key={code} href={`/track/${code}`}>
+                  <Link key={code.id} href={`/track/${code.id}`}>
                     <PopArtContainer color={colors[index]} shadow>
                       <Card className="border-4 border-pop-black hover:scale-105 transition-transform cursor-pointer bg-white aspect-square">
                         <CardContent className="p-4 text-center bg-white h-full flex flex-col justify-center">
                           <QRCodeElement
-                            qrCode={code}
+                            qrCode={code.id}
                             size="md"
                             className="mx-auto mb-4"
                           />
                           <div className="systematic-caps text-lg helvetica-bold">
-                            {code}
+                            {code.id}
                           </div>
                           <div className="text-xs text-pop-gray mt-1">
-                            Click to track
+                            {code.type.toUpperCase()} • Click to track
                           </div>
                         </CardContent>
                       </Card>
                     </PopArtContainer>
                   </Link>
                 );
-              })}
+                })
+              )}
             </div>
           </div>
 
