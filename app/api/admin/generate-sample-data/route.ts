@@ -137,6 +137,20 @@ export async function POST() {
     
     // Generate Bins with QR codes
     const bins: any[] = [];
+    const eventNames = [
+      'Summer Music Festival 2025',
+      'Comic-Con International',
+      'Corporate Holiday Party',
+      'Art Walk Downtown',
+      'Food & Wine Festival',
+      'Tech Conference 2025',
+      'Community Earth Day',
+      'Museum Gala Night',
+      null, // Some bins have no special event
+      null,
+      null
+    ];
+    
     orgs.forEach((org, orgIndex) => {
       const binCount = orgIndex === 0 ? 5 : 4; // PopCycle gets 5 bins, others get 4
       for (let i = 0; i < binCount; i++) {
@@ -147,6 +161,10 @@ export async function POST() {
         const nextCollectionDate = new Date(Date.now() + Math.random() * 7 * 24 * 60 * 60 * 1000);
         
         const binStatuses = ['bin_on_vehicle', 'bin_on_site', 'ready_for_processing'] as const;
+        
+        // Assign random event to some bins (40% chance)
+        const hasEvent = Math.random() > 0.6;
+        const eventName = hasEvent ? eventNames[Math.floor(Math.random() * eventNames.length)] : null;
         
         bins.push({
           _id: qrCode,
@@ -159,6 +177,7 @@ export async function POST() {
           canBeAdopted: true,
           adoptedBy: i === 0 ? 'Education Team' : undefined,
           status: binStatuses[Math.floor(Math.random() * binStatuses.length)],
+          event: eventName, // Add event field for actual events like parties, festivals
           lastCollectionDate,
           nextCollectionDate,
           createdAt: new Date(),
