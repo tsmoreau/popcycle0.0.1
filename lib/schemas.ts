@@ -83,14 +83,6 @@ export interface Blank {
   weight: number; // in kg
   assemblyDate?: Date;
   deliveryDate?: Date;
-  // Maker details for assembled items
-  makerDetails?: {
-    name: string;
-    location: string;
-    story: string;
-    assemblyDate: Date;
-    verifiedEmail: string;
-  };
   createdAt: Date;
   updatedAt: Date;
   

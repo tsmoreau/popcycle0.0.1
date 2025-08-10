@@ -25,7 +25,7 @@ PopCycle is built as a unified Next.js PWA with MongoDB, managing all core opera
 - **Framework**: Next.js API Routes serving as serverless functions for unified business management.
 - **Database**: MongoDB for flexible document storage of all operational data.
 - **API Design**: RESTful API routes support CRM, logistics, user tracking, and QR code tracking.
-- **Data Models**: Key data models include: Org, Bin, Batch, Item, User, Product, and Order (linking operations to financial systems).
+- **Data Models**: Key data models include: Org, Bin, Batch, Blank, User, Product, and Order (linking operations to financial systems).
 - **Core System Architecture**:
     - **Universal QR Code System**: Pure alphanumeric IDs serve as both QR codes and database primary keys with embedded partner branding. Supports three distinct views: Bin tracking, Batch tracking, and Blank tracking. Tracks transformation from waste collection to delivery.
     - **Logistics & Operations Management**: Includes pickup scheduling, route optimization, mobile staff apps, and PWA thin clients at production stations.

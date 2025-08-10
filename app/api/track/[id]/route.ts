@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { MongoClient } from 'mongodb';
 
 // Function to determine collection type from QR code
-function getCollectionType(qrCode: string): 'bin' | 'batch' | 'item' | null {
+function getCollectionType(qrCode: string): 'bin' | 'batch' | 'blank' | null {
   if (qrCode.length < 6) return null;
   
   const typeCode = qrCode.substring(3, 6);
@@ -11,7 +11,7 @@ function getCollectionType(qrCode: string): 'bin' | 'batch' | 'item' | null {
     case 'BIN': return 'bin';
     case 'BAT': return 'batch';
     case 'BLK': 
-    case 'FIN': return 'item';
+    case 'FIN': return 'blank';
     default: return null;
   }
 }
@@ -117,9 +117,9 @@ export async function GET(
         }
       });
       
-    } else if (collectionType === 'item') {
-      // Look up item record
-      record = await db.collection('items').findOne({ _id: id });
+    } else if (collectionType === 'blank') {
+      // Look up blank record
+      record = await db.collection('blanks').findOne({ _id: id });
       if (record) {
         const batch = await db.collection('batches').findOne({ _id: record.batchId });
         if (batch) {
@@ -132,13 +132,19 @@ export async function GET(
       
       if (!record) {
         await client.close();
-        return NextResponse.json({ error: 'Item not found' }, { status: 404 });
+        return NextResponse.json({ error: 'Blank not found' }, { status: 404 });
+      }
+      
+      // Get user details if assigned
+      let userDetails = null;
+      if (record.userId) {
+        userDetails = await db.collection('users').findOne({ _id: record.userId });
       }
       
       await client.close();
       return NextResponse.json({
         id: record._id,
-        type: 'item',
+        type: 'blank',
         batchId: record.batchId,
         productId: record.productId,
         userId: record.userId,
@@ -147,6 +153,13 @@ export async function GET(
         weight: record.weight,
         assemblyDate: record.assemblyDate,
         deliveryDate: record.deliveryDate,
+        makerDetails: userDetails ? {
+          name: userDetails.name,
+          location: userDetails.location || 'Unknown',
+          assemblyDate: record.assemblyDate?.toISOString() || null,
+          story: `Assembled by ${userDetails.name}`,
+          verifiedEmail: userDetails.email
+        } : null,
         organization: org ? {
           name: org.name,
           type: org.type,

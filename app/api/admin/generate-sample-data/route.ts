@@ -33,7 +33,7 @@ export async function POST() {
     const db = client.db('PopCycle');
     
     // Clear existing data
-    const collections = ['orgs', 'bins', 'batches', 'items', 'users', 'products', 'orders'];
+    const collections = ['orgs', 'bins', 'batches', 'blanks', 'users', 'products', 'orders'];
     for (const collName of collections) {
       await db.collection(collName).deleteMany({});
     }
@@ -221,37 +221,7 @@ export async function POST() {
     
     await db.collection('products').insertMany(products);
     
-    // Generate Items with QR codes
-    const items: any[] = [];
-    batches.forEach((batch, batchIndex) => {
-      const orgIndex = orgs.findIndex(org => {
-        const bin = bins.find(b => b._id === batch.binId);
-        return bin && org._id.equals(bin.orgId);
-      });
-      
-      const itemCount = Math.floor(Math.random() * 3) + 2;
-      for (let i = 0; i < itemCount; i++) {
-        const isFinished = Math.random() > 0.3;
-        const qrCode = generateQRCode(orgIndex, 'item');
-        items.push({
-          _id: qrCode,
-          batchId: batch._id,
-          productId: isFinished ? products[Math.floor(Math.random() * products.length)]._id : undefined,
-          userId: isFinished ? undefined : undefined,
-          type: isFinished ? 'finished' as const : 'blank' as const,
-          status: isFinished ? 'assembled' as const : 'blank' as const,
-          weight: Math.round((Math.random() * 0.5 + 0.2) * 100) / 100,
-          assemblyDate: isFinished ? new Date(Date.now() - Math.random() * 14 * 24 * 60 * 60 * 1000) : undefined,
-          deliveryDate: isFinished && Math.random() > 0.5 ? new Date(Date.now() - Math.random() * 7 * 24 * 60 * 60 * 1000) : undefined,
-          createdAt: new Date(),
-          updatedAt: new Date()
-        });
-      }
-    });
-    
-    await db.collection('items').insertMany(items);
-    
-    // Generate Users
+    // Generate Users first (needed for blanks assembly)
     const users = [
       {
         _id: new ObjectId(),
@@ -303,6 +273,36 @@ export async function POST() {
     ];
     
     await db.collection('users').insertMany(users);
+    
+    // Generate Blanks with QR codes
+    const blanks: any[] = [];
+    batches.forEach((batch, batchIndex) => {
+      const orgIndex = orgs.findIndex(org => {
+        const bin = bins.find(b => b._id === batch.binId);
+        return bin && org._id.equals(bin.orgId);
+      });
+      
+      const blankCount = Math.floor(Math.random() * 3) + 2;
+      for (let i = 0; i < blankCount; i++) {
+        const isFinished = Math.random() > 0.3;
+        const qrCode = generateQRCode(orgIndex, 'item');
+        blanks.push({
+          _id: qrCode,
+          batchId: batch._id,
+          productId: isFinished ? products[Math.floor(Math.random() * products.length)]._id : undefined,
+          userId: isFinished ? users[Math.floor(Math.random() * users.length)]._id : undefined,
+          type: isFinished ? 'finished' as const : 'blank' as const,
+          status: isFinished ? 'assembled' as const : 'blank' as const,
+          weight: Math.round((Math.random() * 0.5 + 0.2) * 100) / 100,
+          assemblyDate: isFinished ? new Date(Date.now() - Math.random() * 14 * 24 * 60 * 60 * 1000) : undefined,
+          deliveryDate: isFinished && Math.random() > 0.5 ? new Date(Date.now() - Math.random() * 7 * 24 * 60 * 60 * 1000) : undefined,
+          createdAt: new Date(),
+          updatedAt: new Date()
+        });
+      }
+    });
+    
+    await db.collection('blanks').insertMany(blanks);
     
     // Generate Orders
     const orders = [
@@ -379,7 +379,7 @@ export async function POST() {
     const sampleQRCodes = {
       bins: bins.slice(0, 3).map(b => ({ id: b._id, name: b.name })),
       batches: batches.slice(0, 3).map(b => ({ id: b._id, binId: b.binId })),
-      items: items.slice(0, 3).map(i => ({ id: i._id, batchId: i.batchId }))
+      blanks: blanks.slice(0, 3).map(b => ({ id: b._id, batchId: b.batchId }))
     };
     
     return NextResponse.json({
@@ -389,7 +389,7 @@ export async function POST() {
         organizations: orgs.length,
         bins: bins.length,
         batches: batches.length,
-        items: items.length,
+        blanks: blanks.length,
         users: users.length,
         products: products.length,
         orders: orders.length
