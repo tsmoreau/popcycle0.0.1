@@ -6,20 +6,23 @@ function encodePartnerBase36(partnerId: number): string {
   return partnerId.toString(36).toUpperCase().padStart(3, '0');
 }
 
-// Generate QR code IDs with partner branding and randomized sequences
+// Generate QR code IDs with partner branding and embedded type information
 function generateQRCode(partnerIndex: number, type: 'bin' | 'batch' | 'item'): string {
-  // PopCycle (index 0) gets "000", partners start from "001"
+  // PopCycle (index 0) gets "000", partners start from "001"  
   const partnerHash = partnerIndex === 0 ? '000' : encodePartnerBase36(partnerIndex);
-  const typePrefix = {
-    bin: 'BIN',
-    batch: 'BAT', 
-    item: 'BLK' // "Blank" for items
+  
+  // Embed type in the first character of the sequence (subtle encoding)
+  const typeChar = {
+    bin: 'B',     // Bins start with B
+    batch: 'T',   // Batches start with T  
+    item: 'K'     // Blanks start with K
   }[type];
   
-  // Generate random 6-character Base36 sequence
-  const randomNum = Math.floor(Math.random() * Math.pow(36, 6)); // 0 to 36^6-1
-  const seqStr = randomNum.toString(36).toUpperCase().padStart(6, '0');
-  return `${partnerHash}${typePrefix}${seqStr}`;
+  // Generate random 5-character Base36 sequence for the rest
+  const randomNum = Math.floor(Math.random() * Math.pow(36, 5)); // 0 to 36^5-1
+  const seqStr = randomNum.toString(36).toUpperCase().padStart(5, '0');
+  
+  return `${partnerHash}${typeChar}${seqStr}`;
 }
 
 export async function POST() {

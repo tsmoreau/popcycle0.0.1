@@ -3,15 +3,15 @@ import { MongoClient } from 'mongodb';
 
 // Function to determine collection type from QR code
 function getCollectionType(qrCode: string): 'bin' | 'batch' | 'blank' | null {
-  if (qrCode.length < 6) return null;
+  if (qrCode.length < 4) return null;
   
-  const typeCode = qrCode.substring(3, 6);
+  // Extract type from the 4th character (e.g., "000B12345" -> "B")
+  const typeChar = qrCode.charAt(3);
   
-  switch (typeCode) {
-    case 'BIN': return 'bin';
-    case 'BAT': return 'batch';
-    case 'BLK': 
-    case 'FIN': return 'blank';
+  switch (typeChar) {
+    case 'B': return 'bin';
+    case 'T': return 'batch';
+    case 'K': return 'blank';
     default: return null;
   }
 }
