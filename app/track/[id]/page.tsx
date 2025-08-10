@@ -565,18 +565,12 @@ export default function TrackItem() {
                     </div>
                   </div>
                 )}
-                {isSourceOnly && !isUncollected && (
-                  <div
-                    className={`border-t pt-4 text-center ${isProcessed ? "border-pop-blue" : "border-pop-red"}`}
-                  >
-                    <div
-                      className={`flex items-center justify-center text-sm ${isProcessed ? "text-pop-blue" : "text-pop-red"}`}
-                    >
+                {isSourceOnly && !isUncollected && isProcessed && (
+                  <div className="border-t pt-4 text-center border-pop-blue">
+                    <div className="flex items-center justify-center text-sm text-pop-blue">
                       <Calendar className="w-4 h-4 mr-1" />
                       <span className="systematic-caps">
-                        {isProcessed
-                          ? "Ready for Purchase"
-                          : "Awaiting Processing"}
+                        Ready for Purchase
                       </span>
                     </div>
                   </div>
