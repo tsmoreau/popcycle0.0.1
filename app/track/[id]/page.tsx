@@ -327,7 +327,7 @@ export default function TrackItem() {
         </div>
 
         {/* Status Timeline */}
-        {!isSourceOnly && (
+        {(!isSourceOnly || item.id.startsWith('T')) && (
           <div className="mb-12">
             <div className="flex gap-2 justify-center max-w-2xl mx-auto">
               <div className="text-center flex-1 max-w-[120px]">
