@@ -455,8 +455,8 @@ export default function OperationsPage() {
     }
   }
 
-  // Column definitions updated for MongoDB data structure
-  const collectionsColumns: Column<Bin>[] = [
+  // Complete Bin column definitions with ALL database fields
+  const allBinColumns: Column<Bin>[] = [
     { key: "_id", header: "Bin ID" },
     { key: "name", header: "Bin Name" },
     { key: "location", header: "Location" },
@@ -474,10 +474,55 @@ export default function OperationsPage() {
         </Badge>
       )
     },
-    { key: "capacity", header: "Capacity (kg)" }
+    { key: "capacity", header: "Capacity (kg)" },
+    { key: "orgId", header: "Organization ID" },
+    { key: "eventId", header: "Event ID" },
+    { 
+      key: "isActive", 
+      header: "Active",
+      render: (item) => (
+        <Badge variant={item.isActive ? "default" : "secondary"}>
+          {item.isActive ? "Active" : "Inactive"}
+        </Badge>
+      )
+    },
+    { 
+      key: "canBeAdopted", 
+      header: "Adoptable",
+      render: (item) => (
+        <Badge variant={item.canBeAdopted ? "default" : "secondary"}>
+          {item.canBeAdopted ? "Yes" : "No"}
+        </Badge>
+      )
+    },
+    { key: "adoptedBy", header: "Adopted By" },
+    { 
+      key: "lastCollectionDate", 
+      header: "Last Collection",
+      render: (item) => item.lastCollectionDate ? new Date(item.lastCollectionDate).toLocaleDateString() : 'Never'
+    },
+    { 
+      key: "nextCollectionDate", 
+      header: "Next Collection",
+      render: (item) => item.nextCollectionDate ? new Date(item.nextCollectionDate).toLocaleDateString() : 'Not scheduled'
+    },
+    { 
+      key: "createdAt", 
+      header: "Created",
+      render: (item) => new Date(item.createdAt).toLocaleDateString()
+    },
+    { 
+      key: "updatedAt", 
+      header: "Updated",
+      render: (item) => new Date(item.updatedAt).toLocaleDateString()
+    }
   ];
 
-  const processingColumns: Column<Batch>[] = [
+  // Default visible columns for Bins (current selection)
+  const defaultBinColumns = ["_id", "name", "location", "status", "type", "capacity"];
+
+  // Complete Batch column definitions with ALL database fields
+  const allBatchColumns: Column<Batch>[] = [
     { key: "_id", header: "Batch ID" },
     { 
       key: "binIds", 
@@ -503,10 +548,30 @@ export default function OperationsPage() {
       header: "Status",
       render: (item) => getProcessingStatusBadge(item.status)
     },
-    { key: "collectedBy", header: "Collector" }
+    { key: "collectedBy", header: "Collector" },
+    { 
+      key: "collectionDate", 
+      header: "Collection Date",
+      render: (item) => new Date(item.collectionDate).toLocaleDateString()
+    },
+    { key: "notes", header: "Notes" },
+    { 
+      key: "createdAt", 
+      header: "Created",
+      render: (item) => new Date(item.createdAt).toLocaleDateString()
+    },
+    { 
+      key: "updatedAt", 
+      header: "Updated",
+      render: (item) => new Date(item.updatedAt).toLocaleDateString()
+    }
   ];
 
-  const fulfillmentColumns: Column<Order>[] = [
+  // Default visible columns for Batches (current selection)
+  const defaultBatchColumns = ["_id", "binIds", "weight", "materialType", "status", "collectedBy"];
+
+  // Complete Order column definitions with ALL database fields
+  const allOrderColumns: Column<Order>[] = [
     { key: "_id", header: "Order ID" },
     { key: "orderNumber", header: "Order Number" },
     { key: "type", header: "Order Type" },
@@ -520,8 +585,125 @@ export default function OperationsPage() {
       key: "total", 
       header: "Total",
       render: (item) => `$${item.total?.toFixed(2) || '0.00'}`
+    },
+    { key: "orgId", header: "Organization ID" },
+    { key: "contractReference", header: "Contract Ref" },
+    { 
+      key: "lineItems", 
+      header: "Line Items",
+      render: (item) => Array.isArray(item.lineItems) ? `${item.lineItems.length} items` : '0 items'
+    },
+    { 
+      key: "subtotal", 
+      header: "Subtotal",
+      render: (item) => `$${item.subtotal?.toFixed(2) || '0.00'}`
+    },
+    { 
+      key: "tax", 
+      header: "Tax",
+      render: (item) => `$${item.tax?.toFixed(2) || '0.00'}`
+    },
+    { key: "invoiceId", header: "Invoice ID" },
+    { 
+      key: "orderDate", 
+      header: "Order Date",
+      render: (item) => item.orderDate ? new Date(item.orderDate).toLocaleDateString() : 'Not set'
+    },
+    { 
+      key: "expectedCompletionDate", 
+      header: "Expected Completion",
+      render: (item) => item.expectedCompletionDate ? new Date(item.expectedCompletionDate).toLocaleDateString() : 'Not set'
+    },
+    { 
+      key: "completedDate", 
+      header: "Completed",
+      render: (item) => item.completedDate ? new Date(item.completedDate).toLocaleDateString() : 'Not completed'
+    },
+    { 
+      key: "invoicedDate", 
+      header: "Invoiced",
+      render: (item) => item.invoicedDate ? new Date(item.invoicedDate).toLocaleDateString() : 'Not invoiced'
+    },
+    { 
+      key: "assignedStaff", 
+      header: "Assigned Staff",
+      render: (item) => Array.isArray(item.assignedStaff) ? `${item.assignedStaff.length} staff` : 'Unassigned'
+    },
+    { 
+      key: "createdAt", 
+      header: "Created",
+      render: (item) => new Date(item.createdAt).toLocaleDateString()
+    },
+    { 
+      key: "updatedAt", 
+      header: "Updated",
+      render: (item) => new Date(item.updatedAt).toLocaleDateString()
     }
   ];
+
+  // Default visible columns for Orders (current selection)
+  const defaultOrderColumns = ["_id", "orderNumber", "type", "serviceDescription", "status", "total"];
+
+  // Complete Blank column definitions with ALL database fields
+  const allBlankColumns: Column<Blank>[] = [
+    { key: "_id", header: "Blank ID" },
+    { key: "batchId", header: "Batch ID" },
+    { key: "productId", header: "Product ID" },
+    { key: "userId", header: "User ID" },
+    { 
+      key: "type", 
+      header: "Type",
+      render: (item) => (
+        <Badge variant={item.type === "finished" ? "default" : "secondary"}>
+          {item.type}
+        </Badge>
+      )
+    },
+    { 
+      key: "status", 
+      header: "Status",
+      render: (item) => {
+        const colors = { 
+          blank: "secondary", 
+          assembled: "default", 
+          delivered: "outline" 
+        };
+        return (
+          <Badge variant={colors[item.status as keyof typeof colors] || "secondary"}>
+            {item.status}
+          </Badge>
+        );
+      }
+    },
+    { 
+      key: "weight", 
+      header: "Weight",
+      render: (item) => `${item.weight} kg`
+    },
+    { 
+      key: "assemblyDate", 
+      header: "Assembly Date",
+      render: (item) => item.assemblyDate ? new Date(item.assemblyDate).toLocaleDateString() : 'Not assembled'
+    },
+    { 
+      key: "deliveryDate", 
+      header: "Delivery Date",
+      render: (item) => item.deliveryDate ? new Date(item.deliveryDate).toLocaleDateString() : 'Not delivered'
+    },
+    { 
+      key: "createdAt", 
+      header: "Created",
+      render: (item) => new Date(item.createdAt).toLocaleDateString()
+    },
+    { 
+      key: "updatedAt", 
+      header: "Updated",
+      render: (item) => new Date(item.updatedAt).toLocaleDateString()
+    }
+  ];
+
+  // Default visible columns for Blanks
+  const defaultBlankColumns = ["_id", "batchId", "type", "status", "weight"];
 
   // Modal render functions
   const renderCollectionsModal = (bin: any) => (
@@ -1006,7 +1188,11 @@ export default function OperationsPage() {
               description="Live status overview of all bins assigned for pickup and collected materials awaiting processing"
               icon={<Package className="h-5 w-5 text-pop-green" />}
               data={bins}
-              columns={collectionsColumns}
+              columns={allBinColumns.filter(col => defaultBinColumns.includes(String(col.key)))}
+              availableColumns={allBinColumns}
+              defaultVisibleColumns={defaultBinColumns}
+              enableColumnSelection={true}
+              enableFiltering={true}
               editableFields={binEditableFields}
               onSave={handleBinSave}
               onDelete={handleBinDelete}
@@ -1294,7 +1480,11 @@ export default function OperationsPage() {
               description="Live status overview of all batches in various processing stages"
               icon={<Settings className="h-5 w-5 text-pop-blue" />}
               data={batches}
-              columns={processingColumns}
+              columns={allBatchColumns.filter(col => defaultBatchColumns.includes(String(col.key)))}
+              availableColumns={allBatchColumns}
+              defaultVisibleColumns={defaultBatchColumns}
+              enableColumnSelection={true}
+              enableFiltering={true}
               editableFields={batchEditableFields}
               onSave={handleBatchSave}
               onDelete={handleBatchDelete}
@@ -2023,7 +2213,11 @@ export default function OperationsPage() {
               description="Customer orders and maker assignments with fulfillment status tracking"
               icon={<Users className="h-5 w-5 text-pop-green" />}
               data={orders}
-              columns={fulfillmentColumns}
+              columns={allOrderColumns.filter(col => defaultOrderColumns.includes(String(col.key)))}
+              availableColumns={allOrderColumns}
+              defaultVisibleColumns={defaultOrderColumns}
+              enableColumnSelection={true}
+              enableFiltering={true}
               editableFields={orderEditableFields}
               onSave={handleOrderSave}
               onDelete={handleOrderDelete}
@@ -2540,7 +2734,11 @@ export default function OperationsPage() {
                     description="Live status overview of all bins assigned for pickup and collected materials awaiting processing"
                     icon={<Package className="h-5 w-5 text-pop-green" />}
                     data={bins}
-                    columns={collectionsColumns}
+                    columns={allBinColumns.filter(col => defaultBinColumns.includes(String(col.key)))}
+                    availableColumns={allBinColumns}
+                    defaultVisibleColumns={defaultBinColumns}
+                    enableColumnSelection={true}
+                    enableFiltering={true}
                     editableFields={binEditableFields}
                     onSave={handleBinSave}
                     onDelete={handleBinDelete}
@@ -2560,7 +2758,11 @@ export default function OperationsPage() {
                     description="Active batches moving through sorting, cleaning, and shredding stages"
                     icon={<Settings className="h-5 w-5 text-pop-green" />}
                     data={batches}
-                    columns={processingColumns}
+                    columns={allBatchColumns.filter(col => defaultBatchColumns.includes(String(col.key)))}
+                    availableColumns={allBatchColumns}
+                    defaultVisibleColumns={defaultBatchColumns}
+                    enableColumnSelection={true}
+                    enableFiltering={true}
                     editableFields={batchEditableFields}
                     onSave={handleBatchSave}
                     onDelete={handleBatchDelete}
@@ -2580,7 +2782,11 @@ export default function OperationsPage() {
                     description="Customer orders and maker assignments for item assembly and delivery"
                     icon={<Truck className="h-5 w-5 text-pop-green" />}
                     data={orders}
-                    columns={fulfillmentColumns}
+                    columns={allOrderColumns.filter(col => defaultOrderColumns.includes(String(col.key)))}
+                    availableColumns={allOrderColumns}
+                    defaultVisibleColumns={defaultOrderColumns}
+                    enableColumnSelection={true}
+                    enableFiltering={true}
                     editableFields={orderEditableFields}
                     onSave={handleOrderSave}
                     onDelete={handleOrderDelete}

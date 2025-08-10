@@ -22,7 +22,8 @@ import { Button } from "./button"
 import { Input } from "./input"
 import { Textarea } from "./textarea"
 import { Label } from "./label"
-import { ArrowUpDown, Edit2, Save, X } from "lucide-react"
+import { ArrowUpDown, Edit2, Save, X, Columns, Filter, ChevronDown } from "lucide-react"
+// Note: We'll implement column selection and filtering with basic HTML elements for now
 
 export interface Column<T> {
   key: keyof T | string
@@ -59,6 +60,11 @@ export interface DataTableProps<T> {
   onSort?: (field: string, direction: SortDirection) => void
   // Legacy support for custom modals
   renderModal?: (item: T) => React.ReactNode
+  // Column selection and filtering (optional)
+  availableColumns?: Column<T>[]
+  defaultVisibleColumns?: string[]
+  enableColumnSelection?: boolean
+  enableFiltering?: boolean
 }
 
 type SortDirection = "asc" | "desc"
@@ -76,7 +82,11 @@ export function DataTable<T extends Record<string, any>>({
   sortField: externalSortField,
   sortDirection: externalSortDirection,
   onSort,
-  renderModal
+  renderModal,
+  availableColumns,
+  defaultVisibleColumns,
+  enableColumnSelection = false,
+  enableFiltering = false
 }: DataTableProps<T>) {
   const [internalSortField, setInternalSortField] = useState<string>("")
   const [internalSortDirection, setInternalSortDirection] = useState<SortDirection>("asc")
@@ -85,9 +95,72 @@ export function DataTable<T extends Record<string, any>>({
   const [editFormData, setEditFormData] = useState<Record<string, any>>({})
   const [isSaving, setIsSaving] = useState(false)
   
+  // Column selection state
+  const allColumns = availableColumns || columns
+  const [visibleColumnKeys, setVisibleColumnKeys] = useState<string[]>(() => {
+    if (defaultVisibleColumns) return defaultVisibleColumns
+    return columns.map(col => String(col.key))
+  })
+  
+  // Filtering state
+  const [columnFilters, setColumnFilters] = useState<Record<string, any>>({})
+  
+  // Get visible columns based on selection
+  const visibleColumns = allColumns.filter(col => visibleColumnKeys.includes(String(col.key)))
+  
   // Use external state if provided, otherwise use internal state
   const sortField = externalSortField !== undefined ? externalSortField : internalSortField
   const sortDirection = externalSortDirection !== undefined ? externalSortDirection : internalSortDirection
+  
+  // Apply filters to data
+  const filteredData = data.filter(item => {
+    return Object.entries(columnFilters).every(([columnKey, filterValue]) => {
+      if (!filterValue) return true // No filter applied
+      
+      const itemValue = item[columnKey]
+      if (itemValue == null) return false
+      
+      // Handle different filter types
+      if (typeof filterValue === 'string') {
+        return String(itemValue).toLowerCase().includes(filterValue.toLowerCase())
+      }
+      if (typeof filterValue === 'object' && filterValue.min !== undefined) {
+        // Number range filter
+        const numValue = Number(itemValue)
+        return numValue >= (filterValue.min || -Infinity) && numValue <= (filterValue.max || Infinity)
+      }
+      
+      return String(itemValue).toLowerCase() === String(filterValue).toLowerCase()
+    })
+  })
+  
+  // Handle column selection toggle
+  const toggleColumn = (columnKey: string) => {
+    setVisibleColumnKeys(prev => {
+      const newKeys = prev.includes(columnKey)
+        ? prev.filter(key => key !== columnKey)
+        : [...prev, columnKey]
+      
+      // Persist to localStorage
+      if (enableColumnSelection) {
+        localStorage.setItem(`datatable-columns-${title}`, JSON.stringify(newKeys))
+      }
+      return newKeys
+    })
+  }
+  
+  // Handle filter change
+  const handleFilterChange = (columnKey: string, value: any) => {
+    setColumnFilters(prev => ({
+      ...prev,
+      [columnKey]: value || undefined
+    }))
+  }
+  
+  // Clear all filters
+  const clearAllFilters = () => {
+    setColumnFilters({})
+  }
 
   const handleSort = (field: string) => {
     const newDirection = sortField === field ? (sortDirection === "asc" ? "desc" : "asc") : "asc"
@@ -119,7 +192,7 @@ export function DataTable<T extends Record<string, any>>({
     }
   }
 
-  const sortedData = [...data].sort((a, b) => {
+  const sortedData = [...filteredData].sort((a, b) => {
     if (!sortField) return 0
     
     const aValue = a[sortField]
@@ -374,7 +447,7 @@ export function DataTable<T extends Record<string, any>>({
   const renderViewModal = (item: T) => (
     <div>
       <DialogHeader>
-        <DialogTitle>{getCellValue(item, columns[0])}</DialogTitle>
+        <DialogTitle>{getCellValue(item, visibleColumns[0] || allColumns[0])}</DialogTitle>
         <DialogDescription>
           View details and edit this item.
         </DialogDescription>
@@ -408,22 +481,97 @@ export function DataTable<T extends Record<string, any>>({
     </div>
   )
 
+  // Column selection UI state
+  const [showColumnSelector, setShowColumnSelector] = useState(false)
+  
   return (
     <Card className={className}>
       <CardHeader>
-        <CardTitle className="flex items-center gap-2">
-          {icon}
-          {title}
-        </CardTitle>
-        <CardDescription>{description}</CardDescription>
+        <div className="flex items-center justify-between">
+          <div>
+            <CardTitle className="flex items-center gap-2">
+              {icon}
+              {title}
+            </CardTitle>
+            <CardDescription>{description}</CardDescription>
+          </div>
+          <div className="flex gap-2">
+            {enableFiltering && Object.keys(columnFilters).length > 0 && (
+              <Button 
+                variant="outline" 
+                size="sm" 
+                onClick={clearAllFilters}
+                className="text-xs"
+              >
+                <X className="h-3 w-3 mr-1" />
+                Clear Filters
+              </Button>
+            )}
+            {enableColumnSelection && (
+              <div className="relative">
+                <Button 
+                  variant="outline" 
+                  size="sm" 
+                  onClick={() => setShowColumnSelector(!showColumnSelector)}
+                  className="text-xs"
+                >
+                  <Columns className="h-3 w-3 mr-1" />
+                  Columns ({visibleColumns.length})
+                </Button>
+                {showColumnSelector && (
+                  <div className="absolute right-0 top-full mt-2 bg-white border rounded-lg shadow-lg p-3 w-64 z-10">
+                    <div className="text-sm font-medium mb-2">Select Columns</div>
+                    <div className="space-y-2 max-h-48 overflow-y-auto">
+                      {allColumns.map(column => (
+                        <label key={String(column.key)} className="flex items-center space-x-2 text-sm">
+                          <input
+                            type="checkbox"
+                            checked={visibleColumnKeys.includes(String(column.key))}
+                            onChange={() => toggleColumn(String(column.key))}
+                            className="rounded"
+                          />
+                          <span>{column.header}</span>
+                        </label>
+                      ))}
+                    </div>
+                    <Button 
+                      size="sm" 
+                      variant="outline"
+                      onClick={() => setShowColumnSelector(false)}
+                      className="w-full mt-2 text-xs"
+                    >
+                      Done
+                    </Button>
+                  </div>
+                )}
+              </div>
+            )}
+          </div>
+        </div>
       </CardHeader>
       <CardContent>
         {/* Desktop Table View */}
         <div className="hidden md:block">
           <Table>
             <TableHeader>
+              {/* Filter Row */}
+              {enableFiltering && (
+                <TableRow>
+                  {visibleColumns.map((column) => (
+                    <TableHead key={`filter-${String(column.key)}`} className="p-2">
+                      <Input
+                        placeholder={`Filter ${column.header.toLowerCase()}...`}
+                        value={columnFilters[String(column.key)] || ''}
+                        onChange={(e) => handleFilterChange(String(column.key), e.target.value)}
+                        className="text-xs h-8"
+                      />
+                    </TableHead>
+                  ))}
+                </TableRow>
+              )}
+              {/* Header Row */}
               <TableRow>
-                {columns.map((column) => (
+                {visibleColumns.map((column) => (
                   <TableHead
                     key={String(column.key)}
                     onClick={column.sortable !== false ? () => handleSort(String(column.key)) : undefined}
@@ -440,10 +588,10 @@ export function DataTable<T extends Record<string, any>>({
                 const hasModal = renderModal || editableFields
                 const RowContent = (
                   <TableRow className={hasModal ? "cursor-pointer hover:bg-gray-50" : ""}>
-                    {columns.map((column) => (
+                    {visibleColumns.map((column) => (
                       <TableCell
                         key={String(column.key)}
-                        className={column.key === columns[0].key ? "font-medium" : ""}
+                        className={column.key === visibleColumns[0].key ? "font-medium" : ""}
                       >
                         {getCellValue(item, column)}
                       </TableCell>
@@ -484,7 +632,7 @@ export function DataTable<T extends Record<string, any>>({
               className="border rounded px-3 py-2 text-sm w-48"
             >
               <option value="">Sort by...</option>
-              {columns.filter(col => col.sortable !== false).map((column) => (
+              {visibleColumns.filter(col => col.sortable !== false).map((column) => (
                 <optgroup key={String(column.key)} label={column.header}>
                   <option value={`${String(column.key)}-asc`}>
                     {column.header} (A-Z)
@@ -503,7 +651,7 @@ export function DataTable<T extends Record<string, any>>({
               const CardContent = (
                 <div className={`p-4 border rounded-lg bg-white ${hasModal ? "cursor-pointer hover:bg-gray-50" : ""}`}>
                   <div className="space-y-2">
-                    {columns.map((column, colIndex) => (
+                    {visibleColumns.map((column, colIndex) => (
                       <div key={String(column.key)} className={`flex justify-between items-start ${colIndex === 0 ? "mb-3" : ""}`}>
                         <span className={`text-sm font-medium text-gray-600 ${colIndex === 0 ? "text-base font-semibold text-black" : ""}`}>
                           {colIndex === 0 ? "" : `${column.header}:`}
