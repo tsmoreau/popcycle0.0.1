@@ -201,6 +201,35 @@ export default function TrackItem() {
     }
   };
 
+  const getBatchStatusLabel = (status: string) => {
+    switch (status) {
+      case "collected":
+        return "Collected";
+      case "rough_wash":
+        return "Rough Wash";
+      case "sort":
+        return "Sorting";
+      case "first_dry":
+        return "First Dry";
+      case "shred":
+        return "Shredding";
+      case "fine_wash":
+        return "Fine Wash";
+      case "second_dry":
+        return "Second Dry";
+      case "press":
+        return "Pressing";
+      case "weigh_photo":
+        return "Weigh & Photo";
+      case "laser_marking":
+        return "Laser Marking";
+      case "completed":
+        return "Completed";
+      default:
+        return status;
+    }
+  };
+
   return (
     <div className="min-h-screen py-20">
       <div className="max-w-4xl mx-auto px-4">
@@ -684,7 +713,7 @@ export default function TrackItem() {
                         <div>
                           <div className="systematic-caps text-sm font-semibold">{batch.id}</div>
                           <div className="text-xs text-pop-gray">
-                            {batch.weight}kg • {batch.materialType} • {batch.status}
+                            {batch.weight}kg • {batch.materialType} • {getBatchStatusLabel(batch.status)}
                           </div>
                         </div>
                         <div className="text-xs text-pop-gray">
