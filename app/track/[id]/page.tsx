@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
+import Link from "next/link";
 import {
   Card,
   CardContent,
@@ -709,17 +710,21 @@ export default function TrackItem() {
                 <CardContent className="py-6">
                   <div className="space-y-3">
                     {batches.map((batch, index) => (
-                      <div key={batch.id} className="flex justify-between items-center p-3 border border-pop-gray rounded">
-                        <div>
-                          <div className="systematic-caps text-sm font-semibold">{batch.id}</div>
+                      <Link key={batch.id} href={`/track/${batch.id}`} className="block">
+                        <div className="flex justify-between items-center p-3 border border-pop-gray rounded hover:border-pop-green hover:bg-pop-green hover:bg-opacity-5 transition-colors cursor-pointer">
+                          <div>
+                            <div className="systematic-caps text-sm font-semibold text-pop-green hover:text-pop-black">
+                              {batch.id}
+                            </div>
+                            <div className="text-xs text-pop-gray">
+                              {batch.weight}kg • {batch.materialType} • {getBatchStatusLabel(batch.status)}
+                            </div>
+                          </div>
                           <div className="text-xs text-pop-gray">
-                            {batch.weight}kg • {batch.materialType} • {getBatchStatusLabel(batch.status)}
+                            {new Date(batch.collectionDate).toLocaleDateString()}
                           </div>
                         </div>
-                        <div className="text-xs text-pop-gray">
-                          {new Date(batch.collectionDate).toLocaleDateString()}
-                        </div>
-                      </div>
+                      </Link>
                     ))}
                   </div>
                 </CardContent>
