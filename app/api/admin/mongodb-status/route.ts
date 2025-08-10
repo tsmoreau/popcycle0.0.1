@@ -13,7 +13,10 @@ export async function GET() {
       })
     }
 
-    const client = new MongoClient(uri)
+    const client = new MongoClient(uri, {
+      connectTimeoutMS: 10000,
+      socketTimeoutMS: 10000,
+    })
     
     try {
       // Test connection with timeout
@@ -39,7 +42,22 @@ export async function GET() {
         collections = await db.listCollections().toArray()
       } catch (error) {
         listCollectionsError = error instanceof Error ? error.message : 'Unknown error'
-        collections = []
+        
+        // Try alternative approach - check known collections
+        const knownCollections = ['users', 'orgs', 'bins', 'batches', 'items', 'products']
+        const existingCollections = []
+        
+        for (const collName of knownCollections) {
+          try {
+            const collection = db.collection(collName)
+            const count = await collection.estimatedDocumentCount()
+            existingCollections.push({ name: collName, count })
+          } catch (err) {
+            // Collection doesn't exist or no access
+          }
+        }
+        
+        collections = existingCollections
       }
       
       await client.close()
