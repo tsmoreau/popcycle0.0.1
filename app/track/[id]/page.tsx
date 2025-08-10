@@ -351,8 +351,8 @@ export default function TrackItem() {
               </p>
             </div>
 
-            {/* Step 2: Processing/Processed - only show for collected items */}
-            {!isUncollected && (
+            {/* Step 2: Processing/Processed - only show for collected batches and blanks, NOT bins */}
+            {!isUncollected && !item.id.startsWith('B') && (
               <div className="text-center flex-1 max-w-[120px]">
                 <div className="w-16 h-16 mx-auto mb-4 border-2 border-pop-black flex items-center justify-center bg-pop-blue">
                   <CheckCircle className="w-8 h-8 text-pop-black" />
