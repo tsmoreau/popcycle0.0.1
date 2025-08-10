@@ -63,6 +63,7 @@ export async function GET(
         location: record.location,
         capacity: record.capacity,
         isActive: record.isActive,
+        status: record.status,
         canBeAdopted: record.canBeAdopted,
         adoptedBy: record.adoptedBy,
         lastCollectionDate: record.lastCollectionDate,

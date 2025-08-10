@@ -90,6 +90,8 @@ export default function TrackItem() {
           makerDetails: data.makerDetails,
           transactionDate: data.transactionDate || '',
           deliveredDate: data.deliveryDate || '',
+          // Store bin status for display
+          event: data.type === 'bin' ? data.status : data.event,
           // Proper ID hierarchy mapping
           binId: data.type === 'batch' ? data.binId : (data.type === 'blank' ? data.binId : undefined),
           batchId: data.type === 'blank' ? data.batchId : undefined,
@@ -169,6 +171,19 @@ export default function TrackItem() {
         return "Dinnerware";
       default:
         return type;
+    }
+  };
+
+  const getBinStatusLabel = (status: string) => {
+    switch (status) {
+      case "bin_on_vehicle":
+        return "On Vehicle";
+      case "bin_on_site":
+        return "On Site";
+      case "ready_for_processing":
+        return "Ready for Processing";
+      default:
+        return "Awaiting Collection";
     }
   };
 
@@ -383,7 +398,7 @@ export default function TrackItem() {
                     <span className="systematic-caps text-sm">Status</span>
                     <span className="flex items-center text-pop-gray">
                       <Package className="w-4 h-4 mr-1" strokeWidth={1.5} />
-                      Awaiting Collection
+                      {item.event ? getBinStatusLabel(item.event) : "Awaiting Collection"}
                     </span>
                   </div>
                 )}
