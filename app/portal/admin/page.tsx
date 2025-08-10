@@ -46,6 +46,7 @@ export default function AdminPage() {
   const [showMongoDBOperations, setShowMongoDBOperations] = useState(false)
   const [mongoStatus, setMongoStatus] = useState<MongoDBStatus | null>(null)
   const [loadingMongo, setLoadingMongo] = useState(true)
+  const [generatingData, setGeneratingData] = useState(false)
 
   // Fetch MongoDB status on component mount
   useEffect(() => {
@@ -66,6 +67,28 @@ export default function AdminPage() {
       })
     } finally {
       setLoadingMongo(false)
+    }
+  }
+
+  const generateSampleData = async () => {
+    try {
+      setGeneratingData(true)
+      const response = await fetch('/api/admin/generate-sample-data', {
+        method: 'POST'
+      })
+      const data = await response.json()
+      
+      if (data.success) {
+        alert(`Sample data generated successfully!\n\nSummary:\n- ${data.summary.organizations} Organizations\n- ${data.summary.bins} Bins\n- ${data.summary.batches} Batches\n- ${data.summary.items} Items\n- ${data.summary.users} Users\n- ${data.summary.products} Products\n- ${data.summary.orders} Orders`)
+        // Refresh MongoDB status to show new collection count
+        await fetchMongoStatus()
+      } else {
+        alert(`Failed to generate sample data: ${data.error}`)
+      }
+    } catch (error) {
+      alert(`Error generating sample data: ${error}`)
+    } finally {
+      setGeneratingData(false)
     }
   }
 
@@ -463,7 +486,14 @@ export default function AdminPage() {
                   >
                     {loadingMongo ? 'Testing...' : 'Test Connection'}
                   </Button>
-                  <Button variant="outline" className="w-full">Initialize Sample Data</Button>
+                  <Button 
+                    variant="outline" 
+                    className="w-full"
+                    onClick={generateSampleData}
+                    disabled={generatingData}
+                  >
+                    {generatingData ? 'Generating...' : 'Initialize Sample Data'}
+                  </Button>
                   <Button variant="outline" className="w-full">View Collection Stats</Button>
                   <Button variant="outline" className="w-full text-pop-red">Reset Development Data</Button>
                 </div>
