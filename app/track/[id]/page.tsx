@@ -95,7 +95,7 @@ export default function TrackItem() {
         const mappedItem: PlasticItem = {
           id: data.id,
           originPoint: data.organization?.name || "Unknown Origin",
-          collectionDate: data.type === 'bin' ? null : (data.collectionDate || '2024-01-15'),
+          collectionDate: data.type === 'bin' ? data.lastCollectionDate : (data.collectionDate || '2024-01-15'),
           materialType: data.materialType || "Mixed Plastic",
           weight: data.weight || 0.5,
           processedDate: data.type === 'blank' ? '2024-02-01' : (data.processedDate || ''),
