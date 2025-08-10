@@ -1,16 +1,19 @@
 import { NextResponse } from 'next/server';
 import { MongoClient } from 'mongodb';
 
-const MONGODB_URI = process.env.MONGODB_URI!;
-
 export async function GET(request: Request) {
   try {
     const url = new URL(request.url);
     const type = url.searchParams.get('type');
 
-    const client = new MongoClient(MONGODB_URI);
+    const uri = process.env.MONGODB_URI;
+    if (!uri) {
+      return NextResponse.json({ success: false, error: 'MONGODB_URI not configured' }, { status: 500 });
+    }
+
+    const client = new MongoClient(uri);
     await client.connect();
-    const db = client.db('popcycle');
+    const db = client.db('PopCycle');
 
     let items: any[] = [];
 
