@@ -16,7 +16,7 @@ import { useState, useEffect } from "react";
 interface SampleQRCodes {
   bins: Array<{ id: string; name: string }>;
   batches: Array<{ id: string; binId: string }>;
-  blanks: Array<{ id: string; batchId: string }>;
+  blanks: Array<{ id: string; batchId: string; userId?: string }>;
 }
 
 export default function Track() {
@@ -64,20 +64,25 @@ export default function Track() {
     let codes: Array<{ id: string; type: string; name?: string }> = [];
     
     switch (selectedFilter) {
-      case "BINS":
-        codes = sampleCodes.bins.map(bin => ({ id: bin.id, type: "bin", name: bin.name }));
+      case "COLLECTED BATCHES":
+        codes = sampleCodes.batches.map(batch => ({ id: batch.id, type: "collected batch" }));
         break;
-      case "BATCHES":
-        codes = sampleCodes.batches.map(batch => ({ id: batch.id, type: "batch" }));
+      case "PRESSED BLANKS":
+        codes = sampleCodes.blanks.map(blank => ({ id: blank.id, type: "pressed blank" }));
         break;
-      case "BLANKS":
-        codes = sampleCodes.blanks.map(blank => ({ id: blank.id, type: "blank" }));
+      case "MANUFACTURED ITEMS":
+        // Filter blanks that have been manufactured (have userIds)
+        codes = sampleCodes.blanks.filter(blank => blank.userId).map(blank => ({ id: blank.id, type: "manufactured item" }));
+        break;
+      case "ASSEMBLED ITEMS":
+        // Filter blanks that have been assembled (have userIds)
+        codes = sampleCodes.blanks.filter(blank => blank.userId).map(blank => ({ id: blank.id, type: "assembled item" }));
         break;
       default: // "ALL"
         codes = [
-          ...sampleCodes.bins.map(bin => ({ id: bin.id, type: "bin", name: bin.name })),
-          ...sampleCodes.batches.map(batch => ({ id: batch.id, type: "batch" })),
-          ...sampleCodes.blanks.map(blank => ({ id: blank.id, type: "blank" }))
+          ...sampleCodes.bins.map(bin => ({ id: bin.id, type: "collection bin", name: bin.name })),
+          ...sampleCodes.batches.map(batch => ({ id: batch.id, type: "collected batch" })),
+          ...sampleCodes.blanks.map(blank => ({ id: blank.id, type: blank.userId ? "assembled item" : "pressed blank" }))
         ];
     }
 
@@ -149,9 +154,10 @@ export default function Track() {
             <div className="flex flex-wrap gap-4 justify-center">
               {[
                 "ALL",
-                "BINS",
-                "BATCHES", 
-                "BLANKS",
+                "COLLECTED BATCHES",
+                "PRESSED BLANKS",
+                "MANUFACTURED ITEMS",
+                "ASSEMBLED ITEMS",
               ].map((category) => (
                 <button
                   key={category}

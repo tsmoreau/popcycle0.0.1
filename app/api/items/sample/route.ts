@@ -22,7 +22,7 @@ export async function GET(request: Request) {
       items = items.map(batch => ({ id: batch._id, binId: batch.binId }));
     } else if (type === 'blanks') {
       items = await db.collection('blanks').find({}).limit(20).toArray();
-      items = items.map(blank => ({ id: blank._id, batchId: blank.batchId }));
+      items = items.map(blank => ({ id: blank._id, batchId: blank.batchId, userId: blank.userId }));
     } else {
       // Return all types
       const [bins, batches, blanks] = await Promise.all([
@@ -34,7 +34,7 @@ export async function GET(request: Request) {
       items = {
         bins: bins.map(bin => ({ id: bin._id, name: bin.name })),
         batches: batches.map(batch => ({ id: batch._id, binId: batch.binId })),
-        blanks: blanks.map(blank => ({ id: blank._id, batchId: blank.batchId }))
+        blanks: blanks.map(blank => ({ id: blank._id, batchId: blank.batchId, userId: blank.userId }))
       };
     }
 
