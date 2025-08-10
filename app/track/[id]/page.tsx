@@ -98,6 +98,7 @@ export default function TrackItem() {
           event: data.type === 'bin' ? data.status : (data.type === 'batch' ? data.status : data.event),
           // Proper ID hierarchy mapping
           binId: data.type === 'batch' ? data.binId : (data.type === 'blank' ? data.binId : undefined),
+          binIds: data.type === 'batch' ? data.binIds : undefined,
           batchId: data.type === 'blank' ? data.batchId : undefined,
           blankId: data.type === 'blank' ? data.id : undefined
         };
@@ -117,7 +118,7 @@ export default function TrackItem() {
           }
         }
         
-        // If this is a batch, fetch associated blanks and source bin
+        // If this is a batch, fetch associated blanks and source bins
         if (data.type === 'batch') {
           try {
             // Fetch blanks produced from this batch
@@ -127,12 +128,14 @@ export default function TrackItem() {
               setBlanks(blankData.items || []);
             }
             
-            // Fetch source bin information
-            if (data.binId) {
-              const binResponse = await fetch(`/api/track/${data.binId}`);
+            // Fetch source bin information - handle both single and multiple bins
+            const binIds = data.binIds || (data.binId ? [data.binId] : []);
+            if (binIds.length > 0) {
+              // For now, just fetch the first bin for sourceBin compatibility
+              const binResponse = await fetch(`/api/track/${binIds[0]}`);
               if (binResponse.ok) {
                 const binData = await binResponse.json();
-                setSourceBin(binData);
+                setSourceBin({...binData, allBinIds: binIds});
               }
             }
           } catch (relatedErr) {
@@ -413,19 +416,31 @@ export default function TrackItem() {
                     <span className="systematic-caps text-sm">Main ID</span>
                     <span className="font-mono">{item.id}</span>
                   </div>
-                  {(item.binId || sourceBin) && (
+                  {(item.binIds || item.binId || sourceBin) && (
                     <div className="flex justify-between">
                       <span className="systematic-caps text-sm">Bin IDs</span>
                       <div className="space-y-1 text-right">
-                        {item.binId && (
-                          <Link href={`/track/${item.binId}`} className="block font-mono text-pop-green hover:text-pop-black hover:underline">
-                            {item.binId}
-                          </Link>
-                        )}
-                        {sourceBin && sourceBin.id !== item.binId && (
-                          <Link href={`/track/${sourceBin.id}`} className="block font-mono text-pop-green hover:text-pop-black hover:underline">
-                            {sourceBin.id}
-                          </Link>
+                        {item.binIds ? (
+                          // Show multiple bin IDs from the array
+                          item.binIds.map((binId: string) => (
+                            <Link key={binId} href={`/track/${binId}`} className="block font-mono text-pop-green hover:text-pop-black hover:underline">
+                              {binId}
+                            </Link>
+                          ))
+                        ) : (
+                          // Fallback to single bin ID
+                          <>
+                            {item.binId && (
+                              <Link href={`/track/${item.binId}`} className="block font-mono text-pop-green hover:text-pop-black hover:underline">
+                                {item.binId}
+                              </Link>
+                            )}
+                            {sourceBin && sourceBin.id !== item.binId && (
+                              <Link href={`/track/${sourceBin.id}`} className="block font-mono text-pop-green hover:text-pop-black hover:underline">
+                                {sourceBin.id}
+                              </Link>
+                            )}
+                          </>
                         )}
                       </div>
                     </div>

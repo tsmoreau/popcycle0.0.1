@@ -101,6 +101,7 @@ export async function GET(
         id: record._id,
         type: 'batch',
         binId: record.binId,
+        binIds: record.binIds || [record.binId], // Support both old and new format
         collectionDate: record.collectionDate,
         weight: record.weight,
         materialType: record.materialType,

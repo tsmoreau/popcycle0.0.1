@@ -169,31 +169,50 @@ export async function POST() {
     
     await db.collection('bins').insertMany(bins);
     
-    // Generate Batches with QR codes
+    // Generate Batches with QR codes (each batch combines multiple bins)
     const batches: any[] = [];
-    bins.forEach((bin, binIndex) => {
-      const batchCount = binIndex % 2 === 0 ? 2 : 1;
-      for (let i = 0; i < batchCount; i++) {
-        const orgIndex = orgs.findIndex(org => org._id.equals(bin.orgId));
-        const materialTypes = ['HDPE', 'PET', 'PP', 'mixed'] as const;
-        const statuses = ['collected', 'rough_wash', 'sort', 'first_dry', 'shred', 'fine_wash', 'second_dry', 'press', 'weigh_photo', 'laser_marking', 'completed'] as const;
-        const collectors = ['John Smith', 'Maria Garcia', 'David Chen'];
-        
-        const qrCode = generateQRCode(orgIndex, 'batch');
-        batches.push({
-          _id: qrCode,
-          binId: bin._id,
-          collectionDate: new Date(Date.now() - Math.random() * 30 * 24 * 60 * 60 * 1000),
-          weight: Math.round((Math.random() * 20 + 5) * 10) / 10,
-          materialType: materialTypes[Math.floor(Math.random() * materialTypes.length)],
-          collectedBy: collectors[Math.floor(Math.random() * collectors.length)],
-          status: statuses[Math.floor(Math.random() * statuses.length)],
-          notes: i === 0 ? 'High quality plastic, minimal contamination' : undefined,
-          createdAt: new Date(),
-          updatedAt: new Date()
-        });
+    const usedBinIds = new Set();
+    const materialTypes = ['HDPE', 'PET', 'PP', 'mixed'] as const;
+    const statuses = ['collected', 'rough_wash', 'sort', 'first_dry', 'shred', 'fine_wash', 'second_dry', 'press', 'weigh_photo', 'laser_marking', 'completed'] as const;
+    const collectors = ['John Smith', 'Maria Garcia', 'David Chen'];
+    
+    // Create batches that combine 2-4 bins each
+    const batchCount = 8; // Create 8 batches total
+    for (let batchIndex = 0; batchIndex < batchCount; batchIndex++) {
+      const availableBins = bins.filter(bin => !usedBinIds.has(bin._id));
+      if (availableBins.length === 0) break; // No more bins available
+      
+      // Select 2-4 random bins for this batch
+      const binsPerBatch = Math.min(Math.floor(Math.random() * 3) + 2, availableBins.length);
+      const selectedBins = [];
+      for (let i = 0; i < binsPerBatch; i++) {
+        const randomIndex = Math.floor(Math.random() * availableBins.length);
+        const selectedBin = availableBins.splice(randomIndex, 1)[0];
+        selectedBins.push(selectedBin);
+        usedBinIds.add(selectedBin._id);
       }
-    });
+      
+      // Use the first bin's org for QR code generation
+      const orgIndex = orgs.findIndex(org => org._id.equals(selectedBins[0].orgId));
+      const qrCode = generateQRCode(orgIndex, 'batch');
+      
+      // Calculate total weight from all bins
+      const totalWeight = selectedBins.reduce((sum, bin) => sum + (Math.random() * 15 + 3), 0);
+      
+      batches.push({
+        _id: qrCode,
+        binIds: selectedBins.map(bin => bin._id), // Array of bin IDs
+        binId: selectedBins[0]._id, // Keep for backward compatibility
+        collectionDate: new Date(Date.now() - Math.random() * 30 * 24 * 60 * 60 * 1000),
+        weight: Math.round(totalWeight * 10) / 10,
+        materialType: materialTypes[Math.floor(Math.random() * materialTypes.length)],
+        collectedBy: collectors[Math.floor(Math.random() * collectors.length)],
+        status: statuses[Math.floor(Math.random() * statuses.length)],
+        notes: batchIndex === 0 ? 'High quality plastic from multiple collection points' : undefined,
+        createdAt: new Date(),
+        updatedAt: new Date()
+      });
+    }
     
     await db.collection('batches').insertMany(batches);
     
