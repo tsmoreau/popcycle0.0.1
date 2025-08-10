@@ -330,6 +330,7 @@ export default function TrackItem() {
         {!isUncollected && (
           <div className="mb-12">
             <div className="flex gap-2 justify-center max-w-2xl mx-auto">
+              {/* Step 1: Collected */}
               <div className="text-center flex-1 max-w-[120px]">
                 <div className="w-16 h-16 mx-auto mb-4 border-2 border-pop-black flex items-center justify-center bg-pop-green">
                   <CheckCircle className="w-8 h-8 text-pop-black" />
@@ -338,6 +339,7 @@ export default function TrackItem() {
                 <p className="text-xs text-pop-gray truncate">{item.collectionDate}</p>
               </div>
 
+              {/* Step 2: Processing/Processed */}
               <div className="text-center flex-1 max-w-[120px]">
                 <div className="w-16 h-16 mx-auto mb-4 border-2 border-pop-black flex items-center justify-center bg-pop-blue">
                   <CheckCircle className="w-8 h-8 text-pop-black" />
@@ -350,33 +352,43 @@ export default function TrackItem() {
                 </p>
               </div>
 
-              {item.transactionDate && (
-                <div className="text-center flex-1 max-w-[120px]">
-                  <div className="w-16 h-16 mx-auto mb-4 border-2 border-pop-black flex items-center justify-center bg-pop-red">
-                    {isCharity ? (
+              {/* Step 3: Purchased/Donated */}
+              <div className="text-center flex-1 max-w-[120px]">
+                <div className={`w-16 h-16 mx-auto mb-4 border-2 border-pop-black flex items-center justify-center ${item.productId ? 'bg-pop-red' : 'bg-white'}`}>
+                  {item.productId ? (
+                    isCharity ? (
                       <HeartHandshake className="w-8 h-8 text-pop-black" />
                     ) : (
                       <CheckCircle className="w-8 h-8 text-pop-black" />
-                    )}
-                  </div>
-                  <h3 className="systematic-caps text-sm mb-1">
-                    {isCharity ? "Donated" : "Purchased"}
-                  </h3>
-                  <p className="text-xs text-pop-gray truncate">{item.transactionDate}</p>
+                    )
+                  ) : (
+                    <Package className="w-8 h-8 text-pop-gray" strokeWidth={1.5} />
+                  )}
                 </div>
-              )}
+                <h3 className="systematic-caps text-sm mb-1">
+                  {item.productId ? (isCharity ? "Donated" : "Purchased") : "Purchase"}
+                </h3>
+                <p className="text-xs text-pop-gray truncate">
+                  {item.transactionDate || "Pending"}
+                </p>
+              </div>
 
-              {hasMaker && (
-                <div className="text-center flex-1 max-w-[120px]">
-                  <div className="w-16 h-16 mx-auto mb-4 border-2 border-pop-black flex items-center justify-center bg-pop-red">
+              {/* Step 4: Assembled */}
+              <div className="text-center flex-1 max-w-[120px]">
+                <div className={`w-16 h-16 mx-auto mb-4 border-2 border-pop-black flex items-center justify-center ${item.userId ? 'bg-pop-red' : 'bg-white'}`}>
+                  {item.userId ? (
                     <CheckCircle className="w-8 h-8 text-pop-black" />
-                  </div>
-                  <h3 className="systematic-caps text-sm mb-1">Assembled</h3>
-                  <p className="text-xs text-pop-gray truncate">
-                    {item.makerDetails?.assemblyDate}
-                  </p>
+                  ) : (
+                    <Wrench className="w-8 h-8 text-pop-gray" strokeWidth={1.5} />
+                  )}
                 </div>
-              )}
+                <h3 className="systematic-caps text-sm mb-1">
+                  {item.userId ? "Assembled" : "Assembly"}
+                </h3>
+                <p className="text-xs text-pop-gray truncate">
+                  {item.makerDetails?.assemblyDate || "Pending"}
+                </p>
+              </div>
             </div>
             
             {/* Status text below timeline */}
