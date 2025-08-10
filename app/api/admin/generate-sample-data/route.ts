@@ -72,20 +72,20 @@ export async function POST() {
       },
       {
         _id: new ObjectId(),
-        name: 'Museum of Science Boston',
-        slug: 'museumofscience',
+        name: 'LA Plaza de Cultura y Artes',
+        slug: 'laplaza',
         type: 'educational' as const,
-        description: 'Leading science museum with sustainability programs',
+        description: 'Cultural center dedicated to Mexican and Mexican American culture',
         contactInfo: {
-          email: 'sustainability@mos.org',
-          phone: '(617) 723-2500',
-          address: '1 Science Park, Boston, MA 02114',
-          website: 'https://www.mos.org'
+          email: 'sustainability@lapca.org',
+          phone: '(213) 542-6200',
+          address: '501 N Main St, Los Angeles, CA 90012',
+          website: 'https://www.lapca.org'
         },
         branding: {
-          primaryColor: '#0066CC',
-          secondaryColor: '#FF9900',
-          trackingPageMessage: 'Your Museum of Science visit helped create educational materials from recycled plastic!'
+          primaryColor: '#D2691E',
+          secondaryColor: '#8B4513',
+          trackingPageMessage: 'Your La Plaza visit helped transform plastic waste into educational resources celebrating our culture!'
         },
         events: [],
         createdAt: new Date(),
@@ -347,7 +347,7 @@ export async function POST() {
         orgId: orgs[1]._id,
         type: 'product_delivery' as const,
         status: 'in_progress' as const,
-        serviceDescription: 'Custom educational kit delivery for Museum of Science Boston',
+        serviceDescription: 'Custom educational kit delivery for LA Plaza de Cultura y Artes',
         lineItems: [
           {
             itemType: 'product' as const,
