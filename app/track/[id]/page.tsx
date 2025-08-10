@@ -283,7 +283,7 @@ export default function TrackItem() {
       case "laser_marking":
         return <Badge className="bg-pop-red text-white">Laser Marking</Badge>;
       case "inventory_creation":
-        return <Badge className="bg-green-600 text-white">Inventory Creation</Badge>;
+        return <Badge className="bg-pop-black text-white">Inventory Creation</Badge>;
       default:
         return <Badge variant="outline">{status}</Badge>;
     }
