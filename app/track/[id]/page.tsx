@@ -345,9 +345,14 @@ export default function TrackItem() {
                 <h3 className="systematic-caps text-sm mb-1">
                   {item.id.startsWith('T') ? (item.event === 'inventory_creation' ? 'Processed' : 'Processing') : 'Processed'}
                 </h3>
-                <p className="text-xs text-pop-gray truncate">
-                  {item.id.startsWith('T') ? getBatchStatusLabel(item.event || 'collected') : item.processedDate}
-                </p>
+                <div className="flex justify-center mb-1">
+                  {item.id.startsWith('T') ? getProcessingStatusBadge(item.event || 'collected') : (
+                    <p className="text-xs text-pop-gray truncate">{item.processedDate}</p>
+                  )}
+                </div>
+                {item.id.startsWith('T') && item.event === 'inventory_creation' && (
+                  <p className="text-xs text-pop-blue systematic-caps">Ready for Purchase</p>
+                )}
               </div>
 
               <div className="text-center flex-1 max-w-[120px]">
