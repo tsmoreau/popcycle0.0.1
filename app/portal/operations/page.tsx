@@ -894,7 +894,7 @@ export default function OperationsPage() {
       <Dialog open={isLogisticsFullscreen} onOpenChange={setIsLogisticsFullscreen}>
         <DialogContent className="max-w-none w-screen h-screen m-0 p-0 bg-gray-50">
           <div className="flex flex-col h-full">
-            <div className="flex items-center justify-between p-6 bg-white border-b">
+            <div className="flex items-center justify-between p-6 bg-white border-b flex-shrink-0">
               <h2 className="text-2xl font-bold text-pop-black">Logistics Management</h2>
               <Button
                 variant="outline"
@@ -906,7 +906,8 @@ export default function OperationsPage() {
               </Button>
             </div>
             
-            <div className="flex-1 overflow-auto p-6">
+            <div className="flex-1 overflow-y-auto min-h-0">
+              <div className="p-6">
               <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full h-full">
                 <div className="flex items-center justify-between mb-6">
                   <TabsList className="relative z-10 p-0 bg-transparent h-auto gap-0 flex-nowrap overflow-visible">
@@ -991,6 +992,7 @@ export default function OperationsPage() {
                   />
                 </TabsContent>
               </Tabs>
+              </div>
             </div>
           </div>
         </DialogContent>
