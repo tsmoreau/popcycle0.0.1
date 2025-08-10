@@ -14,9 +14,9 @@ import Link from "next/link";
 import { useState, useEffect } from "react";
 
 interface SampleQRCodes {
-  bins: Array<{ id: string; name: string }>;
-  batches: Array<{ id: string; binId: string }>;
-  blanks: Array<{ id: string; batchId: string; userId?: string }>;
+  bins: Array<{ id: string; name: string; isActive: boolean }>;
+  batches: Array<{ id: string; binId: string; status: string }>;
+  blanks: Array<{ id: string; batchId: string; status: string; userId?: string }>;
 }
 
 export default function Track() {
@@ -65,27 +65,27 @@ export default function Track() {
     
     switch (selectedFilter) {
       case "ACTIVE BINS":
-        codes = sampleCodes.bins.map(bin => ({ id: bin.id, type: "active bin", name: bin.name }));
+        codes = sampleCodes.bins.filter(bin => bin.isActive).map(bin => ({ id: bin.id, type: "active bin", name: bin.name }));
         break;
       case "COLLECTED BATCHES":
-        codes = sampleCodes.batches.map(batch => ({ id: batch.id, type: "collected batch" }));
+        codes = sampleCodes.batches.filter(batch => batch.status === 'collected').map(batch => ({ id: batch.id, type: "collected batch" }));
         break;
       case "PRESSED BLANKS":
-        codes = sampleCodes.blanks.map(blank => ({ id: blank.id, type: "pressed blank" }));
+        codes = sampleCodes.blanks.filter(blank => blank.status === 'blank').map(blank => ({ id: blank.id, type: "pressed blank" }));
         break;
       case "MANUFACTURED ITEMS":
-        // Filter blanks that have been manufactured (have userIds)
-        codes = sampleCodes.blanks.filter(blank => blank.userId).map(blank => ({ id: blank.id, type: "manufactured item" }));
+        // Filter blanks that have been processed but not yet assembled
+        codes = sampleCodes.blanks.filter(blank => blank.status === 'blank' && blank.userId).map(blank => ({ id: blank.id, type: "manufactured item" }));
         break;
       case "ASSEMBLED ITEMS":
-        // Filter blanks that have been assembled (have userIds)
-        codes = sampleCodes.blanks.filter(blank => blank.userId).map(blank => ({ id: blank.id, type: "assembled item" }));
+        // Filter blanks that have been assembled
+        codes = sampleCodes.blanks.filter(blank => blank.status === 'assembled').map(blank => ({ id: blank.id, type: "assembled item" }));
         break;
       default: // "ALL"
         codes = [
-          ...sampleCodes.bins.map(bin => ({ id: bin.id, type: "collection bin", name: bin.name })),
-          ...sampleCodes.batches.map(batch => ({ id: batch.id, type: "collected batch" })),
-          ...sampleCodes.blanks.map(blank => ({ id: blank.id, type: blank.userId ? "assembled item" : "pressed blank" }))
+          ...sampleCodes.bins.filter(bin => bin.isActive).map(bin => ({ id: bin.id, type: "active bin", name: bin.name })),
+          ...sampleCodes.batches.map(batch => ({ id: batch.id, type: `${batch.status} batch` })),
+          ...sampleCodes.blanks.map(blank => ({ id: blank.id, type: `${blank.status} item` }))
         ];
     }
 
