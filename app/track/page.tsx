@@ -64,6 +64,9 @@ export default function Track() {
     let codes: Array<{ id: string; type: string; name?: string }> = [];
     
     switch (selectedFilter) {
+      case "ACTIVE BINS":
+        codes = sampleCodes.bins.map(bin => ({ id: bin.id, type: "active bin", name: bin.name }));
+        break;
       case "COLLECTED BATCHES":
         codes = sampleCodes.batches.map(batch => ({ id: batch.id, type: "collected batch" }));
         break;
@@ -154,6 +157,7 @@ export default function Track() {
             <div className="flex flex-wrap gap-4 justify-center">
               {[
                 "ALL",
+                "ACTIVE BINS",
                 "COLLECTED BATCHES",
                 "PRESSED BLANKS",
                 "MANUFACTURED ITEMS",
