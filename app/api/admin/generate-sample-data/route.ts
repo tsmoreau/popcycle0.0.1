@@ -138,7 +138,7 @@ export async function POST() {
     // Generate Bins with QR codes
     const bins: any[] = [];
     orgs.forEach((org, orgIndex) => {
-      const binCount = orgIndex === 0 ? 3 : 2; // PopCycle gets 3 bins, others get 2
+      const binCount = orgIndex === 0 ? 5 : 4; // PopCycle gets 5 bins, others get 4
       for (let i = 0; i < binCount; i++) {
         const qrCode = generateQRCode(orgIndex, 'bin');
         
@@ -177,13 +177,13 @@ export async function POST() {
     const collectors = ['John Smith', 'Maria Garcia', 'David Chen'];
     
     // Create batches that combine 2-4 bins each
-    const batchCount = 8; // Create 8 batches total
+    const batchCount = 10; // Create 10 batches total
     for (let batchIndex = 0; batchIndex < batchCount; batchIndex++) {
       const availableBins = bins.filter(bin => !usedBinIds.has(bin._id));
       if (availableBins.length === 0) break; // No more bins available
       
-      // Select 2-4 random bins for this batch
-      const binsPerBatch = Math.min(Math.floor(Math.random() * 3) + 2, availableBins.length);
+      // Select 1-2 random bins for this batch (to allow more batches)
+      const binsPerBatch = Math.min(Math.floor(Math.random() * 2) + 1, availableBins.length);
       const selectedBins = [];
       for (let i = 0; i < binsPerBatch; i++) {
         const randomIndex = Math.floor(Math.random() * availableBins.length);
@@ -199,8 +199,27 @@ export async function POST() {
       // Calculate total weight from all bins
       const totalWeight = selectedBins.reduce((sum, bin) => sum + (Math.random() * 15 + 3), 0);
       
-      // Assign logical status - some batches finished processing, others in progress
-      const batchStatus = batchIndex < 3 ? 'inventory_creation' : statuses[Math.floor(Math.random() * (statuses.length - 1))]; // First 3 are at final step, rest are in progress
+      // Assign different processing stages to showcase the timeline
+      let batchStatus;
+      if (batchIndex === 0) {
+        batchStatus = 'inventory_creation'; // Complete batch
+      } else if (batchIndex === 1) {
+        batchStatus = 'laser_marking'; // Almost complete
+      } else if (batchIndex === 2) {
+        batchStatus = 'weigh_photo'; // Near end
+      } else if (batchIndex === 3) {
+        batchStatus = 'press'; // Mid-stage
+      } else if (batchIndex === 4) {
+        batchStatus = 'fine_wash'; // Mid-stage
+      } else if (batchIndex === 5) {
+        batchStatus = 'shred'; // Early-mid stage
+      } else if (batchIndex === 6) {
+        batchStatus = 'sort'; // Early stage
+      } else if (batchIndex === 7) {
+        batchStatus = 'rough_wash'; // Very early stage
+      } else {
+        batchStatus = 'collected'; // Just collected
+      }
       
       batches.push({
         _id: qrCode,
