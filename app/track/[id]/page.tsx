@@ -474,16 +474,26 @@ export default function TrackItem() {
                   <div className="flex justify-between">
                     <span className="systematic-caps text-sm">Status</span>
                     <Badge className={
-                      item.event === 'Weigh & Photo' ? 'bg-indigo-500 text-white' :
-                      item.event === 'Processed' ? 'bg-green-600 text-white' :
-                      item.event === 'Rough Wash' ? 'bg-pop-blue text-white' :
-                      item.event === 'Sort' ? 'bg-pop-green text-white' :
-                      item.event === 'Shred' ? 'bg-orange-500 text-white' :
-                      item.event === 'Press' ? 'bg-purple-500 text-white' :
-                      item.event === 'Laser Marking' ? 'bg-pop-red text-white' :
+                      item.event === 'collected' ? 'bg-gray-500 text-white' :
+                      item.event === 'rough_wash' ? 'bg-pop-blue text-white' :
+                      item.event === 'sort' ? 'bg-pop-green text-white' :
+                      item.event === 'first_dry' ? 'bg-yellow-500 text-white' :
+                      item.event === 'shred' ? 'bg-orange-500 text-white' :
+                      item.event === 'fine_wash' ? 'bg-blue-600 text-white' :
+                      item.event === 'second_dry' ? 'bg-yellow-600 text-white' :
+                      item.event === 'press' ? 'bg-purple-500 text-white' :
+                      item.event === 'weigh_photo' ? 'bg-indigo-500 text-white' :
+                      item.event === 'laser_marking' ? 'bg-pop-red text-white' :
+                      item.event === 'completed' ? 'bg-green-600 text-white' :
                       'bg-gray-100 text-gray-800'
                     }>
-                      {item.event}
+                      {item.event === 'weigh_photo' ? 'Weigh & Photo' :
+                       item.event === 'rough_wash' ? 'Rough Wash' :
+                       item.event === 'first_dry' ? 'First Dry' :
+                       item.event === 'fine_wash' ? 'Fine Wash' :
+                       item.event === 'second_dry' ? 'Second Dry' :
+                       item.event === 'laser_marking' ? 'Laser Marking' :
+                       item.event.charAt(0).toUpperCase() + item.event.slice(1)}
                     </Badge>
                   </div>
                 )}
