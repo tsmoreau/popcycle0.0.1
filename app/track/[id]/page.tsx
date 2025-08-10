@@ -338,61 +338,35 @@ export default function TrackItem() {
             {item.id.startsWith('B') && (
               <div className="text-center flex-1 max-w-[120px]">
                 <div className="w-16 h-16 mx-auto mb-4 border-2 border-pop-black flex items-center justify-center bg-pop-green">
-                  {isUncollected ? (
-                    <Package className="w-8 h-8 text-black" strokeWidth={1.5} />
-                  ) : (
-                    <CheckCircle className="w-8 h-8 text-pop-black" />
-                  )}
+                  <Package className="w-8 h-8 text-black" strokeWidth={1.5} />
                 </div>
-                <h3 className="systematic-caps text-sm mb-1">
-                  {isUncollected ? "Awaiting Pickup" : "Collected"}
-                </h3>
-                <p className="text-xs text-pop-gray truncate">
-                  {isUncollected ? "Next collection" : item.collectionDate}
-                </p>
+                <h3 className="systematic-caps text-sm mb-1">Awaiting Pickup</h3>
+                <p className="text-xs text-pop-gray truncate">Next collection</p>
               </div>
             )}
 
             {/* Step 2: BATCHES (PROCESSING/PROCESSED) */}
             {item.id.startsWith('T') && (
-              <>
-                <div className="text-center flex-1 max-w-[120px]">
-                  <div className="w-16 h-16 mx-auto mb-4 border-2 border-pop-black flex items-center justify-center bg-pop-green">
-                    <CheckCircle className="w-8 h-8 text-pop-black" />
-                  </div>
-                  <h3 className="systematic-caps text-sm mb-1">Collected</h3>
-                  <p className="text-xs text-pop-gray truncate">{item.collectionDate}</p>
+              <div className="text-center flex-1 max-w-[120px]">
+                <div className="w-16 h-16 mx-auto mb-4 border-2 border-pop-black flex items-center justify-center bg-pop-blue">
+                  <CheckCircle className="w-8 h-8 text-pop-black" />
                 </div>
-                <div className="text-center flex-1 max-w-[120px]">
-                  <div className="w-16 h-16 mx-auto mb-4 border-2 border-pop-black flex items-center justify-center bg-pop-blue">
-                    <CheckCircle className="w-8 h-8 text-pop-black" />
-                  </div>
-                  <h3 className="systematic-caps text-sm mb-1">
-                    {item.event === 'inventory_creation' ? 'Processed' : 'Processing'}
-                  </h3>
-                  <p className="text-xs text-pop-gray truncate">{item.processedDate || '2024-02-01'}</p>
-                </div>
-              </>
+                <h3 className="systematic-caps text-sm mb-1">
+                  {item.event === 'inventory_creation' ? 'Processed' : 'Processing'}
+                </h3>
+                <p className="text-xs text-pop-gray truncate">{item.processedDate || '2024-02-01'}</p>
+              </div>
             )}
 
             {/* Step 2: BLANKS (PROCESSING/PROCESSED) */}
             {item.id.startsWith('K') && (
-              <>
-                <div className="text-center flex-1 max-w-[120px]">
-                  <div className="w-16 h-16 mx-auto mb-4 border-2 border-pop-black flex items-center justify-center bg-pop-green">
-                    <CheckCircle className="w-8 h-8 text-pop-black" />
-                  </div>
-                  <h3 className="systematic-caps text-sm mb-1">Collected</h3>
-                  <p className="text-xs text-pop-gray truncate">{item.collectionDate}</p>
+              <div className="text-center flex-1 max-w-[120px]">
+                <div className="w-16 h-16 mx-auto mb-4 border-2 border-pop-black flex items-center justify-center bg-pop-blue">
+                  <CheckCircle className="w-8 h-8 text-pop-black" />
                 </div>
-                <div className="text-center flex-1 max-w-[120px]">
-                  <div className="w-16 h-16 mx-auto mb-4 border-2 border-pop-black flex items-center justify-center bg-pop-blue">
-                    <CheckCircle className="w-8 h-8 text-pop-black" />
-                  </div>
-                  <h3 className="systematic-caps text-sm mb-1">Processed</h3>
-                  <p className="text-xs text-pop-gray truncate">{item.processedDate}</p>
-                </div>
-              </>
+                <h3 className="systematic-caps text-sm mb-1">Processed</h3>
+                <p className="text-xs text-pop-gray truncate">{item.processedDate}</p>
+              </div>
             )}
 
             {/* Step 3: PURCHASED/DONATED - when productId exists */}
