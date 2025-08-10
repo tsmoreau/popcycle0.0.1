@@ -106,8 +106,8 @@ export default function TrackItem() {
           makerDetails: data.makerDetails,
           transactionDate: data.transactionDate || '',
           deliveredDate: data.deliveryDate || '',
-          // Store bin/batch status for display - use status field from API
-          event: data.status,
+          // Store actual event names (festivals, parties, etc.) from event field
+          event: data.event,
           // Map productId and userId for timeline display
           productId: data.productId,
           userId: data.userId,
