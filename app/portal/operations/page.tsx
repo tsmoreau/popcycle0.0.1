@@ -27,6 +27,9 @@ import {
   Maximize,
   Minimize,
   X,
+  Monitor,
+  Activity,
+  Route,
 } from "lucide-react";
 import { Button } from "../../components/ui/button";
 import {
@@ -943,6 +946,321 @@ export default function OperationsPage() {
           </div>
         </div>
       </div>
+
+      {/* Production Station Interfaces Accordion */}
+      <Accordion type="single" collapsible className="w-full">
+        <AccordionItem value="production-stations" className="border rounded-lg px-4">
+          <AccordionTrigger className="hover:no-underline">
+            <div className="flex items-center gap-3">
+              <Monitor className="h-5 w-5 text-pop-green" />
+              <div className="text-left">
+                <h3 className="text-lg font-semibold text-pop-black">Production Station Interfaces</h3>
+                <p className="text-sm text-gray-600">Real-time monitoring and control of processing stations</p>
+              </div>
+            </div>
+          </AccordionTrigger>
+          <AccordionContent>
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 pt-2 pb-4">
+              {/* Station 1 - Weighing/Photo */}
+              <Card>
+                <CardHeader>
+                  <div className="flex items-center justify-between">
+                    <CardTitle className="flex items-center gap-2">
+                      <Scale className="h-5 w-5 text-pop-blue" />
+                      Station 1 - Weighing/Photo
+                    </CardTitle>
+                    <Badge className="bg-pop-green text-white">
+                      <Activity className="h-3 w-3 mr-1" />
+                      Online
+                    </Badge>
+                  </div>
+                  <CardDescription>HID Scale + Camera Ready</CardDescription>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  <div className="grid grid-cols-2 gap-4">
+                    <div className="bg-gray-50 p-3 rounded-lg">
+                      <div className="text-sm font-medium text-gray-700">Current Weight</div>
+                      <div className="text-xl font-bold text-pop-black">2.47 kg</div>
+                    </div>
+                    <div className="bg-gray-50 p-3 rounded-lg">
+                      <div className="text-sm font-medium text-gray-700">Photos Taken</div>
+                      <div className="text-xl font-bold text-pop-black">127</div>
+                    </div>
+                  </div>
+                  <div className="flex gap-2">
+                    <Button size="sm" className="bg-pop-green hover:bg-pop-green/90">
+                      <Camera className="h-4 w-4 mr-2" />
+                      Capture Photo
+                    </Button>
+                    <Button size="sm" variant="outline">
+                      <Scale className="h-4 w-4 mr-2" />
+                      Tare Scale
+                    </Button>
+                  </div>
+                </CardContent>
+              </Card>
+
+              {/* Station 2 - Laser Processing */}
+              <Card>
+                <CardHeader>
+                  <div className="flex items-center justify-between">
+                    <CardTitle className="flex items-center gap-2">
+                      <Zap className="h-5 w-5 text-pop-red" />
+                      Station 2 - Laser Processing
+                    </CardTitle>
+                    <Badge className="bg-pop-blue text-white">
+                      <Activity className="h-3 w-3 mr-1" />
+                      Active
+                    </Badge>
+                  </div>
+                  <CardDescription>Lightburn Integration</CardDescription>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  <div className="grid grid-cols-2 gap-4">
+                    <div className="bg-gray-50 p-3 rounded-lg">
+                      <div className="text-sm font-medium text-gray-700">Job Progress</div>
+                      <div className="text-xl font-bold text-pop-black">73%</div>
+                    </div>
+                    <div className="bg-gray-50 p-3 rounded-lg">
+                      <div className="text-sm font-medium text-gray-700">Queue Items</div>
+                      <div className="text-xl font-bold text-pop-black">5</div>
+                    </div>
+                  </div>
+                  <div className="flex gap-2">
+                    <Button size="sm" className="bg-pop-red hover:bg-pop-red/90">
+                      <Zap className="h-4 w-4 mr-2" />
+                      Start Job
+                    </Button>
+                    <Button size="sm" variant="outline">
+                      <Settings className="h-4 w-4 mr-2" />
+                      Configure
+                    </Button>
+                  </div>
+                </CardContent>
+              </Card>
+
+              {/* Station Controls */}
+              <Card className="lg:col-span-2">
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-2">
+                    <Settings className="h-5 w-5 text-pop-green" />
+                    Station Management
+                  </CardTitle>
+                  <CardDescription>Centralized controls and monitoring</CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <div className="flex flex-wrap gap-2">
+                    <Button size="sm" variant="outline">
+                      <Monitor className="h-4 w-4 mr-2" />
+                      View All Stations
+                    </Button>
+                    <Button size="sm" variant="outline">
+                      <Activity className="h-4 w-4 mr-2" />
+                      System Status
+                    </Button>
+                    <Button size="sm" variant="outline">
+                      <Settings className="h-4 w-4 mr-2" />
+                      Configuration
+                    </Button>
+                    <Button size="sm" variant="outline">
+                      <AlertCircle className="h-4 w-4 mr-2" />
+                      Error Logs
+                    </Button>
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
+          </AccordionContent>
+        </AccordionItem>
+      </Accordion>
+
+      {/* Pickup Scheduling Accordion */}
+      <Accordion type="single" collapsible className="w-full">
+        <AccordionItem value="pickup-scheduling" className="border rounded-lg px-4">
+          <AccordionTrigger className="hover:no-underline">
+            <div className="flex items-center gap-3">
+              <Calendar className="h-5 w-5 text-pop-green" />
+              <div className="text-left">
+                <h3 className="text-lg font-semibold text-pop-black">Pickup Scheduling</h3>
+                <p className="text-sm text-gray-600">Route planning and logistics coordination</p>
+              </div>
+            </div>
+          </AccordionTrigger>
+          <AccordionContent>
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 pt-2 pb-4">
+              {/* Today's Schedule */}
+              <Card>
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-2">
+                    <Clock className="h-5 w-5 text-pop-blue" />
+                    Today's Schedule
+                  </CardTitle>
+                  <CardDescription>Active pickup routes</CardDescription>
+                </CardHeader>
+                <CardContent className="space-y-3">
+                  <div className="flex items-center justify-between p-3 bg-pop-red/5 rounded-lg border-l-4 border-pop-red">
+                    <div>
+                      <div className="font-medium text-sm">TechCorp - Floor 3</div>
+                      <div className="text-xs text-gray-600">BI-7829 - 85% Full</div>
+                      <div className="text-xs text-gray-500">9:30 AM</div>
+                    </div>
+                    <Badge className="bg-pop-red text-white">Urgent</Badge>
+                  </div>
+                  <div className="flex items-center justify-between p-3 bg-pop-blue/5 rounded-lg border-l-4 border-pop-blue">
+                    <div>
+                      <div className="font-medium text-sm">GreenTech Industries</div>
+                      <div className="text-xs text-gray-600">BI-5432 - 65% Full</div>
+                      <div className="text-xs text-gray-500">11:00 AM</div>
+                    </div>
+                    <Badge className="bg-pop-blue text-white">Scheduled</Badge>
+                  </div>
+                  <div className="flex items-center justify-between p-3 bg-pop-green/5 rounded-lg border-l-4 border-pop-green">
+                    <div>
+                      <div className="font-medium text-sm">Innovation Hub</div>
+                      <div className="text-xs text-gray-600">BI-9876 - 45% Full</div>
+                      <div className="text-xs text-gray-500">2:15 PM</div>
+                    </div>
+                    <Badge className="bg-pop-green text-white">Confirmed</Badge>
+                  </div>
+                </CardContent>
+              </Card>
+
+              {/* Route Optimization */}
+              <Card>
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-2">
+                    <Route className="h-5 w-5 text-pop-green" />
+                    Route Planning
+                  </CardTitle>
+                  <CardDescription>Optimized pickup routes</CardDescription>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  <div className="bg-gray-50 p-3 rounded-lg">
+                    <div className="text-sm font-medium text-gray-700">Route A</div>
+                    <div className="text-xs text-gray-600 mt-1">3 stops • 12.5 miles • 2h 15m</div>
+                    <div className="flex gap-1 mt-2">
+                      <Badge variant="outline" className="text-xs">TechCorp</Badge>
+                      <Badge variant="outline" className="text-xs">GreenTech</Badge>
+                      <Badge variant="outline" className="text-xs">Innovation</Badge>
+                    </div>
+                  </div>
+                  <div className="bg-gray-50 p-3 rounded-lg">
+                    <div className="text-sm font-medium text-gray-700">Route B</div>
+                    <div className="text-xs text-gray-600 mt-1">2 stops • 8.3 miles • 1h 30m</div>
+                    <div className="flex gap-1 mt-2">
+                      <Badge variant="outline" className="text-xs">StartupCo</Badge>
+                      <Badge variant="outline" className="text-xs">EcoSpace</Badge>
+                    </div>
+                  </div>
+                  <Button size="sm" className="w-full bg-pop-green hover:bg-pop-green/90">
+                    <Route className="h-4 w-4 mr-2" />
+                    Optimize Routes
+                  </Button>
+                </CardContent>
+              </Card>
+
+              {/* Driver Management */}
+              <Card>
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-2">
+                    <Users className="h-5 w-5 text-pop-blue" />
+                    Driver Assignments
+                  </CardTitle>
+                  <CardDescription>Team availability and assignments</CardDescription>
+                </CardHeader>
+                <CardContent className="space-y-3">
+                  <div className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                    <div>
+                      <div className="font-medium text-sm">Mike Rodriguez</div>
+                      <div className="text-xs text-gray-600">Route A - On Route</div>
+                    </div>
+                    <Badge className="bg-pop-green text-white">Active</Badge>
+                  </div>
+                  <div className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                    <div>
+                      <div className="font-medium text-sm">Sarah Chen</div>
+                      <div className="text-xs text-gray-600">Route B - Available</div>
+                    </div>
+                    <Badge variant="outline">Standby</Badge>
+                  </div>
+                  <div className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                    <div>
+                      <div className="font-medium text-sm">Alex Kim</div>
+                      <div className="text-xs text-gray-600">Processing Station</div>
+                    </div>
+                    <Badge className="bg-pop-blue text-white">Busy</Badge>
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
+
+            {/* Calendar Integration */}
+            <Card className="mt-4">
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <Calendar className="h-5 w-5 text-pop-green" />
+                  Weekly Schedule Overview
+                </CardTitle>
+                <CardDescription>Upcoming pickups and scheduling coordination</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="grid grid-cols-7 gap-2 text-center">
+                  <div className="font-semibold text-sm text-gray-600 p-2">Mon</div>
+                  <div className="font-semibold text-sm text-gray-600 p-2">Tue</div>
+                  <div className="font-semibold text-sm text-gray-600 p-2">Wed</div>
+                  <div className="font-semibold text-sm text-gray-600 p-2">Thu</div>
+                  <div className="font-semibold text-sm text-gray-600 p-2">Fri</div>
+                  <div className="font-semibold text-sm text-gray-600 p-2">Sat</div>
+                  <div className="font-semibold text-sm text-gray-600 p-2">Sun</div>
+                  
+                  <div className="p-2 bg-pop-green/10 rounded text-sm">
+                    <div className="font-bold">12</div>
+                    <div className="text-xs">3 pickups</div>
+                  </div>
+                  <div className="p-2 bg-pop-blue/10 rounded text-sm">
+                    <div className="font-bold">13</div>
+                    <div className="text-xs">2 pickups</div>
+                  </div>
+                  <div className="p-2 bg-gray-50 rounded text-sm">
+                    <div className="font-bold text-pop-red">14</div>
+                    <div className="text-xs">Today</div>
+                  </div>
+                  <div className="p-2 bg-pop-red/10 rounded text-sm">
+                    <div className="font-bold">15</div>
+                    <div className="text-xs">5 pickups</div>
+                  </div>
+                  <div className="p-2 bg-gray-50 rounded text-sm">
+                    <div className="font-bold">16</div>
+                    <div className="text-xs">1 pickup</div>
+                  </div>
+                  <div className="p-2 bg-gray-50 rounded text-sm">
+                    <div className="font-bold">17</div>
+                    <div className="text-xs">-</div>
+                  </div>
+                  <div className="p-2 bg-gray-50 rounded text-sm">
+                    <div className="font-bold">18</div>
+                    <div className="text-xs">-</div>
+                  </div>
+                </div>
+                <div className="flex gap-2 mt-4">
+                  <Button size="sm" variant="outline">
+                    <Calendar className="h-4 w-4 mr-2" />
+                    View Full Calendar
+                  </Button>
+                  <Button size="sm" variant="outline">
+                    <MapPin className="h-4 w-4 mr-2" />
+                    Map View
+                  </Button>
+                  <Button size="sm" className="bg-pop-green hover:bg-pop-green/90">
+                    <Calendar className="h-4 w-4 mr-2" />
+                    Schedule Pickup
+                  </Button>
+                </div>
+              </CardContent>
+            </Card>
+          </AccordionContent>
+        </AccordionItem>
+      </Accordion>
 
       {/* Operations Management Accordion */}
       <Accordion type="single" collapsible className="w-full">
