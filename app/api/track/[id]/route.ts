@@ -1,226 +1,168 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { MongoClient } from 'mongodb';
 
-// Interface for sample item structure
-interface SampleItem {
-  id: string;
-  originPoint?: string | null;
-  collectionDate?: string | null;
-  materialType?: string | null;
-  weight?: number | null;
-  processedDate?: string | null;
-  transactionDate?: string | null;
-  deliveredDate?: string | null;
-  productType?: string | null;
-  donatingEntity?: string | null;
-  destination?: string | null;
-  carbonOffset?: number | null;
-  event?: string | null;
-  message?: string | null;
-  binId?: string | null;
-  batchId?: string | null;
-  blankId?: string | null;
-  makerDetails?: {
-    userId: string;
-    name: string;
-    location: string;
-    assemblyDate: string;
-    story: string;
-    registeredAt: string;
-    verifiedEmail: string;
-  } | null;
-}
-
-// Sample data for demonstration - in production this would come from MongoDB
-const sampleItems: Record<string, SampleItem> = {
-  'ABC123': {
-    id: 'ABC123',
-    originPoint: 'Cafe Luna',
-    collectionDate: '2025-01-15',
-    materialType: 'HDPE',
-    weight: 2.3,
-    processedDate: '2025-01-20',
-    transactionDate: '2025-01-28',
-    deliveredDate: '2025-01-30',
-    productType: 'rover_chassis',
-    donatingEntity: 'TechCorp Foundation',
-    destination: 'Roosevelt Elementary School',
-    carbonOffset: 5.8,
-    event: 'Annual Sustainability Summit',
-    message: 'From our cafeteria to your classroom - building the future together!',
-    // ID hierarchy based on schema - all processing stages complete
-    binId: 'BIN-A1B2C3',
-    batchId: 'BAT-D4E5F6',
-    blankId: 'BLK-G7H8I9',
-    makerDetails: {
-      userId: 'user_001',
-      name: 'Sarah Chen',
-      location: 'Portland, OR',
-      assemblyDate: '2025-02-01',
-      story: 'Built this rover chassis with my daughter Emma for her robotics club! She\'s fascinated by how waste becomes functional tech. We spent three hours assembling it together - she did all the precision work while I held pieces steady. Now it\'s ready for their Mars exploration project.',
-      registeredAt: '2025-02-01T19:30:00Z',
-      verifiedEmail: 'sarah.chen@email.com'
-    }
-  },
-  'DEF456': {
-    id: 'DEF456',
-    originPoint: 'TechCorp',
-    collectionDate: '2025-01-12',
-    materialType: 'PET',
-    weight: 1.7,
-    processedDate: '2025-01-18',
-    transactionDate: '2025-01-24',
-    deliveredDate: '2025-01-26',
-    productType: 'assembly_toy',
-    donatingEntity: null,
-    destination: null,
-    carbonOffset: 4.2,
-    event: 'Earth Day Corporate Challenge',
-    // ID hierarchy - processed into blank
-    binId: 'BIN-J1K2L3',
-    batchId: 'BAT-M4N5O6',
-    blankId: 'BLK-P7Q8R9',
-    makerDetails: null
-  },
-  'GHI789': {
-    id: 'GHI789',
-    originPoint: 'Riverside Park',
-    collectionDate: '2025-01-10',
-    materialType: 'HDPE',
-    weight: 3.1,
-    processedDate: '2025-01-16',
-    transactionDate: '2025-01-22',
-    deliveredDate: '2025-01-24',
-    productType: 'educational_kit',
-    donatingEntity: 'Local Community Fund',
-    destination: 'YMCA Summer Camp',
-    carbonOffset: 7.8,
-    event: 'Community Cleanup Initiative',
-    message: 'From park cleanup to learning tool - community action creates change.',
-    // ID hierarchy - processed into blank
-    binId: 'BIN-S1T2U3',
-    batchId: 'BAT-V4W5X6',
-    blankId: 'BLK-Y7Z8A9',
-    makerDetails: null
-  },
-  'JKL012': {
-    id: 'JKL012',
-    originPoint: 'Startup Hub',
-    collectionDate: '2025-01-08',
-    materialType: 'PP',
-    weight: 1.9,
-    processedDate: '2025-01-14',
-    transactionDate: '2025-01-21',
-    deliveredDate: '2025-01-23',
-    productType: 'dinnerware',
-    donatingEntity: null,
-    destination: null,
-    carbonOffset: 4.7,
-    event: 'Green Living Expo',
-    // ID hierarchy - processed into blank
-    binId: 'BIN-B1C2D3',
-    batchId: 'BAT-E4F5G6',
-    blankId: 'BLK-H7I8J9',
-    makerDetails: null
-  },
-  'MNO345': {
-    id: 'MNO345',
-    originPoint: 'Green Valley Office Park',
-    collectionDate: '2025-01-29',
-    materialType: 'PET',
-    weight: 3.2,
-    processedDate: '2025-02-02',
-    transactionDate: null,
-    deliveredDate: null,
-    productType: null,
-    donatingEntity: null,
-    destination: null,
-    carbonOffset: null,
-    event: 'Corporate Cleanup Day',
-    message: 'Processed into clean plastic pellets - ready for manufacturing into educational products.',
-    // ID hierarchy - processed into batch, but not yet into blanks
-    binId: 'BIN-K1L2M3',
-    batchId: 'BAT-N4O5P6',
-    blankId: null, // No blank created yet
-    makerDetails: null
-  },
-  'PQR678': {
-    id: 'PQR678',
-    originPoint: 'Riverside Community Center',
-    collectionDate: '2025-01-30',
-    materialType: 'HDPE',
-    weight: 2.8,
-    processedDate: null,
-    transactionDate: null,
-    deliveredDate: null,
-    productType: null,
-    donatingEntity: null,
-    destination: null,
-    carbonOffset: null,
-    event: 'Weekend Volunteer Drive',
-    message: 'Collected during our community volunteer cleanup - awaiting transformation into educational materials.',
-    // ID hierarchy - only bin collected, no processing yet
-    binId: 'BIN-Q1R2S3',
-    batchId: null, // No batch created yet
-    blankId: null, // No blank created yet
-    makerDetails: null
-  },
-  'STU901': {
-    id: 'STU901',
-    originPoint: 'Downtown Office Plaza',
-    collectionDate: null,
-    materialType: null,
-    weight: null,
-    processedDate: null,
-    transactionDate: null,
-    deliveredDate: null,
-    productType: null,
-    donatingEntity: null,
-    destination: null,
-    carbonOffset: null,
-    event: null,
-    message: 'Bin is active and ready for collection. Located at main lobby - please use designated plastic waste only.',
-    // ID hierarchy - only bin exists, not collected yet
-    binId: 'BIN-T1U2V3',
-    batchId: null, // No collection yet
-    blankId: null, // No collection yet
-    makerDetails: null
+// Function to determine collection type from QR code
+function getCollectionType(qrCode: string): 'bin' | 'batch' | 'item' | null {
+  if (qrCode.length < 6) return null;
+  
+  const typeCode = qrCode.substring(3, 6);
+  
+  switch (typeCode) {
+    case 'BIN': return 'bin';
+    case 'BAT': return 'batch';
+    case 'BLK': 
+    case 'FIN': return 'item';
+    default: return null;
   }
-};
+}
 
 export async function GET(
   request: NextRequest,
   { params }: { params: Promise<{ id: string }> }
 ) {
   const { id } = await params;
-  const item = sampleItems[id.toUpperCase() as keyof typeof sampleItems];
   
-  if (!item) {
-    return NextResponse.json({ error: 'Item not found' }, { status: 404 });
-  }
-  
-  return NextResponse.json({
-    id: item.id,
-    originPoint: item.originPoint,
-    collectionDate: item.collectionDate,
-    materialType: item.materialType,
-    weight: item.weight,
-    processedDate: item.processedDate,
-    transactionDate: item.transactionDate,
-    deliveredDate: item.deliveredDate,
-    destination: item.destination,
-    donatingEntity: item.donatingEntity,
-    carbonOffset: item.carbonOffset,
-    productType: item.productType,
-    event: item.event || null,
-    message: item.message || null,
-    makerDetails: item.makerDetails,
-    // ID hierarchy based on processing stage
-    binId: item.binId,
-    batchId: item.batchId,
-    blankId: item.blankId,
-    impactMetrics: {
-      carbonSaved: item.carbonOffset || 0,
-      wasteReduced: item.weight || 0
+  try {
+    const uri = process.env.MONGODB_URI;
+    if (!uri) {
+      return NextResponse.json({ error: 'Database configuration error' }, { status: 500 });
     }
-  });
+
+    const client = new MongoClient(uri);
+    await client.connect();
+    const db = client.db('PopCycle');
+    
+    // Determine which collection to search based on QR code type
+    const collectionType = getCollectionType(id);
+    
+    if (!collectionType) {
+      await client.close();
+      return NextResponse.json({ error: 'Invalid QR code format' }, { status: 400 });
+    }
+    
+    let record;
+    let org;
+    
+    if (collectionType === 'bin') {
+      // Look up bin record
+      record = await db.collection('bins').findOne({ _id: id });
+      if (record) {
+        org = await db.collection('orgs').findOne({ _id: record.orgId });
+      }
+      
+      if (!record) {
+        await client.close();
+        return NextResponse.json({ error: 'Bin not found' }, { status: 404 });
+      }
+      
+      await client.close();
+      return NextResponse.json({
+        id: record._id,
+        type: 'bin',
+        name: record.name,
+        location: record.location,
+        capacity: record.capacity,
+        isActive: record.isActive,
+        canBeAdopted: record.canBeAdopted,
+        adoptedBy: record.adoptedBy,
+        organization: org ? {
+          name: org.name,
+          type: org.type,
+          description: org.description,
+          branding: org.branding
+        } : null,
+        message: org?.branding?.trackingPageMessage || 'This bin is part of our circular economy program.',
+        impactMetrics: {
+          carbonSaved: 0, // Bins don't have direct impact yet
+          wasteReduced: 0
+        }
+      });
+      
+    } else if (collectionType === 'batch') {
+      // Look up batch record
+      record = await db.collection('batches').findOne({ _id: id });
+      if (record) {
+        const bin = await db.collection('bins').findOne({ _id: record.binId });
+        if (bin) {
+          org = await db.collection('orgs').findOne({ _id: bin.orgId });
+        }
+      }
+      
+      if (!record) {
+        await client.close();
+        return NextResponse.json({ error: 'Batch not found' }, { status: 404 });
+      }
+      
+      await client.close();
+      return NextResponse.json({
+        id: record._id,
+        type: 'batch',
+        binId: record.binId,
+        collectionDate: record.collectionDate,
+        weight: record.weight,
+        materialType: record.materialType,
+        collectedBy: record.collectedBy,
+        status: record.status,
+        notes: record.notes,
+        organization: org ? {
+          name: org.name,
+          type: org.type,
+          description: org.description,
+          branding: org.branding
+        } : null,
+        message: org?.branding?.trackingPageMessage || 'This plastic has been collected and is being processed.',
+        impactMetrics: {
+          carbonSaved: record.weight * 2.3, // Rough calculation
+          wasteReduced: record.weight
+        }
+      });
+      
+    } else if (collectionType === 'item') {
+      // Look up item record
+      record = await db.collection('items').findOne({ _id: id });
+      if (record) {
+        const batch = await db.collection('batches').findOne({ _id: record.batchId });
+        if (batch) {
+          const bin = await db.collection('bins').findOne({ _id: batch.binId });
+          if (bin) {
+            org = await db.collection('orgs').findOne({ _id: bin.orgId });
+          }
+        }
+      }
+      
+      if (!record) {
+        await client.close();
+        return NextResponse.json({ error: 'Item not found' }, { status: 404 });
+      }
+      
+      await client.close();
+      return NextResponse.json({
+        id: record._id,
+        type: 'item',
+        batchId: record.batchId,
+        productId: record.productId,
+        userId: record.userId,
+        itemType: record.type,
+        status: record.status,
+        weight: record.weight,
+        assemblyDate: record.assemblyDate,
+        deliveryDate: record.deliveryDate,
+        organization: org ? {
+          name: org.name,
+          type: org.type,
+          description: org.description,
+          branding: org.branding
+        } : null,
+        message: org?.branding?.trackingPageMessage || 'This item represents the transformation of waste into useful products.',
+        impactMetrics: {
+          carbonSaved: record.weight * 3.5, // Higher impact for finished items
+          wasteReduced: record.weight
+        }
+      });
+    }
+    
+  } catch (error) {
+    console.error('Error tracking item:', error);
+    return NextResponse.json({ error: 'Database error' }, { status: 500 });
+  }
 }

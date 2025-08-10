@@ -225,7 +225,7 @@ export async function POST() {
     const items: any[] = [];
     batches.forEach((batch, batchIndex) => {
       const orgIndex = orgs.findIndex(org => {
-        const bin = bins.find(b => b._id.equals(batch.binId));
+        const bin = bins.find(b => b._id === batch.binId);
         return bin && org._id.equals(bin.orgId);
       });
       
