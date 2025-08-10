@@ -332,7 +332,7 @@ export default function TrackItem() {
         </div>
 
         {/* Status Timeline */}
-        {!isUncollected && (
+        {!isUncollected && !item.id.startsWith('B') && (
           <div className="mb-12">
             <div className="flex gap-2 justify-center max-w-2xl mx-auto">
               {/* Step 1: Collected */}
