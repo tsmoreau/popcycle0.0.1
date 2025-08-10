@@ -1,28 +1,20 @@
 import { NextResponse } from 'next/server';
 import { MongoClient, ObjectId } from 'mongodb';
 
-// Base36 encoding for partner IDs (supports up to 46,655 partners)
-function encodePartnerBase36(partnerId: number): string {
-  return partnerId.toString(36).toUpperCase().padStart(3, '0');
-}
-
-// Generate QR code IDs with partner branding and embedded type information
+// Generate QR code IDs with embedded type information (no org prefix)
 function generateQRCode(partnerIndex: number, type: 'bin' | 'batch' | 'item'): string {
-  // PopCycle (index 0) gets "000", partners start from "001"  
-  const partnerHash = partnerIndex === 0 ? '000' : encodePartnerBase36(partnerIndex);
-  
-  // Embed type in the first character of the sequence (subtle encoding)
+  // Embed type in the first character of the sequence
   const typeChar = {
     bin: 'B',     // Bins start with B
     batch: 'T',   // Batches start with T  
     item: 'K'     // Blanks start with K
   }[type];
   
-  // Generate random 5-character Base36 sequence for the rest
-  const randomNum = Math.floor(Math.random() * Math.pow(36, 5)); // 0 to 36^5-1
-  const seqStr = randomNum.toString(36).toUpperCase().padStart(5, '0');
+  // Generate random 7-character Base36 sequence for the rest
+  const randomNum = Math.floor(Math.random() * Math.pow(36, 7)); // 0 to 36^7-1
+  const seqStr = randomNum.toString(36).toUpperCase().padStart(7, '0');
   
-  return `${partnerHash}${typeChar}${seqStr}`;
+  return `${typeChar}${seqStr}`;
 }
 
 export async function POST() {
