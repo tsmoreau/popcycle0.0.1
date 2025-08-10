@@ -80,7 +80,13 @@ export default function AdminPage() {
       setLoadingProducts(true)
       const response = await fetch('/api/admin/products')
       const data = await response.json()
-      setProducts(data)
+      
+      if (response.ok && Array.isArray(data)) {
+        setProducts(data)
+      } else {
+        console.error('Error fetching products:', data.error || 'Invalid response')
+        setProducts([])
+      }
     } catch (error) {
       console.error('Error fetching products:', error)
       setProducts([])
