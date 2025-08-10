@@ -1000,8 +1000,8 @@ export default function OperationsPage() {
 
       {/* QR Scanner Modal */}
       <QRScanner 
-        isOpen={showScanModal} 
-        onClose={() => setShowScanModal(false)} 
+        open={showScanModal} 
+        onOpenChange={setShowScanModal} 
       />
     </div>
   );
