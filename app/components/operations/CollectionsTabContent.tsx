@@ -46,28 +46,6 @@ export function CollectionsTabContent({
           setCollectionsSortDirection(direction);
         }}
       />
-      
-      {!loadingBins && (
-        <DataTable
-          title="Bin Status"
-          description="Real-time tracking of collection bins across all locations"
-          data={bins}
-          columns={allBinColumns}
-          editableFields={binEditableFields}
-          onSave={handleBinSave}
-          onDelete={handleBinDelete}
-          availableColumns={allBinColumns}
-          defaultVisibleColumns={defaultBinColumns}
-          enableColumnSelection
-          enableFiltering
-          sortField={collectionsSortField}
-          sortDirection={collectionsSortDirection}
-          onSort={(field, direction) => {
-            setCollectionsSortField(field);
-            setCollectionsSortDirection(direction);
-          }}
-        />
-      )}
     </div>
   );
 }
