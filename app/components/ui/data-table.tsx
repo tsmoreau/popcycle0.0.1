@@ -349,6 +349,28 @@ export function DataTable<T extends Record<string, any>>({
     </div>
   )
 
+  const renderNestedValue = (value: any, nestedFields?: EditableField<any>[]) => {
+    if (!value || typeof value !== 'object') return String(value || 'Not provided')
+    
+    return (
+      <div className="ml-4 space-y-1">
+        {nestedFields?.map(nestedField => {
+          const nestedValue = value[nestedField.key as string]
+          return (
+            <div key={String(nestedField.key)} className="text-sm">
+              <span className="font-medium">{nestedField.label}:</span>{' '}
+              {String(nestedValue || 'Not provided')}
+            </div>
+          )
+        }) || Object.entries(value).map(([key, val]) => (
+          <div key={key} className="text-sm">
+            <span className="font-medium">{key}:</span> {String(val || 'Not provided')}
+          </div>
+        ))}
+      </div>
+    )
+  }
+
   const renderViewModal = (item: T) => (
     <div>
       <DialogHeader>
@@ -365,7 +387,7 @@ export function DataTable<T extends Record<string, any>>({
             <div key={String(field.key)}>
               <strong>{field.label}:</strong>{' '}
               {field.render ? field.render(item) : 
-               field.type === 'nested' ? JSON.stringify(value, null, 2) :
+               field.type === 'nested' ? renderNestedValue(value, field.nested) :
                String(value || 'Not provided')}
             </div>
           )
