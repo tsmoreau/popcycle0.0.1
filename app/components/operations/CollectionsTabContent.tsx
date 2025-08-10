@@ -27,7 +27,7 @@ export function CollectionsTabContent({
   setCollectionsSortDirection,
   isFullscreen = false,
 }: CollectionsTabContentProps) {
-  const containerClass = isFullscreen ? "space-y-6 h-full" : "space-y-6";
+  const containerClass = "space-y-6";
 
   return (
     <div className={containerClass}>

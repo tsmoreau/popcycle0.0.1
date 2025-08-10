@@ -28,7 +28,7 @@ export function FulfillmentTabContent({
   setFulfillmentSortDirection,
   isFullscreen = false,
 }: FulfillmentTabContentProps) {
-  const containerClass = isFullscreen ? "space-y-6 h-full" : "space-y-6";
+  const containerClass = "space-y-6";
 
   return (
     <div className={containerClass}>
