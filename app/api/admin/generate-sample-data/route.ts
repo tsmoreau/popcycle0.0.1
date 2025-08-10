@@ -173,7 +173,7 @@ export async function POST() {
     const batches: any[] = [];
     const usedBinIds = new Set();
     const materialTypes = ['HDPE', 'PET', 'PP', 'mixed'] as const;
-    const statuses = ['collected', 'rough_wash', 'sort', 'first_dry', 'shred', 'fine_wash', 'second_dry', 'press', 'weigh_photo', 'laser_marking'] as const;
+    const statuses = ['collected', 'rough_wash', 'sort', 'first_dry', 'shred', 'fine_wash', 'second_dry', 'press', 'weigh_photo', 'laser_marking', 'inventory_creation'] as const;
     const collectors = ['John Smith', 'Maria Garcia', 'David Chen'];
     
     // Create batches that combine 2-4 bins each
@@ -200,7 +200,7 @@ export async function POST() {
       const totalWeight = selectedBins.reduce((sum, bin) => sum + (Math.random() * 15 + 3), 0);
       
       // Assign logical status - some batches finished processing, others in progress
-      const batchStatus = batchIndex < 3 ? 'laser_marking' : statuses[Math.floor(Math.random() * (statuses.length - 1))]; // First 3 are at final step, rest are in progress
+      const batchStatus = batchIndex < 3 ? 'inventory_creation' : statuses[Math.floor(Math.random() * (statuses.length - 1))]; // First 3 are at final step, rest are in progress
       
       batches.push({
         _id: qrCode,
@@ -325,7 +325,7 @@ export async function POST() {
     
     // Generate Blanks with QR codes - only for batches that finished processing 
     const blanks: any[] = [];
-    const completedBatches = batches.filter(batch => batch.status === 'laser_marking');
+    const completedBatches = batches.filter(batch => batch.status === 'inventory_creation');
     
     completedBatches.forEach((batch, batchIndex) => {
       const orgIndex = orgs.findIndex(org => {

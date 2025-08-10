@@ -253,8 +253,8 @@ export default function TrackItem() {
         return "Weigh & Photo";
       case "laser_marking":
         return "Laser Marking";
-      case "completed":
-        return "Completed";
+      case "inventory_creation":
+        return "Inventory Creation";
       default:
         return status;
     }
@@ -305,7 +305,7 @@ export default function TrackItem() {
                   <CheckCircle className="w-8 h-8 text-pop-black" />
                 </div>
                 <h3 className="systematic-caps text-sm mb-1">
-                  {item.id.startsWith('T') ? (item.event === 'completed' ? 'Processed' : 'Processing') : 'Processed'}
+                  {item.id.startsWith('T') ? (item.event === 'inventory_creation' ? 'Processed' : 'Processing') : 'Processed'}
                 </h3>
                 <p className="text-xs text-pop-gray truncate">
                   {item.id.startsWith('T') ? getBatchStatusLabel(item.event || 'collected') : item.processedDate}
@@ -489,7 +489,7 @@ export default function TrackItem() {
                       item.event === 'press' ? 'bg-purple-500 text-white' :
                       item.event === 'weigh_photo' ? 'bg-indigo-500 text-white' :
                       item.event === 'laser_marking' ? 'bg-pop-red text-white' :
-                      item.event === 'completed' ? 'bg-green-600 text-white' :
+                      item.event === 'inventory_creation' ? 'bg-green-600 text-white' :
                       'bg-gray-100 text-gray-800'
                     }>
                       {item.event === 'weigh_photo' ? 'Weigh & Photo' :
@@ -498,6 +498,7 @@ export default function TrackItem() {
                        item.event === 'fine_wash' ? 'Fine Wash' :
                        item.event === 'second_dry' ? 'Second Dry' :
                        item.event === 'laser_marking' ? 'Laser Marking' :
+                       item.event === 'inventory_creation' ? 'Inventory Creation' :
                        item.event.charAt(0).toUpperCase() + item.event.slice(1)}
                     </Badge>
                   </div>
