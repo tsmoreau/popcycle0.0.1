@@ -122,8 +122,9 @@ export async function GET(
     } else if (collectionType === 'blank') {
       // Look up blank record
       record = await db.collection('blanks').findOne({ _id: id });
+      let batch = null;
       if (record) {
-        const batch = await db.collection('batches').findOne({ _id: record.batchId });
+        batch = await db.collection('batches').findOne({ _id: record.batchId });
         if (batch) {
           const bin = await db.collection('bins').findOne({ _id: batch.binId });
           if (bin) {
