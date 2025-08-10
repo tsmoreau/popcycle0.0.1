@@ -128,7 +128,7 @@ export async function GET(
       if (record) {
         batch = await db.collection('batches').findOne({ _id: record.batchId } as any);
         if (batch) {
-          const bin = await db.collection('bins').findOne({ _id: new ObjectId(batch.binId) });
+          const bin = await db.collection('bins').findOne({ _id: batch.binId } as any);
           if (bin) {
             org = await db.collection('orgs').findOne({ _id: new ObjectId(bin.orgId) });
           }

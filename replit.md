@@ -14,6 +14,11 @@ User preference: Visual icon distinctions are important - QR code and maximize i
 ## System Architecture
 PopCycle is built as a unified Next.js PWA with MongoDB, managing all core operations.
 
+### Recent Technical Fixes (Aug 2025)
+- **TypeScript Deployment Fixes**: Resolved critical deployment issues by adding missing `binIds` property to PlasticItem interface for multi-bin batch support, fixed property naming inconsistency (`deliveryDate` → `deliveredDate`), and added missing `productId` property to blanks interface.
+- **MongoDB Query Issues**: Fixed ObjectId compatibility errors by updating tracking API to handle QR code strings directly instead of attempting ObjectId conversion (`{ _id: qrCodeString } as any`). This resolved "Item Not Found" errors for blank tracking pages.
+- **Build Process**: All TypeScript compilation errors resolved, application now builds successfully for deployment.
+
 ### Frontend Architecture
 - **Framework**: Next.js 15 with App Router and TypeScript.
 - **UI Framework**: Radix UI components with shadcn/ui design system.
