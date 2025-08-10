@@ -177,7 +177,7 @@ export async function POST() {
     const collectors = ['John Smith', 'Maria Garcia', 'David Chen'];
     
     // Create batches that combine 2-4 bins each
-    const batchCount = 10; // Create 10 batches total
+    const batchCount = 15; // Create 15 batches total
     for (let batchIndex = 0; batchIndex < batchCount; batchIndex++) {
       const availableBins = bins.filter(bin => !usedBinIds.has(bin._id));
       if (availableBins.length === 0) break; // No more bins available
@@ -199,23 +199,27 @@ export async function POST() {
       // Calculate total weight from all bins
       const totalWeight = selectedBins.reduce((sum, bin) => sum + (Math.random() * 15 + 3), 0);
       
-      // Assign different processing stages to showcase the timeline
+      // Assign different processing stages - more completed batches for more blanks
       let batchStatus;
-      if (batchIndex === 0) {
-        batchStatus = 'inventory_creation'; // Complete batch
-      } else if (batchIndex === 1) {
-        batchStatus = 'laser_marking'; // Almost complete
-      } else if (batchIndex === 2) {
-        batchStatus = 'weigh_photo'; // Near end
-      } else if (batchIndex === 3) {
-        batchStatus = 'press'; // Mid-stage
-      } else if (batchIndex === 4) {
-        batchStatus = 'fine_wash'; // Mid-stage
-      } else if (batchIndex === 5) {
-        batchStatus = 'shred'; // Early-mid stage
+      if (batchIndex < 6) {
+        batchStatus = 'inventory_creation'; // First 6 batches are complete
       } else if (batchIndex === 6) {
-        batchStatus = 'sort'; // Early stage
+        batchStatus = 'laser_marking'; // Almost complete
       } else if (batchIndex === 7) {
+        batchStatus = 'weigh_photo'; // Near end
+      } else if (batchIndex === 8) {
+        batchStatus = 'press'; // Mid-stage
+      } else if (batchIndex === 9) {
+        batchStatus = 'second_dry'; // Mid-stage
+      } else if (batchIndex === 10) {
+        batchStatus = 'fine_wash'; // Mid-stage
+      } else if (batchIndex === 11) {
+        batchStatus = 'first_dry'; // Early-mid stage
+      } else if (batchIndex === 12) {
+        batchStatus = 'shred'; // Early-mid stage
+      } else if (batchIndex === 13) {
+        batchStatus = 'sort'; // Early stage
+      } else if (batchIndex === 14) {
         batchStatus = 'rough_wash'; // Very early stage
       } else {
         batchStatus = 'collected'; // Just collected
@@ -352,9 +356,10 @@ export async function POST() {
         return bin && org._id.equals(bin.orgId);
       });
       
-      const blankCount = Math.floor(Math.random() * 3) + 2;
+      // Generate 8-15 blanks per completed batch for "tons of blanks"
+      const blankCount = Math.floor(Math.random() * 8) + 8;
       for (let i = 0; i < blankCount; i++) {
-        const isFinished = Math.random() > 0.3;
+        const isFinished = Math.random() > 0.4; // 60% chance of being finished/assembled
         const qrCode = generateQRCode(orgIndex, 'item');
         blanks.push({
           _id: qrCode,
