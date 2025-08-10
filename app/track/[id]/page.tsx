@@ -341,7 +341,7 @@ export default function TrackItem() {
                   <Package className="w-8 h-8 text-black" strokeWidth={1.5} />
                 </div>
                 <h3 className="systematic-caps text-sm mb-1">Awaiting Pickup</h3>
-                <p className="text-xs text-pop-gray truncate">Next collection</p>
+                <p className="text-xs text-pop-gray truncate">Active bin</p>
               </div>
             )}
 
