@@ -327,7 +327,7 @@ export default function TrackItem() {
         </div>
 
         {/* Status Timeline */}
-        {(!isSourceOnly || item.id.startsWith('T')) && (
+        {!isUncollected && (
           <div className="mb-12">
             <div className="flex gap-2 justify-center max-w-2xl mx-auto">
               <div className="text-center flex-1 max-w-[120px]">
@@ -350,7 +350,7 @@ export default function TrackItem() {
                 </p>
               </div>
 
-              {(item.transactionDate || !item.id.startsWith('T')) && (
+              {item.transactionDate && (
                 <div className="text-center flex-1 max-w-[120px]">
                   <div className="w-16 h-16 mx-auto mb-4 border-2 border-pop-black flex items-center justify-center bg-pop-red">
                     {isCharity ? (
@@ -379,8 +379,24 @@ export default function TrackItem() {
               )}
             </div>
             
-            {/* Ready for Purchase text for completed batches */}
+            {/* Status text below timeline */}
             {item.id.startsWith('T') && item.event === 'inventory_creation' && (
+              <div className="text-center mt-4">
+                <p className="text-xs text-pop-blue systematic-caps">
+                  Ready for Purchase
+                </p>
+              </div>
+            )}
+            
+            {!item.id.startsWith('T') && !isProcessed && (
+              <div className="text-center mt-4">
+                <p className="text-xs text-pop-red systematic-caps">
+                  Ready for Processing
+                </p>
+              </div>
+            )}
+            
+            {!item.id.startsWith('T') && isProcessed && !item.transactionDate && (
               <div className="text-center mt-4">
                 <p className="text-xs text-pop-blue systematic-caps">
                   Ready for Purchase
@@ -408,47 +424,6 @@ export default function TrackItem() {
                 Active Bin
               </p>
             </div>
-          </div>
-        )}
-
-        {/* Source-Only Status */}
-        {isSourceOnly && !isUncollected && !item.id.startsWith('T') && (
-          <div className="mb-12">
-            <div className="flex gap-2 justify-center max-w-2xl mx-auto">
-              <div className="text-center flex-1 max-w-[120px]">
-                <div className="w-16 h-16 mx-auto mb-4 border-2 border-pop-black flex items-center justify-center bg-pop-green">
-                  <CheckCircle className="w-8 h-8 text-pop-black" />
-                </div>
-                <h3 className="systematic-caps text-sm mb-1">Collected</h3>
-                <p className="text-xs text-pop-gray truncate">{item.collectionDate}</p>
-              </div>
-
-              {isProcessed && (
-                <div className="text-center flex-1 max-w-[120px]">
-                  <div className="w-16 h-16 mx-auto mb-4 border-2 border-pop-black flex items-center justify-center bg-pop-blue">
-                    <CheckCircle className="w-8 h-8 text-pop-black" />
-                  </div>
-                  <h3 className="systematic-caps text-sm mb-1">Processed</h3>
-                  <p className="text-xs text-pop-gray truncate">{item.processedDate}</p>
-                </div>
-              )}
-            </div>
-
-            {!isProcessed && (
-              <div className="text-center mt-4">
-                <p className="text-xs text-pop-red systematic-caps">
-                  Ready for Processing
-                </p>
-              </div>
-            )}
-
-            {isProcessed && (
-              <div className="text-center mt-4">
-                <p className="text-xs text-pop-blue systematic-caps">
-                  Ready for Purchase
-                </p>
-              </div>
-            )}
           </div>
         )}
 
