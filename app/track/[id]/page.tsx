@@ -346,7 +346,7 @@ export default function TrackItem() {
                   {item.id.startsWith('T') ? (item.event === 'inventory_creation' ? 'Processed' : 'Processing') : 'Processed'}
                 </h3>
                 <p className="text-xs text-pop-gray truncate">
-                  {item.id.startsWith('T') ? '2024-02-01' : item.processedDate}
+                  {item.id.startsWith('T') ? (item.processedDate || '2024-02-01') : item.processedDate}
                 </p>
               </div>
 
