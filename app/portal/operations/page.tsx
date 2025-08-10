@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   Package,
   Truck,
@@ -68,13 +68,26 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "../../components/ui/dialog";
-import { DataTable, Column } from "../../components/ui/data-table";
+import { DataTable, Column, EditableField } from "../../components/ui/data-table";
+import { Bin, Batch, Order, Blank } from "../../../lib/schemas";
 
 export default function OperationsPage() {
   const [activeTab, setActiveTab] = useState("collections");
   const [selectedBin, setSelectedBin] = useState(null);
   const [showScanModal, setShowScanModal] = useState(false);
   const [isLogisticsFullscreen, setIsLogisticsFullscreen] = useState(false);
+  
+  // Data state
+  const [bins, setBins] = useState<Bin[]>([]);
+  const [batches, setBatches] = useState<Batch[]>([]);
+  const [orders, setOrders] = useState<Order[]>([]);
+  const [blanks, setBlanks] = useState<Blank[]>([]);
+  
+  // Loading states
+  const [loadingBins, setLoadingBins] = useState(true);
+  const [loadingBatches, setLoadingBatches] = useState(true);
+  const [loadingOrders, setLoadingOrders] = useState(true);
+  const [loadingBlanks, setLoadingBlanks] = useState(true);
   
   // Shared sorting state for data tables
   const [collectionsSortField, setCollectionsSortField] = useState<string>("");
@@ -84,218 +97,293 @@ export default function OperationsPage() {
   const [fulfillmentSortField, setFulfillmentSortField] = useState<string>("");
   const [fulfillmentSortDirection, setFulfillmentSortDirection] = useState<"asc" | "desc">("asc");
 
-  // Mock data for Collections Queue - this should come from your MongoDB API
-  const collectionsQueue = [
-    {
-      id: "BI-7829",
-      qrCode: "QR-BI-7829",
-      orgId: "ORG-001",
-      orgName: "TechCorp",
-      location: "Floor 3 Kitchen",
-      status: "Ready for Pickup",
-      capacity: 50,
-      currentLevel: 85,
-      type: "permanent",
-      collectionDate: "2025-01-15",
-      isActive: true,
-      adoptedBy: "Engineering Team"
+  // Bin editing configuration
+  const binEditableFields: EditableField<Bin>[] = [
+    { key: '_id', label: 'Bin ID', type: 'readonly' },
+    { key: 'name', label: 'Bin Name', type: 'text', required: true, placeholder: 'Enter bin name' },
+    { key: 'location', label: 'Location', type: 'text', required: true, placeholder: 'Physical location' },
+    { 
+      key: 'type', 
+      label: 'Bin Type', 
+      type: 'select', 
+      required: true,
+      options: [
+        { value: 'permanent', label: 'Permanent' },
+        { value: 'temporary', label: 'Temporary' }
+      ]
     },
-    {
-      id: "BI-7830",
-      qrCode: "QR-BI-7830", 
-      orgId: "ORG-002",
-      orgName: "GreenOffice",
-      location: "Main Kitchen",
-      status: "Collected",
-      capacity: 30,
-      currentLevel: 100,
-      type: "permanent",
-      collectionDate: "2025-01-14",
-      isActive: true,
-      adoptedBy: null
+    { 
+      key: 'status', 
+      label: 'Status', 
+      type: 'select', 
+      required: true,
+      options: [
+        { value: 'bin_on_vehicle', label: 'On Vehicle' },
+        { value: 'bin_on_site', label: 'On Site' },
+        { value: 'ready_for_processing', label: 'Ready for Processing' }
+      ]
     },
-    {
-      id: "BI-7831",
-      qrCode: "QR-BI-7831",
-      orgId: "ORG-003", 
-      orgName: "Metro Facilities",
-      location: "Building A Lobby",
-      status: "Awaiting Rough Wash",
-      capacity: 40,
-      currentLevel: 78,
-      type: "permanent",
-      collectionDate: "2025-01-13",
-      isActive: true,
-      adoptedBy: "Facilities Team"
-    },
-    {
-      id: "BI-7832",
-      qrCode: "QR-BI-7832",
-      orgId: "ORG-004",
-      orgName: "Creative Studios",
-      location: "Event Space",
-      status: "Ready for Pickup",
-      capacity: 25,
-      currentLevel: 92,
-      type: "temporary",
-      collectionDate: "2025-01-16",
-      isActive: true,
-      adoptedBy: null
-    }
+    { key: 'capacity', label: 'Capacity (kg)', type: 'number', placeholder: 'Bin capacity in kg' },
+    { key: 'adoptedBy', label: 'Adopted By', type: 'text', placeholder: 'Team/department that adopted this bin' }
   ];
 
-  // Mock data for Processing Queue - this should come from your MongoDB API
-  const processingQueue = [
-    {
-      id: "BA-8472",
-      qrCode: "QR-BA-8472",
-      binId: "BI-7829",
-      orgName: "TechCorp",
-      collectionDate: "2025-01-15",
-      weight: 45,
-      materialType: "HDPE",
-      collectedBy: "Mike Chen",
-      status: "collected",
-      stage: "rough_wash",
-      notes: "Large batch, mixed containers"
-    },
-    {
-      id: "BA-8471",
-      qrCode: "QR-BA-8471",
-      binId: "BI-7830",
-      orgName: "GreenOffice",
-      collectionDate: "2025-01-14",
-      weight: 32,
-      materialType: "PET",
-      collectedBy: "Sarah Kim",
-      status: "sorted",
-      stage: "sorting",
-      notes: "Clean bottles mostly"
-    },
-    {
-      id: "BA-8470",
-      qrCode: "QR-BA-8470",
-      binId: "BI-7831",
-      orgName: "Metro Facilities",
-      collectionDate: "2025-01-13",
-      weight: 28,
-      materialType: "mixed",
-      collectedBy: "Alex Rivera",
-      status: "cleaned",
-      stage: "shredding",
-      notes: "Ready for processing"
-    },
-    {
-      id: "BA-8469",
-      qrCode: "QR-BA-8469",
-      binId: "BI-7832",
-      orgName: "Creative Studios",
-      collectionDate: "2025-01-12",
-      weight: 38,
-      materialType: "PP",
-      collectedBy: "Mike Chen",
-      status: "processed",
-      stage: "complete",
-      notes: "High quality material"
+  const handleBinSave = async (bin: Bin) => {
+    try {
+      const response = await fetch('/api/operations/bins', {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(bin)
+      })
+      
+      if (response.ok) {
+        await fetchBins()
+      } else {
+        throw new Error('Failed to save bin')
+      }
+    } catch (error) {
+      console.error('Error saving bin:', error)
+      throw error
     }
+  }
+
+  const handleBinDelete = async (bin: Bin) => {
+    try {
+      const response = await fetch(`/api/operations/bins?id=${bin._id}`, {
+        method: 'DELETE'
+      })
+      
+      if (response.ok) {
+        await fetchBins()
+      } else {
+        throw new Error('Failed to delete bin')
+      }
+    } catch (error) {
+      console.error('Error deleting bin:', error)
+      throw error
+    }
+  }
+
+  // Batch editing configuration
+  const batchEditableFields: EditableField<Batch>[] = [
+    { key: '_id', label: 'Batch ID', type: 'readonly' },
+    { key: 'binId', label: 'Bin ID', type: 'text', required: true, placeholder: 'Source bin ID' },
+    { key: 'weight', label: 'Weight (kg)', type: 'number', required: true, placeholder: 'Weight in kg' },
+    { 
+      key: 'materialType', 
+      label: 'Material Type', 
+      type: 'select', 
+      required: true,
+      options: [
+        { value: 'HDPE', label: 'HDPE' },
+        { value: 'PET', label: 'PET' },
+        { value: 'PP', label: 'PP' },
+        { value: 'mixed', label: 'Mixed' }
+      ]
+    },
+    { 
+      key: 'status', 
+      label: 'Processing Status', 
+      type: 'select', 
+      required: true,
+      options: [
+        { value: 'collected', label: 'Collected' },
+        { value: 'rough_wash', label: 'Rough Wash' },
+        { value: 'sort', label: 'Sort' },
+        { value: 'first_dry', label: 'First Dry' },
+        { value: 'shred', label: 'Shred' },
+        { value: 'fine_wash', label: 'Fine Wash' },
+        { value: 'second_dry', label: 'Second Dry' },
+        { value: 'press', label: 'Press' },
+        { value: 'weigh_photo', label: 'Weigh & Photo' },
+        { value: 'laser_marking', label: 'Laser Marking' },
+        { value: 'inventory_creation', label: 'Inventory Creation' }
+      ]
+    },
+    { key: 'collectedBy', label: 'Collected By', type: 'text', required: true, placeholder: 'Collector name' },
+    { key: 'notes', label: 'Notes', type: 'textarea', placeholder: 'Processing notes' }
   ];
 
-  // Mock data for Fulfillment Queue - this should come from your MongoDB API
-  const fulfillmentQueue = [
-    {
-      id: "ORD-2847",
-      qrCode: "QR-ORD-2847",
-      customerName: "GreenTech Corp",
-      itemType: "Phone Stand",
-      quantity: 3,
-      dueDate: "2025-01-17",
-      status: "urgent",
-      priority: "high",
-      assignedMaker: null,
-      batchId: "BA-8472",
-      notes: "Rush order - customer pickup"
-    },
-    {
-      id: "ORD-2846",
-      qrCode: "QR-ORD-2846",
-      customerName: "Metro Facilities",
-      itemType: "Desk Organizer",
-      quantity: 1,
-      dueDate: "2025-01-18",
-      status: "assembly",
-      priority: "medium",
-      assignedMaker: "Jordan Kim",
-      batchId: "BA-8471",
-      notes: "Standard assembly timeline"
-    },
-    {
-      id: "ORD-2845",
-      qrCode: "QR-ORD-2845",
-      customerName: "Creative Studios",
-      itemType: "Plant Holder",
-      quantity: 2,
-      dueDate: "2025-01-21",
-      status: "ready",
-      priority: "medium",
-      assignedMaker: null,
-      batchId: "BA-8470",
-      notes: "Materials ready for assembly"
-    },
-    {
-      id: "ORD-2844",
-      qrCode: "QR-ORD-2844",
-      customerName: "TechCorp",
-      itemType: "Desk Organizer",
-      quantity: 1,
-      dueDate: "2025-01-20",
-      status: "shipping",
-      priority: "low",
-      assignedMaker: "Maria Santos",
-      batchId: "BA-8469",
-      notes: "Completed, ready for shipment"
-    },
-    {
-      id: "ORD-2843",
-      qrCode: "QR-ORD-2843",
-      customerName: "GreenOffice",
-      itemType: "Phone Stand",
-      quantity: 2,
-      dueDate: "2025-01-19",
-      status: "shipped",
-      priority: "low",
-      assignedMaker: "Alex Chen",
-      batchId: "BA-8468",
-      notes: "Delivered successfully"
+  const handleBatchSave = async (batch: Batch) => {
+    try {
+      const response = await fetch('/api/operations/batches', {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(batch)
+      })
+      
+      if (response.ok) {
+        await fetchBatches()
+      } else {
+        throw new Error('Failed to save batch')
+      }
+    } catch (error) {
+      console.error('Error saving batch:', error)
+      throw error
     }
+  }
+
+  const handleBatchDelete = async (batch: Batch) => {
+    try {
+      const response = await fetch(`/api/operations/batches?id=${batch._id}`, {
+        method: 'DELETE'
+      })
+      
+      if (response.ok) {
+        await fetchBatches()
+      } else {
+        throw new Error('Failed to delete batch')
+      }
+    } catch (error) {
+      console.error('Error deleting batch:', error)
+      throw error
+    }
+  }
+
+  // Order editing configuration  
+  const orderEditableFields: EditableField<Order>[] = [
+    { key: '_id', label: 'Order ID', type: 'readonly' },
+    { key: 'orderNumber', label: 'Order Number', type: 'text', required: true, placeholder: 'ORD-YYYY-XXX' },
+    { 
+      key: 'type', 
+      label: 'Order Type', 
+      type: 'select', 
+      required: true,
+      options: [
+        { value: 'collection_service', label: 'Collection Service' },
+        { value: 'product_delivery', label: 'Product Delivery' },
+        { value: 'educational_workshop', label: 'Educational Workshop' },
+        { value: 'consulting', label: 'Consulting' }
+      ]
+    },
+    { 
+      key: 'status', 
+      label: 'Status', 
+      type: 'select', 
+      required: true,
+      options: [
+        { value: 'pending', label: 'Pending' },
+        { value: 'in_progress', label: 'In Progress' },
+        { value: 'completed', label: 'Completed' },
+        { value: 'invoiced', label: 'Invoiced' },
+        { value: 'cancelled', label: 'Cancelled' }
+      ]
+    },
+    { key: 'serviceDescription', label: 'Service Description', type: 'textarea', required: true, placeholder: 'Describe the service or products' },
+    { key: 'subtotal', label: 'Subtotal', type: 'number', required: true, placeholder: 'Amount before tax' },
+    { key: 'tax', label: 'Tax', type: 'number', placeholder: 'Tax amount' },
+    { key: 'total', label: 'Total', type: 'number', required: true, placeholder: 'Total amount' },
+    { key: 'contractReference', label: 'Contract Reference', type: 'text', placeholder: 'Contract/agreement reference' }
   ];
 
-  // Column definitions for DataTable components
-  const collectionsColumns: Column<any>[] = [
-    { key: "id", header: "Bin ID" },
-    { key: "orgName", header: "Organization" },
+  const handleOrderSave = async (order: Order) => {
+    try {
+      const response = await fetch('/api/operations/orders', {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(order)
+      })
+      
+      if (response.ok) {
+        await fetchOrders()
+      } else {
+        throw new Error('Failed to save order')
+      }
+    } catch (error) {
+      console.error('Error saving order:', error)
+      throw error
+    }
+  }
+
+  const handleOrderDelete = async (order: Order) => {
+    try {
+      const response = await fetch(`/api/operations/orders?id=${order._id}`, {
+        method: 'DELETE'
+      })
+      
+      if (response.ok) {
+        await fetchOrders()
+      } else {
+        throw new Error('Failed to delete order')
+      }
+    } catch (error) {
+      console.error('Error deleting order:', error)
+      throw error
+    }
+  }
+
+  // Blank editing configuration
+  const blankEditableFields: EditableField<Blank>[] = [
+    { key: '_id', label: 'Blank ID', type: 'readonly' },
+    { key: 'batchId', label: 'Batch ID', type: 'text', required: true, placeholder: 'Source batch ID' },
+    { 
+      key: 'type', 
+      label: 'Type', 
+      type: 'select', 
+      required: true,
+      options: [
+        { value: 'blank', label: 'Blank' },
+        { value: 'finished', label: 'Finished Product' }
+      ]
+    },
+    { 
+      key: 'status', 
+      label: 'Status', 
+      type: 'select', 
+      required: true,
+      options: [
+        { value: 'blank', label: 'Blank' },
+        { value: 'assembled', label: 'Assembled' },
+        { value: 'delivered', label: 'Delivered' }
+      ]
+    },
+    { key: 'weight', label: 'Weight (kg)', type: 'number', required: true, placeholder: 'Weight in kg' }
+  ];
+
+  const handleBlankSave = async (blank: Blank) => {
+    try {
+      const response = await fetch('/api/operations/blanks', {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(blank)
+      })
+      
+      if (response.ok) {
+        await fetchBlanks()
+      } else {
+        throw new Error('Failed to save blank')
+      }
+    } catch (error) {
+      console.error('Error saving blank:', error)
+      throw error
+    }
+  }
+
+  const handleBlankDelete = async (blank: Blank) => {
+    try {
+      const response = await fetch(`/api/operations/blanks?id=${blank._id}`, {
+        method: 'DELETE'
+      })
+      
+      if (response.ok) {
+        await fetchBlanks()
+      } else {
+        throw new Error('Failed to delete blank')
+      }
+    } catch (error) {
+      console.error('Error deleting blank:', error)
+      throw error
+    }
+  }
+
+  // Column definitions updated for MongoDB data structure
+  const collectionsColumns: Column<Bin>[] = [
+    { key: "_id", header: "Bin ID" },
+    { key: "name", header: "Bin Name" },
     { key: "location", header: "Location" },
     { 
       key: "status", 
       header: "Status",
       render: (item) => getStatusBadge(item.status)
-    },
-    { 
-      key: "currentLevel", 
-      header: "Capacity",
-      render: (item) => (
-        <div className="flex items-center gap-2">
-          <div className="w-20 bg-gray-200 rounded-full h-2">
-            <div 
-              className={`h-2 rounded-full ${
-                item.currentLevel >= 85 ? 'bg-pop-red' : 
-                item.currentLevel >= 60 ? 'bg-orange-500' : 'bg-pop-green'
-              }`}
-              style={{ width: `${item.currentLevel}%` }}
-            ></div>
-          </div>
-          <span className="text-sm text-gray-600">{item.currentLevel}%</span>
-        </div>
-      )
     },
     { 
       key: "type", 
@@ -305,16 +393,17 @@ export default function OperationsPage() {
           {item.type}
         </Badge>
       )
-    }
+    },
+    { key: "capacity", header: "Capacity (kg)" }
   ];
 
-  const processingColumns: Column<any>[] = [
-    { key: "id", header: "Batch ID" },
-    { key: "orgName", header: "Organization" },
+  const processingColumns: Column<Batch>[] = [
+    { key: "_id", header: "Batch ID" },
+    { key: "binId", header: "Source Bin" },
     { 
       key: "weight", 
       header: "Weight",
-      render: (item) => `${item.weight} lbs`
+      render: (item) => `${item.weight} kg`
     },
     { 
       key: "materialType", 
@@ -329,17 +418,21 @@ export default function OperationsPage() {
     { key: "collectedBy", header: "Collector" }
   ];
 
-  const fulfillmentColumns: Column<any>[] = [
-    { key: "id", header: "Order ID" },
-    { key: "customerName", header: "Customer" },
-    { key: "itemType", header: "Item" },
-    { key: "quantity", header: "Qty" },
+  const fulfillmentColumns: Column<Order>[] = [
+    { key: "_id", header: "Order ID" },
+    { key: "orderNumber", header: "Order Number" },
+    { key: "type", header: "Order Type" },
+    { key: "serviceDescription", header: "Description" },
     { 
       key: "status", 
       header: "Status",
       render: (item) => getFulfillmentStatusBadge(item.status)
     },
-    { key: "dueDate", header: "Due Date" }
+    { 
+      key: "total", 
+      header: "Total",
+      render: (item) => `$${item.total?.toFixed(2) || '0.00'}`
+    }
   ];
 
   // Modal render functions
@@ -807,20 +900,28 @@ export default function OperationsPage() {
         {/* Collections Tab */}
         <TabsContent value="collections" className="space-y-6">
           {/* Collections Queue */}
-          <DataTable
-            title="Collections Queue"
-            description="Live status overview of all bins assigned for pickup and collected materials awaiting processing"
-            icon={<Package className="h-5 w-5 text-pop-green" />}
-            data={collectionsQueue}
-            columns={collectionsColumns}
-            renderModal={renderCollectionsModal}
-            sortField={collectionsSortField}
-            sortDirection={collectionsSortDirection}
-            onSort={(field, direction) => {
-              setCollectionsSortField(field);
-              setCollectionsSortDirection(direction);
-            }}
-          />
+          {loadingBins ? (
+            <div className="flex items-center justify-center p-8">
+              <div className="text-sm text-gray-600">Loading bins...</div>
+            </div>
+          ) : (
+            <DataTable
+              title="Collections Queue"
+              description="Live status overview of all bins assigned for pickup and collected materials awaiting processing"
+              icon={<Package className="h-5 w-5 text-pop-green" />}
+              data={bins}
+              columns={collectionsColumns}
+              editableFields={binEditableFields}
+              onSave={handleBinSave}
+              onDelete={handleBinDelete}
+              sortField={collectionsSortField}
+              sortDirection={collectionsSortDirection}
+              onSort={(field, direction) => {
+                setCollectionsSortField(field);
+                setCollectionsSortDirection(direction);
+              }}
+            />
+          )}
 
           {/* Collections Workflow Diagram */}
           <Card>
@@ -1087,20 +1188,28 @@ export default function OperationsPage() {
         {/* Processing Tab */}
         <TabsContent value="processing" className="space-y-6">
           {/* Processing Queue */}
-          <DataTable
-            title="Processing Queue"
-            description="Live status overview of all batches in various processing stages"
-            icon={<Settings className="h-5 w-5 text-pop-blue" />}
-            data={processingQueue}
-            columns={processingColumns}
-            renderModal={renderProcessingModal}
-            sortField={processingSortField}
-            sortDirection={processingSortDirection}
-            onSort={(field, direction) => {
-              setProcessingSortField(field);
-              setProcessingSortDirection(direction);
-            }}
-          />
+          {loadingBatches ? (
+            <div className="flex items-center justify-center p-8">
+              <div className="text-sm text-gray-600">Loading batches...</div>
+            </div>
+          ) : (
+            <DataTable
+              title="Processing Queue"
+              description="Live status overview of all batches in various processing stages"
+              icon={<Settings className="h-5 w-5 text-pop-blue" />}
+              data={batches}
+              columns={processingColumns}
+              editableFields={batchEditableFields}
+              onSave={handleBatchSave}
+              onDelete={handleBatchDelete}
+              sortField={processingSortField}
+              sortDirection={processingSortDirection}
+              onSort={(field, direction) => {
+                setProcessingSortField(field);
+                setProcessingSortDirection(direction);
+              }}
+            />
+          )}
 
           {/* Processing Workflow Diagram */}
           <Card>
@@ -1808,20 +1917,28 @@ export default function OperationsPage() {
         {/* Fulfillment Tab */}
         <TabsContent value="fulfillment" className="space-y-6">
           {/* Fulfillment Queue */}
-          <DataTable
-            title="Order Queue"
-            description="Customer orders and maker assignments with fulfillment status tracking"
-            icon={<Users className="h-5 w-5 text-pop-green" />}
-            data={fulfillmentQueue}
-            columns={fulfillmentColumns}
-            renderModal={renderFulfillmentModal}
-            sortField={fulfillmentSortField}
-            sortDirection={fulfillmentSortDirection}
-            onSort={(field, direction) => {
-              setFulfillmentSortField(field);
-              setFulfillmentSortDirection(direction);
-            }}
-          />
+          {loadingOrders ? (
+            <div className="flex items-center justify-center p-8">
+              <div className="text-sm text-gray-600">Loading orders...</div>
+            </div>
+          ) : (
+            <DataTable
+              title="Order Queue"
+              description="Customer orders and maker assignments with fulfillment status tracking"
+              icon={<Users className="h-5 w-5 text-pop-green" />}
+              data={orders}
+              columns={fulfillmentColumns}
+              editableFields={orderEditableFields}
+              onSave={handleOrderSave}
+              onDelete={handleOrderDelete}
+              sortField={fulfillmentSortField}
+              sortDirection={fulfillmentSortDirection}
+              onSort={(field, direction) => {
+                setFulfillmentSortField(field);
+                setFulfillmentSortDirection(direction);
+              }}
+            />
+          )}
 
             <Card>
               <CardHeader>
@@ -2011,9 +2128,11 @@ export default function OperationsPage() {
                     title="Collections Queue"
                     description="Live status overview of all bins assigned for pickup and collected materials awaiting processing"
                     icon={<Package className="h-5 w-5 text-pop-green" />}
-                    data={collectionsQueue}
+                    data={bins}
                     columns={collectionsColumns}
-                    renderModal={renderCollectionsModal}
+                    editableFields={binEditableFields}
+                    onSave={handleBinSave}
+                    onDelete={handleBinDelete}
                     sortField={collectionsSortField}
                     sortDirection={collectionsSortDirection}
                     onSort={(field, direction) => {
@@ -2029,9 +2148,11 @@ export default function OperationsPage() {
                     title="Processing Queue"
                     description="Active batches moving through sorting, cleaning, and shredding stages"
                     icon={<Settings className="h-5 w-5 text-pop-green" />}
-                    data={processingQueue}
+                    data={batches}
                     columns={processingColumns}
-                    renderModal={renderProcessingModal}
+                    editableFields={batchEditableFields}
+                    onSave={handleBatchSave}
+                    onDelete={handleBatchDelete}
                     sortField={processingSortField}
                     sortDirection={processingSortDirection}
                     onSort={(field, direction) => {
@@ -2047,9 +2168,11 @@ export default function OperationsPage() {
                     title="Fulfillment Queue"
                     description="Customer orders and maker assignments for item assembly and delivery"
                     icon={<Truck className="h-5 w-5 text-pop-green" />}
-                    data={fulfillmentQueue}
+                    data={orders}
                     columns={fulfillmentColumns}
-                    renderModal={renderFulfillmentModal}
+                    editableFields={orderEditableFields}
+                    onSave={handleOrderSave}
+                    onDelete={handleOrderDelete}
                     sortField={fulfillmentSortField}
                     sortDirection={fulfillmentSortDirection}
                     onSort={(field, direction) => {
