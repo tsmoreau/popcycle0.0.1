@@ -452,7 +452,7 @@ export default function AdminPage() {
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-3">
                   <Database className="h-5 w-5 text-pop-green" />
-                  <span className="font-medium">Production Stations</span>
+                  <span className="font-medium">Production Station Configuration</span>
                 </div>
                 <ChevronDown className={`h-5 w-5 text-gray-400 transition-transform ${showProductionStations ? 'rotate-180' : ''}`} />
               </div>
@@ -490,7 +490,7 @@ export default function AdminPage() {
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-3">
                   <QrCode className="h-5 w-5 text-pop-green" />
-                  <span className="font-medium">QR Code Generation Settings</span>
+                  <span className="font-medium">QR Code Generation Configuration</span>
                 </div>
                 <ChevronDown className={`h-5 w-5 text-gray-400 transition-transform ${showQRSettings ? 'rotate-180' : ''}`} />
               </div>
