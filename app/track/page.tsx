@@ -68,7 +68,7 @@ export default function Track() {
         codes = sampleCodes.bins.filter(bin => bin.isActive).map(bin => ({ id: bin.id, type: "active bin", name: bin.name }));
         break;
       case "COLLECTED BATCHES":
-        codes = sampleCodes.batches.filter(batch => batch.status === 'collected').map(batch => ({ id: batch.id, type: "collected batch" }));
+        codes = sampleCodes.batches.map(batch => ({ id: batch.id, type: "processing batch" }));
         break;
       case "PRESSED BLANKS":
         codes = sampleCodes.blanks.filter(blank => blank.status === 'blank').map(blank => ({ id: blank.id, type: "pressed blank" }));
