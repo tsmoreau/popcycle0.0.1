@@ -827,7 +827,7 @@ export default function TrackItem() {
                 <CardHeader>
                   <CardTitle className="systematic-caps flex items-center justify-center text-2xl">
                     <Building className="w-6 h-6 mr-2" />
-                    {isProcessed ? "Processing Complete" : "Collection Complete"}
+                    {isProcessed ? "Processing Complete" : "Plastic Collected"}
                   </CardTitle>
                 </CardHeader>
                 <CardContent className="text-center py-8">
