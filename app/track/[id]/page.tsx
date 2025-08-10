@@ -365,7 +365,7 @@ export default function TrackItem() {
                   <h3 className="systematic-caps text-sm mb-1">
                     {isCharity ? "Donated" : "Purchased"}
                   </h3>
-                  <p className="text-xs text-pop-gray truncate">{item.transactionDate}</p>
+                  <p className="text-xs text-pop-gray truncate">{item.deliveryDate || '2025-02-01'}</p>
                 </div>
               )}
 
