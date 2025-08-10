@@ -8,7 +8,8 @@ function encodePartnerBase36(partnerId: number): string {
 
 // Generate QR code IDs with partner branding and randomized sequences
 function generateQRCode(partnerIndex: number, type: 'bin' | 'batch' | 'item'): string {
-  const partnerHash = encodePartnerBase36(partnerIndex + 1); // Start from 1
+  // PopCycle (index 0) gets "000", partners start from "001"
+  const partnerHash = partnerIndex === 0 ? '000' : encodePartnerBase36(partnerIndex);
   const typePrefix = {
     bin: 'BIN',
     batch: 'BAT', 
@@ -40,6 +41,27 @@ export async function POST() {
     
     // Generate Organizations (Partners)
     const orgs = [
+      {
+        _id: new ObjectId(),
+        name: 'PopCycle',
+        slug: 'popcycle',
+        type: 'corporate' as const,
+        description: 'Circular plastic waste tracking and recycling management system',
+        contactInfo: {
+          email: 'hello@popcycle.org',
+          phone: '(555) 000-0000',
+          address: 'Los Angeles, CA',
+          website: 'https://www.popcycle.org'
+        },
+        branding: {
+          primaryColor: '#00C851',
+          secondaryColor: '#0074D9',
+          trackingPageMessage: 'Welcome to PopCycle! Track your plastic items through their circular journey from waste to product.'
+        },
+        events: [],
+        createdAt: new Date(),
+        updatedAt: new Date()
+      },
       {
         _id: new ObjectId(),
         name: 'Discovery Cube',
@@ -121,19 +143,26 @@ export async function POST() {
     // Generate Bins with QR codes
     const bins: any[] = [];
     orgs.forEach((org, orgIndex) => {
-      const binCount = orgIndex === 0 ? 3 : 2;
+      const binCount = orgIndex === 0 ? 3 : 2; // PopCycle gets 3 bins, others get 2
       for (let i = 0; i < binCount; i++) {
         const qrCode = generateQRCode(orgIndex, 'bin');
+        
+        // Calculate collection dates - last collection 1-10 days ago, next collection 1-7 days from now
+        const lastCollectionDate = new Date(Date.now() - Math.random() * 10 * 24 * 60 * 60 * 1000);
+        const nextCollectionDate = new Date(Date.now() + Math.random() * 7 * 24 * 60 * 60 * 1000);
+        
         bins.push({
           _id: qrCode,
           orgId: org._id,
           name: `${org.name} Bin ${i + 1}`,
-          type: orgIndex === 0 ? 'permanent' as const : 'temporary' as const,
+          type: orgIndex === 0 ? 'permanent' as const : (orgIndex === 1 ? 'permanent' as const : 'temporary' as const),
           location: i === 0 ? 'Main Entrance' : `Location ${String.fromCharCode(65 + i)}`,
           capacity: 50,
           isActive: true,
           canBeAdopted: true,
           adoptedBy: i === 0 ? 'Education Team' : undefined,
+          lastCollectionDate,
+          nextCollectionDate,
           createdAt: new Date(),
           updatedAt: new Date()
         });

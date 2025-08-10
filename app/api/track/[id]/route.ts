@@ -65,6 +65,8 @@ export async function GET(
         isActive: record.isActive,
         canBeAdopted: record.canBeAdopted,
         adoptedBy: record.adoptedBy,
+        lastCollectionDate: record.lastCollectionDate,
+        nextCollectionDate: record.nextCollectionDate,
         organization: org ? {
           name: org.name,
           type: org.type,

@@ -53,6 +53,8 @@ export interface Bin {
   isActive: boolean;
   canBeAdopted: boolean; // Whether teams/departments can "adopt" and name this bin
   adoptedBy?: string; // Team/department that adopted this bin
+  lastCollectionDate?: Date; // When this bin was last emptied
+  nextCollectionDate?: Date; // Scheduled next collection
   createdAt: Date;
   updatedAt: Date;
 }
