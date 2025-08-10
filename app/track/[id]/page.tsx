@@ -27,6 +27,7 @@ import {
   Plus,
   HeartHandshake,
   Circle,
+  Clock,
 } from "lucide-react";
 
 interface MakerDetails {
@@ -288,7 +289,7 @@ export default function TrackItem() {
         </div>
 
         {/* Status Timeline */}
-        {!isSourceOnly && (
+        {!isUncollected && (
           <div className="mb-12">
             <div className="flex gap-2 justify-center max-w-2xl mx-auto">
               <div className="text-center flex-1 max-w-[120px]">
@@ -300,25 +301,48 @@ export default function TrackItem() {
               </div>
 
               <div className="text-center flex-1 max-w-[120px]">
-                <div className="w-16 h-16 mx-auto mb-4 border-2 border-pop-black flex items-center justify-center bg-pop-blue">
-                  <CheckCircle className="w-8 h-8 text-pop-black" />
+                <div className={`w-16 h-16 mx-auto mb-4 border-2 border-pop-black flex items-center justify-center ${
+                  item.id.startsWith('T') && item.event === 'completed' ? 'bg-pop-blue' : 
+                  item.id.startsWith('T') && item.event && item.event !== 'collected' ? 'bg-pop-blue' : 
+                  isProcessed ? 'bg-pop-blue' : 'bg-gray-200'
+                }`}>
+                  {(item.id.startsWith('T') && item.event && item.event !== 'collected') || isProcessed ? (
+                    <CheckCircle className="w-8 h-8 text-pop-black" />
+                  ) : (
+                    <Clock className="w-8 h-8 text-gray-400" />
+                  )}
                 </div>
-                <h3 className="systematic-caps text-sm mb-1">Processed</h3>
-                <p className="text-xs text-pop-gray truncate">{item.processedDate}</p>
+                <h3 className="systematic-caps text-sm mb-1">
+                  {item.id.startsWith('T') ? getBatchStatusLabel(item.event || 'collected') : 'Processed'}
+                </h3>
+                <p className="text-xs text-pop-gray truncate">
+                  {item.id.startsWith('T') && item.event && item.event !== 'collected' ? 
+                    'In Progress' : 
+                    item.processedDate || 'Awaiting Processing'
+                  }
+                </p>
               </div>
 
               <div className="text-center flex-1 max-w-[120px]">
-                <div className="w-16 h-16 mx-auto mb-4 border-2 border-pop-black flex items-center justify-center bg-pop-red">
-                  {isCharity ? (
-                    <HeartHandshake className="w-8 h-8 text-pop-black" />
+                <div className={`w-16 h-16 mx-auto mb-4 border-2 border-pop-black flex items-center justify-center ${
+                  item.transactionDate ? 'bg-pop-red' : 'bg-gray-200'
+                }`}>
+                  {item.transactionDate ? (
+                    isCharity ? (
+                      <HeartHandshake className="w-8 h-8 text-pop-black" />
+                    ) : (
+                      <CheckCircle className="w-8 h-8 text-pop-black" />
+                    )
                   ) : (
-                    <CheckCircle className="w-8 h-8 text-pop-black" />
+                    <Clock className="w-8 h-8 text-gray-400" />
                   )}
                 </div>
                 <h3 className="systematic-caps text-sm mb-1">
                   {isCharity ? "Donated" : "Purchased"}
                 </h3>
-                <p className="text-xs text-pop-gray truncate">{item.transactionDate}</p>
+                <p className="text-xs text-pop-gray truncate">
+                  {item.transactionDate || 'Awaiting Sale'}
+                </p>
               </div>
 
               {hasMaker && (
