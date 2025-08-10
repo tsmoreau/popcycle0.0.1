@@ -331,112 +331,72 @@ export default function TrackItem() {
           </PopArtContainer>
         </div>
 
-        {/* Status Timeline */}
-        {!isUncollected && (
-          <div className="mb-12">
-            <div className="flex gap-2 justify-center max-w-2xl mx-auto">
-              {/* Step 1: Collected */}
-              <div className="text-center flex-1 max-w-[120px]">
-                <div className="w-16 h-16 mx-auto mb-4 border-2 border-pop-black flex items-center justify-center bg-pop-green">
-                  <CheckCircle className="w-8 h-8 text-pop-black" />
-                </div>
-                <h3 className="systematic-caps text-sm mb-1">Collected</h3>
-                <p className="text-xs text-pop-gray truncate">{item.collectionDate}</p>
-              </div>
-
-              {/* Step 2: Processing/Processed - only for batches and blanks, not bins */}
-              {!item.id.startsWith('B') && (
-                <div className="text-center flex-1 max-w-[120px]">
-                  <div className="w-16 h-16 mx-auto mb-4 border-2 border-pop-black flex items-center justify-center bg-pop-blue">
-                    <CheckCircle className="w-8 h-8 text-pop-black" />
-                  </div>
-                  <h3 className="systematic-caps text-sm mb-1">
-                    {item.id.startsWith('T') ? (item.event === 'inventory_creation' ? 'Processed' : 'Processing') : 'Processed'}
-                  </h3>
-                  <p className="text-xs text-pop-gray truncate">
-                    {item.id.startsWith('T') ? (item.processedDate || '2024-02-01') : item.processedDate}
-                  </p>
-                </div>
-              )}
-
-              {/* Step 3: Purchased/Donated - only if productId exists */}
-              {item.productId && (
-                <div className="text-center flex-1 max-w-[120px]">
-                  <div className="w-16 h-16 mx-auto mb-4 border-2 border-pop-black flex items-center justify-center bg-pop-red">
-                    {isCharity ? (
-                      <HeartHandshake className="w-8 h-8 text-pop-black" />
-                    ) : (
-                      <CheckCircle className="w-8 h-8 text-pop-black" />
-                    )}
-                  </div>
-                  <h3 className="systematic-caps text-sm mb-1">
-                    {isCharity ? "Donated" : "Purchased"}
-                  </h3>
-                  <p className="text-xs text-pop-gray truncate">{item.deliveryDate || '2025-02-01'}</p>
-                </div>
-              )}
-
-              {/* Step 4: Assembled - only if userId exists */}
-              {item.userId && (
-                <div className="text-center flex-1 max-w-[120px]">
-                  <div className="w-16 h-16 mx-auto mb-4 border-2 border-pop-black flex items-center justify-center bg-pop-red">
-                    <CheckCircle className="w-8 h-8 text-pop-black" />
-                  </div>
-                  <h3 className="systematic-caps text-sm mb-1">Assembled</h3>
-                  <p className="text-xs text-pop-gray truncate">
-                    {item.makerDetails?.assemblyDate}
-                  </p>
-                </div>
-              )}
-            </div>
-            
-            {/* Status text below timeline */}
-            {item.id.startsWith('T') && item.event === 'inventory_creation' && (
-              <div className="text-center mt-4">
-                <p className="text-xs text-pop-blue systematic-caps">
-                  Ready for Purchase
-                </p>
-              </div>
-            )}
-            
-            {!item.id.startsWith('T') && !isProcessed && (
-              <div className="text-center mt-4">
-                <p className="text-xs text-pop-red systematic-caps">
-                  Ready for Processing
-                </p>
-              </div>
-            )}
-            
-            {!item.id.startsWith('T') && isProcessed && !item.transactionDate && (
-              <div className="text-center mt-4">
-                <p className="text-xs text-pop-blue systematic-caps">
-                  Ready for Purchase
-                </p>
-              </div>
-            )}
-          </div>
-        )}
-
-        {/* Uncollected Bin Status */}
-        {isUncollected && (
-          <div className="mb-12">
-            <div className="flex gap-2 justify-center max-w-2xl mx-auto">
-              <div className="text-center flex-1 max-w-[120px]">
-                <div className="w-16 h-16 mx-auto mb-4 border-2 border-pop-black flex items-center justify-center bg-pop-green">
+        {/* Unified Status Timeline */}
+        <div className="mb-12">
+          <div className="flex gap-2 justify-center max-w-2xl mx-auto">
+            {/* Step 1: Awaiting Pickup OR Collected */}
+            <div className="text-center flex-1 max-w-[120px]">
+              <div className="w-16 h-16 mx-auto mb-4 border-2 border-pop-black flex items-center justify-center bg-pop-green">
+                {isUncollected ? (
                   <Package className="w-8 h-8 text-black" strokeWidth={1.5} />
-                </div>
-                <h3 className="systematic-caps text-sm mb-1">Awaiting Collection</h3>
-                <p className="text-xs text-pop-gray truncate">2025-8-20 </p>
+                ) : (
+                  <CheckCircle className="w-8 h-8 text-pop-black" />
+                )}
               </div>
-            </div>
-
-            <div className="text-center mt-4">
-              <p className="text-xs text-pop-gray systematic-caps">
-                Active Bin
+              <h3 className="systematic-caps text-sm mb-1">
+                {isUncollected ? "Awaiting Pickup" : "Collected"}
+              </h3>
+              <p className="text-xs text-pop-gray truncate">
+                {isUncollected ? "Next collection" : item.collectionDate}
               </p>
             </div>
+
+            {/* Step 2: Processing/Processed - only show for collected items */}
+            {!isUncollected && (
+              <div className="text-center flex-1 max-w-[120px]">
+                <div className="w-16 h-16 mx-auto mb-4 border-2 border-pop-black flex items-center justify-center bg-pop-blue">
+                  <CheckCircle className="w-8 h-8 text-pop-black" />
+                </div>
+                <h3 className="systematic-caps text-sm mb-1">
+                  {item.id.startsWith('T') ? (item.event === 'inventory_creation' ? 'Processed' : 'Processing') : 'Processed'}
+                </h3>
+                <p className="text-xs text-pop-gray truncate">
+                  {item.id.startsWith('T') ? (item.processedDate || '2024-02-01') : item.processedDate}
+                </p>
+              </div>
+            )}
+
+            {/* Step 3: Purchased/Donated - only if productId exists */}
+            {item.productId && (
+              <div className="text-center flex-1 max-w-[120px]">
+                <div className="w-16 h-16 mx-auto mb-4 border-2 border-pop-black flex items-center justify-center bg-pop-red">
+                  {isCharity ? (
+                    <HeartHandshake className="w-8 h-8 text-pop-black" />
+                  ) : (
+                    <CheckCircle className="w-8 h-8 text-pop-black" />
+                  )}
+                </div>
+                <h3 className="systematic-caps text-sm mb-1">
+                  {isCharity ? "Donated" : "Purchased"}
+                </h3>
+                <p className="text-xs text-pop-gray truncate">{item.deliveryDate || '2025-02-01'}</p>
+              </div>
+            )}
+
+            {/* Step 4: Assembled - only if userId exists */}
+            {item.userId && (
+              <div className="text-center flex-1 max-w-[120px]">
+                <div className="w-16 h-16 mx-auto mb-4 border-2 border-pop-black flex items-center justify-center bg-pop-red">
+                  <CheckCircle className="w-8 h-8 text-pop-black" />
+                </div>
+                <h3 className="systematic-caps text-sm mb-1">Assembled</h3>
+                <p className="text-xs text-pop-gray truncate">
+                  {item.makerDetails?.assemblyDate}
+                </p>
+              </div>
+            )}
           </div>
-        )}
+        </div>
 
         {/* Item Details */}
         <div className="flex flex-col gap-8 mb-12 max-w-2xl mx-auto">
