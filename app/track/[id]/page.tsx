@@ -413,20 +413,21 @@ export default function TrackItem() {
                     <span className="systematic-caps text-sm">Main ID</span>
                     <span className="font-mono">{item.id}</span>
                   </div>
-                  {item.binId && (
+                  {(item.binId || sourceBin) && (
                     <div className="flex justify-between">
-                      <span className="systematic-caps text-sm">Bin ID</span>
-                      <Link href={`/track/${item.binId}`} className="font-mono text-pop-green hover:text-pop-black hover:underline">
-                        {item.binId}
-                      </Link>
-                    </div>
-                  )}
-                  {sourceBin && (
-                    <div className="flex justify-between">
-                      <span className="systematic-caps text-sm">Source Bin</span>
-                      <Link href={`/track/${sourceBin.id}`} className="font-mono text-pop-green hover:text-pop-black hover:underline">
-                        {sourceBin.id}
-                      </Link>
+                      <span className="systematic-caps text-sm">Bin IDs</span>
+                      <div className="space-y-1 text-right">
+                        {item.binId && (
+                          <Link href={`/track/${item.binId}`} className="block font-mono text-pop-green hover:text-pop-black hover:underline">
+                            {item.binId}
+                          </Link>
+                        )}
+                        {sourceBin && sourceBin.id !== item.binId && (
+                          <Link href={`/track/${sourceBin.id}`} className="block font-mono text-pop-green hover:text-pop-black hover:underline">
+                            {sourceBin.id}
+                          </Link>
+                        )}
+                      </div>
                     </div>
                   )}
                   {item.batchId && (
