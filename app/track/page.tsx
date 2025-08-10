@@ -14,7 +14,7 @@ import Link from "next/link";
 import { useState, useEffect } from "react";
 
 interface SampleQRCodes {
-  bins: Array<{ id: string; name: string; isActive: boolean }>;
+  bins: Array<{ id: string; name: string; isActive: boolean; status: string }>;
   batches: Array<{ id: string; binId: string; status: string }>;
   blanks: Array<{ id: string; batchId: string; status: string; userId?: string }>;
 }

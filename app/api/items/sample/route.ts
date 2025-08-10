@@ -19,13 +19,13 @@ export async function GET(request: Request) {
 
     if (type === 'bins') {
       items = await db.collection('bins').find({}).limit(20).toArray();
-      items = items.map(bin => ({ id: bin._id, name: bin.name }));
+      items = items.map(bin => ({ id: bin._id, name: bin.name, isActive: bin.isActive, status: bin.status }));
     } else if (type === 'batches') {
       items = await db.collection('batches').find({}).limit(20).toArray();
-      items = items.map(batch => ({ id: batch._id, binId: batch.binId }));
+      items = items.map(batch => ({ id: batch._id, binId: batch.binId, status: batch.status }));
     } else if (type === 'blanks') {
       items = await db.collection('blanks').find({}).limit(20).toArray();
-      items = items.map(blank => ({ id: blank._id, batchId: blank.batchId, userId: blank.userId }));
+      items = items.map(blank => ({ id: blank._id, batchId: blank.batchId, userId: blank.userId, status: blank.status }));
     } else {
       // Return all types
       const [bins, batches, blanks] = await Promise.all([
@@ -35,9 +35,9 @@ export async function GET(request: Request) {
       ]);
 
       items = {
-        bins: bins.map(bin => ({ id: bin._id, name: bin.name })),
-        batches: batches.map(batch => ({ id: batch._id, binId: batch.binId })),
-        blanks: blanks.map(blank => ({ id: blank._id, batchId: blank.batchId, userId: blank.userId }))
+        bins: bins.map(bin => ({ id: bin._id, name: bin.name, isActive: bin.isActive, status: bin.status })),
+        batches: batches.map(batch => ({ id: batch._id, binId: batch.binId, status: batch.status })),
+        blanks: blanks.map(blank => ({ id: blank._id, batchId: blank.batchId, userId: blank.userId, status: blank.status }))
       };
     }
 
