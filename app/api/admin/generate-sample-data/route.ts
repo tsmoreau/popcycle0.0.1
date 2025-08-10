@@ -123,9 +123,9 @@ export async function POST() {
     orgs.forEach((org, orgIndex) => {
       const binCount = orgIndex === 0 ? 3 : 2;
       for (let i = 0; i < binCount; i++) {
+        const qrCode = generateQRCode(orgIndex, 'bin');
         bins.push({
-          _id: new ObjectId(),
-          qrCode: generateQRCode(orgIndex, 'bin'),
+          _id: qrCode,
           orgId: org._id,
           name: `${org.name} Bin ${i + 1}`,
           type: orgIndex === 0 ? 'permanent' as const : 'temporary' as const,
@@ -152,9 +152,9 @@ export async function POST() {
         const statuses = ['collected', 'sorted', 'cleaned', 'processed'] as const;
         const collectors = ['John Smith', 'Maria Garcia', 'David Chen'];
         
+        const qrCode = generateQRCode(orgIndex, 'batch');
         batches.push({
-          _id: new ObjectId(),
-          qrCode: generateQRCode(orgIndex, 'batch'),
+          _id: qrCode,
           binId: bin._id,
           collectionDate: new Date(Date.now() - Math.random() * 30 * 24 * 60 * 60 * 1000),
           weight: Math.round((Math.random() * 20 + 5) * 10) / 10,
@@ -232,9 +232,9 @@ export async function POST() {
       const itemCount = Math.floor(Math.random() * 3) + 2;
       for (let i = 0; i < itemCount; i++) {
         const isFinished = Math.random() > 0.3;
+        const qrCode = generateQRCode(orgIndex, 'item');
         items.push({
-          _id: new ObjectId(),
-          qrCode: generateQRCode(orgIndex, 'item'),
+          _id: qrCode,
           batchId: batch._id,
           productId: isFinished ? products[Math.floor(Math.random() * products.length)]._id : undefined,
           userId: isFinished ? undefined : undefined,
@@ -377,9 +377,9 @@ export async function POST() {
     
     // Sample QR codes for demonstration
     const sampleQRCodes = {
-      bins: bins.slice(0, 3).map(b => ({ id: b._id, qrCode: b.qrCode, name: b.name })),
-      batches: batches.slice(0, 3).map(b => ({ id: b._id, qrCode: b.qrCode, binId: b.binId })),
-      items: items.slice(0, 3).map(i => ({ id: i._id, qrCode: i.qrCode, batchId: i.batchId }))
+      bins: bins.slice(0, 3).map(b => ({ id: b._id, name: b.name })),
+      batches: batches.slice(0, 3).map(b => ({ id: b._id, binId: b.binId })),
+      items: items.slice(0, 3).map(i => ({ id: i._id, batchId: i.batchId }))
     };
     
     return NextResponse.json({

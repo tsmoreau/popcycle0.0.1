@@ -60,7 +60,7 @@ export interface Bin {
 // Batch - Collection record when bins are emptied
 export interface Batch {
   _id: string; // QR code string (e.g., "002BATF3N8Q1")
-  binId: ObjectId; // Reference to Bin (inherits org provenance)
+  binId: string; // Reference to Bin QR code (inherits org provenance)
   collectionDate: Date;
   weight: number; // in kg
   materialType: 'HDPE' | 'PET' | 'PP' | 'mixed';
@@ -74,8 +74,8 @@ export interface Batch {
 
 // Item - Individual physical blank or finished product
 export interface Item {
-  _id: ObjectId;
-  batchId: ObjectId; // Reference to Batch
+  _id: string; // QR code string (e.g., "003BLKA5T6R4")
+  batchId: string; // Reference to Batch QR code
   productId?: ObjectId; // Reference to Product (if finished)
   userId?: ObjectId; // Reference to User (if assembled)
   type: 'blank' | 'finished';
@@ -164,8 +164,8 @@ export interface Order {
     unitPrice: number;
     totalPrice: number;
     // Optional references to actual items/batches/events
-    batchIds?: ObjectId[];
-    itemIds?: ObjectId[];
+    batchIds?: string[];
+    itemIds?: string[];
     productIds?: ObjectId[];
   }[];
   
