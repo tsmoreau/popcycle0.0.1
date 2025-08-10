@@ -935,8 +935,8 @@ export default function OperationsPage() {
               </div>
 
               {/* Collections Tab Fullscreen */}
-              <TabsContent value="collections" className="flex-1 overflow-y-auto px-6 pb-6">
-                <div className="space-y-6">
+              <TabsContent value="collections" className="flex-1 min-h-0">
+                <div className="h-full overflow-y-auto px-6 pb-6 space-y-6">
                   <CollectionsTabContent
                     bins={bins}
                     loadingBins={loadingBins}
@@ -952,8 +952,8 @@ export default function OperationsPage() {
               </TabsContent>
 
               {/* Processing Tab Fullscreen */}
-              <TabsContent value="processing" className="flex-1 overflow-y-auto px-6 pb-6">
-                <div className="space-y-6">
+              <TabsContent value="processing" className="flex-1 min-h-0">
+                <div className="h-full overflow-y-auto px-6 pb-6 space-y-6">
                   <ProcessingTabContent
                     batches={batches}
                     loadingBatches={loadingBatches}
@@ -969,8 +969,8 @@ export default function OperationsPage() {
               </TabsContent>
 
               {/* Fulfillment Tab Fullscreen */}
-              <TabsContent value="fulfillment" className="flex-1 overflow-y-auto px-6 pb-6">
-                <div className="space-y-6">
+              <TabsContent value="fulfillment" className="flex-1 min-h-0">
+                <div className="h-full overflow-y-auto px-6 pb-6 space-y-6">
                   <FulfillmentTabContent
                     orders={orders}
                     loadingOrders={loadingOrders}
@@ -986,8 +986,8 @@ export default function OperationsPage() {
               </TabsContent>
 
               {/* Inventory Tab Fullscreen */}
-              <TabsContent value="inventory" className="flex-1 overflow-y-auto px-6 pb-6">
-                <div className="space-y-6">
+              <TabsContent value="inventory" className="flex-1 min-h-0">
+                <div className="h-full overflow-y-auto px-6 pb-6 space-y-6">
                   <InventoryTabContent
                     blanks={blanks}
                     loadingBlanks={loadingBlanks}
