@@ -359,18 +359,30 @@ export async function POST() {
       // Generate 5-8 blanks per completed batch (6 batches = ~30-40 blanks total)
       const blankCount = Math.floor(Math.random() * 4) + 5;
       for (let i = 0; i < blankCount; i++) {
-        const isFinished = Math.random() > 0.4; // 60% chance of being finished/assembled
         const qrCode = generateQRCode(orgIndex, 'item');
+        
+        // Logical progression: blank -> purchased -> assembled
+        const hasPurchase = Math.random() > 0.3; // 70% chance of being purchased
+        const hasAssembly = hasPurchase && Math.random() > 0.4; // 60% of purchased items get assembled
+        
+        let itemType: 'blank' | 'finished' = 'blank';
+        let status: 'blank' | 'assembled' = 'blank';
+        
+        if (hasAssembly) {
+          itemType = 'finished';
+          status = 'assembled';
+        }
+        
         blanks.push({
           _id: qrCode,
           batchId: batch._id,
-          productId: isFinished ? products[Math.floor(Math.random() * products.length)]._id : null,
-          userId: isFinished ? users[Math.floor(Math.random() * users.length)]._id : null,
-          type: isFinished ? 'finished' as const : 'blank' as const,
-          status: isFinished ? 'assembled' as const : 'blank' as const,
+          productId: hasPurchase ? products[Math.floor(Math.random() * products.length)]._id : null,
+          userId: hasAssembly ? users[Math.floor(Math.random() * users.length)]._id : null,
+          type: itemType,
+          status: status,
           weight: Math.round((Math.random() * 0.5 + 0.2) * 100) / 100,
-          assemblyDate: isFinished ? new Date(Date.now() - Math.random() * 14 * 24 * 60 * 60 * 1000) : undefined,
-          deliveryDate: isFinished && Math.random() > 0.5 ? new Date(Date.now() - Math.random() * 7 * 24 * 60 * 60 * 1000) : undefined,
+          assemblyDate: hasAssembly ? new Date(Date.now() - Math.random() * 14 * 24 * 60 * 60 * 1000) : undefined,
+          deliveryDate: hasAssembly && Math.random() > 0.5 ? new Date(Date.now() - Math.random() * 7 * 24 * 60 * 60 * 1000) : undefined,
           createdAt: new Date(),
           updatedAt: new Date()
         });
