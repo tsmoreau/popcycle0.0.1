@@ -84,7 +84,7 @@ export default function TrackItem() {
           weight: data.weight || 0.5,
           processedDate: data.type === 'blank' ? '2024-02-01' : (data.processedDate || ''),
           carbonOffset: data.impactMetrics?.carbonSaved || 0,
-          productType: data.type === 'blank' ? data.itemType || 'educational_kit' : '',
+          productType: data.type === 'blank' ? 'educational_kit' : '',
           message: data.message,
           makerDetails: data.makerDetails,
           transactionDate: data.type === 'blank' && data.makerDetails ? '2024-03-01' : '',
