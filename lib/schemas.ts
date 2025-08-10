@@ -68,7 +68,7 @@ export interface Batch {
   weight: number; // in kg
   materialType: 'HDPE' | 'PET' | 'PP' | 'mixed';
   collectedBy: string; // Collector name/ID
-  status: 'collected' | 'rough_wash' | 'sort' | 'first_dry' | 'shred' | 'fine_wash' | 'second_dry' | 'press' | 'weigh_photo' | 'laser_marking' | 'completed';
+  status: 'collected' | 'rough_wash' | 'sort' | 'first_dry' | 'shred' | 'fine_wash' | 'second_dry' | 'press' | 'weigh_photo' | 'laser_marking';
   notes?: string;
   createdAt: Date;
   updatedAt: Date;
