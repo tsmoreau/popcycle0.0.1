@@ -44,7 +44,7 @@ export const CollectionsWorkflow = ({
   onSort,
 }: CollectionsWorkflowProps) => {
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 h-full flex flex-col">
       {/* Collections Queue */}
       {loadingBins ? (
         <div className="flex items-center justify-center p-8">
@@ -67,6 +67,7 @@ export const CollectionsWorkflow = ({
           sortField={collectionsSortField}
           sortDirection={collectionsSortDirection}
           onSort={onSort}
+          className="flex-1 min-h-0"
         />
       )}
 

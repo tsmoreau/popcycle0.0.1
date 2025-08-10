@@ -502,7 +502,7 @@ export function DataTable<T extends Record<string, any>>({
   const [showColumnSelector, setShowColumnSelector] = useState(false)
   
   return (
-    <Card className={className}>
+    <Card className={`${className} ${className?.includes('flex-1') ? 'h-full flex flex-col' : ''}`}>
       <CardHeader>
         <div className="flex items-center justify-between">
           <div>
