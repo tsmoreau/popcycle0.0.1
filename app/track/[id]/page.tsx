@@ -459,8 +459,13 @@ export default function TrackItem() {
                   <div className="flex justify-between">
                     <span className="systematic-caps text-sm">Status</span>
                     <Badge className={
-                      item.event === 'Weight & Photo' ? 'bg-pop-blue text-white' :
-                      item.event === 'Processed' ? 'bg-pop-green text-white' :
+                      item.event === 'Weigh & Photo' ? 'bg-indigo-500 text-white' :
+                      item.event === 'Processed' ? 'bg-green-600 text-white' :
+                      item.event === 'Rough Wash' ? 'bg-pop-blue text-white' :
+                      item.event === 'Sort' ? 'bg-pop-green text-white' :
+                      item.event === 'Shred' ? 'bg-orange-500 text-white' :
+                      item.event === 'Press' ? 'bg-purple-500 text-white' :
+                      item.event === 'Laser Marking' ? 'bg-pop-red text-white' :
                       'bg-gray-100 text-gray-800'
                     }>
                       {item.event}
