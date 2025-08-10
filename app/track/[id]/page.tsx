@@ -80,7 +80,7 @@ export default function TrackItem() {
         const mappedItem: PlasticItem = {
           id: data.id,
           originPoint: data.organization?.name || "Unknown Origin",
-          collectionDate: data.type === 'bin' ? '' : (data.collectionDate || '2024-01-15'),
+          collectionDate: data.type === 'bin' ? null : (data.collectionDate || '2024-01-15'),
           materialType: data.materialType || "Mixed Plastic",
           weight: data.weight || 0.5,
           processedDate: data.type === 'blank' ? '2024-02-01' : (data.processedDate || ''),
@@ -107,7 +107,7 @@ export default function TrackItem() {
             const batchResponse = await fetch(`/api/items/sample?type=batches&binId=${data.id}`);
             if (batchResponse.ok) {
               const batchData = await batchResponse.json();
-              setBatches(batchData);
+              setBatches(batchData.items || []);
             }
           } catch (batchErr) {
             console.log('Could not fetch batches for bin:', batchErr);
@@ -667,7 +667,7 @@ export default function TrackItem() {
         )}
 
         {/* Bin Batches List */}
-        {isUncollected && batches.length > 0 && (
+        {isUncollected && item.id.startsWith('B') && batches.length > 0 && (
           <div className="max-w-2xl mx-auto">
             <PopArtContainer color="green" shadow>
               <Card className="border-4 border-pop-black">
