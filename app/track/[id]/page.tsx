@@ -65,6 +65,8 @@ interface PlasticItem {
   deliveredDate?: string;
   donatingEntity?: string;
   destination?: string;
+  productId?: string;
+  userId?: string;
   // ID hierarchy based on processing stage
   binId?: string;
   batchId?: string;
@@ -106,6 +108,9 @@ export default function TrackItem() {
           deliveredDate: data.deliveryDate || '',
           // Store bin/batch status for display - use status field from API
           event: data.status,
+          // Map productId and userId for timeline display
+          productId: data.productId,
+          userId: data.userId,
           // Proper ID hierarchy mapping
           binId: data.type === 'batch' ? data.binId : (data.type === 'blank' ? data.binId : undefined),
           binIds: data.type === 'batch' ? data.binIds : undefined,
