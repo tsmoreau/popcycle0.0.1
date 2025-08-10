@@ -145,3 +145,47 @@ export interface Product {
   updatedAt: Date;
   
 }
+
+// Order - Internal orders connecting partners to services/products for invoicing
+export interface Order {
+  _id: ObjectId;
+  orderNumber: string; // Human-readable order ID (e.g., "ORD-2025-001")
+  orgId: ObjectId; // Reference to partner organization
+  type: 'collection_service' | 'product_delivery' | 'educational_workshop' | 'consulting';
+  status: 'pending' | 'in_progress' | 'completed' | 'invoiced' | 'cancelled';
+  
+  // Service details
+  serviceDescription: string;
+  contractReference?: string; // Reference to signed contract/agreement
+  
+  // Line items for billing
+  lineItems: {
+    itemType: 'collection' | 'processing' | 'product' | 'workshop' | 'consulting_hours';
+    description: string;
+    quantity: number;
+    unitPrice: number;
+    totalPrice: number;
+    // Optional references to actual items/batches/events
+    batchIds?: ObjectId[];
+    itemIds?: ObjectId[];
+    productIds?: ObjectId[];
+  }[];
+  
+  // Financial details
+  subtotal: number;
+  tax?: number;
+  total: number;
+  invoiceId?: string; // QuickBooks invoice reference when invoiced
+  
+  // Dates
+  orderDate: Date;
+  expectedCompletionDate?: Date;
+  completedDate?: Date;
+  invoicedDate?: Date;
+  
+  // Staff assignment
+  assignedStaff?: ObjectId[]; // References to User records
+  
+  createdAt: Date;
+  updatedAt: Date;
+}

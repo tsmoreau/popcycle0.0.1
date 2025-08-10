@@ -44,7 +44,7 @@ export async function GET() {
         listCollectionsError = error instanceof Error ? error.message : 'Unknown error'
         
         // Try alternative approach - check known collections
-        const knownCollections = ['users', 'orgs', 'bins', 'batches', 'items', 'products']
+        const knownCollections = ['users', 'orgs', 'bins', 'batches', 'items', 'products', 'orders']
         const existingCollections = []
         
         for (const collName of knownCollections) {
