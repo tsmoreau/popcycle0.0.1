@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { MongoClient, ObjectId } from 'mongodb'
 import { Order } from '../../../../lib/schemas'
 
-const uri = process.env.DATABASE_URL!
+const uri = process.env.MONGODB_URI!
 const client = new MongoClient(uri)
 
 export async function GET() {
