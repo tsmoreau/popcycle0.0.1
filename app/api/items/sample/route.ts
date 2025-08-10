@@ -6,6 +6,7 @@ export async function GET(request: Request) {
     const url = new URL(request.url);
     const type = url.searchParams.get('type');
     const binId = url.searchParams.get('binId');
+    const batchId = url.searchParams.get('batchId');
 
     const uri = process.env.MONGODB_URI;
     if (!uri) {
@@ -33,8 +34,15 @@ export async function GET(request: Request) {
         collectionDate: batch.collectionDate
       }));
     } else if (type === 'blanks') {
-      items = await db.collection('blanks').find({}).limit(20).toArray();
-      items = items.map(blank => ({ id: blank._id, batchId: blank.batchId, userId: blank.userId, status: blank.status }));
+      const query = batchId ? { batchId } : {};
+      items = await db.collection('blanks').find(query).limit(20).toArray();
+      items = items.map(blank => ({ 
+        id: blank._id, 
+        batchId: blank.batchId, 
+        userId: blank.userId, 
+        status: blank.status,
+        productId: blank.productId
+      }));
     } else {
       // Return all types
       const [bins, batches, blanks] = await Promise.all([

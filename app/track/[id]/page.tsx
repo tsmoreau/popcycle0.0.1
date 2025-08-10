@@ -65,6 +65,8 @@ export default function TrackItem() {
   const { id } = useParams();
   const [item, setItem] = useState<PlasticItem | null>(null);
   const [batches, setBatches] = useState<any[]>([]);
+  const [blanks, setBlanks] = useState<any[]>([]);
+  const [sourceBin, setSourceBin] = useState<any>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -92,8 +94,8 @@ export default function TrackItem() {
           makerDetails: data.makerDetails,
           transactionDate: data.transactionDate || '',
           deliveredDate: data.deliveryDate || '',
-          // Store bin status for display
-          event: data.type === 'bin' ? data.status : data.event,
+          // Store bin/batch status for display
+          event: data.type === 'bin' ? data.status : (data.type === 'batch' ? data.status : data.event),
           // Proper ID hierarchy mapping
           binId: data.type === 'batch' ? data.binId : (data.type === 'blank' ? data.binId : undefined),
           batchId: data.type === 'blank' ? data.batchId : undefined,
@@ -112,6 +114,29 @@ export default function TrackItem() {
             }
           } catch (batchErr) {
             console.log('Could not fetch batches for bin:', batchErr);
+          }
+        }
+        
+        // If this is a batch, fetch associated blanks and source bin
+        if (data.type === 'batch') {
+          try {
+            // Fetch blanks produced from this batch
+            const blankResponse = await fetch(`/api/items/sample?type=blanks&batchId=${data.id}`);
+            if (blankResponse.ok) {
+              const blankData = await blankResponse.json();
+              setBlanks(blankData.items || []);
+            }
+            
+            // Fetch source bin information
+            if (data.binId) {
+              const binResponse = await fetch(`/api/track/${data.binId}`);
+              if (binResponse.ok) {
+                const binData = await binResponse.json();
+                setSourceBin(binData);
+              }
+            }
+          } catch (relatedErr) {
+            console.log('Could not fetch related items for batch:', relatedErr);
           }
         }
       } catch (err) {
@@ -378,7 +403,7 @@ export default function TrackItem() {
               <CardHeader>
                 <CardTitle className="systematic-caps flex items-center">
                   <Building className="w-5 h-5 mr-2" />
-                  {item.id.startsWith('B') ? 'Bin Details' : 'Source Details'}
+                  {item.id.startsWith('B') ? 'Bin Details' : item.id.startsWith('T') ? 'Batch Details' : 'Source Details'}
                 </CardTitle>
               </CardHeader>
               <CardContent className="space-y-4">
@@ -694,6 +719,106 @@ export default function TrackItem() {
               </CardContent>
             </Card>
           </PopArtContainer>
+        )}
+
+        {/* Source Bin Display for Batches */}
+        {item.id.startsWith('T') && sourceBin && (
+          <div className="max-w-2xl mx-auto">
+            <PopArtContainer color="green" shadow>
+              <Card className="border-4 border-pop-black">
+                <CardHeader>
+                  <CardTitle className="systematic-caps flex items-center justify-center text-2xl">
+                    <Package className="w-6 h-6 mr-2" />
+                    Source Bin
+                  </CardTitle>
+                </CardHeader>
+                <CardContent className="py-6">
+                  <Link href={`/track/${sourceBin.id}`} className="block">
+                    <div className="flex justify-between items-center p-4 border border-pop-gray rounded hover:border-pop-green hover:bg-pop-green hover:bg-opacity-5 transition-colors cursor-pointer">
+                      <div>
+                        <div className="systematic-caps text-sm font-semibold text-pop-green hover:text-pop-black">
+                          {sourceBin.id}
+                        </div>
+                        <div className="text-xs text-pop-gray">
+                          {sourceBin.name} • {getBinStatusLabel(sourceBin.status)}
+                        </div>
+                      </div>
+                      <div className="text-xs text-pop-gray">
+                        {sourceBin.location}
+                      </div>
+                    </div>
+                  </Link>
+                </CardContent>
+              </Card>
+            </PopArtContainer>
+          </div>
+        )}
+
+        {/* Batch Processing Timeline */}
+        {item.id.startsWith('T') && (
+          <div className="max-w-2xl mx-auto">
+            <PopArtContainer color="blue" shadow>
+              <Card className="border-4 border-pop-black">
+                <CardHeader>
+                  <CardTitle className="systematic-caps flex items-center justify-center text-2xl">
+                    <CheckCircle className="w-6 h-6 mr-2" />
+                    Processing Status: {getBatchStatusLabel(item.event || '')}
+                  </CardTitle>
+                </CardHeader>
+                <CardContent className="py-6 text-center">
+                  <div className="text-4xl helvetica-bold text-pop-blue mb-4">
+                    {item.weight}kg
+                  </div>
+                  <div className="systematic-caps text-sm text-pop-gray mb-6">
+                    {item.materialType} Plastic
+                  </div>
+                  <p className="text-lg text-pop-gray mb-2">
+                    Current Stage: {getBatchStatusLabel(item.event || '')}
+                  </p>
+                  <p className="text-sm text-pop-gray">
+                    {item.collectionDate && `Collected: ${new Date(item.collectionDate).toLocaleDateString()}`}
+                  </p>
+                </CardContent>
+              </Card>
+            </PopArtContainer>
+          </div>
+        )}
+
+        {/* Produced Blanks List for Batches */}
+        {item.id.startsWith('T') && blanks.length > 0 && (
+          <div className="max-w-2xl mx-auto">
+            <PopArtContainer color="red" shadow>
+              <Card className="border-4 border-pop-black">
+                <CardHeader>
+                  <CardTitle className="systematic-caps flex items-center justify-center text-2xl">
+                    <Package className="w-6 h-6 mr-2" />
+                    Produced Items
+                  </CardTitle>
+                </CardHeader>
+                <CardContent className="py-6">
+                  <div className="space-y-3">
+                    {blanks.map((blank, index) => (
+                      <Link key={blank.id} href={`/track/${blank.id}`} className="block">
+                        <div className="flex justify-between items-center p-3 border border-pop-gray rounded hover:border-pop-red hover:bg-pop-red hover:bg-opacity-5 transition-colors cursor-pointer">
+                          <div>
+                            <div className="systematic-caps text-sm font-semibold text-pop-red hover:text-pop-black">
+                              {blank.id}
+                            </div>
+                            <div className="text-xs text-pop-gray">
+                              {blank.productId ? 'Assembled' : 'Available for Assembly'} • {blank.status}
+                            </div>
+                          </div>
+                          <div className="text-xs text-pop-gray">
+                            Blank Item
+                          </div>
+                        </div>
+                      </Link>
+                    ))}
+                  </div>
+                </CardContent>
+              </Card>
+            </PopArtContainer>
+          </div>
         )}
 
         {/* Bin Batches List */}
