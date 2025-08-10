@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { MongoClient } from 'mongodb';
+import { MongoClient, ObjectId } from 'mongodb';
 
 // Function to determine collection type from QR code
 function getCollectionType(qrCode: string): 'bin' | 'batch' | 'blank' | null {
@@ -45,9 +45,9 @@ export async function GET(
     
     if (collectionType === 'bin') {
       // Look up bin record
-      record = await db.collection('bins').findOne({ _id: id });
+      record = await db.collection('bins').findOne({ _id: new ObjectId(id) });
       if (record) {
-        org = await db.collection('orgs').findOne({ _id: record.orgId });
+        org = await db.collection('orgs').findOne({ _id: new ObjectId(record.orgId) });
       }
       
       if (!record) {
@@ -83,11 +83,11 @@ export async function GET(
       
     } else if (collectionType === 'batch') {
       // Look up batch record
-      record = await db.collection('batches').findOne({ _id: id });
+      record = await db.collection('batches').findOne({ _id: new ObjectId(id) });
       if (record) {
-        const bin = await db.collection('bins').findOne({ _id: record.binId });
+        const bin = await db.collection('bins').findOne({ _id: new ObjectId(record.binId) });
         if (bin) {
-          org = await db.collection('orgs').findOne({ _id: bin.orgId });
+          org = await db.collection('orgs').findOne({ _id: new ObjectId(bin.orgId) });
         }
       }
       
@@ -123,14 +123,14 @@ export async function GET(
       
     } else if (collectionType === 'blank') {
       // Look up blank record
-      record = await db.collection('blanks').findOne({ _id: id });
+      record = await db.collection('blanks').findOne({ _id: new ObjectId(id) });
       let batch = null;
       if (record) {
-        batch = await db.collection('batches').findOne({ _id: record.batchId });
+        batch = await db.collection('batches').findOne({ _id: new ObjectId(record.batchId) });
         if (batch) {
-          const bin = await db.collection('bins').findOne({ _id: batch.binId });
+          const bin = await db.collection('bins').findOne({ _id: new ObjectId(batch.binId) });
           if (bin) {
-            org = await db.collection('orgs').findOne({ _id: bin.orgId });
+            org = await db.collection('orgs').findOne({ _id: new ObjectId(bin.orgId) });
           }
         }
       }
@@ -143,7 +143,7 @@ export async function GET(
       // Get user details if assigned
       let userDetails = null;
       if (record.userId) {
-        userDetails = await db.collection('users').findOne({ _id: record.userId });
+        userDetails = await db.collection('users').findOne({ _id: new ObjectId(record.userId) });
       }
       
       await client.close();
