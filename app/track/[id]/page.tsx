@@ -332,7 +332,7 @@ export default function TrackItem() {
         </div>
 
         {/* Status Timeline */}
-        {!isUncollected && !item.id.startsWith('B') && (
+        {!isUncollected && (
           <div className="mb-12">
             <div className="flex gap-2 justify-center max-w-2xl mx-auto">
               {/* Step 1: Collected */}
@@ -344,18 +344,20 @@ export default function TrackItem() {
                 <p className="text-xs text-pop-gray truncate">{item.collectionDate}</p>
               </div>
 
-              {/* Step 2: Processing/Processed */}
-              <div className="text-center flex-1 max-w-[120px]">
-                <div className="w-16 h-16 mx-auto mb-4 border-2 border-pop-black flex items-center justify-center bg-pop-blue">
-                  <CheckCircle className="w-8 h-8 text-pop-black" />
+              {/* Step 2: Processing/Processed - only for batches and blanks, not bins */}
+              {!item.id.startsWith('B') && (
+                <div className="text-center flex-1 max-w-[120px]">
+                  <div className="w-16 h-16 mx-auto mb-4 border-2 border-pop-black flex items-center justify-center bg-pop-blue">
+                    <CheckCircle className="w-8 h-8 text-pop-black" />
+                  </div>
+                  <h3 className="systematic-caps text-sm mb-1">
+                    {item.id.startsWith('T') ? (item.event === 'inventory_creation' ? 'Processed' : 'Processing') : 'Processed'}
+                  </h3>
+                  <p className="text-xs text-pop-gray truncate">
+                    {item.id.startsWith('T') ? (item.processedDate || '2024-02-01') : item.processedDate}
+                  </p>
                 </div>
-                <h3 className="systematic-caps text-sm mb-1">
-                  {item.id.startsWith('T') ? (item.event === 'inventory_creation' ? 'Processed' : 'Processing') : 'Processed'}
-                </h3>
-                <p className="text-xs text-pop-gray truncate">
-                  {item.id.startsWith('T') ? (item.processedDate || '2024-02-01') : item.processedDate}
-                </p>
-              </div>
+              )}
 
               {/* Step 3: Purchased/Donated - only if productId exists */}
               {item.productId && (
