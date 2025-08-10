@@ -111,6 +111,13 @@ PopCycle is built as a unified Next.js PWA with MongoDB, managing all core opera
 
 ## Recent Architectural Changes
 
+### August 2025 - MongoDB Atlas Integration Complete
+- **Live Database Connection**: Successfully connected to MongoDB Atlas cluster with popcycleapp user having readWrite + dbAdmin permissions
+- **Real-time Status Monitoring**: Admin portal displays live collection count, database size, and connection status
+- **Case-sensitive Database Name**: Resolved database name case sensitivity issue (PopCycle vs popcycle)
+- **External Integrations Panel**: Added MongoDB Atlas status alongside other service integrations
+- **Database Operations Panel**: Dedicated MongoDB management section with live statistics and connection testing
+
 ### January 2025 - Operations Dashboard Enhancements
 - **Fullscreen Logistics Management**: Added ability to fullscreen the entire logistics section while maintaining tab navigation
 - **Shared State Implementation**: Modified DataTable component to support external state management
