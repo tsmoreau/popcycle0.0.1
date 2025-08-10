@@ -1334,181 +1334,7 @@ export default function OperationsPage() {
             </CardContent>
           </Card>
 
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-            <Card>
-              <CardHeader>
-                <CardTitle>Pickup Scheduling</CardTitle>
-                <CardDescription>
-                  Route optimization and calendar integration
-                </CardDescription>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <div className="space-y-2">
-                  <div className="flex items-center justify-between p-3 bg-pop-red/5 rounded-lg">
-                    <div>
-                      <span className="font-medium text-sm">
-                        TechCorp - Floor 3
-                      </span>
-                      <p className="text-xs text-gray-600">
-                        BI-7829 - 85% Full
-                      </p>
-                    </div>
-                    <Badge className="bg-pop-red text-white">Urgent</Badge>
-                  </div>
-                  <div className="flex items-center justify-between p-3 bg-pop-blue/5 rounded-lg">
-                    <div>
-                      <span className="font-medium text-sm">
-                        GreenOffice Kitchen
-                      </span>
-                      <p className="text-xs text-gray-600">BI-7830 - Ready</p>
-                    </div>
-                    <Badge className="bg-pop-blue text-white">Scheduled</Badge>
-                  </div>
-                  <div className="flex items-center justify-between p-3 bg-pop-green/5 rounded-lg">
-                    <div>
-                      <span className="font-medium text-sm">
-                        Metro Facilities A
-                      </span>
-                      <p className="text-xs text-gray-600">
-                        BI-7831 - 78% Full
-                      </p>
-                    </div>
-                    <Badge className="bg-pop-green text-white">Tomorrow</Badge>
-                  </div>
-                </div>
-                <Button className="w-full bg-pop-green hover:bg-pop-green/90">
-                  <Calendar className="h-4 w-4 mr-2" />
-                  Schedule Pickup Route
-                </Button>
-              </CardContent>
-            </Card>
-
-            <Card>
-              <CardHeader>
-                <CardTitle>Bin Network Status</CardTitle>
-                <CardDescription>Real-time capacity monitoring</CardDescription>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <div className="space-y-3">
-                  <div className="flex justify-between items-center">
-                    <span className="text-sm text-gray-600">Active Bins</span>
-                    <span className="font-medium">156 total</span>
-                  </div>
-                  <div className="flex justify-between items-center">
-                    <span className="text-sm text-gray-600">
-                      Ready for Pickup
-                    </span>
-                    <span className="font-medium text-pop-red">12 bins</span>
-                  </div>
-                  <div className="flex justify-between items-center">
-                    <span className="text-sm text-gray-600">
-                      Recently Collected
-                    </span>
-                    <span className="font-medium">8 today</span>
-                  </div>
-                  <div className="flex justify-between items-center">
-                    <span className="text-sm text-gray-600">
-                      Average Fill Rate
-                    </span>
-                    <span className="font-medium">67%</span>
-                  </div>
-                </div>
-                <Button variant="outline" className="w-full">
-                  <MapPin className="h-4 w-4 mr-2" />
-                  View Bin Map
-                </Button>
-              </CardContent>
-            </Card>
-
-            <Card>
-              <CardHeader>
-                <CardTitle>Mobile Staff Workflow</CardTitle>
-                <CardDescription>Collection team management</CardDescription>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <div className="space-y-2">
-                  <div className="flex items-center justify-between p-2 bg-gray-50 rounded">
-                    <span className="text-sm">Driver: Mike Chen</span>
-                    <Badge className="bg-pop-green text-white">
-                      Active Route
-                    </Badge>
-                  </div>
-                  <div className="flex items-center justify-between p-2 bg-gray-50 rounded">
-                    <span className="text-sm">Driver: Sarah Kim</span>
-                    <Badge variant="outline">Available</Badge>
-                  </div>
-                  <div className="flex items-center justify-between p-2 bg-gray-50 rounded">
-                    <span className="text-sm">Driver: Alex Rivera</span>
-                    <Badge className="bg-pop-blue text-white">Break</Badge>
-                  </div>
-                </div>
-                <Button variant="outline" className="w-full">
-                  View Collection Log
-                </Button>
-                <Button className="w-full bg-pop-blue hover:bg-pop-blue/90">
-                  Assign New Route
-                </Button>
-              </CardContent>
-            </Card>
-          </div>
-
-          <Card>
-            <CardHeader>
-              <CardTitle>Collection History</CardTitle>
-              <CardDescription>
-                Recent pickups and batch creation
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              <div className="space-y-3">
-                <div className="flex items-center justify-between p-3 border rounded-lg">
-                  <div>
-                    <span className="font-medium text-sm">
-                      Batch BA-8472 Created
-                    </span>
-                    <p className="text-xs text-gray-600">
-                      45 lbs from TechCorp Industries
-                    </p>
-                  </div>
-                  <div className="text-right">
-                    <span className="text-xs text-gray-500">2 hours ago</span>
-                    <p className="text-xs text-pop-green">Driver: Mike Chen</p>
-                  </div>
-                </div>
-                <div className="flex items-center justify-between p-3 border rounded-lg">
-                  <div>
-                    <span className="font-medium text-sm">
-                      Batch BA-8471 Created
-                    </span>
-                    <p className="text-xs text-gray-600">
-                      32 lbs from GreenOffice Solutions
-                    </p>
-                  </div>
-                  <div className="text-right">
-                    <span className="text-xs text-gray-500">5 hours ago</span>
-                    <p className="text-xs text-pop-green">Driver: Sarah Kim</p>
-                  </div>
-                </div>
-                <div className="flex items-center justify-between p-3 border rounded-lg">
-                  <div>
-                    <span className="font-medium text-sm">
-                      Batch BA-8470 Created
-                    </span>
-                    <p className="text-xs text-gray-600">
-                      28 lbs from Metro Facilities
-                    </p>
-                  </div>
-                  <div className="text-right">
-                    <span className="text-xs text-gray-500">1 day ago</span>
-                    <p className="text-xs text-pop-green">
-                      Driver: Alex Rivera
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
+    
 
         </TabsContent>
 
@@ -1671,413 +1497,7 @@ export default function OperationsPage() {
             </CardContent>
           </Card>
 
-          {/* Manufacturing Workflow Stations */}
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-            {/* Station 1: Rough Wash */}
-            <Card>
-              <CardHeader>
-                <CardTitle className="flex items-center">
-                  <Droplets className="h-5 w-5 mr-2 text-pop-blue" />
-                  Wash Station
-                </CardTitle>
-                <CardDescription>Initial cleaning and contaminant removal</CardDescription>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <div className="space-y-2">
-                  <Label>Current Batch</Label>
-                  <Input value="BA-8473" readOnly />
-                </div>
-                <div className="flex items-center justify-between p-3 bg-pop-blue/5 rounded-lg">
-                  <span className="text-sm">Station Status</span>
-                  <Badge className="bg-pop-blue text-white">Processing</Badge>
-                </div>
-                <div className="space-y-2">
-                  <div className="flex justify-between text-sm">
-                    <span>Progress</span>
-                    <span>78%</span>
-                  </div>
-                  <div className="w-full bg-gray-200 rounded-full h-2">
-                    <div className="bg-pop-blue h-2 rounded-full" style={{width: '78%'}}></div>
-                  </div>
-                </div>
-                <Button className="w-full bg-pop-blue hover:bg-pop-blue/90">
-                  Complete Wash Cycle
-                </Button>
-              </CardContent>
-            </Card>
-
-            {/* Station 2: Sort */}
-            <Card>
-              <CardHeader>
-                <CardTitle className="flex items-center">
-                  <Scissors className="h-5 w-5 mr-2 text-pop-green" />
-                  Sort Station
-                </CardTitle>
-                <CardDescription>Material separation and quality control</CardDescription>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <div className="space-y-2">
-                  <Label>Queue</Label>
-                  <div className="space-y-1">
-                    <div className="text-sm p-2 bg-gray-50 rounded">BA-8472 - Ready</div>
-                    <div className="text-sm p-2 bg-gray-50 rounded">BA-8471 - Ready</div>
-                  </div>
-                </div>
-                <div className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
-                  <span className="text-sm">Station Status</span>
-                  <Badge variant="outline">Idle</Badge>
-                </div>
-                <div className="grid grid-cols-2 gap-2">
-                  <Button variant="outline" size="sm">PET</Button>
-                  <Button variant="outline" size="sm">HDPE</Button>
-                  <Button variant="outline" size="sm">PP</Button>
-                  <Button variant="outline" size="sm">Reject</Button>
-                </div>
-                <Button className="w-full bg-pop-green hover:bg-pop-green/90">
-                  Start Sort Process
-                </Button>
-              </CardContent>
-            </Card>
-
-            {/* Station 3: Shred */}
-            <Card>
-              <CardHeader>
-                <CardTitle className="flex items-center">
-                  <ShredIcon className="h-5 w-5 mr-2 text-pop-red" />
-                  Shred Station
-                </CardTitle>
-                <CardDescription>Size reduction processing</CardDescription>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <div className="space-y-2">
-                  <Label>Material Input</Label>
-                  <div className="flex space-x-2">
-                    <Input placeholder="Weight (lbs)" className="flex-1" />
-                    <Button size="sm" variant="outline">Scale</Button>
-                  </div>
-                </div>
-                <div className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
-                  <span className="text-sm">Shredder Status</span>
-                  <Badge variant="outline">Ready</Badge>
-                </div>
-                <div className="space-y-2">
-                  <div className="flex justify-between text-sm">
-                    <span>Target Size</span>
-                    <span>5mm flakes</span>
-                  </div>
-                </div>
-                <Button className="w-full bg-pop-red hover:bg-pop-red/90">
-                  Start Shredding
-                </Button>
-              </CardContent>
-            </Card>
-          </div>
-
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-            {/* Station 4: Fine Wash */}
-            <Card>
-              <CardHeader>
-                <CardTitle className="flex items-center">
-                  <Droplets className="h-5 w-5 mr-2 text-pop-blue" />
-                  Fine Wash Station
-                </CardTitle>
-                <CardDescription>Post-shred cleaning and debris removal</CardDescription>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <div className="space-y-2">
-                  <Label>Current Material</Label>
-                  <Input value="PET Flakes - 5mm" readOnly />
-                </div>
-                <div className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
-                  <span className="text-sm">Station Status</span>
-                  <Badge variant="outline">Ready</Badge>
-                </div>
-                <div className="space-y-2">
-                  <div className="flex justify-between text-sm">
-                    <span>Water Temperature</span>
-                    <span>60°C</span>
-                  </div>
-                  <div className="flex justify-between text-sm">
-                    <span>Rinse Cycles</span>
-                    <span>3x planned</span>
-                  </div>
-                </div>
-                <Button className="w-full bg-pop-blue hover:bg-pop-blue/90">
-                  Start Fine Wash
-                </Button>
-              </CardContent>
-            </Card>
-
-            {/* Station 5: Dry */}
-            <Card>
-              <CardHeader>
-                <CardTitle className="flex items-center">
-                  <Wind className="h-5 w-5 mr-2 text-gray-600" />
-                  Dry Station
-                </CardTitle>
-                <CardDescription>Moisture removal</CardDescription>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <div className="space-y-2">
-                  <Label>Temperature Control</Label>
-                  <div className="flex items-center space-x-2">
-                    <Input value="85°C" readOnly className="flex-1" />
-                    <Badge className="bg-pop-green text-white">Optimal</Badge>
-                  </div>
-                </div>
-                <div className="space-y-2">
-                  <div className="flex justify-between text-sm">
-                    <span>Drying Time</span>
-                    <span>45 min remaining</span>
-                  </div>
-                  <div className="w-full bg-gray-200 rounded-full h-2">
-                    <div className="bg-gray-600 h-2 rounded-full" style={{width: '60%'}}></div>
-                  </div>
-                </div>
-                <Button className="w-full" variant="outline">
-                  Monitor Cycle
-                </Button>
-              </CardContent>
-            </Card>
-
-            {/* Station 6: Storage */}
-            <Card>
-              <CardHeader>
-                <CardTitle className="flex items-center">
-                  <Archive className="h-5 w-5 mr-2 text-gray-500" />
-                  Storage Bins
-                </CardTitle>
-                <CardDescription>Material inventory management</CardDescription>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <div className="space-y-2">
-                  <div className="grid grid-cols-2 gap-2 text-sm">
-                    <div className="p-2 bg-pop-blue/10 rounded">
-                      <div className="font-medium">PET</div>
-                      <div className="text-xs">156 lbs</div>
-                    </div>
-                    <div className="p-2 bg-pop-green/10 rounded">
-                      <div className="font-medium">HDPE</div>
-                      <div className="text-xs">89 lbs</div>
-                    </div>
-                    <div className="p-2 bg-pop-red/10 rounded">
-                      <div className="font-medium">PP</div>
-                      <div className="text-xs">67 lbs</div>
-                    </div>
-                    <div className="p-2 bg-gray-100 rounded">
-                      <div className="font-medium">Mixed</div>
-                      <div className="text-xs">23 lbs</div>
-                    </div>
-                  </div>
-                </div>
-                <Button className="w-full" variant="outline">
-                  Update Inventory
-                </Button>
-              </CardContent>
-            </Card>
-
-            {/* Station 7: Pressing */}
-            <Card>
-              <CardHeader>
-                <CardTitle className="flex items-center">
-                  <ChevronDown className="h-5 w-5 mr-2 text-pop-black" />
-                  Press Station
-                </CardTitle>
-                <CardDescription>Blank formation</CardDescription>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <div className="space-y-2">
-                  <Label>Press Settings</Label>
-                  <div className="grid grid-cols-2 gap-2">
-                    <div>
-                      <div className="text-xs text-gray-600">Temperature</div>
-                      <div className="text-sm font-medium">180°C</div>
-                    </div>
-                    <div>
-                      <div className="text-xs text-gray-600">Pressure</div>
-                      <div className="text-sm font-medium">2500 PSI</div>
-                    </div>
-                  </div>
-                </div>
-                <div className="flex items-center justify-between p-3 bg-pop-black/5 rounded-lg">
-                  <span className="text-sm">Press Status</span>
-                  <Badge className="bg-pop-black text-white">Ready</Badge>
-                </div>
-                <Button className="w-full bg-pop-black hover:bg-pop-black/90 text-white">
-                  Start Press Cycle
-                </Button>
-              </CardContent>
-            </Card>
-          </div>
-
-          {/* Production Stations */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-            <Card>
-              <CardHeader>
-                <CardTitle className="flex items-center">
-                  <Scale className="h-5 w-5 mr-2 text-pop-green" />
-                  Station 8: Weighing/Photo/Creation
-                </CardTitle>
-                <CardDescription>
-                  Item creation from pressed blanks
-                </CardDescription>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <div className="space-y-4">
-                  <div>
-                    <Label htmlFor="batch-id">Batch ID Input</Label>
-                    <Input
-                      id="batch-id"
-                      placeholder="BA-XXXX"
-                      className="mt-1"
-                    />
-                  </div>
-                  <div className="flex items-center justify-between p-3 bg-pop-green/5 rounded-lg">
-                    <div>
-                      <span className="font-medium text-sm">
-                        HID Scale Integration
-                      </span>
-                      <p className="text-xs text-gray-600">
-                        Auto-weight capture ready
-                      </p>
-                    </div>
-                    <Badge className="bg-pop-green text-white">
-                      <Scale className="h-3 w-3 mr-1" />
-                      Connected
-                    </Badge>
-                  </div>
-                  <div className="flex items-center justify-between p-3 bg-pop-blue/5 rounded-lg">
-                    <div>
-                      <span className="font-medium text-sm">
-                        Webcam Capture
-                      </span>
-                      <p className="text-xs text-gray-600">USB camera ready</p>
-                    </div>
-                    <Badge className="bg-pop-blue text-white">
-                      <Camera className="h-3 w-3 mr-1" />
-                      Ready
-                    </Badge>
-                  </div>
-                </div>
-                <Button className="w-full bg-pop-green hover:bg-pop-green/90">
-                  <Package className="h-4 w-4 mr-2" />
-                  Create New Item
-                </Button>
-              </CardContent>
-            </Card>
-
-            <Card>
-              <CardHeader>
-                <CardTitle className="flex items-center">
-                  <Zap className="h-5 w-5 mr-2 text-pop-blue" />
-                  Station 9: Laser Processing
-                </CardTitle>
-                <CardDescription>
-                  QR code engraving and completion
-                </CardDescription>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <div className="space-y-4">
-                  <div className="space-y-2">
-                    <Label>Queue Management</Label>
-                    <div className="space-y-2">
-                      <div className="flex items-center justify-between p-2 bg-gray-50 rounded">
-                        <span className="text-sm">
-                          IT-8472-001 - Phone Stand
-                        </span>
-                        <Badge variant="outline">Queued</Badge>
-                      </div>
-                      <div className="flex items-center justify-between p-2 bg-pop-blue/5 rounded">
-                        <span className="text-sm">
-                          IT-8471-003 - Desk Organizer
-                        </span>
-                        <Badge className="bg-pop-blue text-white">
-                          Processing
-                        </Badge>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="p-3 bg-pop-green/5 rounded-lg">
-                    <div className="flex items-center justify-between mb-2">
-                      <span className="font-medium text-sm">
-                        Lightburn Integration
-                      </span>
-                      <Badge className="bg-pop-green text-white">
-                        <Zap className="h-3 w-3 mr-1" />
-                        Active
-                      </Badge>
-                    </div>
-                    <p className="text-xs text-gray-600 mb-2">
-                      Copy QR codes for laser engraving
-                    </p>
-                    <div className="flex space-x-2">
-                      <Input
-                        placeholder="Offline QR: ABC123"
-                        className="text-xs"
-                        readOnly
-                      />
-                      <Button size="sm" variant="outline">
-                        Copy
-                      </Button>
-                    </div>
-                  </div>
-                </div>
-                <Button className="w-full bg-pop-blue hover:bg-pop-blue/90">
-                  <QrCode className="h-4 w-4 mr-2" />
-                  Mark Laser Complete
-                </Button>
-              </CardContent>
-            </Card>
-          </div>
-
-          <Card>
-            <CardHeader>
-              <CardTitle>Batch Processing Status</CardTitle>
-              <CardDescription>
-                Track material transformation pipeline
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              <div className="space-y-3">
-                <div className="flex items-center justify-between p-3 border rounded-lg">
-                  <div>
-                    <span className="font-medium text-sm">Batch BA-8472</span>
-                    <p className="text-xs text-gray-600">
-                      45 lbs → 12 Phone Stands
-                    </p>
-                  </div>
-                  <div className="flex items-center space-x-2">
-                    <Badge className="bg-pop-blue text-white">Station 2</Badge>
-                    <span className="text-xs text-gray-500">8/12 complete</span>
-                  </div>
-                </div>
-                <div className="flex items-center justify-between p-3 border rounded-lg">
-                  <div>
-                    <span className="font-medium text-sm">Batch BA-8471</span>
-                    <p className="text-xs text-gray-600">
-                      32 lbs → 8 Desk Organizers
-                    </p>
-                  </div>
-                  <div className="flex items-center space-x-2">
-                    <Badge className="bg-pop-green text-white">Complete</Badge>
-                    <span className="text-xs text-gray-500">8/8 ready</span>
-                  </div>
-                </div>
-                <div className="flex items-center justify-between p-3 border rounded-lg">
-                  <div>
-                    <span className="font-medium text-sm">Batch BA-8470</span>
-                    <p className="text-xs text-gray-600">
-                      28 lbs → 7 Plant Holders
-                    </p>
-                  </div>
-                  <div className="flex items-center space-x-2">
-                    <Badge className="bg-pop-green text-white">Station 1</Badge>
-                    <span className="text-xs text-gray-500">3/7 created</span>
-                  </div>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
+          
         </TabsContent>
 
         {/* Inventory Tab */}
@@ -2431,116 +1851,366 @@ export default function OperationsPage() {
             </div>
           </AccordionTrigger>
           <AccordionContent>
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 pt-2 pb-4">
-              {/* Station 1 - Weighing/Photo */}
+            {/* Manufacturing Workflow Stations */}
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+              {/* Station 1: Rough Wash */}
               <Card>
                 <CardHeader>
-                  <div className="flex items-center justify-between">
-                    <CardTitle className="flex items-center gap-2">
-                      <Scale className="h-5 w-5 text-pop-blue" />
-                      Station 1 - Weighing/Photo
-                    </CardTitle>
-                    <Badge className="bg-pop-green text-white">
-                      <Activity className="h-3 w-3 mr-1" />
-                      Online
-                    </Badge>
-                  </div>
-                  <CardDescription>HID Scale + Camera Ready</CardDescription>
-                </CardHeader>
-                <CardContent className="space-y-4">
-                  <div className="grid grid-cols-2 gap-4">
-                    <div className="bg-gray-50 p-3 rounded-lg">
-                      <div className="text-sm font-medium text-gray-700">Current Weight</div>
-                      <div className="text-xl font-bold text-pop-black">2.47 kg</div>
-                    </div>
-                    <div className="bg-gray-50 p-3 rounded-lg">
-                      <div className="text-sm font-medium text-gray-700">Photos Taken</div>
-                      <div className="text-xl font-bold text-pop-black">127</div>
-                    </div>
-                  </div>
-                  <div className="flex gap-2">
-                    <Button size="sm" className="bg-pop-green hover:bg-pop-green/90">
-                      <Camera className="h-4 w-4 mr-2" />
-                      Capture Photo
-                    </Button>
-                    <Button size="sm" variant="outline">
-                      <Scale className="h-4 w-4 mr-2" />
-                      Tare Scale
-                    </Button>
-                  </div>
-                </CardContent>
-              </Card>
-
-              {/* Station 2 - Laser Processing */}
-              <Card>
-                <CardHeader>
-                  <div className="flex items-center justify-between">
-                    <CardTitle className="flex items-center gap-2">
-                      <Zap className="h-5 w-5 text-pop-red" />
-                      Station 2 - Laser Processing
-                    </CardTitle>
-                    <Badge className="bg-pop-blue text-white">
-                      <Activity className="h-3 w-3 mr-1" />
-                      Active
-                    </Badge>
-                  </div>
-                  <CardDescription>Lightburn Integration</CardDescription>
-                </CardHeader>
-                <CardContent className="space-y-4">
-                  <div className="grid grid-cols-2 gap-4">
-                    <div className="bg-gray-50 p-3 rounded-lg">
-                      <div className="text-sm font-medium text-gray-700">Job Progress</div>
-                      <div className="text-xl font-bold text-pop-black">73%</div>
-                    </div>
-                    <div className="bg-gray-50 p-3 rounded-lg">
-                      <div className="text-sm font-medium text-gray-700">Queue Items</div>
-                      <div className="text-xl font-bold text-pop-black">5</div>
-                    </div>
-                  </div>
-                  <div className="flex gap-2">
-                    <Button size="sm" className="bg-pop-red hover:bg-pop-red/90">
-                      <Zap className="h-4 w-4 mr-2" />
-                      Start Job
-                    </Button>
-                    <Button size="sm" variant="outline">
-                      <Settings className="h-4 w-4 mr-2" />
-                      Configure
-                    </Button>
-                  </div>
-                </CardContent>
-              </Card>
-
-              {/* Station Controls */}
-              <Card className="lg:col-span-2">
-                <CardHeader>
-                  <CardTitle className="flex items-center gap-2">
-                    <Settings className="h-5 w-5 text-pop-green" />
-                    Station Management
+                  <CardTitle className="flex items-center">
+                    <Droplets className="h-5 w-5 mr-2 text-pop-blue" />
+                    Wash Station
                   </CardTitle>
-                  <CardDescription>Centralized controls and monitoring</CardDescription>
+                  <CardDescription>Initial cleaning and contaminant removal</CardDescription>
                 </CardHeader>
-                <CardContent>
-                  <div className="flex flex-wrap gap-2">
-                    <Button size="sm" variant="outline">
-                      <Monitor className="h-4 w-4 mr-2" />
-                      View All Stations
-                    </Button>
-                    <Button size="sm" variant="outline">
-                      <Activity className="h-4 w-4 mr-2" />
-                      System Status
-                    </Button>
-                    <Button size="sm" variant="outline">
-                      <Settings className="h-4 w-4 mr-2" />
-                      Configuration
-                    </Button>
-                    <Button size="sm" variant="outline">
-                      <AlertCircle className="h-4 w-4 mr-2" />
-                      Error Logs
-                    </Button>
+                <CardContent className="space-y-4">
+                  <div className="space-y-2">
+                    <Label>Current Batch</Label>
+                    <Input value="BA-8473" readOnly />
                   </div>
+                  <div className="flex items-center justify-between p-3 bg-pop-blue/5 rounded-lg">
+                    <span className="text-sm">Station Status</span>
+                    <Badge className="bg-pop-blue text-white">Processing</Badge>
+                  </div>
+                  <div className="space-y-2">
+                    <div className="flex justify-between text-sm">
+                      <span>Progress</span>
+                      <span>78%</span>
+                    </div>
+                    <div className="w-full bg-gray-200 rounded-full h-2">
+                      <div className="bg-pop-blue h-2 rounded-full" style={{width: '78%'}}></div>
+                    </div>
+                  </div>
+                  <Button className="w-full bg-pop-blue hover:bg-pop-blue/90">
+                    Complete Wash Cycle
+                  </Button>
+                </CardContent>
+              </Card>
+
+              {/* Station 2: Sort */}
+              <Card>
+                <CardHeader>
+                  <CardTitle className="flex items-center">
+                    <Scissors className="h-5 w-5 mr-2 text-pop-green" />
+                    Sort Station
+                  </CardTitle>
+                  <CardDescription>Material separation and quality control</CardDescription>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  <div className="space-y-2">
+                    <Label>Queue</Label>
+                    <div className="space-y-1">
+                      <div className="text-sm p-2 bg-gray-50 rounded">BA-8472 - Ready</div>
+                      <div className="text-sm p-2 bg-gray-50 rounded">BA-8471 - Ready</div>
+                    </div>
+                  </div>
+                  <div className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                    <span className="text-sm">Station Status</span>
+                    <Badge variant="outline">Idle</Badge>
+                  </div>
+                  <div className="grid grid-cols-2 gap-2">
+                    <Button variant="outline" size="sm">PET</Button>
+                    <Button variant="outline" size="sm">HDPE</Button>
+                    <Button variant="outline" size="sm">PP</Button>
+                    <Button variant="outline" size="sm">Reject</Button>
+                  </div>
+                  <Button className="w-full bg-pop-green hover:bg-pop-green/90">
+                    Start Sort Process
+                  </Button>
+                </CardContent>
+              </Card>
+
+              {/* Station 3: Shred */}
+              <Card>
+                <CardHeader>
+                  <CardTitle className="flex items-center">
+                    <ShredIcon className="h-5 w-5 mr-2 text-pop-red" />
+                    Shred Station
+                  </CardTitle>
+                  <CardDescription>Size reduction processing</CardDescription>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  <div className="space-y-2">
+                    <Label>Material Input</Label>
+                    <div className="flex space-x-2">
+                      <Input placeholder="Weight (lbs)" className="flex-1" />
+                      <Button size="sm" variant="outline">Scale</Button>
+                    </div>
+                  </div>
+                  <div className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                    <span className="text-sm">Shredder Status</span>
+                    <Badge variant="outline">Ready</Badge>
+                  </div>
+                  <div className="space-y-2">
+                    <div className="flex justify-between text-sm">
+                      <span>Target Size</span>
+                      <span>5mm flakes</span>
+                    </div>
+                  </div>
+                  <Button className="w-full bg-pop-red hover:bg-pop-red/90">
+                    Start Shredding
+                  </Button>
                 </CardContent>
               </Card>
             </div>
+
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+              {/* Station 4: Fine Wash */}
+              <Card>
+                <CardHeader>
+                  <CardTitle className="flex items-center">
+                    <Droplets className="h-5 w-5 mr-2 text-pop-blue" />
+                    Fine Wash Station
+                  </CardTitle>
+                  <CardDescription>Post-shred cleaning and debris removal</CardDescription>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  <div className="space-y-2">
+                    <Label>Current Material</Label>
+                    <Input value="PET Flakes - 5mm" readOnly />
+                  </div>
+                  <div className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                    <span className="text-sm">Station Status</span>
+                    <Badge variant="outline">Ready</Badge>
+                  </div>
+                  <div className="space-y-2">
+                    <div className="flex justify-between text-sm">
+                      <span>Water Temperature</span>
+                      <span>60°C</span>
+                    </div>
+                    <div className="flex justify-between text-sm">
+                      <span>Rinse Cycles</span>
+                      <span>3x planned</span>
+                    </div>
+                  </div>
+                  <Button className="w-full bg-pop-blue hover:bg-pop-blue/90">
+                    Start Fine Wash
+                  </Button>
+                </CardContent>
+              </Card>
+
+              {/* Station 5: Dry */}
+              <Card>
+                <CardHeader>
+                  <CardTitle className="flex items-center">
+                    <Wind className="h-5 w-5 mr-2 text-gray-600" />
+                    Dry Station
+                  </CardTitle>
+                  <CardDescription>Moisture removal</CardDescription>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  <div className="space-y-2">
+                    <Label>Temperature Control</Label>
+                    <div className="flex items-center space-x-2">
+                      <Input value="85°C" readOnly className="flex-1" />
+                      <Badge className="bg-pop-green text-white">Optimal</Badge>
+                    </div>
+                  </div>
+                  <div className="space-y-2">
+                    <div className="flex justify-between text-sm">
+                      <span>Drying Time</span>
+                      <span>45 min remaining</span>
+                    </div>
+                    <div className="w-full bg-gray-200 rounded-full h-2">
+                      <div className="bg-gray-600 h-2 rounded-full" style={{width: '60%'}}></div>
+                    </div>
+                  </div>
+                  <Button className="w-full" variant="outline">
+                    Monitor Cycle
+                  </Button>
+                </CardContent>
+              </Card>
+
+              {/* Station 6: Storage */}
+              <Card>
+                <CardHeader>
+                  <CardTitle className="flex items-center">
+                    <Archive className="h-5 w-5 mr-2 text-gray-500" />
+                    Storage Bins
+                  </CardTitle>
+                  <CardDescription>Material inventory management</CardDescription>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  <div className="space-y-2">
+                    <div className="grid grid-cols-2 gap-2 text-sm">
+                      <div className="p-2 bg-pop-blue/10 rounded">
+                        <div className="font-medium">PET</div>
+                        <div className="text-xs">156 lbs</div>
+                      </div>
+                      <div className="p-2 bg-pop-green/10 rounded">
+                        <div className="font-medium">HDPE</div>
+                        <div className="text-xs">89 lbs</div>
+                      </div>
+                      <div className="p-2 bg-pop-red/10 rounded">
+                        <div className="font-medium">PP</div>
+                        <div className="text-xs">67 lbs</div>
+                      </div>
+                      <div className="p-2 bg-gray-100 rounded">
+                        <div className="font-medium">Mixed</div>
+                        <div className="text-xs">23 lbs</div>
+                      </div>
+                    </div>
+                  </div>
+                  <Button className="w-full" variant="outline">
+                    Update Inventory
+                  </Button>
+                </CardContent>
+              </Card>
+
+              {/* Station 7: Pressing */}
+              <Card>
+                <CardHeader>
+                  <CardTitle className="flex items-center">
+                    <ChevronDown className="h-5 w-5 mr-2 text-pop-black" />
+                    Press Station
+                  </CardTitle>
+                  <CardDescription>Blank formation</CardDescription>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  <div className="space-y-2">
+                    <Label>Press Settings</Label>
+                    <div className="grid grid-cols-2 gap-2">
+                      <div>
+                        <div className="text-xs text-gray-600">Temperature</div>
+                        <div className="text-sm font-medium">180°C</div>
+                      </div>
+                      <div>
+                        <div className="text-xs text-gray-600">Pressure</div>
+                        <div className="text-sm font-medium">2500 PSI</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="flex items-center justify-between p-3 bg-pop-black/5 rounded-lg">
+                    <span className="text-sm">Press Status</span>
+                    <Badge className="bg-pop-black text-white">Ready</Badge>
+                  </div>
+                  <Button className="w-full bg-pop-black hover:bg-pop-black/90 text-white">
+                    Start Press Cycle
+                  </Button>
+                </CardContent>
+              </Card>
+            </div>
+
+            {/* Production Stations */}
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+              <Card>
+                <CardHeader>
+                  <CardTitle className="flex items-center">
+                    <Scale className="h-5 w-5 mr-2 text-pop-green" />
+                    Station 8: Weighing/Photo/Creation
+                  </CardTitle>
+                  <CardDescription>
+                    Item creation from pressed blanks
+                  </CardDescription>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  <div className="space-y-4">
+                    <div>
+                      <Label htmlFor="batch-id">Batch ID Input</Label>
+                      <Input
+                        id="batch-id"
+                        placeholder="BA-XXXX"
+                        className="mt-1"
+                      />
+                    </div>
+                    <div className="flex items-center justify-between p-3 bg-pop-green/5 rounded-lg">
+                      <div>
+                        <span className="font-medium text-sm">
+                          HID Scale Integration
+                        </span>
+                        <p className="text-xs text-gray-600">
+                          Auto-weight capture ready
+                        </p>
+                      </div>
+                      <Badge className="bg-pop-green text-white">
+                        <Scale className="h-3 w-3 mr-1" />
+                        Connected
+                      </Badge>
+                    </div>
+                    <div className="flex items-center justify-between p-3 bg-pop-blue/5 rounded-lg">
+                      <div>
+                        <span className="font-medium text-sm">
+                          Webcam Capture
+                        </span>
+                        <p className="text-xs text-gray-600">USB camera ready</p>
+                      </div>
+                      <Badge className="bg-pop-blue text-white">
+                        <Camera className="h-3 w-3 mr-1" />
+                        Ready
+                      </Badge>
+                    </div>
+                  </div>
+                  <Button className="w-full bg-pop-green hover:bg-pop-green/90">
+                    <Package className="h-4 w-4 mr-2" />
+                    Create New Item
+                  </Button>
+                </CardContent>
+              </Card>
+
+              <Card>
+                <CardHeader>
+                  <CardTitle className="flex items-center">
+                    <Zap className="h-5 w-5 mr-2 text-pop-blue" />
+                    Station 9: Laser Processing
+                  </CardTitle>
+                  <CardDescription>
+                    QR code engraving and completion
+                  </CardDescription>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  <div className="space-y-4">
+                    <div className="space-y-2">
+                      <Label>Queue Management</Label>
+                      <div className="space-y-2">
+                        <div className="flex items-center justify-between p-2 bg-gray-50 rounded">
+                          <span className="text-sm">
+                            IT-8472-001 - Phone Stand
+                          </span>
+                          <Badge variant="outline">Queued</Badge>
+                        </div>
+                        <div className="flex items-center justify-between p-2 bg-pop-blue/5 rounded">
+                          <span className="text-sm">
+                            IT-8471-003 - Desk Organizer
+                          </span>
+                          <Badge className="bg-pop-blue text-white">
+                            Processing
+                          </Badge>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="p-3 bg-pop-green/5 rounded-lg">
+                      <div className="flex items-center justify-between mb-2">
+                        <span className="font-medium text-sm">
+                          Lightburn Integration
+                        </span>
+                        <Badge className="bg-pop-green text-white">
+                          <Zap className="h-3 w-3 mr-1" />
+                          Active
+                        </Badge>
+                      </div>
+                      <p className="text-xs text-gray-600 mb-2">
+                        Copy QR codes for laser engraving
+                      </p>
+                      <div className="flex space-x-2">
+                        <Input
+                          placeholder="Offline QR: ABC123"
+                          className="text-xs"
+                          readOnly
+                        />
+                        <Button size="sm" variant="outline">
+                          Copy
+                        </Button>
+                      </div>
+                    </div>
+                  </div>
+                  <Button className="w-full bg-pop-blue hover:bg-pop-blue/90">
+                    <QrCode className="h-4 w-4 mr-2" />
+                    Mark Laser Complete
+                  </Button>
+                </CardContent>
+              </Card>
+            </div>
+
+            
           </AccordionContent>
         </AccordionItem>
       </Accordion>
