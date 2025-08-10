@@ -173,7 +173,7 @@ export async function POST() {
       for (let i = 0; i < batchCount; i++) {
         const orgIndex = orgs.findIndex(org => org._id.equals(bin.orgId));
         const materialTypes = ['HDPE', 'PET', 'PP', 'mixed'] as const;
-        const statuses = ['collected', 'sorted', 'cleaned', 'processed'] as const;
+        const statuses = ['collected', 'rough_wash', 'sort', 'first_dry', 'shred', 'fine_wash', 'second_dry', 'press', 'weigh_photo', 'laser_marking', 'completed'] as const;
         const collectors = ['John Smith', 'Maria Garcia', 'David Chen'];
         
         const qrCode = generateQRCode(orgIndex, 'batch');
