@@ -416,7 +416,17 @@ export default function TrackItem() {
                   {item.binId && (
                     <div className="flex justify-between">
                       <span className="systematic-caps text-sm">Bin ID</span>
-                      <span className="font-mono text-pop-green">{item.binId}</span>
+                      <Link href={`/track/${item.binId}`} className="font-mono text-pop-green hover:text-pop-black hover:underline">
+                        {item.binId}
+                      </Link>
+                    </div>
+                  )}
+                  {sourceBin && (
+                    <div className="flex justify-between">
+                      <span className="systematic-caps text-sm">Source Bin</span>
+                      <Link href={`/track/${sourceBin.id}`} className="font-mono text-pop-green hover:text-pop-black hover:underline">
+                        {sourceBin.id}
+                      </Link>
                     </div>
                   )}
                   {item.batchId && (
@@ -441,6 +451,18 @@ export default function TrackItem() {
                     <span className="systematic-caps text-sm">Material</span>
                     <Badge className="bg-pop-green text-pop-black">
                       {item.materialType}
+                    </Badge>
+                  </div>
+                )}
+                {item.id.startsWith('T') && item.event && (
+                  <div className="flex justify-between">
+                    <span className="systematic-caps text-sm">Status</span>
+                    <Badge className={
+                      item.event === 'Weight & Photo' ? 'bg-pop-blue text-white' :
+                      item.event === 'Processed' ? 'bg-pop-green text-white' :
+                      'bg-gray-100 text-gray-800'
+                    }>
+                      {item.event}
                     </Badge>
                   </div>
                 )}
@@ -480,7 +502,7 @@ export default function TrackItem() {
                     </span>
                   </div>
                 )}
-                {item.event && !item.event.startsWith('bin_') && (
+                {item.event && !item.event.startsWith('bin_') && !item.id.startsWith('T') && (
                   <div className="flex justify-between">
                     <span className="systematic-caps text-sm">Event</span>
                     <span>{item.event}</span>
@@ -721,68 +743,7 @@ export default function TrackItem() {
           </PopArtContainer>
         )}
 
-        {/* Source Bin Display for Batches */}
-        {item.id.startsWith('T') && sourceBin && (
-          <div className="max-w-2xl mx-auto">
-            <PopArtContainer color="green" shadow>
-              <Card className="border-4 border-pop-black">
-                <CardHeader>
-                  <CardTitle className="systematic-caps flex items-center justify-center text-2xl">
-                    <Package className="w-6 h-6 mr-2" />
-                    Source Bin
-                  </CardTitle>
-                </CardHeader>
-                <CardContent className="py-6">
-                  <Link href={`/track/${sourceBin.id}`} className="block">
-                    <div className="flex justify-between items-center p-4 border border-pop-gray rounded hover:border-pop-green hover:bg-pop-green hover:bg-opacity-5 transition-colors cursor-pointer">
-                      <div>
-                        <div className="systematic-caps text-sm font-semibold text-pop-green hover:text-pop-black">
-                          {sourceBin.id}
-                        </div>
-                        <div className="text-xs text-pop-gray">
-                          {sourceBin.name} • {getBinStatusLabel(sourceBin.status)}
-                        </div>
-                      </div>
-                      <div className="text-xs text-pop-gray">
-                        {sourceBin.location}
-                      </div>
-                    </div>
-                  </Link>
-                </CardContent>
-              </Card>
-            </PopArtContainer>
-          </div>
-        )}
 
-        {/* Batch Processing Timeline */}
-        {item.id.startsWith('T') && (
-          <div className="max-w-2xl mx-auto">
-            <PopArtContainer color="blue" shadow>
-              <Card className="border-4 border-pop-black">
-                <CardHeader>
-                  <CardTitle className="systematic-caps flex items-center justify-center text-2xl">
-                    <CheckCircle className="w-6 h-6 mr-2" />
-                    Processing Status: {getBatchStatusLabel(item.event || '')}
-                  </CardTitle>
-                </CardHeader>
-                <CardContent className="py-6 text-center">
-                  <div className="text-4xl helvetica-bold text-pop-blue mb-4">
-                    {item.weight}kg
-                  </div>
-                  <div className="systematic-caps text-sm text-pop-gray mb-6">
-                    {item.materialType} Plastic
-                  </div>
-                  <p className="text-lg text-pop-gray mb-2">
-                    Current Stage: {getBatchStatusLabel(item.event || '')}
-                  </p>
-                  <p className="text-sm text-pop-gray">
-                    {item.collectionDate && `Collected: ${new Date(item.collectionDate).toLocaleDateString()}`}
-                  </p>
-                </CardContent>
-              </Card>
-            </PopArtContainer>
-          </div>
-        )}
 
         {/* Produced Blanks List for Batches */}
         {item.id.startsWith('T') && blanks.length > 0 && (
