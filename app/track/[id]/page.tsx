@@ -260,6 +260,35 @@ export default function TrackItem() {
     }
   };
 
+  const getProcessingStatusBadge = (status: string) => {
+    switch (status) {
+      case "collected":
+        return <Badge className="bg-gray-500 text-white">Collected</Badge>;
+      case "rough_wash":
+        return <Badge className="bg-pop-blue text-white">Rough Wash</Badge>;
+      case "sort":
+        return <Badge className="bg-pop-green text-white">Sort</Badge>;
+      case "first_dry":
+        return <Badge className="bg-yellow-500 text-white">First Dry</Badge>;
+      case "shred":
+        return <Badge className="bg-orange-500 text-white">Shred</Badge>;
+      case "fine_wash":
+        return <Badge className="bg-blue-600 text-white">Fine Wash</Badge>;
+      case "second_dry":
+        return <Badge className="bg-yellow-600 text-white">Second Dry</Badge>;
+      case "press":
+        return <Badge className="bg-purple-500 text-white">Press</Badge>;
+      case "weigh_photo":
+        return <Badge className="bg-indigo-500 text-white">Weigh & Photo</Badge>;
+      case "laser_marking":
+        return <Badge className="bg-pop-red text-white">Laser Marking</Badge>;
+      case "inventory_creation":
+        return <Badge className="bg-green-600 text-white">Inventory Creation</Badge>;
+      default:
+        return <Badge variant="outline">{status}</Badge>;
+    }
+  };
+
   return (
     <div className="min-h-screen py-20">
       <div className="max-w-4xl mx-auto px-4">
@@ -478,29 +507,7 @@ export default function TrackItem() {
                 {item.id.startsWith('T') && item.event && (
                   <div className="flex justify-between">
                     <span className="systematic-caps text-sm">Status</span>
-                    <Badge className={
-                      item.event === 'collected' ? 'bg-gray-500 text-white' :
-                      item.event === 'rough_wash' ? 'bg-pop-blue text-white' :
-                      item.event === 'sort' ? 'bg-pop-green text-white' :
-                      item.event === 'first_dry' ? 'bg-yellow-500 text-white' :
-                      item.event === 'shred' ? 'bg-orange-500 text-white' :
-                      item.event === 'fine_wash' ? 'bg-blue-600 text-white' :
-                      item.event === 'second_dry' ? 'bg-yellow-600 text-white' :
-                      item.event === 'press' ? 'bg-purple-500 text-white' :
-                      item.event === 'weigh_photo' ? 'bg-indigo-500 text-white' :
-                      item.event === 'laser_marking' ? 'bg-pop-red text-white' :
-                      item.event === 'inventory_creation' ? 'bg-green-600 text-white' :
-                      'bg-gray-100 text-gray-800'
-                    }>
-                      {item.event === 'weigh_photo' ? 'Weigh & Photo' :
-                       item.event === 'rough_wash' ? 'Rough Wash' :
-                       item.event === 'first_dry' ? 'First Dry' :
-                       item.event === 'fine_wash' ? 'Fine Wash' :
-                       item.event === 'second_dry' ? 'Second Dry' :
-                       item.event === 'laser_marking' ? 'Laser Marking' :
-                       item.event === 'inventory_creation' ? 'Inventory Creation' :
-                       item.event.charAt(0).toUpperCase() + item.event.slice(1)}
-                    </Badge>
+                    {getProcessingStatusBadge(item.event)}
                   </div>
                 )}
                 {item.weight && !item.id.startsWith('B') && (
