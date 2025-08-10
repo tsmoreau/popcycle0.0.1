@@ -88,6 +88,83 @@ export default function OperationsPage() {
   const [loadingBatches, setLoadingBatches] = useState(true);
   const [loadingOrders, setLoadingOrders] = useState(true);
   const [loadingBlanks, setLoadingBlanks] = useState(true);
+
+  // Fetch functions
+  const fetchBins = async () => {
+    try {
+      setLoadingBins(true);
+      const response = await fetch('/api/operations/bins');
+      if (response.ok) {
+        const data = await response.json();
+        setBins(data);
+      } else {
+        console.error('Failed to fetch bins');
+      }
+    } catch (error) {
+      console.error('Error fetching bins:', error);
+    } finally {
+      setLoadingBins(false);
+    }
+  };
+
+  const fetchBatches = async () => {
+    try {
+      setLoadingBatches(true);
+      const response = await fetch('/api/operations/batches');
+      if (response.ok) {
+        const data = await response.json();
+        setBatches(data);
+      } else {
+        console.error('Failed to fetch batches');
+      }
+    } catch (error) {
+      console.error('Error fetching batches:', error);
+    } finally {
+      setLoadingBatches(false);
+    }
+  };
+
+  const fetchOrders = async () => {
+    try {
+      setLoadingOrders(true);
+      const response = await fetch('/api/operations/orders');
+      if (response.ok) {
+        const data = await response.json();
+        setOrders(data);
+      } else {
+        console.error('Failed to fetch orders');
+      }
+    } catch (error) {
+      console.error('Error fetching orders:', error);
+    } finally {
+      setLoadingOrders(false);
+    }
+  };
+
+  const fetchBlanks = async () => {
+    try {
+      setLoadingBlanks(true);
+      const response = await fetch('/api/operations/blanks');
+      if (response.ok) {
+        const data = await response.json();
+        setBlanks(data);
+      } else {
+        console.error('Failed to fetch blanks');
+      }
+    } catch (error) {
+      console.error('Error fetching blanks:', error);
+    } finally {
+      setLoadingBlanks(false);
+    }
+  };
+
+  // Load data on component mount
+  useEffect(() => {
+    fetchBins();
+    fetchBatches();
+    fetchOrders();
+    fetchBlanks();
+  }, []);
   
   // Shared sorting state for data tables
   const [collectionsSortField, setCollectionsSortField] = useState<string>("");
