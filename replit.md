@@ -1,5 +1,35 @@
 # PopCycle - Circular Plastic Tracking System
 
+## 🚨 CRITICAL DEVELOPMENT GUIDELINES 🚨
+**READ THESE FIRST IN EVERY CONVERSATION TO PREVENT DEPLOYMENT ISSUES**
+
+### 1. ID Type Consistency Rules
+- **QR codes are ALWAYS stored as string _id values, NEVER ObjectIds**
+- Use `{ _id: qrCodeString } as any` for QR code queries
+- Use `{ _id: new ObjectId(id) }` only for actual MongoDB-generated IDs (like orgId, userId)
+- When in doubt, check existing working queries in the codebase
+
+### 2. Type-First Development Protocol
+- **ALWAYS update TypeScript interfaces BEFORE writing API code**
+- After ANY database schema changes, update interfaces immediately
+- **Mandatory checklist for new fields:**
+  - ✅ Update database sample data
+  - ✅ Update TypeScript interfaces 
+  - ✅ Update API responses
+  - ✅ Test frontend components
+  - ✅ Run `npm run build` to catch TypeScript errors
+
+### 3. Testing Protocol
+- **Test tracking URLs manually after ANY database changes**
+- Keep bookmark list: `/track/KXKI86UR`, `/track/B1DHF5WA`, `/track/TXDLTYZM`
+- Run `npm run build` after interface changes to catch deployment issues early
+- Test API endpoints with curl before considering changes complete
+
+### 4. Naming Consistency
+- Pick ONE naming convention per property and stick to it across entire codebase
+- Use find/replace across ALL files when changing property names
+- Document naming decisions in this file immediately
+
 ## Overview
 PopCycle is a comprehensive circular economy platform designed to transform corporate plastic waste into trackable, educational products. It establishes a self-reinforcing ecosystem that connects waste collection, manufacturing, education, and community engagement through QR code-based provenance tracking. The system functions as a unified Next.js PWA, serving as the central in-house system for managing all operations, from partner CRM and logistics scheduling to maker skill tracking and community engagement. Its primary business vision is to minimize external dependencies, integrating only with essential services for communication (Google Workspace) and finance (QuickBooks/Stripe), ensuring maximum operational control and a complete in-house solution for the entire circular economy process.
 
