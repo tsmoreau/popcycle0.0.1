@@ -2,21 +2,18 @@ import { NextRequest, NextResponse } from 'next/server'
 import { MongoClient, ObjectId } from 'mongodb'
 import { Blank } from '../../../../lib/schemas'
 
-const uri = process.env.MONGODB_URI!
-const client = new MongoClient(uri)
-
 export async function GET() {
   try {
+    const client = new MongoClient(process.env.MONGODB_URI!)
     await client.connect()
     const db = client.db('PopCycle')
     const blanks = await db.collection<Blank>('blanks').find({}).toArray()
     
+    await client.close()
     return NextResponse.json(blanks)
   } catch (error) {
     console.error('Error fetching blanks:', error)
     return NextResponse.json({ error: 'Failed to fetch blanks' }, { status: 500 })
-  } finally {
-    await client.close()
   }
 }
 

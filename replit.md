@@ -47,6 +47,7 @@ PopCycle is built as a unified Next.js PWA with MongoDB, managing all core opera
 ### Recent Technical Fixes (Aug 2025)
 - **TypeScript Deployment Fixes**: Resolved critical deployment issues by adding missing `binIds` property to PlasticItem interface for multi-bin batch support, fixed property naming inconsistency (`deliveryDate` → `deliveredDate`), and added missing `productId` property to blanks interface.
 - **MongoDB Query Issues**: Fixed ObjectId compatibility errors by updating tracking API to handle QR code strings directly instead of attempting ObjectId conversion (`{ _id: qrCodeString } as any`). This resolved "Item Not Found" errors for blank tracking pages.
+- **Operations Page MongoDB Integration (Aug 10, 2025)**: Fixed critical operations dashboard loading issues by following established CRM API patterns. Root causes: (1) Operations API routes incorrectly used `DATABASE_URL` instead of `MONGODB_URI`, (2) Operations API routes created shared client connections causing "Topology is closed" errors, (3) Operations page completely missing fetch functions and useEffect hooks. **Key lesson: Always follow existing working patterns (CRM routes) instead of creating new connection approaches.**
 - **Build Process**: All TypeScript compilation errors resolved, application now builds successfully for deployment.
 
 ### Frontend Architecture
