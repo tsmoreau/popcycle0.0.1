@@ -63,7 +63,7 @@ export interface Bin {
 // Batch - Collection record when bins are emptied
 export interface Batch {
   _id: string; // QR code string (e.g., "002BATF3N8Q1")
-  binId: string; // Reference to Bin QR code (inherits org provenance)
+  binIds: string[]; // Array of Bin QR codes that contributed to this batch
   collectionDate: Date;
   weight: number; // in kg
   materialType: 'HDPE' | 'PET' | 'PP' | 'mixed';
@@ -72,7 +72,6 @@ export interface Batch {
   notes?: string;
   createdAt: Date;
   updatedAt: Date;
-  
 }
 
 // Blank - Individual physical blank or finished product

@@ -247,7 +247,6 @@ export async function POST() {
       batches.push({
         _id: qrCode,
         binIds: selectedBins.map(bin => bin._id), // Array of bin IDs
-        binId: selectedBins[0]._id, // Keep for backward compatibility
         collectionDate: new Date(Date.now() - Math.random() * 30 * 24 * 60 * 60 * 1000),
         weight: Math.round(totalWeight * 10) / 10,
         materialType: materialTypes[Math.floor(Math.random() * materialTypes.length)],
