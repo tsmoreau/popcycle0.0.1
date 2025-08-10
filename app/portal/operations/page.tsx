@@ -601,13 +601,27 @@ export default function OperationsPage() {
   const getProcessingStatusBadge = (status: string) => {
     switch (status) {
       case "collected":
-        return <Badge className="bg-pop-blue text-white">Collected</Badge>;
-      case "sorted":
-        return <Badge className="bg-pop-green text-white">Sorted</Badge>;
-      case "cleaned":
-        return <Badge className="bg-orange-500 text-white">Cleaned</Badge>;
-      case "processed":
-        return <Badge className="bg-pop-red text-white">Processed</Badge>;
+        return <Badge className="bg-gray-500 text-white">Collected</Badge>;
+      case "rough_wash":
+        return <Badge className="bg-pop-blue text-white">Rough Wash</Badge>;
+      case "sort":
+        return <Badge className="bg-pop-green text-white">Sort</Badge>;
+      case "first_dry":
+        return <Badge className="bg-yellow-500 text-white">First Dry</Badge>;
+      case "shred":
+        return <Badge className="bg-orange-500 text-white">Shred</Badge>;
+      case "fine_wash":
+        return <Badge className="bg-blue-600 text-white">Fine Wash</Badge>;
+      case "second_dry":
+        return <Badge className="bg-yellow-600 text-white">Second Dry</Badge>;
+      case "press":
+        return <Badge className="bg-purple-500 text-white">Press</Badge>;
+      case "weigh_photo":
+        return <Badge className="bg-indigo-500 text-white">Weigh & Photo</Badge>;
+      case "laser_marking":
+        return <Badge className="bg-pop-red text-white">Laser Marking</Badge>;
+      case "completed":
+        return <Badge className="bg-green-600 text-white">Completed</Badge>;
       default:
         return <Badge variant="outline">{status}</Badge>;
     }
