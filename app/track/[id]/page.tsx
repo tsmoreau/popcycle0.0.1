@@ -419,7 +419,7 @@ export default function TrackItem() {
                     </Badge>
                   </div>
                 )}
-                {item.weight && (
+                {item.weight && !item.id.startsWith('B') && (
                   <div className="flex justify-between items-center">
                     <span className="systematic-caps text-sm">Weight</span>
                     <span className="flex items-center">
