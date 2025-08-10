@@ -203,7 +203,7 @@ export async function POST() {
       
       // Select 1-2 random bins for this batch (to allow more batches)
       const binsPerBatch = Math.min(Math.floor(Math.random() * 2) + 1, availableBins.length);
-      const selectedBins = [];
+      const selectedBins: any[] = [];
       for (let i = 0; i < binsPerBatch; i++) {
         const randomIndex = Math.floor(Math.random() * availableBins.length);
         const selectedBin = availableBins.splice(randomIndex, 1)[0];
