@@ -906,38 +906,37 @@ export default function OperationsPage() {
               </Button>
             </div>
             
-            <div className="flex-1 overflow-y-auto min-h-0">
-              <div className="p-6">
-              <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full h-full flex flex-col">
-                <div className="flex items-center justify-between mb-6 flex-shrink-0">
-                  <TabsList className="relative z-10 p-0 bg-transparent h-auto gap-0 flex-nowrap overflow-visible">
-                    <TabsTrigger value="collections" className="folder-tab-white relative z-[4] text-sm px-6 py-3">
-                      <Package className="w-4 h-4 mr-2 text-pop-green" />
-                      Collections
-                    </TabsTrigger>
-                    <TabsTrigger value="processing" className="folder-tab-white relative z-[3] -ml-6 text-sm px-6 py-3">
-                      <Settings className="w-4 h-4 mr-2 text-pop-green" />
-                      Processing
-                    </TabsTrigger>
-                    <TabsTrigger value="fulfillment" className="folder-tab-white relative z-[2] -ml-6 text-sm px-6 py-3">
-                      <Truck className="w-4 h-4 mr-2 text-pop-green" />
-                      Fulfillment
-                    </TabsTrigger>
-                    <TabsTrigger value="inventory" className="folder-tab-white relative z-[1] -ml-6 text-sm px-6 py-3">
-                      <BarChart3 className="w-4 h-4 mr-2 text-pop-green" />
-                      Inventory
-                    </TabsTrigger>
-                  </TabsList>
-                  <div className="flex gap-2">
-                    <Button variant="outline" size="sm">
-                      <QrCode className="h-4 w-4 mr-2" />
-                      Scan QR
-                    </Button>
-                  </div>
+            <Tabs value={activeTab} onValueChange={setActiveTab} className="flex-1 flex flex-col overflow-hidden">
+              <div className="flex items-center justify-between p-6 pb-4 flex-shrink-0">
+                <TabsList className="relative z-10 p-0 bg-transparent h-auto gap-0 flex-nowrap overflow-visible">
+                  <TabsTrigger value="collections" className="folder-tab-white relative z-[4] text-sm px-6 py-3">
+                    <Package className="w-4 h-4 mr-2 text-pop-green" />
+                    Collections
+                  </TabsTrigger>
+                  <TabsTrigger value="processing" className="folder-tab-white relative z-[3] -ml-6 text-sm px-6 py-3">
+                    <Settings className="w-4 h-4 mr-2 text-pop-green" />
+                    Processing
+                  </TabsTrigger>
+                  <TabsTrigger value="fulfillment" className="folder-tab-white relative z-[2] -ml-6 text-sm px-6 py-3">
+                    <Truck className="w-4 h-4 mr-2 text-pop-green" />
+                    Fulfillment
+                  </TabsTrigger>
+                  <TabsTrigger value="inventory" className="folder-tab-white relative z-[1] -ml-6 text-sm px-6 py-3">
+                    <BarChart3 className="w-4 h-4 mr-2 text-pop-green" />
+                    Inventory
+                  </TabsTrigger>
+                </TabsList>
+                <div className="flex gap-2">
+                  <Button variant="outline" size="sm">
+                    <QrCode className="h-4 w-4 mr-2" />
+                    Scan QR
+                  </Button>
                 </div>
+              </div>
 
-                {/* Collections Tab Fullscreen */}
-                <TabsContent value="collections" className="flex-1 overflow-y-auto space-y-6">
+              {/* Collections Tab Fullscreen */}
+              <TabsContent value="collections" className="flex-1 overflow-y-auto px-6 pb-6">
+                <div className="space-y-6">
                   <CollectionsTabContent
                     bins={bins}
                     loadingBins={loadingBins}
@@ -949,10 +948,12 @@ export default function OperationsPage() {
                     setCollectionsSortDirection={setCollectionsSortDirection}
                     isFullscreen={true}
                   />
-                </TabsContent>
+                </div>
+              </TabsContent>
 
-                {/* Processing Tab Fullscreen */}
-                <TabsContent value="processing" className="flex-1 overflow-y-auto space-y-6">
+              {/* Processing Tab Fullscreen */}
+              <TabsContent value="processing" className="flex-1 overflow-y-auto px-6 pb-6">
+                <div className="space-y-6">
                   <ProcessingTabContent
                     batches={batches}
                     loadingBatches={loadingBatches}
@@ -964,10 +965,12 @@ export default function OperationsPage() {
                     setProcessingSortDirection={setProcessingSortDirection}
                     isFullscreen={true}
                   />
-                </TabsContent>
+                </div>
+              </TabsContent>
 
-                {/* Fulfillment Tab Fullscreen */}
-                <TabsContent value="fulfillment" className="flex-1 overflow-y-auto space-y-6">
+              {/* Fulfillment Tab Fullscreen */}
+              <TabsContent value="fulfillment" className="flex-1 overflow-y-auto px-6 pb-6">
+                <div className="space-y-6">
                   <FulfillmentTabContent
                     orders={orders}
                     loadingOrders={loadingOrders}
@@ -979,10 +982,12 @@ export default function OperationsPage() {
                     setFulfillmentSortDirection={setFulfillmentSortDirection}
                     isFullscreen={true}
                   />
-                </TabsContent>
+                </div>
+              </TabsContent>
 
-                {/* Inventory Tab Fullscreen */}
-                <TabsContent value="inventory" className="flex-1 overflow-y-auto space-y-6">
+              {/* Inventory Tab Fullscreen */}
+              <TabsContent value="inventory" className="flex-1 overflow-y-auto px-6 pb-6">
+                <div className="space-y-6">
                   <InventoryTabContent
                     blanks={blanks}
                     loadingBlanks={loadingBlanks}
@@ -990,10 +995,9 @@ export default function OperationsPage() {
                     handleBlankDelete={handleBlankDelete}
                     isFullscreen={true}
                   />
-                </TabsContent>
-              </Tabs>
-              </div>
-            </div>
+                </div>
+              </TabsContent>
+            </Tabs>
           </div>
         </DialogContent>
       </Dialog>
