@@ -79,10 +79,10 @@ export default function TrackItem() {
         const mappedItem: PlasticItem = {
           id: data.id,
           originPoint: data.organization?.name || "Unknown Origin",
-          collectionDate: data.type === 'bin' ? '' : (data.collectionDate || ''),
+          collectionDate: data.type === 'bin' ? '' : (data.collectionDate || '2024-01-15'),
           materialType: data.materialType || "Mixed Plastic",
           weight: data.weight || 0.5,
-          processedDate: data.type === 'blank' ? 'Processed' : (data.processedDate || ''),
+          processedDate: data.type === 'blank' ? '2024-02-01' : (data.processedDate || ''),
           carbonOffset: data.impactMetrics?.carbonSaved || 0,
           // Only set productType for blanks that have been purchased (have productId)
           productType: data.type === 'blank' && data.productId ? 'educational_kit' : '',
