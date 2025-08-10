@@ -305,10 +305,10 @@ export default function TrackItem() {
                   <CheckCircle className="w-8 h-8 text-pop-black" />
                 </div>
                 <h3 className="systematic-caps text-sm mb-1">
-                  {item.id.startsWith('T') ? getBatchStatusLabel(item.event || 'collected') : 'Processed'}
+                  {item.id.startsWith('T') ? (item.event === 'completed' ? 'Processed' : 'Processing') : 'Processed'}
                 </h3>
                 <p className="text-xs text-pop-gray truncate">
-                  {item.id.startsWith('T') ? 'In Progress' : item.processedDate}
+                  {item.id.startsWith('T') ? getBatchStatusLabel(item.event || 'collected') : item.processedDate}
                 </p>
               </div>
 
