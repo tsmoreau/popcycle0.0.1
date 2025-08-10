@@ -176,41 +176,7 @@ export default function OperationsPage() {
     { key: 'updatedAt', label: 'Updated At', type: 'readonly' }
   ];
 
-  const handleBinSave = async (bin: Bin) => {
-    try {
-      const response = await fetch('/api/operations/bins', {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(bin)
-      })
-      
-      if (response.ok) {
-        await fetchBins()
-      } else {
-        throw new Error('Failed to save bin')
-      }
-    } catch (error) {
-      console.error('Error saving bin:', error)
-      throw error
-    }
-  }
 
-  const handleBinDelete = async (bin: Bin) => {
-    try {
-      const response = await fetch(`/api/operations/bins?id=${bin._id}`, {
-        method: 'DELETE'
-      })
-      
-      if (response.ok) {
-        await fetchBins()
-      } else {
-        throw new Error('Failed to delete bin')
-      }
-    } catch (error) {
-      console.error('Error deleting bin:', error)
-      throw error
-    }
-  }
 
   // COMPLETE Batch editing configuration - ALL database fields
   const batchEditableFields: EditableField<Batch>[] = [
@@ -255,41 +221,7 @@ export default function OperationsPage() {
     { key: 'updatedAt', label: 'Updated At', type: 'readonly' }
   ];
 
-  const handleBatchSave = async (batch: Batch) => {
-    try {
-      const response = await fetch('/api/operations/batches', {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(batch)
-      })
-      
-      if (response.ok) {
-        await fetchBatches()
-      } else {
-        throw new Error('Failed to save batch')
-      }
-    } catch (error) {
-      console.error('Error saving batch:', error)
-      throw error
-    }
-  }
 
-  const handleBatchDelete = async (batch: Batch) => {
-    try {
-      const response = await fetch(`/api/operations/batches?id=${batch._id}`, {
-        method: 'DELETE'
-      })
-      
-      if (response.ok) {
-        await fetchBatches()
-      } else {
-        throw new Error('Failed to delete batch')
-      }
-    } catch (error) {
-      console.error('Error deleting batch:', error)
-      throw error
-    }
-  }
 
   // COMPLETE Order editing configuration - ALL database fields
   const orderEditableFields: EditableField<Order>[] = [
@@ -337,41 +269,7 @@ export default function OperationsPage() {
     { key: 'updatedAt', label: 'Updated At', type: 'readonly' }
   ];
 
-  const handleOrderSave = async (order: Order) => {
-    try {
-      const response = await fetch('/api/operations/orders', {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(order)
-      })
-      
-      if (response.ok) {
-        await fetchOrders()
-      } else {
-        throw new Error('Failed to save order')
-      }
-    } catch (error) {
-      console.error('Error saving order:', error)
-      throw error
-    }
-  }
 
-  const handleOrderDelete = async (order: Order) => {
-    try {
-      const response = await fetch(`/api/operations/orders?id=${order._id}`, {
-        method: 'DELETE'
-      })
-      
-      if (response.ok) {
-        await fetchOrders()
-      } else {
-        throw new Error('Failed to delete order')
-      }
-    } catch (error) {
-      console.error('Error deleting order:', error)
-      throw error
-    }
-  }
 
   // COMPLETE Blank editing configuration - ALL database fields
   const blankEditableFields: EditableField<Blank>[] = [
@@ -407,41 +305,7 @@ export default function OperationsPage() {
     { key: 'updatedAt', label: 'Updated At', type: 'readonly' }
   ];
 
-  const handleBlankSave = async (blank: Blank) => {
-    try {
-      const response = await fetch('/api/operations/blanks', {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(blank)
-      })
-      
-      if (response.ok) {
-        await fetchBlanks()
-      } else {
-        throw new Error('Failed to save blank')
-      }
-    } catch (error) {
-      console.error('Error saving blank:', error)
-      throw error
-    }
-  }
 
-  const handleBlankDelete = async (blank: Blank) => {
-    try {
-      const response = await fetch(`/api/operations/blanks?id=${blank._id}`, {
-        method: 'DELETE'
-      })
-      
-      if (response.ok) {
-        await fetchBlanks()
-      } else {
-        throw new Error('Failed to delete blank')
-      }
-    } catch (error) {
-      console.error('Error deleting blank:', error)
-      throw error
-    }
-  }
 
   // Complete Bin column definitions with ALL database fields
   const allBinColumns: Column<Bin>[] = [
