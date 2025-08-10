@@ -63,6 +63,7 @@ interface PlasticItem {
 export default function TrackItem() {
   const { id } = useParams();
   const [item, setItem] = useState<PlasticItem | null>(null);
+  const [batches, setBatches] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -99,6 +100,19 @@ export default function TrackItem() {
         };
         
         setItem(mappedItem);
+        
+        // If this is a bin, fetch associated batches
+        if (data.type === 'bin') {
+          try {
+            const batchResponse = await fetch(`/api/items/sample?type=batches&binId=${data.id}`);
+            if (batchResponse.ok) {
+              const batchData = await batchResponse.json();
+              setBatches(batchData);
+            }
+          } catch (batchErr) {
+            console.log('Could not fetch batches for bin:', batchErr);
+          }
+        }
       } catch (err) {
         setError(err instanceof Error ? err.message : "Failed to fetch item");
       } finally {
@@ -652,8 +666,41 @@ export default function TrackItem() {
           </PopArtContainer>
         )}
 
-        {/* Source-Only Call to Action */}
-        {isSourceOnly && (
+        {/* Bin Batches List */}
+        {isUncollected && batches.length > 0 && (
+          <div className="max-w-2xl mx-auto">
+            <PopArtContainer color="green" shadow>
+              <Card className="border-4 border-pop-black">
+                <CardHeader>
+                  <CardTitle className="systematic-caps flex items-center justify-center text-2xl">
+                    <Package className="w-6 h-6 mr-2" />
+                    Batches from this Bin
+                  </CardTitle>
+                </CardHeader>
+                <CardContent className="py-6">
+                  <div className="space-y-3">
+                    {batches.map((batch, index) => (
+                      <div key={batch.id} className="flex justify-between items-center p-3 border border-pop-gray rounded">
+                        <div>
+                          <div className="systematic-caps text-sm font-semibold">{batch.id}</div>
+                          <div className="text-xs text-pop-gray">
+                            {batch.weight}kg • {batch.materialType} • {batch.status}
+                          </div>
+                        </div>
+                        <div className="text-xs text-pop-gray">
+                          {new Date(batch.collectionDate).toLocaleDateString()}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </CardContent>
+              </Card>
+            </PopArtContainer>
+          </div>
+        )}
+
+        {/* Source-Only Call to Action for non-bins */}
+        {isSourceOnly && !isUncollected && (
           <div className="max-w-2xl mx-auto">
             <PopArtContainer color={isProcessed ? "blue" : "red"} shadow>
               <Card className="border-4 border-pop-black">
