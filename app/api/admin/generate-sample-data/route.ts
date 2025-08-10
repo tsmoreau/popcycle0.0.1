@@ -199,6 +199,9 @@ export async function POST() {
       // Calculate total weight from all bins
       const totalWeight = selectedBins.reduce((sum, bin) => sum + (Math.random() * 15 + 3), 0);
       
+      // Assign logical status - some batches completed, others in progress
+      const batchStatus = batchIndex < 3 ? 'completed' : statuses[Math.floor(Math.random() * (statuses.length - 1))]; // First 3 are completed, rest are in progress
+      
       batches.push({
         _id: qrCode,
         binIds: selectedBins.map(bin => bin._id), // Array of bin IDs
@@ -207,7 +210,7 @@ export async function POST() {
         weight: Math.round(totalWeight * 10) / 10,
         materialType: materialTypes[Math.floor(Math.random() * materialTypes.length)],
         collectedBy: collectors[Math.floor(Math.random() * collectors.length)],
-        status: statuses[Math.floor(Math.random() * statuses.length)],
+        status: batchStatus,
         notes: batchIndex === 0 ? 'High quality plastic from multiple collection points' : undefined,
         createdAt: new Date(),
         updatedAt: new Date()
@@ -320,9 +323,11 @@ export async function POST() {
     
     await db.collection('users').insertMany(users);
     
-    // Generate Blanks with QR codes
+    // Generate Blanks with QR codes - only for completed batches
     const blanks: any[] = [];
-    batches.forEach((batch, batchIndex) => {
+    const completedBatches = batches.filter(batch => batch.status === 'completed');
+    
+    completedBatches.forEach((batch, batchIndex) => {
       const orgIndex = orgs.findIndex(org => {
         const bin = bins.find(b => b._id === batch.binId);
         return bin && org._id.equals(bin.orgId);
@@ -335,8 +340,8 @@ export async function POST() {
         blanks.push({
           _id: qrCode,
           batchId: batch._id,
-          productId: isFinished ? products[Math.floor(Math.random() * products.length)]._id : undefined,
-          userId: isFinished ? users[Math.floor(Math.random() * users.length)]._id : undefined,
+          productId: isFinished ? products[Math.floor(Math.random() * products.length)]._id : null,
+          userId: isFinished ? users[Math.floor(Math.random() * users.length)]._id : null,
           type: isFinished ? 'finished' as const : 'blank' as const,
           status: isFinished ? 'assembled' as const : 'blank' as const,
           weight: Math.round((Math.random() * 0.5 + 0.2) * 100) / 100,
