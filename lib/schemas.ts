@@ -72,8 +72,8 @@ export interface Batch {
   
 }
 
-// Item - Individual physical blank or finished product
-export interface Item {
+// Blank - Individual physical blank or finished product
+export interface Blank {
   _id: string; // QR code string (e.g., "003BLKA5T6R4")
   batchId: string; // Reference to Batch QR code
   productId?: ObjectId; // Reference to Product (if finished)
@@ -83,6 +83,14 @@ export interface Item {
   weight: number; // in kg
   assemblyDate?: Date;
   deliveryDate?: Date;
+  // Maker details for assembled items
+  makerDetails?: {
+    name: string;
+    location: string;
+    story: string;
+    assemblyDate: Date;
+    verifiedEmail: string;
+  };
   createdAt: Date;
   updatedAt: Date;
   
