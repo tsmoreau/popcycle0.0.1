@@ -6,8 +6,8 @@ function encodePartnerBase36(partnerId: number): string {
   return partnerId.toString(36).toUpperCase().padStart(3, '0');
 }
 
-// Generate QR code IDs with partner branding
-function generateQRCode(partnerIndex: number, type: 'bin' | 'batch' | 'item', sequence: number): string {
+// Generate QR code IDs with partner branding and randomized sequences
+function generateQRCode(partnerIndex: number, type: 'bin' | 'batch' | 'item'): string {
   const partnerHash = encodePartnerBase36(partnerIndex + 1); // Start from 1
   const typePrefix = {
     bin: 'BIN',
@@ -15,7 +15,9 @@ function generateQRCode(partnerIndex: number, type: 'bin' | 'batch' | 'item', se
     item: 'BLK' // "Blank" for items
   }[type];
   
-  const seqStr = sequence.toString(36).toUpperCase().padStart(6, '0');
+  // Generate random 6-character Base36 sequence
+  const randomNum = Math.floor(Math.random() * Math.pow(36, 6)); // 0 to 36^6-1
+  const seqStr = randomNum.toString(36).toUpperCase().padStart(6, '0');
   return `${partnerHash}${typePrefix}${seqStr}`;
 }
 
@@ -123,7 +125,7 @@ export async function POST() {
       for (let i = 0; i < binCount; i++) {
         bins.push({
           _id: new ObjectId(),
-          qrCode: generateQRCode(orgIndex, 'bin', bins.length + 1),
+          qrCode: generateQRCode(orgIndex, 'bin'),
           orgId: org._id,
           name: `${org.name} Bin ${i + 1}`,
           type: orgIndex === 0 ? 'permanent' as const : 'temporary' as const,
@@ -152,7 +154,7 @@ export async function POST() {
         
         batches.push({
           _id: new ObjectId(),
-          qrCode: generateQRCode(orgIndex, 'batch', batches.length + 1),
+          qrCode: generateQRCode(orgIndex, 'batch'),
           binId: bin._id,
           collectionDate: new Date(Date.now() - Math.random() * 30 * 24 * 60 * 60 * 1000),
           weight: Math.round((Math.random() * 20 + 5) * 10) / 10,
@@ -232,7 +234,7 @@ export async function POST() {
         const isFinished = Math.random() > 0.3;
         items.push({
           _id: new ObjectId(),
-          qrCode: generateQRCode(orgIndex, 'item', items.length + 1),
+          qrCode: generateQRCode(orgIndex, 'item'),
           batchId: batch._id,
           productId: isFinished ? products[Math.floor(Math.random() * products.length)]._id : undefined,
           userId: isFinished ? undefined : undefined,
