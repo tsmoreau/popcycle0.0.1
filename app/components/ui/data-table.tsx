@@ -18,12 +18,28 @@ import {
   DialogTrigger,
 } from "./dialog"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "./card"
-import { ArrowUpDown } from "lucide-react"
+import { Button } from "./button"
+import { Input } from "./input"
+import { Textarea } from "./textarea"
+import { Label } from "./label"
+import { ArrowUpDown, Edit2, Save, X } from "lucide-react"
 
 export interface Column<T> {
   key: keyof T | string
   header: string
   sortable?: boolean
+  render?: (item: T) => React.ReactNode
+}
+
+export interface EditableField<T> {
+  key: keyof T | string
+  label: string
+  type: 'text' | 'textarea' | 'select' | 'number' | 'email' | 'nested' | 'readonly'
+  options?: { value: string; label: string }[]
+  nested?: EditableField<any>[]
+  required?: boolean
+  placeholder?: string
+  className?: string
   render?: (item: T) => React.ReactNode
 }
 
@@ -33,12 +49,16 @@ export interface DataTableProps<T> {
   icon?: React.ReactNode
   data: T[]
   columns: Column<T>[]
-  renderModal?: (item: T) => React.ReactNode
+  editableFields?: EditableField<T>[]
+  onSave?: (item: T) => Promise<void>
+  onDelete?: (item: T) => Promise<void>
   className?: string
   // External sorting state (optional)
   sortField?: string
   sortDirection?: SortDirection
   onSort?: (field: string, direction: SortDirection) => void
+  // Legacy support for custom modals
+  renderModal?: (item: T) => React.ReactNode
 }
 
 type SortDirection = "asc" | "desc"
@@ -49,14 +69,21 @@ export function DataTable<T extends Record<string, any>>({
   icon,
   data,
   columns,
-  renderModal,
+  editableFields,
+  onSave,
+  onDelete,
   className = "",
   sortField: externalSortField,
   sortDirection: externalSortDirection,
-  onSort
+  onSort,
+  renderModal
 }: DataTableProps<T>) {
   const [internalSortField, setInternalSortField] = useState<string>("")
   const [internalSortDirection, setInternalSortDirection] = useState<SortDirection>("asc")
+  const [isEditing, setIsEditing] = useState(false)
+  const [editingItem, setEditingItem] = useState<T | null>(null)
+  const [editFormData, setEditFormData] = useState<Record<string, any>>({})
+  const [isSaving, setIsSaving] = useState(false)
   
   // Use external state if provided, otherwise use internal state
   const sortField = externalSortField !== undefined ? externalSortField : internalSortField
@@ -117,6 +144,248 @@ export function DataTable<T extends Record<string, any>>({
     return item[column.key as keyof T]
   }
 
+  const handleEdit = (item: T) => {
+    setEditingItem(item)
+    setEditFormData({ ...item })
+    setIsEditing(true)
+  }
+
+  const handleCancelEdit = () => {
+    setIsEditing(false)
+    setEditingItem(null)
+    setEditFormData({})
+  }
+
+  const handleSave = async () => {
+    if (!editingItem || !onSave) return
+    
+    try {
+      setIsSaving(true)
+      await onSave(editFormData as T)
+      setIsEditing(false)
+      setEditingItem(null)
+      setEditFormData({})
+    } catch (error) {
+      console.error('Error saving:', error)
+    } finally {
+      setIsSaving(false)
+    }
+  }
+
+  const handleDelete = async () => {
+    if (!editingItem || !onDelete) return
+    
+    try {
+      setIsSaving(true)
+      await onDelete(editingItem)
+      setIsEditing(false)
+      setEditingItem(null)
+      setEditFormData({})
+    } catch (error) {
+      console.error('Error deleting:', error)
+    } finally {
+      setIsSaving(false)
+    }
+  }
+
+  const handleFieldChange = (fieldKey: string, value: any) => {
+    setEditFormData(prev => ({
+      ...prev,
+      [fieldKey]: value
+    }))
+  }
+
+  const handleNestedFieldChange = (parentKey: string, nestedKey: string, value: any) => {
+    setEditFormData(prev => ({
+      ...prev,
+      [parentKey]: {
+        ...prev[parentKey],
+        [nestedKey]: value
+      }
+    }))
+  }
+
+  const renderField = (field: EditableField<T>, value: any, onChange: (value: any) => void) => {
+    switch (field.type) {
+      case 'textarea':
+        return (
+          <Textarea
+            value={value || ''}
+            onChange={(e) => onChange(e.target.value)}
+            placeholder={field.placeholder}
+            className={field.className}
+            rows={3}
+          />
+        )
+      case 'select':
+        return (
+          <select
+            value={value || ''}
+            onChange={(e) => onChange(e.target.value)}
+            className={`border rounded px-3 py-2 w-full ${field.className || ''}`}
+          >
+            <option value="">Select...</option>
+            {field.options?.map(option => (
+              <option key={option.value} value={option.value}>
+                {option.label}
+              </option>
+            ))}
+          </select>
+        )
+      case 'number':
+        return (
+          <Input
+            type="number"
+            value={value || ''}
+            onChange={(e) => onChange(parseFloat(e.target.value) || 0)}
+            placeholder={field.placeholder}
+            className={field.className}
+          />
+        )
+      case 'email':
+        return (
+          <Input
+            type="email"
+            value={value || ''}
+            onChange={(e) => onChange(e.target.value)}
+            placeholder={field.placeholder}
+            className={field.className}
+          />
+        )
+      case 'readonly':
+        return (
+          <div className="px-3 py-2 bg-gray-50 border rounded text-gray-600">
+            {field.render ? field.render(editFormData as T) : value}
+          </div>
+        )
+      case 'nested':
+        return (
+          <div className="space-y-3 p-3 border rounded bg-gray-50">
+            {field.nested?.map(nestedField => (
+              <div key={String(nestedField.key)}>
+                <Label className="text-sm font-medium">{nestedField.label}</Label>
+                {renderField(
+                  nestedField,
+                  value?.[nestedField.key as string],
+                  (newValue) => handleNestedFieldChange(String(field.key), String(nestedField.key), newValue)
+                )}
+              </div>
+            ))}
+          </div>
+        )
+      default:
+        return (
+          <Input
+            type="text"
+            value={value || ''}
+            onChange={(e) => onChange(e.target.value)}
+            placeholder={field.placeholder}
+            className={field.className}
+          />
+        )
+    }
+  }
+
+  const renderEditModal = (item: T) => (
+    <div>
+      <DialogHeader>
+        <DialogTitle className="flex items-center gap-2">
+          <Edit2 className="h-5 w-5" />
+          Edit {title.replace(' Management', '').replace(' Configuration', '')}
+        </DialogTitle>
+        <DialogDescription>
+          Make changes to this item. Click save when you're done.
+        </DialogDescription>
+      </DialogHeader>
+      
+      <div className="space-y-4 mt-4">
+        {editableFields?.map(field => {
+          const value = editFormData[field.key as string]
+          return (
+            <div key={String(field.key)}>
+              <Label className="text-sm font-medium">
+                {field.label}
+                {field.required && <span className="text-red-500 ml-1">*</span>}
+              </Label>
+              <div className="mt-1">
+                {renderField(
+                  field,
+                  value,
+                  (newValue) => handleFieldChange(String(field.key), newValue)
+                )}
+              </div>
+            </div>
+          )
+        })}
+      </div>
+
+      <div className="flex gap-2 mt-6">
+        <Button
+          onClick={handleSave}
+          disabled={isSaving}
+          className="flex-1 bg-pop-green hover:bg-pop-green/90"
+        >
+          <Save className="h-4 w-4 mr-2" />
+          {isSaving ? 'Saving...' : 'Save Changes'}
+        </Button>
+        <Button
+          variant="outline"
+          onClick={handleCancelEdit}
+          disabled={isSaving}
+        >
+          <X className="h-4 w-4 mr-2" />
+          Cancel
+        </Button>
+        {onDelete && (
+          <Button
+            variant="destructive"
+            onClick={handleDelete}
+            disabled={isSaving}
+          >
+            Delete
+          </Button>
+        )}
+      </div>
+    </div>
+  )
+
+  const renderViewModal = (item: T) => (
+    <div>
+      <DialogHeader>
+        <DialogTitle>{getCellValue(item, columns[0])}</DialogTitle>
+        <DialogDescription>
+          View details and edit this item.
+        </DialogDescription>
+      </DialogHeader>
+      
+      <div className="space-y-3 mt-4">
+        {editableFields?.map(field => {
+          const value = item[field.key as string]
+          return (
+            <div key={String(field.key)}>
+              <strong>{field.label}:</strong>{' '}
+              {field.render ? field.render(item) : 
+               field.type === 'nested' ? JSON.stringify(value, null, 2) :
+               String(value || 'Not provided')}
+            </div>
+          )
+        })}
+      </div>
+
+      <div className="pt-4 space-y-2">
+        {editableFields && (
+          <Button
+            className="w-full bg-pop-green hover:bg-pop-green/90"
+            onClick={() => handleEdit(item)}
+          >
+            <Edit2 className="h-4 w-4 mr-2" />
+            Edit {title.replace(' Management', '').replace(' Configuration', '')}
+          </Button>
+        )}
+      </div>
+    </div>
+  )
+
   return (
     <Card className={className}>
       <CardHeader>
@@ -146,8 +415,9 @@ export function DataTable<T extends Record<string, any>>({
             </TableHeader>
             <TableBody>
               {sortedData.map((item, index) => {
+                const hasModal = renderModal || editableFields
                 const RowContent = (
-                  <TableRow className={renderModal ? "cursor-pointer hover:bg-gray-50" : ""}>
+                  <TableRow className={hasModal ? "cursor-pointer hover:bg-gray-50" : ""}>
                     {columns.map((column) => (
                       <TableCell
                         key={String(column.key)}
@@ -159,14 +429,17 @@ export function DataTable<T extends Record<string, any>>({
                   </TableRow>
                 )
 
-                if (renderModal) {
+                if (hasModal) {
                   return (
-                    <Dialog key={index}>
+                    <Dialog key={index} open={isEditing && editingItem === item ? true : undefined}>
                       <DialogTrigger asChild>
                         {RowContent}
                       </DialogTrigger>
-                      <DialogContent className="max-w-md">
-                        {renderModal(item)}
+                      <DialogContent className="max-w-2xl max-h-[80vh] overflow-y-auto">
+                        {isEditing && editingItem === item ? 
+                          renderEditModal(item) : 
+                          renderModal ? renderModal(item) : renderViewModal(item)
+                        }
                       </DialogContent>
                     </Dialog>
                   )
@@ -204,8 +477,9 @@ export function DataTable<T extends Record<string, any>>({
 
           <div className="space-y-3">
             {sortedData.map((item, index) => {
+              const hasModal = renderModal || editableFields
               const CardContent = (
-                <div className={`p-4 border rounded-lg bg-white ${renderModal ? "cursor-pointer hover:bg-gray-50" : ""}`}>
+                <div className={`p-4 border rounded-lg bg-white ${hasModal ? "cursor-pointer hover:bg-gray-50" : ""}`}>
                   <div className="space-y-2">
                     {columns.map((column, colIndex) => (
                       <div key={String(column.key)} className={`flex justify-between items-start ${colIndex === 0 ? "mb-3" : ""}`}>
@@ -221,14 +495,17 @@ export function DataTable<T extends Record<string, any>>({
                 </div>
               )
 
-              if (renderModal) {
+              if (hasModal) {
                 return (
-                  <Dialog key={index}>
+                  <Dialog key={index} open={isEditing && editingItem === item ? true : undefined}>
                     <DialogTrigger asChild>
                       {CardContent}
                     </DialogTrigger>
-                    <DialogContent className="max-w-md">
-                      {renderModal(item)}
+                    <DialogContent className="max-w-2xl max-h-[80vh] overflow-y-auto">
+                      {isEditing && editingItem === item ? 
+                        renderEditModal(item) : 
+                        renderModal ? renderModal(item) : renderViewModal(item)
+                      }
                     </DialogContent>
                   </Dialog>
                 )

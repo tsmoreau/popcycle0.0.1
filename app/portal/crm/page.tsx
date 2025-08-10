@@ -5,7 +5,7 @@ import { Phone, Users, TrendingUp, AlertCircle, Calendar, MessageCircle, Buildin
 import { Button } from '../../components/ui/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../../components/ui/card'
 import { Badge } from '../../components/ui/badge'
-import { DataTable, Column } from '../../components/ui/data-table'
+import { DataTable, Column, EditableField } from '../../components/ui/data-table'
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '../../components/ui/accordion'
 
 interface Organization {
@@ -99,29 +99,85 @@ export default function CRMPage() {
     }
   ]
 
-  const renderOrganizationModal = (org: Organization) => (
-    <div>
-      <h3 className="text-lg font-semibold mb-4">{org.name}</h3>
-      <div className="space-y-3">
-        <div><strong>Type:</strong> {org.type}</div>
-        <div><strong>Description:</strong> {org.description}</div>
-        <div><strong>Slug:</strong> {org.slug}</div>
-        <div><strong>Email:</strong> {org.contactInfo.email || 'Not provided'}</div>
-        <div><strong>Phone:</strong> {org.contactInfo.phone || 'Not provided'}</div>
-        <div><strong>Website:</strong> {org.contactInfo.website || 'Not provided'}</div>
-        <div><strong>Address:</strong> {org.contactInfo.address || 'Not provided'}</div>
-        <div><strong>Events:</strong> {org.events.length}</div>
-        <div><strong>Tracking Message:</strong> {org.branding.trackingPageMessage || 'Default message'}</div>
-        <div><strong>Created:</strong> {new Date(org.createdAt).toLocaleDateString()}</div>
-        <div className="pt-4 space-y-2">
-          <Button className="w-full bg-pop-green hover:bg-pop-green/90">Edit Organization</Button>
-          <Button variant="outline" className="w-full">Schedule Follow-up</Button>
-          <Button variant="outline" className="w-full">Generate Report</Button>
-          <Button variant="outline" className="w-full">View Partner Portal</Button>
-        </div>
-      </div>
-    </div>
-  )
+  // Organization editing configuration
+  const organizationEditableFields: EditableField<Organization>[] = [
+    { key: '_id', label: 'Organization ID', type: 'readonly' },
+    { key: 'name', label: 'Organization Name', type: 'text', required: true, placeholder: 'Enter organization name' },
+    { key: 'slug', label: 'URL Slug', type: 'text', required: true, placeholder: 'organization-slug' },
+    { 
+      key: 'type', 
+      label: 'Organization Type', 
+      type: 'select', 
+      required: true,
+      options: [
+        { value: 'corporate', label: 'Corporate' },
+        { value: 'educational', label: 'Educational' },
+        { value: 'community', label: 'Community' }
+      ]
+    },
+    { key: 'description', label: 'Description', type: 'textarea', required: true, placeholder: 'Describe the organization' },
+    { key: 'logoUrl', label: 'Logo URL', type: 'text', placeholder: 'https://example.com/logo.png' },
+    { 
+      key: 'contactInfo', 
+      label: 'Contact Information', 
+      type: 'nested',
+      nested: [
+        { key: 'email', label: 'Email', type: 'email', placeholder: 'contact@organization.com' },
+        { key: 'phone', label: 'Phone', type: 'text', placeholder: '(555) 123-4567' },
+        { key: 'website', label: 'Website', type: 'text', placeholder: 'https://organization.com' },
+        { key: 'address', label: 'Address', type: 'textarea', placeholder: 'Full address' }
+      ]
+    },
+    { 
+      key: 'branding', 
+      label: 'Branding Settings', 
+      type: 'nested',
+      nested: [
+        { key: 'primaryColor', label: 'Primary Color', type: 'text', placeholder: '#000000' },
+        { key: 'secondaryColor', label: 'Secondary Color', type: 'text', placeholder: '#ffffff' },
+        { key: 'customDomain', label: 'Custom Domain', type: 'text', placeholder: 'track.organization.com' },
+        { key: 'trackingPageMessage', label: 'Tracking Page Message', type: 'textarea', placeholder: 'Welcome message for tracking page' }
+      ]
+    }
+  ]
+
+  const handleOrganizationSave = async (organization: Organization) => {
+    try {
+      const response = await fetch('/api/crm/organizations', {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(organization)
+      })
+      
+      if (response.ok) {
+        // Refresh organizations list
+        await fetchOrganizations()
+      } else {
+        throw new Error('Failed to save organization')
+      }
+    } catch (error) {
+      console.error('Error saving organization:', error)
+      throw error
+    }
+  }
+
+  const handleOrganizationDelete = async (organization: Organization) => {
+    try {
+      const response = await fetch(`/api/crm/organizations?id=${organization._id}`, {
+        method: 'DELETE'
+      })
+      
+      if (response.ok) {
+        // Refresh organizations list
+        await fetchOrganizations()
+      } else {
+        throw new Error('Failed to delete organization')
+      }
+    } catch (error) {
+      console.error('Error deleting organization:', error)
+      throw error
+    }
+  }
 
   return (
     <div className="space-y-6">
@@ -217,7 +273,9 @@ export default function CRMPage() {
           icon={<Building2 className="h-5 w-5 text-pop-green" />}
           data={organizations}
           columns={organizationColumns}
-          renderModal={renderOrganizationModal}
+          editableFields={organizationEditableFields}
+          onSave={handleOrganizationSave}
+          onDelete={handleOrganizationDelete}
         />
       )}
 

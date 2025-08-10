@@ -5,7 +5,7 @@ import { Users, Settings, Shield, ChevronDown, Database, Cog, Eye, Zap, QrCode, 
 import { Button } from '../../components/ui/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../../components/ui/card'
 import { Badge } from '../../components/ui/badge'
-import { DataTable, Column } from '../../components/ui/data-table'
+import { DataTable, Column, EditableField } from '../../components/ui/data-table'
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '../../components/ui/accordion'
 
 interface User {
@@ -236,45 +236,99 @@ export default function AdminPage() {
     }
   ]
 
-  const renderUserModal = (user: User) => (
-    <div>
-      <h3 className="text-lg font-semibold mb-4">{user.name}</h3>
-      <div className="space-y-3">
-        <div><strong>Email:</strong> {user.email}</div>
-        <div><strong>Role:</strong> {user.role}</div>
-        <div><strong>Partner Org:</strong> {user.orgId || 'None'}</div>
-        <div><strong>Status:</strong> {user.status}</div>
-        <div><strong>Last Active:</strong> {user.lastActive}</div>
-        <div className="pt-4 space-y-2">
-          <Button className="w-full bg-pop-green hover:bg-pop-green/90">Edit User</Button>
-          <Button variant="outline" className="w-full">Reset Password</Button>
-          <Button variant="outline" className="w-full text-pop-red">Deactivate User</Button>
-        </div>
-      </div>
-    </div>
-  )
+  // Product editing configuration
+  const productEditableFields: EditableField<Product>[] = [
+    { key: '_id', label: 'Product ID', type: 'readonly' },
+    { key: 'name', label: 'Name', type: 'text', required: true, placeholder: 'Enter product name' },
+    { key: 'description', label: 'Description', type: 'textarea', required: true, placeholder: 'Describe the product' },
+    { 
+      key: 'category', 
+      label: 'Category', 
+      type: 'select', 
+      required: true,
+      options: [
+        { value: 'educational_kit', label: 'Educational Kit' },
+        { value: 'assembly_toy', label: 'Assembly Toy' },
+        { value: 'practical_item', label: 'Practical Item' },
+        { value: 'decoration', label: 'Decoration' }
+      ]
+    },
+    { 
+      key: 'difficulty', 
+      label: 'Difficulty', 
+      type: 'select', 
+      required: true,
+      options: [
+        { value: 'easy', label: 'Easy' },
+        { value: 'medium', label: 'Medium' },
+        { value: 'hard', label: 'Hard' }
+      ]
+    },
+    { key: 'estimatedAssemblyTime', label: 'Assembly Time (minutes)', type: 'number', required: true },
+    { 
+      key: 'materialRequirements', 
+      label: 'Material Requirements', 
+      type: 'nested',
+      nested: [
+        { 
+          key: 'plasticType', 
+          label: 'Plastic Type', 
+          type: 'select',
+          options: [
+            { value: 'HDPE', label: 'HDPE' },
+            { value: 'PET', label: 'PET' },
+            { value: 'PP', label: 'PP' }
+          ]
+        },
+        { key: 'weight', label: 'Weight (kg)', type: 'number' }
+      ]
+    },
+    { key: 'price', label: 'Price ($)', type: 'number', required: true },
+    { key: 'rating', label: 'Rating (1-5)', type: 'number' },
+    { key: 'reviewCount', label: 'Review Count', type: 'number' },
+    { key: 'inStock', label: 'In Stock', type: 'select', options: [
+      { value: 'true', label: 'In Stock' },
+      { value: 'false', label: 'Out of Stock' }
+    ] }
+  ]
 
-  const renderProductModal = (product: Product) => (
-    <div>
-      <h3 className="text-lg font-semibold mb-4">{product.name}</h3>
-      <div className="space-y-3">
-        <div><strong>Description:</strong> {product.description}</div>
-        <div><strong>Category:</strong> {product.category.replace('_', ' ')}</div>
-        <div><strong>Difficulty:</strong> {product.difficulty}</div>
-        <div><strong>Assembly Time:</strong> {product.estimatedAssemblyTime} minutes</div>
-        <div><strong>Material:</strong> {product.materialRequirements.plasticType} ({product.materialRequirements.weight}kg)</div>
-        <div><strong>Price:</strong> ${product.price.toFixed(2)}</div>
-        <div><strong>Rating:</strong> {product.rating}/5 ({product.reviewCount} reviews)</div>
-        <div><strong>Stock Status:</strong> {product.inStock ? 'In Stock' : 'Out of Stock'}</div>
-        <div className="pt-4 space-y-2">
-          <Button className="w-full bg-pop-green hover:bg-pop-green/90">Edit Product</Button>
-          <Button variant="outline" className="w-full">View Design Files</Button>
-          <Button variant="outline" className="w-full">Duplicate Product</Button>
-          <Button variant="outline" className="w-full text-pop-red">Delete Product</Button>
-        </div>
-      </div>
-    </div>
-  )
+  const handleProductSave = async (product: Product) => {
+    try {
+      const response = await fetch('/api/admin/products', {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(product)
+      })
+      
+      if (response.ok) {
+        // Refresh products list
+        await fetchProducts()
+      } else {
+        throw new Error('Failed to save product')
+      }
+    } catch (error) {
+      console.error('Error saving product:', error)
+      throw error
+    }
+  }
+
+  const handleProductDelete = async (product: Product) => {
+    try {
+      const response = await fetch(`/api/admin/products?id=${product._id}`, {
+        method: 'DELETE'
+      })
+      
+      if (response.ok) {
+        // Refresh products list
+        await fetchProducts()
+      } else {
+        throw new Error('Failed to delete product')
+      }
+    } catch (error) {
+      console.error('Error deleting product:', error)
+      throw error
+    }
+  }
 
   return (
     <div className="space-y-6">
@@ -376,7 +430,6 @@ export default function AdminPage() {
                 description="Manage user roles, permissions, and partner affiliations"
                 data={usersData}
                 columns={userColumns}
-                renderModal={renderUserModal}
               />
             </div>
           </AccordionContent>
@@ -495,7 +548,9 @@ export default function AdminPage() {
                       description="Configure and manage product catalog"
                       data={products}
                       columns={productColumns}
-                      renderModal={renderProductModal}
+                      editableFields={productEditableFields}
+                      onSave={handleProductSave}
+                      onDelete={handleProductDelete}
                     />
                   )}
                 </div>
