@@ -367,11 +367,11 @@ export function DataTable<T extends Record<string, any>>({
           Edit {title.replace(' Management', '').replace(' Configuration', '')}
         </DialogTitle>
         <DialogDescription>
-          Make changes to this item. Click save when you're done.
+          Make changes to this item. All database fields are shown below.
         </DialogDescription>
       </DialogHeader>
       
-      <div className="space-y-4 mt-4">
+      <div className="space-y-4 mt-4 max-h-96 overflow-y-auto">
         {editableFields?.map(field => {
           const value = editFormData[field.key as string]
           return (
@@ -386,6 +386,21 @@ export function DataTable<T extends Record<string, any>>({
                   value,
                   (newValue) => handleFieldChange(String(field.key), newValue)
                 )}
+              </div>
+            </div>
+          )
+        })}
+        
+        {/* Show read-only fields that aren't in editableFields */}
+        {allColumns.filter(col => !editableFields?.some(field => field.key === col.key)).map(column => {
+          const value = item[column.key as string]
+          return (
+            <div key={`readonly-${String(column.key)}`} className="opacity-75">
+              <Label className="text-sm font-medium text-gray-600">
+                {column.header} (Read-only)
+              </Label>
+              <div className="mt-1 p-2 bg-gray-50 rounded text-sm">
+                {column.render ? column.render(item) : String(value || 'Not provided')}
               </div>
             </div>
           )
@@ -447,21 +462,23 @@ export function DataTable<T extends Record<string, any>>({
   const renderViewModal = (item: T) => (
     <div>
       <DialogHeader>
-        <DialogTitle>{getCellValue(item, visibleColumns[0] || allColumns[0])}</DialogTitle>
+        <DialogTitle>{getCellValue(item, allColumns[0])}</DialogTitle>
         <DialogDescription>
-          View details and edit this item.
+          View complete database record details.
         </DialogDescription>
       </DialogHeader>
       
-      <div className="space-y-3 mt-4">
-        {editableFields?.map(field => {
-          const value = item[field.key as string]
+      <div className="space-y-3 mt-4 max-h-96 overflow-y-auto">
+        {allColumns.map(column => {
+          const value = item[column.key as string]
           return (
-            <div key={String(field.key)}>
-              <strong>{field.label}:</strong>{' '}
-              {field.render ? field.render(item) : 
-               field.type === 'nested' ? renderNestedValue(value, field.nested) :
-               String(value || 'Not provided')}
+            <div key={String(column.key)} className="grid grid-cols-3 gap-4 py-2 border-b border-gray-100">
+              <div className="font-medium text-sm text-gray-700 truncate">
+                {column.header}:
+              </div>
+              <div className="col-span-2 text-sm text-gray-900">
+                {column.render ? column.render(item) : String(value || 'Not provided')}
+              </div>
             </div>
           )
         })}

@@ -177,9 +177,11 @@ export default function OperationsPage() {
   const [fulfillmentSortField, setFulfillmentSortField] = useState<string>("");
   const [fulfillmentSortDirection, setFulfillmentSortDirection] = useState<"asc" | "desc">("asc");
 
-  // Bin editing configuration
+  // COMPLETE Bin editing configuration - ALL database fields
   const binEditableFields: EditableField<Bin>[] = [
     { key: '_id', label: 'Bin ID', type: 'readonly' },
+    { key: 'orgId', label: 'Organization ID', type: 'readonly' },
+    { key: 'eventId', label: 'Event ID', type: 'text', placeholder: 'Optional event reference' },
     { key: 'name', label: 'Bin Name', type: 'text', required: true, placeholder: 'Enter bin name' },
     { key: 'location', label: 'Location', type: 'text', required: true, placeholder: 'Physical location' },
     { 
@@ -204,7 +206,31 @@ export default function OperationsPage() {
       ]
     },
     { key: 'capacity', label: 'Capacity (kg)', type: 'number', placeholder: 'Bin capacity in kg' },
-    { key: 'adoptedBy', label: 'Adopted By', type: 'text', placeholder: 'Team/department that adopted this bin' }
+    { 
+      key: 'isActive', 
+      label: 'Active Status', 
+      type: 'select', 
+      required: true,
+      options: [
+        { value: 'true', label: 'Active' },
+        { value: 'false', label: 'Inactive' }
+      ]
+    },
+    { 
+      key: 'canBeAdopted', 
+      label: 'Can Be Adopted', 
+      type: 'select', 
+      required: true,
+      options: [
+        { value: 'true', label: 'Yes' },
+        { value: 'false', label: 'No' }
+      ]
+    },
+    { key: 'adoptedBy', label: 'Adopted By', type: 'text', placeholder: 'Team/department that adopted this bin' },
+    { key: 'lastCollectionDate', label: 'Last Collection Date', type: 'text', placeholder: 'YYYY-MM-DD format' },
+    { key: 'nextCollectionDate', label: 'Next Collection Date', type: 'text', placeholder: 'YYYY-MM-DD format' },
+    { key: 'createdAt', label: 'Created At', type: 'readonly' },
+    { key: 'updatedAt', label: 'Updated At', type: 'readonly' }
   ];
 
   const handleBinSave = async (bin: Bin) => {
@@ -243,10 +269,11 @@ export default function OperationsPage() {
     }
   }
 
-  // Batch editing configuration
+  // COMPLETE Batch editing configuration - ALL database fields
   const batchEditableFields: EditableField<Batch>[] = [
     { key: '_id', label: 'Batch ID', type: 'readonly' },
     { key: 'binIds', label: 'Source Bins', type: 'readonly' },
+    { key: 'collectionDate', label: 'Collection Date', type: 'text', required: true, placeholder: 'YYYY-MM-DD format' },
     { key: 'weight', label: 'Weight (kg)', type: 'number', required: true, placeholder: 'Weight in kg' },
     { 
       key: 'materialType', 
@@ -260,6 +287,7 @@ export default function OperationsPage() {
         { value: 'mixed', label: 'Mixed' }
       ]
     },
+    { key: 'collectedBy', label: 'Collected By', type: 'text', required: true, placeholder: 'Collector name' },
     { 
       key: 'status', 
       label: 'Processing Status', 
@@ -279,8 +307,9 @@ export default function OperationsPage() {
         { value: 'inventory_creation', label: 'Inventory Creation' }
       ]
     },
-    { key: 'collectedBy', label: 'Collected By', type: 'text', required: true, placeholder: 'Collector name' },
-    { key: 'notes', label: 'Notes', type: 'textarea', placeholder: 'Processing notes' }
+    { key: 'notes', label: 'Notes', type: 'textarea', placeholder: 'Processing notes' },
+    { key: 'createdAt', label: 'Created At', type: 'readonly' },
+    { key: 'updatedAt', label: 'Updated At', type: 'readonly' }
   ];
 
   const handleBatchSave = async (batch: Batch) => {
@@ -319,10 +348,11 @@ export default function OperationsPage() {
     }
   }
 
-  // Order editing configuration  
+  // COMPLETE Order editing configuration - ALL database fields
   const orderEditableFields: EditableField<Order>[] = [
     { key: '_id', label: 'Order ID', type: 'readonly' },
     { key: 'orderNumber', label: 'Order Number', type: 'text', required: true, placeholder: 'ORD-YYYY-XXX' },
+    { key: 'orgId', label: 'Organization ID', type: 'readonly' },
     { 
       key: 'type', 
       label: 'Order Type', 
@@ -349,10 +379,19 @@ export default function OperationsPage() {
       ]
     },
     { key: 'serviceDescription', label: 'Service Description', type: 'textarea', required: true, placeholder: 'Describe the service or products' },
+    { key: 'contractReference', label: 'Contract Reference', type: 'text', placeholder: 'Contract/agreement reference' },
+    { key: 'lineItems', label: 'Line Items', type: 'readonly' },
     { key: 'subtotal', label: 'Subtotal', type: 'number', required: true, placeholder: 'Amount before tax' },
     { key: 'tax', label: 'Tax', type: 'number', placeholder: 'Tax amount' },
     { key: 'total', label: 'Total', type: 'number', required: true, placeholder: 'Total amount' },
-    { key: 'contractReference', label: 'Contract Reference', type: 'text', placeholder: 'Contract/agreement reference' }
+    { key: 'invoiceId', label: 'Invoice ID', type: 'text', placeholder: 'QuickBooks invoice reference' },
+    { key: 'orderDate', label: 'Order Date', type: 'text', required: true, placeholder: 'YYYY-MM-DD format' },
+    { key: 'expectedCompletionDate', label: 'Expected Completion Date', type: 'text', placeholder: 'YYYY-MM-DD format' },
+    { key: 'completedDate', label: 'Completed Date', type: 'text', placeholder: 'YYYY-MM-DD format' },
+    { key: 'invoicedDate', label: 'Invoiced Date', type: 'text', placeholder: 'YYYY-MM-DD format' },
+    { key: 'assignedStaff', label: 'Assigned Staff', type: 'readonly' },
+    { key: 'createdAt', label: 'Created At', type: 'readonly' },
+    { key: 'updatedAt', label: 'Updated At', type: 'readonly' }
   ];
 
   const handleOrderSave = async (order: Order) => {
@@ -391,10 +430,12 @@ export default function OperationsPage() {
     }
   }
 
-  // Blank editing configuration
+  // COMPLETE Blank editing configuration - ALL database fields
   const blankEditableFields: EditableField<Blank>[] = [
     { key: '_id', label: 'Blank ID', type: 'readonly' },
     { key: 'batchId', label: 'Batch ID', type: 'text', required: true, placeholder: 'Source batch ID' },
+    { key: 'productId', label: 'Product ID', type: 'text', placeholder: 'Associated product reference' },
+    { key: 'userId', label: 'User ID', type: 'text', placeholder: 'Assigned user reference' },
     { 
       key: 'type', 
       label: 'Type', 
@@ -416,7 +457,11 @@ export default function OperationsPage() {
         { value: 'delivered', label: 'Delivered' }
       ]
     },
-    { key: 'weight', label: 'Weight (kg)', type: 'number', required: true, placeholder: 'Weight in kg' }
+    { key: 'weight', label: 'Weight (kg)', type: 'number', required: true, placeholder: 'Weight in kg' },
+    { key: 'assemblyDate', label: 'Assembly Date', type: 'text', placeholder: 'YYYY-MM-DD format' },
+    { key: 'deliveryDate', label: 'Delivery Date', type: 'text', placeholder: 'YYYY-MM-DD format' },
+    { key: 'createdAt', label: 'Created At', type: 'readonly' },
+    { key: 'updatedAt', label: 'Updated At', type: 'readonly' }
   ];
 
   const handleBlankSave = async (blank: Blank) => {
