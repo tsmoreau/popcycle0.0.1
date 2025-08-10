@@ -356,8 +356,8 @@ export async function POST() {
         return bin && org._id.equals(bin.orgId);
       });
       
-      // Generate 8-15 blanks per completed batch for "tons of blanks"
-      const blankCount = Math.floor(Math.random() * 8) + 8;
+      // Generate 5-8 blanks per completed batch (6 batches = ~30-40 blanks total)
+      const blankCount = Math.floor(Math.random() * 4) + 5;
       for (let i = 0; i < blankCount; i++) {
         const isFinished = Math.random() > 0.4; // 60% chance of being finished/assembled
         const qrCode = generateQRCode(orgIndex, 'item');
