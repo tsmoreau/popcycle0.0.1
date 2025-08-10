@@ -391,10 +391,6 @@ export default function AdminPage() {
                     <Badge className="bg-gray-100 text-gray-800">Not Set Up</Badge>
                   </div>
                 </div>
-                <div className="mt-4 space-y-2">
-                  <Button variant="outline" className="w-full">Configure API Keys</Button>
-                  <Button variant="outline" className="w-full">Test Connections</Button>
-                </div>
               </div>
             )}
           </div>
