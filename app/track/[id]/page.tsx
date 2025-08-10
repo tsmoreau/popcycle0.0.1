@@ -352,43 +352,35 @@ export default function TrackItem() {
                 </p>
               </div>
 
-              {/* Step 3: Purchased/Donated */}
-              <div className="text-center flex-1 max-w-[120px]">
-                <div className={`w-16 h-16 mx-auto mb-4 border-2 border-pop-black flex items-center justify-center ${item.productId ? 'bg-pop-red' : 'bg-white'}`}>
-                  {item.productId ? (
-                    isCharity ? (
+              {/* Step 3: Purchased/Donated - only if productId exists */}
+              {item.productId && (
+                <div className="text-center flex-1 max-w-[120px]">
+                  <div className="w-16 h-16 mx-auto mb-4 border-2 border-pop-black flex items-center justify-center bg-pop-red">
+                    {isCharity ? (
                       <HeartHandshake className="w-8 h-8 text-pop-black" />
                     ) : (
                       <CheckCircle className="w-8 h-8 text-pop-black" />
-                    )
-                  ) : (
-                    <Package className="w-8 h-8 text-pop-gray" strokeWidth={1.5} />
-                  )}
+                    )}
+                  </div>
+                  <h3 className="systematic-caps text-sm mb-1">
+                    {isCharity ? "Donated" : "Purchased"}
+                  </h3>
+                  <p className="text-xs text-pop-gray truncate">{item.transactionDate}</p>
                 </div>
-                <h3 className="systematic-caps text-sm mb-1">
-                  {item.productId ? (isCharity ? "Donated" : "Purchased") : "Purchase"}
-                </h3>
-                <p className="text-xs text-pop-gray truncate">
-                  {item.transactionDate || "Pending"}
-                </p>
-              </div>
+              )}
 
-              {/* Step 4: Assembled */}
-              <div className="text-center flex-1 max-w-[120px]">
-                <div className={`w-16 h-16 mx-auto mb-4 border-2 border-pop-black flex items-center justify-center ${item.userId ? 'bg-pop-red' : 'bg-white'}`}>
-                  {item.userId ? (
+              {/* Step 4: Assembled - only if userId exists */}
+              {item.userId && (
+                <div className="text-center flex-1 max-w-[120px]">
+                  <div className="w-16 h-16 mx-auto mb-4 border-2 border-pop-black flex items-center justify-center bg-pop-red">
                     <CheckCircle className="w-8 h-8 text-pop-black" />
-                  ) : (
-                    <Wrench className="w-8 h-8 text-pop-gray" strokeWidth={1.5} />
-                  )}
+                  </div>
+                  <h3 className="systematic-caps text-sm mb-1">Assembled</h3>
+                  <p className="text-xs text-pop-gray truncate">
+                    {item.makerDetails?.assemblyDate}
+                  </p>
                 </div>
-                <h3 className="systematic-caps text-sm mb-1">
-                  {item.userId ? "Assembled" : "Assembly"}
-                </h3>
-                <p className="text-xs text-pop-gray truncate">
-                  {item.makerDetails?.assemblyDate || "Pending"}
-                </p>
-              </div>
+              )}
             </div>
             
             {/* Status text below timeline */}
