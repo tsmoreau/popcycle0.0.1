@@ -89,7 +89,8 @@ export default function TrackItem() {
           makerDetails: data.makerDetails,
           transactionDate: data.type === 'blank' && data.makerDetails ? '2024-03-01' : '',
           deliveredDate: data.deliveryDate,
-          binId: data.type === 'batch' ? data.binId : (data.type === 'blank' ? data.batchId : undefined),
+          // Proper ID hierarchy mapping
+          binId: data.type === 'batch' ? data.binId : (data.type === 'blank' ? data.binId : undefined),
           batchId: data.type === 'blank' ? data.batchId : undefined,
           blankId: data.type === 'blank' ? data.id : undefined
         };

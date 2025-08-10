@@ -148,6 +148,7 @@ export async function GET(
         id: record._id,
         type: 'blank',
         batchId: record.batchId,
+        binId: batch ? batch.binId : null, // Include the bin ID from the batch
         productId: record.productId,
         userId: record.userId,
         itemType: record.type,
