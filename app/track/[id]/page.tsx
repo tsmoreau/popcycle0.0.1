@@ -95,8 +95,8 @@ export default function TrackItem() {
           makerDetails: data.makerDetails,
           transactionDate: data.transactionDate || '',
           deliveredDate: data.deliveryDate || '',
-          // Store bin/batch status for display
-          event: data.type === 'bin' ? data.status : (data.type === 'batch' ? data.status : data.event),
+          // Store bin/batch status for display - use status field from API
+          event: data.status,
           // Proper ID hierarchy mapping
           binId: data.type === 'batch' ? data.binId : (data.type === 'blank' ? data.binId : undefined),
           binIds: data.type === 'batch' ? data.binIds : undefined,
