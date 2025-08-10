@@ -348,7 +348,7 @@ export default function TrackItem() {
               <CardHeader>
                 <CardTitle className="systematic-caps flex items-center">
                   <Building className="w-5 h-5 mr-2" />
-                  Source Details
+                  {item.id.startsWith('B') ? 'Bin Details' : 'Source Details'}
                 </CardTitle>
               </CardHeader>
               <CardContent className="space-y-4">
