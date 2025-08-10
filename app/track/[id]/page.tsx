@@ -79,16 +79,17 @@ export default function TrackItem() {
         const mappedItem: PlasticItem = {
           id: data.id,
           originPoint: data.organization?.name || "Unknown Origin",
-          collectionDate: data.type === 'bin' ? '' : (data.collectionDate || '2024-01-01'),
+          collectionDate: data.type === 'bin' ? '' : (data.collectionDate || ''),
           materialType: data.materialType || "Mixed Plastic",
           weight: data.weight || 0.5,
-          processedDate: data.type === 'blank' ? '2024-02-01' : (data.processedDate || ''),
+          processedDate: data.type === 'blank' ? 'Processed' : (data.processedDate || ''),
           carbonOffset: data.impactMetrics?.carbonSaved || 0,
-          productType: data.type === 'blank' ? 'educational_kit' : '',
+          // Only set productType for blanks that have been purchased (have productId)
+          productType: data.type === 'blank' && data.productId ? 'educational_kit' : '',
           message: data.message,
           makerDetails: data.makerDetails,
-          transactionDate: data.type === 'blank' && data.makerDetails ? '2024-03-01' : '',
-          deliveredDate: data.deliveryDate,
+          transactionDate: data.transactionDate || '',
+          deliveredDate: data.deliveryDate || '',
           // Proper ID hierarchy mapping
           binId: data.type === 'batch' ? data.binId : (data.type === 'blank' ? data.binId : undefined),
           batchId: data.type === 'blank' ? data.batchId : undefined,
