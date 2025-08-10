@@ -825,7 +825,7 @@ export default function TrackItem() {
         )}
 
         {/* Bin Batches List */}
-        {isUncollected && item.id.startsWith('B') && batches.length > 0 && (
+        {item.id.startsWith('B') && batches.length > 0 && (
           <div className="max-w-2xl mx-auto">
             <PopArtContainer color="green" shadow>
               <Card className="border-4 border-pop-black">
