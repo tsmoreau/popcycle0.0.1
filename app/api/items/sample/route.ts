@@ -11,7 +11,7 @@ interface BinItem {
 
 interface BatchItem {
   id: string;
-  binId: string;
+  binIds: string[];
   status: string;
   weight?: number;
   materialType?: string;
@@ -59,11 +59,11 @@ export async function GET(request: Request) {
         status: bin.status 
       }));
     } else if (type === 'batches') {
-      const query = binId ? { binId } : {};
+      const query = binId ? { binIds: binId } : {};
       const batchDocs = await db.collection('batches').find(query).limit(20).toArray();
       items = batchDocs.map((batch: any): BatchItem => ({ 
         id: batch._id.toString(), 
-        binId: batch.binId, 
+        binIds: batch.binIds || [], 
         status: batch.status,
         weight: batch.weight,
         materialType: batch.materialType,
@@ -96,7 +96,7 @@ export async function GET(request: Request) {
         })),
         batches: batchDocs.map((batch: any): BatchItem => ({ 
           id: batch._id.toString(), 
-          binId: batch.binId, 
+          binIds: batch.binIds || [], 
           status: batch.status 
         })),
         blanks: blankDocs.map((blank: any): BlankItem => ({ 

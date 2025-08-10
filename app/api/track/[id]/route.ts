@@ -85,9 +85,12 @@ export async function GET(
       // Look up batch record using string ID (QR code)
       record = await db.collection('batches').findOne({ _id: id } as any);
       if (record) {
-        const bin = await db.collection('bins').findOne({ _id: record.binId } as any);
-        if (bin) {
-          org = await db.collection('orgs').findOne({ _id: new ObjectId(bin.orgId) });
+        // Get the first bin for organization lookup (batches can come from multiple bins)
+        if (record.binIds && record.binIds.length > 0) {
+          const bin = await db.collection('bins').findOne({ _id: record.binIds[0] } as any);
+          if (bin) {
+            org = await db.collection('orgs').findOne({ _id: new ObjectId(bin.orgId) });
+          }
         }
       }
       
@@ -100,8 +103,7 @@ export async function GET(
       return NextResponse.json({
         id: record._id,
         type: 'batch',
-        binId: record.binId,
-        binIds: record.binIds || [record.binId], // Support both old and new format
+        binIds: record.binIds || [],
         collectionDate: record.collectionDate,
         weight: record.weight,
         materialType: record.materialType,
@@ -128,9 +130,12 @@ export async function GET(
       if (record) {
         batch = await db.collection('batches').findOne({ _id: record.batchId } as any);
         if (batch) {
-          const bin = await db.collection('bins').findOne({ _id: batch.binId } as any);
-          if (bin) {
-            org = await db.collection('orgs').findOne({ _id: new ObjectId(bin.orgId) });
+          // Get the first bin for organization lookup (batches can come from multiple bins)
+          if (batch.binIds && batch.binIds.length > 0) {
+            const bin = await db.collection('bins').findOne({ _id: batch.binIds[0] } as any);
+            if (bin) {
+              org = await db.collection('orgs').findOne({ _id: new ObjectId(bin.orgId) });
+            }
           }
         }
       }
@@ -151,7 +156,7 @@ export async function GET(
         id: record._id,
         type: 'blank',
         batchId: record.batchId,
-        binId: batch ? batch.binId : null, // Include the bin ID from the batch
+        binIds: batch ? batch.binIds : [], // Include the bin IDs from the batch
         productId: record.productId,
         userId: record.userId,
         itemType: record.type,

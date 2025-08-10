@@ -370,7 +370,7 @@ export async function POST() {
     
     completedBatches.forEach((batch, batchIndex) => {
       const orgIndex = orgs.findIndex(org => {
-        const bin = bins.find(b => b._id === batch.binId);
+        const bin = bins.find(b => batch.binIds && batch.binIds.includes(b._id));
         return bin && org._id.equals(bin.orgId);
       });
       
@@ -483,7 +483,7 @@ export async function POST() {
     // Sample QR codes for demonstration
     const sampleQRCodes = {
       bins: bins.slice(0, 3).map(b => ({ id: b._id, name: b.name })),
-      batches: batches.slice(0, 3).map(b => ({ id: b._id, binId: b.binId })),
+      batches: batches.slice(0, 3).map(b => ({ id: b._id, binIds: b.binIds })),
       blanks: blanks.slice(0, 3).map(b => ({ id: b._id, batchId: b.batchId }))
     };
     

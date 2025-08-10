@@ -243,7 +243,7 @@ export default function OperationsPage() {
   // Batch editing configuration
   const batchEditableFields: EditableField<Batch>[] = [
     { key: '_id', label: 'Batch ID', type: 'readonly' },
-    { key: 'binId', label: 'Bin ID', type: 'text', required: true, placeholder: 'Source bin ID' },
+    { key: 'binIds', label: 'Source Bins', type: 'readonly' },
     { key: 'weight', label: 'Weight (kg)', type: 'number', required: true, placeholder: 'Weight in kg' },
     { 
       key: 'materialType', 
@@ -476,7 +476,15 @@ export default function OperationsPage() {
 
   const processingColumns: Column<Batch>[] = [
     { key: "_id", header: "Batch ID" },
-    { key: "binId", header: "Source Bin" },
+    { 
+      key: "binIds", 
+      header: "Source Bins",
+      render: (item) => {
+        if (!item.binIds || item.binIds.length === 0) return 'No bins';
+        if (item.binIds.length === 1) return item.binIds[0];
+        return `${item.binIds.length} bins: ${item.binIds.slice(0, 2).join(', ')}${item.binIds.length > 2 ? '...' : ''}`;
+      }
+    },
     { 
       key: "weight", 
       header: "Weight",
@@ -625,8 +633,16 @@ export default function OperationsPage() {
         </div>
         <div className="grid grid-cols-2 gap-4">
           <div>
-            <Label className="text-sm font-medium text-gray-700">Source Bin</Label>
-            <p className="text-sm font-mono">{batch.binId}</p>
+            <Label className="text-sm font-medium text-gray-700">Source Bins</Label>
+            {batch.binIds && batch.binIds.length > 0 ? (
+              <div className="space-y-1">
+                {batch.binIds.map((binId: string, index: number) => (
+                  <p key={index} className="text-sm font-mono">{binId}</p>
+                ))}
+              </div>
+            ) : (
+              <p className="text-sm text-gray-500">No bins assigned</p>
+            )}
           </div>
           <div>
             <Label className="text-sm font-medium text-gray-700">QR Code</Label>

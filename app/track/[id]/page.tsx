@@ -68,7 +68,6 @@ interface PlasticItem {
   productId?: string;
   userId?: string;
   // ID hierarchy based on processing stage
-  binId?: string;
   binIds?: string[]; // For batches that come from multiple bins
   batchId?: string;
   blankId?: string;
@@ -113,7 +112,6 @@ export default function TrackItem() {
           productId: data.productId,
           userId: data.userId,
           // Proper ID hierarchy mapping
-          binId: data.type === 'batch' ? data.binId : (data.type === 'blank' ? data.binId : undefined),
           binIds: data.type === 'batch' ? data.binIds : undefined,
           batchId: data.type === 'blank' ? data.batchId : undefined,
           blankId: data.type === 'blank' ? data.id : undefined
@@ -144,14 +142,13 @@ export default function TrackItem() {
               setBlanks(blankData.items || []);
             }
             
-            // Fetch source bin information - handle both single and multiple bins
-            const binIds = data.binIds || (data.binId ? [data.binId] : []);
-            if (binIds.length > 0) {
+            // Fetch source bin information - use binIds array
+            if (data.binIds && data.binIds.length > 0) {
               // For now, just fetch the first bin for sourceBin compatibility
-              const binResponse = await fetch(`/api/track/${binIds[0]}`);
+              const binResponse = await fetch(`/api/track/${data.binIds[0]}`);
               if (binResponse.ok) {
                 const binData = await binResponse.json();
-                setSourceBin({...binData, allBinIds: binIds});
+                setSourceBin({...binData, allBinIds: data.binIds});
               }
             }
           } catch (relatedErr) {
