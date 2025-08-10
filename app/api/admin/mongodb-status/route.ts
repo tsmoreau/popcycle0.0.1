@@ -21,7 +21,7 @@ export async function GET() {
     try {
       // Test connection with timeout
       await client.connect()
-      const db = client.db('popcycle')
+      const db = client.db('PopCycle')
       
       // Get basic database stats (with fallback)
       let stats: any = { dataSize: 0, storageSize: 0 }
@@ -65,7 +65,7 @@ export async function GET() {
       return NextResponse.json({
         connected: true,
         status: 'Connected',
-        database: 'popcycle',
+        database: 'PopCycle',
         hostname: uri.split('@')[1]?.split('/')[0] || 'unknown',
         collections: collections.length,
         collectionsDetail: collections.map(c => c.name),
