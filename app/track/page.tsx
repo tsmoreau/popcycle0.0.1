@@ -71,15 +71,16 @@ export default function Track() {
         codes = sampleCodes.batches.map(batch => ({ id: batch.id, type: "processing batch" }));
         break;
       case "PRESSED BLANKS":
-        codes = sampleCodes.blanks.filter(blank => blank.status === 'blank').map(blank => ({ id: blank.id, type: "pressed blank" }));
+        // Blanks that haven't been turned into products yet (no productId)
+        codes = sampleCodes.blanks.filter(blank => blank.status === 'blank' && !blank.productId).map(blank => ({ id: blank.id, type: "pressed blank" }));
         break;
       case "MANUFACTURED ITEMS":
-        // Filter blanks that are ready for makers to claim (blank status, no userId)
-        codes = sampleCodes.blanks.filter(blank => blank.status === 'blank' && !blank.userId).map(blank => ({ id: blank.id, type: "manufactured item" }));
+        // Blanks that have been turned into products (have productId) but may not be assembled yet
+        codes = sampleCodes.blanks.filter(blank => blank.productId && blank.status === 'assembled').map(blank => ({ id: blank.id, type: "manufactured item" }));
         break;
       case "ASSEMBLED ITEMS":
-        // Filter blanks that have been claimed and assembled by makers
-        codes = sampleCodes.blanks.filter(blank => blank.status === 'assembled' && blank.userId).map(blank => ({ id: blank.id, type: "assembled item" }));
+        // Filter blanks that have been assembled by makers (same as manufactured for now)
+        codes = sampleCodes.blanks.filter(blank => blank.status === 'assembled' && blank.userId && blank.productId).map(blank => ({ id: blank.id, type: "assembled item" }));
         break;
       default: // "ALL"
         codes = [
