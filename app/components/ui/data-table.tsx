@@ -502,7 +502,7 @@ export function DataTable<T extends Record<string, any>>({
   const [showColumnSelector, setShowColumnSelector] = useState(false)
   
   return (
-    <Card className={`${className} ${className?.includes('flex-1') ? 'h-full flex flex-col' : ''}`}>
+    <Card className={className}>
       <CardHeader>
         <div className="flex items-center justify-between">
           <div>
@@ -566,9 +566,9 @@ export function DataTable<T extends Record<string, any>>({
           </div>
         </div>
       </CardHeader>
-      <CardContent className={className?.includes('flex-1') ? 'flex-1 overflow-hidden flex flex-col' : ''}>
+      <CardContent>
         {/* Desktop Table View */}
-        <div className={`hidden md:block ${className?.includes('flex-1') ? 'flex-1 overflow-y-auto' : ''}`}>
+        <div className="hidden md:block">
           <Table>
             <TableHeader>
               {/* Filter Row */}
@@ -639,7 +639,7 @@ export function DataTable<T extends Record<string, any>>({
         </div>
 
         {/* Mobile Card View */}
-        <div className={`md:hidden ${className?.includes('flex-1') ? 'flex-1 overflow-y-auto' : ''}`}>
+        <div className="md:hidden">
           {/* Mobile Sort Controls */}
           <div className="mb-4 flex items-center gap-2">
             <ArrowUpDown className="h-4 w-4 text-pop-green" />
