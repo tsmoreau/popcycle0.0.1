@@ -194,7 +194,7 @@ export const QRScanner = ({ open, onOpenChange }: QRScannerProps) => {
                   <p className="text-xs text-red-500 mt-1">{cameraError}</p>
                 </div>
               </div>
-            ) : !isScanning ? (
+            ) : !isScanning && (
               <div className="absolute inset-0 flex items-center justify-center text-center bg-white">
                 <div>
                   <Camera className="h-12 w-12 text-gray-400 mx-auto mb-2" />
@@ -202,17 +202,19 @@ export const QRScanner = ({ open, onOpenChange }: QRScannerProps) => {
                   <p className="text-xs text-gray-400 mt-1">Check browser console for debug info</p>
                 </div>
               </div>
-            ) : (
-              /* Scanning overlay */
+            )}
+            
+            {/* Scanning overlay - only show corners, not blocking overlay */}
+            {isScanning && (
               <div className="absolute inset-4 border-2 border-pop-green rounded-lg pointer-events-none">
                 <div className="absolute top-0 left-0 w-4 h-4 border-t-2 border-l-2 border-pop-green"></div>
                 <div className="absolute top-0 right-0 w-4 h-4 border-t-2 border-r-2 border-pop-green"></div>
                 <div className="absolute bottom-0 left-0 w-4 h-4 border-b-2 border-l-2 border-pop-green"></div>
                 <div className="absolute bottom-0 right-0 w-4 h-4 border-b-2 border-r-2 border-pop-green"></div>
                 
-                {/* Scanning indicator */}
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <div className="bg-pop-green/20 text-pop-green text-xs px-2 py-1 rounded">
+                {/* Scanning indicator in bottom corner */}
+                <div className="absolute bottom-2 right-2">
+                  <div className="bg-pop-green/90 text-white text-xs px-2 py-1 rounded">
                     Scanning...
                   </div>
                 </div>
