@@ -767,39 +767,7 @@ export default function OperationsPage() {
                 onFullscreen={() => setShowRoughWashFullscreen(true)}
               />
               
-              {/* Hard-coded Station 1: Rough Wash (Original) */}
-              <Card>
-                <CardHeader>
-                  <CardTitle className="flex items-center">
-                    <Droplets className="h-5 w-5 mr-2 text-pop-blue" />
-                    Wash Station
-                  </CardTitle>
-                  <CardDescription>Initial cleaning and contaminant removal</CardDescription>
-                </CardHeader>
-                <CardContent className="space-y-4">
-                  <div className="space-y-2">
-                    <Label>Current Batch</Label>
-                    <Input value="BA-8473" readOnly />
-                  </div>
-                  <div className="flex items-center justify-between p-3 bg-pop-blue/5 rounded-lg">
-                    <span className="text-sm">Station Status</span>
-                    <Badge className="bg-pop-blue text-white">Processing</Badge>
-                  </div>
-                  <div className="space-y-2">
-                    <div className="flex justify-between text-sm">
-                      <span>Progress</span>
-                      <span>78%</span>
-                    </div>
-                    <div className="w-full bg-gray-200 rounded-full h-2">
-                      <div className="bg-pop-blue h-2 rounded-full" style={{width: '78%'}}></div>
-                    </div>
-                  </div>
-                  <Button className="w-full bg-pop-blue hover:bg-pop-blue/90">
-                    Complete Wash Cycle
-                  </Button>
-                </CardContent>
-              </Card>
-
+         
               {/* Station 2: Sort */}
               <Card>
                 <CardHeader>
@@ -1124,17 +1092,7 @@ export default function OperationsPage() {
               </Card>
             </div>
 
-            {/* Dynamic Station Components */}
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mt-6">
-              <StationCard
-                station={washStation}
-                onFullscreen={handleStationFullscreen}
-              />
-              <StationCard
-                station={sortStation}
-                onFullscreen={handleStationFullscreen}
-              />
-            </div>
+        
             
           </AccordionContent>
         </AccordionItem>
