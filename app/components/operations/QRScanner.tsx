@@ -30,16 +30,29 @@ export const QRScanner = ({ open, onOpenChange }: QRScannerProps) => {
     console.log("useEffect triggered - open:", open, "videoRef.current:", !!videoRef.current);
     
     if (open) {
-      // Add a small delay to ensure video element is rendered
+      // Reset states
+      setCameraError("");
+      setHasCamera(false);
+      setIsScanning(false);
+      
+      // Add multiple delays to ensure video element is properly rendered
       const timer = setTimeout(() => {
         console.log("Timer triggered - videoRef.current:", !!videoRef.current);
         if (videoRef.current) {
           initializeScanner();
         } else {
-          console.error("Video ref is null after timeout");
-          setCameraError("Failed to initialize video element");
+          console.error("Video ref is null after timeout, retrying...");
+          // Try one more time with longer delay
+          setTimeout(() => {
+            console.log("Retry - videoRef.current:", !!videoRef.current);
+            if (videoRef.current) {
+              initializeScanner();
+            } else {
+              setCameraError("Failed to initialize video element");
+            }
+          }, 500);
         }
-      }, 100);
+      }, 200);
       
       return () => clearTimeout(timer);
     } else if (!open && qrScannerRef.current) {
@@ -48,6 +61,8 @@ export const QRScanner = ({ open, onOpenChange }: QRScannerProps) => {
       qrScannerRef.current.destroy();
       qrScannerRef.current = null;
       setIsScanning(false);
+      setHasCamera(false);
+      setCameraError("");
     }
   }, [open]);
 
@@ -154,16 +169,26 @@ export const QRScanner = ({ open, onOpenChange }: QRScannerProps) => {
         <div className="space-y-4">
           {/* Camera feed */}
           <div className="relative aspect-square bg-gray-100 rounded-lg border-2 border-dashed border-gray-300 overflow-hidden">
+            {/* Always render video element so ref is available */}
+            <video
+              ref={videoRef}
+              className={`w-full h-full object-cover rounded-lg ${isScanning ? 'block' : 'hidden'}`}
+              autoPlay
+              playsInline
+              muted
+            />
+            
+            {/* Show overlays based on state */}
             {cameraError ? (
-              <div className="flex items-center justify-center h-full text-center p-4">
+              <div className="absolute inset-0 flex items-center justify-center text-center p-4 bg-white">
                 <div>
                   <AlertCircle className="h-12 w-12 text-red-400 mx-auto mb-2" />
                   <p className="text-sm text-red-600 font-medium">Camera Error</p>
                   <p className="text-xs text-red-500 mt-1">{cameraError}</p>
                 </div>
               </div>
-            ) : !hasCamera ? (
-              <div className="flex items-center justify-center h-full text-center">
+            ) : !isScanning ? (
+              <div className="absolute inset-0 flex items-center justify-center text-center bg-white">
                 <div>
                   <Camera className="h-12 w-12 text-gray-400 mx-auto mb-2" />
                   <p className="text-sm text-gray-500">Initializing camera...</p>
@@ -171,32 +196,20 @@ export const QRScanner = ({ open, onOpenChange }: QRScannerProps) => {
                 </div>
               </div>
             ) : (
-              <>
-                <video
-                  ref={videoRef}
-                  className="w-full h-full object-cover rounded-lg"
-                  autoPlay
-                  playsInline
-                  muted
-                />
+              /* Scanning overlay */
+              <div className="absolute inset-4 border-2 border-pop-green rounded-lg pointer-events-none">
+                <div className="absolute top-0 left-0 w-4 h-4 border-t-2 border-l-2 border-pop-green"></div>
+                <div className="absolute top-0 right-0 w-4 h-4 border-t-2 border-r-2 border-pop-green"></div>
+                <div className="absolute bottom-0 left-0 w-4 h-4 border-b-2 border-l-2 border-pop-green"></div>
+                <div className="absolute bottom-0 right-0 w-4 h-4 border-b-2 border-r-2 border-pop-green"></div>
                 
-                {/* Scanning overlay */}
-                <div className="absolute inset-4 border-2 border-pop-green rounded-lg pointer-events-none">
-                  <div className="absolute top-0 left-0 w-4 h-4 border-t-2 border-l-2 border-pop-green"></div>
-                  <div className="absolute top-0 right-0 w-4 h-4 border-t-2 border-r-2 border-pop-green"></div>
-                  <div className="absolute bottom-0 left-0 w-4 h-4 border-b-2 border-l-2 border-pop-green"></div>
-                  <div className="absolute bottom-0 right-0 w-4 h-4 border-b-2 border-r-2 border-pop-green"></div>
-                  
-                  {/* Scanning indicator */}
-                  {isScanning && (
-                    <div className="absolute inset-0 flex items-center justify-center">
-                      <div className="bg-pop-green/20 text-pop-green text-xs px-2 py-1 rounded">
-                        Scanning...
-                      </div>
-                    </div>
-                  )}
+                {/* Scanning indicator */}
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <div className="bg-pop-green/20 text-pop-green text-xs px-2 py-1 rounded">
+                    Scanning...
+                  </div>
                 </div>
-              </>
+              </div>
             )}
           </div>
 
