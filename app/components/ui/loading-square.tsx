@@ -41,14 +41,17 @@ export function LoadingSquare({
         }
         
         @keyframes popcycle-colors {
-          0%, 33% { 
+          0%, 25% { 
             background-color: hsl(142, 100%, 35%);
           }
-          34%, 66% { 
+          30%, 55% { 
             background-color: hsl(214, 100%, 50%);
           }
-          67%, 100% { 
+          60%, 85% { 
             background-color: hsl(347, 100%, 60%);
+          }
+          90%, 100% { 
+            background-color: hsl(142, 100%, 35%);
           }
         }
         
@@ -57,15 +60,15 @@ export function LoadingSquare({
             opacity: 1;
           }
           50% { 
-            opacity: 0.7;
+            opacity: 0.8;
           }
         }
         
         .animate-popcycle-loader {
           animation: 
             popcycle-spin 2s cubic-bezier(0.68, -0.55, 0.265, 1.55) infinite,
-            popcycle-colors 6s ease-in-out infinite,
-            popcycle-pulse 3s ease-in-out infinite;
+            popcycle-colors 2s ease-in-out infinite,
+            popcycle-pulse 1s ease-in-out infinite;
           transform-origin: center center;
         }
       `}</style>
