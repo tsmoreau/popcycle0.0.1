@@ -33,7 +33,10 @@ export const OperationsOverview = ({ bins, batches, orders, blanks, loading }: O
   
   // Today's orders - for simplicity, using orders created today as "today's pickups"
   const today = new Date().toISOString().split('T')[0];
-  const todaysPickups = orders.filter(order => order.createdAt.toISOString().startsWith(today));
+  const todaysPickups = orders.filter(order => {
+    const orderDate = typeof order.createdAt === 'string' ? order.createdAt : order.createdAt.toISOString();
+    return orderDate.startsWith(today);
+  });
   const completedPickups = todaysPickups.filter(order => order.status === 'completed');
   const pendingPickups = todaysPickups.filter(order => order.status !== 'completed');
 
