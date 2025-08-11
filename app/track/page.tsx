@@ -123,9 +123,9 @@ export default function Track() {
       </div>
 
       <div className="pb-24 pt-0">
-        <div className=" mx-auto px-6 sm:px-8">
+        <div className="max-w-5xl mx-auto px-6 sm:px-8">
           {/* QR Code Search */}
-          <div className="mb-16 mx-auto  max-w-4xl">
+          <div className="mb-16 mx-auto  max-w-3xl">
             <PopArtContainer color="green" shadow>
               <Card className="border-4 border-pop-black">
                 <CardContent className="p-8">
@@ -178,11 +178,12 @@ export default function Track() {
               ))}
             </div>
           </div>
+        </div><div>
 
           {/* QR Codes */}
           <div className="mb-16 mt-32">
            
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 max-w-4xl mx-auto px-12">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 max-w-7xl mx-auto px-12">
               {loading ? (
                 <div className="col-span-full text-center text-pop-gray">Loading QR codes...</div>
               ) : (

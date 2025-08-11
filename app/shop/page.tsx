@@ -118,7 +118,7 @@ export default function Shop() {
       </div>
 
       {/* Categories Filter */}
-      <div className="max-w-7xl mx-auto px-6 py-8">
+      <div className="max-w-5xl mx-auto px-6 py-8">
         <div className="flex flex-wrap gap-4 justify-center mb-12">
           {categories.map((category) => (
             <button
