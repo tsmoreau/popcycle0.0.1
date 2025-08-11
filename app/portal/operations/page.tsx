@@ -75,6 +75,7 @@ import { DataTable, Column, EditableField } from "../../components/ui/data-table
 import { Bin, Batch, Order, Blank } from "../../../lib/schemas";
 import { RoughWashStationCard } from "../../components/operations/stations/RoughWashStationCard";
 import { SortStationCard } from "../../components/operations/stations/SortStationCard";
+import { ShredStationCard } from "../../components/operations/stations/ShredStationCard";
 
 import { useOperationsData } from "../../../hooks/useOperationsData";
 import { QRScanner } from "../../components/operations/QRScanner";
@@ -114,6 +115,7 @@ export default function OperationsPage() {
 
   const [showRoughWashFullscreen, setShowRoughWashFullscreen] = useState(false);
   const [showSortFullscreen, setShowSortFullscreen] = useState(false);
+  const [showShredFullscreen, setShowShredFullscreen] = useState(false);
 
   // Use the extracted data hook
   const {
@@ -725,41 +727,20 @@ export default function OperationsPage() {
                 }}
                 onFullscreen={() => setShowSortFullscreen(true)}
               />
-         
-              {/* Station 2: Sort - Original Hard-coded */}
-              <Card>
-                <CardHeader>
-                  <CardTitle className="flex items-center">
-                    <Scissors className="h-5 w-5 mr-2 text-pop-green" />
-                    Sort Station
-                  </CardTitle>
-                  <CardDescription>Material separation and quality control</CardDescription>
-                </CardHeader>
-                <CardContent className="space-y-4">
-                  <div className="space-y-2">
-                    <Label>Queue</Label>
-                    <div className="space-y-1">
-                      <div className="text-sm p-2 bg-gray-50 rounded">BA-8472 - Ready</div>
-                      <div className="text-sm p-2 bg-gray-50 rounded">BA-8471 - Ready</div>
-                    </div>
-                  </div>
-                  <div className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
-                    <span className="text-sm">Station Status</span>
-                    <Badge variant="outline">Idle</Badge>
-                  </div>
-                  <div className="grid grid-cols-2 gap-2">
-                    <Button variant="outline" size="sm">PET</Button>
-                    <Button variant="outline" size="sm">HDPE</Button>
-                    <Button variant="outline" size="sm">PP</Button>
-                    <Button variant="outline" size="sm">Reject</Button>
-                  </div>
-                  <Button className="w-full bg-pop-green hover:bg-pop-green/90">
-                    Start Sort Process
-                  </Button>
-                </CardContent>
-              </Card>
 
-              {/* Station 3: Shred */}
+              {/* Component-Based Station 3: Shred */}
+              <ShredStationCard
+                station={{
+                  materialInput: "Weight (lbs)",
+                  status: "Ready",
+                  targetSize: "5mm flakes"
+                }}
+                onFullscreen={() => setShowShredFullscreen(true)}
+              />
+            </div>
+
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+              {/* Station 3: Shred - Original Hard-coded */}
               <Card>
                 <CardHeader>
                   <CardTitle className="flex items-center">
@@ -1478,6 +1459,28 @@ export default function OperationsPage() {
               queue: ["BA-8472", "BA-8471"],
               status: "Idle",
               currentMaterial: "PET Bottles"
+            }}
+            isFullscreen={true}
+          />
+        </DialogContent>
+      </Dialog>
+
+      {/* Shred Station Card Fullscreen Dialog */}
+      <Dialog open={showShredFullscreen} onOpenChange={setShowShredFullscreen}>
+        <DialogContent className="max-w-none w-screen h-screen m-0 p-0 overflow-hidden">
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={() => setShowShredFullscreen(false)}
+            className="absolute top-4 right-4 z-20 h-8 w-8 p-0 bg-white hover:bg-gray-100 shadow-md"
+          >
+            <X className="h-4 w-4" />
+          </Button>
+          <ShredStationCard
+            station={{
+              materialInput: "Weight (lbs)",
+              status: "Ready",
+              targetSize: "5mm flakes"
             }}
             isFullscreen={true}
           />
