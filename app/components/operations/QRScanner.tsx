@@ -27,6 +27,11 @@ export const QRScanner = ({ open, onOpenChange }: QRScannerProps) => {
   const [isLoadingItem, setIsLoadingItem] = useState(false);
   const [lastScanTime, setLastScanTime] = useState<number>(0);
   const router = useRouter();
+  
+  // Queue state
+  const [queueActive, setQueueActive] = useState(false);
+  const [queueType, setQueueType] = useState<string>('');
+  const [queuedItems, setQueuedItems] = useState<any[]>([]);
 
   // Extract item ID from any URL or direct code
   const extractItemId = (scannedText: string): string | null => {
@@ -57,6 +62,10 @@ export const QRScanner = ({ open, onOpenChange }: QRScannerProps) => {
       if (response.ok) {
         const data = await response.json();
         setScannedItem(data);
+        
+        // Auto-add to queue if active and type matches
+        addToQueue(data);
+        
         console.log("=== FETCHED ITEM DATA ===");
         console.log("Type:", data.type);
         console.log("All fields:", Object.keys(data));
@@ -71,6 +80,36 @@ export const QRScanner = ({ open, onOpenChange }: QRScannerProps) => {
       setScannedItem({ error: "Failed to fetch item data" });
     } finally {
       setIsLoadingItem(false);
+    }
+  };
+
+  // Queue management functions
+  const startQueue = (type: string) => {
+    setQueueActive(true);
+    setQueueType(type);
+    setQueuedItems([]);
+    
+    // Add current item to queue if it exists and matches type
+    if (scannedItem && scannedItem.type === type) {
+      setQueuedItems([scannedItem]);
+    }
+  };
+
+  const stopQueue = () => {
+    setQueueActive(false);
+    setQueueType('');
+    setQueuedItems([]);
+  };
+
+  const addToQueue = (item: any) => {
+    // Only add if queue is active and item type matches queue type
+    if (queueActive && item.type === queueType) {
+      // Check if item is already in queue (by ID)
+      const isAlreadyQueued = queuedItems.some(queuedItem => queuedItem.id === item.id);
+      if (!isAlreadyQueued) {
+        setQueuedItems(prev => [...prev, item]);
+        console.log(`Added ${item.id} to ${queueType} queue`);
+      }
     }
   };
 
@@ -277,7 +316,7 @@ export const QRScanner = ({ open, onOpenChange }: QRScannerProps) => {
           </DialogDescription>
         </DialogHeader>
         <div className="space-y-4">
-          {/* Camera feed */}
+          {/* Camera feed with queue icons */}
           <div className="relative aspect-square bg-gray-100 rounded-lg border-2 border-dashed border-gray-300 overflow-hidden">
             {/* Always render video element so ref is available */}
             <video
@@ -322,6 +361,21 @@ export const QRScanner = ({ open, onOpenChange }: QRScannerProps) => {
                     Scanning...
                   </div>
                 </div>
+              </div>
+            )}
+
+            {/* Queue icons on right side */}
+            {queueActive && queuedItems.length > 0 && (
+              <div className="absolute right-2 top-2 flex flex-col gap-1 max-h-full overflow-y-auto">
+                {queuedItems.map((item, index) => (
+                  <div
+                    key={`${item.id}-${index}`}
+                    className="w-8 h-8 rounded-full bg-pop-green text-white text-xs flex items-center justify-center font-bold shadow-lg"
+                    title={`${item.id} (${item.type})`}
+                  >
+                    {item.id?.charAt(0) || '?'}
+                  </div>
+                ))}
               </div>
             )}
           </div>
@@ -469,17 +523,54 @@ export const QRScanner = ({ open, onOpenChange }: QRScannerProps) => {
                         </div>
                       )}
 
-                      {/* Action button to view full details */}
-                      <Button
-                        size="sm"
-                        className="w-full bg-pop-green hover:bg-pop-green/90"
-                        onClick={() => {
-                          onOpenChange(false);
-                          router.push(`/track/${scannedItem.id}`);
-                        }}
-                      >
-                        View Full Details
-                      </Button>
+                      {/* Queue controls */}
+                      <div className="space-y-2">
+                        {!queueActive ? (
+                          /* Start queue button - only show if we have a valid item */
+                          scannedItem.type && (
+                            <Button
+                              size="sm"
+                              variant="outline"
+                              className="w-full border-pop-green text-pop-green hover:bg-pop-green hover:text-white"
+                              onClick={() => startQueue(scannedItem.type)}
+                            >
+                              Start {scannedItem.type.charAt(0).toUpperCase() + scannedItem.type.slice(1)} Queue
+                            </Button>
+                          )
+                        ) : (
+                          /* Queue is active - show status and stop button */
+                          <div className="space-y-2">
+                            <div className="flex items-center justify-between bg-pop-green/10 p-2 rounded">
+                              <span className="text-sm font-medium text-pop-green">
+                                {queueType.charAt(0).toUpperCase() + queueType.slice(1)} Queue Active
+                              </span>
+                              <span className="text-xs bg-pop-green text-white px-2 py-1 rounded">
+                                {queuedItems.length} items
+                              </span>
+                            </div>
+                            <Button
+                              size="sm"
+                              variant="outline"
+                              className="w-full border-red-400 text-red-600 hover:bg-red-50"
+                              onClick={stopQueue}
+                            >
+                              Stop Queue
+                            </Button>
+                          </div>
+                        )}
+
+                        {/* Action button to view full details */}
+                        <Button
+                          size="sm"
+                          className="w-full bg-pop-green hover:bg-pop-green/90"
+                          onClick={() => {
+                            onOpenChange(false);
+                            router.push(`/track/${scannedItem.id}`);
+                          }}
+                        >
+                          View Full Details
+                        </Button>
+                      </div>
                     </div>
                   )}
                 </div>
