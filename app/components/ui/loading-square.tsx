@@ -20,17 +20,8 @@ export function LoadingSquare({
   };
 
   return (
-    <div className={cn("text-center", className)}>
-      <div 
-        className={cn(
-          sizeClasses[size],
-          "border-2 border-pop-black mx-auto mb-4",
-          "animate-popcycle-loader"
-        )}
-      ></div>
-      <p className="systematic-caps text-pop-black animate-pulse">{text}</p>
-      
-      <style jsx>{`
+    <>
+      <style jsx global>{`
         @keyframes popcycle-loader {
           0% { 
             background-color: hsl(142, 100%, 35%); 
@@ -73,6 +64,16 @@ export function LoadingSquare({
           animation: popcycle-loader 3s ease-in-out infinite;
         }
       `}</style>
-    </div>
+      <div className={cn("text-center", className)}>
+        <div 
+          className={cn(
+            sizeClasses[size],
+            "border-2 border-pop-black mx-auto mb-4",
+            "animate-popcycle-loader"
+          )}
+        ></div>
+        <p className="systematic-caps text-pop-black animate-pulse">{text}</p>
+      </div>
+    </>
   );
 }

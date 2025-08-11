@@ -12,6 +12,7 @@ import { PopArtContainer, QRCodeElement } from "../components/PopArtElements";
 import { Search, QrCode, ArrowRight } from "lucide-react";
 import Link from "next/link";
 import { useState, useEffect } from "react";
+import { LoadingSquare } from "../components/ui/loading-square";
 
 interface SampleQRCodes {
   bins: Array<{ id: string; name: string; isActive: boolean; status: string }>;
@@ -185,7 +186,9 @@ export default function Track() {
            
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 max-w-7xl mx-auto px-12">
               {loading ? (
-                <div className="col-span-full text-center text-pop-gray">Loading QR codes...</div>
+                <div className="col-span-full flex justify-center items-center py-16">
+                  <LoadingSquare color="green" text="Loading..." />
+                </div>
               ) : (
                 getFilteredCodes().map((code, index) => {
                 const colors = [
