@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { MongoClient, ObjectId } from 'mongodb';
+import { ObjectId } from 'mongodb';
+import { getDatabase } from '../../../../lib/mongodb';
 
 // Function to determine collection type from QR code
 function getCollectionType(qrCode: string): 'bin' | 'batch' | 'blank' | null {
@@ -23,20 +24,12 @@ export async function GET(
   const { id } = await params;
   
   try {
-    const uri = process.env.MONGODB_URI;
-    if (!uri) {
-      return NextResponse.json({ error: 'Database configuration error' }, { status: 500 });
-    }
-
-    const client = new MongoClient(uri);
-    await client.connect();
-    const db = client.db('PopCycle');
+    const db = await getDatabase();
     
     // Determine which collection to search based on QR code type
     const collectionType = getCollectionType(id);
     
     if (!collectionType) {
-      await client.close();
       return NextResponse.json({ error: 'Invalid QR code format' }, { status: 400 });
     }
     
@@ -51,7 +44,6 @@ export async function GET(
       }
       
       if (!record) {
-        await client.close();
         return NextResponse.json({ error: 'Bin not found' }, { status: 404 });
       }
       
@@ -61,7 +53,6 @@ export async function GET(
         eventInfo = org.events.find((event: any) => event.eventId === record.eventId);
       }
       
-      await client.close();
       return NextResponse.json({
         id: record._id,
         type: 'bin',
@@ -103,11 +94,9 @@ export async function GET(
       }
       
       if (!record) {
-        await client.close();
         return NextResponse.json({ error: 'Batch not found' }, { status: 404 });
       }
       
-      await client.close();
       return NextResponse.json({
         id: record._id,
         type: 'batch',
@@ -149,7 +138,6 @@ export async function GET(
       }
       
       if (!record) {
-        await client.close();
         return NextResponse.json({ error: 'Blank not found' }, { status: 404 });
       }
       
@@ -159,7 +147,6 @@ export async function GET(
         userDetails = await db.collection('users').findOne({ _id: new ObjectId(record.userId) });
       }
       
-      await client.close();
       return NextResponse.json({
         id: record._id,
         type: 'blank',
