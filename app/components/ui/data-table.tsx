@@ -569,7 +569,7 @@ export function DataTable<T extends Record<string, any>>({
       <CardContent>
         {/* Desktop Table View */}
         <div className="hidden md:block">
-          <div className="overflow-auto border rounded-md" style={{ maxHeight: 'calc(100vh - 300px)' }}>
+          <div className="h-full overflow-auto border rounded-md">
             <Table>
               <TableHeader className="sticky top-0 bg-white z-10">
                 {/* Filter Row */}
@@ -664,7 +664,7 @@ export function DataTable<T extends Record<string, any>>({
             </select>
           </div>
 
-          <div className="space-y-3 overflow-auto" style={{ maxHeight: 'calc(100vh - 300px)' }}>
+          <div className="space-y-3 h-full overflow-auto">
             {sortedData.map((item, index) => {
               const hasModal = renderModal || editableFields
               const CardContent = (
