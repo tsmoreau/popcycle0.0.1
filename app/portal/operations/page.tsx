@@ -1253,10 +1253,6 @@ export default function OperationsPage() {
       <Dialog open={isLogisticsFullscreen} onOpenChange={setIsLogisticsFullscreen}>
         <DialogContent className="max-w-none w-screen h-screen m-0 p-0 bg-gray-50">
           <div className="flex flex-col h-full">
-            <div className="flex items-center justify-between p-6 bg-white border-b">
-              <h2 className="text-2xl font-bold text-pop-black">Logistics Management</h2>
-            </div>
-            
             <div className="flex-1 flex flex-col overflow-hidden">
               <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full h-full flex flex-col">
                 <div className="flex items-center justify-between mb-6 px-6 pt-6">
