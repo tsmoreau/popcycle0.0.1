@@ -1274,7 +1274,14 @@ export default function OperationsPage() {
                       Inventory
                     </TabsTrigger>
                   </TabsList>
-
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => setIsLogisticsFullscreen(false)}
+                    className="border-pop-red hover:bg-pop-red hover:text-white"
+                  >
+                    <X className="h-4 w-4" />
+                  </Button>
                 </div>
 
                 {/* Collections Tab Fullscreen */}
