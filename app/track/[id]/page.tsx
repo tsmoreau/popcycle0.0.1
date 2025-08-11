@@ -14,7 +14,7 @@ import {
   PopArtContainer,
   QRCodeElement,
 } from "../../components/PopArtElements";
-import { LoadingSquare } from "../../components/loading-square";
+import { LoadingSquare } from "../../components/ui/loading-square";
 import {
   Building,
   Calendar,

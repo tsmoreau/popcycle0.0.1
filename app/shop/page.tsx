@@ -17,7 +17,7 @@ import {
   Calendar,
   Weight,
 } from "lucide-react";
-import { LoadingSquare } from "../components/loading-square";
+import { LoadingSquare } from "../components/ui/loading-square";
 
 interface Product {
   _id: string;
