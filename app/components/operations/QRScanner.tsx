@@ -50,9 +50,11 @@ export const QRScanner = ({ open, onOpenChange }: QRScannerProps) => {
 
     try {
       setCameraError("");
+      console.log("Starting camera initialization...");
       
       // Check if camera is available
       const hasCamera = await QrScanner.hasCamera();
+      console.log("Camera availability:", hasCamera);
       setHasCamera(hasCamera);
       
       if (!hasCamera) {
@@ -60,25 +62,43 @@ export const QRScanner = ({ open, onOpenChange }: QRScannerProps) => {
         return;
       }
 
+      console.log("Creating QR scanner instance...");
       // Create QR scanner instance
       qrScannerRef.current = new QrScanner(
         videoRef.current,
         (result) => handleScanResult(result.data),
         {
-          onDecodeError: () => {
+          onDecodeError: (error) => {
             // Silently ignore decode errors (normal when no QR code in view)
+            console.log("Decode error (normal):", typeof error === 'string' ? error : error?.message || 'Unknown decode error');
           },
           highlightScanRegion: true,
           highlightCodeOutline: true,
+          preferredCamera: 'environment', // Try back camera first on mobile
         }
       );
 
+      console.log("Starting scanner...");
       // Start scanning
       await qrScannerRef.current.start();
+      console.log("Scanner started successfully!");
       setIsScanning(true);
     } catch (error) {
       console.error("Failed to initialize scanner:", error);
-      setCameraError("Failed to access camera. Please allow camera permissions.");
+      
+      // More specific error messages
+      const err = error as Error;
+      if (err.name === 'NotAllowedError') {
+        setCameraError("Camera access denied. Please allow camera permissions and try again.");
+      } else if (err.name === 'NotFoundError') {
+        setCameraError("No camera found. Please connect a camera and try again.");
+      } else if (err.name === 'NotSupportedError') {
+        setCameraError("Camera not supported in this browser. Try Chrome or Firefox.");
+      } else if (err.name === 'NotReadableError') {
+        setCameraError("Camera is being used by another application.");
+      } else {
+        setCameraError(`Camera error: ${err.message || 'Unknown error'}`);
+      }
     }
   };
 
