@@ -114,6 +114,12 @@ export const QRScanner = ({ open, onOpenChange }: QRScannerProps) => {
       await qrScannerRef.current.start();
       console.log("Scanner started successfully!");
       setIsScanning(true);
+      
+      // Force video to be visible
+      if (videoRef.current) {
+        videoRef.current.style.display = 'block';
+        videoRef.current.style.visibility = 'visible';
+      }
     } catch (error) {
       console.error("Failed to initialize scanner:", error);
       
@@ -172,7 +178,8 @@ export const QRScanner = ({ open, onOpenChange }: QRScannerProps) => {
             {/* Always render video element so ref is available */}
             <video
               ref={videoRef}
-              className={`w-full h-full object-cover rounded-lg ${isScanning ? 'block' : 'hidden'}`}
+              className="w-full h-full object-cover rounded-lg"
+              style={{ display: isScanning ? 'block' : 'none' }}
               autoPlay
               playsInline
               muted
