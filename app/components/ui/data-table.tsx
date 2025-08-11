@@ -569,73 +569,75 @@ export function DataTable<T extends Record<string, any>>({
       <CardContent>
         {/* Desktop Table View */}
         <div className="hidden md:block">
-          <Table>
-            <TableHeader>
-              {/* Filter Row */}
-              {enableFiltering && (
+          <div className="max-h-[70vh] overflow-auto border rounded-md">
+            <Table>
+              <TableHeader className="sticky top-0 bg-white z-10">
+                {/* Filter Row */}
+                {enableFiltering && (
+                  <TableRow>
+                    {visibleColumns.map((column) => (
+                      <TableHead key={`filter-${String(column.key)}`} className="p-2">
+                        <Input
+                          placeholder={`Filter ${column.header.toLowerCase()}...`}
+                          value={columnFilters[String(column.key)] || ''}
+                          onChange={(e) => handleFilterChange(String(column.key), e.target.value)}
+                          className="text-xs h-8"
+                        />
+                      </TableHead>
+                    ))}
+                  </TableRow>
+                )}
+                {/* Header Row */}
                 <TableRow>
                   {visibleColumns.map((column) => (
-                    <TableHead key={`filter-${String(column.key)}`} className="p-2">
-                      <Input
-                        placeholder={`Filter ${column.header.toLowerCase()}...`}
-                        value={columnFilters[String(column.key)] || ''}
-                        onChange={(e) => handleFilterChange(String(column.key), e.target.value)}
-                        className="text-xs h-8"
-                      />
+                    <TableHead
+                      key={String(column.key)}
+                      onClick={column.sortable !== false ? () => handleSort(String(column.key)) : undefined}
+                      className={column.sortable !== false ? "cursor-pointer hover:bg-gray-50" : ""}
+                    >
+                      {column.header}
+                      {column.sortable !== false && getSortIndicator(String(column.key))}
                     </TableHead>
                   ))}
                 </TableRow>
-              )}
-              {/* Header Row */}
-              <TableRow>
-                {visibleColumns.map((column) => (
-                  <TableHead
-                    key={String(column.key)}
-                    onClick={column.sortable !== false ? () => handleSort(String(column.key)) : undefined}
-                    className={column.sortable !== false ? "cursor-pointer hover:bg-gray-50" : ""}
-                  >
-                    {column.header}
-                    {column.sortable !== false && getSortIndicator(String(column.key))}
-                  </TableHead>
-                ))}
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {sortedData.map((item, index) => {
-                const hasModal = renderModal || editableFields
-                const RowContent = (
-                  <TableRow className={hasModal ? "cursor-pointer hover:bg-gray-50" : ""}>
-                    {visibleColumns.map((column) => (
-                      <TableCell
-                        key={String(column.key)}
-                        className={column.key === visibleColumns[0].key ? "font-medium" : ""}
-                      >
-                        {getCellValue(item, column)}
-                      </TableCell>
-                    ))}
-                  </TableRow>
-                )
-
-                if (hasModal) {
-                  return (
-                    <Dialog key={index} open={isEditing && editingItem === item ? true : undefined}>
-                      <DialogTrigger asChild>
-                        {RowContent}
-                      </DialogTrigger>
-                      <DialogContent className="max-w-2xl max-h-[80vh] overflow-y-auto">
-                        {isEditing && editingItem === item ? 
-                          renderEditModal(item) : 
-                          renderModal ? renderModal(item) : renderViewModal(item)
-                        }
-                      </DialogContent>
-                    </Dialog>
+              </TableHeader>
+              <TableBody>
+                {sortedData.map((item, index) => {
+                  const hasModal = renderModal || editableFields
+                  const RowContent = (
+                    <TableRow className={hasModal ? "cursor-pointer hover:bg-gray-50" : ""}>
+                      {visibleColumns.map((column) => (
+                        <TableCell
+                          key={String(column.key)}
+                          className={column.key === visibleColumns[0].key ? "font-medium" : ""}
+                        >
+                          {getCellValue(item, column)}
+                        </TableCell>
+                      ))}
+                    </TableRow>
                   )
-                }
 
-                return <div key={index}>{RowContent}</div>
-              })}
-            </TableBody>
-          </Table>
+                  if (hasModal) {
+                    return (
+                      <Dialog key={index} open={isEditing && editingItem === item ? true : undefined}>
+                        <DialogTrigger asChild>
+                          {RowContent}
+                        </DialogTrigger>
+                        <DialogContent className="max-w-2xl max-h-[80vh] overflow-y-auto">
+                          {isEditing && editingItem === item ? 
+                            renderEditModal(item) : 
+                            renderModal ? renderModal(item) : renderViewModal(item)
+                          }
+                        </DialogContent>
+                      </Dialog>
+                    )
+                  }
+
+                  return <div key={index}>{RowContent}</div>
+                })}
+              </TableBody>
+            </Table>
+          </div>
         </div>
 
         {/* Mobile Card View */}
@@ -662,7 +664,7 @@ export function DataTable<T extends Record<string, any>>({
             </select>
           </div>
 
-          <div className="space-y-3">
+          <div className="space-y-3 max-h-[70vh] overflow-auto">
             {sortedData.map((item, index) => {
               const hasModal = renderModal || editableFields
               const CardContent = (
