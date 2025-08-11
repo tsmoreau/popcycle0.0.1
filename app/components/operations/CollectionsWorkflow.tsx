@@ -15,62 +15,10 @@ import {
   CardHeader,
   CardTitle,
 } from "../ui/card";
-import { DataTable, Column, EditableField } from "../ui/data-table";
-import { Bin } from "../../../lib/schemas";
 
-interface CollectionsWorkflowProps {
-  bins: Bin[];
-  loadingBins: boolean;
-  allBinColumns: Column<Bin>[];
-  defaultBinColumns: string[];
-  binEditableFields: EditableField<Bin>[];
-  handleBinSave: (bin: Bin) => Promise<void>;
-  handleBinDelete: (bin: Bin) => Promise<void>;
-  collectionsSortField: string;
-  collectionsSortDirection: "asc" | "desc";
-  onSort: (field: string, direction: "asc" | "desc") => void;
-}
-
-export const CollectionsWorkflow = ({
-  bins,
-  loadingBins,
-  allBinColumns,
-  defaultBinColumns,
-  binEditableFields,
-  handleBinSave,
-  handleBinDelete,
-  collectionsSortField,
-  collectionsSortDirection,
-  onSort,
-}: CollectionsWorkflowProps) => {
+export const CollectionsWorkflow = () => {
   return (
-    <div className="space-y-6">
-      {/* Collections Queue */}
-      {loadingBins ? (
-        <div className="flex items-center justify-center p-8">
-          <div className="text-sm text-gray-600">Loading bins...</div>
-        </div>
-      ) : (
-        <DataTable
-          title="Collections Queue"
-          description="Live status overview of all bins assigned for pickup and collected materials awaiting processing"
-          icon={<Package className="h-5 w-5 text-pop-green" />}
-          data={bins}
-          columns={allBinColumns.filter(col => defaultBinColumns.includes(String(col.key)))}
-          availableColumns={allBinColumns}
-          defaultVisibleColumns={defaultBinColumns}
-          enableColumnSelection={true}
-          enableFiltering={true}
-          editableFields={binEditableFields}
-          onSave={handleBinSave}
-          onDelete={handleBinDelete}
-          sortField={collectionsSortField}
-          sortDirection={collectionsSortDirection}
-          onSort={onSort}
-        />
-      )}
 
-      {/* Collections Workflow Diagram */}
       <Card>
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
@@ -153,6 +101,5 @@ export const CollectionsWorkflow = ({
           </div>
         </CardContent>
       </Card>
-    </div>
   );
 };

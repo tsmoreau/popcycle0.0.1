@@ -608,21 +608,36 @@ export default function OperationsPage() {
 
         {/* Collections Tab */}
         <TabsContent value="collections" className="space-y-6">
-          <CollectionsWorkflow
-            bins={bins}
-            loadingBins={loadingBins}
-            allBinColumns={allBinColumns}
-            defaultBinColumns={defaultBinColumns}
-            binEditableFields={binEditableFields}
-            handleBinSave={handleBinSave}
-            handleBinDelete={handleBinDelete}
-            collectionsSortField={collectionsSortField}
-            collectionsSortDirection={collectionsSortDirection}
-            onSort={(field, direction) => {
-              setCollectionsSortField(field);
-              setCollectionsSortDirection(direction);
-            }}
-          />
+          {/* Collections Queue */}
+          {loadingBins ? (
+            <div className="flex items-center justify-center p-8">
+              <div className="text-sm text-gray-600">Loading bins...</div>
+            </div>
+          ) : (
+            <DataTable
+              title="Collections Queue"
+              description="Live status overview of all bins assigned for pickup and collected materials awaiting processing"
+              icon={<Package className="h-5 w-5 text-pop-green" />}
+              data={bins}
+              columns={allBinColumns.filter(col => defaultBinColumns.includes(String(col.key)))}
+              availableColumns={allBinColumns}
+              defaultVisibleColumns={defaultBinColumns}
+              enableColumnSelection={true}
+              enableFiltering={true}
+              editableFields={binEditableFields}
+              onSave={handleBinSave}
+              onDelete={handleBinDelete}
+              sortField={collectionsSortField}
+              sortDirection={collectionsSortDirection}
+              onSort={(field, direction) => {
+                setCollectionsSortField(field);
+                setCollectionsSortDirection(direction);
+              }}
+            />
+          )}
+
+          {/* Collections Workflow Diagram */}
+          <CollectionsWorkflow />
         </TabsContent>
 
         {/* Processing Tab */}
@@ -1731,21 +1746,32 @@ export default function OperationsPage() {
 
                 {/* Collections Tab Fullscreen */}
                 <TabsContent value="collections" className="space-y-6 h-full">
-                  <CollectionsWorkflow
-                    bins={bins}
-                    loadingBins={loadingBins}
-                    allBinColumns={allBinColumns}
-                    defaultBinColumns={defaultBinColumns}
-                    binEditableFields={binEditableFields}
-                    handleBinSave={handleBinSave}
-                    handleBinDelete={handleBinDelete}
-                    collectionsSortField={collectionsSortField}
-                    collectionsSortDirection={collectionsSortDirection}
-                    onSort={(field, direction) => {
-                      setCollectionsSortField(field);
-                      setCollectionsSortDirection(direction);
-                    }}
-                  />
+                  {loadingBins ? (
+                    <div className="flex items-center justify-center p-8">
+                      <div className="text-sm text-gray-600">Loading bins...</div>
+                    </div>
+                  ) : (
+                    <DataTable
+                      title="Collections Queue"
+                      description="Live status overview of all bins assigned for pickup and collected materials awaiting processing"
+                      icon={<Package className="h-5 w-5 text-pop-green" />}
+                      data={bins}
+                      columns={allBinColumns.filter(col => defaultBinColumns.includes(String(col.key)))}
+                      availableColumns={allBinColumns}
+                      defaultVisibleColumns={defaultBinColumns}
+                      enableColumnSelection={true}
+                      enableFiltering={true}
+                      editableFields={binEditableFields}
+                      onSave={handleBinSave}
+                      onDelete={handleBinDelete}
+                      sortField={collectionsSortField}
+                      sortDirection={collectionsSortDirection}
+                      onSort={(field, direction) => {
+                        setCollectionsSortField(field);
+                        setCollectionsSortDirection(direction);
+                      }}
+                    />
+                  )}
                 </TabsContent>
 
                 {/* Processing Tab Fullscreen */}
