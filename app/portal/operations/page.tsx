@@ -1255,14 +1255,6 @@ export default function OperationsPage() {
           <div className="flex flex-col h-full">
             <div className="flex items-center justify-between p-6 bg-white border-b">
               <h2 className="text-2xl font-bold text-pop-black">Logistics Management</h2>
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={() => setIsLogisticsFullscreen(false)}
-                className="border-pop-red hover:bg-pop-red hover:text-white"
-              >
-                <X className="h-4 w-4" />
-              </Button>
             </div>
             
             <div className="flex-1 flex flex-col overflow-hidden">
@@ -1286,10 +1278,11 @@ export default function OperationsPage() {
                       Inventory
                     </TabsTrigger>
                   </TabsList>
+
                 </div>
 
                 {/* Collections Tab Fullscreen */}
-                <TabsContent value="collections" className="flex-1 px-6 pb-6">
+<TabsContent value="collections" className="flex-1 overflow-hidden px-6 pb-6">
                   <CollectionsTab
                     bins={bins}
                     loadingBins={loadingBins}
@@ -1363,7 +1356,9 @@ export default function OperationsPage() {
                 </TabsContent>
               </Tabs>
             </div>
+          
           </div>
+          
         </DialogContent>
       </Dialog>
 
