@@ -1,15 +1,12 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { MongoClient, ObjectId } from 'mongodb'
+import { ObjectId } from 'mongodb'
+import { getDatabase } from '../../../../lib/mongodb'
 import { Blank } from '../../../../lib/schemas'
 
 export async function GET() {
   try {
-    const client = new MongoClient(process.env.MONGODB_URI!)
-    await client.connect()
-    const db = client.db('PopCycle')
+    const db = await getDatabase()
     const blanks = await db.collection<Blank>('blanks').find({}).toArray()
-    
-    await client.close()
     return NextResponse.json(blanks)
   } catch (error) {
     console.error('Error fetching blanks:', error)
@@ -20,9 +17,7 @@ export async function GET() {
 export async function PUT(request: NextRequest) {
   try {
     const blank: Blank = await request.json()
-    
-    await client.connect()
-    const db = client.db('PopCycle')
+    const db = await getDatabase()
     
     const { _id, ...updateData } = blank
     updateData.updatedAt = new Date()
@@ -40,8 +35,6 @@ export async function PUT(request: NextRequest) {
   } catch (error) {
     console.error('Error updating blank:', error)
     return NextResponse.json({ error: 'Failed to update blank' }, { status: 500 })
-  } finally {
-    await client.close()
   }
 }
 
@@ -54,8 +47,7 @@ export async function DELETE(request: NextRequest) {
       return NextResponse.json({ error: 'ID parameter required' }, { status: 400 })
     }
     
-    await client.connect()
-    const db = client.db('PopCycle')
+    const db = await getDatabase()
     
     const result = await db.collection<Blank>('blanks').deleteOne({ _id: id })
     
@@ -67,7 +59,5 @@ export async function DELETE(request: NextRequest) {
   } catch (error) {
     console.error('Error deleting blank:', error)
     return NextResponse.json({ error: 'Failed to delete blank' }, { status: 500 })
-  } finally {
-    await client.close()
   }
 }
