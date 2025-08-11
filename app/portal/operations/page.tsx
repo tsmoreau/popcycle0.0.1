@@ -733,6 +733,14 @@ export default function OperationsPage() {
           <AccordionContent>
             {/* Manufacturing Workflow Stations */}
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+              {/* New Wash Station Card with Fullscreen */}
+              <div className="col-span-1">
+                <StationCard
+                  station={washStation}
+                  onFullscreen={handleStationFullscreen}
+                />
+              </div>
+
               {/* Station 1: Rough Wash */}
               <Card>
                 <CardHeader>
@@ -1476,6 +1484,17 @@ export default function OperationsPage() {
           </div>
         </DialogContent>
       </Dialog>
+
+      {/* Station Fullscreen Dialog */}
+      <StationFullscreen
+        isOpen={isStationFullscreen}
+        onClose={() => setIsStationFullscreen(false)}
+        station={selectedStation}
+      >
+        {selectedStation?.type === StationType.ROUGH_WASH && (
+          <RoughWashStation station={selectedStation as WashStationData} />
+        )}
+      </StationFullscreen>
     </div>
   );
 }
