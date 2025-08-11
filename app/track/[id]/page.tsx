@@ -524,7 +524,7 @@ export default function TrackItem() {
                     </span>
                   </div>
                 )}
-                {item.event && item.event.trim() && !item.event.startsWith('bin_') && !item.id.startsWith('T') && (
+                {item.event && item.event.trim() && !item.event.startsWith('bin_') && !item.id.startsWith('T') && !item.id.startsWith('B') && (
                   <div className="flex justify-between">
                     <span className="systematic-caps text-sm">Event</span>
                     <span>{item.event}</span>
