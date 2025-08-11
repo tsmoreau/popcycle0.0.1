@@ -78,6 +78,8 @@ export default function AdminPage() {
   const [generatingData, setGeneratingData] = useState(false)
   const [products, setProducts] = useState<Product[]>([])
   const [loadingProducts, setLoadingProducts] = useState(false)
+  const [selectedStation, setSelectedStation] = useState<StationBase | null>(null)
+  const [isStationFullscreen, setIsStationFullscreen] = useState(false)
 
   // Fetch MongoDB status and products on component mount
   useEffect(() => {
@@ -162,8 +164,33 @@ export default function AdminPage() {
   // Sample station data
   const stationsData: Station[] = [
     { id: 'ST-001', name: 'Station 1', type: 'Weighing/Photo', status: 'Online', description: 'HID Scale + Camera Ready' },
-    { id: 'ST-002', name: 'Station 2', type: 'Laser Processing', status: 'Active', description: 'Lightburn Integration' }
+    { id: 'ST-002', name: 'Station 2', type: 'Laser Processing', status: 'Active', description: 'Lightburn Integration' },
+    { id: 'ST-003', name: 'Wash Station', type: 'Rough Wash', status: 'Active', description: 'Automated washing with temperature control' }
   ]
+
+  // Convert to StationBase for the wash station
+  const washStation: WashStationData = {
+    id: 'ST-003',
+    name: 'Wash Station',
+    type: StationType.ROUGH_WASH,
+    status: StationStatus.ACTIVE,
+    description: 'Automated washing with temperature control',
+    operator: 'John Smith',
+    lastMaintenance: '2024-01-15',
+    nextMaintenance: '2024-02-15',
+    waterTemperature: 65,
+    waterPressure: 2.5,
+    detergentLevel: 78,
+    cycleTime: 600,
+    currentBatch: 'BATCH-2024-001',
+    washCycles: 12,
+    efficiency: 87
+  }
+
+  const handleStationFullscreen = (station: StationBase) => {
+    setSelectedStation(station);
+    setIsStationFullscreen(true);
+  }
 
   const userColumns: Column<User>[] = [
     { key: 'id', header: 'User ID' },
