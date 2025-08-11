@@ -25,6 +25,7 @@ export const QRScanner = ({ open, onOpenChange }: QRScannerProps) => {
   const [lastScan, setLastScan] = useState<string>("");
   const [scannedItem, setScannedItem] = useState<any>(null);
   const [isLoadingItem, setIsLoadingItem] = useState(false);
+  const [lastScanTime, setLastScanTime] = useState<number>(0);
   const router = useRouter();
 
   // Extract item ID from any URL or direct code
@@ -69,19 +70,20 @@ export const QRScanner = ({ open, onOpenChange }: QRScannerProps) => {
     }
   };
 
-  // Handle QR code scan result
+  // Handle QR code scan result with debouncing
   const handleScanResult = (result: string) => {
-    console.log("QR Code scanned:", result);
+    const now = Date.now();
+    const itemId = extractItemId(result);
     
-    // Prevent duplicate scans of the same code
-    if (result === lastScan) {
-      console.log("Duplicate scan ignored");
+    // Debounce: ignore scans of the same code within 2 seconds
+    if (result === lastScan && (now - lastScanTime) < 2000) {
       return;
     }
     
+    console.log("QR Code scanned:", result);
     setLastScan(result);
+    setLastScanTime(now);
     
-    const itemId = extractItemId(result);
     if (itemId) {
       console.log("Extracted item ID:", itemId);
       fetchItemData(itemId);
@@ -355,31 +357,85 @@ export const QRScanner = ({ open, onOpenChange }: QRScannerProps) => {
                         </span>
                       </div>
 
-                      {/* Item details */}
+                      {/* Item details - show different fields based on item type */}
                       <div className="text-sm space-y-1">
-                        {scannedItem.materialType && (
-                          <div><span className="font-medium">Material:</span> {scannedItem.materialType}</div>
-                        )}
-                        {scannedItem.weight && (
-                          <div><span className="font-medium">Weight:</span> {scannedItem.weight}kg</div>
-                        )}
+                        {/* Common fields */}
                         {scannedItem.status && (
                           <div><span className="font-medium">Status:</span> {scannedItem.status.replace(/_/g, ' ')}</div>
                         )}
-                        {scannedItem.collectedBy && (
-                          <div><span className="font-medium">Collected By:</span> {scannedItem.collectedBy}</div>
-                        )}
-                        {scannedItem.collectionDate && (
-                          <div><span className="font-medium">Collection Date:</span> {new Date(scannedItem.collectionDate).toLocaleDateString()}</div>
-                        )}
-                        {scannedItem.binIds && scannedItem.binIds.length > 0 && (
-                          <div><span className="font-medium">Source Bins:</span> {scannedItem.binIds.join(', ')}</div>
-                        )}
-                        {scannedItem.notes && (
-                          <div><span className="font-medium">Notes:</span> {scannedItem.notes}</div>
-                        )}
                         {scannedItem.organization && (
                           <div><span className="font-medium">Organization:</span> {scannedItem.organization.name}</div>
+                        )}
+
+                        {/* Batch-specific fields */}
+                        {scannedItem.type === 'batch' && (
+                          <>
+                            {scannedItem.materialType && (
+                              <div><span className="font-medium">Material:</span> {scannedItem.materialType}</div>
+                            )}
+                            {scannedItem.weight && (
+                              <div><span className="font-medium">Weight:</span> {scannedItem.weight}kg</div>
+                            )}
+                            {scannedItem.collectedBy && (
+                              <div><span className="font-medium">Collected By:</span> {scannedItem.collectedBy}</div>
+                            )}
+                            {scannedItem.collectionDate && (
+                              <div><span className="font-medium">Collection Date:</span> {new Date(scannedItem.collectionDate).toLocaleDateString()}</div>
+                            )}
+                            {scannedItem.binIds && scannedItem.binIds.length > 0 && (
+                              <div><span className="font-medium">Source Bins:</span> {scannedItem.binIds.join(', ')}</div>
+                            )}
+                          </>
+                        )}
+
+                        {/* Bin-specific fields */}
+                        {scannedItem.type === 'bin' && (
+                          <>
+                            {scannedItem.name && (
+                              <div><span className="font-medium">Name:</span> {scannedItem.name}</div>
+                            )}
+                            {scannedItem.location && (
+                              <div><span className="font-medium">Location:</span> {scannedItem.location}</div>
+                            )}
+                            {scannedItem.capacity && (
+                              <div><span className="font-medium">Capacity:</span> {scannedItem.capacity}L</div>
+                            )}
+                            {scannedItem.lastCollectionDate && (
+                              <div><span className="font-medium">Last Collection:</span> {new Date(scannedItem.lastCollectionDate).toLocaleDateString()}</div>
+                            )}
+                            {scannedItem.nextCollectionDate && (
+                              <div><span className="font-medium">Next Collection:</span> {new Date(scannedItem.nextCollectionDate).toLocaleDateString()}</div>
+                            )}
+                            {scannedItem.canBeAdopted !== undefined && (
+                              <div><span className="font-medium">Can Be Adopted:</span> {scannedItem.canBeAdopted ? 'Yes' : 'No'}</div>
+                            )}
+                            {scannedItem.adoptedBy && (
+                              <div><span className="font-medium">Adopted By:</span> {scannedItem.adoptedBy}</div>
+                            )}
+                          </>
+                        )}
+
+                        {/* Blank-specific fields (when available) */}
+                        {scannedItem.type === 'blank' && (
+                          <>
+                            {scannedItem.material && (
+                              <div><span className="font-medium">Material:</span> {scannedItem.material}</div>
+                            )}
+                            {scannedItem.color && (
+                              <div><span className="font-medium">Color:</span> {scannedItem.color}</div>
+                            )}
+                            {scannedItem.weight && (
+                              <div><span className="font-medium">Weight:</span> {scannedItem.weight}g</div>
+                            )}
+                            {scannedItem.productName && (
+                              <div><span className="font-medium">Product:</span> {scannedItem.productName}</div>
+                            )}
+                          </>
+                        )}
+
+                        {/* Generic notes field */}
+                        {scannedItem.notes && (
+                          <div><span className="font-medium">Notes:</span> {scannedItem.notes}</div>
                         )}
                       </div>
 
