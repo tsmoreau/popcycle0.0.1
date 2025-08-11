@@ -67,6 +67,7 @@ interface PlasticItem {
   destination?: string;
   productId?: string;
   userId?: string;
+  nextCollectionDate?: string; // For bins
   // ID hierarchy based on processing stage
   binIds?: string[]; // For batches that come from multiple bins
   batchId?: string;
@@ -106,11 +107,13 @@ export default function TrackItem() {
           makerDetails: data.makerDetails,
           transactionDate: data.transactionDate || '',
           deliveredDate: data.deliveryDate || '',
-          // Store actual event names (festivals, parties, etc.) from event field
-          event: data.event,
+          // For bins, use status field; for others use event field
+          event: data.type === 'bin' ? data.status : data.event,
           // Map productId and userId for timeline display
           productId: data.productId,
           userId: data.userId,
+          // Map next collection date for bins
+          nextCollectionDate: data.type === 'bin' ? data.nextCollectionDate : undefined,
           // Proper ID hierarchy mapping
           binIds: data.type === 'batch' ? data.binIds : undefined,
           batchId: data.type === 'blank' ? data.batchId : undefined,
@@ -488,20 +491,28 @@ export default function TrackItem() {
                 )}
                 {item.collectionDate && (
                   <div className="flex justify-between items-center">
-                    <span className="systematic-caps text-sm">Collected</span>
+                    <span className="systematic-caps text-sm">Last Collected</span>
                     <span className="flex items-center">
                       <Calendar className="w-4 h-4 mr-1" />
-                      {item.collectionDate}
+                      {new Date(item.collectionDate).toLocaleDateString()}
                     </span>
                   </div>
                 )}
-                {!item.collectionDate && (
+                {item.nextCollectionDate && (
+                  <div className="flex justify-between items-center">
+                    <span className="systematic-caps text-sm">Next Collection</span>
+                    <span className="flex items-center">
+                      <Calendar className="w-4 h-4 mr-1" />
+                      {new Date(item.nextCollectionDate).toLocaleDateString()}
+                    </span>
+                  </div>
+                )}
+                {item.id.startsWith('B') && item.event && (
                   <div className="flex justify-between items-center">
                     <span className="systematic-caps text-sm">Status</span>
-                    <span className="flex items-center text-pop-gray">
-                      <Package className="w-4 h-4 mr-1" strokeWidth={1.5} />
-                      {item.event ? getBinStatusLabel(item.event) : "Awaiting Collection"}
-                    </span>
+                    <Badge className="bg-pop-green text-pop-black">
+                      {getBinStatusLabel(item.event)}
+                    </Badge>
                   </div>
                 )}
                 {item.processedDate && (
