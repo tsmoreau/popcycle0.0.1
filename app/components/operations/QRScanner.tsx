@@ -85,14 +85,20 @@ export const QRScanner = ({ open, onOpenChange }: QRScannerProps) => {
 
   // Queue management functions
   const startQueue = (type: string) => {
+    console.log("=== START QUEUE ===");
+    console.log("Starting queue for type:", type);
+    console.log("Current scanned item:", scannedItem?.id, scannedItem?.type);
+    
     setQueueActive(true);
     setQueueType(type);
     setQueuedItems([]);
     
     // Add current item to queue if it exists and matches type
     if (scannedItem && scannedItem.type === type) {
+      console.log("Adding current item to new queue:", scannedItem.id);
       setQueuedItems([scannedItem]);
     }
+    console.log("==================");
   };
 
   const stopQueue = () => {
@@ -102,15 +108,34 @@ export const QRScanner = ({ open, onOpenChange }: QRScannerProps) => {
   };
 
   const addToQueue = (item: any) => {
+    console.log("=== ADD TO QUEUE DEBUG ===");
+    console.log("Queue active:", queueActive);
+    console.log("Queue type:", queueType);
+    console.log("Item type:", item.type);
+    console.log("Item ID:", item.id);
+    console.log("Current queue length:", queuedItems.length);
+    console.log("Current queued items:", queuedItems.map(q => q.id));
+    
     // Only add if queue is active and item type matches queue type
     if (queueActive && item.type === queueType) {
-      // Check if item is already in queue (by ID)
-      const isAlreadyQueued = queuedItems.some(queuedItem => queuedItem.id === item.id);
-      if (!isAlreadyQueued) {
-        setQueuedItems(prev => [...prev, item]);
-        console.log(`Added ${item.id} to ${queueType} queue`);
-      }
+      setQueuedItems(prev => {
+        // Check if item is already in queue (by ID)
+        const isAlreadyQueued = prev.some(queuedItem => queuedItem.id === item.id);
+        console.log("Already queued?", isAlreadyQueued);
+        
+        if (!isAlreadyQueued) {
+          const newQueue = [...prev, item];
+          console.log(`✅ Added ${item.id} to ${queueType} queue. New length:`, newQueue.length);
+          return newQueue;
+        } else {
+          console.log(`❌ ${item.id} already in queue, not adding`);
+          return prev;
+        }
+      });
+    } else {
+      console.log("❌ Not adding to queue - queue inactive or type mismatch");
     }
+    console.log("========================");
   };
 
   // Handle QR code scan result with proper debouncing
