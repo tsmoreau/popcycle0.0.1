@@ -77,14 +77,15 @@ export const QRScanner = ({ open, onOpenChange }: QRScannerProps) => {
   // Handle QR code scan result with proper debouncing
   const handleScanResult = (result: string) => {
     const now = Date.now();
+    const itemId = extractItemId(result);
     
-    // Debounce: ignore scans of the same code within 3 seconds OR if already loading
-    if ((result === lastScan && (now - lastScanTime) < 3000) || isLoadingItem) {
-      console.log("Scan ignored - duplicate or loading");
+    // Only debounce identical scans within 2 seconds - allow different codes immediately
+    if (result === lastScan && (now - lastScanTime) < 2000) {
+      console.log("Duplicate scan ignored:", result);
       return;
     }
     
-    const itemId = extractItemId(result);
+    // Allow new scans even if currently loading (user might want to scan different item)
     console.log("QR Code scanned:", result, "Extracted ID:", itemId);
     
     setLastScan(result);
@@ -186,7 +187,7 @@ export const QRScanner = ({ open, onOpenChange }: QRScannerProps) => {
           highlightScanRegion: true,
           highlightCodeOutline: true,
           preferredCamera: 'environment', // Try back camera first on mobile
-          maxScansPerSecond: 0.3, // Maximum one scan every 3+ seconds
+          maxScansPerSecond: 1, // Allow up to 1 scan per second
         }
       );
 
