@@ -23,6 +23,8 @@ export const QRScanner = ({ open, onOpenChange }: QRScannerProps) => {
   const [cameraError, setCameraError] = useState<string>("");
   const [isScanning, setIsScanning] = useState(false);
   const [lastScan, setLastScan] = useState<string>("");
+  const [scannedItem, setScannedItem] = useState<any>(null);
+  const [isLoadingItem, setIsLoadingItem] = useState(false);
   const router = useRouter();
 
   // Initialize camera and QR scanner when modal opens
@@ -278,7 +280,7 @@ export const QRScanner = ({ open, onOpenChange }: QRScannerProps) => {
 
           {/* Quick access buttons */}
           <div className="pt-4 border-t">
-            <p className="text-sm text-gray-600 mb-3">Quick Navigation</p>
+            <p className="text-sm text-gray-600 mb-3">Last Scanned Info</p>
             <div className="grid grid-cols-2 gap-2">
               <Button 
                 variant="outline" 
