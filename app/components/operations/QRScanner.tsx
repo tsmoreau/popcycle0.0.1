@@ -331,15 +331,7 @@ export const QRScanner = ({ open, onOpenChange }: QRScannerProps) => {
             <div className="pt-4 border-t space-y-3">
               <h3 className="text-sm font-medium text-gray-900">Last Scanned Item</h3>
               
-              {/* Last scan raw data */}
-              {lastScan && (
-                <div>
-                  <p className="text-xs text-gray-500 mb-1">Scanned QR Code:</p>
-                  <div className="bg-gray-50 p-2 rounded text-xs font-mono break-all">
-                    {lastScan}
-                  </div>
-                </div>
-              )}
+
 
               {/* Loading state */}
               {isLoadingItem && (
