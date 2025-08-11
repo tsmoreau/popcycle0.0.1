@@ -140,6 +140,29 @@ export default function OperationsPage() {
     handleBlankDelete,
   } = useOperationsData();
 
+  // Wash station data for the production interfaces section
+  const washStation: WashStationData = {
+    id: 'ST-WASH-001',
+    name: 'Wash Station',
+    type: StationType.ROUGH_WASH,
+    status: StationStatus.ACTIVE,
+    description: 'Initial cleaning and contaminant removal',
+    operator: 'John Smith',
+    lastMaintenance: '2024-01-15',
+    nextMaintenance: '2024-02-15',
+    waterTemperature: 65,
+    waterPressure: 2.5,
+    detergentLevel: 78,
+    cycleTime: 600,
+    currentBatch: 'BA-8473',
+    washCycles: 12,
+    efficiency: 87
+  };
+
+  const handleStationFullscreen = (station: StationBase) => {
+    setSelectedStation(station);
+    setIsStationFullscreen(true);
+  };
 
   
   // Shared sorting state for data tables
