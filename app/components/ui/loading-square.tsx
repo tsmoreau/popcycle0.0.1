@@ -112,7 +112,7 @@ export function LoadingSquare({
         <div 
           className={cn(
             sizeClasses[size],
-            "border-2 border-pop-black mx-auto mb-4",
+            "border-2 border-pop-black mx-auto mb-4 bg-pop-green",
             "animate-popcycle-loader"
           )}
         ></div>
