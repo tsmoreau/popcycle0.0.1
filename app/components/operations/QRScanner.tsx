@@ -33,6 +33,7 @@ export const QRScanner = ({ open, onOpenChange }: QRScannerProps) => {
   const [queueType, setQueueType] = useState<string>('');
   const [queuedItems, setQueuedItems] = useState<any[]>([]);
   const [lastQueuedItemId, setLastQueuedItemId] = useState<string>('');
+  const [scannedItemHistory, setScannedItemHistory] = useState<any[]>([]);
 
 
   // Extract item ID from any URL or direct code
@@ -64,6 +65,9 @@ export const QRScanner = ({ open, onOpenChange }: QRScannerProps) => {
       if (response.ok) {
         const data = await response.json();
         setScannedItem(data);
+        
+        // Add to history stack - move current to top, shift others down
+        setScannedItemHistory(prev => [data, ...prev.slice(0, 4)]); // Keep max 5 items
         
 
       } else {
@@ -406,8 +410,201 @@ export const QRScanner = ({ open, onOpenChange }: QRScannerProps) => {
                 </div>
               )}
 
-              {/* Item data or error */}
-              {scannedItem && !isLoadingItem && (
+              {/* Item history stack - show all scanned items */}
+              {scannedItemHistory.length > 0 && !isLoadingItem && (
+                <div className="space-y-2">
+                  {scannedItemHistory.map((item, index) => (
+                    <div key={`${item.id}-${index}`} className="space-y-3">
+                      {item.error ? (
+                        <div className="bg-red-50 border border-red-200 rounded-lg p-3">
+                          <p className="text-sm text-red-800">{item.error}</p>
+                        </div>
+                      ) : (
+                        <div className={`${index === 0 ? 'bg-pop-green/5 border-pop-green/20' : 'bg-gray-50 border-gray-200'} border rounded-lg p-3 space-y-2`}>
+                          {/* Item ID and Type with newest indicator */}
+                          <div className="flex items-center justify-between">
+                            <span className="text-lg font-mono font-bold text-pop-green">
+                              {item.id}
+                            </span>
+                            <div className="flex items-center gap-2">
+                              {index === 0 && <span className="text-xs bg-blue-500 text-white px-2 py-1 rounded">NEWEST</span>}
+                              <span className="text-xs bg-pop-green text-white px-2 py-1 rounded uppercase">
+                                {item.type}
+                              </span>
+                            </div>
+                          </div>
+
+                          {/* Full item details - only show for the newest item (index 0) */}
+                          {index === 0 && (
+                            <>
+                              {/* Item details - show different fields based on item type */}
+                              <div className="text-sm space-y-1">
+                                {/* Common fields */}
+                                {item.status && (
+                                  <div><span className="font-medium">Status:</span> {item.status.replace(/_/g, ' ')}</div>
+                                )}
+                                {item.organization && (
+                                  <div><span className="font-medium">Organization:</span> {item.organization.name}</div>
+                                )}
+
+                                {/* Batch-specific fields */}
+                                {item.type === 'batch' && (
+                                  <>
+                                    {item.materialType && (
+                                      <div><span className="font-medium">Material:</span> {item.materialType}</div>
+                                    )}
+                                    {item.weight && (
+                                      <div><span className="font-medium">Weight:</span> {item.weight}kg</div>
+                                    )}
+                                    {item.collectedBy && (
+                                      <div><span className="font-medium">Collected By:</span> {item.collectedBy}</div>
+                                    )}
+                                    {item.collectionDate && (
+                                      <div><span className="font-medium">Collection Date:</span> {new Date(item.collectionDate).toLocaleDateString()}</div>
+                                    )}
+                                    {item.binIds && item.binIds.length > 0 && (
+                                      <div><span className="font-medium">Source Bins:</span> {item.binIds.join(', ')}</div>
+                                    )}
+                                  </>
+                                )}
+
+                                {/* Bin-specific fields */}
+                                {item.type === 'bin' && (
+                                  <>
+                                    {item.name && (
+                                      <div><span className="font-medium">Name:</span> {item.name}</div>
+                                    )}
+                                    {item.location && (
+                                      <div><span className="font-medium">Location:</span> {item.location}</div>
+                                    )}
+                                    {item.capacity && (
+                                      <div><span className="font-medium">Capacity:</span> {item.capacity}L</div>
+                                    )}
+                                    {item.lastCollectionDate && (
+                                      <div><span className="font-medium">Last Collection:</span> {new Date(item.lastCollectionDate).toLocaleDateString()}</div>
+                                    )}
+                                    {item.nextCollectionDate && (
+                                      <div><span className="font-medium">Next Collection:</span> {new Date(item.nextCollectionDate).toLocaleDateString()}</div>
+                                    )}
+                                    {item.canBeAdopted !== undefined && (
+                                      <div><span className="font-medium">Can Be Adopted:</span> {item.canBeAdopted ? 'Yes' : 'No'}</div>
+                                    )}
+                                    {item.adoptedBy && (
+                                      <div><span className="font-medium">Adopted By:</span> {item.adoptedBy}</div>
+                                    )}
+                                  </>
+                                )}
+
+                                {/* Blank-specific fields - DEBUG VERSION */}
+                                {item.type === 'blank' && (
+                                  <>
+                                    <div className="text-xs text-red-500 mb-2">DEBUG: Type={item.type}, Has batchId={!!item.batchId}, Has productId={!!item.productId}</div>
+                                    
+                                    {console.log("BLANK RENDER DEBUG:", {
+                                      type: item.type,
+                                      batchId: item.batchId,
+                                      productId: item.productId,
+                                      binIds: item.binIds,
+                                      allKeys: Object.keys(item)
+                                    })}
+                                    
+                                    {/* Always show available fields with fallbacks */}
+                                    <div><span className="font-medium">Batch ID:</span> {item.batchId || 'Not available'}</div>
+                                    <div><span className="font-medium">Product ID:</span> {item.productId || 'Not available'}</div>
+                                    <div><span className="font-medium">Weight:</span> {item.weight || 'Not available'}kg</div>
+                                    <div><span className="font-medium">Source Bins:</span> {(item.binIds && item.binIds.length > 0) ? item.binIds.join(', ') : 'Not available'}</div>
+                                    <div><span className="font-medium">Assembly Date:</span> {item.assemblyDate ? new Date(item.assemblyDate).toLocaleDateString() : 'Not available'}</div>
+                                    <div><span className="font-medium">Delivery Date:</span> {item.deliveryDate ? new Date(item.deliveryDate).toLocaleDateString() : 'Not available'}</div>
+                                    <div><span className="font-medium">User ID:</span> {item.userId || 'Not available'}</div>
+                                    <div><span className="font-medium">Maker:</span> {item.makerDetails || 'Not available'}</div>
+                                    
+                                    {item.impactMetrics && (
+                                      <div className="text-xs text-gray-600 mt-2">
+                                        <div>Carbon Saved: {item.impactMetrics.carbonSaved}kg</div>
+                                        <div>Waste Reduced: {item.impactMetrics.wasteReduced}kg</div>
+                                      </div>
+                                    )}
+                                  </>
+                                )}
+
+                                {/* Generic notes field */}
+                                {item.notes && (
+                                  <div><span className="font-medium">Notes:</span> {item.notes}</div>
+                                )}
+                              </div>
+
+                              {/* Impact metrics */}
+                              {item.impactMetrics && (
+                                <div className="bg-white/50 rounded p-2 text-xs space-y-1">
+                                  <div className="font-medium text-pop-green">Environmental Impact:</div>
+                                  {item.impactMetrics.carbonSaved && (
+                                    <div>Carbon Saved: {item.impactMetrics.carbonSaved}kg CO₂</div>
+                                  )}
+                                  {item.impactMetrics.wasteReduced && (
+                                    <div>Waste Reduced: {item.impactMetrics.wasteReduced}kg</div>
+                                  )}
+                                </div>
+                              )}
+
+                              {/* Queue controls - only show for newest item */}
+                              <div className="space-y-2">
+                                {!queueActive ? (
+                                  /* Start queue button - only show if we have a valid item */
+                                  item.type && (
+                                    <Button
+                                      size="sm"
+                                      variant="outline"
+                                      className="w-full border-pop-green text-pop-green hover:bg-pop-green hover:text-white"
+                                      onClick={() => startQueue(item.type)}
+                                    >
+                                      Start {item.type.charAt(0).toUpperCase() + item.type.slice(1)} Queue
+                                    </Button>
+                                  )
+                                ) : (
+                                  /* Queue is active - show status and stop button */
+                                  <div className="space-y-2">
+                                    <div className="flex items-center justify-between bg-pop-green/10 p-2 rounded">
+                                      <span className="text-sm font-medium text-pop-green">
+                                        {queueType.charAt(0).toUpperCase() + queueType.slice(1)} Queue Active
+                                      </span>
+                                      <span className="text-xs bg-pop-green text-white px-2 py-1 rounded">
+                                        {queuedItems.length} items
+                                      </span>
+                                    </div>
+                                    <Button
+                                      size="sm"
+                                      variant="outline"
+                                      className="w-full border-red-400 text-red-600 hover:bg-red-50"
+                                      onClick={stopQueue}
+                                    >
+                                      Stop Queue
+                                    </Button>
+                                  </div>
+                                )}
+
+                                {/* Action button to view full details */}
+                                <Button
+                                  size="sm"
+                                  className="w-full bg-pop-green hover:bg-pop-green/90"
+                                  onClick={() => {
+                                    onOpenChange(false);
+                                    router.push(`/track/${item.id}`);
+                                  }}
+                                >
+                                  View Full Details
+                                </Button>
+                              </div>
+                            </>
+                          )}
+                        </div>
+                      )}
+                    </div>
+                  ))}
+                </div>
+              )}
+
+              {/* Legacy fallback - only show if no history exists */}
+              {scannedItem && !isLoadingItem && scannedItemHistory.length === 0 && (
                 <div className="space-y-3">
                   {scannedItem.error ? (
                     <div className="bg-red-50 border border-red-200 rounded-lg p-3">
