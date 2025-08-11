@@ -1249,12 +1249,11 @@ export default function OperationsPage() {
         </AccordionItem>
       </Accordion>
 
-      {/* Fullscreen Logistics Management Dialog */}
+      {/* Fullscreen Dialog */}
       <Dialog open={isLogisticsFullscreen} onOpenChange={setIsLogisticsFullscreen}>
         <DialogContent className="max-w-none w-screen h-screen m-0 p-0 bg-gray-50">
           <div className="flex flex-col h-full">
-            <div className="flex items-center justify-between p-6 bg-white border-b">
-              <h2 className="text-2xl font-bold text-pop-black">Logistics Management</h2>
+            <div className="flex items-center justify-end p-6 bg-white border-b">
               <Button
                 variant="outline"
                 size="sm"
@@ -1265,9 +1264,9 @@ export default function OperationsPage() {
               </Button>
             </div>
             
-            <div className="flex-1 flex flex-col overflow-hidden">
+            <div className="flex-1 flex flex-col h-full overflow-hidden">
               <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full h-full flex flex-col">
-                <div className="flex items-center justify-between mb-6 px-6 pt-6">
+                <div className="flex items-center justify-between px-6 py-4 flex-shrink-0">
                   <TabsList className="relative z-10 p-0 bg-transparent h-auto gap-0 flex-nowrap overflow-visible">
                     <TabsTrigger value="collections" className="folder-tab-white relative z-[4] text-sm px-6 py-3">
                       <Package className="w-4 h-4 mr-2 text-pop-green" />
@@ -1289,7 +1288,7 @@ export default function OperationsPage() {
                 </div>
 
                 {/* Collections Tab Fullscreen */}
-                <TabsContent value="collections" className="flex-1 px-6 pb-6">
+                <TabsContent value="collections" className="flex-1 px-6 pb-6 overflow-hidden">
                   <CollectionsTab
                     bins={bins}
                     loadingBins={loadingBins}
@@ -1309,7 +1308,7 @@ export default function OperationsPage() {
                 </TabsContent>
 
                 {/* Processing Tab Fullscreen */}
-                <TabsContent value="processing" className="flex-1 px-6 pb-6">
+                <TabsContent value="processing" className="flex-1 px-6 pb-6 overflow-hidden">
                   <ProcessingTab
                     batches={batches}
                     loadingBatches={loadingBatches}
@@ -1329,7 +1328,7 @@ export default function OperationsPage() {
                 </TabsContent>
 
                 {/* Fulfillment Tab Fullscreen */}
-                <TabsContent value="fulfillment" className="flex-1 px-6 pb-6">
+                <TabsContent value="fulfillment" className="flex-1 px-6 pb-6 overflow-hidden">
                   <FulfillmentTab
                     orders={orders}
                     loadingOrders={loadingOrders}
@@ -1349,7 +1348,7 @@ export default function OperationsPage() {
                 </TabsContent>
 
                 {/* Inventory Tab Fullscreen */}
-                <TabsContent value="inventory" className="flex-1 px-6 pb-6">
+                <TabsContent value="inventory" className="flex-1 px-6 pb-6 overflow-hidden">
                   <InventoryTab
                     blanks={blanks}
                     loadingBlanks={loadingBlanks}

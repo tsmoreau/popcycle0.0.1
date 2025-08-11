@@ -502,8 +502,8 @@ export function DataTable<T extends Record<string, any>>({
   const [showColumnSelector, setShowColumnSelector] = useState(false)
   
   return (
-    <Card className={className}>
-      <CardHeader>
+    <Card className={`${className} h-full flex flex-col`}>
+      <CardHeader className="flex-shrink-0">
         <div className="flex items-center justify-between">
           <div>
             <CardTitle className="flex items-center gap-2">
@@ -566,10 +566,10 @@ export function DataTable<T extends Record<string, any>>({
           </div>
         </div>
       </CardHeader>
-      <CardContent>
+      <CardContent className="h-full flex flex-col">
         {/* Desktop Table View */}
-        <div className="hidden md:block">
-          <div className="overflow-auto border rounded-md" style={{ maxHeight: 'calc(100vh - 300px)' }}>
+        <div className="hidden md:block h-full">
+          <div className="h-full overflow-auto border rounded-md">
             <Table>
               <TableHeader className="sticky top-0 bg-white z-10">
                 {/* Filter Row */}
@@ -641,9 +641,9 @@ export function DataTable<T extends Record<string, any>>({
         </div>
 
         {/* Mobile Card View */}
-        <div className="md:hidden">
+        <div className="md:hidden h-full flex flex-col">
           {/* Mobile Sort Controls */}
-          <div className="mb-4 flex items-center gap-2">
+          <div className="mb-4 flex items-center gap-2 flex-shrink-0">
             <ArrowUpDown className="h-4 w-4 text-pop-green" />
             <select 
               value={sortField ? `${sortField}-${sortDirection}` : ""} 
@@ -664,7 +664,7 @@ export function DataTable<T extends Record<string, any>>({
             </select>
           </div>
 
-          <div className="space-y-3 overflow-auto" style={{ maxHeight: 'calc(100vh - 300px)' }}>
+          <div className="space-y-3 flex-1 overflow-auto">
             {sortedData.map((item, index) => {
               const hasModal = renderModal || editableFields
               const CardContent = (
