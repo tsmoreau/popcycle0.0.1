@@ -23,17 +23,11 @@ interface Product {
   _id: string;
   name: string;
   description: string;
-  category:
-    | "flora_fauna"
-    | "kinetic_sculptures"
-    | "vehicles_vessels"
-    | "pop_bots"
-    | "everyday_objects"
-    | "limited_editions";
-  difficulty: "easy" | "medium" | "hard";
+  category: 'educational_kit' | 'assembly_toy' | 'practical_item' | 'decoration';
+  difficulty: 'easy' | 'medium' | 'hard';
   estimatedAssemblyTime: number;
   materialRequirements: {
-    plasticType: "HDPE" | "PET" | "PP";
+    plasticType: 'HDPE' | 'PET' | 'PP';
     weight: number;
   };
   designFiles: {
@@ -51,20 +45,18 @@ interface Product {
 
 // Map database categories to display categories
 const categoryMap = {
-  educational_kit: "Educational Kits",
-  assembly_toy: "Educational Toys",
-  practical_item: "Practical Items",
-  decoration: "Decorations",
+  'educational_kit': 'Educational Kits',
+  'assembly_toy': 'Educational Toys', 
+  'practical_item': 'Practical Items',
+  'decoration': 'Decorations'
 };
 
 const categories = [
   "All",
-  "Flora & Fauna",
-  "Kinetic Sculptures ",
-  "Vehicles & Vessels",
-  "Pop Bots",
-  "Everyday Objects",
-  "Limited Editions",
+  "Educational Kits",
+  "Educational Toys", 
+  "Practical Items",
+  "Decorations",
 ];
 
 export default function Shop() {
@@ -77,16 +69,14 @@ export default function Shop() {
     const fetchProducts = async () => {
       try {
         setLoading(true);
-        const response = await fetch("/api/shop/products");
+        const response = await fetch('/api/shop/products');
         if (!response.ok) {
-          throw new Error("Failed to fetch products");
+          throw new Error('Failed to fetch products');
         }
         const data = await response.json();
         setProducts(data);
       } catch (err) {
-        setError(
-          err instanceof Error ? err.message : "Failed to load products",
-        );
+        setError(err instanceof Error ? err.message : 'Failed to load products');
       } finally {
         setLoading(false);
       }
@@ -95,12 +85,9 @@ export default function Shop() {
     fetchProducts();
   }, []);
 
-  const filteredProducts =
-    selectedCategory === "All"
-      ? products
-      : products.filter(
-          (product) => categoryMap[product.category] === selectedCategory,
-        );
+  const filteredProducts = selectedCategory === "All" 
+    ? products 
+    : products.filter(product => categoryMap[product.category] === selectedCategory);
 
   return (
     <div className="min-h-screen bg-white">
@@ -124,9 +111,9 @@ export default function Shop() {
               key={category}
               onClick={() => setSelectedCategory(category)}
               className={`px-6 py-3 border-2 border-pop-black transition-colors systematic-caps ${
-                selectedCategory === category
-                  ? "bg-pop-black text-white"
-                  : "bg-white hover:bg-pop-black hover:text-white"
+                selectedCategory === category 
+                  ? 'bg-pop-black text-white' 
+                  : 'bg-white hover:bg-pop-black hover:text-white'
               }`}
             >
               {category}
@@ -140,27 +127,19 @@ export default function Shop() {
         {loading ? (
           <div className="flex justify-center items-center py-16">
             <Loader2 className="w-8 h-8 animate-spin text-pop-blue" />
-            <span className="ml-3 text-pop-black systematic-caps">
-              Loading Products...
-            </span>
+            <span className="ml-3 text-pop-black systematic-caps">Loading Products...</span>
           </div>
         ) : error ? (
           <div className="text-center py-16">
-            <div className="text-pop-red systematic-caps mb-4">
-              Error Loading Products
-            </div>
+            <div className="text-pop-red systematic-caps mb-4">Error Loading Products</div>
             <p className="text-pop-gray">{error}</p>
           </div>
         ) : filteredProducts.length === 0 ? (
           <div className="text-center py-16">
             <Package className="w-16 h-16 text-pop-gray mx-auto mb-4" />
-            <div className="text-pop-gray systematic-caps">
-              No Products Found
-            </div>
+            <div className="text-pop-gray systematic-caps">No Products Found</div>
             {selectedCategory !== "All" && (
-              <p className="text-pop-gray mt-2">
-                Try selecting a different category
-              </p>
+              <p className="text-pop-gray mt-2">Try selecting a different category</p>
             )}
           </div>
         ) : (
@@ -174,10 +153,9 @@ export default function Shop() {
                 <Card className="border-4 border-pop-black h-full">
                   <CardHeader className="pb-4">
                     <div className="w-full h-48 bg-pop-white border-2 border-pop-black mb-4 flex items-center justify-center">
-                      {product.designFiles.photos &&
-                      product.designFiles.photos.length > 0 ? (
-                        <img
-                          src={product.designFiles.photos[0]}
+                      {product.designFiles.photos && product.designFiles.photos.length > 0 ? (
+                        <img 
+                          src={product.designFiles.photos[0]} 
                           alt={product.name}
                           className="w-full h-full object-cover"
                         />
@@ -219,8 +197,7 @@ export default function Shop() {
                         </span>
                         <span className="flex items-center">
                           <Weight className="w-3 h-3 mr-1" />
-                          {product.materialRequirements.weight}kg recycled
-                          plastic
+                          {product.materialRequirements.weight}kg recycled plastic
                         </span>
                       </div>
                       <div className="flex justify-between items-center">
