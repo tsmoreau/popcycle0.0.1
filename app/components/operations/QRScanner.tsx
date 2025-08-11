@@ -63,8 +63,13 @@ export const QRScanner = ({ open, onOpenChange }: QRScannerProps) => {
         const data = await response.json();
         setScannedItem(data);
         
-        // Auto-add to queue if active and type matches - use setTimeout to ensure state is updated
-        setTimeout(() => addToQueue(data), 0);
+        // Auto-add to queue if active and type matches
+        if (queueActive && queueType && data.type === queueType) {
+          setQueuedItems(prev => {
+            const isAlreadyQueued = prev.some(item => item.id === data.id);
+            return isAlreadyQueued ? prev : [...prev, data];
+          });
+        }
       } else {
         console.error("Item not found:", itemId);
         setScannedItem({ error: `Item ${itemId} not found` });
@@ -97,13 +102,12 @@ export const QRScanner = ({ open, onOpenChange }: QRScannerProps) => {
   };
 
   const addToQueue = (item: any) => {
-    // Use functional update to ensure we have latest state
+    // Use refs to get current values and avoid closure issues
+    if (!queueActive || !queueType || item.type !== queueType) {
+      return;
+    }
+    
     setQueuedItems(currentQueue => {
-      // Only add if queue is active and item type matches queue type
-      if (!queueActive || item.type !== queueType) {
-        return currentQueue;
-      }
-      
       // Check if item is already in queue (by ID)
       const isAlreadyQueued = currentQueue.some(queuedItem => queuedItem.id === item.id);
       
