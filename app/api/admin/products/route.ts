@@ -1,154 +1,156 @@
-import { NextRequest, NextResponse } from 'next/server'
-import { MongoClient, ObjectId } from 'mongodb'
+import { NextResponse } from 'next/server';
+import { MongoClient } from 'mongodb';
 
-export async function GET(request: NextRequest) {
-  try {
-    const client = new MongoClient(process.env.MONGODB_URI!)
-    await client.connect()
-    const db = client.db('PopCycle')
-    
-    const products = await db.collection('products').find({}).toArray()
-    
-    await client.close()
-    
-    return NextResponse.json(products)
-  } catch (error) {
-    console.error('Error fetching products:', error)
-    return NextResponse.json(
-      { error: 'Failed to fetch products' },
-      { status: 500 }
-    )
-  }
+const MONGODB_URI = process.env.MONGODB_URI!;
+
+if (!MONGODB_URI) {
+  throw new Error('Please define the MONGODB_URI environment variable');
 }
 
-export async function POST(request: NextRequest) {
+export async function POST() {
+  const client = new MongoClient(MONGODB_URI);
+  
   try {
-    const body = await request.json()
-    const client = new MongoClient(process.env.MONGODB_URI!)
-    await client.connect()
-    const db = client.db('PopCycle')
+    await client.connect();
+    const db = client.db('PopCycle');
     
-    const newProduct = {
-      _id: new ObjectId(),
-      name: body.name,
-      description: body.description,
-      category: body.category,
-      difficulty: body.difficulty,
-      estimatedAssemblyTime: parseInt(body.estimatedAssemblyTime),
-      materialRequirements: {
-        plasticType: body.plasticType,
-        weight: parseFloat(body.weight)
+    const sampleProducts = [
+      {
+        name: "Educational Rover Chassis",
+        description: "Complete rover chassis kit made from recycled HDPE plastic. Perfect for robotics education and STEM learning.",
+        category: "educational_kit",
+        difficulty: "medium",
+        estimatedAssemblyTime: 120,
+        materialRequirements: {
+          plasticType: "HDPE",
+          weight: 2.3
+        },
+        designFiles: {
+          photos: ["/api/placeholder/300/200"],
+          instructionsPdf: "/instructions/rover-chassis.pdf"
+        },
+        price: 45,
+        inStock: true,
+        rating: 4.8,
+        reviewCount: 24,
+        createdAt: new Date(),
+        updatedAt: new Date()
       },
-      designFiles: {
-        instructionsPdf: body.instructionsPdf || '',
-        templateSvg: body.templateSvg || '',
-        photos: body.photos || []
+      {
+        name: "Modular Assembly Set",
+        description: "Interlocking building pieces that teach engineering principles while demonstrating circular manufacturing.",
+        category: "assembly_toy",
+        difficulty: "easy",
+        estimatedAssemblyTime: 45,
+        materialRequirements: {
+          plasticType: "PET",
+          weight: 1.7
+        },
+        designFiles: {
+          photos: ["/api/placeholder/300/200"]
+        },
+        price: 32,
+        inStock: true,
+        rating: 4.6,
+        reviewCount: 18,
+        createdAt: new Date(),
+        updatedAt: new Date()
       },
-      price: parseFloat(body.price),
-      inStock: body.inStock || true,
-      rating: 0,
-      reviewCount: 0,
-      createdAt: new Date(),
-      updatedAt: new Date()
-    }
-    
-    const result = await db.collection('products').insertOne(newProduct)
-    
-    await client.close()
+      {
+        name: "Sustainability Learning Kit",
+        description: "Hands-on kit teaching circular economy principles through interactive plastic transformation activities.",
+        category: "educational_kit",
+        difficulty: "medium",
+        estimatedAssemblyTime: 90,
+        materialRequirements: {
+          plasticType: "PP",
+          weight: 3.1
+        },
+        designFiles: {
+          photos: ["/api/placeholder/300/200"],
+          instructionsPdf: "/instructions/sustainability-kit.pdf"
+        },
+        price: 38,
+        inStock: true,
+        rating: 4.9,
+        reviewCount: 31,
+        createdAt: new Date(),
+        updatedAt: new Date()
+      },
+      {
+        name: "Eco Dinnerware Set",
+        description: "Durable dinnerware set crafted from recycled plastic. Food-safe and perfect for outdoor education programs.",
+        category: "practical_item",
+        difficulty: "easy",
+        estimatedAssemblyTime: 30,
+        materialRequirements: {
+          plasticType: "HDPE",
+          weight: 1.9
+        },
+        designFiles: {
+          photos: ["/api/placeholder/300/200"]
+        },
+        price: 28,
+        inStock: true,
+        rating: 4.7,
+        reviewCount: 15,
+        createdAt: new Date(),
+        updatedAt: new Date()
+      },
+      {
+        name: "Mini Garden Tool Set",
+        description: "Child-friendly garden tools made from recycled plastic. Great for outdoor learning and environmental education.",
+        category: "practical_item",
+        difficulty: "easy",
+        estimatedAssemblyTime: 60,
+        materialRequirements: {
+          plasticType: "HDPE",
+          weight: 2.1
+        },
+        designFiles: {
+          photos: ["/api/placeholder/300/200"]
+        },
+        price: 35,
+        inStock: false,
+        rating: 4.5,
+        reviewCount: 9,
+        createdAt: new Date(),
+        updatedAt: new Date()
+      },
+      {
+        name: "Science Measurement Kit",
+        description: "Precision measurement tools for science education, all crafted from traceable recycled plastic materials.",
+        category: "educational_kit",
+        difficulty: "hard",
+        estimatedAssemblyTime: 150,
+        materialRequirements: {
+          plasticType: "PET",
+          weight: 2.5
+        },
+        designFiles: {
+          photos: ["/api/placeholder/300/200"],
+          instructionsPdf: "/instructions/measurement-kit.pdf"
+        },
+        price: 42,
+        inStock: true,
+        rating: 4.8,
+        reviewCount: 22,
+        createdAt: new Date(),
+        updatedAt: new Date()
+      }
+    ];
+
+    const result = await db.collection('products').insertMany(sampleProducts);
     
     return NextResponse.json({ 
-      success: true, 
-      productId: result.insertedId,
-      product: newProduct
-    })
+      message: 'Sample products created successfully',
+      insertedCount: result.insertedCount,
+      insertedIds: result.insertedIds
+    });
   } catch (error) {
-    console.error('Error creating product:', error)
-    return NextResponse.json(
-      { error: 'Failed to create product' },
-      { status: 500 }
-    )
-  }
-}
-
-export async function PUT(request: NextRequest) {
-  try {
-    const body = await request.json()
-    const client = new MongoClient(process.env.MONGODB_URI!)
-    await client.connect()
-    const db = client.db('PopCycle')
-    
-    const { _id, ...updateData } = body
-    updateData.updatedAt = new Date()
-    
-    if (updateData.estimatedAssemblyTime) {
-      updateData.estimatedAssemblyTime = parseInt(updateData.estimatedAssemblyTime)
-    }
-    if (updateData.price) {
-      updateData.price = parseFloat(updateData.price)
-    }
-    if (updateData.materialRequirements?.weight) {
-      updateData.materialRequirements.weight = parseFloat(updateData.materialRequirements.weight)
-    }
-    
-    const result = await db.collection('products').updateOne(
-      { _id: new ObjectId(_id) },
-      { $set: updateData }
-    )
-    
-    await client.close()
-    
-    if (result.matchedCount === 0) {
-      return NextResponse.json(
-        { error: 'Product not found' },
-        { status: 404 }
-      )
-    }
-    
-    return NextResponse.json({ success: true })
-  } catch (error) {
-    console.error('Error updating product:', error)
-    return NextResponse.json(
-      { error: 'Failed to update product' },
-      { status: 500 }
-    )
-  }
-}
-
-export async function DELETE(request: NextRequest) {
-  try {
-    const { searchParams } = new URL(request.url)
-    const productId = searchParams.get('id')
-    
-    if (!productId) {
-      return NextResponse.json(
-        { error: 'Product ID required' },
-        { status: 400 }
-      )
-    }
-    
-    const client = new MongoClient(process.env.MONGODB_URI!)
-    await client.connect()
-    const db = client.db('PopCycle')
-    
-    const result = await db.collection('products').deleteOne({
-      _id: new ObjectId(productId)
-    })
-    
-    await client.close()
-    
-    if (result.deletedCount === 0) {
-      return NextResponse.json(
-        { error: 'Product not found' },
-        { status: 404 }
-      )
-    }
-    
-    return NextResponse.json({ success: true })
-  } catch (error) {
-    console.error('Error deleting product:', error)
-    return NextResponse.json(
-      { error: 'Failed to delete product' },
-      { status: 500 }
-    )
+    console.error('Error creating sample products:', error);
+    return NextResponse.json({ error: 'Failed to create sample products' }, { status: 500 });
+  } finally {
+    await client.close();
   }
 }
