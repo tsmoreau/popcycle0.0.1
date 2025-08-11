@@ -140,7 +140,7 @@ export default function Shop() {
       <div className="max-w-7xl mx-auto px-6 pb-16">
         {loading ? (
           <div className="flex justify-center items-center py-16">
-            <LoadingSquare color="blue" text="Loading Products..." />
+            <LoadingSquare color="green" text="Loading..." />
           </div>
         ) : error ? (
           <div className="text-center py-16">
