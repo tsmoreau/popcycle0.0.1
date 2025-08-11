@@ -5,7 +5,7 @@ import { Badge } from "../../ui/badge";
 import { Button } from "../../ui/button";
 import { Input } from "../../ui/input";
 import { Label } from "../../ui/label";
-import { Scissors, Maximize, Settings, Gauge, Clock, AlertTriangle, Activity, Zap, Scale } from "lucide-react";
+import { Zap, Maximize, Settings, Gauge, Clock, AlertTriangle, Activity, Scale } from "lucide-react";
 
 interface ShredStationCardProps {
   station: {
@@ -27,7 +27,7 @@ export function ShredStationCard({ station, onFullscreen, isFullscreen = false }
             <Card className="col-span-1">
               <CardHeader>
                 <CardTitle className="flex items-center">
-                  <Scissors className="h-6 w-6 mr-3 text-pop-red" />
+                  <Zap className="h-6 w-6 mr-3 text-pop-red" />
                   Shred Station Control
                 </CardTitle>
                 <CardDescription>Size reduction processing</CardDescription>
@@ -166,7 +166,7 @@ export function ShredStationCard({ station, onFullscreen, isFullscreen = false }
       <CardHeader>
         <div className="flex items-center justify-between">
           <CardTitle className="flex items-center">
-            <Scissors className="h-5 w-5 mr-2 text-pop-red" />
+            <Zap className="h-5 w-5 mr-2 text-pop-red" />
             Shred Station
           </CardTitle>
           {onFullscreen && (
