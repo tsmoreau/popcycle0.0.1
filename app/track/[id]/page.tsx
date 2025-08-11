@@ -69,6 +69,7 @@ interface PlasticItem {
   userId?: string;
   nextCollectionDate?: string; // For bins
   binStatus?: string; // For bin status separate from event
+  adoptedBy?: string; // For bins that have been adopted by teams
   // ID hierarchy based on processing stage
   binIds?: string[]; // For batches that come from multiple bins
   batchId?: string;
@@ -117,6 +118,8 @@ export default function TrackItem() {
           nextCollectionDate: data.type === 'bin' ? data.nextCollectionDate : undefined,
           // Map bin status separately from event
           binStatus: data.type === 'bin' ? data.status : undefined,
+          // Map adoptedBy for bins
+          adoptedBy: data.type === 'bin' ? data.adoptedBy : undefined,
           // Proper ID hierarchy mapping
           binIds: data.type === 'batch' ? data.binIds : undefined,
           batchId: data.type === 'blank' ? data.batchId : undefined,
@@ -530,6 +533,12 @@ export default function TrackItem() {
                   <div className="flex justify-between">
                     <span className="systematic-caps text-sm">Event</span>
                     <span>{item.event}</span>
+                  </div>
+                )}
+                {item.adoptedBy && item.id.startsWith('B') && (
+                  <div className="flex justify-between">
+                    <span className="systematic-caps text-sm">Adopted By</span>
+                    <span>{item.adoptedBy}</span>
                   </div>
                 )}
                 {item.message && (

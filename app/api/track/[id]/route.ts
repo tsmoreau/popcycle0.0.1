@@ -82,7 +82,7 @@ export async function GET(
           description: org.description,
           branding: org.branding
         } : null,
-        message: org?.branding?.trackingPageMessage || 'This bin is part of our circular economy program.',
+        message: record.message || org?.branding?.trackingPageMessage || 'This bin is part of our circular economy program.',
         impactMetrics: {
           carbonSaved: 0, // Bins don't have direct impact yet
           wasteReduced: 0
