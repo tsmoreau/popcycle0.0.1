@@ -426,12 +426,9 @@ export const QRScanner = ({ open, onOpenChange }: QRScannerProps) => {
                             <span className="text-lg font-mono font-bold text-pop-green">
                               {item.id}
                             </span>
-                            <div className="flex items-center gap-2">
-                              {index === 0 && <span className="text-xs bg-blue-500 text-white px-2 py-1 rounded">NEWEST</span>}
-                              <span className="text-xs bg-pop-green text-white px-2 py-1 rounded uppercase">
-                                {item.type}
-                              </span>
-                            </div>
+                            <span className="text-xs bg-pop-green text-white px-2 py-1 rounded uppercase">
+                              {item.type}
+                            </span>
                           </div>
 
                           {/* Full item details - only show for the newest item (index 0) */}
