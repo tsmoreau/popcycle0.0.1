@@ -5,3 +5,4 @@ export { StationControls } from "./StationControls";
 export { StationMetrics } from "./StationMetrics";
 export { StationStatus } from "./StationStatus";
 export { RoughWashStation } from "./RoughWashStation";
+export { SortStation } from "./SortStation";

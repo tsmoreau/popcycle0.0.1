@@ -38,6 +38,18 @@ export interface WashStationData extends StationBase {
   efficiency: number;
 }
 
+export interface SortStationData extends StationBase {
+  type: StationType.SORT;
+  sortingRate?: number; // items per minute
+  qualityScore?: number; // percentage
+  rejectionRate?: number; // percentage
+  currentMaterial?: string;
+  currentBatch?: string;
+  sortCycles: number;
+  efficiency: number;
+  materialTypes?: string[];
+}
+
 export interface StationMetrics {
   throughput: number;
   efficiency: number;
