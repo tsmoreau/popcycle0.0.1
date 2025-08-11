@@ -29,6 +29,38 @@ export async function POST() {
           photos: ["/api/placeholder/300/200"],
           instructionsPdf: "/instructions/rover-chassis.pdf"
         },
+        assets: [
+          {
+            id: "rover-main-1",
+            type: "image",
+            url: "/images/products/rover-chassis-main.jpg",
+            thumbnail: "/images/products/thumbs/rover-chassis-main.jpg",
+            alt: "Educational Rover Chassis main product view",
+            description: "Main product image showing assembled rover chassis",
+            isPrimary: true,
+            order: 1
+          },
+          {
+            id: "rover-parts-1",
+            type: "image", 
+            url: "/images/products/rover-chassis-parts.jpg",
+            thumbnail: "/images/products/thumbs/rover-chassis-parts.jpg",
+            alt: "Rover chassis component parts",
+            description: "Individual components before assembly",
+            isPrimary: false,
+            order: 2
+          },
+          {
+            id: "rover-assembly-vid",
+            type: "video",
+            url: "/videos/products/rover-assembly-guide.mp4",
+            thumbnail: "/images/products/thumbs/rover-assembly-thumb.jpg",
+            alt: "Rover chassis assembly demonstration",
+            description: "Step-by-step assembly video guide",
+            isPrimary: false,
+            order: 3
+          }
+        ],
         price: 45,
         inStock: true,
         rating: 4.8,
@@ -49,6 +81,28 @@ export async function POST() {
         designFiles: {
           photos: ["/api/placeholder/300/200"]
         },
+        assets: [
+          {
+            id: "modular-main-1",
+            type: "image",
+            url: "/images/products/modular-set-main.jpg",
+            thumbnail: "/images/products/thumbs/modular-set-main.jpg",
+            alt: "Modular Assembly Set complete view",
+            description: "Complete modular building set with interlocking pieces",
+            isPrimary: true,
+            order: 1
+          },
+          {
+            id: "modular-pieces-1",
+            type: "image",
+            url: "/images/products/modular-set-pieces.jpg",
+            thumbnail: "/images/products/thumbs/modular-set-pieces.jpg",
+            alt: "Individual modular pieces",
+            description: "Various interlocking building pieces",
+            isPrimary: false,
+            order: 2
+          }
+        ],
         price: 32,
         inStock: true,
         rating: 4.6,
@@ -70,6 +124,38 @@ export async function POST() {
           photos: ["/api/placeholder/300/200"],
           instructionsPdf: "/instructions/sustainability-kit.pdf"
         },
+        assets: [
+          {
+            id: "sustain-main-1",
+            type: "image",
+            url: "/images/products/sustainability-kit-main.jpg",
+            thumbnail: "/images/products/thumbs/sustainability-kit-main.jpg",
+            alt: "Sustainability Learning Kit overview",
+            description: "Complete sustainability education kit with activities",
+            isPrimary: true,
+            order: 1
+          },
+          {
+            id: "sustain-activity-1",
+            type: "image",
+            url: "/images/products/sustainability-activity.jpg",
+            thumbnail: "/images/products/thumbs/sustainability-activity.jpg",
+            alt: "Sustainability kit activity demonstration",
+            description: "Students engaged in circular economy activity",
+            isPrimary: false,
+            order: 2
+          },
+          {
+            id: "sustain-guide-pdf",
+            type: "document",
+            url: "/documents/sustainability-guide.pdf",
+            thumbnail: "/images/products/thumbs/sustainability-guide.jpg",
+            alt: "Sustainability guide document",
+            description: "Comprehensive educator's guide PDF",
+            isPrimary: false,
+            order: 3
+          }
+        ],
         price: 38,
         inStock: true,
         rating: 4.9,
@@ -90,6 +176,28 @@ export async function POST() {
         designFiles: {
           photos: ["/api/placeholder/300/200"]
         },
+        assets: [
+          {
+            id: "dinnerware-main-1",
+            type: "image",
+            url: "/images/products/eco-dinnerware-main.jpg",
+            thumbnail: "/images/products/thumbs/eco-dinnerware-main.jpg",
+            alt: "Eco Dinnerware Set complete",
+            description: "Complete eco-friendly dinnerware set",
+            isPrimary: true,
+            order: 1
+          },
+          {
+            id: "dinnerware-use-1",
+            type: "image",
+            url: "/images/products/eco-dinnerware-use.jpg",
+            thumbnail: "/images/products/thumbs/eco-dinnerware-use.jpg",
+            alt: "Dinnerware set in use outdoors",
+            description: "Students using dinnerware set during outdoor program",
+            isPrimary: false,
+            order: 2
+          }
+        ],
         price: 28,
         inStock: true,
         rating: 4.7,
@@ -110,6 +218,28 @@ export async function POST() {
         designFiles: {
           photos: ["/api/placeholder/300/200"]
         },
+        assets: [
+          {
+            id: "garden-tools-main-1",
+            type: "image",
+            url: "/images/products/garden-tools-main.jpg",
+            thumbnail: "/images/products/thumbs/garden-tools-main.jpg",
+            alt: "Mini Garden Tool Set overview",
+            description: "Complete set of child-friendly garden tools",
+            isPrimary: true,
+            order: 1
+          },
+          {
+            id: "garden-tools-action-1",
+            type: "image",
+            url: "/images/products/garden-tools-action.jpg",
+            thumbnail: "/images/products/thumbs/garden-tools-action.jpg",
+            alt: "Children using garden tools",
+            description: "Kids learning gardening with eco-friendly tools",
+            isPrimary: false,
+            order: 2
+          }
+        ],
         price: 35,
         inStock: false,
         rating: 4.5,
@@ -131,6 +261,48 @@ export async function POST() {
           photos: ["/api/placeholder/300/200"],
           instructionsPdf: "/instructions/measurement-kit.pdf"
         },
+        assets: [
+          {
+            id: "science-kit-main-1",
+            type: "image",
+            url: "/images/products/science-measurement-main.jpg",
+            thumbnail: "/images/products/thumbs/science-measurement-main.jpg",
+            alt: "Science Measurement Kit complete set",
+            description: "Complete precision measurement toolkit for education",
+            isPrimary: true,
+            order: 1
+          },
+          {
+            id: "science-kit-tools-1",
+            type: "image",
+            url: "/images/products/science-measurement-tools.jpg",
+            thumbnail: "/images/products/thumbs/science-measurement-tools.jpg",
+            alt: "Individual measurement tools",
+            description: "Detailed view of precision measurement instruments",
+            isPrimary: false,
+            order: 2
+          },
+          {
+            id: "science-kit-demo-vid",
+            type: "video",
+            url: "/videos/products/measurement-kit-demo.mp4",
+            thumbnail: "/images/products/thumbs/measurement-demo-thumb.jpg",
+            alt: "Measurement kit demonstration",
+            description: "Educational demonstration of precision measurement techniques",
+            isPrimary: false,
+            order: 3
+          },
+          {
+            id: "science-kit-3d-model",
+            type: "model",
+            url: "/models/products/measurement-kit.obj",
+            thumbnail: "/images/products/thumbs/measurement-3d-thumb.jpg",
+            alt: "3D model of measurement kit",
+            description: "Interactive 3D model for educational visualization",
+            isPrimary: false,
+            order: 4
+          }
+        ],
         price: 42,
         inStock: true,
         rating: 4.8,

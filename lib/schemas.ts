@@ -138,6 +138,16 @@ export interface Product {
     templateSvg?: string;
     photos: string[];
   };
+  assets: {
+    id: string;
+    type: 'image' | 'video' | 'document' | 'model';
+    url: string;
+    thumbnail?: string;
+    alt?: string;
+    description?: string;
+    isPrimary?: boolean;    // Mark main product image
+    order?: number;         // For display ordering
+  }[];
   price: number;
   inStock: boolean;
   rating: number;
