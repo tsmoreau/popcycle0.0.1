@@ -115,10 +115,32 @@ export const QRScanner = ({ open, onOpenChange }: QRScannerProps) => {
       console.log("Scanner started successfully!");
       setIsScanning(true);
       
-      // Force video to be visible
+      // Debug video element
       if (videoRef.current) {
+        console.log("Video element after start:", {
+          videoWidth: videoRef.current.videoWidth,
+          videoHeight: videoRef.current.videoHeight,
+          srcObject: !!videoRef.current.srcObject,
+          currentSrc: videoRef.current.currentSrc,
+          readyState: videoRef.current.readyState,
+          style: videoRef.current.style.cssText
+        });
+        
+        // Force video to be visible
         videoRef.current.style.display = 'block';
         videoRef.current.style.visibility = 'visible';
+        videoRef.current.style.opacity = '1';
+        videoRef.current.style.zIndex = '1';
+        
+        // Try to play if not playing
+        if (videoRef.current.paused) {
+          try {
+            await videoRef.current.play();
+            console.log("Video play() called successfully");
+          } catch (playError) {
+            console.error("Video play error:", playError);
+          }
+        }
       }
     } catch (error) {
       console.error("Failed to initialize scanner:", error);
