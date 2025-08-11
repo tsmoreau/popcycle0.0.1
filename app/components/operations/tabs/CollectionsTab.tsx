@@ -33,30 +33,32 @@ export const CollectionsTab = ({
 
 
   return (
-    <div className="space-y-6">
+    <div className="h-full flex flex-col space-y-6">
       {/* Collections Queue */}
       {loadingBins ? (
         <div className="flex items-center justify-center p-8">
           <div className="text-sm text-gray-600">Loading bins...</div>
         </div>
       ) : (
-        <DataTable
-          title="Collections Queue"
-          description="Live status overview of all bins assigned for pickup and collected materials awaiting processing"
-          icon={<Package className="h-5 w-5 text-pop-green" />}
-          data={bins}
-          columns={allBinColumns.filter(col => defaultBinColumns.includes(String(col.key)))}
-          availableColumns={allBinColumns}
-          defaultVisibleColumns={defaultBinColumns}
-          enableColumnSelection={true}
-          enableFiltering={true}
-          editableFields={binEditableFields}
-          onSave={handleBinSave}
-          onDelete={handleBinDelete}
-          sortField={collectionsSortField}
-          sortDirection={collectionsSortDirection}
-          onSort={onSort}
-        />
+        <div className="flex-1 min-h-0">
+          <DataTable
+            title="Collections Queue"
+            description="Live status overview of all bins assigned for pickup and collected materials awaiting processing"
+            icon={<Package className="h-5 w-5 text-pop-green" />}
+            data={bins}
+            columns={allBinColumns.filter(col => defaultBinColumns.includes(String(col.key)))}
+            availableColumns={allBinColumns}
+            defaultVisibleColumns={defaultBinColumns}
+            enableColumnSelection={true}
+            enableFiltering={true}
+            editableFields={binEditableFields}
+            onSave={handleBinSave}
+            onDelete={handleBinDelete}
+            sortField={collectionsSortField}
+            sortDirection={collectionsSortDirection}
+            onSort={onSort}
+          />
+        </div>
       )}
 
       {/* Collections Workflow Diagram - only show in regular mode */}
