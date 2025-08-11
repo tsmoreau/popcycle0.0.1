@@ -31,10 +31,14 @@ export const QRScanner = ({ open, onOpenChange }: QRScannerProps) => {
           <div className="relative aspect-square bg-gray-100 rounded-lg border-2 border-dashed border-gray-300 flex items-center justify-center">
             <div className="text-center">
               <Camera className="h-12 w-12 text-gray-400 mx-auto mb-2" />
-              <p className="text-sm text-gray-500">Camera feed will appear here</p>
-              <p className="text-xs text-gray-400 mt-1">Position QR code within frame</p>
+              <p className="text-sm text-gray-500">
+                Camera feed will appear here
+              </p>
+              <p className="text-xs text-gray-400 mt-1">
+                Position QR code within frame
+              </p>
             </div>
-            
+
             {/* Scanning overlay */}
             <div className="absolute inset-4 border-2 border-pop-green rounded-lg">
               <div className="absolute top-0 left-0 w-4 h-4 border-t-2 border-l-2 border-pop-green"></div>
@@ -46,14 +50,14 @@ export const QRScanner = ({ open, onOpenChange }: QRScannerProps) => {
 
           {/* Scan controls */}
           <div className="flex gap-2">
-            <Button 
-              variant="outline" 
+            <Button
+              variant="outline"
               className="flex-1"
               onClick={() => onOpenChange(false)}
             >
               Cancel
             </Button>
-            <Button 
+            <Button
               className="flex-1 bg-pop-green hover:bg-pop-green/90"
               onClick={() => {
                 // Simulate successful scan - in real implementation this would process the QR code
@@ -68,7 +72,7 @@ export const QRScanner = ({ open, onOpenChange }: QRScannerProps) => {
 
           {/* Quick access buttons */}
           <div className="pt-4 border-t">
-            <p className="text-sm text-gray-600 mb-3">Quick Access:</p>
+            <p className="text-sm text-gray-600 mb-3">Last Scan Info</p>
             <div className="grid grid-cols-2 gap-2">
               <Button variant="outline" size="sm" className="text-xs">
                 <Package className="h-3 w-3 mr-1" />
