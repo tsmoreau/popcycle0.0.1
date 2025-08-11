@@ -22,89 +22,50 @@ export function LoadingSquare({
   return (
     <>
       <style jsx global>{`
-        @keyframes popcycle-loader {
+        @keyframes popcycle-spin {
           0% { 
-            background-color: hsl(142, 100%, 35%); 
-            transform: rotate(0deg) scale(1) skew(0deg);
-            opacity: 1;
-            filter: hue-rotate(0deg) brightness(1);
-          }
-          8% { 
-            background-color: hsl(142, 100%, 35%); 
-            transform: rotate(45deg) scale(1.15) skew(-5deg);
-            opacity: 0.8;
-            filter: hue-rotate(10deg) brightness(1.1);
-          }
-          16% { 
-            background-color: hsl(142, 100%, 35%); 
-            transform: rotate(90deg) scale(1.2) skew(0deg);
-            opacity: 0.6;
-            filter: hue-rotate(20deg) brightness(1.2);
+            transform: rotate(0deg) scale(1);
           }
           25% { 
-            background-color: hsl(214, 100%, 50%); 
-            transform: rotate(135deg) scale(1.15) skew(5deg);
-            opacity: 0.8;
-            filter: hue-rotate(0deg) brightness(1.1);
-          }
-          33% { 
-            background-color: hsl(214, 100%, 50%); 
-            transform: rotate(180deg) scale(1) skew(0deg);
-            opacity: 1;
-            filter: hue-rotate(0deg) brightness(1);
-          }
-          41% { 
-            background-color: hsl(214, 100%, 50%); 
-            transform: rotate(225deg) scale(1.15) skew(-5deg);
-            opacity: 0.8;
-            filter: hue-rotate(-10deg) brightness(1.1);
+            transform: rotate(90deg) scale(1.1);
           }
           50% { 
-            background-color: hsl(214, 100%, 50%); 
-            transform: rotate(270deg) scale(1.2) skew(0deg);
-            opacity: 0.6;
-            filter: hue-rotate(-20deg) brightness(1.2);
+            transform: rotate(180deg) scale(1);
           }
-          58% { 
-            background-color: hsl(347, 100%, 60%); 
-            transform: rotate(315deg) scale(1.15) skew(5deg);
-            opacity: 0.8;
-            filter: hue-rotate(0deg) brightness(1.1);
-          }
-          66% { 
-            background-color: hsl(347, 100%, 60%); 
-            transform: rotate(360deg) scale(1) skew(0deg);
-            opacity: 1;
-            filter: hue-rotate(0deg) brightness(1);
-          }
-          74% { 
-            background-color: hsl(347, 100%, 60%); 
-            transform: rotate(405deg) scale(1.15) skew(-5deg);
-            opacity: 0.8;
-            filter: hue-rotate(10deg) brightness(1.1);
-          }
-          83% { 
-            background-color: hsl(347, 100%, 60%); 
-            transform: rotate(450deg) scale(1.2) skew(0deg);
-            opacity: 0.6;
-            filter: hue-rotate(20deg) brightness(1.2);
-          }
-          91% { 
-            background-color: hsl(142, 100%, 35%); 
-            transform: rotate(495deg) scale(1.15) skew(5deg);
-            opacity: 0.8;
-            filter: hue-rotate(0deg) brightness(1.1);
+          75% { 
+            transform: rotate(270deg) scale(1.1);
           }
           100% { 
-            background-color: hsl(142, 100%, 35%); 
-            transform: rotate(540deg) scale(1) skew(0deg);
+            transform: rotate(360deg) scale(1);
+          }
+        }
+        
+        @keyframes popcycle-colors {
+          0%, 33% { 
+            background-color: hsl(142, 100%, 35%);
+          }
+          34%, 66% { 
+            background-color: hsl(214, 100%, 50%);
+          }
+          67%, 100% { 
+            background-color: hsl(347, 100%, 60%);
+          }
+        }
+        
+        @keyframes popcycle-pulse {
+          0%, 100% { 
             opacity: 1;
-            filter: hue-rotate(0deg) brightness(1);
+          }
+          50% { 
+            opacity: 0.7;
           }
         }
         
         .animate-popcycle-loader {
-          animation: popcycle-loader 4s cubic-bezier(0.25, 0.46, 0.45, 0.94) infinite;
+          animation: 
+            popcycle-spin 2s cubic-bezier(0.68, -0.55, 0.265, 1.55) infinite,
+            popcycle-colors 6s ease-in-out infinite,
+            popcycle-pulse 3s ease-in-out infinite;
           transform-origin: center center;
         }
       `}</style>
