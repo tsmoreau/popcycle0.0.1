@@ -33,7 +33,7 @@ export const QRScanner = ({ open, onOpenChange }: QRScannerProps) => {
   const [queueType, setQueueType] = useState<string>('');
   const [queuedItems, setQueuedItems] = useState<any[]>([]);
   const [lastQueuedItemId, setLastQueuedItemId] = useState<string>('');
-  const [scannedItemHistory, setScannedItemHistory] = useState<any[]>([]);
+
 
   // Extract item ID from any URL or direct code
   const extractItemId = (scannedText: string): string | null => {
@@ -65,8 +65,7 @@ export const QRScanner = ({ open, onOpenChange }: QRScannerProps) => {
         const data = await response.json();
         setScannedItem(data);
         
-        // Add to history stack - move current to top, shift others down
-        setScannedItemHistory(prev => [data, ...prev.slice(0, 4)]); // Keep max 5 items
+
       } else {
         console.error("Item not found:", itemId);
         setScannedItem({ error: `Item ${itemId} not found` });
@@ -407,87 +406,184 @@ export const QRScanner = ({ open, onOpenChange }: QRScannerProps) => {
                 </div>
               )}
 
-              {/* Item data stack - show history of scanned items */}
-              {scannedItemHistory.length > 0 && !isLoadingItem && (
-                <div className="space-y-2">
-                  {scannedItemHistory.map((item, index) => (
-                    <div key={`${item.id}-${index}`} className={`${index === 0 ? 'bg-pop-green/5 border-pop-green/20' : 'bg-gray-50 border-gray-200'} border rounded-lg p-3 space-y-2`}>
-                      {item.error ? (
-                        <div className="bg-red-50 border border-red-200 rounded-lg p-3">
-                          <p className="text-sm text-red-800">{item.error}</p>
+              {/* Item data or error */}
+              {scannedItem && !isLoadingItem && (
+                <div className="space-y-3">
+                  {scannedItem.error ? (
+                    <div className="bg-red-50 border border-red-200 rounded-lg p-3">
+                      <p className="text-sm text-red-800">{scannedItem.error}</p>
+                    </div>
+                  ) : (
+                    <div className="bg-pop-green/5 border border-pop-green/20 rounded-lg p-3 space-y-2">
+                      {/* Item ID and Type */}
+                      <div className="flex items-center justify-between">
+                        <span className="text-lg font-mono font-bold text-pop-green">
+                          {scannedItem.id}
+                        </span>
+                        <span className="text-xs bg-pop-green text-white px-2 py-1 rounded uppercase">
+                          {scannedItem.type}
+                        </span>
+                      </div>
+
+                      {/* Item details - show different fields based on item type */}
+                      <div className="text-sm space-y-1">
+                        {/* Common fields */}
+                        {scannedItem.status && (
+                          <div><span className="font-medium">Status:</span> {scannedItem.status.replace(/_/g, ' ')}</div>
+                        )}
+                        {scannedItem.organization && (
+                          <div><span className="font-medium">Organization:</span> {scannedItem.organization.name}</div>
+                        )}
+
+                        {/* Batch-specific fields */}
+                        {scannedItem.type === 'batch' && (
+                          <>
+                            {scannedItem.materialType && (
+                              <div><span className="font-medium">Material:</span> {scannedItem.materialType}</div>
+                            )}
+                            {scannedItem.weight && (
+                              <div><span className="font-medium">Weight:</span> {scannedItem.weight}kg</div>
+                            )}
+                            {scannedItem.collectedBy && (
+                              <div><span className="font-medium">Collected By:</span> {scannedItem.collectedBy}</div>
+                            )}
+                            {scannedItem.collectionDate && (
+                              <div><span className="font-medium">Collection Date:</span> {new Date(scannedItem.collectionDate).toLocaleDateString()}</div>
+                            )}
+                            {scannedItem.binIds && scannedItem.binIds.length > 0 && (
+                              <div><span className="font-medium">Source Bins:</span> {scannedItem.binIds.join(', ')}</div>
+                            )}
+                          </>
+                        )}
+
+                        {/* Bin-specific fields */}
+                        {scannedItem.type === 'bin' && (
+                          <>
+                            {scannedItem.name && (
+                              <div><span className="font-medium">Name:</span> {scannedItem.name}</div>
+                            )}
+                            {scannedItem.location && (
+                              <div><span className="font-medium">Location:</span> {scannedItem.location}</div>
+                            )}
+                            {scannedItem.capacity && (
+                              <div><span className="font-medium">Capacity:</span> {scannedItem.capacity}L</div>
+                            )}
+                            {scannedItem.lastCollectionDate && (
+                              <div><span className="font-medium">Last Collection:</span> {new Date(scannedItem.lastCollectionDate).toLocaleDateString()}</div>
+                            )}
+                            {scannedItem.nextCollectionDate && (
+                              <div><span className="font-medium">Next Collection:</span> {new Date(scannedItem.nextCollectionDate).toLocaleDateString()}</div>
+                            )}
+                            {scannedItem.canBeAdopted !== undefined && (
+                              <div><span className="font-medium">Can Be Adopted:</span> {scannedItem.canBeAdopted ? 'Yes' : 'No'}</div>
+                            )}
+                            {scannedItem.adoptedBy && (
+                              <div><span className="font-medium">Adopted By:</span> {scannedItem.adoptedBy}</div>
+                            )}
+                          </>
+                        )}
+
+                        {/* Blank-specific fields - DEBUG VERSION */}
+                        {scannedItem.type === 'blank' && (
+                          <>
+                            <div className="text-xs text-red-500 mb-2">DEBUG: Type={scannedItem.type}, Has batchId={!!scannedItem.batchId}, Has productId={!!scannedItem.productId}</div>
+                            
+                            {console.log("BLANK RENDER DEBUG:", {
+                              type: scannedItem.type,
+                              batchId: scannedItem.batchId,
+                              productId: scannedItem.productId,
+                              binIds: scannedItem.binIds,
+                              allKeys: Object.keys(scannedItem)
+                            })}
+                            
+                            {/* Always show available fields with fallbacks */}
+                            <div><span className="font-medium">Batch ID:</span> {scannedItem.batchId || 'Not available'}</div>
+                            <div><span className="font-medium">Product ID:</span> {scannedItem.productId || 'Not available'}</div>
+                            <div><span className="font-medium">Weight:</span> {scannedItem.weight || 'Not available'}kg</div>
+                            <div><span className="font-medium">Source Bins:</span> {(scannedItem.binIds && scannedItem.binIds.length > 0) ? scannedItem.binIds.join(', ') : 'Not available'}</div>
+                            <div><span className="font-medium">Assembly Date:</span> {scannedItem.assemblyDate ? new Date(scannedItem.assemblyDate).toLocaleDateString() : 'Not available'}</div>
+                            <div><span className="font-medium">Delivery Date:</span> {scannedItem.deliveryDate ? new Date(scannedItem.deliveryDate).toLocaleDateString() : 'Not available'}</div>
+                            <div><span className="font-medium">User ID:</span> {scannedItem.userId || 'Not available'}</div>
+                            <div><span className="font-medium">Maker:</span> {scannedItem.makerDetails || 'Not available'}</div>
+                            
+                            {scannedItem.impactMetrics && (
+                              <div className="text-xs text-gray-600 mt-2">
+                                <div>Carbon Saved: {scannedItem.impactMetrics.carbonSaved}kg</div>
+                                <div>Waste Reduced: {scannedItem.impactMetrics.wasteReduced}kg</div>
+                              </div>
+                            )}
+                          </>
+                        )}
+
+                        {/* Generic notes field */}
+                        {scannedItem.notes && (
+                          <div><span className="font-medium">Notes:</span> {scannedItem.notes}</div>
+                        )}
+                      </div>
+
+                      {/* Impact metrics */}
+                      {scannedItem.impactMetrics && (
+                        <div className="bg-white/50 rounded p-2 text-xs space-y-1">
+                          <div className="font-medium text-pop-green">Environmental Impact:</div>
+                          {scannedItem.impactMetrics.carbonSaved && (
+                            <div>Carbon Saved: {scannedItem.impactMetrics.carbonSaved}kg CO₂</div>
+                          )}
+                          {scannedItem.impactMetrics.wasteReduced && (
+                            <div>Waste Reduced: {scannedItem.impactMetrics.wasteReduced}kg</div>
+                          )}
                         </div>
-                      ) : (
-                        <>
-                          {/* Item header with age indicator */}
-                          <div className="flex items-center justify-between">
-                            <span className="text-lg font-mono font-bold text-pop-green">
-                              {item.id}
-                            </span>
-                            <div className="flex items-center gap-2">
-                              {index === 0 && <span className="text-xs bg-blue-500 text-white px-2 py-1 rounded">NEWEST</span>}
-                              <span className="text-xs bg-pop-green text-white px-2 py-1 rounded uppercase">
-                                {item.type}
+                      )}
+
+                      {/* Queue controls */}
+                      <div className="space-y-2">
+                        {!queueActive ? (
+                          /* Start queue button - only show if we have a valid item */
+                          scannedItem.type && (
+                            <Button
+                              size="sm"
+                              variant="outline"
+                              className="w-full border-pop-green text-pop-green hover:bg-pop-green hover:text-white"
+                              onClick={() => startQueue(scannedItem.type)}
+                            >
+                              Start {scannedItem.type.charAt(0).toUpperCase() + scannedItem.type.slice(1)} Queue
+                            </Button>
+                          )
+                        ) : (
+                          /* Queue is active - show status and stop button */
+                          <div className="space-y-2">
+                            <div className="flex items-center justify-between bg-pop-green/10 p-2 rounded">
+                              <span className="text-sm font-medium text-pop-green">
+                                {queueType.charAt(0).toUpperCase() + queueType.slice(1)} Queue Active
+                              </span>
+                              <span className="text-xs bg-pop-green text-white px-2 py-1 rounded">
+                                {queuedItems.length} items
                               </span>
                             </div>
+                            <Button
+                              size="sm"
+                              variant="outline"
+                              className="w-full border-red-400 text-red-600 hover:bg-red-50"
+                              onClick={stopQueue}
+                            >
+                              Stop Queue
+                            </Button>
                           </div>
+                        )}
 
-                          {/* Item details - only show for the most recent item */}
-                          {index === 0 && (
-                            <div className="text-sm space-y-1">
-                              {/* Common fields */}
-                              {item.status && (
-                                <div><span className="font-medium">Status:</span> {item.status.replace(/_/g, ' ')}</div>
-                              )}
-                              {item.organization && (
-                                <div><span className="font-medium">Organization:</span> {item.organization.name}</div>
-                              )}
-                            </div>
-                          )}
-
-                          {/* Queue controls - only show for newest item */}
-                          {index === 0 && (
-                            <div className="space-y-2">
-                              {!queueActive ? (
-                                /* Start queue button - only show if we have a valid item */
-                                item.type && (
-                                  <Button
-                                    size="sm"
-                                    variant="outline"
-                                    className="w-full border-pop-green text-pop-green hover:bg-pop-green hover:text-white"
-                                    onClick={() => startQueue(item.type)}
-                                  >
-                                    Start {item.type.charAt(0).toUpperCase() + item.type.slice(1)} Queue
-                                  </Button>
-                                )
-                              ) : (
-                                /* Queue is active - show stop button */
-                                <Button
-                                  size="sm"
-                                  variant="outline"
-                                  className="w-full border-red-400 text-red-600 hover:bg-red-50"
-                                  onClick={stopQueue}
-                                >
-                                  Stop Queue
-                                </Button>
-                              )}
-
-                              {/* Action button to view full details */}
-                              <Button
-                                size="sm"
-                                className="w-full bg-pop-green hover:bg-pop-green/90"
-                                onClick={() => {
-                                  onOpenChange(false);
-                                  router.push(`/track/${item.id}`);
-                                }}
-                              >
-                                View Full Details
-                              </Button>
-                            </div>
-                          )}
-                        </>
-                      )}
+                        {/* Action button to view full details */}
+                        <Button
+                          size="sm"
+                          className="w-full bg-pop-green hover:bg-pop-green/90"
+                          onClick={() => {
+                            onOpenChange(false);
+                            router.push(`/track/${scannedItem.id}`);
+                          }}
+                        >
+                          View Full Details
+                        </Button>
+                      </div>
                     </div>
-                  ))}
+                  )}
                 </div>
               )}
             </div>
