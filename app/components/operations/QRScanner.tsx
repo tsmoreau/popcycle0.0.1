@@ -27,8 +27,21 @@ export const QRScanner = ({ open, onOpenChange }: QRScannerProps) => {
 
   // Initialize camera and QR scanner when modal opens
   useEffect(() => {
-    if (open && videoRef.current) {
-      initializeScanner();
+    console.log("useEffect triggered - open:", open, "videoRef.current:", !!videoRef.current);
+    
+    if (open) {
+      // Add a small delay to ensure video element is rendered
+      const timer = setTimeout(() => {
+        console.log("Timer triggered - videoRef.current:", !!videoRef.current);
+        if (videoRef.current) {
+          initializeScanner();
+        } else {
+          console.error("Video ref is null after timeout");
+          setCameraError("Failed to initialize video element");
+        }
+      }, 100);
+      
+      return () => clearTimeout(timer);
     } else if (!open && qrScannerRef.current) {
       // Clean up scanner when modal closes
       qrScannerRef.current.stop();
@@ -36,14 +49,17 @@ export const QRScanner = ({ open, onOpenChange }: QRScannerProps) => {
       qrScannerRef.current = null;
       setIsScanning(false);
     }
+  }, [open]);
 
+  // Cleanup on unmount
+  useEffect(() => {
     return () => {
       if (qrScannerRef.current) {
         qrScannerRef.current.stop();
         qrScannerRef.current.destroy();
       }
     };
-  }, [open]);
+  }, []);
 
   const initializeScanner = async () => {
     if (!videoRef.current) return;
@@ -151,7 +167,7 @@ export const QRScanner = ({ open, onOpenChange }: QRScannerProps) => {
                 <div>
                   <Camera className="h-12 w-12 text-gray-400 mx-auto mb-2" />
                   <p className="text-sm text-gray-500">Initializing camera...</p>
-                  <p className="text-xs text-gray-400 mt-1">Please allow camera permissions</p>
+                  <p className="text-xs text-gray-400 mt-1">Check browser console for debug info</p>
                 </div>
               </div>
             ) : (
