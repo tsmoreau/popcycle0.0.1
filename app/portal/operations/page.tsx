@@ -73,7 +73,7 @@ import {
 } from "../../components/ui/dialog";
 import { DataTable, Column, EditableField } from "../../components/ui/data-table";
 import { Bin, Batch, Order, Blank } from "../../../lib/schemas";
-import { WashStationCard } from "../../components/operations/stations/WashStationCard";
+import { RoughWashStationCard } from "../../components/operations/stations/RoughWashStationCard";
 import { 
   StationCard, 
   StationFullscreen, 
@@ -757,15 +757,11 @@ export default function OperationsPage() {
             {/* Manufacturing Workflow Stations */}
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
               {/* Component-Based Station 1: Rough Wash */}
-              <WashStationCard
+              <RoughWashStationCard
                 station={{
                   currentBatch: "BA-8473",
                   status: "Processing", 
                   progress: 78
-                }}
-                onFullscreen={() => {
-                  setSelectedStation(washStation);
-                  setIsStationFullscreen(true);
                 }}
               />
               
