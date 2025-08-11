@@ -106,7 +106,18 @@ export async function POST() {
           secondaryColor: '#8B4513',
           trackingPageMessage: 'Your La Plaza visit helped transform plastic waste into educational resources celebrating our culture!'
         },
-        events: [],
+        events: [
+          {
+            eventId: 'cultural-workshop-2025',
+            name: 'Cultural Workshop Series 2025',
+            type: 'recurring' as const,
+            description: 'Monthly workshops highlighting sustainability in Mexican culture',
+            scheduledDate: new Date('2025-03-15'),
+            location: 'Main Gallery',
+            binIds: [],
+            status: 'planned' as const
+          }
+        ],
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -127,7 +138,18 @@ export async function POST() {
           secondaryColor: '#F5F5F5',
           trackingPageMessage: 'Your stay at Ace Hotel contributed to our zero-waste initiative!'
         },
-        events: [],
+        events: [
+          {
+            eventId: 'sustainability-week-2025',
+            name: 'Sustainability Week 2025',
+            type: 'ad_hoc' as const,
+            description: 'Week-long sustainability initiative for hotel guests',
+            scheduledDate: new Date('2025-04-01'),
+            location: 'Hotel Lobby & Restaurant',
+            binIds: [],
+            status: 'planned' as const
+          }
+        ],
         createdAt: new Date(),
         updatedAt: new Date()
       }
@@ -137,19 +159,6 @@ export async function POST() {
     
     // Generate Bins with QR codes
     const bins: any[] = [];
-    const eventNames = [
-      'Summer Music Festival 2025',
-      'Comic-Con International',
-      'Corporate Holiday Party',
-      'Art Walk Downtown',
-      'Food & Wine Festival',
-      'Tech Conference 2025',
-      'Community Earth Day',
-      'Museum Gala Night',
-      null, // Some bins have no special event
-      null,
-      null
-    ];
     
     orgs.forEach((org, orgIndex) => {
       const binCount = orgIndex === 0 ? 5 : 4; // PopCycle gets 5 bins, others get 4
@@ -162,13 +171,16 @@ export async function POST() {
         
         const binStatuses = ['bin_on_vehicle', 'bin_on_site', 'ready_for_processing'] as const;
         
-        // Assign random event to some bins (40% chance)
-        const hasEvent = Math.random() > 0.6;
-        const eventName = hasEvent ? eventNames[Math.floor(Math.random() * eventNames.length)] : null;
+        // Assign some bins to events defined in the org (30% chance)
+        let eventId: string | undefined = undefined;
+        if (org.events.length > 0 && Math.random() > 0.7) {
+          eventId = org.events[Math.floor(Math.random() * org.events.length)].eventId;
+        }
         
         bins.push({
           _id: qrCode,
           orgId: org._id,
+          eventId: eventId,
           name: `${org.name} Bin ${i + 1}`,
           type: orgIndex === 0 ? 'permanent' as const : (orgIndex === 1 ? 'permanent' as const : 'temporary' as const),
           location: i === 0 ? 'Main Entrance' : `Location ${String.fromCharCode(65 + i)}`,
@@ -177,7 +189,6 @@ export async function POST() {
           canBeAdopted: true,
           adoptedBy: i === 0 ? 'Education Team' : undefined,
           status: binStatuses[Math.floor(Math.random() * binStatuses.length)],
-          event: eventName, // Add event field for actual events like parties, festivals
           lastCollectionDate,
           nextCollectionDate,
           createdAt: new Date(),
