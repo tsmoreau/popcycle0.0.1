@@ -244,8 +244,8 @@ export const QRScanner = ({ open, onOpenChange }: QRScannerProps) => {
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-lg">
-        <DialogHeader>
+      <DialogContent className="max-w-lg max-h-[90vh] flex flex-col">
+        <DialogHeader className="flex-shrink-0">
           <DialogTitle className="flex items-center gap-2">
             <Scan className="h-5 w-5 text-pop-green" />
             QR Code Scanner
@@ -254,7 +254,7 @@ export const QRScanner = ({ open, onOpenChange }: QRScannerProps) => {
             Scan any QR code for bin status, batch processing, or item tracking
           </DialogDescription>
         </DialogHeader>
-        <div className="space-y-4">
+        <div className="space-y-4 overflow-y-auto flex-1">
           {/* Camera feed */}
           <div className="relative aspect-square bg-gray-100 rounded-lg border-2 border-dashed border-gray-300 overflow-hidden">
             {/* Always render video element so ref is available */}
@@ -305,7 +305,7 @@ export const QRScanner = ({ open, onOpenChange }: QRScannerProps) => {
           </div>
 
           {/* Close button */}
-          <div className="flex justify-end">
+          <div className="flex justify-end flex-shrink-0 sticky bottom-0 bg-white pt-4 border-t">
             <Button
               variant="outline"
               onClick={() => onOpenChange(false)}
