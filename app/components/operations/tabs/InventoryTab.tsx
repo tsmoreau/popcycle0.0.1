@@ -27,7 +27,7 @@ export const InventoryTab = ({
   isFullscreen = false,
 }: InventoryTabProps) => {
   return (
-    <div className={`space-y-6 ${isFullscreen ? 'h-full' : ''}`}>
+    <div className="space-y-6">
       {/* Blanks Inventory */}
       {loadingBlanks ? (
         <div className="flex items-center justify-center p-8">

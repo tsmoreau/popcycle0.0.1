@@ -30,16 +30,10 @@ export const CollectionsTab = ({
   onSort,
   isFullscreen = false,
 }: CollectionsTabProps) => {
-  console.log("CollectionsTab Debug:", {
-    binsCount: bins?.length || 0,
-    loadingBins,
-    allBinColumnsCount: allBinColumns?.length || 0,
-    defaultBinColumnsCount: defaultBinColumns?.length || 0,
-    bins: bins?.slice(0, 2) // Show first 2 bins for debugging
-  });
+
 
   return (
-    <div className={`space-y-6 ${isFullscreen ? 'h-full' : ''}`}>
+    <div className="space-y-6">
       {/* Collections Queue */}
       {loadingBins ? (
         <div className="flex items-center justify-center p-8">

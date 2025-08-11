@@ -33,7 +33,7 @@ export const FulfillmentTab = ({
   isFullscreen = false,
 }: FulfillmentTabProps) => {
   return (
-    <div className={`space-y-6 ${isFullscreen ? 'h-full' : ''}`}>
+    <div className="space-y-6">
       {/* Fulfillment Queue */}
       {loadingOrders ? (
         <div className="flex items-center justify-center p-8">
