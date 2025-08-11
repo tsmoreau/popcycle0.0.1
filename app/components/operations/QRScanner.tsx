@@ -67,7 +67,7 @@ export const QRScanner = ({ open, onOpenChange }: QRScannerProps) => {
         setScannedItem(data);
         
         // Add to history stack - move current to top, shift others down
-        setScannedItemHistory(prev => [data, ...prev.slice(0, 4)]); // Keep max 5 items
+        setScannedItemHistory(prev => [data, ...prev]);
         
 
       } else {
