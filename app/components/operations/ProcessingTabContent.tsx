@@ -1,27 +1,24 @@
-"use client";
+'use client';
 
-import { Settings, ArrowRight, ChevronDown, Droplets, Package, Zap } from "lucide-react";
-import { DataTable } from "../ui/data-table";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../ui/card";
-import { Badge } from "../ui/badge";
-import type { Batch } from "../../../lib/schemas";
-import type { Column, EditableField } from "../ui/data-table";
+import { DataTable, Column, EditableField } from '../ui/data-table';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../ui/card';
+import { Badge } from '../ui/badge';
+import { Settings, ArrowRight, ChevronDown, Droplets, Scissors, Wind, Archive, Scale, Zap, Package, Minus } from 'lucide-react';
 
-interface ProcessingTabProps {
-  batches: Batch[];
+interface ProcessingTabContentProps {
+  batches: any[];
   loadingBatches: boolean;
-  allBatchColumns: Column<Batch>[];
+  allBatchColumns: Column<any>[];
   defaultBatchColumns: string[];
-  batchEditableFields: EditableField<Batch>[];
-  handleBatchSave: (item: Batch) => Promise<void>;
-  handleBatchDelete: (item: Batch) => Promise<void>;
+  batchEditableFields: EditableField<any>[];
+  handleBatchSave: (batch: any) => Promise<void>;
+  handleBatchDelete: (batch: any) => Promise<void>;
   processingSortField: string;
-  processingSortDirection: "asc" | "desc";
-  onSort: (field: string, direction: "asc" | "desc") => void;
-  isFullscreen?: boolean;
+  processingSortDirection: 'asc' | 'desc';
+  onSort: (field: string, direction: 'asc' | 'desc') => void;
 }
 
-export function ProcessingTab({
+export const ProcessingTabContent = ({
   batches,
   loadingBatches,
   allBatchColumns,
@@ -31,11 +28,10 @@ export function ProcessingTab({
   handleBatchDelete,
   processingSortField,
   processingSortDirection,
-  onSort,
-  isFullscreen = false,
-}: ProcessingTabProps) {
+  onSort
+}: ProcessingTabContentProps) => {
   return (
-    <div className={isFullscreen ? "space-y-6 h-full" : "space-y-6"}>
+    <div className="space-y-6">
       {/* Processing Queue */}
       {loadingBatches ? (
         <div className="flex items-center justify-center p-8">
@@ -64,93 +60,109 @@ export function ProcessingTab({
       {/* Processing Workflow Diagram */}
       <Card>
         <CardHeader>
-          <CardTitle className="flex items-center">
-            <Settings className="h-5 w-5 mr-2 text-pop-green" />
-            Manufacturing Process Flow
+          <CardTitle className="flex items-center gap-2">
+            <ArrowRight className="h-5 w-5 text-pop-blue" />
+            Processing Workflow
           </CardTitle>
           <CardDescription>
-            Step-by-step plastic processing workflow from collection to finished blanks
+            Ten step complete processing pipeline from collection to finished materials.
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <div className="flex flex-col sm:flex-row justify-center items-center space-y-4 sm:space-y-0 sm:space-x-4 overflow-x-auto pb-4">
-            {/* Step 1: Collection */}
-            <div className="flex flex-col items-center">
-              <Badge className="bg-pop-green text-white px-4 py-2 text-sm whitespace-nowrap">
-                <Package className="h-4 w-4 mr-2" />
-                Collection
-              </Badge>
-            </div>
-            <ArrowRight className="h-5 w-5 text-gray-400 hidden sm:block" />
-            <ChevronDown className="h-5 w-5 text-gray-400 sm:hidden" />
-
-            {/* Step 2: Rough Wash */}
+          <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-4 py-4">
+            {/* Step 1: Rough Wash */}
             <div className="flex flex-col items-center">
               <Badge className="bg-pop-blue text-white px-4 py-2 text-sm whitespace-nowrap">
                 <Droplets className="h-4 w-4 mr-2" />
                 Rough Wash
               </Badge>
             </div>
+            
+            {/* Arrow 1 */}
             <ArrowRight className="h-5 w-5 text-gray-400 hidden sm:block" />
             <ChevronDown className="h-5 w-5 text-gray-400 sm:hidden" />
-
-            {/* Step 3: Sort */}
+            
+            {/* Step 2: Sort */}
             <div className="flex flex-col items-center">
               <Badge className="bg-pop-green text-white px-4 py-2 text-sm whitespace-nowrap">
-                <Settings className="h-4 w-4 mr-2" />
+                <Scissors className="h-4 w-4 mr-2" />
                 Sort
               </Badge>
             </div>
+            
+            {/* Arrow 2 */}
             <ArrowRight className="h-5 w-5 text-gray-400 hidden sm:block" />
             <ChevronDown className="h-5 w-5 text-gray-400 sm:hidden" />
-
-            {/* Step 4: First Dry */}
+            
+            {/* Step 3: First Dry */}
             <div className="flex flex-col items-center">
-              <Badge className="bg-yellow-500 text-white px-4 py-2 text-sm whitespace-nowrap">
-                <Zap className="h-4 w-4 mr-2" />
+              <Badge className="bg-orange-500 text-white px-4 py-2 text-sm whitespace-nowrap">
+                <Wind className="h-4 w-4 mr-2" />
                 First Dry
               </Badge>
             </div>
+            
+            {/* Arrow 3 */}
             <ArrowRight className="h-5 w-5 text-gray-400 hidden sm:block" />
             <ChevronDown className="h-5 w-5 text-gray-400 sm:hidden" />
-
-            {/* Step 5: Shred */}
+            
+            {/* Step 4: Shred */}
             <div className="flex flex-col items-center">
-              <Badge className="bg-pop-red text-white px-4 py-2 text-sm whitespace-nowrap">
-                <Settings className="h-4 w-4 mr-2" />
+              <Badge className="bg-red-600 text-white px-4 py-2 text-sm whitespace-nowrap">
+                <Minus className="h-4 w-4 mr-2" />
                 Shred
               </Badge>
             </div>
+            
+            {/* Arrow 4 */}
             <ArrowRight className="h-5 w-5 text-gray-400 hidden sm:block" />
             <ChevronDown className="h-5 w-5 text-gray-400 sm:hidden" />
-
-            {/* Step 6: Fine Wash */}
+            
+            {/* Step 5: Fine Wash */}
             <div className="flex flex-col items-center">
               <Badge className="bg-pop-blue text-white px-4 py-2 text-sm whitespace-nowrap">
                 <Droplets className="h-4 w-4 mr-2" />
                 Fine Wash
               </Badge>
             </div>
+            
+            {/* Arrow 5 */}
             <ArrowRight className="h-5 w-5 text-gray-400 hidden sm:block" />
             <ChevronDown className="h-5 w-5 text-gray-400 sm:hidden" />
-
-            {/* Step 7: Second Dry */}
+            
+            {/* Step 6: Second Dry */}
             <div className="flex flex-col items-center">
-              <Badge className="bg-yellow-500 text-white px-4 py-2 text-sm whitespace-nowrap">
-                <Zap className="h-4 w-4 mr-2" />
+              <Badge className="bg-orange-500 text-white px-4 py-2 text-sm whitespace-nowrap">
+                <Wind className="h-4 w-4 mr-2" />
                 Second Dry
               </Badge>
             </div>
+            
+            {/* Arrow 6 */}
             <ArrowRight className="h-5 w-5 text-gray-400 hidden sm:block" />
             <ChevronDown className="h-5 w-5 text-gray-400 sm:hidden" />
-
-            {/* Step 8: Press */}
+            
+            {/* Step 7: Press */}
             <div className="flex flex-col items-center">
-              <Badge className="bg-purple-600 text-white px-4 py-2 text-sm whitespace-nowrap">
-                <Package className="h-4 w-4 mr-2" />
+              <Badge className="bg-pop-black text-white px-4 py-2 text-sm whitespace-nowrap">
+                <Archive className="h-4 w-4 mr-2" />
                 Press
               </Badge>
             </div>
+            
+            {/* Arrow 7 */}
+            <ArrowRight className="h-5 w-5 text-gray-400 hidden sm:block" />
+            <ChevronDown className="h-5 w-5 text-gray-400 sm:hidden" />
+            
+            {/* Step 8: Weigh & Photo */}
+            <div className="flex flex-col items-center">
+              <Badge className="bg-pop-green text-white px-4 py-2 text-sm whitespace-nowrap">
+                <Scale className="h-4 w-4 mr-2" />
+                Weigh & Photo
+              </Badge>
+            </div>
+            
+            {/* Arrow 8 */}
             <ArrowRight className="h-5 w-5 text-gray-400 hidden sm:block" />
             <ChevronDown className="h-5 w-5 text-gray-400 sm:hidden" />
             
@@ -175,4 +187,4 @@ export function ProcessingTab({
       </Card>
     </div>
   );
-}
+};
