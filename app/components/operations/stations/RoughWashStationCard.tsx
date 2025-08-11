@@ -5,7 +5,7 @@ import { Badge } from "../../ui/badge";
 import { Button } from "../../ui/button";
 import { Input } from "../../ui/input";
 import { Label } from "../../ui/label";
-import { Droplets } from "lucide-react";
+import { Droplets, Maximize } from "lucide-react";
 
 interface RoughWashStationCardProps {
   station: {
@@ -13,16 +13,29 @@ interface RoughWashStationCardProps {
     status: string;
     progress: number;
   };
+  onFullscreen?: () => void;
 }
 
-export function RoughWashStationCard({ station }: RoughWashStationCardProps) {
+export function RoughWashStationCard({ station, onFullscreen }: RoughWashStationCardProps) {
   return (
     <Card>
       <CardHeader>
-        <CardTitle className="flex items-center">
-          <Droplets className="h-5 w-5 mr-2 text-pop-blue" />
-          Wash Station
-        </CardTitle>
+        <div className="flex items-center justify-between">
+          <CardTitle className="flex items-center">
+            <Droplets className="h-5 w-5 mr-2 text-pop-blue" />
+            Wash Station
+          </CardTitle>
+          {onFullscreen && (
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={onFullscreen}
+              className="h-8 w-8 p-0 hover:bg-gray-100"
+            >
+              <Maximize className="h-4 w-4" />
+            </Button>
+          )}
+        </div>
         <CardDescription>Initial cleaning and contaminant removal</CardDescription>
       </CardHeader>
       <CardContent className="space-y-4">

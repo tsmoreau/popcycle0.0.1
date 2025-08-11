@@ -123,6 +123,7 @@ export default function OperationsPage() {
   const [isLogisticsFullscreen, setIsLogisticsFullscreen] = useState(false);
   const [selectedStation, setSelectedStation] = useState<StationBase | null>(null);
   const [isStationFullscreen, setIsStationFullscreen] = useState(false);
+  const [showRoughWashFullscreen, setShowRoughWashFullscreen] = useState(false);
 
   // Use the extracted data hook
   const {
@@ -763,6 +764,7 @@ export default function OperationsPage() {
                   status: "Processing", 
                   progress: 78
                 }}
+                onFullscreen={() => setShowRoughWashFullscreen(true)}
               />
               
               {/* Hard-coded Station 1: Rough Wash (Original) */}
@@ -1533,6 +1535,36 @@ export default function OperationsPage() {
           <SortStation station={selectedStation as SortStationData} />
         )}
       </StationFullscreen>
+
+      {/* Rough Wash Card Fullscreen Dialog */}
+      <Dialog open={showRoughWashFullscreen} onOpenChange={setShowRoughWashFullscreen}>
+        <DialogContent className="max-w-none w-screen h-screen m-0 p-0 bg-gray-50">
+          <div className="flex flex-col h-full p-8">
+            <div className="flex items-center justify-between mb-6">
+              <h2 className="text-2xl font-bold text-pop-black">Wash Station - Fullscreen View</h2>
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => setShowRoughWashFullscreen(false)}
+                className="border-pop-red hover:bg-pop-red hover:text-white"
+              >
+                <X className="h-4 w-4" />
+              </Button>
+            </div>
+            <div className="flex-1 flex items-center justify-center">
+              <div className="w-full max-w-md">
+                <RoughWashStationCard
+                  station={{
+                    currentBatch: "BA-8473",
+                    status: "Processing", 
+                    progress: 78
+                  }}
+                />
+              </div>
+            </div>
+          </div>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }
