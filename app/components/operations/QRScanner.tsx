@@ -72,6 +72,13 @@ export const QRScanner = ({ open, onOpenChange }: QRScannerProps) => {
   // Handle QR code scan result
   const handleScanResult = (result: string) => {
     console.log("QR Code scanned:", result);
+    
+    // Prevent duplicate scans of the same code
+    if (result === lastScan) {
+      console.log("Duplicate scan ignored");
+      return;
+    }
+    
     setLastScan(result);
     
     const itemId = extractItemId(result);
@@ -342,36 +349,50 @@ export const QRScanner = ({ open, onOpenChange }: QRScannerProps) => {
                       {/* Item ID and Type */}
                       <div className="flex items-center justify-between">
                         <span className="text-lg font-mono font-bold text-pop-green">
-                          {scannedItem.item?._id || scannedItem._id}
+                          {scannedItem.id}
                         </span>
-                        <span className="text-xs bg-pop-green text-white px-2 py-1 rounded">
-                          {scannedItem.type || 'Item'}
+                        <span className="text-xs bg-pop-green text-white px-2 py-1 rounded uppercase">
+                          {scannedItem.type}
                         </span>
                       </div>
 
                       {/* Item details */}
-                      {scannedItem.item && (
-                        <div className="text-sm space-y-1">
-                          {scannedItem.item.material && (
-                            <div><span className="font-medium">Material:</span> {scannedItem.item.material}</div>
+                      <div className="text-sm space-y-1">
+                        {scannedItem.materialType && (
+                          <div><span className="font-medium">Material:</span> {scannedItem.materialType}</div>
+                        )}
+                        {scannedItem.weight && (
+                          <div><span className="font-medium">Weight:</span> {scannedItem.weight}kg</div>
+                        )}
+                        {scannedItem.status && (
+                          <div><span className="font-medium">Status:</span> {scannedItem.status.replace(/_/g, ' ')}</div>
+                        )}
+                        {scannedItem.collectedBy && (
+                          <div><span className="font-medium">Collected By:</span> {scannedItem.collectedBy}</div>
+                        )}
+                        {scannedItem.collectionDate && (
+                          <div><span className="font-medium">Collection Date:</span> {new Date(scannedItem.collectionDate).toLocaleDateString()}</div>
+                        )}
+                        {scannedItem.binIds && scannedItem.binIds.length > 0 && (
+                          <div><span className="font-medium">Source Bins:</span> {scannedItem.binIds.join(', ')}</div>
+                        )}
+                        {scannedItem.notes && (
+                          <div><span className="font-medium">Notes:</span> {scannedItem.notes}</div>
+                        )}
+                        {scannedItem.organization && (
+                          <div><span className="font-medium">Organization:</span> {scannedItem.organization.name}</div>
+                        )}
+                      </div>
+
+                      {/* Impact metrics */}
+                      {scannedItem.impactMetrics && (
+                        <div className="bg-white/50 rounded p-2 text-xs space-y-1">
+                          <div className="font-medium text-pop-green">Environmental Impact:</div>
+                          {scannedItem.impactMetrics.carbonSaved && (
+                            <div>Carbon Saved: {scannedItem.impactMetrics.carbonSaved}kg CO₂</div>
                           )}
-                          {scannedItem.item.weight && (
-                            <div><span className="font-medium">Weight:</span> {scannedItem.item.weight}g</div>
-                          )}
-                          {scannedItem.item.color && (
-                            <div><span className="font-medium">Color:</span> {scannedItem.item.color}</div>
-                          )}
-                          {scannedItem.item.status && (
-                            <div><span className="font-medium">Status:</span> {scannedItem.item.status}</div>
-                          )}
-                          {scannedItem.item.location && (
-                            <div><span className="font-medium">Location:</span> {scannedItem.item.location}</div>
-                          )}
-                          {scannedItem.item.partner && (
-                            <div><span className="font-medium">Partner:</span> {scannedItem.item.partner}</div>
-                          )}
-                          {scannedItem.item.productName && (
-                            <div><span className="font-medium">Product:</span> {scannedItem.item.productName}</div>
+                          {scannedItem.impactMetrics.wasteReduced && (
+                            <div>Waste Reduced: {scannedItem.impactMetrics.wasteReduced}kg</div>
                           )}
                         </div>
                       )}
@@ -382,7 +403,7 @@ export const QRScanner = ({ open, onOpenChange }: QRScannerProps) => {
                         className="w-full bg-pop-green hover:bg-pop-green/90"
                         onClick={() => {
                           onOpenChange(false);
-                          router.push(`/track/${scannedItem.item?._id || scannedItem._id}`);
+                          router.push(`/track/${scannedItem.id}`);
                         }}
                       >
                         View Full Details
