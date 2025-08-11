@@ -1254,26 +1254,7 @@ export default function OperationsPage() {
         <DialogContent className="max-w-none w-screen h-screen m-0 p-0 bg-gray-50">
           <div className="flex flex-col h-screen">
             <div className="flex items-center justify-between p-4 bg-white border-b shrink-0">
-              <div className="flex items-center gap-4">
-                <TabsList className="relative z-10 p-0 bg-transparent h-auto gap-0 flex-nowrap overflow-visible">
-                  <TabsTrigger value="collections" className="folder-tab-white relative z-[4] text-sm px-4 py-2" onClick={() => setActiveTab("collections")}>
-                    <Package className="w-4 h-4 mr-2 text-pop-green" />
-                    Collections
-                  </TabsTrigger>
-                  <TabsTrigger value="processing" className="folder-tab-white relative z-[3] -ml-4 text-sm px-4 py-2" onClick={() => setActiveTab("processing")}>
-                    <Settings className="w-4 h-4 mr-2 text-pop-green" />
-                    Processing
-                  </TabsTrigger>
-                  <TabsTrigger value="fulfillment" className="folder-tab-white relative z-[2] -ml-4 text-sm px-4 py-2" onClick={() => setActiveTab("fulfillment")}>
-                    <Truck className="w-4 h-4 mr-2 text-pop-green" />
-                    Fulfillment
-                  </TabsTrigger>
-                  <TabsTrigger value="inventory" className="folder-tab-white relative z-[1] -ml-4 text-sm px-4 py-2" onClick={() => setActiveTab("inventory")}>
-                    <BarChart3 className="w-4 h-4 mr-2 text-pop-green" />
-                    Inventory
-                  </TabsTrigger>
-                </TabsList>
-              </div>
+              <h2 className="text-xl font-bold text-pop-black">Operations Management</h2>
               <Button
                 variant="outline"
                 size="sm"
@@ -1284,81 +1265,104 @@ export default function OperationsPage() {
               </Button>
             </div>
             
-            <div className="flex-1 overflow-hidden p-4">
-              <Tabs value={activeTab} onValueChange={setActiveTab} className="h-full">
-                {/* Collections Tab Fullscreen */}
-                <TabsContent value="collections" className="h-full m-0">
-                  <CollectionsTab
-                    bins={bins}
-                    loadingBins={loadingBins}
-                    allBinColumns={allBinColumns}
-                    defaultBinColumns={defaultBinColumns}
-                    binEditableFields={binEditableFields}
-                    handleBinSave={handleBinSave}
-                    handleBinDelete={handleBinDelete}
-                    collectionsSortField={collectionsSortField}
-                    collectionsSortDirection={collectionsSortDirection}
-                    onSort={(field, direction) => {
-                      setCollectionsSortField(field);
-                      setCollectionsSortDirection(direction);
-                    }}
-                    isFullscreen={true}
-                  />
-                </TabsContent>
+            <div className="flex-1 overflow-hidden">
+              <Tabs value={activeTab} onValueChange={setActiveTab} className="h-full flex flex-col">
+                <div className="shrink-0 px-4 pt-4">
+                  <TabsList className="relative z-10 p-0 bg-transparent h-auto gap-0 flex-nowrap overflow-visible">
+                    <TabsTrigger value="collections" className="folder-tab-white relative z-[4] text-sm px-4 py-2">
+                      <Package className="w-4 h-4 mr-2 text-pop-green" />
+                      Collections
+                    </TabsTrigger>
+                    <TabsTrigger value="processing" className="folder-tab-white relative z-[3] -ml-4 text-sm px-4 py-2">
+                      <Settings className="w-4 h-4 mr-2 text-pop-green" />
+                      Processing
+                    </TabsTrigger>
+                    <TabsTrigger value="fulfillment" className="folder-tab-white relative z-[2] -ml-4 text-sm px-4 py-2">
+                      <Truck className="w-4 h-4 mr-2 text-pop-green" />
+                      Fulfillment
+                    </TabsTrigger>
+                    <TabsTrigger value="inventory" className="folder-tab-white relative z-[1] -ml-4 text-sm px-4 py-2">
+                      <BarChart3 className="w-4 h-4 mr-2 text-pop-green" />
+                      Inventory
+                    </TabsTrigger>
+                  </TabsList>
+                </div>
 
-                {/* Processing Tab Fullscreen */}
-                <TabsContent value="processing" className="h-full m-0">
-                  <ProcessingTab
-                    batches={batches}
-                    loadingBatches={loadingBatches}
-                    allBatchColumns={allBatchColumns}
-                    defaultBatchColumns={defaultBatchColumns}
-                    batchEditableFields={batchEditableFields}
-                    handleBatchSave={handleBatchSave}
-                    handleBatchDelete={handleBatchDelete}
-                    processingSortField={processingSortField}
-                    processingSortDirection={processingSortDirection}
-                    onSort={(field, direction) => {
-                      setProcessingSortField(field);
-                      setProcessingSortDirection(direction);
-                    }}
-                    isFullscreen={true}
-                  />
-                </TabsContent>
+                <div className="flex-1 overflow-hidden p-4">
+                  {/* Collections Tab Fullscreen */}
+                  <TabsContent value="collections" className="h-full m-0">
+                    <CollectionsTab
+                      bins={bins}
+                      loadingBins={loadingBins}
+                      allBinColumns={allBinColumns}
+                      defaultBinColumns={defaultBinColumns}
+                      binEditableFields={binEditableFields}
+                      handleBinSave={handleBinSave}
+                      handleBinDelete={handleBinDelete}
+                      collectionsSortField={collectionsSortField}
+                      collectionsSortDirection={collectionsSortDirection}
+                      onSort={(field, direction) => {
+                        setCollectionsSortField(field);
+                        setCollectionsSortDirection(direction);
+                      }}
+                      isFullscreen={true}
+                    />
+                  </TabsContent>
 
-                {/* Fulfillment Tab Fullscreen */}
-                <TabsContent value="fulfillment" className="h-full m-0">
-                  <FulfillmentTab
-                    orders={orders}
-                    loadingOrders={loadingOrders}
-                    allOrderColumns={allOrderColumns}
-                    defaultOrderColumns={defaultOrderColumns}
-                    orderEditableFields={orderEditableFields}
-                    handleOrderSave={handleOrderSave}
-                    handleOrderDelete={handleOrderDelete}
-                    fulfillmentSortField={fulfillmentSortField}
-                    fulfillmentSortDirection={fulfillmentSortDirection}
-                    onSort={(field, direction) => {
-                      setFulfillmentSortField(field);
-                      setFulfillmentSortDirection(direction);
-                    }}
-                    isFullscreen={true}
-                  />
-                </TabsContent>
+                  {/* Processing Tab Fullscreen */}
+                  <TabsContent value="processing" className="h-full m-0">
+                    <ProcessingTab
+                      batches={batches}
+                      loadingBatches={loadingBatches}
+                      allBatchColumns={allBatchColumns}
+                      defaultBatchColumns={defaultBatchColumns}
+                      batchEditableFields={batchEditableFields}
+                      handleBatchSave={handleBatchSave}
+                      handleBatchDelete={handleBatchDelete}
+                      processingSortField={processingSortField}
+                      processingSortDirection={processingSortDirection}
+                      onSort={(field, direction) => {
+                        setProcessingSortField(field);
+                        setProcessingSortDirection(direction);
+                      }}
+                      isFullscreen={true}
+                    />
+                  </TabsContent>
 
-                {/* Inventory Tab Fullscreen */}
-                <TabsContent value="inventory" className="h-full m-0">
-                  <InventoryTab
-                    blanks={blanks}
-                    loadingBlanks={loadingBlanks}
-                    allBlankColumns={allBlankColumns}
-                    defaultBlankColumns={defaultBlankColumns}
-                    blankEditableFields={blankEditableFields}
-                    handleBlankSave={handleBlankSave}
-                    handleBlankDelete={handleBlankDelete}
-                    isFullscreen={true}
-                  />
-                </TabsContent>
+                  {/* Fulfillment Tab Fullscreen */}
+                  <TabsContent value="fulfillment" className="h-full m-0">
+                    <FulfillmentTab
+                      orders={orders}
+                      loadingOrders={loadingOrders}
+                      allOrderColumns={allOrderColumns}
+                      defaultOrderColumns={defaultOrderColumns}
+                      orderEditableFields={orderEditableFields}
+                      handleOrderSave={handleOrderSave}
+                      handleOrderDelete={handleOrderDelete}
+                      fulfillmentSortField={fulfillmentSortField}
+                      fulfillmentSortDirection={fulfillmentSortDirection}
+                      onSort={(field, direction) => {
+                        setFulfillmentSortField(field);
+                        setFulfillmentSortDirection(direction);
+                      }}
+                      isFullscreen={true}
+                    />
+                  </TabsContent>
+
+                  {/* Inventory Tab Fullscreen */}
+                  <TabsContent value="inventory" className="h-full m-0">
+                    <InventoryTab
+                      blanks={blanks}
+                      loadingBlanks={loadingBlanks}
+                      allBlankColumns={allBlankColumns}
+                      defaultBlankColumns={defaultBlankColumns}
+                      blankEditableFields={blankEditableFields}
+                      handleBlankSave={handleBlankSave}
+                      handleBlankDelete={handleBlankDelete}
+                      isFullscreen={true}
+                    />
+                  </TabsContent>
+                </div>
               </Tabs>
             </div>
           </div>
