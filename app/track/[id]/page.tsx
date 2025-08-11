@@ -68,6 +68,7 @@ interface PlasticItem {
   productId?: string;
   userId?: string;
   nextCollectionDate?: string; // For bins
+  binStatus?: string; // For bin status separate from event
   // ID hierarchy based on processing stage
   binIds?: string[]; // For batches that come from multiple bins
   batchId?: string;
@@ -107,13 +108,15 @@ export default function TrackItem() {
           makerDetails: data.makerDetails,
           transactionDate: data.transactionDate || '',
           deliveredDate: data.deliveryDate || '',
-          // For bins, use status field; for others use event field
-          event: data.type === 'bin' ? data.status : data.event,
+          // For bins, use actual event name from events array; for others use event field; for status use separate mapping
+          event: data.type === 'bin' ? data.event : data.event,
           // Map productId and userId for timeline display
           productId: data.productId,
           userId: data.userId,
-          // Map next collection date for bins
+          // Map next collection date for bins  
           nextCollectionDate: data.type === 'bin' ? data.nextCollectionDate : undefined,
+          // Map bin status separately from event
+          binStatus: data.type === 'bin' ? data.status : undefined,
           // Proper ID hierarchy mapping
           binIds: data.type === 'batch' ? data.binIds : undefined,
           batchId: data.type === 'blank' ? data.batchId : undefined,
@@ -507,11 +510,11 @@ export default function TrackItem() {
                     </span>
                   </div>
                 )}
-                {item.id.startsWith('B') && item.event && (
+                {item.id.startsWith('B') && item.binStatus && (
                   <div className="flex justify-between items-center">
                     <span className="systematic-caps text-sm">Status</span>
                     <Badge className="bg-pop-green text-pop-black">
-                      {getBinStatusLabel(item.event)}
+                      {getBinStatusLabel(item.binStatus)}
                     </Badge>
                   </div>
                 )}
@@ -524,7 +527,7 @@ export default function TrackItem() {
                     </span>
                   </div>
                 )}
-                {item.event && item.event.trim() && !item.event.startsWith('bin_') && !item.id.startsWith('T') && !item.id.startsWith('B') && (
+                {item.event && item.event.trim() && (
                   <div className="flex justify-between">
                     <span className="systematic-caps text-sm">Event</span>
                     <span>{item.event}</span>

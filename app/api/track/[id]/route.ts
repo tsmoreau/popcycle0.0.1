@@ -55,6 +55,12 @@ export async function GET(
         return NextResponse.json({ error: 'Bin not found' }, { status: 404 });
       }
       
+      // Find event information if bin has an eventId
+      let eventInfo = null;
+      if (record.eventId && org && org.events) {
+        eventInfo = org.events.find((event: any) => event.eventId === record.eventId);
+      }
+      
       await client.close();
       return NextResponse.json({
         id: record._id,
@@ -68,6 +74,8 @@ export async function GET(
         adoptedBy: record.adoptedBy,
         lastCollectionDate: record.lastCollectionDate,
         nextCollectionDate: record.nextCollectionDate,
+        eventId: record.eventId,
+        event: eventInfo ? eventInfo.name : null,
         organization: org ? {
           name: org.name,
           type: org.type,
