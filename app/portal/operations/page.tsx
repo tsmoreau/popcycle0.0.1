@@ -74,6 +74,7 @@ import {
 import { DataTable, Column, EditableField } from "../../components/ui/data-table";
 import { Bin, Batch, Order, Blank } from "../../../lib/schemas";
 import { RoughWashStationCard } from "../../components/operations/stations/RoughWashStationCard";
+import { SortStationCard } from "../../components/operations/stations/SortStationCard";
 
 import { useOperationsData } from "../../../hooks/useOperationsData";
 import { QRScanner } from "../../components/operations/QRScanner";
@@ -112,6 +113,7 @@ export default function OperationsPage() {
   const [isLogisticsFullscreen, setIsLogisticsFullscreen] = useState(false);
 
   const [showRoughWashFullscreen, setShowRoughWashFullscreen] = useState(false);
+  const [showSortFullscreen, setShowSortFullscreen] = useState(false);
 
   // Use the extracted data hook
   const {
@@ -713,9 +715,18 @@ export default function OperationsPage() {
                 }}
                 onFullscreen={() => setShowRoughWashFullscreen(true)}
               />
-              
+
+              {/* Component-Based Station 2: Sort */}
+              <SortStationCard
+                station={{
+                  queue: ["BA-8472", "BA-8471"],
+                  status: "Idle",
+                  currentMaterial: "PET Bottles"
+                }}
+                onFullscreen={() => setShowSortFullscreen(true)}
+              />
          
-              {/* Station 2: Sort */}
+              {/* Station 2: Sort - Original Hard-coded */}
               <Card>
                 <CardHeader>
                   <CardTitle className="flex items-center">
@@ -1445,6 +1456,28 @@ export default function OperationsPage() {
               currentBatch: "BA-8473",
               status: "Processing", 
               progress: 78
+            }}
+            isFullscreen={true}
+          />
+        </DialogContent>
+      </Dialog>
+
+      {/* Sort Station Card Fullscreen Dialog */}
+      <Dialog open={showSortFullscreen} onOpenChange={setShowSortFullscreen}>
+        <DialogContent className="max-w-none w-screen h-screen m-0 p-0 overflow-hidden">
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={() => setShowSortFullscreen(false)}
+            className="absolute top-4 right-4 z-20 h-8 w-8 p-0 bg-white hover:bg-gray-100 shadow-md"
+          >
+            <X className="h-4 w-4" />
+          </Button>
+          <SortStationCard
+            station={{
+              queue: ["BA-8472", "BA-8471"],
+              status: "Idle",
+              currentMaterial: "PET Bottles"
             }}
             isFullscreen={true}
           />
