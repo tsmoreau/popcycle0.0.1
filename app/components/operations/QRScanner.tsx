@@ -593,7 +593,7 @@ export const QRScanner = ({ open, onOpenChange }: QRScannerProps) => {
                                 </div>
                               )}
                             </>
-                          }
+                          
                         </div>
                       )}
                     </div>
