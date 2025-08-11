@@ -126,11 +126,14 @@ export const QRScanner = ({ open, onOpenChange }: QRScannerProps) => {
           style: videoRef.current.style.cssText
         });
         
-        // Force video to be visible
-        videoRef.current.style.display = 'block';
-        videoRef.current.style.visibility = 'visible';
-        videoRef.current.style.opacity = '1';
-        videoRef.current.style.zIndex = '1';
+        // Force video to be visible - override QrScanner library styles
+        videoRef.current.style.setProperty('display', 'block', 'important');
+        videoRef.current.style.setProperty('visibility', 'visible', 'important');
+        videoRef.current.style.setProperty('opacity', '1', 'important');
+        videoRef.current.style.setProperty('position', 'static', 'important');
+        videoRef.current.style.setProperty('width', '100%', 'important');
+        videoRef.current.style.setProperty('height', '100%', 'important');
+        videoRef.current.style.setProperty('object-fit', 'cover', 'important');
         
         // Try to play if not playing
         if (videoRef.current.paused) {
