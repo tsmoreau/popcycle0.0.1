@@ -54,6 +54,7 @@ export interface Bin {
   status: 'bin_on_vehicle' | 'bin_on_site' | 'ready_for_processing';
   canBeAdopted: boolean; // Whether teams/departments can "adopt" and name this bin
   adoptedBy?: string; // Team/department that adopted this bin
+  message?: string; // Custom tracking page message (overrides org message when present)
   lastCollectionDate?: Date; // When this bin was last emptied
   nextCollectionDate?: Date; // Scheduled next collection
   createdAt: Date;
