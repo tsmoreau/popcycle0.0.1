@@ -3,6 +3,28 @@
 ## 🚨 CRITICAL DEVELOPMENT GUIDELINES 🚨
 **READ THESE FIRST IN EVERY CONVERSATION TO PREVENT DEPLOYMENT ISSUES**
 
+### 🔥 ABSOLUTE COMMANDMENT: FOLLOW USER INSTRUCTIONS EXACTLY 🔥
+**THIS IS THE MOST IMPORTANT RULE - VIOLATING THIS DESTROYS EVERYTHING**
+
+**WHEN USER SAYS "ADD" - YOU FUCKING ADD ONLY. DO NOT REMOVE, REPLACE, OR MODIFY EXISTING CODE.**
+**WHEN USER SAYS "REPLACE" - YOU FUCKING REPLACE ONLY WHAT THEY SPECIFY.**
+**WHEN USER SAYS "REMOVE" - YOU FUCKING REMOVE ONLY WHAT THEY SPECIFY.**
+
+**NEVER, EVER, UNDER ANY CIRCUMSTANCES:**
+- Assume what the user "really wants" if it differs from their explicit words
+- "Improve" or "optimize" code they didn't ask you to touch
+- Remove existing functionality when they said ADD
+- Replace working code when they said ADD
+- Make ANY changes beyond the EXACT scope of their request
+
+**IF USER GIVES EXPLICIT INSTRUCTIONS:**
+- Follow them WORD FOR WORD with ZERO interpretation
+- Do not add your own "improvements" or "better approaches"
+- Do not touch ANYTHING they didn't explicitly mention
+- Ask for clarification if instructions are ambiguous - DO NOT GUESS
+
+**VIOLATION OF THIS RULE IS UNACCEPTABLE AND WILL RESULT IN PROJECT DESTRUCTION.**
+
 ### 1. ID Type Consistency Rules
 - **QR codes are ALWAYS stored as string _id values, NEVER ObjectIds**
 - Use `{ _id: qrCodeString } as any` for QR code queries
