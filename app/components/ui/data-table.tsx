@@ -502,8 +502,8 @@ export function DataTable<T extends Record<string, any>>({
   const [showColumnSelector, setShowColumnSelector] = useState(false)
   
   return (
-    <Card className={`${className} h-full flex flex-col`}>
-      <CardHeader className="flex-shrink-0">
+    <Card className={className}>
+      <CardHeader>
         <div className="flex items-center justify-between">
           <div>
             <CardTitle className="flex items-center gap-2">
@@ -566,9 +566,9 @@ export function DataTable<T extends Record<string, any>>({
           </div>
         </div>
       </CardHeader>
-      <CardContent className="h-full flex flex-col">
+      <CardContent>
         {/* Desktop Table View */}
-        <div className="hidden md:block h-full">
+        <div className="hidden md:block">
           <div className="h-full overflow-auto border rounded-md">
             <Table>
               <TableHeader className="sticky top-0 bg-white z-10">
@@ -641,9 +641,9 @@ export function DataTable<T extends Record<string, any>>({
         </div>
 
         {/* Mobile Card View */}
-        <div className="md:hidden h-full flex flex-col">
+        <div className="md:hidden">
           {/* Mobile Sort Controls */}
-          <div className="mb-4 flex items-center gap-2 flex-shrink-0">
+          <div className="mb-4 flex items-center gap-2">
             <ArrowUpDown className="h-4 w-4 text-pop-green" />
             <select 
               value={sortField ? `${sortField}-${sortDirection}` : ""} 
@@ -664,7 +664,7 @@ export function DataTable<T extends Record<string, any>>({
             </select>
           </div>
 
-          <div className="space-y-3 flex-1 overflow-auto">
+          <div className="space-y-3 h-full overflow-auto">
             {sortedData.map((item, index) => {
               const hasModal = renderModal || editableFields
               const CardContent = (
