@@ -74,18 +74,7 @@ import {
 import { DataTable, Column, EditableField } from "../../components/ui/data-table";
 import { Bin, Batch, Order, Blank } from "../../../lib/schemas";
 import { RoughWashStationCard } from "../../components/operations/stations/RoughWashStationCard";
-import { 
-  StationCard, 
-  StationFullscreen, 
-  RoughWashStation,
-  SortStation,
-  StationBase,
-  StationType,
-  WashStationData,
-  SortStationData
-} from "../../components/operations/stations";
-import { StationStatus as StationStatusComponent } from "../../components/operations/stations/StationStatus";
-import { StationStatus as StationStatusEnum } from "../../components/operations/stations/stationTypes";
+
 import { useOperationsData } from "../../../hooks/useOperationsData";
 import { QRScanner } from "../../components/operations/QRScanner";
 import { OperationsOverview } from "../../components/operations/OperationsOverview";
@@ -121,8 +110,7 @@ export default function OperationsPage() {
   const [selectedBin, setSelectedBin] = useState(null);
   const [showScanModal, setShowScanModal] = useState(false);
   const [isLogisticsFullscreen, setIsLogisticsFullscreen] = useState(false);
-  const [selectedStation, setSelectedStation] = useState<StationBase | null>(null);
-  const [isStationFullscreen, setIsStationFullscreen] = useState(false);
+
   const [showRoughWashFullscreen, setShowRoughWashFullscreen] = useState(false);
 
   // Use the extracted data hook
@@ -145,48 +133,7 @@ export default function OperationsPage() {
     handleBlankDelete,
   } = useOperationsData();
 
-  // Station data for the production interfaces section
-  const washStation: WashStationData = {
-    id: 'ST-WASH-001',
-    name: 'Wash Station',
-    type: StationType.ROUGH_WASH,
-    status: StationStatusEnum.ACTIVE,
-    description: 'Initial cleaning and contaminant removal',
-    operator: 'John Smith',
-    lastMaintenance: '2024-01-15',
-    nextMaintenance: '2024-02-15',
-    waterTemperature: 65,
-    waterPressure: 2.5,
-    detergentLevel: 78,
-    cycleTime: 600,
-    currentBatch: 'BA-8473',
-    washCycles: 12,
-    efficiency: 87
-  };
 
-  const sortStation: SortStationData = {
-    id: 'ST-SORT-001',
-    name: 'Sort Station',
-    type: StationType.SORT,
-    status: StationStatusEnum.ACTIVE,
-    description: 'Material separation and quality control',
-    operator: 'Sarah Johnson',
-    lastMaintenance: '2024-01-08',
-    nextMaintenance: '2024-02-08',
-    sortingRate: 125,
-    qualityScore: 92,
-    rejectionRate: 8,
-    currentMaterial: 'PET Bottles',
-    currentBatch: 'SORT-2024-001',
-    sortCycles: 18,
-    efficiency: 92,
-    materialTypes: ['PET', 'HDPE', 'PP', 'PS']
-  };
-
-  const handleStationFullscreen = (station: StationBase) => {
-    setSelectedStation(station);
-    setIsStationFullscreen(true);
-  };
 
   
   // Shared sorting state for data tables
@@ -1480,19 +1427,7 @@ export default function OperationsPage() {
         </DialogContent>
       </Dialog>
 
-      {/* Station Fullscreen Dialog */}
-      <StationFullscreen
-        isOpen={isStationFullscreen}
-        onClose={() => setIsStationFullscreen(false)}
-        station={selectedStation}
-      >
-        {selectedStation?.type === StationType.ROUGH_WASH && (
-          <RoughWashStation station={selectedStation as WashStationData} />
-        )}
-        {selectedStation?.type === StationType.SORT && (
-          <SortStation station={selectedStation as SortStationData} />
-        )}
-      </StationFullscreen>
+
 
       {/* Rough Wash Card Fullscreen Dialog */}
       <Dialog open={showRoughWashFullscreen} onOpenChange={setShowRoughWashFullscreen}>
