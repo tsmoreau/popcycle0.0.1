@@ -94,75 +94,85 @@ export default function TrackItem() {
           throw new Error("Item not found");
         }
         const data = await response.json();
-        
+
         // Map API response to PlasticItem interface
         const mappedItem: PlasticItem = {
           id: data.id,
           originPoint: data.organization?.name || "Unknown Origin",
-          collectionDate: data.type === 'bin' ? data.lastCollectionDate : (data.collectionDate || '2024-01-15'),
+          collectionDate:
+            data.type === "bin"
+              ? data.lastCollectionDate
+              : data.collectionDate || "2024-01-15",
           materialType: data.materialType || "Mixed Plastic",
           weight: data.weight || 0.5,
-          processedDate: data.type === 'blank' ? '2024-02-01' : (data.processedDate || ''),
+          processedDate:
+            data.type === "blank" ? "2024-02-01" : data.processedDate || "",
           carbonOffset: data.impactMetrics?.carbonSaved || 0,
           // Only set productType for blanks that have been purchased (have productId)
-          productType: data.type === 'blank' && data.productId ? 'educational_kit' : '',
+          productType:
+            data.type === "blank" && data.productId ? "educational_kit" : "",
           message: data.message,
           makerDetails: data.makerDetails,
-          transactionDate: data.transactionDate || '',
-          deliveredDate: data.deliveryDate || '',
+          transactionDate: data.transactionDate || "",
+          deliveredDate: data.deliveryDate || "",
           // For bins, use actual event name from events array; for others use event field; for status use separate mapping
-          event: data.type === 'bin' ? data.event : data.event,
+          event: data.type === "bin" ? data.event : data.event,
           // Map productId and userId for timeline display
           productId: data.productId,
           userId: data.userId,
-          // Map next collection date for bins  
-          nextCollectionDate: data.type === 'bin' ? data.nextCollectionDate : undefined,
+          // Map next collection date for bins
+          nextCollectionDate:
+            data.type === "bin" ? data.nextCollectionDate : undefined,
           // Map bin status separately from event
-          binStatus: data.type === 'bin' ? data.status : undefined,
+          binStatus: data.type === "bin" ? data.status : undefined,
           // Map adoptedBy for bins
-          adoptedBy: data.type === 'bin' ? data.adoptedBy : undefined,
+          adoptedBy: data.type === "bin" ? data.adoptedBy : undefined,
           // Proper ID hierarchy mapping
-          binIds: data.type === 'batch' ? data.binIds : undefined,
-          batchId: data.type === 'blank' ? data.batchId : undefined,
-          blankId: data.type === 'blank' ? data.id : undefined
+          binIds: data.type === "batch" ? data.binIds : undefined,
+          batchId: data.type === "blank" ? data.batchId : undefined,
+          blankId: data.type === "blank" ? data.id : undefined,
         };
-        
+
         setItem(mappedItem);
-        
+
         // If this is a bin, fetch associated batches
-        if (data.type === 'bin') {
+        if (data.type === "bin") {
           try {
-            const batchResponse = await fetch(`/api/items/sample?type=batches&binId=${data.id}`);
+            const batchResponse = await fetch(
+              `/api/items/sample?type=batches&binId=${data.id}`,
+            );
             if (batchResponse.ok) {
               const batchData = await batchResponse.json();
               setBatches(batchData.items || []);
             }
           } catch (batchErr) {
-            console.log('Could not fetch batches for bin:', batchErr);
+            console.log("Could not fetch batches for bin:", batchErr);
           }
         }
-        
+
         // If this is a batch, fetch associated blanks and source bins
-        if (data.type === 'batch') {
+        if (data.type === "batch") {
           try {
             // Fetch blanks produced from this batch
-            const blankResponse = await fetch(`/api/items/sample?type=blanks&batchId=${data.id}`);
+            const blankResponse = await fetch(
+              `/api/items/sample?type=blanks&batchId=${data.id}`,
+            );
             if (blankResponse.ok) {
               const blankData = await blankResponse.json();
               setBlanks(blankData.items || []);
             }
-            
+
             // Fetch source bin information - use binIds array
             if (data.binIds && data.binIds.length > 0) {
               // For now, just fetch the first bin for sourceBin compatibility
               const binResponse = await fetch(`/api/track/${data.binIds[0]}`);
               if (binResponse.ok) {
                 const binData = await binResponse.json();
-                setSourceBin({...binData, allBinIds: data.binIds});
+                setSourceBin({ ...binData, allBinIds: data.binIds });
               }
             }
           } catch (relatedErr) {
-            console.log('Could not fetch related items for batch:', relatedErr);
+            console.log("Could not fetch related items for batch:", relatedErr);
           }
         }
       } catch (err) {
@@ -180,7 +190,7 @@ export default function TrackItem() {
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
-        <LoadingSquare color="green" text="Loading..." />
+        <LoadingSquare color="green" text="Loading Item..." />
       </div>
     );
   }
@@ -282,27 +292,82 @@ export default function TrackItem() {
   const getProcessingStatusBadge = (status: string) => {
     switch (status) {
       case "collected":
-        return <Badge className="bg-gray-500 text-white"><Package className="h-3 w-3 mr-1" />Collected</Badge>;
+        return (
+          <Badge className="bg-gray-500 text-white">
+            <Package className="h-3 w-3 mr-1" />
+            Collected
+          </Badge>
+        );
       case "rough_wash":
-        return <Badge className="bg-pop-blue text-white"><Droplets className="h-3 w-3 mr-1" />Rough Wash</Badge>;
+        return (
+          <Badge className="bg-pop-blue text-white">
+            <Droplets className="h-3 w-3 mr-1" />
+            Rough Wash
+          </Badge>
+        );
       case "sort":
-        return <Badge className="bg-pop-green text-white"><Scissors className="h-3 w-3 mr-1" />Sort</Badge>;
+        return (
+          <Badge className="bg-pop-green text-white">
+            <Scissors className="h-3 w-3 mr-1" />
+            Sort
+          </Badge>
+        );
       case "first_dry":
-        return <Badge className="bg-yellow-500 text-white"><Wind className="h-3 w-3 mr-1" />First Dry</Badge>;
+        return (
+          <Badge className="bg-yellow-500 text-white">
+            <Wind className="h-3 w-3 mr-1" />
+            First Dry
+          </Badge>
+        );
       case "shred":
-        return <Badge className="bg-orange-500 text-white"><ShredIcon className="h-3 w-3 mr-1" />Shred</Badge>;
+        return (
+          <Badge className="bg-orange-500 text-white">
+            <ShredIcon className="h-3 w-3 mr-1" />
+            Shred
+          </Badge>
+        );
       case "fine_wash":
-        return <Badge className="bg-blue-600 text-white"><Droplets className="h-3 w-3 mr-1" />Fine Wash</Badge>;
+        return (
+          <Badge className="bg-blue-600 text-white">
+            <Droplets className="h-3 w-3 mr-1" />
+            Fine Wash
+          </Badge>
+        );
       case "second_dry":
-        return <Badge className="bg-yellow-600 text-white"><Wind className="h-3 w-3 mr-1" />Second Dry</Badge>;
+        return (
+          <Badge className="bg-yellow-600 text-white">
+            <Wind className="h-3 w-3 mr-1" />
+            Second Dry
+          </Badge>
+        );
       case "press":
-        return <Badge className="bg-purple-500 text-white"><Archive className="h-3 w-3 mr-1" />Press</Badge>;
+        return (
+          <Badge className="bg-purple-500 text-white">
+            <Archive className="h-3 w-3 mr-1" />
+            Press
+          </Badge>
+        );
       case "weigh_photo":
-        return <Badge className="bg-indigo-500 text-white"><Scale className="h-3 w-3 mr-1" />Weigh & Photo</Badge>;
+        return (
+          <Badge className="bg-indigo-500 text-white">
+            <Scale className="h-3 w-3 mr-1" />
+            Weigh & Photo
+          </Badge>
+        );
       case "laser_marking":
-        return <Badge className="bg-pop-red text-white"><Zap className="h-3 w-3 mr-1" />Laser Marking</Badge>;
+        return (
+          <Badge className="bg-pop-red text-white">
+            <Zap className="h-3 w-3 mr-1" />
+            Laser Marking
+          </Badge>
+        );
       case "inventory_creation":
-        return <Badge className="bg-pop-black text-white"><Settings className="h-3 w-3 mr-1" />Inventory Creation</Badge>;
+        return (
+          <Badge className="bg-pop-black text-white">
+            <Settings className="h-3 w-3 mr-1" />
+            Inventory Creation
+          </Badge>
+        );
       default:
         return <Badge variant="outline">{status}</Badge>;
     }
@@ -320,10 +385,10 @@ export default function TrackItem() {
             {isUncollected
               ? `Active collection bin at ${item.originPoint}`
               : isSourceOnly
-              ? isProcessed
-                ? `Processed plastic from ${item.originPoint}`
-                : `Fresh plastic collection from ${item.originPoint}`
-              : `Complete transformation journey from ${item.originPoint}`}
+                ? isProcessed
+                  ? `Processed plastic from ${item.originPoint}`
+                  : `Fresh plastic collection from ${item.originPoint}`
+                : `Complete transformation journey from ${item.originPoint}`}
           </p>
         </div>
 
@@ -340,37 +405,45 @@ export default function TrackItem() {
         <div className="mb-12">
           <div className="flex gap-2 justify-center max-w-2xl mx-auto">
             {/* Step 1: BINS (AWAITING PICKUP) */}
-            {item.id.startsWith('B') && (
+            {item.id.startsWith("B") && (
               <div className="text-center flex-1 max-w-[120px]">
                 <div className="w-16 h-16 mx-auto mb-4 border-2 border-pop-black flex items-center justify-center bg-pop-green">
                   <Package className="w-8 h-8 text-black" strokeWidth={1.5} />
                 </div>
-                <h3 className="systematic-caps text-sm mb-1">Awaiting Pickup</h3>
+                <h3 className="systematic-caps text-sm mb-1">
+                  Awaiting Pickup
+                </h3>
                 <p className="text-xs text-pop-gray truncate">Active bin</p>
               </div>
             )}
 
             {/* Step 2: BATCHES (PROCESSING/PROCESSED) */}
-            {item.id.startsWith('T') && (
+            {item.id.startsWith("T") && (
               <div className="text-center flex-1 max-w-[120px]">
                 <div className="w-16 h-16 mx-auto mb-4 border-2 border-pop-black flex items-center justify-center bg-pop-blue">
                   <CheckCircle className="w-8 h-8 text-pop-black" />
                 </div>
                 <h3 className="systematic-caps text-sm mb-1">
-                  {item.event === 'inventory_creation' ? 'Processed' : 'Processing'}
+                  {item.event === "inventory_creation"
+                    ? "Processed"
+                    : "Processing"}
                 </h3>
-                <p className="text-xs text-pop-gray truncate">{item.processedDate || '2024-02-01'}</p>
+                <p className="text-xs text-pop-gray truncate">
+                  {item.processedDate || "2024-02-01"}
+                </p>
               </div>
             )}
 
             {/* Step 2: BLANKS (PROCESSING/PROCESSED) */}
-            {item.id.startsWith('K') && (
+            {item.id.startsWith("K") && (
               <div className="text-center flex-1 max-w-[120px]">
                 <div className="w-16 h-16 mx-auto mb-4 border-2 border-pop-black flex items-center justify-center bg-pop-blue">
                   <CheckCircle className="w-8 h-8 text-pop-black" />
                 </div>
                 <h3 className="systematic-caps text-sm mb-1">Processed</h3>
-                <p className="text-xs text-pop-gray truncate">{item.processedDate}</p>
+                <p className="text-xs text-pop-gray truncate">
+                  {item.processedDate}
+                </p>
               </div>
             )}
 
@@ -387,7 +460,9 @@ export default function TrackItem() {
                 <h3 className="systematic-caps text-sm mb-1">
                   {isCharity ? "Donated" : "Purchased"}
                 </h3>
-                <p className="text-xs text-pop-gray truncate">{item.deliveredDate || '2025-02-01'}</p>
+                <p className="text-xs text-pop-gray truncate">
+                  {item.deliveredDate || "2025-02-01"}
+                </p>
               </div>
             )}
 
@@ -414,7 +489,11 @@ export default function TrackItem() {
               <CardHeader>
                 <CardTitle className="systematic-caps flex items-center">
                   <Building className="w-5 h-5 mr-2" />
-                  {item.id.startsWith('B') ? 'Bin Details' : item.id.startsWith('T') ? 'Batch Details' : 'Source Details'}
+                  {item.id.startsWith("B")
+                    ? "Bin Details"
+                    : item.id.startsWith("T")
+                      ? "Batch Details"
+                      : "Source Details"}
                 </CardTitle>
               </CardHeader>
               <CardContent className="space-y-4">
@@ -422,9 +501,13 @@ export default function TrackItem() {
                 <div className="space-y-3 pb-4 border-b border-pop-gray">
                   <div className="flex justify-between">
                     <span className="systematic-caps text-sm">
-                      {item.id.startsWith('B') ? 'Bin ID' : 
-                       item.id.startsWith('T') ? 'Batch ID' : 
-                       item.id.startsWith('K') ? 'Blank ID' : 'Main ID'}
+                      {item.id.startsWith("B")
+                        ? "Bin ID"
+                        : item.id.startsWith("T")
+                          ? "Batch ID"
+                          : item.id.startsWith("K")
+                            ? "Blank ID"
+                            : "Main ID"}
                     </span>
                     <span className="font-mono">{item.id}</span>
                   </div>
@@ -435,7 +518,11 @@ export default function TrackItem() {
                         {item.binIds ? (
                           // Show multiple bin IDs from the array
                           item.binIds.map((binId: string) => (
-                            <Link key={binId} href={`/track/${binId}`} className="block font-mono text-pop-green hover:text-pop-black hover:underline">
+                            <Link
+                              key={binId}
+                              href={`/track/${binId}`}
+                              className="block font-mono text-pop-green hover:text-pop-black hover:underline"
+                            >
                               {binId}
                             </Link>
                           ))
@@ -443,12 +530,18 @@ export default function TrackItem() {
                           // Fallback to single bin ID
                           <>
                             {item.binId && (
-                              <Link href={`/track/${item.binId}`} className="block font-mono text-pop-green hover:text-pop-black hover:underline">
+                              <Link
+                                href={`/track/${item.binId}`}
+                                className="block font-mono text-pop-green hover:text-pop-black hover:underline"
+                              >
                                 {item.binId}
                               </Link>
                             )}
                             {sourceBin && sourceBin.id !== item.binId && (
-                              <Link href={`/track/${sourceBin.id}`} className="block font-mono text-pop-green hover:text-pop-black hover:underline">
+                              <Link
+                                href={`/track/${sourceBin.id}`}
+                                className="block font-mono text-pop-green hover:text-pop-black hover:underline"
+                              >
                                 {sourceBin.id}
                               </Link>
                             )}
@@ -460,10 +553,11 @@ export default function TrackItem() {
                   {item.batchId && (
                     <div className="flex justify-between">
                       <span className="systematic-caps text-sm">Batch ID</span>
-                      <span className="font-mono text-pop-blue">{item.batchId}</span>
+                      <span className="font-mono text-pop-blue">
+                        {item.batchId}
+                      </span>
                     </div>
                   )}
-
                 </div>
                 <div className="flex justify-between">
                   <span className="systematic-caps text-sm">Origin</span>
@@ -477,13 +571,13 @@ export default function TrackItem() {
                     </Badge>
                   </div>
                 )}
-                {item.id.startsWith('T') && item.event && (
+                {item.id.startsWith("T") && item.event && (
                   <div className="flex justify-between">
                     <span className="systematic-caps text-sm">Status</span>
                     {getProcessingStatusBadge(item.event)}
                   </div>
                 )}
-                {item.weight && !item.id.startsWith('B') && (
+                {item.weight && !item.id.startsWith("B") && (
                   <div className="flex justify-between items-center">
                     <span className="systematic-caps text-sm">Weight</span>
                     <span className="flex items-center">
@@ -494,7 +588,9 @@ export default function TrackItem() {
                 )}
                 {item.collectionDate && (
                   <div className="flex justify-between items-center">
-                    <span className="systematic-caps text-sm">Last Collected</span>
+                    <span className="systematic-caps text-sm">
+                      Last Collected
+                    </span>
                     <span className="flex items-center">
                       <Calendar className="w-4 h-4 mr-1" />
                       {new Date(item.collectionDate).toLocaleDateString()}
@@ -503,14 +599,16 @@ export default function TrackItem() {
                 )}
                 {item.nextCollectionDate && (
                   <div className="flex justify-between items-center">
-                    <span className="systematic-caps text-sm">Next Collection</span>
+                    <span className="systematic-caps text-sm">
+                      Next Collection
+                    </span>
                     <span className="flex items-center">
                       <Calendar className="w-4 h-4 mr-1" />
                       {new Date(item.nextCollectionDate).toLocaleDateString()}
                     </span>
                   </div>
                 )}
-                {item.id.startsWith('B') && item.binStatus && (
+                {item.id.startsWith("B") && item.binStatus && (
                   <div className="flex justify-between items-center">
                     <span className="systematic-caps text-sm">Status</span>
                     <Badge className="bg-pop-green text-pop-black">
@@ -533,7 +631,7 @@ export default function TrackItem() {
                     <span>{item.event}</span>
                   </div>
                 )}
-                {item.adoptedBy && item.id.startsWith('B') && (
+                {item.adoptedBy && item.id.startsWith("B") && (
                   <div className="flex justify-between">
                     <span className="systematic-caps text-sm">Adopted By</span>
                     <span>{item.adoptedBy}</span>
@@ -768,10 +866,8 @@ export default function TrackItem() {
           </PopArtContainer>
         )}
 
-
-
         {/* ========== CONNECTED ITEMS - Produced Items (for Batches) ========== */}
-        {item.id.startsWith('T') && blanks.length > 0 && (
+        {item.id.startsWith("T") && blanks.length > 0 && (
           <div className="max-w-2xl mx-auto">
             <PopArtContainer color="red" shadow>
               <Card className="border-4 border-pop-black">
@@ -784,14 +880,21 @@ export default function TrackItem() {
                 <CardContent className="py-6">
                   <div className="space-y-3">
                     {blanks.map((blank, index) => (
-                      <Link key={blank.id} href={`/track/${blank.id}`} className="block">
+                      <Link
+                        key={blank.id}
+                        href={`/track/${blank.id}`}
+                        className="block"
+                      >
                         <div className="flex justify-between items-center p-3 border border-pop-gray rounded hover:border-pop-red hover:bg-pop-red hover:bg-opacity-5 transition-colors cursor-pointer">
                           <div>
                             <div className="systematic-caps text-sm font-semibold text-pop-red hover:text-pop-black">
                               {blank.id}
                             </div>
                             <div className="text-xs text-pop-gray">
-                              {blank.productId ? 'Assembled' : 'Available for Assembly'} • {blank.status}
+                              {blank.productId
+                                ? "Assembled"
+                                : "Available for Assembly"}{" "}
+                              • {blank.status}
                             </div>
                           </div>
                           <div className="text-xs text-pop-gray">
@@ -808,7 +911,7 @@ export default function TrackItem() {
         )}
 
         {/* ========== CONNECTED ITEMS - Batches from Bin (for Bins) ========== */}
-        {item.id.startsWith('B') && batches.length > 0 && (
+        {item.id.startsWith("B") && batches.length > 0 && (
           <div className="max-w-2xl mx-auto">
             <PopArtContainer color="green" shadow>
               <Card className="border-4 border-pop-black">
@@ -821,18 +924,25 @@ export default function TrackItem() {
                 <CardContent className="py-6">
                   <div className="space-y-3">
                     {batches.map((batch, index) => (
-                      <Link key={batch.id} href={`/track/${batch.id}`} className="block">
+                      <Link
+                        key={batch.id}
+                        href={`/track/${batch.id}`}
+                        className="block"
+                      >
                         <div className="flex justify-between items-center p-3 border border-pop-gray rounded hover:border-pop-green hover:bg-pop-green hover:bg-opacity-5 transition-colors cursor-pointer">
                           <div>
                             <div className="systematic-caps text-sm font-semibold text-pop-green hover:text-pop-black">
                               {batch.id}
                             </div>
                             <div className="text-xs text-pop-gray">
-                              {batch.weight}kg • {batch.materialType} • {getBatchStatusLabel(batch.status)}
+                              {batch.weight}kg • {batch.materialType} •{" "}
+                              {getBatchStatusLabel(batch.status)}
                             </div>
                           </div>
                           <div className="text-xs text-pop-gray">
-                            {new Date(batch.collectionDate).toLocaleDateString()}
+                            {new Date(
+                              batch.collectionDate,
+                            ).toLocaleDateString()}
                           </div>
                         </div>
                       </Link>
@@ -843,8 +953,6 @@ export default function TrackItem() {
             </PopArtContainer>
           </div>
         )}
-
-
       </div>
     </div>
   );

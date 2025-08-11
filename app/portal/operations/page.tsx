@@ -700,8 +700,8 @@ export default function OperationsPage() {
             <div className="flex items-center gap-3">
               <Monitor className="h-5 w-5 text-pop-green" />
               <div className="text-left">
-                <h3 className="text-lg font-semibold text-pop-black">Production Station Interfaces</h3>
-                <p className="text-sm text-gray-600">Real-time monitoring and control of processing stations</p>
+                <h3 className="text-lg font-semibold text-pop-black">Production Interfaces</h3>
+                <p className="text-sm text-gray-600">Real-time monitoring and control of materials processing</p>
               </div>
             </div>
           </AccordionTrigger>
