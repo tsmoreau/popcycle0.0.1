@@ -57,7 +57,11 @@ export const QRScanner = ({ open, onOpenChange }: QRScannerProps) => {
       if (response.ok) {
         const data = await response.json();
         setScannedItem(data);
-        console.log("Fetched item data:", data);
+        console.log("=== FETCHED ITEM DATA ===");
+        console.log("Type:", data.type);
+        console.log("All fields:", Object.keys(data));
+        console.log("Full data:", JSON.stringify(data, null, 2));
+        console.log("=========================");
       } else {
         console.error("Item not found:", itemId);
         setScannedItem({ error: `Item ${itemId} not found` });
@@ -166,10 +170,14 @@ export const QRScanner = ({ open, onOpenChange }: QRScannerProps) => {
       }
 
       console.log("Creating QR scanner instance...");
-      // Create QR scanner instance
+      // Create QR scanner instance with proper debouncing
       qrScannerRef.current = new QrScanner(
         videoRef.current,
-        (result) => handleScanResult(result.data),
+        (result) => {
+          // Use the raw text data for comparison
+          const scanData = typeof result === 'string' ? result : result.data;
+          handleScanResult(scanData);
+        },
         {
           onDecodeError: (error) => {
             // Silently ignore decode errors (normal when no QR code in view)
@@ -178,6 +186,7 @@ export const QRScanner = ({ open, onOpenChange }: QRScannerProps) => {
           highlightScanRegion: true,
           highlightCodeOutline: true,
           preferredCamera: 'environment', // Try back camera first on mobile
+          maxScansPerSecond: 0.3, // Maximum one scan every 3+ seconds
         }
       );
 
@@ -416,33 +425,29 @@ export const QRScanner = ({ open, onOpenChange }: QRScannerProps) => {
                           </>
                         )}
 
-                        {/* Blank-specific fields (when available) */}
+                        {/* Blank-specific fields - DEBUG VERSION */}
                         {scannedItem.type === 'blank' && (
                           <>
-                            {scannedItem.batchId && (
-                              <div><span className="font-medium">Batch ID:</span> {scannedItem.batchId}</div>
-                            )}
-                            {scannedItem.productId && (
-                              <div><span className="font-medium">Product ID:</span> {scannedItem.productId}</div>
-                            )}
-                            {scannedItem.weight && (
-                              <div><span className="font-medium">Weight:</span> {scannedItem.weight}kg</div>
-                            )}
-                            {scannedItem.binIds && scannedItem.binIds.length > 0 && (
-                              <div><span className="font-medium">Source Bins:</span> {scannedItem.binIds.join(', ')}</div>
-                            )}
-                            {scannedItem.assemblyDate && (
-                              <div><span className="font-medium">Assembly Date:</span> {new Date(scannedItem.assemblyDate).toLocaleDateString()}</div>
-                            )}
-                            {scannedItem.deliveryDate && (
-                              <div><span className="font-medium">Delivery Date:</span> {new Date(scannedItem.deliveryDate).toLocaleDateString()}</div>
-                            )}
-                            {scannedItem.userId && (
-                              <div><span className="font-medium">User ID:</span> {scannedItem.userId}</div>
-                            )}
-                            {scannedItem.makerDetails && (
-                              <div><span className="font-medium">Maker:</span> {scannedItem.makerDetails}</div>
-                            )}
+                            <div className="text-xs text-red-500 mb-2">DEBUG: Type={scannedItem.type}, Has batchId={!!scannedItem.batchId}, Has productId={!!scannedItem.productId}</div>
+                            
+                            {console.log("BLANK RENDER DEBUG:", {
+                              type: scannedItem.type,
+                              batchId: scannedItem.batchId,
+                              productId: scannedItem.productId,
+                              binIds: scannedItem.binIds,
+                              allKeys: Object.keys(scannedItem)
+                            })}
+                            
+                            {/* Always show available fields with fallbacks */}
+                            <div><span className="font-medium">Batch ID:</span> {scannedItem.batchId || 'Not available'}</div>
+                            <div><span className="font-medium">Product ID:</span> {scannedItem.productId || 'Not available'}</div>
+                            <div><span className="font-medium">Weight:</span> {scannedItem.weight || 'Not available'}kg</div>
+                            <div><span className="font-medium">Source Bins:</span> {(scannedItem.binIds && scannedItem.binIds.length > 0) ? scannedItem.binIds.join(', ') : 'Not available'}</div>
+                            <div><span className="font-medium">Assembly Date:</span> {scannedItem.assemblyDate ? new Date(scannedItem.assemblyDate).toLocaleDateString() : 'Not available'}</div>
+                            <div><span className="font-medium">Delivery Date:</span> {scannedItem.deliveryDate ? new Date(scannedItem.deliveryDate).toLocaleDateString() : 'Not available'}</div>
+                            <div><span className="font-medium">User ID:</span> {scannedItem.userId || 'Not available'}</div>
+                            <div><span className="font-medium">Maker:</span> {scannedItem.makerDetails || 'Not available'}</div>
+                            
                             {scannedItem.impactMetrics && (
                               <div className="text-xs text-gray-600 mt-2">
                                 <div>Carbon Saved: {scannedItem.impactMetrics.carbonSaved}kg</div>
