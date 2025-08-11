@@ -177,6 +177,28 @@ export async function POST() {
           eventId = org.events[Math.floor(Math.random() * org.events.length)].eventId;
         }
         
+        const adoptedBy = i === 0 ? 'Education Team' : undefined;
+        
+        // Generate custom message only for bins with adoption or event association
+        let customMessage: string | undefined = undefined;
+        if (adoptedBy) {
+          // Adopted bins get team-specific messages
+          const teamMessages = [
+            'This bin is proudly maintained by our Education Team - every bottle you recycle becomes part of our learning materials!',
+            'The Education Team thanks you for contributing to our hands-on sustainability curriculum.',
+            'Your recycling here directly supports our educational programs and student projects.'
+          ];
+          customMessage = teamMessages[Math.floor(Math.random() * teamMessages.length)];
+        } else if (eventId) {
+          // Event-specific bins get event-themed messages
+          const eventMessages = [
+            'Thank you for participating in our special event! Your plastic will become educational materials celebrating this experience.',
+            'This event collection will be transformed into commemorative items showcasing our partnership.',
+            'Your contribution during this event helps create lasting educational impact beyond today.'
+          ];
+          customMessage = eventMessages[Math.floor(Math.random() * eventMessages.length)];
+        }
+        
         bins.push({
           _id: qrCode,
           orgId: org._id,
@@ -187,7 +209,8 @@ export async function POST() {
           capacity: 50,
           isActive: true,
           canBeAdopted: true,
-          adoptedBy: i === 0 ? 'Education Team' : undefined,
+          adoptedBy: adoptedBy,
+          message: customMessage,
           status: binStatuses[Math.floor(Math.random() * binStatuses.length)],
           lastCollectionDate,
           nextCollectionDate,
