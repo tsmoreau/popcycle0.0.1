@@ -302,7 +302,7 @@ export default function AdminPage() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           ...user,
-          isActive: user.isActive === 'true' || user.isActive === true || (typeof user.isActive === 'boolean' && user.isActive)
+          isActive: typeof user.isActive === 'string' ? user.isActive === 'true' : Boolean(user.isActive)
         })
       })
       

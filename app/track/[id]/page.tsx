@@ -511,7 +511,7 @@ export default function TrackItem() {
                     </span>
                     <span className="font-mono">{item.id}</span>
                   </div>
-                  {(item.binIds || item.binId || sourceBin) && (
+                  {(item.binIds || sourceBin) && (
                     <div className="flex justify-between">
                       <span className="systematic-caps text-sm">Bin IDs</span>
                       <div className="space-y-1 text-right">
@@ -527,25 +527,15 @@ export default function TrackItem() {
                             </Link>
                           ))
                         ) : (
-                          // Fallback to single bin ID
-                          <>
-                            {item.binId && (
-                              <Link
-                                href={`/track/${item.binId}`}
-                                className="block font-mono text-pop-green hover:text-pop-black hover:underline"
-                              >
-                                {item.binId}
-                              </Link>
-                            )}
-                            {sourceBin && sourceBin.id !== item.binId && (
-                              <Link
-                                href={`/track/${sourceBin.id}`}
-                                className="block font-mono text-pop-green hover:text-pop-black hover:underline"
-                              >
-                                {sourceBin.id}
-                              </Link>
-                            )}
-                          </>
+                          // Fallback to source bin
+                          sourceBin && (
+                            <Link
+                              href={`/track/${sourceBin.id}`}
+                              className="block font-mono text-pop-green hover:text-pop-black hover:underline"
+                            >
+                              {sourceBin.id}
+                            </Link>
+                          )
                         )}
                       </div>
                     </div>
