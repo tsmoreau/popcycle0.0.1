@@ -32,6 +32,7 @@ export const QRScanner = ({ open, onOpenChange }: QRScannerProps) => {
   const [queueActive, setQueueActive] = useState(false);
   const [queueType, setQueueType] = useState<string>('');
   const [queuedItems, setQueuedItems] = useState<any[]>([]);
+  const [lastQueuedItemId, setLastQueuedItemId] = useState<string>('');
 
   // Extract item ID from any URL or direct code
   const extractItemId = (scannedText: string): string | null => {
@@ -62,14 +63,6 @@ export const QRScanner = ({ open, onOpenChange }: QRScannerProps) => {
       if (response.ok) {
         const data = await response.json();
         setScannedItem(data);
-        
-        // Auto-add to queue if active and type matches
-        if (queueActive && queueType && data.type === queueType) {
-          setQueuedItems(prev => {
-            const isAlreadyQueued = prev.some(item => item.id === data.id);
-            return isAlreadyQueued ? prev : [...prev, data];
-          });
-        }
       } else {
         console.error("Item not found:", itemId);
         setScannedItem({ error: `Item ${itemId} not found` });
@@ -99,25 +92,22 @@ export const QRScanner = ({ open, onOpenChange }: QRScannerProps) => {
     setQueueActive(false);
     setQueueType('');
     setQueuedItems([]);
+    setLastQueuedItemId('');
   };
 
-  const addToQueue = (item: any) => {
-    // Use refs to get current values and avoid closure issues
-    if (!queueActive || !queueType || item.type !== queueType) {
-      return;
+  // Use useEffect to handle queue additions when scannedItem changes
+  useEffect(() => {
+    if (scannedItem && queueActive && queueType && scannedItem.type === queueType && scannedItem.id !== lastQueuedItemId) {
+      setQueuedItems(prev => {
+        const isAlreadyQueued = prev.some(item => item.id === scannedItem.id);
+        if (!isAlreadyQueued) {
+          setLastQueuedItemId(scannedItem.id);
+          return [...prev, scannedItem];
+        }
+        return prev;
+      });
     }
-    
-    setQueuedItems(currentQueue => {
-      // Check if item is already in queue (by ID)
-      const isAlreadyQueued = currentQueue.some(queuedItem => queuedItem.id === item.id);
-      
-      if (!isAlreadyQueued) {
-        return [...currentQueue, item];
-      }
-      
-      return currentQueue;
-    });
-  };
+  }, [scannedItem, queueActive, queueType, lastQueuedItemId]);
 
   // Handle QR code scan result with proper debouncing
   const handleScanResult = (result: string) => {
