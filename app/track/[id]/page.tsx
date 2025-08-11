@@ -180,7 +180,7 @@ export default function TrackItem() {
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
-        <LoadingSquare color="green" text="Loading..." />
+        <LoadingSquare />
       </div>
     );
   }
