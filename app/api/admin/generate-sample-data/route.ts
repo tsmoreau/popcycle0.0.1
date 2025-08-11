@@ -294,50 +294,524 @@ export async function POST() {
     
     await db.collection('batches').insertMany(batches);
     
-    // Generate Products
+    // Generate Products with new categories
     const products = [
+      // Flora & Fauna (2 products)
       {
         _id: new ObjectId(),
-        name: 'STEM Desk Organizer',
-        description: 'Modular desk organizer perfect for classrooms and maker spaces',
-        category: 'educational_kit' as const,
-        difficulty: 'easy' as const,
-        estimatedAssemblyTime: 30,
-        materialRequirements: {
-          plasticType: 'HDPE' as const,
-          weight: 0.5
-        },
-        designFiles: {
-          instructionsPdf: 'desk-organizer-instructions.pdf',
-          templateSvg: 'desk-organizer-template.svg',
-          photos: ['desk-organizer-1.jpg', 'desk-organizer-2.jpg']
-        },
-        price: 15.99,
-        inStock: true,
-        rating: 4.8,
-        reviewCount: 127,
-        createdAt: new Date(),
-        updatedAt: new Date()
-      },
-      {
-        _id: new ObjectId(),
-        name: 'Ocean Cleanup Assembly Kit',
-        description: 'Educational kit teaching ocean conservation through hands-on building',
-        category: 'educational_kit' as const,
+        name: 'Butterfly Garden Mobile',
+        description: 'Delicate kinetic mobile featuring colorful butterfly sculptures that dance in the breeze',
+        category: 'flora_fauna' as const,
         difficulty: 'medium' as const,
-        estimatedAssemblyTime: 45,
+        estimatedAssemblyTime: 90,
         materialRequirements: {
           plasticType: 'PET' as const,
           weight: 0.8
         },
         designFiles: {
-          instructionsPdf: 'ocean-cleanup-instructions.pdf',
-          photos: ['ocean-cleanup-1.jpg', 'ocean-cleanup-2.jpg', 'ocean-cleanup-3.jpg']
+          instructionsPdf: 'butterfly-mobile-instructions.pdf',
+          templateSvg: 'butterfly-template.svg',
+          photos: ['butterfly-mobile-1.jpg', 'butterfly-mobile-2.jpg']
         },
-        price: 24.99,
+        assets: [
+          {
+            id: 'butterfly-main-1',
+            type: 'image',
+            url: '/images/products/butterfly-mobile-main.jpg',
+            thumbnail: '/images/products/thumbs/butterfly-mobile-main.jpg',
+            alt: 'Butterfly Garden Mobile hanging display',
+            description: 'Colorful butterfly mobile in natural setting',
+            isPrimary: true,
+            order: 1
+          },
+          {
+            id: 'butterfly-detail-1',
+            type: 'image',
+            url: '/images/products/butterfly-mobile-detail.jpg',
+            thumbnail: '/images/products/thumbs/butterfly-mobile-detail.jpg',
+            alt: 'Close-up of butterfly sculptures',
+            description: 'Detailed view of individual butterfly elements',
+            isPrimary: false,
+            order: 2
+          }
+        ],
+        price: 32.99,
+        inStock: true,
+        rating: 4.7,
+        reviewCount: 43,
+        createdAt: new Date(),
+        updatedAt: new Date()
+      },
+      {
+        _id: new ObjectId(),
+        name: 'Succulent Planter Set',
+        description: 'Modern geometric planters perfect for small succulents and air plants',
+        category: 'flora_fauna' as const,
+        difficulty: 'easy' as const,
+        estimatedAssemblyTime: 45,
+        materialRequirements: {
+          plasticType: 'HDPE' as const,
+          weight: 1.2
+        },
+        designFiles: {
+          instructionsPdf: 'succulent-planter-instructions.pdf',
+          photos: ['succulent-planter-1.jpg', 'succulent-planter-2.jpg']
+        },
+        assets: [
+          {
+            id: 'succulent-main-1',
+            type: 'image',
+            url: '/images/products/succulent-planter-main.jpg',
+            thumbnail: '/images/products/thumbs/succulent-planter-main.jpg',
+            alt: 'Geometric succulent planter set',
+            description: 'Modern planters with live succulents',
+            isPrimary: true,
+            order: 1
+          }
+        ],
+        price: 28.50,
+        inStock: true,
+        rating: 4.8,
+        reviewCount: 67,
+        createdAt: new Date(),
+        updatedAt: new Date()
+      },
+
+      // Kinetic Sculptures (3 products)
+      {
+        _id: new ObjectId(),
+        name: 'Wave Motion Pendulum',
+        description: 'Mesmerizing kinetic sculpture demonstrating wave physics through synchronized pendulum motion',
+        category: 'kinetic_sculptures' as const,
+        difficulty: 'hard' as const,
+        estimatedAssemblyTime: 180,
+        materialRequirements: {
+          plasticType: 'PET' as const,
+          weight: 2.1
+        },
+        designFiles: {
+          instructionsPdf: 'wave-pendulum-instructions.pdf',
+          templateSvg: 'pendulum-template.svg',
+          photos: ['wave-pendulum-1.jpg', 'wave-pendulum-2.jpg']
+        },
+        assets: [
+          {
+            id: 'pendulum-main-1',
+            type: 'image',
+            url: '/images/products/wave-pendulum-main.jpg',
+            thumbnail: '/images/products/thumbs/wave-pendulum-main.jpg',
+            alt: 'Wave Motion Pendulum sculpture',
+            description: 'Kinetic pendulum showing wave motion',
+            isPrimary: true,
+            order: 1
+          },
+          {
+            id: 'pendulum-motion-vid',
+            type: 'video',
+            url: '/videos/products/pendulum-motion.mp4',
+            thumbnail: '/images/products/thumbs/pendulum-motion-thumb.jpg',
+            alt: 'Pendulum motion demonstration',
+            description: 'Video showing mesmerizing wave motion',
+            isPrimary: false,
+            order: 2
+          }
+        ],
+        price: 89.99,
         inStock: true,
         rating: 4.9,
-        reviewCount: 89,
+        reviewCount: 28,
+        createdAt: new Date(),
+        updatedAt: new Date()
+      },
+      {
+        _id: new ObjectId(),
+        name: 'Wind Spiral Tower',
+        description: 'Elegant vertical sculpture that spins and rotates in response to air currents',
+        category: 'kinetic_sculptures' as const,
+        difficulty: 'medium' as const,
+        estimatedAssemblyTime: 120,
+        materialRequirements: {
+          plasticType: 'PP' as const,
+          weight: 1.5
+        },
+        designFiles: {
+          instructionsPdf: 'wind-spiral-instructions.pdf',
+          photos: ['wind-spiral-1.jpg', 'wind-spiral-2.jpg']
+        },
+        assets: [
+          {
+            id: 'spiral-main-1',
+            type: 'image',
+            url: '/images/products/wind-spiral-main.jpg',
+            thumbnail: '/images/products/thumbs/wind-spiral-main.jpg',
+            alt: 'Wind Spiral Tower sculpture',
+            description: 'Tall kinetic tower sculpture spinning in wind',
+            isPrimary: true,
+            order: 1
+          }
+        ],
+        price: 64.50,
+        inStock: false,
+        rating: 4.6,
+        reviewCount: 19,
+        createdAt: new Date(),
+        updatedAt: new Date()
+      },
+      {
+        _id: new ObjectId(),
+        name: 'Balance Point Mobile',
+        description: 'Delicate kinetic balance sculpture exploring equilibrium and motion',
+        category: 'kinetic_sculptures' as const,
+        difficulty: 'medium' as const,
+        estimatedAssemblyTime: 90,
+        materialRequirements: {
+          plasticType: 'PET' as const,
+          weight: 0.9
+        },
+        designFiles: {
+          instructionsPdf: 'balance-mobile-instructions.pdf',
+          photos: ['balance-mobile-1.jpg']
+        },
+        assets: [
+          {
+            id: 'balance-main-1',
+            type: 'image',
+            url: '/images/products/balance-mobile-main.jpg',
+            thumbnail: '/images/products/thumbs/balance-mobile-main.jpg',
+            alt: 'Balance Point Mobile sculpture',
+            description: 'Kinetic balance mobile in motion',
+            isPrimary: true,
+            order: 1
+          }
+        ],
+        price: 45.75,
+        inStock: true,
+        rating: 4.5,
+        reviewCount: 32,
+        createdAt: new Date(),
+        updatedAt: new Date()
+      },
+
+      // Vehicles & Vessels (2 products)
+      {
+        _id: new ObjectId(),
+        name: 'Solar Racing Car Kit',
+        description: 'Build and race your own solar-powered vehicle with this comprehensive kit',
+        category: 'vehicles_vessels' as const,
+        difficulty: 'hard' as const,
+        estimatedAssemblyTime: 240,
+        materialRequirements: {
+          plasticType: 'HDPE' as const,
+          weight: 2.8
+        },
+        designFiles: {
+          instructionsPdf: 'solar-car-instructions.pdf',
+          templateSvg: 'car-chassis-template.svg',
+          photos: ['solar-car-1.jpg', 'solar-car-2.jpg', 'solar-car-3.jpg']
+        },
+        assets: [
+          {
+            id: 'solar-car-main-1',
+            type: 'image',
+            url: '/images/products/solar-car-main.jpg',
+            thumbnail: '/images/products/thumbs/solar-car-main.jpg',
+            alt: 'Solar Racing Car complete kit',
+            description: 'Assembled solar car ready for racing',
+            isPrimary: true,
+            order: 1
+          },
+          {
+            id: 'solar-car-build-vid',
+            type: 'video',
+            url: '/videos/products/solar-car-build.mp4',
+            thumbnail: '/images/products/thumbs/solar-build-thumb.jpg',
+            alt: 'Solar car assembly tutorial',
+            description: 'Complete build tutorial video',
+            isPrimary: false,
+            order: 2
+          }
+        ],
+        price: 125.00,
+        inStock: true,
+        rating: 4.8,
+        reviewCount: 156,
+        createdAt: new Date(),
+        updatedAt: new Date()
+      },
+      {
+        _id: new ObjectId(),
+        name: 'Paddle Boat Explorer',
+        description: 'Floating vessel kit perfect for pool and pond adventures',
+        category: 'vehicles_vessels' as const,
+        difficulty: 'medium' as const,
+        estimatedAssemblyTime: 90,
+        materialRequirements: {
+          plasticType: 'HDPE' as const,
+          weight: 1.8
+        },
+        designFiles: {
+          instructionsPdf: 'paddle-boat-instructions.pdf',
+          photos: ['paddle-boat-1.jpg', 'paddle-boat-2.jpg']
+        },
+        assets: [
+          {
+            id: 'boat-main-1',
+            type: 'image',
+            url: '/images/products/paddle-boat-main.jpg',
+            thumbnail: '/images/products/thumbs/paddle-boat-main.jpg',
+            alt: 'Paddle Boat Explorer on water',
+            description: 'Paddle boat floating on calm water',
+            isPrimary: true,
+            order: 1
+          }
+        ],
+        price: 38.75,
+        inStock: true,
+        rating: 4.4,
+        reviewCount: 73,
+        createdAt: new Date(),
+        updatedAt: new Date()
+      },
+
+      // Pop Bots (3 products)
+      {
+        _id: new ObjectId(),
+        name: 'Walking Wobble Bot',
+        description: 'Colorful robot that walks with a distinctive wobbling gait',
+        category: 'pop_bots' as const,
+        difficulty: 'easy' as const,
+        estimatedAssemblyTime: 60,
+        materialRequirements: {
+          plasticType: 'PP' as const,
+          weight: 0.6
+        },
+        designFiles: {
+          instructionsPdf: 'wobble-bot-instructions.pdf',
+          photos: ['wobble-bot-1.jpg', 'wobble-bot-2.jpg']
+        },
+        assets: [
+          {
+            id: 'wobble-bot-main-1',
+            type: 'image',
+            url: '/images/products/wobble-bot-main.jpg',
+            thumbnail: '/images/products/thumbs/wobble-bot-main.jpg',
+            alt: 'Walking Wobble Bot robot',
+            description: 'Colorful wobbling robot toy',
+            isPrimary: true,
+            order: 1
+          },
+          {
+            id: 'wobble-action-vid',
+            type: 'video',
+            url: '/videos/products/wobble-bot-action.mp4',
+            thumbnail: '/images/products/thumbs/wobble-action-thumb.jpg',
+            alt: 'Wobble bot walking demonstration',
+            description: 'Robot demonstrating wobbling walk',
+            isPrimary: false,
+            order: 2
+          }
+        ],
+        price: 22.50,
+        inStock: true,
+        rating: 4.7,
+        reviewCount: 94,
+        createdAt: new Date(),
+        updatedAt: new Date()
+      },
+      {
+        _id: new ObjectId(),
+        name: 'Light Chaser Bot',
+        description: 'Smart robot that follows light sources and responds to shadows',
+        category: 'pop_bots' as const,
+        difficulty: 'hard' as const,
+        estimatedAssemblyTime: 200,
+        materialRequirements: {
+          plasticType: 'PET' as const,
+          weight: 1.1
+        },
+        designFiles: {
+          instructionsPdf: 'light-chaser-instructions.pdf',
+          templateSvg: 'robot-body-template.svg',
+          photos: ['light-chaser-1.jpg', 'light-chaser-2.jpg']
+        },
+        assets: [
+          {
+            id: 'light-chaser-main-1',
+            type: 'image',
+            url: '/images/products/light-chaser-main.jpg',
+            thumbnail: '/images/products/thumbs/light-chaser-main.jpg',
+            alt: 'Light Chaser Bot with sensors',
+            description: 'Advanced robot with light-sensing capability',
+            isPrimary: true,
+            order: 1
+          }
+        ],
+        price: 67.25,
+        inStock: true,
+        rating: 4.9,
+        reviewCount: 47,
+        createdAt: new Date(),
+        updatedAt: new Date()
+      },
+      {
+        _id: new ObjectId(),
+        name: 'Spin Dance Bot',
+        description: 'Entertaining robot that spins and dances to music rhythms',
+        category: 'pop_bots' as const,
+        difficulty: 'medium' as const,
+        estimatedAssemblyTime: 105,
+        materialRequirements: {
+          plasticType: 'PP' as const,
+          weight: 0.8
+        },
+        designFiles: {
+          instructionsPdf: 'spin-bot-instructions.pdf',
+          photos: ['spin-bot-1.jpg']
+        },
+        assets: [
+          {
+            id: 'spin-bot-main-1',
+            type: 'image',
+            url: '/images/products/spin-bot-main.jpg',
+            thumbnail: '/images/products/thumbs/spin-bot-main.jpg',
+            alt: 'Spin Dance Bot in action',
+            description: 'Dancing robot with spinning motion',
+            isPrimary: true,
+            order: 1
+          }
+        ],
+        price: 41.00,
+        inStock: false,
+        rating: 4.6,
+        reviewCount: 61,
+        createdAt: new Date(),
+        updatedAt: new Date()
+      },
+
+      // Everyday Objects (2 products)
+      {
+        _id: new ObjectId(),
+        name: 'Modular Storage Cubes',
+        description: 'Stackable storage system perfect for organizing any space',
+        category: 'everyday_objects' as const,
+        difficulty: 'easy' as const,
+        estimatedAssemblyTime: 30,
+        materialRequirements: {
+          plasticType: 'HDPE' as const,
+          weight: 1.4
+        },
+        designFiles: {
+          instructionsPdf: 'storage-cube-instructions.pdf',
+          templateSvg: 'cube-template.svg',
+          photos: ['storage-cubes-1.jpg', 'storage-cubes-2.jpg']
+        },
+        assets: [
+          {
+            id: 'storage-main-1',
+            type: 'image',
+            url: '/images/products/storage-cubes-main.jpg',
+            thumbnail: '/images/products/thumbs/storage-cubes-main.jpg',
+            alt: 'Modular Storage Cubes stacked',
+            description: 'Colorful stackable storage cube system',
+            isPrimary: true,
+            order: 1
+          }
+        ],
+        price: 34.99,
+        inStock: true,
+        rating: 4.5,
+        reviewCount: 128,
+        createdAt: new Date(),
+        updatedAt: new Date()
+      },
+      {
+        _id: new ObjectId(),
+        name: 'Ergonomic Phone Stand',
+        description: 'Adjustable phone stand with perfect viewing angles for work and entertainment',
+        category: 'everyday_objects' as const,
+        difficulty: 'easy' as const,
+        estimatedAssemblyTime: 20,
+        materialRequirements: {
+          plasticType: 'PET' as const,
+          weight: 0.3
+        },
+        designFiles: {
+          instructionsPdf: 'phone-stand-instructions.pdf',
+          photos: ['phone-stand-1.jpg']
+        },
+        assets: [
+          {
+            id: 'phone-stand-main-1',
+            type: 'image',
+            url: '/images/products/phone-stand-main.jpg',
+            thumbnail: '/images/products/thumbs/phone-stand-main.jpg',
+            alt: 'Ergonomic Phone Stand with device',
+            description: 'Sleek phone stand holding smartphone',
+            isPrimary: true,
+            order: 1
+          }
+        ],
+        price: 15.75,
+        inStock: true,
+        rating: 4.8,
+        reviewCount: 203,
+        createdAt: new Date(),
+        updatedAt: new Date()
+      },
+
+      // Limited Editions (1 product)
+      {
+        _id: new ObjectId(),
+        name: 'Ocean Waves Art Piece',
+        description: 'Limited edition sculptural art piece capturing the essence of ocean movements - Only 50 made',
+        category: 'limited_editions' as const,
+        difficulty: 'hard' as const,
+        estimatedAssemblyTime: 300,
+        materialRequirements: {
+          plasticType: 'PET' as const,
+          weight: 3.2
+        },
+        designFiles: {
+          instructionsPdf: 'ocean-waves-instructions.pdf',
+          templateSvg: 'waves-template.svg',
+          photos: ['ocean-waves-1.jpg', 'ocean-waves-2.jpg', 'ocean-waves-3.jpg']
+        },
+        assets: [
+          {
+            id: 'waves-art-main-1',
+            type: 'image',
+            url: '/images/products/ocean-waves-main.jpg',
+            thumbnail: '/images/products/thumbs/ocean-waves-main.jpg',
+            alt: 'Ocean Waves Art Piece sculpture',
+            description: 'Limited edition ocean-inspired art sculpture',
+            isPrimary: true,
+            order: 1
+          },
+          {
+            id: 'waves-detail-1',
+            type: 'image',
+            url: '/images/products/ocean-waves-detail.jpg',
+            thumbnail: '/images/products/thumbs/ocean-waves-detail.jpg',
+            alt: 'Close-up of wave details',
+            description: 'Intricate wave pattern details',
+            isPrimary: false,
+            order: 2
+          },
+          {
+            id: 'waves-process-vid',
+            type: 'video',
+            url: '/videos/products/waves-creation-process.mp4',
+            thumbnail: '/images/products/thumbs/waves-process-thumb.jpg',
+            alt: 'Art piece creation process',
+            description: 'Behind-the-scenes creation video',
+            isPrimary: false,
+            order: 3
+          }
+        ],
+        price: 299.99,
+        inStock: true,
+        rating: 5.0,
+        reviewCount: 12,
         createdAt: new Date(),
         updatedAt: new Date()
       }

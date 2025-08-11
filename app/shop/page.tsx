@@ -23,7 +23,7 @@ interface Product {
   _id: string;
   name: string;
   description: string;
-  category: 'educational_kit' | 'assembly_toy' | 'practical_item' | 'decoration';
+  category: 'flora_fauna' | 'kinetic_sculptures' | 'vehicles_vessels' | 'pop_bots' | 'everyday_objects' | 'limited_editions';
   difficulty: 'easy' | 'medium' | 'hard';
   estimatedAssemblyTime: number;
   materialRequirements: {
@@ -35,6 +35,16 @@ interface Product {
     templateSvg?: string;
     photos: string[];
   };
+  assets?: {
+    id: string;
+    type: 'image' | 'video' | 'document' | 'model';
+    url: string;
+    thumbnail?: string;
+    alt?: string;
+    description?: string;
+    isPrimary?: boolean;
+    order?: number;
+  }[];
   price: number;
   inStock: boolean;
   rating: number;
@@ -45,18 +55,22 @@ interface Product {
 
 // Map database categories to display categories
 const categoryMap = {
-  'educational_kit': 'Educational Kits',
-  'assembly_toy': 'Educational Toys', 
-  'practical_item': 'Practical Items',
-  'decoration': 'Decorations'
+  'flora_fauna': 'Flora & Fauna',
+  'kinetic_sculptures': 'Kinetic Sculptures',
+  'vehicles_vessels': 'Vehicles & Vessels',
+  'pop_bots': 'Pop Bots',
+  'everyday_objects': 'Everyday Objects',
+  'limited_editions': 'Limited Editions'
 };
 
 const categories = [
   "All",
-  "Educational Kits",
-  "Educational Toys", 
-  "Practical Items",
-  "Decorations",
+  "Flora & Fauna",
+  "Kinetic Sculptures",
+  "Vehicles & Vessels",
+  "Pop Bots",
+  "Everyday Objects",
+  "Limited Editions",
 ];
 
 export default function Shop() {
