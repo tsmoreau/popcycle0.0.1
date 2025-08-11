@@ -304,7 +304,7 @@ export default function TrackItem() {
   return (
     <div className="min-h-screen py-20">
       <div className="max-w-4xl mx-auto px-4">
-        {/* Header */}
+        {/* ========== HERO SECTION ========== */}
         <div className="text-center mb-12">
           <h1 className="text-4xl lg:text-6xl helvetica-bold mb-6 tracking-tight">
             <span className="text-pop-green"></span> {item.id}
@@ -329,7 +329,7 @@ export default function TrackItem() {
           </PopArtContainer>
         </div>
 
-        {/* Unified Status Timeline */}
+        {/* ========== TIMELINE SECTION ========== */}
         <div className="mb-12">
           <div className="flex gap-2 justify-center max-w-2xl mx-auto">
             {/* Step 1: BINS (AWAITING PICKUP) */}
@@ -399,7 +399,7 @@ export default function TrackItem() {
           </div>
         </div>
 
-        {/* Item Details */}
+        {/* ========== SOURCE DETAILS ========== */}
         <div className="flex flex-col gap-8 mb-12 max-w-2xl mx-auto">
           {/* Source Details Card */}
           <PopArtContainer color="green" shadow>
@@ -551,7 +551,7 @@ export default function TrackItem() {
             </Card>
           </PopArtContainer>
 
-          {/* Product Details Card */}
+          {/* ========== PRODUCT DETAILS ========== */}
           {!isSourceOnly && (
             <>
               <PopArtContainer color={isCharity ? "red" : "blue"} shadow>
@@ -623,7 +623,7 @@ export default function TrackItem() {
                 </Card>
               </PopArtContainer>
 
-              {/* Maker Details Card */}
+              {/* ========== MAKER DETAILS ========== */}
               <PopArtContainer color="red" shadow>
                 <Card className="border-4 border-pop-black">
                   <CardHeader>
@@ -750,7 +750,7 @@ export default function TrackItem() {
 
 
 
-        {/* Produced Blanks List for Batches */}
+        {/* ========== CONNECTED ITEMS - Produced Items (for Batches) ========== */}
         {item.id.startsWith('T') && blanks.length > 0 && (
           <div className="max-w-2xl mx-auto">
             <PopArtContainer color="red" shadow>
@@ -787,7 +787,7 @@ export default function TrackItem() {
           </div>
         )}
 
-        {/* Bin Batches List */}
+        {/* ========== CONNECTED ITEMS - Batches from Bin (for Bins) ========== */}
         {item.id.startsWith('B') && batches.length > 0 && (
           <div className="max-w-2xl mx-auto">
             <PopArtContainer color="green" shadow>
