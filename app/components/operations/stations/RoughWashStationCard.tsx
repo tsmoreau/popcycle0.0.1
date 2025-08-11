@@ -20,8 +20,8 @@ interface RoughWashStationCardProps {
 export function RoughWashStationCard({ station, onFullscreen, isFullscreen = false }: RoughWashStationCardProps) {
   if (isFullscreen) {
     return (
-      <div className="w-full h-full bg-white overflow-y-auto overflow-x-hidden">
-        <div className="p-4 md:p-8 max-w-6xl mx-auto min-h-full">
+      <div className="w-full h-screen bg-white overflow-y-auto overflow-x-hidden">
+        <div className="p-4 md:p-8 max-w-6xl mx-auto">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
             {/* Main Station Control */}
             <Card className="col-span-1">

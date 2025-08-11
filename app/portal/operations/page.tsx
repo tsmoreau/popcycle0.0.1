@@ -1431,25 +1431,23 @@ export default function OperationsPage() {
 
       {/* Rough Wash Card Fullscreen Dialog */}
       <Dialog open={showRoughWashFullscreen} onOpenChange={setShowRoughWashFullscreen}>
-        <DialogContent className="max-w-none w-screen h-screen m-0 p-0">
-          <div className="relative w-full h-full">
-            <Button
-              variant="ghost"
-              size="sm"
-              onClick={() => setShowRoughWashFullscreen(false)}
-              className="absolute top-4 right-4 z-10 h-8 w-8 p-0 bg-white hover:bg-gray-100 shadow-md"
-            >
-              <X className="h-4 w-4" />
-            </Button>
-            <RoughWashStationCard
-              station={{
-                currentBatch: "BA-8473",
-                status: "Processing", 
-                progress: 78
-              }}
-              isFullscreen={true}
-            />
-          </div>
+        <DialogContent className="max-w-none w-screen h-screen m-0 p-0 overflow-hidden">
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={() => setShowRoughWashFullscreen(false)}
+            className="absolute top-4 right-4 z-20 h-8 w-8 p-0 bg-white hover:bg-gray-100 shadow-md"
+          >
+            <X className="h-4 w-4" />
+          </Button>
+          <RoughWashStationCard
+            station={{
+              currentBatch: "BA-8473",
+              status: "Processing", 
+              progress: 78
+            }}
+            isFullscreen={true}
+          />
         </DialogContent>
       </Dialog>
     </div>
