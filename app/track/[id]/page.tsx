@@ -420,7 +420,11 @@ export default function TrackItem() {
                 {/* ID Hierarchy Display */}
                 <div className="space-y-3 pb-4 border-b border-pop-gray">
                   <div className="flex justify-between">
-                    <span className="systematic-caps text-sm">Main ID</span>
+                    <span className="systematic-caps text-sm">
+                      {item.id.startsWith('B') ? 'Bin ID' : 
+                       item.id.startsWith('T') ? 'Batch ID' : 
+                       item.id.startsWith('K') ? 'Blank ID' : 'Main ID'}
+                    </span>
                     <span className="font-mono">{item.id}</span>
                   </div>
                   {(item.binIds || item.binId || sourceBin) && (
@@ -458,12 +462,7 @@ export default function TrackItem() {
                       <span className="font-mono text-pop-blue">{item.batchId}</span>
                     </div>
                   )}
-                  {item.blankId && (
-                    <div className="flex justify-between">
-                      <span className="systematic-caps text-sm">Blank ID</span>
-                      <span className="font-mono text-pop-red">{item.blankId}</span>
-                    </div>
-                  )}
+
                 </div>
                 <div className="flex justify-between">
                   <span className="systematic-caps text-sm">Origin</span>
