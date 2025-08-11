@@ -27,15 +27,13 @@ export function LoadingSquare({
   };
 
   return (
-    <div className={cn("fixed inset-0 flex items-center justify-center z-50 bg-white bg-opacity-90", className)}>
-      <div className="text-center">
-        <div className={cn(
-          sizeClasses[size],
-          colorClasses[color],
-          "border-2 border-pop-black mx-auto mb-4 animate-pulse"
-        )}></div>
-        <p className="systematic-caps text-pop-black">{text}</p>
-      </div>
+    <div className={cn("text-center", className)}>
+      <div className={cn(
+        sizeClasses[size],
+        colorClasses[color],
+        "border-2 border-pop-black mx-auto mb-4 animate-pulse"
+      )}></div>
+      <p className="systematic-caps text-pop-black">{text}</p>
     </div>
   );
 }
