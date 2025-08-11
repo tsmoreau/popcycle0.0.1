@@ -14,6 +14,7 @@ import {
   PopArtContainer,
   QRCodeElement,
 } from "../../components/PopArtElements";
+import { LoadingSquare } from "@/components/ui/loading-square";
 import {
   Building,
   Calendar,
@@ -179,10 +180,7 @@ export default function TrackItem() {
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
-        <div className="text-center">
-          <div className="w-16 h-16 bg-pop-green border-2 border-pop-black mx-auto mb-4 animate-pulse"></div>
-          <p className="systematic-caps">Loading item data...</p>
-        </div>
+        <LoadingSquare text="Loading item data..." />
       </div>
     );
   }

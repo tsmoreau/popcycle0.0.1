@@ -16,8 +16,8 @@ import {
   Star,
   Calendar,
   Weight,
-  Loader2,
 } from "lucide-react";
+import { LoadingSquare } from "@/components/ui/loading-square";
 
 interface Product {
   _id: string;
@@ -140,8 +140,7 @@ export default function Shop() {
       <div className="max-w-7xl mx-auto px-6 pb-16">
         {loading ? (
           <div className="flex justify-center items-center py-16">
-            <Loader2 className="w-8 h-8 animate-spin text-pop-blue" />
-            <span className="ml-3 text-pop-black systematic-caps">Loading Products...</span>
+            <LoadingSquare color="blue" text="Loading Products..." />
           </div>
         ) : error ? (
           <div className="text-center py-16">
