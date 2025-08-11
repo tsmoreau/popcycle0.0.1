@@ -302,7 +302,7 @@ export default function AdminPage() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           ...user,
-          isActive: user.isActive === 'true' || user.isActive === true
+          isActive: user.isActive === 'true' || user.isActive === true || (typeof user.isActive === 'boolean' && user.isActive)
         })
       })
       
@@ -575,9 +575,8 @@ export default function AdminPage() {
                 </div>
               ) : (
                 <DataTable
-                  title="User Management"
-                  description="Manage user roles, permissions, and partner affiliations"
-                  icon={<Users className="h-5 w-5 text-pop-green" />}
+                  title=""
+                  description=""
                   data={users}
                   columns={userColumns}
                   editableFields={userEditableFields}
