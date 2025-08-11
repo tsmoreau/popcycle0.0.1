@@ -7,15 +7,25 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../..
 import { Badge } from '../../components/ui/badge'
 import { DataTable, Column, EditableField } from '../../components/ui/data-table'
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '../../components/ui/accordion'
+import { LoadingSquare } from '../../components/ui/loading-square'
 
 interface User {
-  id: string
+  _id: string
   name: string
   email: string
-  role: string
+  userType: 'admin' | 'super_admin' | 'staff' | 'user' | 'partner_owner'
   orgId?: string
-  lastActive: string
-  status: 'Active' | 'Inactive'
+  location?: string
+  skillLevel?: 'beginner' | 'intermediate' | 'advanced'
+  itemsAssembled?: number
+  totalHoursLogged?: number
+  favoriteProducts?: string[]
+  assemblyStories?: any[]
+  permissions?: string[]
+  assignedRoutes?: string[]
+  isActive: boolean
+  createdAt: string
+  updatedAt: string
 }
 
 interface Station {
@@ -69,11 +79,34 @@ export default function AdminPage() {
   const [generatingData, setGeneratingData] = useState(false)
   const [products, setProducts] = useState<Product[]>([])
   const [loadingProducts, setLoadingProducts] = useState(false)
+  const [users, setUsers] = useState<User[]>([])
+  const [loadingUsers, setLoadingUsers] = useState(false)
 
-  // Fetch MongoDB status and products on component mount
+  // Fetch MongoDB status, products, and users on component mount
   useEffect(() => {
     fetchMongoStatus()
+    fetchUsers()
   }, [])
+
+  const fetchUsers = async () => {
+    try {
+      setLoadingUsers(true)
+      const response = await fetch('/api/admin/users')
+      const data = await response.json()
+      
+      if (response.ok && Array.isArray(data)) {
+        setUsers(data)
+      } else {
+        console.error('Error fetching users:', data.error || 'Invalid response')
+        setUsers([])
+      }
+    } catch (error) {
+      console.error('Error fetching users:', error)
+      setUsers([])
+    } finally {
+      setLoadingUsers(false)
+    }
+  }
 
   const fetchProducts = async () => {
     try {
@@ -141,14 +174,18 @@ export default function AdminPage() {
     }
   }
 
-  // Sample user data
-  const usersData: User[] = [
-    { id: 'U-001', name: 'Sarah Chen', email: 'sarah@popcycle.io', role: 'Admin', lastActive: '2 min ago', status: 'Active' },
-    { id: 'U-002', name: 'Mike Rodriguez', email: 'mike@popcycle.io', role: 'Operations Staff', lastActive: '1 hour ago', status: 'Active' },
-    { id: 'U-003', name: 'Alex Kim', email: 'alex@acmecorp.com', role: 'Maker', orgId: 'O-001', lastActive: '3 hours ago', status: 'Active' },
-    { id: 'U-004', name: 'Jamie Foster', email: 'jamie@popcycle.io', role: 'CRM Staff', lastActive: '5 hours ago', status: 'Active' },
-    { id: 'U-005', name: 'Taylor Swift', email: 'taylor@greentech.com', role: 'Maker', orgId: 'O-002', lastActive: '2 days ago', status: 'Inactive' }
-  ]
+  // Helper function to format last active
+  const formatLastActive = (dateString: string) => {
+    const date = new Date(dateString)
+    const now = new Date()
+    const diffInHours = Math.abs(now.getTime() - date.getTime()) / (1000 * 60 * 60)
+    
+    if (diffInHours < 1) return 'Just now'
+    if (diffInHours < 24) return `${Math.floor(diffInHours)} hours ago`
+    const diffInDays = Math.floor(diffInHours / 24)
+    if (diffInDays === 1) return '1 day ago'
+    return `${diffInDays} days ago`
+  }
 
   // Sample station data
   const stationsData: Station[] = [
@@ -157,38 +194,145 @@ export default function AdminPage() {
   ]
 
   const userColumns: Column<User>[] = [
-    { key: 'id', header: 'User ID' },
-    { key: 'name', header: 'Name' },
-    { key: 'email', header: 'Email' },
+    { key: '_id', header: 'User ID' },
+    { key: 'name', header: 'Name', sortable: true },
+    { key: 'email', header: 'Email', sortable: true },
     {
-      key: 'role',
+      key: 'userType',
       header: 'Role',
       render: (user) => (
         <Badge className={
-          user.role === 'Admin' ? 'bg-pop-red text-white' :
-          user.role.includes('Staff') ? 'bg-pop-blue text-white' :
+          user.userType === 'super_admin' || user.userType === 'admin' ? 'bg-pop-red text-white' :
+          user.userType === 'staff' ? 'bg-pop-blue text-white' :
+          user.userType === 'partner_owner' ? 'bg-purple-500 text-white' :
           'bg-gray-100 text-gray-800'
         }>
-          {user.role}
+          {user.userType.replace('_', ' ').toUpperCase()}
         </Badge>
       )
+    },
+    {
+      key: 'skillLevel',
+      header: 'Skill Level',
+      render: (user) => user.skillLevel ? (
+        <Badge variant="outline" className={
+          user.skillLevel === 'advanced' ? 'border-pop-green text-pop-green' :
+          user.skillLevel === 'intermediate' ? 'border-pop-blue text-pop-blue' :
+          'border-gray-400 text-gray-600'
+        }>
+          {user.skillLevel.toUpperCase()}
+        </Badge>
+      ) : '-'
+    },
+    {
+      key: 'itemsAssembled',
+      header: 'Items Built',
+      render: (user) => user.itemsAssembled || 0
+    },
+    {
+      key: 'totalHoursLogged',
+      header: 'Hours Logged',
+      render: (user) => user.totalHoursLogged || 0
     },
     {
       key: 'orgId',
       header: 'Partner Org',
-      render: (user) => user.orgId ? <Badge variant="outline">{user.orgId}</Badge> : '-'
+      render: (user) => user.orgId ? <Badge variant="outline">{String(user.orgId).slice(-8)}</Badge> : '-'
     },
-    { key: 'lastActive', header: 'Last Active' },
     {
-      key: 'status',
+      key: 'updatedAt',
+      header: 'Last Active',
+      render: (user) => formatLastActive(user.updatedAt)
+    },
+    {
+      key: 'isActive',
       header: 'Status',
       render: (user) => (
-        <Badge className={user.status === 'Active' ? 'bg-pop-green text-white' : 'bg-gray-100 text-gray-800'}>
-          {user.status}
+        <Badge className={user.isActive ? 'bg-pop-green text-white' : 'bg-gray-100 text-gray-800'}>
+          {user.isActive ? 'Active' : 'Inactive'}
         </Badge>
       )
     }
   ]
+
+  const userEditableFields: EditableField<User>[] = [
+    { key: 'name', label: 'Name', type: 'text', required: true },
+    { key: 'email', label: 'Email', type: 'email', required: true },
+    { 
+      key: 'userType', 
+      label: 'User Type', 
+      type: 'select', 
+      required: true,
+      options: [
+        { value: 'user', label: 'User' },
+        { value: 'staff', label: 'Staff' },
+        { value: 'admin', label: 'Admin' },
+        { value: 'super_admin', label: 'Super Admin' },
+        { value: 'partner_owner', label: 'Partner Owner' }
+      ]
+    },
+    { key: 'location', label: 'Location', type: 'text' },
+    { 
+      key: 'skillLevel', 
+      label: 'Skill Level', 
+      type: 'select',
+      options: [
+        { value: 'beginner', label: 'Beginner' },
+        { value: 'intermediate', label: 'Intermediate' },
+        { value: 'advanced', label: 'Advanced' }
+      ]
+    },
+    { key: 'itemsAssembled', label: 'Items Assembled', type: 'number' },
+    { key: 'totalHoursLogged', label: 'Total Hours Logged', type: 'number' },
+    { 
+      key: 'isActive', 
+      label: 'Active Status', 
+      type: 'select',
+      options: [
+        { value: 'true', label: 'Active' },
+        { value: 'false', label: 'Inactive' }
+      ]
+    }
+  ]
+
+  const handleUserSave = async (user: User) => {
+    try {
+      const response = await fetch('/api/admin/users', {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          ...user,
+          isActive: user.isActive === 'true' || user.isActive === true
+        })
+      })
+      
+      if (response.ok) {
+        await fetchUsers()
+      } else {
+        throw new Error('Failed to save user')
+      }
+    } catch (error) {
+      console.error('Error saving user:', error)
+      throw error
+    }
+  }
+
+  const handleUserDelete = async (user: User) => {
+    try {
+      const response = await fetch(`/api/admin/users?id=${user._id}`, {
+        method: 'DELETE'
+      })
+      
+      if (response.ok) {
+        await fetchUsers()
+      } else {
+        throw new Error('Failed to delete user')
+      }
+    } catch (error) {
+      console.error('Error deleting user:', error)
+      throw error
+    }
+  }
 
   const productColumns: Column<Product>[] = [
     { key: '_id', header: 'Product ID' },
@@ -425,12 +569,26 @@ export default function AdminPage() {
           </AccordionTrigger>
           <AccordionContent>
             <div className="pt-2 pb-4">
-              <DataTable
-                title="User Management"
-                description="Manage user roles, permissions, and partner affiliations"
-                data={usersData}
-                columns={userColumns}
-              />
+              {loadingUsers ? (
+                <div className="flex justify-center items-center py-8">
+                  <LoadingSquare />
+                </div>
+              ) : (
+                <DataTable
+                  title="User Management"
+                  description="Manage user roles, permissions, and partner affiliations"
+                  icon={<Users className="h-5 w-5 text-pop-green" />}
+                  data={users}
+                  columns={userColumns}
+                  editableFields={userEditableFields}
+                  onSave={handleUserSave}
+                  onDelete={handleUserDelete}
+                  enableColumnSelection={true}
+                  enableFiltering={true}
+                  availableColumns={userColumns}
+                  defaultVisibleColumns={['name', 'email', 'userType', 'skillLevel', 'isActive']}
+                />
+              )}
             </div>
           </AccordionContent>
         </AccordionItem>

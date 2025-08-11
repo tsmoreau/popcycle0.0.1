@@ -536,7 +536,7 @@ export function DataTable<T extends Record<string, any>>({
                   Columns ({visibleColumns.length})
                 </Button>
                 {showColumnSelector && (
-                  <div className="absolute right-0 top-full mt-2 bg-white border rounded-lg shadow-lg p-3 w-64 z-10">
+                  <div className="absolute right-0 top-full mt-2 bg-white border rounded-lg shadow-lg p-3 w-64 z-50">
                     <div className="text-sm font-medium mb-2">Select Columns</div>
                     <div className="space-y-2 max-h-48 overflow-y-auto">
                       {allColumns.map(column => (
