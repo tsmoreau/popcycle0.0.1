@@ -70,22 +70,23 @@ export const QRScanner = ({ open, onOpenChange }: QRScannerProps) => {
     }
   };
 
-  // Handle QR code scan result with debouncing
+  // Handle QR code scan result with proper debouncing
   const handleScanResult = (result: string) => {
     const now = Date.now();
-    const itemId = extractItemId(result);
     
-    // Debounce: ignore scans of the same code within 2 seconds
-    if (result === lastScan && (now - lastScanTime) < 2000) {
+    // Debounce: ignore scans of the same code within 3 seconds OR if already loading
+    if ((result === lastScan && (now - lastScanTime) < 3000) || isLoadingItem) {
+      console.log("Scan ignored - duplicate or loading");
       return;
     }
     
-    console.log("QR Code scanned:", result);
+    const itemId = extractItemId(result);
+    console.log("QR Code scanned:", result, "Extracted ID:", itemId);
+    
     setLastScan(result);
     setLastScanTime(now);
     
     if (itemId) {
-      console.log("Extracted item ID:", itemId);
       fetchItemData(itemId);
     } else {
       console.log("No valid PopCycle item ID found in:", result);
@@ -418,17 +419,35 @@ export const QRScanner = ({ open, onOpenChange }: QRScannerProps) => {
                         {/* Blank-specific fields (when available) */}
                         {scannedItem.type === 'blank' && (
                           <>
-                            {scannedItem.material && (
-                              <div><span className="font-medium">Material:</span> {scannedItem.material}</div>
+                            {scannedItem.batchId && (
+                              <div><span className="font-medium">Batch ID:</span> {scannedItem.batchId}</div>
                             )}
-                            {scannedItem.color && (
-                              <div><span className="font-medium">Color:</span> {scannedItem.color}</div>
+                            {scannedItem.productId && (
+                              <div><span className="font-medium">Product ID:</span> {scannedItem.productId}</div>
                             )}
                             {scannedItem.weight && (
-                              <div><span className="font-medium">Weight:</span> {scannedItem.weight}g</div>
+                              <div><span className="font-medium">Weight:</span> {scannedItem.weight}kg</div>
                             )}
-                            {scannedItem.productName && (
-                              <div><span className="font-medium">Product:</span> {scannedItem.productName}</div>
+                            {scannedItem.binIds && scannedItem.binIds.length > 0 && (
+                              <div><span className="font-medium">Source Bins:</span> {scannedItem.binIds.join(', ')}</div>
+                            )}
+                            {scannedItem.assemblyDate && (
+                              <div><span className="font-medium">Assembly Date:</span> {new Date(scannedItem.assemblyDate).toLocaleDateString()}</div>
+                            )}
+                            {scannedItem.deliveryDate && (
+                              <div><span className="font-medium">Delivery Date:</span> {new Date(scannedItem.deliveryDate).toLocaleDateString()}</div>
+                            )}
+                            {scannedItem.userId && (
+                              <div><span className="font-medium">User ID:</span> {scannedItem.userId}</div>
+                            )}
+                            {scannedItem.makerDetails && (
+                              <div><span className="font-medium">Maker:</span> {scannedItem.makerDetails}</div>
+                            )}
+                            {scannedItem.impactMetrics && (
+                              <div className="text-xs text-gray-600 mt-2">
+                                <div>Carbon Saved: {scannedItem.impactMetrics.carbonSaved}kg</div>
+                                <div>Waste Reduced: {scannedItem.impactMetrics.wasteReduced}kg</div>
+                              </div>
                             )}
                           </>
                         )}
