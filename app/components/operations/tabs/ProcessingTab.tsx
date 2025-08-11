@@ -31,6 +31,14 @@ export const ProcessingTab = ({
   onSort,
   isFullscreen = false,
 }: ProcessingTabProps) => {
+  console.log("ProcessingTab Debug:", {
+    batchesCount: batches?.length || 0,
+    loadingBatches,
+    allBatchColumnsCount: allBatchColumns?.length || 0,
+    defaultBatchColumnsCount: defaultBatchColumns?.length || 0,
+    batches: batches?.slice(0, 2) // Show first 2 batches for debugging
+  });
+
   return (
     <div className={`space-y-6 ${isFullscreen ? 'h-full' : ''}`}>
       {/* Processing Queue */}
