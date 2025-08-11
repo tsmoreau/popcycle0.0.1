@@ -63,6 +63,15 @@ User preference: Individual transaction lists preferred over categorized summari
 User preference: State management must be shared between fullscreen and regular views - filtering/sorting must persist when switching between view modes.
 User preference: Visual icon distinctions are important - QR code and maximize icons should be clearly different.
 
+## Development Efficiency Requirements (Aug 11, 2025)
+**CRITICAL EFFICIENCY MANDATE**: When user provides existing patterns to copy, implement immediately without overengineering.
+- Identify exact pattern first, implement second
+- Do NOT get sidetracked by peripheral issues like import conflicts unless they block functionality
+- Copy-paste-modify approach when patterns exist
+- Resolve only blocking errors, ignore warnings during initial implementation
+- Focus on core functionality first, optimize later only if requested
+**EFFICIENCY COMMITMENT**: I guarantee direct, pattern-based implementation without unnecessary debugging detours.
+
 ## System Architecture
 PopCycle is built as a unified Next.js PWA with MongoDB, managing all core operations.
 
