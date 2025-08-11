@@ -62,6 +62,13 @@ User preference confirmed: Operations functions contained in single file rather 
 User preference: Individual transaction lists preferred over categorized summaries for financial data visibility.
 User preference: State management must be shared between fullscreen and regular views - filtering/sorting must persist when switching between view modes.
 User preference: Visual icon distinctions are important - QR code and maximize icons should be clearly different.
+User preference: `/track/[id]` page section terminology - Use simplified names when referencing page structure:
+- **hero section** - QR code ID heading and description
+- **timeline section** - Processing stage icons and status
+- **source details** - Main item information (bin/batch/blank details)
+- **connected items** - Related items (batches from bin OR produced items from batch)
+- **product details** - Product information (only for blanks with productId)
+- **maker details** - Maker information or registration CTA (only for blanks)
 
 ## Development Efficiency Requirements (Aug 11, 2025)
 **CRITICAL EFFICIENCY MANDATE**: When user provides existing patterns to copy, implement immediately without overengineering.
