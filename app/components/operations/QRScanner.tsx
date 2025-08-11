@@ -27,6 +27,63 @@ export const QRScanner = ({ open, onOpenChange }: QRScannerProps) => {
   const [isLoadingItem, setIsLoadingItem] = useState(false);
   const router = useRouter();
 
+  // Extract item ID from any URL or direct code
+  const extractItemId = (scannedText: string): string | null => {
+    // If it's a URL, get the last segment after /
+    if (scannedText.includes('/')) {
+      const segments = scannedText.split('/');
+      const lastSegment = segments[segments.length - 1];
+      
+      // Check if last segment looks like a PopCycle code (letter + 7 chars)
+      if (/^[BTKPOR][A-Z0-9]{7}$/i.test(lastSegment)) {
+        return lastSegment.toUpperCase();
+      }
+    } else {
+      // Direct code scan - check if it looks like a PopCycle code
+      if (/^[BTKPOR][A-Z0-9]{7}$/i.test(scannedText)) {
+        return scannedText.toUpperCase();
+      }
+    }
+    
+    return null;
+  };
+
+  // Fetch item data by ID
+  const fetchItemData = async (itemId: string) => {
+    setIsLoadingItem(true);
+    try {
+      const response = await fetch(`/api/track/${itemId}`);
+      if (response.ok) {
+        const data = await response.json();
+        setScannedItem(data);
+        console.log("Fetched item data:", data);
+      } else {
+        console.error("Item not found:", itemId);
+        setScannedItem({ error: `Item ${itemId} not found` });
+      }
+    } catch (error) {
+      console.error("Error fetching item:", error);
+      setScannedItem({ error: "Failed to fetch item data" });
+    } finally {
+      setIsLoadingItem(false);
+    }
+  };
+
+  // Handle QR code scan result
+  const handleScanResult = (result: string) => {
+    console.log("QR Code scanned:", result);
+    setLastScan(result);
+    
+    const itemId = extractItemId(result);
+    if (itemId) {
+      console.log("Extracted item ID:", itemId);
+      fetchItemData(itemId);
+    } else {
+      console.log("No valid PopCycle item ID found in:", result);
+      setScannedItem({ error: `No valid item code found in: ${result}` });
+    }
+  };
+
   // Initialize camera and QR scanner when modal opens
   useEffect(() => {
     console.log("useEffect triggered - open:", open, "videoRef.current:", !!videoRef.current);
@@ -36,6 +93,9 @@ export const QRScanner = ({ open, onOpenChange }: QRScannerProps) => {
       setCameraError("");
       setHasCamera(false);
       setIsScanning(false);
+      setLastScan("");
+      setScannedItem(null);
+      setIsLoadingItem(false);
       
       // Add multiple delays to ensure video element is properly rendered
       const timer = setTimeout(() => {
@@ -166,19 +226,7 @@ export const QRScanner = ({ open, onOpenChange }: QRScannerProps) => {
     }
   };
 
-  const handleScanResult = (scannedCode: string) => {
-    setLastScan(scannedCode);
-    setIsScanning(false);
-    
-    // Stop scanning
-    if (qrScannerRef.current) {
-      qrScannerRef.current.stop();
-    }
 
-    // Close modal and navigate to tracking page
-    onOpenChange(false);
-    router.push(`/track/${scannedCode}`);
-  };
 
   const handleManualScan = () => {
     if (qrScannerRef.current && !isScanning) {
@@ -249,89 +297,102 @@ export const QRScanner = ({ open, onOpenChange }: QRScannerProps) => {
             )}
           </div>
 
-          {/* Scan controls */}
-          <div className="flex gap-2">
+          {/* Close button */}
+          <div className="flex justify-end">
             <Button
               variant="outline"
-              className="flex-1"
               onClick={() => onOpenChange(false)}
             >
-              Cancel
-            </Button>
-            <Button
-              className="flex-1 bg-pop-green hover:bg-pop-green/90"
-              onClick={handleManualScan}
-              disabled={!hasCamera || cameraError !== "" || isScanning}
-            >
-              <Scan className="h-4 w-4 mr-2" />
-              {isScanning ? "Scanning..." : "Start Scan"}
+              Close Scanner
             </Button>
           </div>
 
-          {/* Last scan info */}
-          {lastScan && (
-            <div className="pt-4 border-t">
-              <p className="text-sm text-gray-600 mb-2">Last Scanned Code:</p>
-              <div className="bg-gray-50 p-3 rounded-lg">
-                <code className="text-sm font-mono text-pop-green">{lastScan}</code>
-              </div>
+          {/* Scanned item information */}
+          {(lastScan || isLoadingItem || scannedItem) && (
+            <div className="pt-4 border-t space-y-3">
+              <h3 className="text-sm font-medium text-gray-900">Last Scanned Item</h3>
+              
+              {/* Last scan raw data */}
+              {lastScan && (
+                <div>
+                  <p className="text-xs text-gray-500 mb-1">Scanned QR Code:</p>
+                  <div className="bg-gray-50 p-2 rounded text-xs font-mono break-all">
+                    {lastScan}
+                  </div>
+                </div>
+              )}
+
+              {/* Loading state */}
+              {isLoadingItem && (
+                <div className="flex items-center gap-2 text-sm text-gray-600">
+                  <div className="animate-spin h-4 w-4 border-2 border-pop-green border-t-transparent rounded-full"></div>
+                  Loading item data...
+                </div>
+              )}
+
+              {/* Item data or error */}
+              {scannedItem && !isLoadingItem && (
+                <div className="space-y-3">
+                  {scannedItem.error ? (
+                    <div className="bg-red-50 border border-red-200 rounded-lg p-3">
+                      <p className="text-sm text-red-800">{scannedItem.error}</p>
+                    </div>
+                  ) : (
+                    <div className="bg-pop-green/5 border border-pop-green/20 rounded-lg p-3 space-y-2">
+                      {/* Item ID and Type */}
+                      <div className="flex items-center justify-between">
+                        <span className="text-lg font-mono font-bold text-pop-green">
+                          {scannedItem.item?._id || scannedItem._id}
+                        </span>
+                        <span className="text-xs bg-pop-green text-white px-2 py-1 rounded">
+                          {scannedItem.type || 'Item'}
+                        </span>
+                      </div>
+
+                      {/* Item details */}
+                      {scannedItem.item && (
+                        <div className="text-sm space-y-1">
+                          {scannedItem.item.material && (
+                            <div><span className="font-medium">Material:</span> {scannedItem.item.material}</div>
+                          )}
+                          {scannedItem.item.weight && (
+                            <div><span className="font-medium">Weight:</span> {scannedItem.item.weight}g</div>
+                          )}
+                          {scannedItem.item.color && (
+                            <div><span className="font-medium">Color:</span> {scannedItem.item.color}</div>
+                          )}
+                          {scannedItem.item.status && (
+                            <div><span className="font-medium">Status:</span> {scannedItem.item.status}</div>
+                          )}
+                          {scannedItem.item.location && (
+                            <div><span className="font-medium">Location:</span> {scannedItem.item.location}</div>
+                          )}
+                          {scannedItem.item.partner && (
+                            <div><span className="font-medium">Partner:</span> {scannedItem.item.partner}</div>
+                          )}
+                          {scannedItem.item.productName && (
+                            <div><span className="font-medium">Product:</span> {scannedItem.item.productName}</div>
+                          )}
+                        </div>
+                      )}
+
+                      {/* Action button to view full details */}
+                      <Button
+                        size="sm"
+                        className="w-full bg-pop-green hover:bg-pop-green/90"
+                        onClick={() => {
+                          onOpenChange(false);
+                          router.push(`/track/${scannedItem.item?._id || scannedItem._id}`);
+                        }}
+                      >
+                        View Full Details
+                      </Button>
+                    </div>
+                  )}
+                </div>
+              )}
             </div>
           )}
-
-          {/* Quick access buttons */}
-          <div className="pt-4 border-t">
-            <p className="text-sm text-gray-600 mb-3">Last Scanned Info</p>
-            <div className="grid grid-cols-2 gap-2">
-              <Button 
-                variant="outline" 
-                size="sm" 
-                className="text-xs"
-                onClick={() => {
-                  onOpenChange(false);
-                  router.push('/track');
-                }}
-              >
-                <Package className="h-3 w-3 mr-1" />
-                Track Items
-              </Button>
-              <Button 
-                variant="outline" 
-                size="sm" 
-                className="text-xs"
-                onClick={() => {
-                  onOpenChange(false);
-                  router.push('/portal/operations');
-                }}
-              >
-                <Settings className="h-3 w-3 mr-1" />
-                Operations
-              </Button>
-              <Button 
-                variant="outline" 
-                size="sm" 
-                className="text-xs"
-                onClick={() => {
-                  onOpenChange(false);
-                  router.push('/portal/crm');
-                }}
-              >
-                <Archive className="h-3 w-3 mr-1" />
-                CRM
-              </Button>
-              <Button 
-                variant="outline" 
-                size="sm" 
-                className="text-xs"
-                onClick={() => {
-                  onOpenChange(false);
-                  router.push('/portal');
-                }}
-              >
-                <Truck className="h-3 w-3 mr-1" />
-                Dashboard
-              </Button>
-            </div>
-          </div>
         </div>
       </DialogContent>
     </Dialog>
