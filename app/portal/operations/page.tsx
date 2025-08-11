@@ -73,6 +73,15 @@ import {
 } from "../../components/ui/dialog";
 import { DataTable, Column, EditableField } from "../../components/ui/data-table";
 import { Bin, Batch, Order, Blank } from "../../../lib/schemas";
+import { 
+  StationCard, 
+  StationFullscreen, 
+  RoughWashStation,
+  StationBase,
+  StationType,
+  StationStatus,
+  WashStationData
+} from "../../components/operations/stations";
 import { useOperationsData } from "../../../hooks/useOperationsData";
 import { QRScanner } from "../../components/operations/QRScanner";
 import { OperationsOverview } from "../../components/operations/OperationsOverview";
@@ -108,6 +117,8 @@ export default function OperationsPage() {
   const [selectedBin, setSelectedBin] = useState(null);
   const [showScanModal, setShowScanModal] = useState(false);
   const [isLogisticsFullscreen, setIsLogisticsFullscreen] = useState(false);
+  const [selectedStation, setSelectedStation] = useState<StationBase | null>(null);
+  const [isStationFullscreen, setIsStationFullscreen] = useState(false);
 
   // Use the extracted data hook
   const {
