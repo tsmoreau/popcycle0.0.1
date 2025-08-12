@@ -347,7 +347,7 @@ export default function TrackItem() {
         </div>
 
         {/* ========== TIMELINE SECTION ========== */}
-        <div className="mb-8 lg:mb-12">
+        <div className="mb-12">
           <div className="flex gap-2 sm:gap-4 justify-center max-w-3xl mx-auto">
             {/* Step 1: COLLECTION */}
             <div className="text-center flex-1 max-w-[100px] sm:max-w-[140px]">
