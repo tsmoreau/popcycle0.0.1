@@ -465,7 +465,7 @@ export default function TrackItem() {
                 Processing
               </h3>
               <p className="text-xs text-pop-gray">
-                {item.status === "inventory_creation"
+                {(item.status && item.status.toString().trim() === "inventory_creation")
                   ? "Complete"
                   : item.id.startsWith("T")
                     ? "In progress"
@@ -474,9 +474,6 @@ export default function TrackItem() {
                       : "Pending"
                 }
               </p>
-              <div className="text-xs bg-red-100 p-2 mt-2">
-                DEBUG: STATUS="{item.status}" | CONDITION={item.status === "inventory_creation" ? "TRUE" : "FALSE"}
-              </div>
             </div>
 
             {/* Connection Line */}
