@@ -1,17 +1,10 @@
 import NextAuth from 'next-auth'
 import GoogleProvider from 'next-auth/providers/google'
-import EmailProvider from 'next-auth/providers/email'
-import { MongoDBAdapter } from "@auth/mongodb-adapter"
 import { MongoClient } from "mongodb"
 import type { AuthOptions } from 'next-auth'
 
-const client = new MongoClient(process.env.MONGODB_URI!)
-const clientPromise = client.connect()
-
 export const authOptions: AuthOptions = {
-  // adapter: MongoDBAdapter(clientPromise), // Disabled - using custom user management
   secret: process.env.NEXTAUTH_SECRET,
-  debug: true,
   trustHost: true,
   providers: [
     GoogleProvider({
@@ -26,17 +19,6 @@ export const authOptions: AuthOptions = {
         }
       },
       allowDangerousEmailAccountLinking: true
-    }),
-    EmailProvider({
-      server: {
-        host: process.env.EMAIL_SERVER_HOST,
-        port: process.env.EMAIL_SERVER_PORT,
-        auth: {
-          user: process.env.EMAIL_SERVER_USER,
-          pass: process.env.EMAIL_SERVER_PASSWORD,
-        },
-      },
-      from: process.env.EMAIL_FROM,
     }),
   ],
   callbacks: {
