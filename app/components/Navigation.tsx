@@ -6,7 +6,7 @@ import { useState, useEffect, useRef } from "react";
 import { useSession, signOut } from 'next-auth/react';
 import { Button } from "./ui/button";
 import { ChevronDown, Menu, X, ChevronRight, User, Settings, LogOut } from "lucide-react";
-import AuthButton from "../../components/AuthButton";
+import AuthButton from "./AuthButton";
 
 export default function Navigation() {
   const pathname = usePathname();
