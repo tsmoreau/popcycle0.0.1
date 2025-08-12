@@ -465,10 +465,10 @@ export default function TrackItem() {
                 }`} strokeWidth={1.5} />
               </div>
               <h3 className="systematic-caps text-sm mb-2 font-semibold">
-                Processing
+                {item.status === "inventory_creation" ? "Processed" : "Processing"}
               </h3>
               <p className="text-xs text-pop-gray">
-                FIXED COMPLETE
+                {item.status === "inventory_creation" ? "Complete" : item.id.startsWith("T") ? "In progress" : "Pending"}
               </p>
             </div>
 
