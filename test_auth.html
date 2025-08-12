@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test Magic Link Auth</title>
+    <style>
+        body { font-family: Arial, sans-serif; max-width: 600px; margin: 50px auto; padding: 20px; }
+        .form-group { margin-bottom: 15px; }
+        input[type="email"] { width: 100%; padding: 10px; border: 2px solid #333; }
+        button { background: #00B050; color: white; padding: 12px 24px; border: none; cursor: pointer; }
+        button:hover { background: #009040; }
+        .status { margin-top: 20px; padding: 10px; background: #f0f0f0; }
+    </style>
+</head>
+<body>
+    <h1>Test PopCycle Authentication</h1>
+    <p>Let's test the magic link authentication while Google OAuth gets fixed.</p>
+    
+    <div class="form-group">
+        <label>Email Address:</label>
+        <input type="email" id="email" placeholder="terrencestasse@gmail.com" value="terrencestasse@gmail.com">
+    </div>
+    
+    <button onclick="sendMagicLink()">Send Magic Link</button>
+    
+    <div class="status" id="status">Ready to test</div>
+
+    <script>
+        async function sendMagicLink() {
+            const email = document.getElementById('email').value;
+            const status = document.getElementById('status');
+            
+            try {
+                status.innerHTML = 'Sending magic link...';
+                
+                const response = await fetch('/api/auth/signin/email', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ email, callbackUrl: '/' })
+                });
+                
+                if (response.ok) {
+                    status.innerHTML = `✅ Magic link sent to ${email}! Check your email and click the link to sign in.`;
+                    status.style.background = '#d4edda';
+                } else {
+                    const error = await response.text();
+                    status.innerHTML = `❌ Error: ${error}`;
+                    status.style.background = '#f8d7da';
+                }
+            } catch (error) {
+                status.innerHTML = `❌ Network error: ${error.message}`;
+                status.style.background = '#f8d7da';
+            }
+        }
+    </script>
+</body>
+</html>
