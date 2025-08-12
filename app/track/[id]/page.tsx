@@ -50,33 +50,7 @@ interface MakerDetails {
   verifiedEmail: string;
 }
 
-interface PlasticItem {
-  id: string;
-  originPoint: string;
-  collectionDate: string;
-  materialType: string;
-  weight: number;
-  processedDate: string;
-  carbonOffset: number;
-  productType: string;
-  event?: string;
-  status?: string; // Add status field for explicit status checks
-  message?: string;
-  makerDetails?: MakerDetails | null;
-  transactionDate?: string;
-  deliveredDate?: string;
-  donatingEntity?: string;
-  destination?: string;
-  productId?: string;
-  userId?: string;
-  nextCollectionDate?: string; // For bins
-  binStatus?: string; // For bin status separate from event
-  adoptedBy?: string; // For bins that have been adopted by teams
-  // ID hierarchy based on processing stage
-  binIds?: string[]; // For batches that come from multiple bins
-  batchId?: string;
-  blankId?: string;
-}
+
 
 export default function TrackItem() {
   const { id } = useParams();
@@ -537,7 +511,7 @@ export default function TrackItem() {
                     </span>
                     <span className="font-mono">{data.id}</span>
                   </div>
-                  {(data.binIds || sourceBin) && (
+                  {(data.binIds || relatedItems.sourceBin) && (
                     <div className="flex justify-between">
                       <span className="systematic-caps text-sm">Bin IDs</span>
                       <div className="space-y-1 text-right">
@@ -554,12 +528,12 @@ export default function TrackItem() {
                           ))
                         ) : (
                           // Fallback to source bin
-                          sourceBin && (
+                          relatedItems.sourceBin && (
                             <Link
-                              href={`/track/${sourceBin.id}`}
+                              href={`/track/${relatedItems.sourceBin.id}`}
                               className="block font-mono text-pop-green hover:text-pop-black hover:underline"
                             >
-                              {sourceBin.id}
+                              {relatedItems.sourceBin.id}
                             </Link>
                           )
                         )}
