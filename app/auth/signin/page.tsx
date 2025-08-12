@@ -81,32 +81,36 @@ export default function SignInPage() {
               </div>
             </div>
 
-            {/* Magic Link - Backup Option */}
-            <form onSubmit={handleEmailSignIn} className="space-y-4">
-              <div className="space-y-2">
-                <Label htmlFor="email" className="systematic-caps text-sm text-gray-700">Email Address</Label>
-                <Input
-                  id="email"
-                  type="email"
-                  placeholder="your@email.com"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  className="border-2 border-gray-300 focus:border-pop-blue"
-                  required
-                />
-              </div>
-              <Button
-                type="submit"
-                disabled={isLoading}
-                className="w-full bg-gray-600 border-2 border-pop-black text-white hover:bg-pop-black systematic-caps text-sm h-12"
-              >
-                <Mail className="w-4 h-4 mr-2" />
-                {isLoading ? 'Sending...' : 'Send Magic Link'}
-              </Button>
-              <div className="text-center text-xs systematic-caps text-gray-500">
-                We'll email you a secure sign-in link
-              </div>
-            </form>
+            {/* Magic Link - Working Alternative */}
+            <div className="bg-blue-50 border-2 border-blue-300 p-4">
+              <h3 className="systematic-caps text-sm text-blue-600 mb-2">✓ Magic Link (Working Now)</h3>
+              <p className="text-xs text-blue-600 mb-3">Use this while we fix Google OAuth</p>
+              <form onSubmit={handleEmailSignIn} className="space-y-4">
+                <div className="space-y-2">
+                  <Label htmlFor="email" className="systematic-caps text-sm text-gray-700">Email Address</Label>
+                  <Input
+                    id="email"
+                    type="email"
+                    placeholder="terrencestasse@gmail.com"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    className="border-2 border-blue-300 focus:border-blue-500"
+                    required
+                  />
+                </div>
+                <Button
+                  type="submit"
+                  disabled={isLoading}
+                  className="w-full bg-blue-600 border-2 border-pop-black text-white hover:bg-pop-black systematic-caps text-sm h-12"
+                >
+                  <Mail className="w-4 h-4 mr-2" />
+                  {isLoading ? 'Sending Magic Link...' : 'Send Magic Link'}
+                </Button>
+                <div className="text-center text-xs systematic-caps text-gray-500">
+                  Check your email for a secure sign-in link
+                </div>
+              </form>
+            </div>
           </CardContent>
         </Card>
       </div>
