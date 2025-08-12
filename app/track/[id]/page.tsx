@@ -886,7 +886,7 @@ export default function TrackItem() {
         )}
 
         {/* ========== CONNECTED ITEMS - Produced Items (for Batches) ========== */}
-        {data.id.startsWith("T") && blanks.length > 0 && (
+        {data.id.startsWith("T") && relatedItems.blanks.length > 0 && (
           <div className="max-w-2xl mx-auto">
             <PopArtContainer color="red" shadow>
               <Card className="border-4 border-pop-black">
@@ -898,7 +898,7 @@ export default function TrackItem() {
                 </CardHeader>
                 <CardContent className="py-6">
                   <div className="space-y-3">
-                    {blanks.map((blank, index) => (
+                    {relatedItems.blanks.map((blank, index) => (
                       <Link
                         key={blank.id}
                         href={`/track/${blank.id}`}
@@ -930,7 +930,7 @@ export default function TrackItem() {
         )}
 
         {/* ========== CONNECTED ITEMS - Batches from Bin (for Bins) ========== */}
-        {data.id.startsWith("B") && batches.length > 0 && (
+        {data.id.startsWith("B") && relatedItems.batches.length > 0 && (
           <div className="max-w-2xl mx-auto">
             <PopArtContainer color="green" shadow>
               <Card className="border-4 border-pop-black">
@@ -942,7 +942,7 @@ export default function TrackItem() {
                 </CardHeader>
                 <CardContent className="py-6">
                   <div className="space-y-3">
-                    {batches.map((batch, index) => (
+                    {relatedItems.batches.map((batch, index) => (
                       <Link
                         key={batch.id}
                         href={`/track/${batch.id}`}
