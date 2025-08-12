@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState, useEffect, useRef } from "react";
-import { useSession } from 'next-auth/react';
+import { useSession, signOut } from 'next-auth/react';
 import { Button } from "./ui/button";
 import { ChevronDown, Menu, X, ChevronRight, User, Settings, LogOut } from "lucide-react";
 import AuthButton from "../../components/AuthButton";
@@ -153,9 +153,80 @@ export default function Navigation() {
             </div>
           </div>
 
-          {/* Right-aligned Auth Button */}
+          {/* Right-aligned User Menu / Auth Button */}
           <div className="hidden lg:block">
-            <AuthButton />
+            {session ? (
+              <div className="relative" ref={userMenuRef}>
+                <button
+                  onClick={() => setUserMenuOpen(!userMenuOpen)}
+                  className="flex items-center space-x-3 hover:opacity-80 transition-opacity"
+                >
+                  <div className="flex items-center space-x-2">
+                    <div className="w-8 h-8 bg-pop-green border-2 border-pop-black rounded-full flex items-center justify-center">
+                      <User className="w-4 h-4 text-pop-black" />
+                    </div>
+                    <div className="text-left">
+                      <div className="text-sm font-semibold text-pop-black">
+                        {session.user?.name?.split(' ')[0] || 'User'}
+                      </div>
+                      <div className="text-xs text-gray-600 systematic-caps">
+                        {session.user?.userType === 'super_admin' ? 'Admin' : 'Maker'}
+                      </div>
+                    </div>
+                  </div>
+                  <ChevronDown className={`w-4 h-4 text-pop-black transform transition-transform ${userMenuOpen ? 'rotate-180' : ''}`} />
+                </button>
+
+                {/* User Dropdown */}
+                {userMenuOpen && (
+                  <div className="absolute right-0 mt-2 w-48 bg-white border-4 border-pop-black pop-shadow-black">
+                    <div className="px-3 py-2 border-b border-gray-200">
+                      <div className="text-sm font-semibold text-pop-black">
+                        {session.user?.email}
+                      </div>
+                      <div className="text-xs text-gray-500 systematic-caps">
+                        {session.user?.userType === 'super_admin' ? 'Super Admin' : 'Maker'}
+                      </div>
+                    </div>
+                    
+                    <div className="py-1">
+                      <Link
+                        href="/profile"
+                        onClick={() => setUserMenuOpen(false)}
+                        className="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-pop-green hover:text-white systematic-caps"
+                      >
+                        <User className="w-4 h-4 mr-3" />
+                        Profile
+                      </Link>
+                      
+                      {hasPortalAccess && (
+                        <Link
+                          href="/portal"
+                          onClick={() => setUserMenuOpen(false)}
+                          className="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-pop-blue hover:text-white systematic-caps"
+                        >
+                          <Settings className="w-4 h-4 mr-3" />
+                          Portal Dashboard
+                        </Link>
+                      )}
+                      
+                      <button
+                        onClick={() => {
+                          setUserMenuOpen(false)
+                          signOut()
+                        }}
+                        className="w-full flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-pop-red hover:text-white systematic-caps text-left"
+                      >
+                        <LogOut className="w-4 h-4 mr-3" />
+                        Sign Out
+                      </button>
+                    </div>
+                  </div>
+                )}
+              </div>
+            ) : (
+              <AuthButton />
+            )}
           </div>
 
           {/* Mobile menu button */}
