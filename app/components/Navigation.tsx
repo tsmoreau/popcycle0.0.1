@@ -184,9 +184,6 @@ export default function Navigation() {
                       <div className="text-sm font-semibold text-pop-black whitespace-nowrap">
                         {session.user?.email}
                       </div>
-                      <div className="text-xs text-gray-500 systematic-caps">
-                        {session.user?.userType === 'super_admin' ? 'Super Admin' : 'Maker'}
-                      </div>
                     </div>
                     
                     <div className="py-1">
