@@ -2,7 +2,6 @@
 
 import { useState } from 'react'
 import { usePathname } from 'next/navigation'
-import { useSession, signOut } from 'next-auth/react'
 import { 
   Users, 
   Truck, 
@@ -29,7 +28,6 @@ export default function PortalLayout({
   children: React.ReactNode
 }) {
   const pathname = usePathname()
-  const { data: session, status } = useSession()
   const [sidebarCollapsed, setSidebarCollapsed] = useState(true)
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
 
@@ -78,7 +76,7 @@ export default function PortalLayout({
               <Home className="h-4 w-4 md:mr-2" />
               <span className="hidden md:inline">Public Site</span>
             </Button>
-            <Button variant="ghost" size="sm" onClick={() => signOut({ callbackUrl: '/' })}>
+            <Button variant="ghost" size="sm">
               <LogOut className="h-4 w-4 md:mr-2" />
               <span className="hidden md:inline">Logout</span>
             </Button>
@@ -90,7 +88,7 @@ export default function PortalLayout({
       {mobileMenuOpen && (
         <div className="fixed inset-0 z-50 md:hidden">
           <div className="fixed inset-0 bg-black/20" onClick={() => setMobileMenuOpen(false)} />
-          <nav className="fixed top-0 left-0 bottom-0 w-64 bg-white border-r border-gray-200 overflow-y-auto flex flex-col">
+          <nav className="fixed top-0 left-0 bottom-0 w-64 bg-white border-r border-gray-200 overflow-y-auto">
             {/* Close button in top corner */}
             <div className="flex justify-start items-center p-4 pb-2">
               <Button 
@@ -102,8 +100,7 @@ export default function PortalLayout({
               </Button>
             </div>
             
-            {/* Navigation Items */}
-            <div className="px-6 pt-2 flex-1">
+            <div className="px-6 pt-2">
               <div className="space-y-2">
                 {sidebarItems.map((item) => {
                   const Icon = item.icon
@@ -124,72 +121,6 @@ export default function PortalLayout({
                   )
                 })}
               </div>
-            </div>
-
-            {/* User Section at Bottom */}
-            <div className="border-t border-gray-200 p-6 mt-auto">
-              {status === 'loading' ? (
-                <div className="flex items-center justify-center py-4">
-                  <div className="w-6 h-6 border-2 border-pop-green border-t-transparent rounded-full animate-spin"></div>
-                </div>
-              ) : session ? (
-                <div className="space-y-3">
-                  {/* User Info */}
-                  <div className="flex items-center space-x-3">
-                    <div className="w-10 h-10 bg-pop-green border-2 border-pop-black rounded-full flex items-center justify-center">
-                      <User className="w-5 h-5 text-pop-black" />
-                    </div>
-                    <div className="flex-1 min-w-0">
-                      <p className="text-sm font-medium text-pop-black truncate">
-                        {session.user?.name || 'User'}
-                      </p>
-                      <p className="text-xs text-gray-500 truncate">
-                        {session.user?.email}
-                      </p>
-                      <p className="text-xs font-medium text-pop-green systematic-caps">
-                        {session.user?.userType === 'super_admin' ? 'Super Admin' : 'Maker'}
-                      </p>
-                    </div>
-                  </div>
-                  
-                  {/* Action Buttons */}
-                  <div className="space-y-2">
-                    <Button 
-                      variant="ghost" 
-                      size="sm" 
-                      className="w-full justify-start"
-                      onClick={() => {
-                        setMobileMenuOpen(false)
-                        window.location.href = '/'
-                      }}
-                    >
-                      <Home className="h-4 w-4 mr-2" />
-                      Public Site
-                    </Button>
-                    <Button 
-                      variant="ghost" 
-                      size="sm" 
-                      className="w-full justify-start text-red-600 hover:text-red-700 hover:bg-red-50"
-                      onClick={() => signOut({ callbackUrl: '/' })}
-                    >
-                      <LogOut className="h-4 w-4 mr-2" />
-                      Logout
-                    </Button>
-                  </div>
-                </div>
-              ) : (
-                <div className="text-center">
-                  <p className="text-sm text-gray-600 mb-3">Not signed in</p>
-                  <Button 
-                    variant="outline"
-                    size="sm"
-                    className="w-full"
-                    onClick={() => window.location.href = '/auth/signin'}
-                  >
-                    Sign In
-                  </Button>
-                </div>
-              )}
             </div>
           </nav>
         </div>
