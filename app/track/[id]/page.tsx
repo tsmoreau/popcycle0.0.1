@@ -230,7 +230,7 @@ export default function TrackItem() {
   // Derived logic from streamlined schema
   const isUncollected = !item.collectionDate; // New state for uncollected bins
   const isSourceOnly = !item.productType;
-  const isProcessed = !!item.processedDate || (item.event === "inventory_creation" || item.status === "inventory_creation");
+  const isProcessed = !!item.processedDate || (item.status === "inventory_creation");
   const isCharity = !!item.donatingEntity;
   const isComplete = !!item.deliveredDate;
   const hasMaker = !!item.makerDetails;
