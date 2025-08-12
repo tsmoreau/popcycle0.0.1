@@ -4,7 +4,7 @@ import { useState, useRef, useEffect } from 'react'
 import { useSession, signOut } from 'next-auth/react'
 import { Button } from './ui/button'
 import { User, LogOut, Settings, ChevronDown } from 'lucide-react'
-import SignInModal from '../app/components/SignInModal'
+import SignInModal from './SignInModal'
 
 export default function AuthButton() {
   const { data: session, status } = useSession()
