@@ -169,8 +169,8 @@ export default function Navigation() {
                       <div className="text-sm font-semibold text-pop-black">
                         {session.user?.name?.split(' ')[0] || 'User'}
                       </div>
-                      <div className="text-xs text-gray-600 systematic-caps">
-                        {session.user?.userType === 'super_admin' ? 'Admin' : 'Maker'}
+                      <div className="text-xs text-pop-green systematic-caps">
+                        {session.user?.userType === 'super_admin' ? 'Super Admin' : 'Maker'}
                       </div>
                     </div>
                   </div>
@@ -342,7 +342,7 @@ export default function Navigation() {
                           {session.user?.name?.split(' ')[0] || 'User'}
                         </div>
                         <div className="systematic-caps text-xs font-medium text-pop-green mt-1">
-                          {session.user?.userType === 'super_admin' ? 'Admin' : 'Maker'}
+                          {session.user?.userType === 'super_admin' ? 'Super Admin' : 'Maker'}
                         </div>
                       </div>
                     </div>
