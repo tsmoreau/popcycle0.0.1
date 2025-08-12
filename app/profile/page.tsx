@@ -3,13 +3,61 @@
 import { Card, CardContent, CardHeader, CardTitle } from '../components/ui/card'
 import { Button } from '../components/ui/button'
 import { Badge } from '../components/ui/badge'
-import { User, Mail, Edit, Trophy, Users, Settings, Calendar } from 'lucide-react'
+import { User, Mail, Edit, Trophy, Users, Settings, Calendar, Package, ExternalLink } from 'lucide-react'
 import { useSession } from 'next-auth/react'
+import { useEffect, useState } from 'react'
 import Link from 'next/link'
+
+interface AssembledItem {
+  id: string;
+  batchId: string;
+  productId?: string;
+  status: string;
+  assemblyDate?: string;
+  deliveryDate?: string;
+  deliveredDate?: string;
+  weight?: number;
+  productName?: string;
+  productDescription?: string;
+}
 
 export default function ProfilePage() {
   const { data: session } = useSession();
-  
+  const [assembledItems, setAssembledItems] = useState<AssembledItem[]>([]);
+  const [loadingItems, setLoadingItems] = useState(true);
+
+  useEffect(() => {
+    if (session?.user) {
+      fetchAssembledItems();
+    }
+  }, [session]);
+
+  const fetchAssembledItems = async () => {
+    try {
+      const response = await fetch('/api/profile/items');
+      const data = await response.json();
+      
+      if (data.success) {
+        setAssembledItems(data.items);
+      } else {
+        console.error('Failed to fetch assembled items:', data.error);
+      }
+    } catch (error) {
+      console.error('Error fetching assembled items:', error);
+    } finally {
+      setLoadingItems(false);
+    }
+  };
+
+  const formatDate = (dateString?: string) => {
+    if (!dateString) return 'N/A';
+    return new Date(dateString).toLocaleDateString('en-US', {
+      month: 'short',
+      day: 'numeric',
+      year: 'numeric'
+    });
+  };
+
   if (!session) {
     return (
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
@@ -190,6 +238,113 @@ export default function ProfilePage() {
             </CardContent>
           </Card>
         </div>
+
+        {/* Assembled Items Section */}
+        <Card className="bg-white border-2 border-pop-black mt-8">
+          <CardHeader>
+            <CardTitle className="systematic-caps text-pop-black flex items-center">
+              <Package className="w-5 h-5 mr-2" />
+              My Assembled Items
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            {loadingItems ? (
+              <div className="text-center py-8">
+                <div className="text-gray-500">Loading your assembled items...</div>
+              </div>
+            ) : assembledItems.length > 0 ? (
+              <div className="space-y-4">
+                {assembledItems.map((item) => (
+                  <div key={item.id} className="p-4 border-2 border-pop-black rounded-lg hover:bg-gray-50 transition-colors">
+                    <div className="flex items-start justify-between">
+                      <div className="flex-1">
+                        <div className="flex items-center space-x-3 mb-2">
+                          <Link 
+                            href={`/track/${item.id}`}
+                            className="helvetica-bold text-lg text-pop-black hover:text-pop-green transition-colors flex items-center"
+                          >
+                            {item.id}
+                            <ExternalLink className="w-4 h-4 ml-1" />
+                          </Link>
+                          <Badge 
+                            className={`systematic-caps text-xs ${
+                              item.status === 'delivered' 
+                                ? 'bg-pop-green/10 text-pop-green border-pop-green'
+                                : item.status === 'assembled'
+                                ? 'bg-pop-blue/10 text-pop-blue border-pop-blue'
+                                : 'bg-gray-100 text-gray-600 border-gray-300'
+                            }`}
+                          >
+                            {item.status === 'delivered' ? 'Delivered' : 
+                             item.status === 'assembled' ? 'Assembled' : 
+                             item.status}
+                          </Badge>
+                        </div>
+
+                        {item.productName && (
+                          <div className="mb-2">
+                            <span className="text-sm font-medium text-gray-700">Product: </span>
+                            <span className="text-sm text-gray-600">{item.productName}</span>
+                          </div>
+                        )}
+
+                        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 text-sm text-gray-600">
+                          <div>
+                            <span className="font-medium">Batch: </span>
+                            <Link 
+                              href={`/track/${item.batchId}`}
+                              className="text-pop-blue hover:text-pop-green transition-colors"
+                            >
+                              {item.batchId}
+                            </Link>
+                          </div>
+                          
+                          {item.weight && (
+                            <div>
+                              <span className="font-medium">Weight: </span>
+                              <span>{item.weight} kg</span>
+                            </div>
+                          )}
+                          
+                          {item.assemblyDate && (
+                            <div>
+                              <span className="font-medium">Assembled: </span>
+                              <span>{formatDate(item.assemblyDate)}</span>
+                            </div>
+                          )}
+                          
+                          {(item.deliveredDate || item.deliveryDate) && (
+                            <div>
+                              <span className="font-medium">Delivered: </span>
+                              <span>{formatDate(item.deliveredDate || item.deliveryDate)}</span>
+                            </div>
+                          )}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+                
+                {assembledItems.length >= 20 && (
+                  <div className="text-center pt-4">
+                    <p className="text-sm text-gray-500">Showing your 20 most recent items</p>
+                  </div>
+                )}
+              </div>
+            ) : (
+              <div className="text-center py-8">
+                <Package className="w-12 h-12 text-gray-400 mx-auto mb-4" />
+                <h3 className="text-lg font-medium text-gray-600 mb-2">No Assembled Items Yet</h3>
+                <p className="text-gray-500 mb-4">You haven't assembled any items yet. Start by browsing available products!</p>
+                <Link href="/shop">
+                  <Button className="systematic-caps bg-pop-green border-2 border-pop-black text-pop-black hover:bg-pop-black hover:text-pop-green">
+                    Browse Shop
+                  </Button>
+                </Link>
+              </div>
+            )}
+          </CardContent>
+        </Card>
 
         {/* Coming Soon Section */}
         <Card className="bg-white border-2 border-pop-black mt-8">
