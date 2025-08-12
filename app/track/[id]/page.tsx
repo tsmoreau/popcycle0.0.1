@@ -126,8 +126,8 @@ export default function TrackItem() {
           makerDetails: data.makerDetails,
           transactionDate: data.transactionDate || "",
           deliveredDate: data.deliveryDate || "",
-          // For bins, use actual event name from events array; for others use event field; for status use separate mapping
-          event: data.type === "bin" ? data.event : data.event,
+          // For bins, use actual event name from events array; for batches use status field; for blanks use event field
+          event: data.type === "bin" ? data.event : data.type === "batch" ? data.status : data.event,
           // Map productId and userId for timeline display
           productId: data.productId,
           userId: data.userId,
