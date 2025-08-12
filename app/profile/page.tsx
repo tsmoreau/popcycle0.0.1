@@ -215,6 +215,11 @@ export default function ProfilePage() {
                   </Button>
                 </Link>
 
+                <Button variant="outline" className="w-full systematic-caps border-2 border-pop-black hover:bg-gray-100 justify-start" disabled>
+                  Purchase History
+                  <span className="ml-auto text-xs text-gray-400">Coming Soon</span>
+                </Button>
+
                 {hasPortalAccess && (
                   <Link href="/portal">
                     <Button variant="outline" className="w-full systematic-caps border-2 border-pop-black hover:bg-pop-blue hover:text-white justify-start">
