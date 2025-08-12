@@ -6,6 +6,7 @@ import type { AuthOptions } from 'next-auth'
 export const authOptions: AuthOptions = {
   secret: process.env.NEXTAUTH_SECRET,
   trustHost: true,
+  session: { strategy: "jwt" },
   providers: [
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID!.trim(),
@@ -27,14 +28,28 @@ export const authOptions: AuthOptions = {
       return !!user?.email
     },
     
-    async session({ session }) {
-      // For terrencestasse@gmail.com, add super admin privileges
-      if (session?.user?.email === 'terrencestasse@gmail.com') {
-        session.user.userType = 'super_admin'
-        session.user.permissions = ['admin', 'operations', 'crm', 'financial', 'partner']
+    async jwt({ token, user }) {
+      if (user) {
+        token.email = user.email
+      }
+      
+      // Add user type and permissions to token for middleware access
+      if (token?.email === 'terrencestasse@gmail.com') {
+        token.userType = 'super_admin'
+        token.permissions = ['admin', 'operations', 'crm', 'financial', 'partner']
       } else {
-        session.user.userType = 'maker'
-        session.user.permissions = []
+        token.userType = 'maker'
+        token.permissions = []
+      }
+      
+      return token
+    },
+    
+    async session({ session, token }) {
+      // Transfer token data to session
+      if (token) {
+        session.user.userType = token.userType
+        session.user.permissions = token.permissions
       }
       return session
     }
