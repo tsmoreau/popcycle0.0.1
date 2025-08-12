@@ -22,68 +22,21 @@ export const authOptions: AuthOptions = {
     }),
   ],
   callbacks: {
-    async signIn({ user, account, profile }) {
-      if (!user.email) return false
-      
-      // Connect to MongoDB to check/create user
-      const client = new MongoClient(process.env.MONGODB_URI!)
-      await client.connect()
-      const db = client.db()
-      
-      // Check if user exists in our users collection
-      let existingUser = await db.collection('users').findOne({ email: user.email })
-      
-      if (!existingUser) {
-        // Create new user with default "maker" role
-        const newUser = {
-          name: user.name || profile?.name || '',
-          email: user.email,
-          userType: 'maker',
-          skillLevel: 'beginner',
-          itemsAssembled: 0,
-          totalHoursLogged: 0,
-          favoriteProducts: [],
-          assemblyStories: [],
-          permissions: [], // No portal access for regular users
-          assignedRoutes: [],
-          isActive: true,
-          createdAt: new Date(),
-          updatedAt: new Date()
-        }
-        
-        await db.collection('users').insertOne(newUser)
-        existingUser = newUser
-      }
-      
-      await client.close()
-      return true
+    async signIn({ user }) {
+      // Allow all Google OAuth users for now
+      return !!user?.email
     },
     
-    async session({ session, token }) {
-      if (session?.user?.email) {
-        // Fetch current user data from MongoDB
-        const client = new MongoClient(process.env.MONGODB_URI!)
-        await client.connect()
-        const db = client.db()
-        
-        const user = await db.collection('users').findOne({ email: session.user.email })
-        
-        if (user) {
-          session.user.userType = user.userType
-          session.user.permissions = user.permissions || []
-          session.user.id = user._id.toString()
-        }
-        
-        await client.close()
+    async session({ session }) {
+      // For terrencestasse@gmail.com, add super admin privileges
+      if (session?.user?.email === 'terrencestasse@gmail.com') {
+        session.user.userType = 'super_admin'
+        session.user.permissions = ['admin', 'operations', 'crm', 'financial', 'partner']
+      } else {
+        session.user.userType = 'maker'
+        session.user.permissions = []
       }
       return session
-    },
-    
-    async jwt({ token, user }) {
-      if (user) {
-        token.email = user.email
-      }
-      return token
     }
   },
   session: {

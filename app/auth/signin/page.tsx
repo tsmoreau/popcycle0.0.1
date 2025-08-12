@@ -69,44 +69,8 @@ export default function SignInPage() {
               </div>
             )}
 
-            <div className="relative">
-              <div className="absolute inset-0 flex items-center">
-                <div className="w-full border-t border-gray-300" />
-              </div>
-              <div className="relative flex justify-center text-xs uppercase">
-                <span className="bg-white px-2 text-gray-500 systematic-caps">Or continue with email</span>
-              </div>
-            </div>
-
-            {/* Magic Link - Working Alternative */}
-            <div className="bg-blue-50 border-2 border-blue-300 p-4">
-              <h3 className="systematic-caps text-sm text-blue-600 mb-2">✓ Magic Link (Working Now)</h3>
-              <p className="text-xs text-blue-600 mb-3">Use this while we fix Google OAuth</p>
-              <form onSubmit={handleEmailSignIn} className="space-y-4">
-                <div className="space-y-2">
-                  <Label htmlFor="email" className="systematic-caps text-sm text-gray-700">Email Address</Label>
-                  <Input
-                    id="email"
-                    type="email"
-                    placeholder="terrencestasse@gmail.com"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    className="border-2 border-blue-300 focus:border-blue-500"
-                    required
-                  />
-                </div>
-                <Button
-                  type="submit"
-                  disabled={isLoading}
-                  className="w-full bg-blue-600 border-2 border-pop-black text-white hover:bg-pop-black systematic-caps text-sm h-12"
-                >
-                  <Mail className="w-4 h-4 mr-2" />
-                  {isLoading ? 'Sending Magic Link...' : 'Send Magic Link'}
-                </Button>
-                <div className="text-center text-xs systematic-caps text-gray-500">
-                  Check your email for a secure sign-in link
-                </div>
-              </form>
+            <div className="text-center text-xs systematic-caps text-gray-500 pt-4">
+              Google OAuth is the primary authentication method for PopCycle
             </div>
           </CardContent>
         </Card>
