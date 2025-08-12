@@ -465,18 +465,13 @@ export default function TrackItem() {
                 Processing
               </h3>
               <p className="text-xs text-pop-gray">
-                {item.id.startsWith("T") && item.event === "inventory_creation"
-                  ? "Complete"
-                  : item.id.startsWith("T")
-                    ? "In progress"
-                    : isProcessed 
-                      ? formatDate(item.processedDate)
-                      : "Pending"
+                {item.id.startsWith("T")
+                  ? (item.event === "inventory_creation" ? "Complete" : "In progress")
+                  : isProcessed 
+                    ? formatDate(item.processedDate)
+                    : "Pending"
                 }
               </p>
-              <div style={{fontSize: '10px', color: 'red'}}>
-                DEBUG: id={item.id}, event={item.event}, isT={item.id.startsWith("T")}, match={item.event === "inventory_creation"}
-              </div>
             </div>
 
             {/* Connection Line */}
