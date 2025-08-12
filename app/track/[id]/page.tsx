@@ -349,194 +349,135 @@ export default function TrackItem() {
         {/* ========== TIMELINE SECTION ========== */}
         <div className="mb-8 lg:mb-12">
           <div className="flex gap-2 sm:gap-4 justify-center max-w-3xl mx-auto">
-            {/* Bins: Show only Collection step */}
-            {data.id.startsWith("B") && (
-              <div className="text-center flex-1 max-w-[200px]">
-                <div className={`w-12 h-12 sm:w-20 sm:h-20 mx-auto mb-2 sm:mb-4 border-2 sm:border-4 border-pop-black flex items-center justify-center rounded-lg shadow-lg ${
+            {/* Step 1: COLLECTION */}
+            <div className="text-center flex-1 max-w-[100px] sm:max-w-[140px]">
+              <div className={`w-12 h-12 sm:w-20 sm:h-20 mx-auto mb-2 sm:mb-4 border-2 sm:border-4 border-pop-black flex items-center justify-center rounded-lg shadow-lg ${
+                data.collectionDate || data.lastCollectionDate || data.id.startsWith("B") 
+                  ? "bg-pop-green" 
+                  : "bg-gray-200"
+              }`}>
+                <Package className={`w-6 h-6 sm:w-10 sm:h-10 ${
                   data.collectionDate || data.lastCollectionDate || data.id.startsWith("B") 
-                    ? "bg-pop-green" 
-                    : "bg-gray-200"
-                }`}>
-                  <Package className={`w-6 h-6 sm:w-10 sm:h-10 ${
-                    data.collectionDate || data.lastCollectionDate || data.id.startsWith("B") 
+                    ? "text-pop-black" 
+                    : "text-gray-400"
+                }`} strokeWidth={1.5} />
+              </div>
+              <h3 className="systematic-caps text-xs sm:text-sm mb-1 sm:mb-2 font-semibold">
+                Collection
+              </h3>
+              <p className="text-xs text-pop-gray leading-tight">
+                {data.id.startsWith("B") 
+                  ? "Active bin" 
+                  : data.collectionDate 
+                    ? formatDate(data.collectionDate)
+                    : data.lastCollectionDate
+                      ? formatDate(data.lastCollectionDate)
+                      : "Pending"
+                }
+              </p>
+            </div>
+
+            {/* Connection Line */}
+            <div className="flex items-center justify-center pt-6 sm:pt-10">
+              <div className={`w-4 sm:w-8 h-0.5 ${
+                isProcessed ? "bg-pop-blue" : "bg-gray-300"
+              }`}></div>
+            </div>
+
+            {/* Step 2: PROCESSING */}
+            <div className="text-center flex-1 max-w-[100px] sm:max-w-[140px]">
+              <div className={`w-12 h-12 sm:w-20 sm:h-20 mx-auto mb-2 sm:mb-4 border-2 sm:border-4 border-pop-black flex items-center justify-center rounded-lg shadow-lg ${
+                isProcessed 
+                  ? "bg-pop-blue" 
+                  : "bg-gray-200"
+              }`}>
+                <Settings className={`w-6 h-6 sm:w-10 sm:h-10 ${
+                  isProcessed 
+                    ? "text-pop-black" 
+                    : "text-gray-400"
+                }`} strokeWidth={1.5} />
+              </div>
+              <h3 className="systematic-caps text-xs sm:text-sm mb-1 sm:mb-2 font-semibold">
+                {data.status === "inventory_creation" ? "Processed" : "Processing"}
+              </h3>
+              <p className="text-xs text-pop-gray leading-tight">
+                {data.status === "inventory_creation" ? "Complete" : data.id.startsWith("T") ? "In progress" : "Pending"}
+              </p>
+            </div>
+
+            {/* Connection Line */}
+            <div className="flex items-center justify-center pt-6 sm:pt-10">
+              <div className={`w-4 sm:w-8 h-0.5 ${
+                data.productId ? "bg-pop-red" : "bg-gray-300"
+              }`}></div>
+            </div>
+
+            {/* Step 3: PURCHASED/DONATED */}
+            <div className="text-center flex-1 max-w-[100px] sm:max-w-[140px]">
+              <div className={`w-12 h-12 sm:w-20 sm:h-20 mx-auto mb-2 sm:mb-4 border-2 sm:border-4 border-pop-black flex items-center justify-center rounded-lg shadow-lg ${
+                data.productId 
+                  ? "bg-pop-red" 
+                  : "bg-gray-200"
+              }`}>
+                {isCharity ? (
+                  <HeartHandshake className={`w-6 h-6 sm:w-10 sm:h-10 ${
+                    data.productId 
                       ? "text-pop-black" 
                       : "text-gray-400"
                   }`} strokeWidth={1.5} />
-                </div>
-                <h3 className="systematic-caps text-xs sm:text-sm mb-1 sm:mb-2 font-semibold">
-                  Collection
-                </h3>
-                <p className="text-xs text-pop-gray leading-tight">
-                  {data.id.startsWith("B") 
-                    ? "Active bin" 
-                    : data.collectionDate 
-                      ? formatDate(data.collectionDate)
-                      : data.lastCollectionDate
-                        ? formatDate(data.lastCollectionDate)
-                        : "Pending"
-                  }
-                </p>
-              </div>
-            )}
-
-            {/* Batches: Show Collection and Processing steps */}
-            {data.id.startsWith("T") && (
-              <>
-                {/* Step 1: COLLECTION */}
-                <div className="text-center flex-1 max-w-[100px] sm:max-w-[140px]">
-                  <div className={`w-12 h-12 sm:w-20 sm:h-20 mx-auto mb-2 sm:mb-4 border-2 sm:border-4 border-pop-black flex items-center justify-center rounded-lg shadow-lg ${
-                    data.collectionDate || data.lastCollectionDate || data.id.startsWith("B") 
-                      ? "bg-pop-green" 
-                      : "bg-gray-200"
-                  }`}>
-                    <Package className={`w-6 h-6 sm:w-10 sm:h-10 ${
-                      data.collectionDate || data.lastCollectionDate || data.id.startsWith("B") 
-                        ? "text-pop-black" 
-                        : "text-gray-400"
-                    }`} strokeWidth={1.5} />
-                  </div>
-                  <h3 className="systematic-caps text-xs sm:text-sm mb-1 sm:mb-2 font-semibold">
-                    Collection
-                  </h3>
-                  <p className="text-xs text-pop-gray leading-tight">
-                    {data.collectionDate ? formatDate(data.collectionDate) : "Complete"}
-                  </p>
-                </div>
-
-                {/* Connection Line */}
-                <div className="flex items-center justify-center pt-6 sm:pt-10">
-                  <div className={`w-4 sm:w-8 h-0.5 ${
-                    isProcessed ? "bg-pop-blue" : "bg-gray-300"
-                  }`}></div>
-                </div>
-
-                {/* Step 2: PROCESSING */}
-                <div className="text-center flex-1 max-w-[100px] sm:max-w-[140px]">
-                  <div className={`w-12 h-12 sm:w-20 sm:h-20 mx-auto mb-2 sm:mb-4 border-2 sm:border-4 border-pop-black flex items-center justify-center rounded-lg shadow-lg ${
-                    isProcessed 
-                      ? "bg-pop-blue" 
-                      : "bg-gray-200"
-                  }`}>
-                    <Settings className={`w-6 h-6 sm:w-10 sm:h-10 ${
-                      isProcessed 
-                        ? "text-pop-black" 
-                        : "text-gray-400"
-                    }`} strokeWidth={1.5} />
-                  </div>
-                  <h3 className="systematic-caps text-xs sm:text-sm mb-1 sm:mb-2 font-semibold">
-                    {data.status === "inventory_creation" ? "Processed" : "Processing"}
-                  </h3>
-                  <p className="text-xs text-pop-gray leading-tight">
-                    {data.status === "inventory_creation" ? "Complete" : "In progress"}
-                  </p>
-                </div>
-              </>
-            )}
-
-            {/* Blanks: Show Processing, Purchased/Donated, and optionally Assembled */}
-            {data.id.startsWith("K") && (
-              <>
-                {/* Step 1: PROCESSING */}
-                <div className="text-center flex-1 max-w-[100px] sm:max-w-[140px]">
-                  <div className={`w-12 h-12 sm:w-20 sm:h-20 mx-auto mb-2 sm:mb-4 border-2 sm:border-4 border-pop-black flex items-center justify-center rounded-lg shadow-lg ${
-                    isProcessed 
-                      ? "bg-pop-blue" 
-                      : "bg-gray-200"
-                  }`}>
-                    <Settings className={`w-6 h-6 sm:w-10 sm:h-10 ${
-                      isProcessed 
-                        ? "text-pop-black" 
-                        : "text-gray-400"
-                    }`} strokeWidth={1.5} />
-                  </div>
-                  <h3 className="systematic-caps text-xs sm:text-sm mb-1 sm:mb-2 font-semibold">
-                    {data.status === "inventory_creation" ? "Processed" : "Processing"}
-                  </h3>
-                  <p className="text-xs text-pop-gray leading-tight">
-                    Complete
-                  </p>
-                </div>
-
-                {/* Connection Line */}
-                <div className="flex items-center justify-center pt-6 sm:pt-10">
-                  <div className={`w-4 sm:w-8 h-0.5 ${
-                    data.productId ? "bg-pop-red" : "bg-gray-300"
-                  }`}></div>
-                </div>
-
-                {/* Step 2: PURCHASED/DONATED */}
-                <div className="text-center flex-1 max-w-[100px] sm:max-w-[140px]">
-                  <div className={`w-12 h-12 sm:w-20 sm:h-20 mx-auto mb-2 sm:mb-4 border-2 sm:border-4 border-pop-black flex items-center justify-center rounded-lg shadow-lg ${
+                ) : (
+                  <CheckCircle className={`w-6 h-6 sm:w-10 sm:h-10 ${
                     data.productId 
-                      ? "bg-pop-red" 
-                      : "bg-gray-200"
-                  }`}>
-                    {isCharity ? (
-                      <HeartHandshake className={`w-6 h-6 sm:w-10 sm:h-10 ${
-                        data.productId 
-                          ? "text-pop-black" 
-                          : "text-gray-400"
-                      }`} strokeWidth={1.5} />
-                    ) : (
-                      <CheckCircle className={`w-6 h-6 sm:w-10 sm:h-10 ${
-                        data.productId 
-                          ? "text-pop-black" 
-                          : "text-gray-400"
-                      }`} strokeWidth={1.5} />
-                    )}
-                  </div>
-                  <h3 className="systematic-caps text-xs sm:text-sm mb-1 sm:mb-2 font-semibold">
-                    {isCharity ? "Donated" : "Purchased"}
-                  </h3>
-                  <p className="text-xs text-pop-gray leading-tight">
-                    {data.productId 
-                      ? data.deliveredDate || data.deliveryDate
-                        ? formatDate(data.deliveredDate || data.deliveryDate)
-                        : "Complete"
-                      : "Available"
-                    }
-                  </p>
-                </div>
-
-                {/* Show Assembly step only if blank has productId (has been purchased) */}
-                {data.productId && (
-                  <>
-                    {/* Connection Line */}
-                    <div className="flex items-center justify-center pt-6 sm:pt-10">
-                      <div className={`w-4 sm:w-8 h-0.5 ${
-                        data.userId ? "bg-pop-red" : "bg-gray-300"
-                      }`}></div>
-                    </div>
-
-                    {/* Step 3: ASSEMBLED */}
-                    <div className="text-center flex-1 max-w-[100px] sm:max-w-[140px]">
-                      <div className={`w-12 h-12 sm:w-20 sm:h-20 mx-auto mb-2 sm:mb-4 border-2 sm:border-4 border-pop-black flex items-center justify-center rounded-lg shadow-lg ${
-                        data.userId 
-                          ? "bg-pop-red" 
-                          : "bg-gray-200"
-                      }`}>
-                        <User className={`w-6 h-6 sm:w-10 sm:h-10 ${
-                          data.userId 
-                            ? "text-pop-black" 
-                            : "text-gray-400"
-                        }`} strokeWidth={1.5} />
-                      </div>
-                      <h3 className="systematic-caps text-xs sm:text-sm mb-1 sm:mb-2 font-semibold">
-                        Assembled
-                      </h3>
-                      <p className="text-xs text-pop-gray leading-tight">
-                        {data.userId 
-                          ? data.makerDetails?.assemblyDate 
-                            ? formatDate(data.makerDetails.assemblyDate)
-                            : "Complete"
-                          : "Awaiting maker"
-                        }
-                      </p>
-                    </div>
-                  </>
+                      ? "text-pop-black" 
+                      : "text-gray-400"
+                  }`} strokeWidth={1.5} />
                 )}
-              </>
-            )}
+              </div>
+              <h3 className="systematic-caps text-xs sm:text-sm mb-1 sm:mb-2 font-semibold">
+                {isCharity ? "Donated" : "Purchased"}
+              </h3>
+              <p className="text-xs text-pop-gray leading-tight">
+                {data.productId 
+                  ? data.deliveredDate || data.deliveryDate
+                    ? formatDate(data.deliveredDate || data.deliveryDate)
+                    : "Complete"
+                  : "Available"
+                }
+              </p>
+            </div>
+
+            {/* Connection Line */}
+            <div className="flex items-center justify-center pt-6 sm:pt-10">
+              <div className={`w-4 sm:w-8 h-0.5 ${
+                data.userId ? "bg-pop-red" : "bg-gray-300"
+              }`}></div>
+            </div>
+
+            {/* Step 4: ASSEMBLED */}
+            <div className="text-center flex-1 max-w-[100px] sm:max-w-[140px]">
+              <div className={`w-12 h-12 sm:w-20 sm:h-20 mx-auto mb-2 sm:mb-4 border-2 sm:border-4 border-pop-black flex items-center justify-center rounded-lg shadow-lg ${
+                data.userId 
+                  ? "bg-pop-red" 
+                  : "bg-gray-200"
+              }`}>
+                <User className={`w-6 h-6 sm:w-10 sm:h-10 ${
+                  data.userId 
+                    ? "text-pop-black" 
+                    : "text-gray-400"
+                }`} strokeWidth={1.5} />
+              </div>
+              <h3 className="systematic-caps text-xs sm:text-sm mb-1 sm:mb-2 font-semibold">
+                Assembled
+              </h3>
+              <p className="text-xs text-pop-gray leading-tight">
+                {data.userId 
+                  ? data.makerDetails?.assemblyDate 
+                    ? formatDate(data.makerDetails.assemblyDate)
+                    : "Complete"
+                  : "Awaiting maker"
+                }
+              </p>
+            </div>
           </div>
         </div>
 
