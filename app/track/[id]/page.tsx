@@ -474,6 +474,9 @@ export default function TrackItem() {
                       : "Pending"
                 }
               </p>
+              <div style={{fontSize: '10px', color: 'red'}}>
+                DEBUG: id={item.id}, event={item.event}, isT={item.id.startsWith("T")}, match={item.event === "inventory_creation"}
+              </div>
             </div>
 
             {/* Connection Line */}
