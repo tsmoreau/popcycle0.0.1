@@ -348,25 +348,25 @@ export default function TrackItem() {
 
         {/* ========== TIMELINE SECTION ========== */}
         <div className="mb-8 lg:mb-12">
-          <div className="flex gap-2 sm:gap-4 justify-center max-w-3xl mx-auto">
+          <div className="flex gap-2 lg:gap-4 justify-center max-w-3xl mx-auto">
             {/* Bins: Show only Collection step */}
             {data.id.startsWith("B") && (
               <div className="text-center flex-1 max-w-[200px]">
-                <div className={`w-12 h-12 sm:w-20 sm:h-20 mx-auto mb-2 sm:mb-4 border-2 sm:border-4 border-pop-black flex items-center justify-center rounded-lg shadow-lg ${
+                <div className={`w-20 h-20 mx-auto mb-3 border-4 border-pop-black flex items-center justify-center rounded-lg shadow-lg ${
                   data.collectionDate || data.lastCollectionDate || data.id.startsWith("B") 
                     ? "bg-pop-green" 
                     : "bg-gray-200"
                 }`}>
-                  <Package className={`w-6 h-6 sm:w-10 sm:h-10 ${
+                  <Package className={`w-10 h-10 ${
                     data.collectionDate || data.lastCollectionDate || data.id.startsWith("B") 
                       ? "text-pop-black" 
                       : "text-gray-400"
                   }`} strokeWidth={1.5} />
                 </div>
-                <h3 className="systematic-caps text-xs sm:text-sm mb-1 sm:mb-2 font-semibold">
+                <h3 className="systematic-caps text-sm mb-1 font-semibold">
                   Collection
                 </h3>
-                <p className="text-xs text-pop-gray leading-tight">
+                <p className="text-xs text-pop-gray">
                   {data.id.startsWith("B") 
                     ? "Active bin" 
                     : data.collectionDate 
@@ -383,50 +383,50 @@ export default function TrackItem() {
             {data.id.startsWith("T") && (
               <>
                 {/* Step 1: COLLECTION */}
-                <div className="text-center flex-1 max-w-[100px] sm:max-w-[140px]">
-                  <div className={`w-12 h-12 sm:w-20 sm:h-20 mx-auto mb-2 sm:mb-4 border-2 sm:border-4 border-pop-black flex items-center justify-center rounded-lg shadow-lg ${
+                <div className="text-center flex-1 max-w-[140px]">
+                  <div className={`w-20 h-20 mx-auto mb-3 border-4 border-pop-black flex items-center justify-center rounded-lg shadow-lg ${
                     data.collectionDate || data.lastCollectionDate || data.id.startsWith("B") 
                       ? "bg-pop-green" 
                       : "bg-gray-200"
                   }`}>
-                    <Package className={`w-6 h-6 sm:w-10 sm:h-10 ${
+                    <Package className={`w-10 h-10 ${
                       data.collectionDate || data.lastCollectionDate || data.id.startsWith("B") 
                         ? "text-pop-black" 
                         : "text-gray-400"
                     }`} strokeWidth={1.5} />
                   </div>
-                  <h3 className="systematic-caps text-xs sm:text-sm mb-1 sm:mb-2 font-semibold">
+                  <h3 className="systematic-caps text-sm mb-1 font-semibold">
                     Collection
                   </h3>
-                  <p className="text-xs text-pop-gray leading-tight">
+                  <p className="text-xs text-pop-gray">
                     {data.collectionDate ? formatDate(data.collectionDate) : "Complete"}
                   </p>
                 </div>
 
                 {/* Connection Line */}
-                <div className="flex items-center justify-center pt-6 sm:pt-10">
-                  <div className={`w-4 sm:w-8 h-0.5 ${
+                <div className="flex items-center justify-center pt-10">
+                  <div className={`w-6 h-0.5 ${
                     isProcessed ? "bg-pop-blue" : "bg-gray-300"
                   }`}></div>
                 </div>
 
                 {/* Step 2: PROCESSING */}
-                <div className="text-center flex-1 max-w-[100px] sm:max-w-[140px]">
-                  <div className={`w-12 h-12 sm:w-20 sm:h-20 mx-auto mb-2 sm:mb-4 border-2 sm:border-4 border-pop-black flex items-center justify-center rounded-lg shadow-lg ${
+                <div className="text-center flex-1 max-w-[140px]">
+                  <div className={`w-20 h-20 mx-auto mb-3 border-4 border-pop-black flex items-center justify-center rounded-lg shadow-lg ${
                     isProcessed 
                       ? "bg-pop-blue" 
                       : "bg-gray-200"
                   }`}>
-                    <Settings className={`w-6 h-6 sm:w-10 sm:h-10 ${
+                    <Settings className={`w-10 h-10 ${
                       isProcessed 
                         ? "text-pop-black" 
                         : "text-gray-400"
                     }`} strokeWidth={1.5} />
                   </div>
-                  <h3 className="systematic-caps text-xs sm:text-sm mb-1 sm:mb-2 font-semibold">
+                  <h3 className="systematic-caps text-sm mb-1 font-semibold">
                     {data.status === "inventory_creation" ? "Processed" : "Processing"}
                   </h3>
-                  <p className="text-xs text-pop-gray leading-tight">
+                  <p className="text-xs text-pop-gray">
                     {data.status === "inventory_creation" ? "Complete" : "In progress"}
                   </p>
                 </div>
@@ -437,58 +437,58 @@ export default function TrackItem() {
             {data.id.startsWith("K") && (
               <>
                 {/* Step 1: PROCESSING */}
-                <div className="text-center flex-1 max-w-[100px] sm:max-w-[140px]">
-                  <div className={`w-12 h-12 sm:w-20 sm:h-20 mx-auto mb-2 sm:mb-4 border-2 sm:border-4 border-pop-black flex items-center justify-center rounded-lg shadow-lg ${
+                <div className="text-center flex-1 max-w-[140px]">
+                  <div className={`w-20 h-20 mx-auto mb-3 border-4 border-pop-black flex items-center justify-center rounded-lg shadow-lg ${
                     isProcessed 
                       ? "bg-pop-blue" 
                       : "bg-gray-200"
                   }`}>
-                    <Settings className={`w-6 h-6 sm:w-10 sm:h-10 ${
+                    <Settings className={`w-10 h-10 ${
                       isProcessed 
                         ? "text-pop-black" 
                         : "text-gray-400"
                     }`} strokeWidth={1.5} />
                   </div>
-                  <h3 className="systematic-caps text-xs sm:text-sm mb-1 sm:mb-2 font-semibold">
+                  <h3 className="systematic-caps text-sm mb-1 font-semibold">
                     {data.status === "inventory_creation" ? "Processed" : "Processing"}
                   </h3>
-                  <p className="text-xs text-pop-gray leading-tight">
+                  <p className="text-xs text-pop-gray">
                     Complete
                   </p>
                 </div>
 
                 {/* Connection Line */}
-                <div className="flex items-center justify-center pt-6 sm:pt-10">
-                  <div className={`w-4 sm:w-8 h-0.5 ${
+                <div className="flex items-center justify-center pt-10">
+                  <div className={`w-6 h-0.5 ${
                     data.productId ? "bg-pop-red" : "bg-gray-300"
                   }`}></div>
                 </div>
 
                 {/* Step 2: PURCHASED/DONATED */}
-                <div className="text-center flex-1 max-w-[100px] sm:max-w-[140px]">
-                  <div className={`w-12 h-12 sm:w-20 sm:h-20 mx-auto mb-2 sm:mb-4 border-2 sm:border-4 border-pop-black flex items-center justify-center rounded-lg shadow-lg ${
+                <div className="text-center flex-1 max-w-[140px]">
+                  <div className={`w-20 h-20 mx-auto mb-3 border-4 border-pop-black flex items-center justify-center rounded-lg shadow-lg ${
                     data.productId 
                       ? "bg-pop-red" 
                       : "bg-gray-200"
                   }`}>
                     {isCharity ? (
-                      <HeartHandshake className={`w-6 h-6 sm:w-10 sm:h-10 ${
+                      <HeartHandshake className={`w-10 h-10 ${
                         data.productId 
                           ? "text-pop-black" 
                           : "text-gray-400"
                       }`} strokeWidth={1.5} />
                     ) : (
-                      <CheckCircle className={`w-6 h-6 sm:w-10 sm:h-10 ${
+                      <CheckCircle className={`w-10 h-10 ${
                         data.productId 
                           ? "text-pop-black" 
                           : "text-gray-400"
                       }`} strokeWidth={1.5} />
                     )}
                   </div>
-                  <h3 className="systematic-caps text-xs sm:text-sm mb-1 sm:mb-2 font-semibold">
+                  <h3 className="systematic-caps text-sm mb-1 font-semibold">
                     {isCharity ? "Donated" : "Purchased"}
                   </h3>
-                  <p className="text-xs text-pop-gray leading-tight">
+                  <p className="text-xs text-pop-gray">
                     {data.productId 
                       ? data.deliveredDate || data.deliveryDate
                         ? formatDate(data.deliveredDate || data.deliveryDate)
@@ -502,29 +502,29 @@ export default function TrackItem() {
                 {data.productId && (
                   <>
                     {/* Connection Line */}
-                    <div className="flex items-center justify-center pt-6 sm:pt-10">
-                      <div className={`w-4 sm:w-8 h-0.5 ${
+                    <div className="flex items-center justify-center pt-10">
+                      <div className={`w-6 h-0.5 ${
                         data.userId ? "bg-pop-red" : "bg-gray-300"
                       }`}></div>
                     </div>
 
                     {/* Step 3: ASSEMBLED */}
-                    <div className="text-center flex-1 max-w-[100px] sm:max-w-[140px]">
-                      <div className={`w-12 h-12 sm:w-20 sm:h-20 mx-auto mb-2 sm:mb-4 border-2 sm:border-4 border-pop-black flex items-center justify-center rounded-lg shadow-lg ${
+                    <div className="text-center flex-1 max-w-[140px]">
+                      <div className={`w-20 h-20 mx-auto mb-3 border-4 border-pop-black flex items-center justify-center rounded-lg shadow-lg ${
                         data.userId 
                           ? "bg-pop-red" 
                           : "bg-gray-200"
                       }`}>
-                        <User className={`w-6 h-6 sm:w-10 sm:h-10 ${
+                        <User className={`w-10 h-10 ${
                           data.userId 
                             ? "text-pop-black" 
                             : "text-gray-400"
                         }`} strokeWidth={1.5} />
                       </div>
-                      <h3 className="systematic-caps text-xs sm:text-sm mb-1 sm:mb-2 font-semibold">
+                      <h3 className="systematic-caps text-sm mb-1 font-semibold">
                         Assembled
                       </h3>
-                      <p className="text-xs text-pop-gray leading-tight">
+                      <p className="text-xs text-pop-gray">
                         {data.userId 
                           ? data.makerDetails?.assemblyDate 
                             ? formatDate(data.makerDetails.assemblyDate)
