@@ -60,6 +60,7 @@ interface PlasticItem {
   carbonOffset: number;
   productType: string;
   event?: string;
+  status?: string; // Add status field for explicit status checks
   message?: string;
   makerDetails?: MakerDetails | null;
   transactionDate?: string;
@@ -128,6 +129,8 @@ export default function TrackItem() {
           deliveredDate: data.deliveryDate || "",
           // For bins, use actual event name from events array; for batches use status field; for blanks use event field
           event: data.type === "bin" ? data.event : data.type === "batch" ? data.status : data.event,
+          // Also keep the original status field for explicit status checks
+          status: data.status,
           // Map productId and userId for timeline display
           productId: data.productId,
           userId: data.userId,
@@ -467,10 +470,10 @@ export default function TrackItem() {
               <p className="text-xs text-pop-gray">
                 {(item.event === "inventory_creation" || item.status === "inventory_creation")
                   ? "Complete"
-                  : item.id.startsWith("T")
-                    ? "In progress"
-                    : isProcessed 
-                      ? formatDate(item.processedDate)
+                  : isProcessed 
+                    ? formatDate(item.processedDate)
+                    : item.id.startsWith("T")
+                      ? "In progress"
                       : "Pending"
                 }
               </p>
