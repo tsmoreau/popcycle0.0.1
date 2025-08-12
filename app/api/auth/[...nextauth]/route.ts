@@ -11,6 +11,8 @@ const clientPromise = Promise.resolve(client)
 export const authOptions: AuthOptions = {
   adapter: MongoDBAdapter(clientPromise),
   secret: process.env.NEXTAUTH_SECRET,
+  debug: true,
+  trustHost: true,
   providers: [
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID!,
