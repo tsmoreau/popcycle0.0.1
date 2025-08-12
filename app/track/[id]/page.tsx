@@ -145,6 +145,12 @@ export default function TrackItem() {
         };
 
         setItem(mappedItem);
+        console.log('DEBUG - Item mapping:', {
+          id: mappedItem.id,
+          event: mappedItem.event,
+          rawStatus: data.status,
+          type: data.type
+        });
 
         // If this is a bin, fetch associated batches
         if (data.type === "bin") {
@@ -466,7 +472,7 @@ export default function TrackItem() {
               </h3>
               <p className="text-xs text-pop-gray">
                 {item.id.startsWith("T") 
-                  ? (item.event === "inventory_creation" ? "Complete" : "In progress")
+                  ? (item.event === "inventory_creation" ? "Complete" : `In progress (event: "${item.event}")`)
                   : isProcessed 
                     ? formatDate(item.processedDate)
                     : "Pending"
