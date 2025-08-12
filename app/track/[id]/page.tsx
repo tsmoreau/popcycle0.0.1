@@ -465,7 +465,7 @@ export default function TrackItem() {
                 Processing
               </h3>
               <p className="text-xs text-pop-gray">
-                {item.id.startsWith("T") && item.event?.trim() === "inventory_creation"
+                {item.event === "inventory_creation"
                   ? "Complete"
                   : item.id.startsWith("T")
                     ? "In progress"
@@ -474,9 +474,6 @@ export default function TrackItem() {
                       : "Pending"
                 }
               </p>
-              <div className="text-xs bg-red-100 p-2 mt-2">
-                DEBUG: ID="{item.id}" | LEN={item.id?.length} | FIRST_CHAR="{item.id?.[0]}" | STARTS_T={item.id?.startsWith("T")} | EVENT="{item.event}" | MATCH={item.event?.trim() === "inventory_creation"}
-              </div>
             </div>
 
             {/* Connection Line */}
