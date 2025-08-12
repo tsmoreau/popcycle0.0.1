@@ -52,7 +52,8 @@ export default function SignInPage() {
           <CardContent className="space-y-6">
             {/* Google SSO - Primary Option */}
             {providers?.google && (
-              <div>
+              <div className="bg-pop-green/10 border-2 border-pop-green p-4 mb-4">
+                <h3 className="systematic-caps text-sm text-pop-green mb-2">✓ Google SSO (Ready)</h3>
                 <Button
                   onClick={() => signIn('google', { callbackUrl: '/' })}
                   className="w-full bg-pop-blue border-2 border-pop-black text-white hover:bg-pop-black hover:text-pop-blue systematic-caps text-sm h-12"
@@ -66,7 +67,7 @@ export default function SignInPage() {
                   Continue with Google
                 </Button>
                 <div className="text-center text-xs systematic-caps text-gray-500 mt-2">
-                  Recommended - Fast & Secure
+                  Primary Method - Fast & Secure
                 </div>
               </div>
             )}
