@@ -465,14 +465,19 @@ export default function TrackItem() {
                 Processing
               </h3>
               <p className="text-xs text-pop-gray">
-                {item.id.startsWith("T") && item.event === "inventory_creation"
-                  ? "Complete"
-                  : item.id.startsWith("T")
-                    ? "In progress"
-                    : isProcessed 
-                      ? formatDate(item.processedDate)
-                      : "Pending"
-                }
+                {(() => {
+                  if (item.id.startsWith("T")) {
+                    console.log('BATCH DEBUG:', {
+                      event: item.event,
+                      eventType: typeof item.event,
+                      comparison: item.event === "inventory_creation",
+                      eventLength: item.event?.length
+                    });
+                    return item.event === "inventory_creation" ? "Complete" : `In progress (${item.event})`;
+                  } else {
+                    return isProcessed ? formatDate(item.processedDate) : "Pending";
+                  }
+                })()}
               </p>
             </div>
 
