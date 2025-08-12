@@ -15,8 +15,8 @@ export const authOptions: AuthOptions = {
   trustHost: true,
   providers: [
     GoogleProvider({
-      clientId: process.env.GOOGLE_CLIENT_ID!,
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
+      clientId: process.env.GOOGLE_CLIENT_ID!.trim(),
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET!.trim(),
       authorization: {
         params: {
           scope: "openid email profile",
