@@ -465,7 +465,7 @@ export default function TrackItem() {
                 Processing
               </h3>
               <p className="text-xs text-pop-gray">
-                {item.id.startsWith("T") && item.status === "inventory_creation"
+                {item.status === "inventory_creation"
                   ? "Complete"
                   : item.id.startsWith("T")
                     ? "In progress"
