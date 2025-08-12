@@ -1,15 +1,13 @@
 'use client'
 
 import { useState, useRef, useEffect } from 'react'
-import { useSession, signOut } from 'next-auth/react'
+import { useSession, signIn, signOut } from 'next-auth/react'
 import { Button } from './ui/button'
 import { User, LogOut, Settings, ChevronDown } from 'lucide-react'
-import SignInModal from './SignInModal'
 
 export default function AuthButton() {
   const { data: session, status } = useSession()
   const [dropdownOpen, setDropdownOpen] = useState(false)
-  const [signInModalOpen, setSignInModalOpen] = useState(false)
   const dropdownRef = useRef<HTMLDivElement>(null)
 
   // Close dropdown when clicking outside
@@ -105,18 +103,11 @@ export default function AuthButton() {
   }
 
   return (
-    <>
-      <Button
-        onClick={() => setSignInModalOpen(true)}
-        className="bg-pop-blue border-2 border-pop-black text-white hover:bg-pop-black systematic-caps"
-      >
-        Sign In
-      </Button>
-      
-      <SignInModal 
-        isOpen={signInModalOpen} 
-        onClose={() => setSignInModalOpen(false)} 
-      />
-    </>
+    <Button
+      onClick={() => signIn()}
+      className="bg-pop-blue border-2 border-pop-black text-white hover:bg-pop-black systematic-caps"
+    >
+      Sign In
+    </Button>
   )
 }
