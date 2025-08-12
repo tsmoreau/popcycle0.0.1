@@ -6,7 +6,7 @@ import { MongoClient } from "mongodb"
 import type { AuthOptions } from 'next-auth'
 
 const client = new MongoClient(process.env.MONGODB_URI!)
-const clientPromise = Promise.resolve(client)
+const clientPromise = client.connect()
 
 export const authOptions: AuthOptions = {
   adapter: MongoDBAdapter(clientPromise),
