@@ -468,7 +468,7 @@ export default function TrackItem() {
                 Processing
               </h3>
               <p className="text-xs text-pop-gray">
-                Complete
+                FIXED COMPLETE
               </p>
             </div>
 
