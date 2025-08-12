@@ -179,9 +179,9 @@ export default function Navigation() {
 
                 {/* User Dropdown */}
                 {userMenuOpen && (
-                  <div className="absolute right-0 mt-2 w-48 bg-white border-4 border-pop-black pop-shadow-black">
-                    <div className="px-3 py-2 border-b border-gray-200">
-                      <div className="text-sm font-semibold text-pop-black">
+                  <div className="absolute right-0 mt-2 min-w-max bg-white border-4 border-pop-black pop-shadow-black">
+                    <div className="px-4 py-3 border-b border-gray-200">
+                      <div className="text-sm font-semibold text-pop-black whitespace-nowrap">
                         {session.user?.email}
                       </div>
                       <div className="text-xs text-gray-500 systematic-caps">
@@ -193,7 +193,7 @@ export default function Navigation() {
                       <Link
                         href="/profile"
                         onClick={() => setUserMenuOpen(false)}
-                        className="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-pop-green hover:text-white systematic-caps"
+                        className="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-pop-green hover:text-white systematic-caps whitespace-nowrap"
                       >
                         <User className="w-4 h-4 mr-3" />
                         Profile
@@ -203,10 +203,10 @@ export default function Navigation() {
                         <Link
                           href="/portal"
                           onClick={() => setUserMenuOpen(false)}
-                          className="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-pop-blue hover:text-white systematic-caps"
+                          className="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-pop-blue hover:text-white systematic-caps whitespace-nowrap"
                         >
                           <Settings className="w-4 h-4 mr-3" />
-                          Portal Dashboard
+                          Portal
                         </Link>
                       )}
                       
@@ -215,7 +215,7 @@ export default function Navigation() {
                           setUserMenuOpen(false)
                           signOut()
                         }}
-                        className="w-full flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-pop-red hover:text-white systematic-caps text-left"
+                        className="w-full flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-pop-red hover:text-white systematic-caps text-left whitespace-nowrap"
                       >
                         <LogOut className="w-4 h-4 mr-3" />
                         Sign Out
