@@ -3,8 +3,10 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState, useEffect, useRef } from "react";
+import { useSession } from 'next-auth/react';
 import { Button } from "./ui/button";
 import { ChevronDown, Menu, X, ChevronRight, User, Settings, LogOut } from "lucide-react";
+import AuthButton from "../../components/AuthButton";
 
 export default function Navigation() {
   const pathname = usePathname();
@@ -16,10 +18,9 @@ export default function Navigation() {
   const [mobileServicesOpen, setMobileServicesOpen] = useState(false);
   const userMenuRef = useRef<HTMLDivElement>(null);
 
-  // Mock user data - in real app this would come from auth context
-  const userRole = "operations_staff"; // Staff user with portal access
-  // const userRole = null; // Regular maker without portal access
-  const hasPortalAccess = userRole !== null;
+  const { data: session } = useSession();
+  const hasPortalAccess = session?.user?.userType === 'super_admin' || 
+    (session?.user?.permissions && session.user.permissions.length > 0);
 
   // Close dropdown when clicking outside
   useEffect(() => {
@@ -152,52 +153,9 @@ export default function Navigation() {
             </div>
           </div>
 
-          {/* Right-aligned User Menu */}
-          <div className="hidden lg:block relative">
-            {/* Commented out login button - showing logged in state */}
-            {/* <button className="login-button systematic-caps px-10 py-1.5 rounded-md transition-colors">
-              Login
-            </button> */}
-            
-            {/* User Avatar with Dropdown */}
-            <div className="relative group" ref={userMenuRef}>
-              <button
-                className="w-10 h-10 bg-pop-green border-2 border-pop-black rounded-full flex items-center justify-center hover:bg-pop-black hover:text-pop-green transition-colors"
-              >
-                <span className="text-pop-black group-hover:text-pop-green helvetica-bold text-sm">P</span>
-              </button>
-
-              <div className="absolute top-full right-0 mt-2 min-w-max bg-white border-4 border-pop-black pop-shadow-black opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
-                <div className="py-2">
-                  <div className="px-6 py-3 border-b-2 border-pop-black bg-pop-green/5">
-                    <div className="systematic-caps text-sm font-bold text-pop-black">PlasticCraftAlex</div>
-                    <div className="systematic-caps text-xs font-medium text-pop-green mt-1">Maker Lvl 3</div>
-                  </div>
-                  <Link
-                    href="/profile"
-                    className="flex items-center px-6 py-3 systematic-caps text-sm hover:bg-pop-green hover:text-white transition-colors whitespace-nowrap"
-                  >
-                    <User className="w-4 h-4 mr-3" />
-                    Profile
-                  </Link>
-                  {hasPortalAccess && (
-                    <Link
-                      href="/portal"
-                      className="flex items-center px-6 py-3 systematic-caps text-sm hover:bg-pop-blue hover:text-white transition-colors whitespace-nowrap"
-                    >
-                      <Settings className="w-4 h-4 mr-3" />
-                      Portal
-                    </Link>
-                  )}
-                  <button
-                    className="w-full flex items-center px-6 py-3 systematic-caps text-sm hover:bg-pop-red hover:text-white transition-colors text-left whitespace-nowrap"
-                  >
-                    <LogOut className="w-4 h-4 mr-3" />
-                    Sign Out
-                  </button>
-                </div>
-              </div>
-            </div>
+          {/* Right-aligned Auth Button */}
+          <div className="hidden lg:block">
+            <AuthButton />
           </div>
 
           {/* Mobile menu button */}
