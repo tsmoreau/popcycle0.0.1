@@ -558,7 +558,7 @@ export default function TrackItem() {
           <PopArtContainer color="green" shadow>
             <Card className="border-4 border-pop-black">
               <CardHeader>
-                <CardTitle className="systematic-caps flex items-center">
+                <CardTitle className="systematic-caps flex items-center justify-center">
                   <Building className="w-5 h-5 mr-2" />
                   {item.id.startsWith("B")
                     ? "Bin Details"
