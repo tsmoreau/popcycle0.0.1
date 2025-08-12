@@ -329,55 +329,62 @@ export default function Navigation() {
 
             {/* Mobile User Section */}
             <div className="pt-4 border-t-2 border-pop-black space-y-3">
-              {/* User Profile Header */}
-              <div className="flex items-center justify-between">
-                <div className="flex items-center space-x-3">
-                  <div className="w-10 h-10 bg-pop-green border-2 border-pop-black rounded-full flex items-center justify-center">
-                    <span className="text-pop-black helvetica-bold text-base">P</span>
+              {session ? (
+                <>
+                  {/* User Profile Header */}
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center space-x-3">
+                      <div className="w-10 h-10 bg-pop-green border-2 border-pop-black rounded-full flex items-center justify-center">
+                        <User className="w-5 h-5 text-pop-black" />
+                      </div>
+                      <div>
+                        <div className="systematic-caps text-sm font-bold text-pop-black">
+                          {session.user?.name?.split(' ')[0] || 'User'}
+                        </div>
+                        <div className="systematic-caps text-xs font-medium text-pop-green mt-1">
+                          {session.user?.userType === 'super_admin' ? 'Admin' : 'Maker'}
+                        </div>
+                      </div>
+                    </div>
                   </div>
-                  <div>
-                    <div className="systematic-caps text-sm font-bold text-pop-black">PlasticCraftAlex</div>
-                    <div className="systematic-caps text-xs font-medium text-pop-green mt-1">Maker Lvl 3</div>
+                  
+                  {/* User Menu Items */}
+                  <div className="space-y-2">
+                    <Link
+                      href="/profile"
+                      onClick={() => setMobileMenuOpen(false)}
+                      className="w-full flex items-center px-4 py-2 systematic-caps text-sm rounded-md hover:bg-pop-green hover:text-white transition-colors"
+                    >
+                      <User className="w-4 h-4 mr-3" />
+                      Profile
+                    </Link>
+                    {hasPortalAccess && (
+                      <Link
+                        href="/portal"
+                        onClick={() => setMobileMenuOpen(false)}
+                        className="w-full flex items-center px-4 py-2 systematic-caps text-sm rounded-md hover:bg-pop-blue hover:text-white transition-colors"
+                      >
+                        <Settings className="w-4 h-4 mr-3" />
+                        Portal
+                      </Link>
+                    )}
+                    <button
+                      onClick={() => {
+                        signOut();
+                        setMobileMenuOpen(false);
+                      }}
+                      className="w-full flex items-center px-4 py-2 systematic-caps text-sm rounded-md hover:bg-pop-red hover:text-white transition-colors text-left"
+                    >
+                      <LogOut className="w-4 h-4 mr-3" />
+                      Sign Out
+                    </button>
                   </div>
+                </>
+              ) : (
+                <div className="space-y-2">
+                  <AuthButton />
                 </div>
-              </div>
-              
-              {/* User Menu Items */}
-              <div className="space-y-2">
-                <Link
-                  href="/profile"
-                  onClick={() => setMobileMenuOpen(false)}
-                  className="w-full flex items-center px-4 py-2 systematic-caps text-sm rounded-md hover:bg-pop-green hover:text-white transition-colors"
-                >
-                  <User className="w-4 h-4 mr-3" />
-                  Profile
-                </Link>
-                {hasPortalAccess && (
-                  <Link
-                    href="/portal"
-                    onClick={() => setMobileMenuOpen(false)}
-                    className="w-full flex items-center px-4 py-2 systematic-caps text-sm rounded-md hover:bg-pop-blue hover:text-white transition-colors"
-                  >
-                    <Settings className="w-4 h-4 mr-3" />
-                    Portal
-                  </Link>
-                )}
-                <button
-                  onClick={() => setMobileMenuOpen(false)}
-                  className="w-full flex items-center px-4 py-2 systematic-caps text-sm rounded-md hover:bg-pop-red hover:text-white transition-colors text-left"
-                >
-                  <LogOut className="w-4 h-4 mr-3" />
-                  Sign Out
-                </button>
-              </div>
-              
-              {/* Commented out login button */}
-              {/* <button
-                className="login-button w-full systematic-caps px-4 py-2 rounded-md transition-colors"
-                onClick={() => setMobileMenuOpen(false)}
-              >
-                Login
-              </button> */}
+              )}
             </div>
           </div>
         </div>
