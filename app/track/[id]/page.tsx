@@ -465,15 +465,13 @@ export default function TrackItem() {
                 Processing
               </h3>
               <p className="text-xs text-pop-gray">
-                {item.id === "TKIZI86K"
+                {item.id.startsWith("T") && item.event === "inventory_creation"
                   ? "Complete"
-                  : item.id.startsWith("T") && item.event === "inventory_creation"
-                    ? "Complete"
-                    : item.id.startsWith("T")
-                      ? "In progress"
-                      : isProcessed 
-                        ? formatDate(item.processedDate)
-                        : "Pending"
+                  : item.id.startsWith("T")
+                    ? "In progress"
+                    : isProcessed 
+                      ? formatDate(item.processedDate)
+                      : "Pending"
                 }
               </p>
             </div>
