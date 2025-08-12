@@ -1,1 +1,6 @@
-{"scripts":{"dev":"next dev -p 5000","build":"next build","start":"next start -p 5000"}}
+{
+  "issue": "Leading space in GOOGLE_CLIENT_ID",
+  "current_value": " 759965345628-vgriivsbpl8j9648uud4o853elrqt04k.apps.googleusercontent.com",
+  "correct_value": "759965345628-vgriivsbpl8j9648uud4o853elrqt04k.apps.googleusercontent.com",
+  "fix": "Update Replit Secrets to remove the leading space"
+}
