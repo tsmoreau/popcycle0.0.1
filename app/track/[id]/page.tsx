@@ -403,81 +403,141 @@ export default function TrackItem() {
 
         {/* ========== TIMELINE SECTION ========== */}
         <div className="mb-12">
-          <div className="flex gap-2 justify-center max-w-2xl mx-auto">
-            {/* Step 1: BINS (AWAITING PICKUP) */}
-            {item.id.startsWith("B") && (
-              <div className="text-center flex-1 max-w-[120px]">
-                <div className="w-16 h-16 mx-auto mb-4 border-2 border-pop-black flex items-center justify-center bg-pop-green">
-                  <Package className="w-8 h-8 text-black" strokeWidth={1.5} />
-                </div>
-                <h3 className="systematic-caps text-sm mb-1">
-                  Awaiting Pickup
-                </h3>
-                <p className="text-xs text-pop-gray truncate">Active bin</p>
+          <div className="flex gap-4 justify-center max-w-3xl mx-auto">
+            {/* Step 1: COLLECTION */}
+            <div className="text-center flex-1 max-w-[140px]">
+              <div className={`w-20 h-20 mx-auto mb-4 border-4 border-pop-black flex items-center justify-center rounded-lg shadow-lg ${
+                item.collectionDate || item.id.startsWith("B") 
+                  ? "bg-pop-green" 
+                  : "bg-gray-200"
+              }`}>
+                <Package className={`w-10 h-10 ${
+                  item.collectionDate || item.id.startsWith("B") 
+                    ? "text-pop-black" 
+                    : "text-gray-400"
+                }`} strokeWidth={1.5} />
               </div>
-            )}
+              <h3 className="systematic-caps text-sm mb-2 font-semibold">
+                Collection
+              </h3>
+              <p className="text-xs text-pop-gray">
+                {item.id.startsWith("B") 
+                  ? "Active bin" 
+                  : item.collectionDate 
+                    ? new Date(item.collectionDate).toLocaleDateString()
+                    : "Pending"
+                }
+              </p>
+            </div>
 
-            {/* Step 2: BATCHES (PROCESSING/PROCESSED) */}
-            {item.id.startsWith("T") && (
-              <div className="text-center flex-1 max-w-[120px]">
-                <div className="w-16 h-16 mx-auto mb-4 border-2 border-pop-black flex items-center justify-center bg-pop-blue">
-                  <CheckCircle className="w-8 h-8 text-pop-black" />
-                </div>
-                <h3 className="systematic-caps text-sm mb-1">
-                  {item.event === "inventory_creation"
-                    ? "Processed"
-                    : "Processing"}
-                </h3>
-                <p className="text-xs text-pop-gray truncate">
-                  {item.processedDate || "2024-02-01"}
-                </p>
-              </div>
-            )}
+            {/* Connection Line */}
+            <div className="flex items-center justify-center pt-10">
+              <div className={`w-8 h-0.5 ${
+                isProcessed ? "bg-pop-blue" : "bg-gray-300"
+              }`}></div>
+            </div>
 
-            {/* Step 2: BLANKS (PROCESSING/PROCESSED) */}
-            {item.id.startsWith("K") && (
-              <div className="text-center flex-1 max-w-[120px]">
-                <div className="w-16 h-16 mx-auto mb-4 border-2 border-pop-black flex items-center justify-center bg-pop-blue">
-                  <CheckCircle className="w-8 h-8 text-pop-black" />
-                </div>
-                <h3 className="systematic-caps text-sm mb-1">Processed</h3>
-                <p className="text-xs text-pop-gray truncate">
-                  {item.processedDate}
-                </p>
+            {/* Step 2: PROCESSING */}
+            <div className="text-center flex-1 max-w-[140px]">
+              <div className={`w-20 h-20 mx-auto mb-4 border-4 border-pop-black flex items-center justify-center rounded-lg shadow-lg ${
+                isProcessed 
+                  ? "bg-pop-blue" 
+                  : "bg-gray-200"
+              }`}>
+                <Settings className={`w-10 h-10 ${
+                  isProcessed 
+                    ? "text-pop-black" 
+                    : "text-gray-400"
+                }`} strokeWidth={1.5} />
               </div>
-            )}
+              <h3 className="systematic-caps text-sm mb-2 font-semibold">
+                Processing
+              </h3>
+              <p className="text-xs text-pop-gray">
+                {item.id.startsWith("T") && item.event === "inventory_creation"
+                  ? "Complete"
+                  : item.id.startsWith("T")
+                    ? "In progress"
+                    : isProcessed 
+                      ? new Date(item.processedDate).toLocaleDateString()
+                      : "Pending"
+                }
+              </p>
+            </div>
 
-            {/* Step 3: PURCHASED/DONATED - when productId exists */}
-            {item.productId && (
-              <div className="text-center flex-1 max-w-[120px]">
-                <div className="w-16 h-16 mx-auto mb-4 border-2 border-pop-black flex items-center justify-center bg-pop-red">
-                  {isCharity ? (
-                    <HeartHandshake className="w-8 h-8 text-pop-black" />
-                  ) : (
-                    <CheckCircle className="w-8 h-8 text-pop-black" />
-                  )}
-                </div>
-                <h3 className="systematic-caps text-sm mb-1">
-                  {isCharity ? "Donated" : "Purchased"}
-                </h3>
-                <p className="text-xs text-pop-gray truncate">
-                  {item.deliveredDate || "2025-02-01"}
-                </p>
-              </div>
-            )}
+            {/* Connection Line */}
+            <div className="flex items-center justify-center pt-10">
+              <div className={`w-8 h-0.5 ${
+                item.productId ? "bg-pop-red" : "bg-gray-300"
+              }`}></div>
+            </div>
 
-            {/* Step 4: ASSEMBLED - when userId exists */}
-            {item.userId && (
-              <div className="text-center flex-1 max-w-[120px]">
-                <div className="w-16 h-16 mx-auto mb-4 border-2 border-pop-black flex items-center justify-center bg-pop-red">
-                  <CheckCircle className="w-8 h-8 text-pop-black" />
-                </div>
-                <h3 className="systematic-caps text-sm mb-1">Assembled</h3>
-                <p className="text-xs text-pop-gray truncate">
-                  {item.makerDetails?.assemblyDate}
-                </p>
+            {/* Step 3: PURCHASED/DONATED */}
+            <div className="text-center flex-1 max-w-[140px]">
+              <div className={`w-20 h-20 mx-auto mb-4 border-4 border-pop-black flex items-center justify-center rounded-lg shadow-lg ${
+                item.productId 
+                  ? "bg-pop-red" 
+                  : "bg-gray-200"
+              }`}>
+                {isCharity ? (
+                  <HeartHandshake className={`w-10 h-10 ${
+                    item.productId 
+                      ? "text-pop-black" 
+                      : "text-gray-400"
+                  }`} strokeWidth={1.5} />
+                ) : (
+                  <CheckCircle className={`w-10 h-10 ${
+                    item.productId 
+                      ? "text-pop-black" 
+                      : "text-gray-400"
+                  }`} strokeWidth={1.5} />
+                )}
               </div>
-            )}
+              <h3 className="systematic-caps text-sm mb-2 font-semibold">
+                {isCharity ? "Donated" : "Purchased"}
+              </h3>
+              <p className="text-xs text-pop-gray">
+                {item.productId 
+                  ? item.deliveredDate 
+                    ? new Date(item.deliveredDate).toLocaleDateString()
+                    : "Complete"
+                  : "Available"
+                }
+              </p>
+            </div>
+
+            {/* Connection Line */}
+            <div className="flex items-center justify-center pt-10">
+              <div className={`w-8 h-0.5 ${
+                item.userId ? "bg-pop-red" : "bg-gray-300"
+              }`}></div>
+            </div>
+
+            {/* Step 4: ASSEMBLED */}
+            <div className="text-center flex-1 max-w-[140px]">
+              <div className={`w-20 h-20 mx-auto mb-4 border-4 border-pop-black flex items-center justify-center rounded-lg shadow-lg ${
+                item.userId 
+                  ? "bg-pop-red" 
+                  : "bg-gray-200"
+              }`}>
+                <User className={`w-10 h-10 ${
+                  item.userId 
+                    ? "text-pop-black" 
+                    : "text-gray-400"
+                }`} strokeWidth={1.5} />
+              </div>
+              <h3 className="systematic-caps text-sm mb-2 font-semibold">
+                Assembled
+              </h3>
+              <p className="text-xs text-pop-gray">
+                {item.userId 
+                  ? item.makerDetails?.assemblyDate 
+                    ? new Date(item.makerDetails.assemblyDate).toLocaleDateString()
+                    : "Complete"
+                  : "Awaiting maker"
+                }
+              </p>
+            </div>
           </div>
         </div>
 
@@ -543,9 +603,12 @@ export default function TrackItem() {
                   {item.batchId && (
                     <div className="flex justify-between">
                       <span className="systematic-caps text-sm">Batch ID</span>
-                      <span className="font-mono text-pop-blue">
+                      <Link
+                        href={`/track/${item.batchId}`}
+                        className="font-mono text-pop-blue hover:text-pop-black hover:underline"
+                      >
                         {item.batchId}
-                      </span>
+                      </Link>
                     </div>
                   )}
                 </div>
