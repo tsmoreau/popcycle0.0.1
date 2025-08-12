@@ -9,7 +9,7 @@ const client = new MongoClient(process.env.MONGODB_URI!)
 const clientPromise = client.connect()
 
 export const authOptions: AuthOptions = {
-  adapter: MongoDBAdapter(clientPromise),
+  // adapter: MongoDBAdapter(clientPromise), // Disabled - using custom user management
   secret: process.env.NEXTAUTH_SECRET,
   debug: true,
   trustHost: true,
@@ -46,7 +46,7 @@ export const authOptions: AuthOptions = {
       // Connect to MongoDB to check/create user
       const client = new MongoClient(process.env.MONGODB_URI!)
       await client.connect()
-      const db = client.db('PopCycle')
+      const db = client.db()
       
       // Check if user exists in our users collection
       let existingUser = await db.collection('users').findOne({ email: user.email })
@@ -82,7 +82,7 @@ export const authOptions: AuthOptions = {
         // Fetch current user data from MongoDB
         const client = new MongoClient(process.env.MONGODB_URI!)
         await client.connect()
-        const db = client.db('PopCycle')
+        const db = client.db()
         
         const user = await db.collection('users').findOne({ email: session.user.email })
         
