@@ -86,6 +86,17 @@ export default function TrackItem() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
+  // Date formatting helper - formats to M/D/YYYY
+  const formatDate = (dateString: string | undefined | null) => {
+    if (!dateString) return '';
+    const date = new Date(dateString);
+    return date.toLocaleDateString('en-US', { 
+      month: 'numeric', 
+      day: 'numeric', 
+      year: 'numeric' 
+    });
+  };
+
   useEffect(() => {
     const fetchItem = async () => {
       try {
@@ -424,7 +435,7 @@ export default function TrackItem() {
                 {item.id.startsWith("B") 
                   ? "Active bin" 
                   : item.collectionDate 
-                    ? new Date(item.collectionDate).toLocaleDateString()
+                    ? formatDate(item.collectionDate)
                     : "Pending"
                 }
               </p>
@@ -459,7 +470,7 @@ export default function TrackItem() {
                   : item.id.startsWith("T")
                     ? "In progress"
                     : isProcessed 
-                      ? new Date(item.processedDate).toLocaleDateString()
+                      ? formatDate(item.processedDate)
                       : "Pending"
                 }
               </p>
@@ -499,7 +510,7 @@ export default function TrackItem() {
               <p className="text-xs text-pop-gray">
                 {item.productId 
                   ? item.deliveredDate 
-                    ? new Date(item.deliveredDate).toLocaleDateString()
+                    ? formatDate(item.deliveredDate)
                     : "Complete"
                   : "Available"
                 }
@@ -532,7 +543,7 @@ export default function TrackItem() {
               <p className="text-xs text-pop-gray">
                 {item.userId 
                   ? item.makerDetails?.assemblyDate 
-                    ? new Date(item.makerDetails.assemblyDate).toLocaleDateString()
+                    ? formatDate(item.makerDetails.assemblyDate)
                     : "Complete"
                   : "Awaiting maker"
                 }
@@ -646,7 +657,7 @@ export default function TrackItem() {
                     </span>
                     <span className="flex items-center">
                       <Calendar className="w-4 h-4 mr-1" />
-                      {new Date(item.collectionDate).toLocaleDateString()}
+                      {formatDate(item.collectionDate)}
                     </span>
                   </div>
                 )}
@@ -657,7 +668,7 @@ export default function TrackItem() {
                     </span>
                     <span className="flex items-center">
                       <Calendar className="w-4 h-4 mr-1" />
-                      {new Date(item.nextCollectionDate).toLocaleDateString()}
+                      {formatDate(item.nextCollectionDate)}
                     </span>
                   </div>
                 )}
@@ -674,7 +685,7 @@ export default function TrackItem() {
                     <span className="systematic-caps text-sm">Processed</span>
                     <span className="flex items-center">
                       <Calendar className="w-4 h-4 mr-1" />
-                      {item.processedDate}
+                      {formatDate(item.processedDate)}
                     </span>
                   </div>
                 )}
@@ -748,7 +759,7 @@ export default function TrackItem() {
                         </span>
                         <span className="flex items-center">
                           <Calendar className="w-4 h-4 mr-1" />
-                          {item.transactionDate}
+                          {formatDate(item.transactionDate)}
                         </span>
                       </div>
                     )}
@@ -771,7 +782,7 @@ export default function TrackItem() {
                       <span className="systematic-caps text-sm">Delivered</span>
                       <span className="flex items-center">
                         <Calendar className="w-4 h-4 mr-1" />
-                        {item.deliveredDate}
+                        {formatDate(item.deliveredDate)}
                       </span>
                     </div>
 
@@ -828,7 +839,7 @@ export default function TrackItem() {
                           </span>
                           <span className="flex items-center">
                             <Calendar className="w-4 h-4 mr-1" />
-                            {item.makerDetails.assemblyDate}
+                            {formatDate(item.makerDetails.assemblyDate)}
                           </span>
                         </div>
                         {item.makerDetails.story && (
@@ -993,9 +1004,7 @@ export default function TrackItem() {
                             </div>
                           </div>
                           <div className="text-xs text-pop-gray">
-                            {new Date(
-                              batch.collectionDate,
-                            ).toLocaleDateString()}
+                            {formatDate(batch.collectionDate)}
                           </div>
                         </div>
                       </Link>
