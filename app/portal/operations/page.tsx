@@ -584,6 +584,7 @@ export default function OperationsPage() {
             defaultBatchColumns={defaultBatchColumns}
             batchEditableFields={batchEditableFields}
             handleBatchSave={handleBatchSave}
+            handleBatchAdd={handleBatchAdd}
             handleBatchDelete={handleBatchDelete}
             processingSortField={processingSortField}
             processingSortDirection={processingSortDirection}
@@ -1229,6 +1230,7 @@ export default function OperationsPage() {
                     defaultBatchColumns={defaultBatchColumns}
                     batchEditableFields={batchEditableFields}
                     handleBatchSave={handleBatchSave}
+                    handleBatchAdd={handleBatchAdd}
                     handleBatchDelete={handleBatchDelete}
                     processingSortField={processingSortField}
                     processingSortDirection={processingSortDirection}
@@ -1249,6 +1251,7 @@ export default function OperationsPage() {
                     defaultOrderColumns={defaultOrderColumns}
                     orderEditableFields={orderEditableFields}
                     handleOrderSave={handleOrderSave}
+                    handleOrderAdd={handleOrderAdd}
                     handleOrderDelete={handleOrderDelete}
                     fulfillmentSortField={fulfillmentSortField}
                     fulfillmentSortDirection={fulfillmentSortDirection}
@@ -1269,6 +1272,7 @@ export default function OperationsPage() {
                     defaultBlankColumns={defaultBlankColumns}
                     blankEditableFields={blankEditableFields}
                     handleBlankSave={handleBlankSave}
+                    handleBlankAdd={handleBlankAdd}
                     handleBlankDelete={handleBlankDelete}
                     isFullscreen={true}
                   />

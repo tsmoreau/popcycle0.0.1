@@ -11,6 +11,7 @@ interface ProcessingTabProps {
   defaultBatchColumns: string[];
   batchEditableFields: EditableField<Batch>[];
   handleBatchSave: (batch: Batch) => Promise<void>;
+  handleBatchAdd: (batch: Batch) => Promise<void>;
   handleBatchDelete: (batch: Batch) => Promise<void>;
   processingSortField: string;
   processingSortDirection: "asc" | "desc";
@@ -25,6 +26,7 @@ export const ProcessingTab = ({
   defaultBatchColumns,
   batchEditableFields,
   handleBatchSave,
+  handleBatchAdd,
   handleBatchDelete,
   processingSortField,
   processingSortDirection,
@@ -53,6 +55,7 @@ export const ProcessingTab = ({
           enableFiltering={true}
           editableFields={batchEditableFields}
           onSave={handleBatchSave}
+          onAdd={handleBatchAdd}
           onDelete={handleBatchDelete}
           sortField={processingSortField}
           sortDirection={processingSortDirection}
