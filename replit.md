@@ -70,6 +70,8 @@ User preference: `/track/[id]` page section terminology - Use simplified names w
 - **product details** - Product information (only for blanks with productId)
 - **maker details** - Maker information or registration CTA (only for blanks)
 
+User preference: Stop fucking expounding and begging for forgiveness when called out on overengineering or mistakes. Just acknowledge briefly and move forward.
+
 ## Development Efficiency Requirements (Aug 11, 2025)
 **CRITICAL EFFICIENCY MANDATE**: When user provides existing patterns to copy, implement immediately without overengineering.
 - Identify exact pattern first, implement second
