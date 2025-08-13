@@ -391,10 +391,12 @@ export default function AdminPage() {
       type: 'select', 
       required: true,
       options: [
-        { value: 'educational_kit', label: 'Educational Kit' },
-        { value: 'assembly_toy', label: 'Assembly Toy' },
-        { value: 'practical_item', label: 'Practical Item' },
-        { value: 'decoration', label: 'Decoration' }
+        { value: 'flora_fauna', label: 'Flora & Fauna' },
+        { value: 'kinetic_sculptures', label: 'Kinetic Sculptures' },
+        { value: 'vehicles_vessels', label: 'Vehicles & Vessels' },
+        { value: 'pop_bots', label: 'Pop Bots' },
+        { value: 'everyday_objects', label: 'Everyday Objects' },
+        { value: 'limited_editions', label: 'Limited Editions' }
       ]
     },
     { 
@@ -701,13 +703,17 @@ export default function AdminPage() {
                     </div>
                   ) : (
                     <DataTable
-                      title="Product Management"
-                      description="Configure and manage product catalog"
+                      title=""
+                      description=""
                       data={products}
                       columns={productColumns}
                       editableFields={productEditableFields}
                       onSave={handleProductSave}
                       onDelete={handleProductDelete}
+                      enableColumnSelection={true}
+                      enableFiltering={true}
+                      availableColumns={productColumns}
+                      defaultVisibleColumns={['name', 'category', 'difficulty', 'price', 'inStock']}
                     />
                   )}
                 </div>
