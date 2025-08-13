@@ -56,7 +56,9 @@ export const authOptions: AuthOptions = {
   session: {
     strategy: 'jwt'
   },
-
+  pages: {
+    error: '/', // Redirect errors back to home page instead of sign-in
+  },
 }
 
 const handler = NextAuth(authOptions)
