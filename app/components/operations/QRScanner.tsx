@@ -23,7 +23,7 @@ export const QRScanner = ({ open, onOpenChange }: QRScannerProps) => {
   const [cameraError, setCameraError] = useState<string>("");
   const [isScanning, setIsScanning] = useState(false);
   const [lastScan, setLastScan] = useState<string>("");
-  const [scannedItem, setScannedItem] = useState<any>(null);
+  const [activeItem, setActiveItem] = useState<any>(null);
   const [isLoadingItem, setIsLoadingItem] = useState(false);
   const [lastScanTime, setLastScanTime] = useState<number>(0);
   const router = useRouter();
@@ -33,7 +33,6 @@ export const QRScanner = ({ open, onOpenChange }: QRScannerProps) => {
   const [queueType, setQueueType] = useState<string>('');
   const [queuedItems, setQueuedItems] = useState<any[]>([]);
   const [lastQueuedItemId, setLastQueuedItemId] = useState<string>('');
-  const [scannedItemHistory, setScannedItemHistory] = useState<any[]>([]);
 
 
   // Extract item ID from any URL or direct code
@@ -64,28 +63,14 @@ export const QRScanner = ({ open, onOpenChange }: QRScannerProps) => {
       const response = await fetch(`/api/track/${itemId}`);
       if (response.ok) {
         const data = await response.json();
-        setScannedItem(data);
-        
-        // Add to history stack only if it's not already in the list
-        setScannedItemHistory(prev => {
-          // Check if this item is already in the history
-          const itemExists = prev.some(item => item.id === data.id);
-          if (itemExists) {
-            console.log('Item already in history, not adding duplicate');
-            return prev;
-          }
-          // Add new item to the beginning, limit to 10 items
-          return [data, ...prev].slice(0, 10);
-        });
-        
-
+        setActiveItem(data);
       } else {
         console.error("Item not found:", itemId);
-        setScannedItem({ error: `Item ${itemId} not found` });
+        setActiveItem({ error: `Item ${itemId} not found` });
       }
     } catch (error) {
       console.error("Error fetching item:", error);
-      setScannedItem({ error: "Failed to fetch item data" });
+      setActiveItem({ error: "Failed to fetch item data" });
     } finally {
       setIsLoadingItem(false);
     }
@@ -97,8 +82,8 @@ export const QRScanner = ({ open, onOpenChange }: QRScannerProps) => {
     setQueueType(type);
     
     // Start with current item if it matches type
-    if (scannedItem && scannedItem.type === type) {
-      setQueuedItems([scannedItem]);
+    if (activeItem && activeItem.type === type) {
+      setQueuedItems([activeItem]);
     } else {
       setQueuedItems([]);
     }
@@ -124,18 +109,18 @@ export const QRScanner = ({ open, onOpenChange }: QRScannerProps) => {
       return;
     }
     
-    if (scannedItem && scannedItem.type === queueType && scannedItem.id !== lastQueuedItemId) {
-      console.log('Adding item to queue:', scannedItem.id);
+    if (activeItem && activeItem.type === queueType && activeItem.id !== lastQueuedItemId) {
+      console.log('Adding item to queue:', activeItem.id);
       setQueuedItems(prev => {
-        const isAlreadyQueued = prev.some(item => item.id === scannedItem.id);
+        const isAlreadyQueued = prev.some(item => item.id === activeItem.id);
         if (!isAlreadyQueued) {
-          setLastQueuedItemId(scannedItem.id);
-          return [...prev, scannedItem];
+          setLastQueuedItemId(activeItem.id);
+          return [...prev, activeItem];
         }
         return prev;
       });
     }
-  }, [scannedItem, queueActive, queueType, lastQueuedItemId]);
+  }, [activeItem, queueActive, queueType, lastQueuedItemId]);
 
   // Handle QR code scan result with proper debouncing
   const handleScanResult = (result: string) => {
@@ -158,7 +143,7 @@ export const QRScanner = ({ open, onOpenChange }: QRScannerProps) => {
       fetchItemData(itemId);
     } else {
       console.log("No valid PopCycle item ID found in:", result);
-      setScannedItem({ error: `No valid item code found in: ${result}` });
+      setActiveItem({ error: `No valid item code found in: ${result}` });
     }
   };
 
@@ -388,25 +373,26 @@ export const QRScanner = ({ open, onOpenChange }: QRScannerProps) => {
               </div>
             )}
 
-            {/* Queue icons on right side */}
+            {/* Queue icons on right side - clickable pills */}
             {queueActive && queuedItems.length > 0 && (
               <div className="absolute -right-2 top-2 flex flex-col gap-1 max-h-full overflow-y-auto">
                 {queuedItems.map((item, index) => (
-                  <div
+                  <button
                     key={`${item.id}-${index}`}
-                    className="h-8 px-2 rounded-full bg-pop-green text-white text-xs flex items-center justify-center font-bold shadow-lg whitespace-nowrap"
-                    title={`${item.id} (${item.type})`}
+                    className="h-8 px-2 rounded-full bg-pop-green text-white text-xs flex items-center justify-center font-bold shadow-lg whitespace-nowrap hover:bg-pop-green/90 transition-colors cursor-pointer"
+                    title={`${item.id} (${item.type}) - Click to view details`}
                     style={{ minWidth: 'fit-content' }}
+                    onClick={() => setActiveItem(item)}
                   >
                     {item.id || '?'}
-                  </div>
+                  </button>
                 ))}
               </div>
             )}
           </div>
 
-          {/* Scanned item information */}
-          {(lastScan || isLoadingItem || scannedItem) && (
+          {/* Active item information */}
+          {(lastScan || isLoadingItem || activeItem) && (
             <div className="pt-4 border-t space-y-3">
               <div className="flex items-center justify-between">
                 
@@ -431,19 +417,19 @@ export const QRScanner = ({ open, onOpenChange }: QRScannerProps) => {
                 </div>
               )}
 
-              {/* Queue Controls Section - Full Width above scanned items */}
-              {scannedItemHistory.length > 0 && (
+              {/* Queue Controls Section - Full Width above active item */}
+              {activeItem && (
                 <div className="pb-3">
                   {!queueActive ? (
                     /* Start queue button - only show if we have a valid item */
-                    scannedItemHistory[0]?.type && (
+                    activeItem.type && (
                       <Button
                         size="sm"
                         variant="outline"
                         className="w-full border-pop-green text-pop-green hover:bg-pop-green hover:text-white"
-                        onClick={() => startQueue(scannedItemHistory[0].type)}
+                        onClick={() => startQueue(activeItem.type)}
                       >
-                        Start {scannedItemHistory[0].type.charAt(0).toUpperCase() + scannedItemHistory[0].type.slice(1)} Queue
+                        Start {activeItem.type.charAt(0).toUpperCase() + activeItem.type.slice(1)} Queue
                       </Button>
                     )
                   ) : (
@@ -460,7 +446,7 @@ export const QRScanner = ({ open, onOpenChange }: QRScannerProps) => {
                 </div>
               )}
 
-              <h3 className="text-sm font-medium text-gray-900">Last Scanned Item</h3>
+              <h3 className="text-sm font-medium text-gray-900">Active Item</h3>
 
               {/* Item history stack - show all scanned items */}
               {scannedItemHistory.length > 0 && !isLoadingItem && (
