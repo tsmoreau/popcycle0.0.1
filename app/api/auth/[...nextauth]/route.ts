@@ -54,13 +54,27 @@ export const authOptions: AuthOptions = {
     },
 
     async redirect({ url, baseUrl }) {
-      console.log('REDIRECT CALLBACK:', { url, baseUrl })
-      // ALWAYS redirect to homepage - no exceptions
+      // If there's an error, redirect back to the original page with error param
+      if (url.includes('error=')) {
+        const urlObj = new URL(url)
+        const error = urlObj.searchParams.get('error')
+        const callbackUrl = urlObj.searchParams.get('callbackUrl') || baseUrl
+        return `${callbackUrl}${callbackUrl.includes('?') ? '&' : '?'}error=${error}`
+      }
+      // If url is on the same origin, allow it
+      if (url.startsWith("/")) return `${baseUrl}${url}`
+      // If url is to the same host, allow it
+      else if (new URL(url).origin === baseUrl) return url
+      // Otherwise redirect to home
       return baseUrl
     }
   },
   session: {
     strategy: 'jwt'
+  },
+  pages: {
+    signIn: '/auth/signin',
+    error: '/auth/error',
   },
 }
 
