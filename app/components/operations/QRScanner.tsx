@@ -408,7 +408,6 @@ export const QRScanner = ({ open, onOpenChange }: QRScannerProps) => {
           {(lastScan || isLoadingItem || scannedItem) && (
             <div className="pt-4 border-t space-y-3">
               <div className="flex items-center justify-between">
-                <h3 className="text-sm font-medium text-gray-900">Last Scanned Item</h3>
                 
                 {/* Queue Active indicator - moved here */}
                 {queueActive && (
@@ -459,6 +458,8 @@ export const QRScanner = ({ open, onOpenChange }: QRScannerProps) => {
                   )}
                 </div>
               )}
+
+              <h3 className="text-sm font-medium text-gray-900">Last Scanned Item</h3>
 
               {/* Item history stack - show all scanned items */}
               {scannedItemHistory.length > 0 && !isLoadingItem && (
