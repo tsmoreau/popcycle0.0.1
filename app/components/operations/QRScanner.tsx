@@ -390,14 +390,15 @@ export const QRScanner = ({ open, onOpenChange }: QRScannerProps) => {
 
             {/* Queue icons on right side */}
             {queueActive && queuedItems.length > 0 && (
-              <div className="absolute right-2 top-2 flex flex-col gap-1 max-h-full overflow-y-auto">
+              <div className="absolute -right-2 top-2 flex flex-col gap-1 max-h-full overflow-y-auto">
                 {queuedItems.map((item, index) => (
                   <div
                     key={`${item.id}-${index}`}
-                    className="w-8 h-8 rounded-full bg-pop-green text-white text-xs flex items-center justify-center font-bold shadow-lg"
+                    className="h-8 px-2 rounded-full bg-pop-green text-white text-xs flex items-center justify-center font-bold shadow-lg whitespace-nowrap"
                     title={`${item.id} (${item.type})`}
+                    style={{ minWidth: 'fit-content' }}
                   >
-                    {item.id?.charAt(0) || '?'}
+                    {item.id || '?'}
                   </div>
                 ))}
               </div>
