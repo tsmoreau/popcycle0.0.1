@@ -34,6 +34,9 @@ export const QRScanner = ({ open, onOpenChange }: QRScannerProps) => {
   const [queuedItems, setQueuedItems] = useState<any[]>([]);
   const [lastQueuedItemId, setLastQueuedItemId] = useState<string>('');
   const [scannedItemHistory, setScannedItemHistory] = useState<any[]>([]);
+  
+  // Active item state (replaces history stack)
+  const [activeItem, setActiveItem] = useState<any>(null);
 
 
   // Extract item ID from any URL or direct code
@@ -65,8 +68,9 @@ export const QRScanner = ({ open, onOpenChange }: QRScannerProps) => {
       if (response.ok) {
         const data = await response.json();
         setScannedItem(data);
+        setActiveItem(data);
         
-        // Add to history stack only if it's not already in the list
+        // Add to history pills only if it's not already in the list
         setScannedItemHistory(prev => {
           // Check if this item is already in the history
           const itemExists = prev.some(item => item.id === data.id);
@@ -81,11 +85,38 @@ export const QRScanner = ({ open, onOpenChange }: QRScannerProps) => {
 
       } else {
         console.error("Item not found:", itemId);
-        setScannedItem({ error: `Item ${itemId} not found` });
+        const errorData = { error: `Item ${itemId} not found` };
+        setScannedItem(errorData);
+        setActiveItem(errorData);
       }
     } catch (error) {
       console.error("Error fetching item:", error);
-      setScannedItem({ error: "Failed to fetch item data" });
+      const errorData = { error: "Failed to fetch item data" };
+      setScannedItem(errorData);
+      setActiveItem(errorData);
+    } finally {
+      setIsLoadingItem(false);
+    }
+  };
+
+  // Load item from history into active position
+  const loadHistoryItemToActive = async (historyItem: any) => {
+    if (historyItem.error) {
+      setActiveItem(historyItem);
+      return;
+    }
+    
+    setIsLoadingItem(true);
+    try {
+      const response = await fetch(`/api/track/${historyItem.id}`);
+      if (response.ok) {
+        const data = await response.json();
+        setActiveItem(data);
+      } else {
+        setActiveItem({ error: `Item ${historyItem.id} not found` });
+      }
+    } catch (error) {
+      setActiveItem({ error: "Failed to fetch item data" });
     } finally {
       setIsLoadingItem(false);
     }
@@ -96,9 +127,9 @@ export const QRScanner = ({ open, onOpenChange }: QRScannerProps) => {
     setQueueActive(true);
     setQueueType(type);
     
-    // Start with current item if it matches type
-    if (scannedItem && scannedItem.type === type) {
-      setQueuedItems([scannedItem]);
+    // Start with active item if it matches type
+    if (activeItem && activeItem.type === type) {
+      setQueuedItems([activeItem]);
     } else {
       setQueuedItems([]);
     }
