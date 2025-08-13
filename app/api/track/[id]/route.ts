@@ -40,18 +40,12 @@ export async function GET(
     if (collectionType === 'bin') {
       // Look up bin record using string ID (QR code)
       record = await db.collection('bins').findOne({ _id: id } as any) as Bin | null;
-      console.log('Found bin record:', record);
       if (record) {
-        console.log('Looking up org with ID:', (record as Bin).orgId);
-        console.log('Converting to ObjectId...');
         try {
           org = await db.collection('orgs').findOne({ _id: new ObjectId((record as Bin).orgId) });
-          console.log('Found org:', org);
         } catch (error) {
-          console.log('Error looking up org:', error);
           // Try looking up with string ID if ObjectId conversion fails
           org = await db.collection('orgs').findOne({ _id: (record as Bin).orgId });
-          console.log('Found org with string lookup:', org);
         }
       }
       
