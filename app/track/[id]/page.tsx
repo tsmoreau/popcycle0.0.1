@@ -633,6 +633,15 @@ export default function TrackItem() {
                   <span className="systematic-caps text-sm">Origin</span>
                   <span>{data.organization?.name || "Unknown Origin"}</span>
                 </div>
+                {data.location && (
+                  <div className="flex justify-between items-center">
+                    <span className="systematic-caps text-sm">Location</span>
+                    <span className="flex items-center">
+                      <MapPin className="w-4 h-4 mr-1" />
+                      {data.location}
+                    </span>
+                  </div>
+                )}
                 {data.materialType && (
                   <div className="flex justify-between">
                     <span className="systematic-caps text-sm">Material</span>
