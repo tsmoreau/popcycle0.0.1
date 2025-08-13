@@ -388,18 +388,19 @@ export const QRScanner = ({ open, onOpenChange }: QRScannerProps) => {
               </div>
             )}
 
-            {/* Queue icons on right side */}
+            {/* Queue icons on right side - now clickable pills */}
             {queueActive && queuedItems.length > 0 && (
               <div className="absolute -right-2 top-2 flex flex-col gap-1 max-h-full overflow-y-auto">
                 {queuedItems.map((item, index) => (
-                  <div
+                  <button
                     key={`${item.id}-${index}`}
-                    className="h-8 px-2 rounded-full bg-pop-green text-white text-xs flex items-center justify-center font-bold shadow-lg whitespace-nowrap"
-                    title={`${item.id} (${item.type})`}
+                    className="h-8 px-2 rounded-full bg-pop-green text-white text-xs flex items-center justify-center font-bold shadow-lg whitespace-nowrap hover:bg-pop-green/80 cursor-pointer transition-colors"
+                    title={`Click to view ${item.id} (${item.type})`}
                     style={{ minWidth: 'fit-content' }}
+                    onClick={() => setScannedItem(item)}
                   >
                     {item.id || '?'}
-                  </div>
+                  </button>
                 ))}
               </div>
             )}
@@ -460,159 +461,149 @@ export const QRScanner = ({ open, onOpenChange }: QRScannerProps) => {
                 </div>
               )}
 
-              <h3 className="text-sm font-medium text-gray-900">Last Scanned Item</h3>
+              <h3 className="text-sm font-medium text-gray-900">Active Item</h3>
 
-              {/* Item history stack - show all scanned items */}
-              {scannedItemHistory.length > 0 && !isLoadingItem && (
-                <div className="space-y-2">
-                  {scannedItemHistory.map((item, index) => (
-                    <div key={`${item.id}-${index}`} className="space-y-3">
-                      {item.error ? (
-                        <div className="bg-red-50 border border-red-200 rounded-lg p-3">
-                          <p className="text-sm text-red-800">{item.error}</p>
-                        </div>
-                      ) : (
-                        <div className={`${index === 0 ? 'bg-pop-green/5 border-pop-green/20' : 'bg-gray-50 border-gray-200'} border rounded-lg p-3 space-y-2`}>
-                          {/* Item ID and Type with newest indicator */}
-                          <div className="flex items-center justify-between">
-                            <span className="text-lg font-mono font-bold text-pop-green">
-                              {item.id}
-                            </span>
-                            <span className="text-xs bg-pop-green text-white px-2 py-1 rounded uppercase">
-                              {item.type}
-                            </span>
-                          </div>
+              {/* Active item display - show only the current scanned item */}
+              {scannedItem && !isLoadingItem && (
+                <div className="space-y-3">
+                  {scannedItem.error ? (
+                    <div className="bg-red-50 border border-red-200 rounded-lg p-3">
+                      <p className="text-sm text-red-800">{scannedItem.error}</p>
+                    </div>
+                  ) : (
+                    <div className="bg-pop-green/5 border border-pop-green/20 rounded-lg p-3 space-y-2">
+                      {/* Item ID and Type */}
+                      <div className="flex items-center justify-between">
+                        <span className="text-lg font-mono font-bold text-pop-green">
+                          {scannedItem.id}
+                        </span>
+                        <span className="text-xs bg-pop-green text-white px-2 py-1 rounded uppercase">
+                          {scannedItem.type}
+                        </span>
+                      </div>
 
-                          {/* Full item details - show for ALL items */}
+                      {/* Item details - show different fields based on item type */}
+                      <div className="text-sm space-y-1">
+                        {/* Common fields */}
+                        {scannedItem.status && (
+                          <div><span className="font-medium">Status:</span> {scannedItem.status.replace(/_/g, ' ')}</div>
+                        )}
+                        {scannedItem.organization && (
+                          <div><span className="font-medium">Organization:</span> {scannedItem.organization.name}</div>
+                        )}
+
+                        {/* Batch-specific fields */}
+                        {scannedItem.type === 'batch' && (
                           <>
-                              {/* Item details - show different fields based on item type */}
-                              <div className="text-sm space-y-1">
-                                {/* Common fields */}
-                                {item.status && (
-                                  <div><span className="font-medium">Status:</span> {item.status.replace(/_/g, ' ')}</div>
-                                )}
-                                {item.organization && (
-                                  <div><span className="font-medium">Organization:</span> {item.organization.name}</div>
-                                )}
+                            {scannedItem.materialType && (
+                              <div><span className="font-medium">Material:</span> {scannedItem.materialType}</div>
+                            )}
+                            {scannedItem.weight && (
+                              <div><span className="font-medium">Weight:</span> {scannedItem.weight}kg</div>
+                            )}
+                            {scannedItem.collectedBy && (
+                              <div><span className="font-medium">Collected By:</span> {scannedItem.collectedBy}</div>
+                            )}
+                            {scannedItem.collectionDate && (
+                              <div><span className="font-medium">Collection Date:</span> {new Date(scannedItem.collectionDate).toLocaleDateString()}</div>
+                            )}
+                            {scannedItem.binIds && scannedItem.binIds.length > 0 && (
+                              <div><span className="font-medium">Source Bins:</span> {scannedItem.binIds.join(', ')}</div>
+                            )}
+                          </>
+                        )}
 
-                                {/* Batch-specific fields */}
-                                {item.type === 'batch' && (
-                                  <>
-                                    {item.materialType && (
-                                      <div><span className="font-medium">Material:</span> {item.materialType}</div>
-                                    )}
-                                    {item.weight && (
-                                      <div><span className="font-medium">Weight:</span> {item.weight}kg</div>
-                                    )}
-                                    {item.collectedBy && (
-                                      <div><span className="font-medium">Collected By:</span> {item.collectedBy}</div>
-                                    )}
-                                    {item.collectionDate && (
-                                      <div><span className="font-medium">Collection Date:</span> {new Date(item.collectionDate).toLocaleDateString()}</div>
-                                    )}
-                                    {item.binIds && item.binIds.length > 0 && (
-                                      <div><span className="font-medium">Source Bins:</span> {item.binIds.join(', ')}</div>
-                                    )}
-                                  </>
-                                )}
+                        {/* Bin-specific fields */}
+                        {scannedItem.type === 'bin' && (
+                          <>
+                            {scannedItem.name && (
+                              <div><span className="font-medium">Name:</span> {scannedItem.name}</div>
+                            )}
+                            {scannedItem.location && (
+                              <div><span className="font-medium">Location:</span> {scannedItem.location}</div>
+                            )}
+                            {scannedItem.capacity && (
+                              <div><span className="font-medium">Capacity:</span> {scannedItem.capacity}L</div>
+                            )}
+                            {scannedItem.lastCollectionDate && (
+                              <div><span className="font-medium">Last Collection:</span> {new Date(scannedItem.lastCollectionDate).toLocaleDateString()}</div>
+                            )}
+                            {scannedItem.nextCollectionDate && (
+                              <div><span className="font-medium">Next Collection:</span> {new Date(scannedItem.nextCollectionDate).toLocaleDateString()}</div>
+                            )}
+                            {scannedItem.canBeAdopted !== undefined && (
+                              <div><span className="font-medium">Can Be Adopted:</span> {scannedItem.canBeAdopted ? 'Yes' : 'No'}</div>
+                            )}
+                            {scannedItem.adoptedBy && (
+                              <div><span className="font-medium">Adopted By:</span> {scannedItem.adoptedBy}</div>
+                            )}
+                          </>
+                        )}
 
-                                {/* Bin-specific fields */}
-                                {item.type === 'bin' && (
-                                  <>
-                                    {item.name && (
-                                      <div><span className="font-medium">Name:</span> {item.name}</div>
-                                    )}
-                                    {item.location && (
-                                      <div><span className="font-medium">Location:</span> {item.location}</div>
-                                    )}
-                                    {item.capacity && (
-                                      <div><span className="font-medium">Capacity:</span> {item.capacity}L</div>
-                                    )}
-                                    {item.lastCollectionDate && (
-                                      <div><span className="font-medium">Last Collection:</span> {new Date(item.lastCollectionDate).toLocaleDateString()}</div>
-                                    )}
-                                    {item.nextCollectionDate && (
-                                      <div><span className="font-medium">Next Collection:</span> {new Date(item.nextCollectionDate).toLocaleDateString()}</div>
-                                    )}
-                                    {item.canBeAdopted !== undefined && (
-                                      <div><span className="font-medium">Can Be Adopted:</span> {item.canBeAdopted ? 'Yes' : 'No'}</div>
-                                    )}
-                                    {item.adoptedBy && (
-                                      <div><span className="font-medium">Adopted By:</span> {item.adoptedBy}</div>
-                                    )}
-                                  </>
-                                )}
-
-                                {/* Blank-specific fields - DEBUG VERSION */}
-                                {item.type === 'blank' && (
-                                  <>
-                                    <div className="text-xs text-red-500 mb-2">DEBUG: Type={item.type}, Has batchId={!!item.batchId}, Has productId={!!item.productId}</div>
-                                    
-                                    {console.log("BLANK RENDER DEBUG:", {
-                                      type: item.type,
-                                      batchId: item.batchId,
-                                      productId: item.productId,
-                                      binIds: item.binIds,
-                                      allKeys: Object.keys(item)
-                                    })}
-                                    
-                                    {/* Always show available fields with fallbacks */}
-                                    <div><span className="font-medium">Batch ID:</span> {item.batchId || 'Not available'}</div>
-                                    <div><span className="font-medium">Product ID:</span> {item.productId || 'Not available'}</div>
-                                    <div><span className="font-medium">Weight:</span> {item.weight || 'Not available'}kg</div>
-                                    <div><span className="font-medium">Source Bins:</span> {(item.binIds && item.binIds.length > 0) ? item.binIds.join(', ') : 'Not available'}</div>
-                                    <div><span className="font-medium">Assembly Date:</span> {item.assemblyDate ? new Date(item.assemblyDate).toLocaleDateString() : 'Not available'}</div>
-                                    <div><span className="font-medium">Delivery Date:</span> {item.deliveryDate ? new Date(item.deliveryDate).toLocaleDateString() : 'Not available'}</div>
-                                    <div><span className="font-medium">User ID:</span> {item.userId || 'Not available'}</div>
-                                    <div><span className="font-medium">Maker:</span> {item.makerDetails || 'Not available'}</div>
-                                    
-                                    {item.impactMetrics && (
-                                      <div className="text-xs text-gray-600 mt-2">
-                                        <div>Carbon Saved: {item.impactMetrics.carbonSaved}kg</div>
-                                        <div>Waste Reduced: {item.impactMetrics.wasteReduced}kg</div>
-                                      </div>
-                                    )}
-                                  </>
-                                )}
-
-                                {/* Generic notes field */}
-                                {item.notes && (
-                                  <div><span className="font-medium">Notes:</span> {item.notes}</div>
-                                )}
+                        {/* Blank-specific fields - DEBUG VERSION */}
+                        {scannedItem.type === 'blank' && (
+                          <>
+                            <div className="text-xs text-red-500 mb-2">DEBUG: Type={scannedItem.type}, Has batchId={!!scannedItem.batchId}, Has productId={!!scannedItem.productId}</div>
+                            
+                            {console.log("BLANK RENDER DEBUG:", {
+                              type: scannedItem.type,
+                              batchId: scannedItem.batchId,
+                              productId: scannedItem.productId,
+                              binIds: scannedItem.binIds,
+                              allKeys: Object.keys(scannedItem)
+                            })}
+                            
+                            {/* Always show available fields with fallbacks */}
+                            <div><span className="font-medium">Batch ID:</span> {scannedItem.batchId || 'Not available'}</div>
+                            <div><span className="font-medium">Product ID:</span> {scannedItem.productId || 'Not available'}</div>
+                            <div><span className="font-medium">Weight:</span> {scannedItem.weight || 'Not available'}kg</div>
+                            <div><span className="font-medium">Source Bins:</span> {(scannedItem.binIds && scannedItem.binIds.length > 0) ? scannedItem.binIds.join(', ') : 'Not available'}</div>
+                            <div><span className="font-medium">Assembly Date:</span> {scannedItem.assemblyDate ? new Date(scannedItem.assemblyDate).toLocaleDateString() : 'Not available'}</div>
+                            <div><span className="font-medium">Delivery Date:</span> {scannedItem.deliveryDate ? new Date(scannedItem.deliveryDate).toLocaleDateString() : 'Not available'}</div>
+                            <div><span className="font-medium">User ID:</span> {scannedItem.userId || 'Not available'}</div>
+                            <div><span className="font-medium">Maker:</span> {scannedItem.makerDetails || 'Not available'}</div>
+                            
+                            {scannedItem.impactMetrics && (
+                              <div className="text-xs text-gray-600 mt-2">
+                                <div>Carbon Saved: {scannedItem.impactMetrics.carbonSaved}kg</div>
+                                <div>Waste Reduced: {scannedItem.impactMetrics.wasteReduced}kg</div>
                               </div>
+                            )}
+                          </>
+                        )}
 
-                              {/* Impact metrics */}
-                              {item.impactMetrics && (
-                                <div className="bg-white/50 rounded p-2 text-xs space-y-1">
-                                  <div className="font-medium text-pop-green">Environmental Impact:</div>
-                                  {item.impactMetrics.carbonSaved && (
-                                    <div>Carbon Saved: {item.impactMetrics.carbonSaved}kg CO₂</div>
-                                  )}
-                                  {item.impactMetrics.wasteReduced && (
-                                    <div>Waste Reduced: {item.impactMetrics.wasteReduced}kg</div>
-                                  )}
-                                </div>
-                              )}
+                        {/* Generic notes field */}
+                        {scannedItem.notes && (
+                          <div><span className="font-medium">Notes:</span> {scannedItem.notes}</div>
+                        )}
+                      </div>
 
-                              {/* Action button to view full details - only show for newest item */}
-                              {index === 0 && (
-                                <Button
-                                  size="sm"
-                                  className="w-full bg-pop-green hover:bg-pop-green/90"
-                                  onClick={() => {
-                                    onOpenChange(false);
-                                    router.push(`/track/${item.id}`);
-                                  }}
-                                >
-                                  View Full Details
-                                </Button>
-                              )}
-                            </>
-                          
+                      {/* Impact metrics */}
+                      {scannedItem.impactMetrics && (
+                        <div className="bg-white/50 rounded p-2 text-xs space-y-1">
+                          <div className="font-medium text-pop-green">Environmental Impact:</div>
+                          {scannedItem.impactMetrics.carbonSaved && (
+                            <div>Carbon Saved: {scannedItem.impactMetrics.carbonSaved}kg CO₂</div>
+                          )}
+                          {scannedItem.impactMetrics.wasteReduced && (
+                            <div>Waste Reduced: {scannedItem.impactMetrics.wasteReduced}kg</div>
+                          )}
                         </div>
                       )}
+
+                      {/* Action button to view full details */}
+                      <Button
+                        size="sm"
+                        className="w-full bg-pop-green hover:bg-pop-green/90"
+                        onClick={() => {
+                          onOpenChange(false);
+                          router.push(`/track/${scannedItem.id}`);
+                        }}
+                      >
+                        View Full Details
+                      </Button>
                     </div>
-                  ))}
+                  )}
                 </div>
               )}
 
