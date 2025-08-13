@@ -106,13 +106,7 @@ export async function GET(
         return NextResponse.json({ error: 'Batch not found' }, { status: 404 });
       }
       
-      // Find event information if batch has an eventId
-      let eventInfo = null;
       const batchRecord = record as Batch;
-      if (batchRecord.eventId && org && org.events) {
-        eventInfo = org.events.find((event: any) => event.eventId === batchRecord.eventId);
-      }
-      
       return NextResponse.json({
         id: batchRecord._id,
         type: 'batch',
@@ -122,8 +116,6 @@ export async function GET(
         materialType: batchRecord.materialType,
         collectedBy: batchRecord.collectedBy,
         status: batchRecord.status,
-        eventId: batchRecord.eventId,
-        event: eventInfo ? eventInfo.name : null,
         notes: batchRecord.notes,
         organization: org ? {
           name: org.name,
