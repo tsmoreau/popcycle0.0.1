@@ -52,10 +52,12 @@ export const authOptions: AuthOptions = {
         session.user.permissions = token.permissions
       }
       return session
+    },
+    
+    async redirect({ url, baseUrl }) {
+      // Always redirect back to the base URL instead of auth pages
+      return baseUrl
     }
-  },
-  session: {
-    strategy: 'jwt'
   },
 }
 
