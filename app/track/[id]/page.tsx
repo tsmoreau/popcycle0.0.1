@@ -38,7 +38,10 @@ import {
   Camera,
   Zap,
   Settings,
+  HelpCircle,
 } from "lucide-react";
+import { GuidedTour } from "../../components/ui/guided-tour";
+import { Button } from "../../components/ui/button";
 
 interface MakerDetails {
   userId: string;
@@ -70,9 +73,56 @@ interface BatchItem {
 
 
 
+// Tour steps configuration
+const getTourSteps = (itemType: string) => [
+  {
+    id: 'hero',
+    title: 'Item ID & Overview',
+    content: `This is the QR code ID for your ${itemType}. Each item in the PopCycle system has a unique alphanumeric ID that tracks it from collection to final product.`,
+    target: '[data-tour="hero-section"]',
+    position: 'bottom' as const
+  },
+  {
+    id: 'timeline',
+    title: 'Processing Timeline',
+    content: 'These icons show the current stage of processing. Items move from collection through sorting, cleaning, processing, and final assembly.',
+    target: '[data-tour="timeline-section"]',
+    position: 'bottom' as const
+  },
+  {
+    id: 'source-details',
+    title: 'Source Information',
+    content: `This section shows detailed information about the ${itemType}, including collection date, material type, weight, and current status.`,
+    target: '[data-tour="source-details"]',
+    position: 'right' as const
+  },
+  {
+    id: 'connected-items',
+    title: 'Connected Items',
+    content: 'This shows related items in the supply chain - either items that came from the same source or items that were created from this one.',
+    target: '[data-tour="connected-items"]',
+    position: 'left' as const
+  },
+  {
+    id: 'product-details',
+    title: 'Product Information',
+    content: 'When an item becomes a finished product, this section shows product details, availability, and purchase options.',
+    target: '[data-tour="product-details"]',
+    position: 'top' as const
+  },
+  {
+    id: 'maker-details',
+    title: 'Maker Community',
+    content: 'This section shows information about community makers who helped process this item, including their stories and contributions.',
+    target: '[data-tour="maker-details"]',
+    position: 'top' as const
+  }
+];
+
 export default function TrackItem() {
   const { id } = useParams();
   const [data, setData] = useState<any>(null);
+  const [tourOpen, setTourOpen] = useState(false);
   const [relatedItems, setRelatedItems] = useState<any>({
     batches: [],
     blanks: [],
@@ -339,8 +389,21 @@ export default function TrackItem() {
   return (
     <div className="min-h-screen py-20">
       <div className="max-w-4xl mx-auto px-4">
+        {/* Tour Button */}
+        <div className="fixed top-20 right-4 z-50">
+          <Button
+            onClick={() => setTourOpen(true)}
+            variant="outline"
+            size="sm"
+            className="bg-white border-2 border-pop-blue text-pop-blue hover:bg-pop-blue hover:text-white shadow-lg"
+          >
+            <HelpCircle className="h-4 w-4 mr-1" />
+            Page Tour
+          </Button>
+        </div>
+
         {/* ========== HERO SECTION ========== */}
-        <div className="text-center mb-12">
+        <div className="text-center mb-12" data-tour="hero-section">
           <h1 className="text-4xl lg:text-6xl helvetica-bold mb-6 tracking-tight">
             <span className="text-pop-green"></span> {data.id}
           </h1>
@@ -365,7 +428,7 @@ export default function TrackItem() {
         </div>
 
         {/* ========== TIMELINE SECTION ========== */}
-        <div className="mb-8 lg:mb-12">
+        <div className="mb-8 lg:mb-12" data-tour="timeline-section">
           <div className="flex gap-2 lg:gap-4 justify-center max-w-3xl mx-auto">
             {/* Bins: Show only Collection step */}
             {data.id.startsWith("B") && (
@@ -559,7 +622,7 @@ export default function TrackItem() {
         </div>
 
         {/* ========== SOURCE DETAILS ========== */}
-        <div className="flex flex-col gap-8 mb-12 max-w-2xl mx-auto">
+        <div className="flex flex-col gap-8 mb-12 max-w-2xl mx-auto" data-tour="source-details">
           {/* Source Details Card */}
           <PopArtContainer color="green" shadow>
             <Card className="border-4 border-pop-black">
@@ -750,7 +813,7 @@ export default function TrackItem() {
 
           {/* ========== PRODUCT DETAILS ========== */}
           {!isSourceOnly && (
-            <>
+            <div data-tour="product-details">
               <PopArtContainer color={isCharity ? "red" : "blue"} shadow>
                 <Card className="border-4 border-pop-black">
                   <CardHeader>
@@ -821,7 +884,8 @@ export default function TrackItem() {
               </PopArtContainer>
 
               {/* ========== MAKER DETAILS ========== */}
-              <PopArtContainer color="red" shadow>
+              <div data-tour="maker-details">
+                <PopArtContainer color="red" shadow>
                 <Card className="border-4 border-pop-black">
                   <CardHeader>
                     <CardTitle className="systematic-caps flex items-center">
@@ -900,8 +964,9 @@ export default function TrackItem() {
                     )}
                   </CardContent>
                 </Card>
-              </PopArtContainer>
-            </>
+                </PopArtContainer>
+              </div>
+            </div>
           )}
         </div>
 
@@ -947,7 +1012,7 @@ export default function TrackItem() {
 
         {/* ========== CONNECTED ITEMS - Produced Items (for Batches) ========== */}
         {data.id.startsWith("T") && relatedItems.blanks.length > 0 && (
-          <div className="max-w-2xl mx-auto">
+          <div className="max-w-2xl mx-auto" data-tour="connected-items">
             <PopArtContainer color="red" shadow>
               <Card className="border-4 border-pop-black">
                 <CardHeader>
@@ -1031,6 +1096,18 @@ export default function TrackItem() {
           </div>
         )}
       </div>
+      
+      {/* Guided Tour Component */}
+      <GuidedTour
+        isOpen={tourOpen}
+        onClose={() => setTourOpen(false)}
+        steps={getTourSteps(
+          data?.id?.startsWith("B") ? "bin" : 
+          data?.id?.startsWith("T") ? "batch" : 
+          "blank"
+        )}
+        tourTitle="Track Page Walkthrough"
+      />
     </div>
   );
 }
