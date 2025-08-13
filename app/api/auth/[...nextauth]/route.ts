@@ -52,9 +52,14 @@ export const authOptions: AuthOptions = {
         session.user.permissions = token.permissions
       }
       return session
-    },
-    
-
+    }
+  },
+  session: {
+    strategy: 'jwt'
+  },
+  pages: {
+    signIn: '/auth/signin',
+    error: '/auth/error',
   },
 }
 
