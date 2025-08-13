@@ -22,7 +22,15 @@ export const authOptions: AuthOptions = {
     }),
   ],
   callbacks: {
-    async signIn({ user }) {
+    async signIn({ user, account, profile, email, credentials }) {
+      console.log('SignIn callback called with:', { user, account })
+      
+      // If user cancels OAuth (no user object), don't trigger error page
+      if (!user) {
+        console.log('User cancelled OAuth - redirecting to home')
+        return false
+      }
+      
       // Allow all Google OAuth users for now
       return !!user?.email
     },
@@ -54,24 +62,19 @@ export const authOptions: AuthOptions = {
     },
 
     async redirect({ url, baseUrl }) {
-      // Handle OAuth cancellation/access_denied - redirect to home page
-      if (url.includes('error=access_denied') || url.includes('error=Callback')) {
+      console.log('NextAuth redirect called with url:', url, 'baseUrl:', baseUrl)
+      
+      // Handle OAuth cancellation/access_denied - always redirect to home page
+      if (url.includes('error=access_denied') || url.includes('error=Callback') || url.includes('/api/auth/signin')) {
+        console.log('Redirecting to home page due to OAuth cancellation')
         return baseUrl
       }
       
-      // If there's an error, redirect back to the original page with error param
-      if (url.includes('error=')) {
-        const urlObj = new URL(url)
-        const error = urlObj.searchParams.get('error')
-        const callbackUrl = urlObj.searchParams.get('callbackUrl') || baseUrl
-        return `${callbackUrl}${callbackUrl.includes('?') ? '&' : '?'}error=${error}`
-      }
-      
-      // If url is on the same origin, allow it
+      // For successful auth, allow the redirect
       if (url.startsWith("/")) return `${baseUrl}${url}`
-      // If url is to the same host, allow it
       else if (new URL(url).origin === baseUrl) return url
-      // Otherwise redirect to home
+      
+      // Default to home page
       return baseUrl
     }
   },
@@ -79,7 +82,7 @@ export const authOptions: AuthOptions = {
     strategy: 'jwt'
   },
   pages: {
-    error: '/auth/error',
+    signIn: '/',
   },
 }
 
