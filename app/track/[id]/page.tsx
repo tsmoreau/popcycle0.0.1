@@ -60,10 +60,11 @@ interface BlankItem {
 
 interface BatchItem {
   id: string;
-  weight: number;
-  materialType: string;
-  collectionDate: string;
+  binIds: string[];
   status: string;
+  weight?: number;
+  materialType?: string;
+  collectionDate?: string;
 }
 
 
