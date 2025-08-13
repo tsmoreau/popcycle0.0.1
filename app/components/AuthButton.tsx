@@ -2,6 +2,7 @@
 
 import { useState, useRef, useEffect } from 'react'
 import { useSession, signIn, signOut } from 'next-auth/react'
+import { useRouter, useSearchParams } from 'next/navigation'
 import { Button } from './ui/button'
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from './ui/dialog'
 import { User, LogOut, Settings, ChevronDown } from 'lucide-react'
@@ -12,6 +13,20 @@ export default function AuthButton() {
   const [signInModalOpen, setSignInModalOpen] = useState(false)
   const [isSigningIn, setIsSigningIn] = useState(false)
   const dropdownRef = useRef<HTMLDivElement>(null)
+  const router = useRouter()
+  const searchParams = useSearchParams()
+
+  // Check for auth errors and reopen modal
+  useEffect(() => {
+    const error = searchParams.get('error')
+    if (error === 'Callback') {
+      setSignInModalOpen(true)
+      // Clean up URL without triggering a page reload
+      const url = new URL(window.location.href)
+      url.searchParams.delete('error')
+      window.history.replaceState({}, '', url.toString())
+    }
+  }, [searchParams])
 
   // Close dropdown when clicking outside
   useEffect(() => {
@@ -109,7 +124,7 @@ export default function AuthButton() {
     <>
       <Button
         onClick={() => setSignInModalOpen(true)}
-        className="bg-pop-blue border-2 border-pop-black text-white hover:bg-pop-black systematic-caps w-full lg:w-auto"
+        className="bg-pop-green text-white hover:bg-pop-black hover:text-white systematic-caps w-full lg:w-auto"
       >
         Sign In
       </Button>
@@ -119,7 +134,7 @@ export default function AuthButton() {
         <DialogContent className="sm:max-w-md bg-white border-4 border-pop-black">
           <DialogHeader className="space-y-4 pb-4">
             <div className="text-center">
-              <div className="w-16 h-16 bg-pop-green border-4 border-pop-black rounded-full flex items-center justify-center mx-auto mb-4">
+              <div className="w-16 h-16 bg-pop-green border-4 border-pop-black  flex items-center justify-center mx-auto mb-4">
                 <span className="text-pop-black helvetica-bold text-2xl">P</span>
               </div>
               <DialogTitle className="text-xl helvetica-bold text-pop-black">
@@ -138,7 +153,9 @@ export default function AuthButton() {
                 onClick={async () => {
                   setIsSigningIn(true)
                   try {
-                    await signIn('google', { callbackUrl: '/' })
+                    // Use current page as callback URL to stay on the same page
+                    const currentUrl = window.location.href
+                    await signIn('google', { callbackUrl: currentUrl })
                   } catch (error) {
                     console.error('Sign in error:', error)
                   } finally {
