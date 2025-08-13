@@ -33,7 +33,7 @@ export const QRScanner = ({ open, onOpenChange }: QRScannerProps) => {
   const [queueType, setQueueType] = useState<string>('');
   const [queuedItems, setQueuedItems] = useState<any[]>([]);
   const [lastQueuedItemId, setLastQueuedItemId] = useState<string>('');
-  const [scannedItemHistory, setScannedItemHistory] = useState<any[]>([]);
+
 
 
   // Extract item ID from any URL or direct code
@@ -65,20 +65,6 @@ export const QRScanner = ({ open, onOpenChange }: QRScannerProps) => {
       if (response.ok) {
         const data = await response.json();
         setScannedItem(data);
-        
-        // Add to history stack only if it's not already in the list
-        setScannedItemHistory(prev => {
-          // Check if this item is already in the history
-          const itemExists = prev.some(item => item.id === data.id);
-          if (itemExists) {
-            console.log('Item already in history, not adding duplicate');
-            return prev;
-          }
-          // Add new item to the beginning, limit to 10 items
-          return [data, ...prev].slice(0, 10);
-        });
-        
-
       } else {
         console.error("Item not found:", itemId);
         setScannedItem({ error: `Item ${itemId} not found` });
@@ -433,18 +419,18 @@ export const QRScanner = ({ open, onOpenChange }: QRScannerProps) => {
               )}
 
               {/* Queue Controls Section - Full Width above scanned items */}
-              {scannedItemHistory.length > 0 && (
+              {scannedItem && !scannedItem.error && (
                 <div className="pb-3">
                   {!queueActive ? (
                     /* Start queue button - only show if we have a valid item */
-                    scannedItemHistory[0]?.type && (
+                    scannedItem.type && (
                       <Button
                         size="sm"
                         variant="outline"
                         className="w-full border-pop-green text-pop-green hover:bg-pop-green hover:text-white"
-                        onClick={() => startQueue(scannedItemHistory[0].type)}
+                        onClick={() => startQueue(scannedItem.type)}
                       >
-                        Start {scannedItemHistory[0].type.charAt(0).toUpperCase() + scannedItemHistory[0].type.slice(1)} Queue
+                        Start {scannedItem.type.charAt(0).toUpperCase() + scannedItem.type.slice(1)} Queue
                       </Button>
                     )
                   ) : (
