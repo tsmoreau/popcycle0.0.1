@@ -3,14 +3,11 @@
 import { useState, useRef, useEffect } from 'react'
 import { useSession, signIn, signOut } from 'next-auth/react'
 import { Button } from './ui/button'
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from './ui/dialog'
 import { User, LogOut, Settings, ChevronDown } from 'lucide-react'
 
 export default function AuthButton() {
   const { data: session, status } = useSession()
   const [dropdownOpen, setDropdownOpen] = useState(false)
-  const [signInModalOpen, setSignInModalOpen] = useState(false)
-  const [isSigningIn, setIsSigningIn] = useState(false)
   const dropdownRef = useRef<HTMLDivElement>(null)
 
   // Close dropdown when clicking outside
