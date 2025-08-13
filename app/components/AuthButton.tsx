@@ -142,12 +142,22 @@ export default function AuthButton() {
                 onClick={async () => {
                   setIsSigningIn(true)
                   try {
-                    await signIn('google')
+                    const result = await signIn('google', { 
+                      redirect: false,
+                      callbackUrl: window.location.href 
+                    })
+                    
+                    if (result?.ok) {
+                      setSignInModalOpen(false)
+                      window.location.reload()
+                    } else if (result?.error) {
+                      console.log('Sign in cancelled or failed:', result.error)
+                      // User cancelled or error occurred, just close modal
+                    }
                   } catch (error) {
                     console.error('Sign in error:', error)
                   } finally {
                     setIsSigningIn(false)
-                    setSignInModalOpen(false)
                   }
                 }}
                 disabled={isSigningIn}
