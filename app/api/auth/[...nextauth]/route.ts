@@ -54,13 +54,8 @@ export const authOptions: AuthOptions = {
     },
 
     async redirect({ url, baseUrl }) {
-      // If there's an error (user backed out), send to homepage
-      if (url.includes('error=')) {
-        return baseUrl
-      }
-      // For successful auth, redirect to callback URL or home
-      if (url.startsWith("/")) return `${baseUrl}${url}`
-      if (new URL(url).origin === baseUrl) return url
+      console.log('REDIRECT CALLBACK:', { url, baseUrl })
+      // ALWAYS redirect to homepage - no exceptions
       return baseUrl
     }
   },
