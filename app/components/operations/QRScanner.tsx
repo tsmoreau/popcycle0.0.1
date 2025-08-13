@@ -96,15 +96,27 @@ export const QRScanner = ({ open, onOpenChange }: QRScannerProps) => {
   };
 
   const stopQueue = () => {
+    console.log('Stopping queue...'); // Debug log
+    
+    // Use functional updates to ensure state is updated immediately
     setQueueActive(false);
     setQueueType('');
     setQueuedItems([]);
     setLastQueuedItemId('');
+    
+    console.log('Queue stopped - all state cleared');
   };
 
   // Use useEffect to handle queue additions when scannedItem changes
   useEffect(() => {
-    if (scannedItem && queueActive && queueType && scannedItem.type === queueType && scannedItem.id !== lastQueuedItemId) {
+    // Early exit if queue is not active
+    if (!queueActive || !queueType) {
+      console.log('Queue not active, skipping item addition');
+      return;
+    }
+    
+    if (scannedItem && scannedItem.type === queueType && scannedItem.id !== lastQueuedItemId) {
+      console.log('Adding item to queue:', scannedItem.id);
       setQueuedItems(prev => {
         const isAlreadyQueued = prev.some(item => item.id === scannedItem.id);
         if (!isAlreadyQueued) {
