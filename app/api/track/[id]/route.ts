@@ -116,7 +116,7 @@ export async function GET(
         materialType: batchRecord.materialType,
         collectedBy: batchRecord.collectedBy,
         status: batchRecord.status,
-        event: batchRecord.status,
+        event: null,
         notes: batchRecord.notes,
         organization: org ? {
           name: org.name,
