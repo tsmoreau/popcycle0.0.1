@@ -6,7 +6,6 @@ import type { AuthOptions } from 'next-auth'
 export const authOptions: AuthOptions = {
   secret: process.env.NEXTAUTH_SECRET,
   trustHost: true,
-  session: { strategy: "jwt" },
   providers: [
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID!.trim(),
@@ -52,6 +51,22 @@ export const authOptions: AuthOptions = {
         session.user.permissions = token.permissions
       }
       return session
+    },
+
+    async redirect({ url, baseUrl }) {
+      // If there's an error, redirect back to the original page with error param
+      if (url.includes('error=')) {
+        const urlObj = new URL(url)
+        const error = urlObj.searchParams.get('error')
+        const callbackUrl = urlObj.searchParams.get('callbackUrl') || baseUrl
+        return `${callbackUrl}${callbackUrl.includes('?') ? '&' : '?'}error=${error}`
+      }
+      // If url is on the same origin, allow it
+      if (url.startsWith("/")) return `${baseUrl}${url}`
+      // If url is to the same host, allow it
+      else if (new URL(url).origin === baseUrl) return url
+      // Otherwise redirect to home
+      return baseUrl
     }
   },
   session: {
