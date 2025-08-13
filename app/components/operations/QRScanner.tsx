@@ -431,17 +431,32 @@ export const QRScanner = ({ open, onOpenChange }: QRScannerProps) => {
                 </div>
               )}
 
-              {/* Stop Queue Section - Full Width above scanned items */}
-              {queueActive && (
+              {/* Queue Controls Section - Full Width above scanned items */}
+              {scannedItemHistory.length > 0 && (
                 <div className="pb-3">
-                  <Button
-                    size="sm"
-                    variant="outline"
-                    className="w-full border-red-400 text-red-600 hover:bg-red-50"
-                    onClick={stopQueue}
-                  >
-                    Stop Queue
-                  </Button>
+                  {!queueActive ? (
+                    /* Start queue button - only show if we have a valid item */
+                    scannedItemHistory[0]?.type && (
+                      <Button
+                        size="sm"
+                        variant="outline"
+                        className="w-full border-pop-green text-pop-green hover:bg-pop-green hover:text-white"
+                        onClick={() => startQueue(scannedItemHistory[0].type)}
+                      >
+                        Start {scannedItemHistory[0].type.charAt(0).toUpperCase() + scannedItemHistory[0].type.slice(1)} Queue
+                      </Button>
+                    )
+                  ) : (
+                    /* Stop queue button when active */
+                    <Button
+                      size="sm"
+                      variant="outline"
+                      className="w-full border-red-400 text-red-600 hover:bg-red-50"
+                      onClick={stopQueue}
+                    >
+                      Stop Queue
+                    </Button>
+                  )}
                 </div>
               )}
 
@@ -577,45 +592,18 @@ export const QRScanner = ({ open, onOpenChange }: QRScannerProps) => {
                                 </div>
                               )}
 
-                              {/* Queue controls - only show for newest item */}
+                              {/* Action button to view full details - only show for newest item */}
                               {index === 0 && (
-                                <div className="space-y-2">
-                                  {!queueActive ? (
-                                    /* Start queue button - only show if we have a valid item */
-                                    item.type && (
-                                      <Button
-                                        size="sm"
-                                        variant="outline"
-                                        className="w-full border-pop-green text-pop-green hover:bg-pop-green hover:text-white"
-                                        onClick={() => startQueue(item.type)}
-                                      >
-                                        Start {item.type.charAt(0).toUpperCase() + item.type.slice(1)} Queue
-                                      </Button>
-                                    )
-                                  ) : (
-                                    /* Queue is active - show status only */
-                                    <div className="flex items-center justify-between bg-pop-green/10 p-2 rounded">
-                                      <span className="text-sm font-medium text-pop-green">
-                                        {queueType.charAt(0).toUpperCase() + queueType.slice(1)} Queue Active
-                                      </span>
-                                      <span className="text-xs bg-pop-green text-white px-2 py-1 rounded">
-                                        {queuedItems.length} items
-                                      </span>
-                                    </div>
-                                  )}
-
-                                  {/* Action button to view full details */}
-                                  <Button
-                                    size="sm"
-                                    className="w-full bg-pop-green hover:bg-pop-green/90"
-                                    onClick={() => {
-                                      onOpenChange(false);
-                                      router.push(`/track/${item.id}`);
-                                    }}
-                                  >
-                                    View Full Details
-                                  </Button>
-                                </div>
+                                <Button
+                                  size="sm"
+                                  className="w-full bg-pop-green hover:bg-pop-green/90"
+                                  onClick={() => {
+                                    onOpenChange(false);
+                                    router.push(`/track/${item.id}`);
+                                  }}
+                                >
+                                  View Full Details
+                                </Button>
                               )}
                             </>
                           
