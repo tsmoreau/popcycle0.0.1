@@ -30,12 +30,22 @@ export default function SignInPage() {
     const callbackUrl = searchParams.get('callbackUrl')
     
     if (error === 'Callback' && callbackUrl) {
-      // User cancelled OAuth, redirect back to the original page
-      setTimeout(() => {
-        window.location.href = callbackUrl
-      }, 100) // Small delay to avoid immediate redirect loop
+      // User cancelled OAuth, redirect back to the original page immediately
+      window.location.href = callbackUrl
+      return
     }
   }, [searchParams])
+
+  // Don't render the page if we're redirecting due to cancelled OAuth
+  const error = searchParams.get('error')
+  const callbackUrl = searchParams.get('callbackUrl')
+  if (error === 'Callback' && callbackUrl) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-pop-green via-pop-blue to-pop-red flex items-center justify-center">
+        <div className="text-white text-lg">Redirecting...</div>
+      </div>
+    )
+  }
 
   const handleEmailSignIn = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
