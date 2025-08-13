@@ -52,7 +52,7 @@ interface Product {
   _id: string
   name: string
   description: string
-  category: 'educational_kit' | 'assembly_toy' | 'practical_item' | 'decoration'
+  category: 'flora_fauna' | 'kinetic_sculptures' | 'vehicles_vessels' | 'pop_bots' | 'everyday_objects' | 'limited_editions'
   difficulty: 'easy' | 'medium' | 'hard'
   estimatedAssemblyTime: number
   materialRequirements: {

@@ -1,10 +1,106 @@
 import { NextResponse } from 'next/server';
-import { MongoClient } from 'mongodb';
+import { MongoClient, ObjectId } from 'mongodb';
 
 const MONGODB_URI = process.env.MONGODB_URI!;
 
 if (!MONGODB_URI) {
   throw new Error('Please define the MONGODB_URI environment variable');
+}
+
+// GET - Fetch all products
+export async function GET() {
+  const client = new MongoClient(MONGODB_URI);
+  
+  try {
+    await client.connect();
+    const db = client.db('PopCycle');
+    
+    const products = await db.collection('products').find({}).toArray();
+    
+    return NextResponse.json(products);
+  } catch (error) {
+    console.error('Error fetching products:', error);
+    return NextResponse.json({ error: 'Failed to fetch products' }, { status: 500 });
+  } finally {
+    await client.close();
+  }
+}
+
+// PUT - Update a product
+export async function PUT(request: Request) {
+  const client = new MongoClient(MONGODB_URI);
+  
+  try {
+    await client.connect();
+    const db = client.db('PopCycle');
+    
+    const body = await request.json();
+    const { _id, ...updateData } = body;
+    
+    // Convert string booleans to actual booleans
+    if (typeof updateData.inStock === 'string') {
+      updateData.inStock = updateData.inStock === 'true';
+    }
+    
+    // Ensure numeric fields are numbers
+    if (updateData.price) updateData.price = Number(updateData.price);
+    if (updateData.estimatedAssemblyTime) updateData.estimatedAssemblyTime = Number(updateData.estimatedAssemblyTime);
+    if (updateData.rating) updateData.rating = Number(updateData.rating);
+    if (updateData.reviewCount) updateData.reviewCount = Number(updateData.reviewCount);
+    
+    // Handle nested material requirements
+    if (updateData.materialRequirements?.weight) {
+      updateData.materialRequirements.weight = Number(updateData.materialRequirements.weight);
+    }
+    
+    updateData.updatedAt = new Date();
+    
+    const result = await db.collection('products').updateOne(
+      { _id: new ObjectId(_id) },
+      { $set: updateData }
+    );
+    
+    if (result.matchedCount === 0) {
+      return NextResponse.json({ error: 'Product not found' }, { status: 404 });
+    }
+    
+    return NextResponse.json({ message: 'Product updated successfully' });
+  } catch (error) {
+    console.error('Error updating product:', error);
+    return NextResponse.json({ error: 'Failed to update product' }, { status: 500 });
+  } finally {
+    await client.close();
+  }
+}
+
+// DELETE - Delete a product
+export async function DELETE(request: Request) {
+  const client = new MongoClient(MONGODB_URI);
+  
+  try {
+    await client.connect();
+    const db = client.db('PopCycle');
+    
+    const url = new URL(request.url);
+    const id = url.searchParams.get('id');
+    
+    if (!id) {
+      return NextResponse.json({ error: 'Product ID is required' }, { status: 400 });
+    }
+    
+    const result = await db.collection('products').deleteOne({ _id: new ObjectId(id) });
+    
+    if (result.deletedCount === 0) {
+      return NextResponse.json({ error: 'Product not found' }, { status: 404 });
+    }
+    
+    return NextResponse.json({ message: 'Product deleted successfully' });
+  } catch (error) {
+    console.error('Error deleting product:', error);
+    return NextResponse.json({ error: 'Failed to delete product' }, { status: 500 });
+  } finally {
+    await client.close();
+  }
 }
 
 export async function POST() {
