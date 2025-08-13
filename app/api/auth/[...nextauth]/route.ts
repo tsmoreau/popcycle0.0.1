@@ -54,6 +54,11 @@ export const authOptions: AuthOptions = {
     },
 
     async redirect({ url, baseUrl }) {
+      // Handle OAuth cancellation/access_denied - redirect to home page
+      if (url.includes('error=access_denied') || url.includes('error=Callback')) {
+        return baseUrl
+      }
+      
       // If there's an error, redirect back to the original page with error param
       if (url.includes('error=')) {
         const urlObj = new URL(url)
@@ -61,6 +66,7 @@ export const authOptions: AuthOptions = {
         const callbackUrl = urlObj.searchParams.get('callbackUrl') || baseUrl
         return `${callbackUrl}${callbackUrl.includes('?') ? '&' : '?'}error=${error}`
       }
+      
       // If url is on the same origin, allow it
       if (url.startsWith("/")) return `${baseUrl}${url}`
       // If url is to the same host, allow it
@@ -73,7 +79,6 @@ export const authOptions: AuthOptions = {
     strategy: 'jwt'
   },
   pages: {
-    signIn: '/auth/signin',
     error: '/auth/error',
   },
 }
