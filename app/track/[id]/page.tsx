@@ -656,7 +656,7 @@ export default function TrackItem() {
                     </span>
                   </div>
                 )}
-                {data.collectionDate && (
+                {data.collectionDate && !data.id.startsWith("T") && (
                   <div className="flex justify-between items-center">
                     <span className="systematic-caps text-sm">
                       Last Collected
