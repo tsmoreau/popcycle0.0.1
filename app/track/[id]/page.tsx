@@ -50,6 +50,15 @@ interface MakerDetails {
   verifiedEmail: string;
 }
 
+interface BlankItem {
+  id: string;
+  batchId: string;
+  status: string;
+  weight: number;
+  materialType: string;
+  collectionDate: string;
+}
+
 
 
 export default function TrackItem() {
@@ -931,7 +940,7 @@ export default function TrackItem() {
                 </CardHeader>
                 <CardContent className="py-6">
                   <div className="space-y-3">
-                    {relatedItems.blanks.map((blank, index) => (
+                    {relatedItems.blanks.map((blank: BlankItem, index: number) => (
                       <Link
                         key={blank.id}
                         href={`/track/${blank.id}`}
