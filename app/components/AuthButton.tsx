@@ -34,7 +34,75 @@ export default function AuthButton() {
   }
 
   if (session) {
-    return null; // Don't render anything when authenticated - mobile nav handles user menu
+    const hasPortalAccess = session?.user?.userType === 'super_admin' || 
+      (session?.user?.permissions && session.user.permissions.length > 0);
+
+    return (
+      <div className="relative" ref={dropdownRef}>
+        {/* User Button */}
+        <Button
+          onClick={() => setDropdownOpen(!dropdownOpen)}
+          variant="outline"
+          className="flex items-center space-x-2 border-2 border-pop-black hover:bg-pop-green systematic-caps"
+        >
+          <div className="w-6 h-6 bg-pop-green border-2 border-pop-black rounded-full flex items-center justify-center">
+            <User className="w-3 h-3 text-pop-black" />
+          </div>
+          <span className="hidden md:inline text-sm font-semibold">
+            {session.user?.name?.split(' ')[0] || 'User'}
+          </span>
+          <ChevronDown className={`w-4 h-4 transition-transform ${dropdownOpen ? 'rotate-180' : ''}`} />
+        </Button>
+        
+        {/* Dropdown Menu */}
+        {dropdownOpen && (
+          <div className="absolute right-0 mt-2 w-48 bg-white border-2 border-pop-black shadow-lg z-50">
+            <div className="p-2">
+              <div className="px-3 py-2 text-sm font-semibold text-pop-black border-b border-gray-200">
+                {session.user?.email}
+              </div>
+              <div className="px-3 py-1 text-xs text-gray-500 systematic-caps border-b border-gray-200">
+                {session.user?.userType === 'super_admin' ? 'Super Admin' : 'Maker'}
+              </div>
+              
+              {/* Profile Link */}
+              <a
+                href="/profile"
+                className="flex items-center px-3 py-2 text-sm text-gray-700 hover:bg-pop-green hover:text-white systematic-caps"
+                onClick={() => setDropdownOpen(false)}
+              >
+                <User className="w-4 h-4 mr-3" />
+                Profile
+              </a>
+              
+              {/* Portal Access */}
+              {hasPortalAccess && (
+                <a
+                  href="/portal"
+                  className="flex items-center px-3 py-2 text-sm text-gray-700 hover:bg-pop-blue hover:text-white systematic-caps"
+                  onClick={() => setDropdownOpen(false)}
+                >
+                  <Settings className="w-4 h-4 mr-3" />
+                  Portal Dashboard
+                </a>
+              )}
+              
+              {/* Sign Out */}
+              <button
+                onClick={() => {
+                  signOut()
+                  setDropdownOpen(false)
+                }}
+                className="w-full flex items-center px-3 py-2 text-sm text-gray-700 hover:bg-pop-red hover:text-white systematic-caps text-left"
+              >
+                <LogOut className="w-4 h-4 mr-3" />
+                Sign Out
+              </button>
+            </div>
+          </div>
+        )}
+      </div>
+    )
   }
 
   return (
