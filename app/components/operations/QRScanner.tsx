@@ -579,24 +579,14 @@ export const QRScanner = ({ open, onOpenChange }: QRScannerProps) => {
                                       </Button>
                                     )
                                   ) : (
-                                    /* Queue is active - show status and stop button */
-                                    <div className="space-y-2">
-                                      <div className="flex items-center justify-between bg-pop-green/10 p-2 rounded">
-                                        <span className="text-sm font-medium text-pop-green">
-                                          {queueType.charAt(0).toUpperCase() + queueType.slice(1)} Queue Active
-                                        </span>
-                                        <span className="text-xs bg-pop-green text-white px-2 py-1 rounded">
-                                          {queuedItems.length} items
-                                        </span>
-                                      </div>
-                                      <Button
-                                        size="sm"
-                                        variant="outline"
-                                        className="w-full border-red-400 text-red-600 hover:bg-red-50"
-                                        onClick={stopQueue}
-                                      >
-                                        Stop Queue
-                                      </Button>
+                                    /* Queue is active - show status only */
+                                    <div className="flex items-center justify-between bg-pop-green/10 p-2 rounded">
+                                      <span className="text-sm font-medium text-pop-green">
+                                        {queueType.charAt(0).toUpperCase() + queueType.slice(1)} Queue Active
+                                      </span>
+                                      <span className="text-xs bg-pop-green text-white px-2 py-1 rounded">
+                                        {queuedItems.length} items
+                                      </span>
                                     </div>
                                   )}
 
@@ -619,6 +609,20 @@ export const QRScanner = ({ open, onOpenChange }: QRScannerProps) => {
                       )}
                     </div>
                   ))}
+                </div>
+              )}
+
+              {/* Stop Queue Section - Full Width under scanned items */}
+              {queueActive && (
+                <div className="border-t border-gray-200 pt-4">
+                  <Button
+                    size="sm"
+                    variant="outline"
+                    className="w-full border-red-400 text-red-600 hover:bg-red-50"
+                    onClick={stopQueue}
+                  >
+                    Stop Queue
+                  </Button>
                 </div>
               )}
 
