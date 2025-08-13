@@ -361,6 +361,18 @@ export function DataTable<T extends Record<string, any>>({
           />
         )
       case 'readonly':
+        // Allow editing certain readonly fields when adding new entries
+        if (isAdding && (field.key === '_id' || field.key === 'orgId')) {
+          return (
+            <Input
+              type="text"
+              value={value || ''}
+              onChange={(e) => onChange(e.target.value)}
+              placeholder={field.placeholder || `Enter ${field.label.toLowerCase()}`}
+              className={field.className}
+            />
+          )
+        }
         return (
           <div className="px-3 py-2 bg-gray-50 border rounded text-gray-600">
             {field.render ? field.render(editFormData as T) : value}
