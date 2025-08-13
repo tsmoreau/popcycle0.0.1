@@ -70,6 +70,7 @@ export async function GET(
         status: binRecord.status,
         canBeAdopted: binRecord.canBeAdopted,
         adoptedBy: binRecord.adoptedBy,
+        collectionDate: binRecord.lastCollectionDate,
         lastCollectionDate: binRecord.lastCollectionDate,
         nextCollectionDate: binRecord.nextCollectionDate,
         eventId: binRecord.eventId,
