@@ -154,14 +154,16 @@ export default function AuthButton() {
                   setIsSigningIn(true)
                   try {
                     // Use current page as callback URL to stay on the same page
-                    const currentUrl = window.location.href
-                    await signIn('google', { callbackUrl: currentUrl })
+                    const currentUrl = window.location.href.split('?')[0] // Remove any existing query params
+                    await signIn('google', { 
+                      callbackUrl: currentUrl,
+                      redirect: false // Prevent automatic redirect
+                    })
                   } catch (error) {
                     console.error('Sign in error:', error)
-                  } finally {
                     setIsSigningIn(false)
-                    setSignInModalOpen(false)
                   }
+                  // Note: Don't close modal here, let the auth flow handle it
                 }}
                 disabled={isSigningIn}
                 className="w-full bg-pop-blue border-2 border-pop-black text-white hover:bg-pop-black hover:text-pop-blue systematic-caps text-sm h-12"
