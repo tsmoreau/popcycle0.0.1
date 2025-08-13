@@ -7,6 +7,9 @@ export const authOptions: AuthOptions = {
   secret: process.env.NEXTAUTH_SECRET,
   trustHost: true,
   session: { strategy: "jwt" },
+  pages: {
+    error: '/', // Redirect errors to homepage instead of error page
+  },
   providers: [
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID!.trim(),
@@ -55,7 +58,13 @@ export const authOptions: AuthOptions = {
     },
     
     async redirect({ url, baseUrl }) {
-      // Always redirect back to the base URL instead of auth pages
+      // If it's an auth-related redirect, go to base URL
+      if (url.includes('/api/auth/')) {
+        return baseUrl
+      }
+      // For other redirects, use the intended URL if it's internal
+      if (url.startsWith('/')) return `${baseUrl}${url}`
+      if (url.startsWith(baseUrl)) return url
       return baseUrl
     }
   },
