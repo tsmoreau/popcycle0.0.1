@@ -43,7 +43,7 @@ PopCycle is built as a unified Next.js PWA with MongoDB, managing all core opera
 
 ### User Access Architecture
 - **User Identity System**: Capability-based access; all users begin as makers, staff roles grant additional dashboard access. `orgId` provides read-only access for partner reporting.
-- **Authentication Strategy**: NextAuth handles authentication only (Google Workspace SSO for all users, magic links as backup). All user data stored in MongoDB User schema. Session management via JWT tokens.
+- **Authentication Strategy**: NextAuth handles authentication only (Google Workspace SSO for all users, magic links as backup). All user data stored in MongoDB User schema. Session management via JWT tokens. Configuration migrated to App Router compatible structure with `authOptions` in `lib/auth-config.ts` for proper deployment compatibility.
 - **Dashboard Architecture**: Route-based portal navigation under `/portal/` with color-coded themes for different dashboards: Main, Profile, Admin, Operations, CRM, Partner, and Financial. Operations functions are consolidated into a single page.
 
 ## External Dependencies
