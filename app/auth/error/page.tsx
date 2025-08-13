@@ -18,6 +18,18 @@ export default function AuthErrorPage() {
   const error = searchParams.get('error')
   const errorMessage = errorMessages[error as string] || errorMessages.Default
 
+  // Auto-redirect OAuth cancellation errors back to home
+  if (error === 'Callback') {
+    if (typeof window !== 'undefined') {
+      window.location.href = '/'
+    }
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-pop-green via-pop-blue to-pop-red flex items-center justify-center">
+        <div className="text-white text-lg">Redirecting...</div>
+      </div>
+    )
+  }
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-pop-red via-orange-500 to-red-600 p-4 flex items-center justify-center">
       <div className="w-full max-w-md">
