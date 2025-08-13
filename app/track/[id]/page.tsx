@@ -100,6 +100,8 @@ export default function TrackItem() {
           throw new Error("Item not found");
         }
         const apiData = await response.json();
+        console.log('Frontend received data:', apiData);
+        console.log('Organization data:', apiData.organization);
         setData(apiData);
 
         // Fetch related items based on type
