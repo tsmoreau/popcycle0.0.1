@@ -59,6 +59,14 @@ interface BlankItem {
   collectionDate: string;
 }
 
+interface BatchItem {
+  id: string;
+  weight: number;
+  materialType: string;
+  status: string;
+  collectionDate: string;
+}
+
 
 
 export default function TrackItem() {
@@ -984,7 +992,7 @@ export default function TrackItem() {
                 </CardHeader>
                 <CardContent className="py-6">
                   <div className="space-y-3">
-                    {relatedItems.batches.map((batch, index) => (
+                    {relatedItems.batches.map((batch: BatchItem, index: number) => (
                       <Link
                         key={batch.id}
                         href={`/track/${batch.id}`}
