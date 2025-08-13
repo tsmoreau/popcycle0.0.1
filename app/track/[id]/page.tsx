@@ -641,10 +641,10 @@ export default function TrackItem() {
                     </Badge>
                   </div>
                 )}
-                {data.id.startsWith("T") && data.event && (
+                {data.id.startsWith("T") && data.status && (
                   <div className="flex justify-between">
                     <span className="systematic-caps text-sm">Status</span>
-                    {getProcessingStatusBadge(data.event)}
+                    {getProcessingStatusBadge(data.status)}
                   </div>
                 )}
                 {data.weight && !data.id.startsWith("B") && (
