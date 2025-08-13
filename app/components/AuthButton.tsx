@@ -1,14 +1,31 @@
 'use client'
 
-import { useState } from 'react'
-import { useSession, signIn } from 'next-auth/react'
+import { useState, useRef, useEffect } from 'react'
+import { useSession, signIn, signOut } from 'next-auth/react'
 import { Button } from './ui/button'
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from './ui/dialog'
+import { User, LogOut, Settings, ChevronDown } from 'lucide-react'
 
 export default function AuthButton() {
   const { data: session, status } = useSession()
+  const [dropdownOpen, setDropdownOpen] = useState(false)
   const [signInModalOpen, setSignInModalOpen] = useState(false)
   const [isSigningIn, setIsSigningIn] = useState(false)
+  const dropdownRef = useRef<HTMLDivElement>(null)
+
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+        setDropdownOpen(false)
+      }
+    }
+
+    document.addEventListener('mousedown', handleClickOutside)
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside)
+    }
+  }, [])
 
   if (status === 'loading') {
     return (
@@ -17,7 +34,7 @@ export default function AuthButton() {
   }
 
   if (session) {
-    return null; // Don't render anything when authenticated
+    return null; // Don't render anything when authenticated - mobile nav handles user menu
   }
 
   return (
