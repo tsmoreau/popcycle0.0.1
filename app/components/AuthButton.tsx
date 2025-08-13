@@ -1,13 +1,13 @@
 'use client'
 
-import { useState, useRef, useEffect } from 'react'
+import { useState, useRef, useEffect, Suspense } from 'react'
 import { useSession, signIn, signOut } from 'next-auth/react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { Button } from './ui/button'
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from './ui/dialog'
 import { User, LogOut, Settings, ChevronDown } from 'lucide-react'
 
-export default function AuthButton() {
+function AuthButtonContent() {
   const { data: session, status } = useSession()
   const [dropdownOpen, setDropdownOpen] = useState(false)
   const [signInModalOpen, setSignInModalOpen] = useState(false)
@@ -187,5 +187,15 @@ export default function AuthButton() {
         </DialogContent>
       </Dialog>
     </>
+  )
+}
+
+export default function AuthButton() {
+  return (
+    <Suspense fallback={
+      <div className="w-8 h-8 border-2 border-pop-green border-t-transparent rounded-full animate-spin"></div>
+    }>
+      <AuthButtonContent />
+    </Suspense>
   )
 }
