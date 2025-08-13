@@ -57,6 +57,7 @@ interface BlankItem {
   weight: number;
   materialType: string;
   collectionDate: string;
+  productId?: string;
 }
 
 interface BatchItem {
