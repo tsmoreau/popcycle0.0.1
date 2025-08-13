@@ -388,18 +388,29 @@ export const QRScanner = ({ open, onOpenChange }: QRScannerProps) => {
               </div>
             )}
 
-            {/* Queue icons on right side */}
+            {/* Queue icons on right side - clickable pills */}
             {queueActive && queuedItems.length > 0 && (
               <div className="absolute -right-2 top-2 flex flex-col gap-1 max-h-full overflow-y-auto">
                 {queuedItems.map((item, index) => (
-                  <div
+                  <button
                     key={`${item.id}-${index}`}
-                    className="h-8 px-2 rounded-full bg-pop-green text-white text-xs flex items-center justify-center font-bold shadow-lg whitespace-nowrap"
-                    title={`${item.id} (${item.type})`}
+                    className="h-8 px-2 rounded-full bg-pop-green text-white text-xs flex items-center justify-center font-bold shadow-lg whitespace-nowrap hover:bg-pop-green/80 transition-colors cursor-pointer"
+                    title={`Click to view ${item.id} (${item.type})`}
                     style={{ minWidth: 'fit-content' }}
+                    onClick={() => {
+                      setScannedItem(item);
+                      // Move this item to front of history if not already there
+                      setScannedItemHistory(prev => {
+                        if (prev.length > 0 && prev[0].id === item.id) {
+                          return prev;
+                        }
+                        const filteredHistory = prev.filter(historyItem => historyItem.id !== item.id);
+                        return [item, ...filteredHistory].slice(0, 10);
+                      });
+                    }}
                   >
                     {item.id || '?'}
-                  </div>
+                  </button>
                 ))}
               </div>
             )}
