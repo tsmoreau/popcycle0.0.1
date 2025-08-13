@@ -2,7 +2,7 @@
 
 import { useState, useRef, useEffect } from 'react'
 import { useSession, signIn, signOut } from 'next-auth/react'
-import { useRouter, useSearchParams } from 'next/navigation'
+
 import { Button } from './ui/button'
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from './ui/dialog'
 import { User, LogOut, Settings, ChevronDown } from 'lucide-react'
@@ -13,20 +13,9 @@ export default function AuthButton() {
   const [signInModalOpen, setSignInModalOpen] = useState(false)
   const [isSigningIn, setIsSigningIn] = useState(false)
   const dropdownRef = useRef<HTMLDivElement>(null)
-  const router = useRouter()
-  const searchParams = useSearchParams()
 
-  // Check for auth errors and reopen modal
-  useEffect(() => {
-    const error = searchParams.get('error')
-    if (error === 'Callback') {
-      setSignInModalOpen(true)
-      // Clean up URL without triggering a page reload
-      const url = new URL(window.location.href)
-      url.searchParams.delete('error')
-      window.history.replaceState({}, '', url.toString())
-    }
-  }, [searchParams])
+
+
 
   // Close dropdown when clicking outside
   useEffect(() => {
@@ -153,9 +142,7 @@ export default function AuthButton() {
                 onClick={async () => {
                   setIsSigningIn(true)
                   try {
-                    // Use current page as callback URL to stay on the same page
-                    const currentUrl = window.location.href
-                    await signIn('google', { callbackUrl: currentUrl })
+                    await signIn('google')
                   } catch (error) {
                     console.error('Sign in error:', error)
                   } finally {
