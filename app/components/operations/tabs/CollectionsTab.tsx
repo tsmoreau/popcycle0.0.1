@@ -10,6 +10,7 @@ interface CollectionsTabProps {
   defaultBinColumns: string[];
   binEditableFields: EditableField<Bin>[];
   handleBinSave: (bin: Bin) => Promise<void>;
+  handleBinAdd: (bin: Bin) => Promise<void>;
   handleBinDelete: (bin: Bin) => Promise<void>;
   collectionsSortField: string;
   collectionsSortDirection: "asc" | "desc";
@@ -24,6 +25,7 @@ export const CollectionsTab = ({
   defaultBinColumns,
   binEditableFields,
   handleBinSave,
+  handleBinAdd,
   handleBinDelete,
   collectionsSortField,
   collectionsSortDirection,
@@ -52,6 +54,7 @@ export const CollectionsTab = ({
           enableFiltering={true}
           editableFields={binEditableFields}
           onSave={handleBinSave}
+          onAdd={handleBinAdd}
           onDelete={handleBinDelete}
           sortField={collectionsSortField}
           sortDirection={collectionsSortDirection}

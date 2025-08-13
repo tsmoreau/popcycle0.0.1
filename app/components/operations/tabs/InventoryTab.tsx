@@ -12,6 +12,7 @@ interface InventoryTabProps {
   defaultBlankColumns: string[];
   blankEditableFields: EditableField<Blank>[];
   handleBlankSave: (blank: Blank) => Promise<void>;
+  handleBlankAdd: (blank: Blank) => Promise<void>;
   handleBlankDelete: (blank: Blank) => Promise<void>;
   isFullscreen?: boolean;
 }
@@ -23,6 +24,7 @@ export const InventoryTab = ({
   defaultBlankColumns,
   blankEditableFields,
   handleBlankSave,
+  handleBlankAdd,
   handleBlankDelete,
   isFullscreen = false,
 }: InventoryTabProps) => {
@@ -46,6 +48,7 @@ export const InventoryTab = ({
           enableFiltering={true}
           editableFields={blankEditableFields}
           onSave={handleBlankSave}
+          onAdd={handleBlankAdd}
           onDelete={handleBlankDelete}
         />
       )}

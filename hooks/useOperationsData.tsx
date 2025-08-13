@@ -232,6 +232,83 @@ export const useOperationsData = () => {
     }
   };
 
+  // Add handlers
+  const handleBinAdd = async (bin: Bin) => {
+    try {
+      const response = await fetch('/api/operations/bins', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(bin)
+      });
+      
+      if (response.ok) {
+        await fetchBins();
+      } else {
+        throw new Error('Failed to add bin');
+      }
+    } catch (error) {
+      console.error('Error adding bin:', error);
+      throw error;
+    }
+  };
+
+  const handleBatchAdd = async (batch: Batch) => {
+    try {
+      const response = await fetch('/api/operations/batches', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(batch)
+      });
+      
+      if (response.ok) {
+        await fetchBatches();
+      } else {
+        throw new Error('Failed to add batch');
+      }
+    } catch (error) {
+      console.error('Error adding batch:', error);
+      throw error;
+    }
+  };
+
+  const handleOrderAdd = async (order: Order) => {
+    try {
+      const response = await fetch('/api/operations/orders', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(order)
+      });
+      
+      if (response.ok) {
+        await fetchOrders();
+      } else {
+        throw new Error('Failed to add order');
+      }
+    } catch (error) {
+      console.error('Error adding order:', error);
+      throw error;
+    }
+  };
+
+  const handleBlankAdd = async (blank: Blank) => {
+    try {
+      const response = await fetch('/api/operations/blanks', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(blank)
+      });
+      
+      if (response.ok) {
+        await fetchBlanks();
+      } else {
+        throw new Error('Failed to add blank');
+      }
+    } catch (error) {
+      console.error('Error adding blank:', error);
+      throw error;
+    }
+  };
+
   // Load data on mount
   useEffect(() => {
     fetchBins();
@@ -261,12 +338,16 @@ export const useOperationsData = () => {
     
     // CRUD handlers
     handleBinSave,
+    handleBinAdd,
     handleBinDelete,
     handleBatchSave,
+    handleBatchAdd,
     handleBatchDelete,
     handleOrderSave,
+    handleOrderAdd,
     handleOrderDelete,
     handleBlankSave,
+    handleBlankAdd,
     handleBlankDelete,
   };
 };

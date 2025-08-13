@@ -128,12 +128,16 @@ export default function OperationsPage() {
     loadingOrders,
     loadingBlanks,
     handleBinSave,
+    handleBinAdd,
     handleBinDelete,
     handleBatchSave,
+    handleBatchAdd,
     handleBatchDelete,
     handleOrderSave,
+    handleOrderAdd,
     handleOrderDelete,
     handleBlankSave,
+    handleBlankAdd,
     handleBlankDelete,
   } = useOperationsData();
 
@@ -560,6 +564,7 @@ export default function OperationsPage() {
             defaultBinColumns={defaultBinColumns}
             binEditableFields={binEditableFields}
             handleBinSave={handleBinSave}
+            handleBinAdd={handleBinAdd}
             handleBinDelete={handleBinDelete}
             collectionsSortField={collectionsSortField}
             collectionsSortDirection={collectionsSortDirection}
@@ -598,6 +603,7 @@ export default function OperationsPage() {
             defaultBlankColumns={defaultBlankColumns}
             blankEditableFields={blankEditableFields}
             handleBlankSave={handleBlankSave}
+            handleBlankAdd={handleBlankAdd}
             handleBlankDelete={handleBlankDelete}
           />
         </TabsContent>
@@ -611,6 +617,7 @@ export default function OperationsPage() {
             defaultOrderColumns={defaultOrderColumns}
             orderEditableFields={orderEditableFields}
             handleOrderSave={handleOrderSave}
+            handleOrderAdd={handleOrderAdd}
             handleOrderDelete={handleOrderDelete}
             fulfillmentSortField={fulfillmentSortField}
             fulfillmentSortDirection={fulfillmentSortDirection}
@@ -1201,6 +1208,7 @@ export default function OperationsPage() {
                     defaultBinColumns={defaultBinColumns}
                     binEditableFields={binEditableFields}
                     handleBinSave={handleBinSave}
+                    handleBinAdd={handleBinAdd}
                     handleBinDelete={handleBinDelete}
                     collectionsSortField={collectionsSortField}
                     collectionsSortDirection={collectionsSortDirection}

@@ -12,6 +12,7 @@ interface FulfillmentTabProps {
   defaultOrderColumns: string[];
   orderEditableFields: EditableField<Order>[];
   handleOrderSave: (order: Order) => Promise<void>;
+  handleOrderAdd: (order: Order) => Promise<void>;
   handleOrderDelete: (order: Order) => Promise<void>;
   fulfillmentSortField: string;
   fulfillmentSortDirection: "asc" | "desc";
@@ -26,6 +27,7 @@ export const FulfillmentTab = ({
   defaultOrderColumns,
   orderEditableFields,
   handleOrderSave,
+  handleOrderAdd,
   handleOrderDelete,
   fulfillmentSortField,
   fulfillmentSortDirection,
@@ -52,6 +54,7 @@ export const FulfillmentTab = ({
           enableFiltering={true}
           editableFields={orderEditableFields}
           onSave={handleOrderSave}
+          onAdd={handleOrderAdd}
           onDelete={handleOrderDelete}
           sortField={fulfillmentSortField}
           sortDirection={fulfillmentSortDirection}
