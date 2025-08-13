@@ -431,6 +431,20 @@ export const QRScanner = ({ open, onOpenChange }: QRScannerProps) => {
                 </div>
               )}
 
+              {/* Stop Queue Section - Full Width above scanned items */}
+              {queueActive && (
+                <div className="pb-3">
+                  <Button
+                    size="sm"
+                    variant="outline"
+                    className="w-full border-red-400 text-red-600 hover:bg-red-50"
+                    onClick={stopQueue}
+                  >
+                    Stop Queue
+                  </Button>
+                </div>
+              )}
+
               {/* Item history stack - show all scanned items */}
               {scannedItemHistory.length > 0 && !isLoadingItem && (
                 <div className="space-y-2">
@@ -612,19 +626,7 @@ export const QRScanner = ({ open, onOpenChange }: QRScannerProps) => {
                 </div>
               )}
 
-              {/* Stop Queue Section - Full Width under scanned items */}
-              {queueActive && (
-                <div className="border-t border-gray-200 pt-4">
-                  <Button
-                    size="sm"
-                    variant="outline"
-                    className="w-full border-red-400 text-red-600 hover:bg-red-50"
-                    onClick={stopQueue}
-                  >
-                    Stop Queue
-                  </Button>
-                </div>
-              )}
+
 
               {/* Legacy fallback - only show if no history exists */}
               {scannedItem && !isLoadingItem && scannedItemHistory.length === 0 && (
