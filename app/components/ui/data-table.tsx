@@ -97,6 +97,8 @@ export function DataTable<T extends Record<string, any>>({
   const [editingItem, setEditingItem] = useState<T | null>(null)
   const [editFormData, setEditFormData] = useState<Record<string, any>>({})
   const [isSaving, setIsSaving] = useState(false)
+  const [organizations, setOrganizations] = useState<any[]>([])
+  const [loadingOrganizations, setLoadingOrganizations] = useState(false)
   
   // Column selection state
   const allColumns = availableColumns || columns
@@ -227,7 +229,7 @@ export function DataTable<T extends Record<string, any>>({
     setIsAdding(false)
   }
 
-  const handleAdd = () => {
+  const handleAdd = async () => {
     const emptyItem = {} as T
     // Initialize empty form data based on editable fields
     const initFormData: Record<string, any> = {}
@@ -238,6 +240,24 @@ export function DataTable<T extends Record<string, any>>({
     setEditFormData(initFormData)
     setIsAdding(true)
     setIsEditing(true)
+    
+    // Fetch organizations when opening add modal
+    await fetchOrganizations()
+  }
+
+  const fetchOrganizations = async () => {
+    try {
+      setLoadingOrganizations(true)
+      const response = await fetch('/api/crm/organizations')
+      if (response.ok) {
+        const orgs = await response.json()
+        setOrganizations(orgs)
+      }
+    } catch (error) {
+      console.error('Error fetching organizations:', error)
+    } finally {
+      setLoadingOrganizations(false)
+    }
   }
 
   const handleCancelEdit = () => {
@@ -362,7 +382,7 @@ export function DataTable<T extends Record<string, any>>({
         )
       case 'readonly':
         // Allow editing certain readonly fields when adding new entries
-        if (isAdding && (field.key === '_id' || field.key === 'orgId')) {
+        if (isAdding && field.key === '_id') {
           return (
             <Input
               type="text"
@@ -371,6 +391,26 @@ export function DataTable<T extends Record<string, any>>({
               placeholder={field.placeholder || `Enter ${field.label.toLowerCase()}`}
               className={field.className}
             />
+          )
+        }
+        // Special handling for orgId - show organization dropdown when adding
+        if (isAdding && field.key === 'orgId') {
+          return (
+            <select
+              value={value || ''}
+              onChange={(e) => onChange(e.target.value)}
+              className={`border rounded px-3 py-2 w-full ${field.className || ''}`}
+              disabled={loadingOrganizations}
+            >
+              <option value="">
+                {loadingOrganizations ? 'Loading organizations...' : 'Select organization...'}
+              </option>
+              {organizations.map(org => (
+                <option key={org._id} value={org._id}>
+                  {org.name}
+                </option>
+              ))}
+            </select>
           )
         }
         return (
