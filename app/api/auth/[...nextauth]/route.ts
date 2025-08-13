@@ -51,51 +51,22 @@ export const authOptions: AuthOptions = {
         session.user.permissions = token.permissions
       }
       return session
+    },
+
+    async redirect({ url, baseUrl }) {
+      // If there's an error (user backed out), send to homepage
+      if (url.includes('error=')) {
+        return baseUrl
+      }
+      // For successful auth, redirect to callback URL or home
+      if (url.startsWith("/")) return `${baseUrl}${url}`
+      if (new URL(url).origin === baseUrl) return url
+      return baseUrl
     }
   },
   session: {
     strategy: 'jwt'
   },
-  pages: {
-    signIn: undefined, // Remove custom sign-in page
-    error: undefined,  // Remove custom error page - use NextAuth defaults
-  },
-  callbacks: {
-    async signIn({ user }) {
-      // Allow all Google OAuth users for now
-      return !!user?.email
-    },
-    
-    async jwt({ token, user }) {
-      if (user) {
-        token.email = user.email
-      }
-      
-      // Add user type and permissions to token for middleware access
-      if (token?.email === 'terrencestasse@gmail.com') {
-        token.userType = 'super_admin'
-        token.permissions = ['admin', 'operations', 'crm', 'financial', 'partner']
-      } else {
-        token.userType = 'maker'
-        token.permissions = []
-      }
-      
-      return token
-    },
-    
-    async session({ session, token }) {
-      // Transfer token data to session
-      if (token) {
-        session.user.userType = token.userType
-        session.user.permissions = token.permissions
-      }
-      return session
-    },
-
-    async redirect({ url, baseUrl }) {
-      // Force all redirects to go to home page
-      return baseUrl
-    }
 }
 
 const handler = NextAuth(authOptions)
