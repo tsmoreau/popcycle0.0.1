@@ -100,9 +100,6 @@ export default function TrackItem() {
           throw new Error("Item not found");
         }
         const apiData = await response.json();
-        console.log('Frontend received data:', apiData);
-        console.log('Organization data:', apiData.organization);
-        console.log('Organization name:', apiData.organization?.name);
         setData(apiData);
 
         // Fetch related items based on type
@@ -348,18 +345,13 @@ export default function TrackItem() {
             <span className="text-pop-green"></span> {data.id}
           </h1>
           <p className="text-lg text-pop-gray">
-            {(() => {
-              const orgName = data.organization?.name || "Unknown Origin";
-              console.log('Rendering with org name:', orgName);
-              console.log('Full data.organization:', data.organization);
-              return isUncollected
-                ? `Active collection bin at ${orgName}`
-                : isSourceOnly
-                  ? isProcessed
-                    ? `Processed plastic from ${orgName}`
-                    : `Fresh plastic collection from ${orgName}`
-                  : `Complete transformation journey from ${orgName}`;
-            })()}
+            {isUncollected
+              ? `Active collection bin at ${data.organization?.name || "Unknown Origin"}`
+              : isSourceOnly
+                ? isProcessed
+                  ? `Processed plastic from ${data.organization?.name || "Unknown Origin"}`
+                  : `Fresh plastic collection from ${data.organization?.name || "Unknown Origin"}`
+                : `Complete transformation journey from ${data.organization?.name || "Unknown Origin"}`}
           </p>
         </div>
 
