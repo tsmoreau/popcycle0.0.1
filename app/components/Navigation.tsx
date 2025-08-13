@@ -329,49 +329,41 @@ export default function Navigation() {
             <div className="pt-4 border-t-2 border-pop-black space-y-3">
               {session ? (
                 <>
-                  {/* User Profile Header */}
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center space-x-3">
-                      <div className="w-10 h-10 bg-pop-green border-2 border-pop-black rounded-full flex items-center justify-center">
-                        <User className="w-5 h-5 text-pop-black" />
-                      </div>
-                      <div>
-                        <div className="systematic-caps text-sm font-bold text-pop-black">
-                          {session.user?.name?.split(' ')[0] || 'User'}
-                        </div>
-                        <div className="systematic-caps text-xs font-medium text-pop-green mt-1">
-                          {session.user?.userType === 'super_admin' ? 'Super Admin' : 'Maker'}
-                        </div>
-                      </div>
+                  {/* User Profile Header - matching desktop structure */}
+                  <div className="px-4 py-3 border-b border-gray-200">
+                    <div className="text-sm font-semibold text-pop-black whitespace-nowrap">
+                      {session.user?.email}
                     </div>
                   </div>
                   
-                  {/* User Menu Items */}
-                  <div className="space-y-2">
+                  {/* User Menu Items - matching desktop structure */}
+                  <div className="py-1">
                     <Link
                       href="/profile"
                       onClick={() => setMobileMenuOpen(false)}
-                      className="w-full flex items-center px-4 py-2 systematic-caps text-sm rounded-md hover:bg-pop-green hover:text-white transition-colors"
+                      className="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-pop-green hover:text-white systematic-caps whitespace-nowrap"
                     >
                       <User className="w-4 h-4 mr-3" />
                       Profile
                     </Link>
+                    
                     {hasPortalAccess && (
                       <Link
                         href="/portal"
                         onClick={() => setMobileMenuOpen(false)}
-                        className="w-full flex items-center px-4 py-2 systematic-caps text-sm rounded-md hover:bg-pop-blue hover:text-white transition-colors"
+                        className="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-pop-blue hover:text-white systematic-caps whitespace-nowrap"
                       >
                         <Settings className="w-4 h-4 mr-3" />
                         Portal
                       </Link>
                     )}
+                    
                     <button
                       onClick={() => {
-                        signOut();
-                        setMobileMenuOpen(false);
+                        setMobileMenuOpen(false)
+                        signOut()
                       }}
-                      className="w-full flex items-center px-4 py-2 systematic-caps text-sm rounded-md hover:bg-pop-red hover:text-white transition-colors text-left"
+                      className="w-full flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-pop-red hover:text-white systematic-caps text-left whitespace-nowrap"
                     >
                       <LogOut className="w-4 h-4 mr-3" />
                       Sign Out
