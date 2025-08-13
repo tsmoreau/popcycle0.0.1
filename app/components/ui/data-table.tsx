@@ -22,7 +22,7 @@ import { Button } from "./button"
 import { Input } from "./input"
 import { Textarea } from "./textarea"
 import { Label } from "./label"
-import { ArrowUpDown, Edit2, Save, X, Columns, Filter, ChevronDown } from "lucide-react"
+import { ArrowUpDown, Edit2, Save, X, Columns, Filter, ChevronDown, Plus } from "lucide-react"
 // Note: We'll implement column selection and filtering with basic HTML elements for now
 
 export interface Column<T> {
@@ -52,6 +52,7 @@ export interface DataTableProps<T> {
   columns: Column<T>[]
   editableFields?: EditableField<T>[]
   onSave?: (item: T) => Promise<void>
+  onAdd?: (item: T) => Promise<void>
   onDelete?: (item: T) => Promise<void>
   className?: string
   // External sorting state (optional)
@@ -77,6 +78,7 @@ export function DataTable<T extends Record<string, any>>({
   columns,
   editableFields,
   onSave,
+  onAdd,
   onDelete,
   className = "",
   sortField: externalSortField,
@@ -91,6 +93,7 @@ export function DataTable<T extends Record<string, any>>({
   const [internalSortField, setInternalSortField] = useState<string>("")
   const [internalSortDirection, setInternalSortDirection] = useState<SortDirection>("asc")
   const [isEditing, setIsEditing] = useState(false)
+  const [isAdding, setIsAdding] = useState(false)
   const [editingItem, setEditingItem] = useState<T | null>(null)
   const [editFormData, setEditFormData] = useState<Record<string, any>>({})
   const [isSaving, setIsSaving] = useState(false)
@@ -221,27 +224,58 @@ export function DataTable<T extends Record<string, any>>({
     setEditingItem(item)
     setEditFormData({ ...item })
     setIsEditing(true)
+    setIsAdding(false)
+  }
+
+  const handleAdd = () => {
+    const emptyItem = {} as T
+    // Initialize empty form data based on editable fields
+    const initFormData: Record<string, any> = {}
+    editableFields?.forEach(field => {
+      initFormData[String(field.key)] = ''
+    })
+    setEditingItem(emptyItem)
+    setEditFormData(initFormData)
+    setIsAdding(true)
+    setIsEditing(true)
   }
 
   const handleCancelEdit = () => {
     setIsEditing(false)
+    setIsAdding(false)
     setEditingItem(null)
     setEditFormData({})
   }
 
   const handleSave = async () => {
-    if (!editingItem || !onSave) return
-    
-    try {
-      setIsSaving(true)
-      await onSave(editFormData as T)
-      setIsEditing(false)
-      setEditingItem(null)
-      setEditFormData({})
-    } catch (error) {
-      console.error('Error saving:', error)
-    } finally {
-      setIsSaving(false)
+    if (isAdding) {
+      if (!onAdd) return
+      try {
+        setIsSaving(true)
+        await onAdd(editFormData as T)
+        setIsEditing(false)
+        setIsAdding(false)
+        setEditingItem(null)
+        setEditFormData({})
+      } catch (error) {
+        console.error('Error adding:', error)
+      } finally {
+        setIsSaving(false)
+      }
+    } else {
+      if (!editingItem || !onSave) return
+      try {
+        setIsSaving(true)
+        await onSave(editFormData as T)
+        setIsEditing(false)
+        setIsAdding(false)
+        setEditingItem(null)
+        setEditFormData({})
+      } catch (error) {
+        console.error('Error saving:', error)
+      } finally {
+        setIsSaving(false)
+      }
     }
   }
 
@@ -252,6 +286,7 @@ export function DataTable<T extends Record<string, any>>({
       setIsSaving(true)
       await onDelete(editingItem)
       setIsEditing(false)
+      setIsAdding(false)
       setEditingItem(null)
       setEditFormData({})
     } catch (error) {
@@ -363,11 +398,14 @@ export function DataTable<T extends Record<string, any>>({
     <div>
       <DialogHeader>
         <DialogTitle className="flex items-center gap-2">
-          <Edit2 className="h-5 w-5" />
-          Edit {title.replace(' Management', '').replace(' Configuration', '')}
+          {isAdding ? <Plus className="h-5 w-5" /> : <Edit2 className="h-5 w-5" />}
+          {isAdding ? 'Add New' : 'Edit'} {title.replace(' Management', '').replace(' Configuration', '')}
         </DialogTitle>
         <DialogDescription>
-          Make changes to this item. All database fields are shown below.
+          {isAdding 
+            ? 'Add a new entry to the database. Fill in all required fields below.'
+            : 'Make changes to this item. All database fields are shown below.'
+          }
         </DialogDescription>
       </DialogHeader>
       
@@ -391,8 +429,8 @@ export function DataTable<T extends Record<string, any>>({
           )
         })}
         
-        {/* Show read-only fields that aren't in editableFields */}
-        {allColumns.filter(col => !editableFields?.some(field => field.key === col.key)).map(column => {
+        {/* Show read-only fields that aren't in editableFields - only when editing, not adding */}
+        {!isAdding && allColumns.filter(col => !editableFields?.some(field => field.key === col.key)).map(column => {
           const value = item[column.key as string]
           return (
             <div key={`readonly-${String(column.key)}`} className="opacity-75">
@@ -414,7 +452,7 @@ export function DataTable<T extends Record<string, any>>({
           className="flex-1 bg-pop-green hover:bg-pop-green/90"
         >
           <Save className="h-4 w-4 mr-2" />
-          {isSaving ? 'Saving...' : 'Save Changes'}
+          {isSaving ? (isAdding ? 'Adding...' : 'Saving...') : (isAdding ? 'Add Entry' : 'Save Changes')}
         </Button>
         <Button
           variant="outline"
@@ -424,7 +462,7 @@ export function DataTable<T extends Record<string, any>>({
           <X className="h-4 w-4 mr-2" />
           Cancel
         </Button>
-        {onDelete && (
+        {!isAdding && onDelete && (
           <Button
             variant="destructive"
             onClick={handleDelete}
@@ -522,6 +560,17 @@ export function DataTable<T extends Record<string, any>>({
               >
                 <X className="h-3 w-3 mr-1" />
                 Clear Filters
+              </Button>
+            )}
+            {editableFields && onAdd && (
+              <Button 
+                variant="outline" 
+                size="sm" 
+                onClick={handleAdd}
+                className="text-xs bg-pop-green hover:bg-pop-green/90 text-white border-pop-green"
+              >
+                <Plus className="h-3 w-3 mr-1" />
+                Add Entry
               </Button>
             )}
             {enableColumnSelection && (
@@ -705,6 +754,15 @@ export function DataTable<T extends Record<string, any>>({
           </div>
         </div>
       </CardContent>
+      
+      {/* Add Entry Dialog */}
+      {editableFields && onAdd && (
+        <Dialog open={isAdding && isEditing}>
+          <DialogContent className="max-w-2xl max-h-[80vh] overflow-y-auto">
+            {renderEditModal({} as T)}
+          </DialogContent>
+        </Dialog>
+      )}
     </Card>
   )
 }

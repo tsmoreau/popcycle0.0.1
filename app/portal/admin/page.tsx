@@ -334,6 +334,28 @@ export default function AdminPage() {
     }
   }
 
+  const handleUserAdd = async (user: User) => {
+    try {
+      const response = await fetch('/api/admin/users', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          ...user,
+          isActive: typeof user.isActive === 'string' ? user.isActive === 'true' : Boolean(user.isActive)
+        })
+      })
+      
+      if (response.ok) {
+        await fetchUsers()
+      } else {
+        throw new Error('Failed to add user')
+      }
+    } catch (error) {
+      console.error('Error adding user:', error)
+      throw error
+    }
+  }
+
   const productColumns: Column<Product>[] = [
     { key: '_id', header: 'Product ID' },
     { key: 'name', header: 'Name' },
@@ -583,6 +605,7 @@ export default function AdminPage() {
                   columns={userColumns}
                   editableFields={userEditableFields}
                   onSave={handleUserSave}
+                  onAdd={handleUserAdd}
                   onDelete={handleUserDelete}
                   enableColumnSelection={true}
                   enableFiltering={true}
