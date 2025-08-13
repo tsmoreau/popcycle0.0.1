@@ -109,7 +109,7 @@ export default function AuthButton() {
     <>
       <Button
         onClick={() => setSignInModalOpen(true)}
-        className="bg-pop-blue border-2 border-pop-black text-white hover:bg-pop-black systematic-caps"
+        className="bg-pop-blue border-2 border-pop-black text-white hover:bg-pop-black systematic-caps w-full lg:w-auto"
       >
         Sign In
       </Button>
