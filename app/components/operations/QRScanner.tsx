@@ -66,8 +66,18 @@ export const QRScanner = ({ open, onOpenChange }: QRScannerProps) => {
         const data = await response.json();
         setScannedItem(data);
         
-        // Add to history stack - move current to top, shift others down
-        setScannedItemHistory(prev => [data, ...prev]);
+        // Add to history stack only if it's different from the most recent item
+        setScannedItemHistory(prev => {
+          // If this is the same item as the most recent one, don't add duplicate
+          if (prev.length > 0 && prev[0].id === data.id) {
+            console.log('Same item scanned, not adding duplicate to history');
+            return prev;
+          }
+          // Remove any existing instances of this item from history, then add to top
+          const filteredHistory = prev.filter(item => item.id !== data.id);
+          // Limit history to 10 items to prevent excessive memory usage
+          return [data, ...filteredHistory].slice(0, 10);
+        });
         
 
       } else {
