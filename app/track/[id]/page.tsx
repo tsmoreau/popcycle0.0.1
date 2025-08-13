@@ -639,7 +639,7 @@ export default function TrackItem() {
                 </div>
                 <div className="flex justify-between">
                   <span className="systematic-caps text-sm">Origin</span>
-                  <span>{data.originPoint}</span>
+                  <span>{data.organization?.name || "Unknown Origin"}</span>
                 </div>
                 {data.materialType && (
                   <div className="flex justify-between">
