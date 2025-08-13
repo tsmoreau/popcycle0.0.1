@@ -2,6 +2,7 @@
 
 import { signIn, getProviders } from 'next-auth/react'
 import { useState, useEffect } from 'react'
+import { useSearchParams, useRouter } from 'next/navigation'
 import { Button } from '../../components/ui/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../../components/ui/card'
 import { Input } from '../../components/ui/input'
@@ -13,6 +14,8 @@ export default function SignInPage() {
   const [providers, setProviders] = useState<any>(null)
   const [email, setEmail] = useState('')
   const [isLoading, setIsLoading] = useState(false)
+  const searchParams = useSearchParams()
+  const router = useRouter()
 
   useEffect(() => {
     (async () => {
@@ -20,6 +23,19 @@ export default function SignInPage() {
       setProviders(res)
     })()
   }, [])
+
+  // Auto-redirect if user cancelled OAuth (came here with error=Callback)
+  useEffect(() => {
+    const error = searchParams.get('error')
+    const callbackUrl = searchParams.get('callbackUrl')
+    
+    if (error === 'Callback' && callbackUrl) {
+      // User cancelled OAuth, redirect back to the original page
+      setTimeout(() => {
+        window.location.href = callbackUrl
+      }, 100) // Small delay to avoid immediate redirect loop
+    }
+  }, [searchParams])
 
   const handleEmailSignIn = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()

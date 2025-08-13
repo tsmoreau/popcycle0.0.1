@@ -51,32 +51,6 @@ export const authOptions: AuthOptions = {
         session.user.permissions = token.permissions
       }
       return session
-    },
-
-    async redirect({ url, baseUrl }) {
-      // Always redirect to the callback URL or base URL, never to sign-in pages
-      const urlObj = new URL(url)
-      
-      // If there's a callback URL in the query params, use it
-      const callbackUrl = urlObj.searchParams.get('callbackUrl')
-      if (callbackUrl) {
-        try {
-          const parsedCallback = new URL(callbackUrl)
-          // Ensure it's on the same origin
-          if (parsedCallback.origin === baseUrl) {
-            return callbackUrl
-          }
-        } catch (e) {
-          // Invalid URL, fall back to base
-        }
-      }
-      
-      // If url is on the same origin, allow it
-      if (url.startsWith("/")) return `${baseUrl}${url}`
-      // If url is to the same host, allow it  
-      else if (new URL(url).origin === baseUrl) return url
-      // Otherwise redirect to home
-      return baseUrl
     }
   },
   session: {

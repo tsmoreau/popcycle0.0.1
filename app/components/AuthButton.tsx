@@ -16,17 +16,7 @@ export default function AuthButton() {
   const router = useRouter()
   const searchParams = useSearchParams()
 
-  // Check for auth errors and reopen modal
-  useEffect(() => {
-    const error = searchParams.get('error')
-    if (error === 'Callback') {
-      setSignInModalOpen(true)
-      // Clean up URL without triggering a page reload
-      const url = new URL(window.location.href)
-      url.searchParams.delete('error')
-      window.history.replaceState({}, '', url.toString())
-    }
-  }, [searchParams])
+  // No need for error handling - remove this complexity
 
   // Close dropdown when clicking outside
   useEffect(() => {
@@ -155,10 +145,8 @@ export default function AuthButton() {
                   try {
                     // Use current page as callback URL to stay on the same page
                     const currentUrl = window.location.href.split('?')[0] // Remove any existing query params
-                    await signIn('google', { 
-                      callbackUrl: currentUrl,
-                      redirect: false // Prevent automatic redirect
-                    })
+                    // Just use default NextAuth behavior - user will come back to the same page
+                    await signIn('google')
                   } catch (error) {
                     console.error('Sign in error:', error)
                     setIsSigningIn(false)
