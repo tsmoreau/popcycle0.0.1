@@ -414,7 +414,7 @@ export default function TrackItem() {
                     }`} strokeWidth={1.5} />
                   </div>
                   <h3 className="systematic-caps text-sm mb-1 font-semibold">
-                    Collection
+                    Collected
                   </h3>
                   <p className="text-xs text-pop-gray">
                     {data.collectionDate ? formatDate(data.collectionDate) : "Complete"}
