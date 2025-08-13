@@ -27,7 +27,7 @@ export default function Footer() {
                 </span>
                 <br />
                 <span className="text-gray-300 leading-relaxed">
-                  Track our plastic
+                  Track your plastic
                 </span>
               </div>
             </div>

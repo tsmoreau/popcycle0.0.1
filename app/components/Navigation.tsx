@@ -46,15 +46,18 @@ export default function Navigation() {
     { href: "/about#team", label: "Team" },
     { href: "/about#story", label: "Story" },
     { href: "/about#process", label: "Process" },
+    { href: "/about#process", label: "Contact" },
     { href: "/about#faq", label: "FAQ" },
   ];
 
   const servicesItems = [
     {
       href: "/services#community-partnerships",
-      label: "Community Partnerships",
+      label: "Audits & Impact Reports",
     },
-    { href: "/services#corporate-esg-events", label: "Corporate Services" },
+    { href: "/services#corporate-esg-events", label: "Collection Services" },
+    { href: "/services#corporate-esg-events", label: "Traceable Custom Products" },
+    { href: "/services#corporate-esg-events", label: "Workshops & Events" },
   ];
 
   return (
@@ -73,55 +76,6 @@ export default function Navigation() {
 
           {/* Absolutely centered navigation links */}
           <div className="hidden lg:flex items-center space-x-8 absolute left-1/2 transform -translate-x-1/2 whitespace-nowrap">
-            {/* Track */}
-            <Link
-              href="/track"
-              className={`systematic-caps text-sm hover:text-pop-green transition-colors py-2 ${
-                pathname === "/track" ? "nav-link-active" : ""
-              }`}
-            >
-              Track Your Plastic
-            </Link>
-
-            {/* Shop */}
-            <Link
-              href="/shop"
-              className={`systematic-caps text-sm hover:text-pop-green transition-colors py-2 ${
-                pathname === "/shop" ? "nav-link-active" : ""
-              }`}
-            >
-              Shop
-            </Link>
-
-            {/* Services Dropdown */}
-            <div
-              className="relative"
-              onMouseEnter={() => setServicesOpen(true)}
-              onMouseLeave={() => setServicesOpen(false)}
-            >
-              <button
-                className={`systematic-caps text-sm hover:text-pop-green transition-colors flex items-center space-x-1 py-2 ${
-                  pathname === "/services" ? "nav-link-active" : ""
-                }`}
-              >
-                <ChevronDown className="w-3 h-3" />
-                <span>Services</span>
-              </button>
-
-              {servicesOpen && (
-                <div className="absolute top-full left-0 w-80 bg-white border-4 border-pop-black pop-shadow-black">
-                  {servicesItems.map((item) => (
-                    <Link
-                      key={item.href}
-                      href={item.href}
-                      className="block w-full text-left px-4 py-3 systematic-caps text-sm hover:bg-pop-blue hover:text-white transition-colors whitespace-normal"
-                    >
-                      {item.label}
-                    </Link>
-                  ))}
-                </div>
-              )}
-            </div>
 
             {/* About Dropdown */}
             <div
@@ -149,9 +103,64 @@ export default function Navigation() {
                       {item.label}
                     </Link>
                   ))}
+
+                </div>
+              )}
+
+            </div>
+           
+            {/* Services Dropdown */}
+            <div
+              className="relative"
+              onMouseEnter={() => setServicesOpen(true)}
+              onMouseLeave={() => setServicesOpen(false)}
+            >
+              <button
+                className={`systematic-caps text-sm hover:text-pop-green transition-colors flex items-center space-x-1 py-2 ${
+                  pathname === "/services" ? "nav-link-active" : ""
+                }`}
+              >
+                <ChevronDown className="w-3 h-3" />
+                <span>What We Do</span>
+              </button>
+
+              {servicesOpen && (
+                <div className="absolute top-full left-0 w-80 bg-white border-4 border-pop-black pop-shadow-black">
+                  {servicesItems.map((item) => (
+                    <Link
+                      key={item.href}
+                      href={item.href}
+                      className="block w-full text-left px-4 py-3 systematic-caps text-sm hover:bg-pop-green hover:text-white transition-colors whitespace-normal"
+                    >
+                      {item.label}
+                    </Link>
+                  ))}
                 </div>
               )}
             </div>
+
+         
+            {/* Track */}
+            <Link
+              href="/track"
+              className={`systematic-caps text-sm hover:text-pop-green transition-colors py-2 ${
+                pathname === "/track" ? "nav-link-active" : ""
+              }`}
+            >
+              Track Your Plastic
+            </Link>
+
+
+            {/* Shop */}
+            <Link
+              href="/shop"
+              className={`systematic-caps text-sm hover:text-pop-green transition-colors py-2 ${
+                pathname === "/shop" ? "nav-link-active" : ""
+              }`}
+            >
+              Shop
+            </Link>
+
           </div>
 
           {/* Right-aligned User Menu / Auth Button */}
