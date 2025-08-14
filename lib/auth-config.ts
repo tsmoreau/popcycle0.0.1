@@ -12,7 +12,8 @@ export const authOptions: AuthOptions = {
           scope: "openid email profile",
           prompt: "consent",
           access_type: "offline",
-          response_type: "code"
+          response_type: "code",
+          redirect_uri: "https://37ee3298-feeb-466d-b740-9cb9625b8c09-00-226i2ijuc5mhx.worf.replit.dev/api/auth/callback/google"
         }
       },
       allowDangerousEmailAccountLinking: true
