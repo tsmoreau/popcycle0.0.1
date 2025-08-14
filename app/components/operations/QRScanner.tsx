@@ -306,7 +306,7 @@ export const QRScanner = ({ open, onOpenChange }: QRScannerProps) => {
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-lg max-h-[80vh] overflow-y-auto">
+      <DialogContent className="max-w-lg max-h-vh h-full overflow-y-auto ">
         {/* Close button in upper right */}
         <button
           onClick={() => onOpenChange(false)}
@@ -316,16 +316,15 @@ export const QRScanner = ({ open, onOpenChange }: QRScannerProps) => {
           <span className="sr-only">Close</span>
         </button>
         
-        <DialogHeader>
+        <DialogHeader className="">
           <DialogTitle className="flex items-center gap-2 pr-8">
             <Scan className="h-5 w-5 text-pop-green" />
             QR Code Scanner
           </DialogTitle>
-          <DialogDescription>
-            Scan any QR code for bin status, batch processing, or item tracking
-          </DialogDescription>
+        
         </DialogHeader>
-        <div className="space-y-4">
+        <div className="space-y-4 ">
+          
           {/* Camera feed with queue icons */}
           <div className="relative aspect-square bg-gray-100 rounded-lg border-2 border-dashed border-gray-300 overflow-hidden">
             {/* Always render video element so ref is available */}
