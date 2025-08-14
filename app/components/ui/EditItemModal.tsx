@@ -40,7 +40,12 @@ export function EditItemModal<T extends Record<string, any>>({
   // Initialize form data when item changes
   useEffect(() => {
     if (item) {
-      setEditFormData({ ...item })
+      // Ensure _id is set from id if needed
+      const formData = { ...item };
+      if (item.id && !item._id) {
+        formData._id = item.id;
+      }
+      setEditFormData(formData);
     }
   }, [item])
 
