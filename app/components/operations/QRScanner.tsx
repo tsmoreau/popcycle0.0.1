@@ -119,15 +119,15 @@ export const QRScanner = ({ open, onOpenChange }: QRScannerProps) => {
     }
   };
 
-  const handleSaveItem = async (updatedFormData: any) => {
+  const getSaveHandler = () => {
     if (scannedItem.type === 'bin') {
-      await operationsData.handleBinSave(updatedFormData);
+      return operationsData.handleBinSave;
     } else if (scannedItem.type === 'batch') {
-      await operationsData.handleBatchSave(updatedFormData);
+      return operationsData.handleBatchSave;
     } else if (scannedItem.type === 'blank') {
-      await operationsData.handleBlankSave(updatedFormData);
+      return operationsData.handleBlankSave;
     }
-    await fetchItemData(scannedItem.id);
+    return () => Promise.resolve();
   };
 
   const handleEditModalClose = async (open: boolean) => {
@@ -649,7 +649,7 @@ export const QRScanner = ({ open, onOpenChange }: QRScannerProps) => {
           editableFields={editConfig.fields}
           isOpen={isEditModalOpen}
           onOpenChange={handleEditModalClose}
-          onSave={handleSaveItem}
+          onSave={getSaveHandler()}
           title={editConfig.itemType}
           isLoading={isLoadingItem}
         />
