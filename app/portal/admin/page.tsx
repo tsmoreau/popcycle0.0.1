@@ -512,7 +512,7 @@ export default function AdminPage() {
               <Shield className="h-5 w-5 text-pop-green" />
               <div className="text-left">
                 <h3 className="text-lg font-semibold text-pop-black">Admin Overview</h3>
-                 <p className="text-sm text-gray-600">User stats, data, and integration overviews</p>
+                 <p className="text-sm text-gray-600 font-medium">User stats, data, and integration overviews</p>
               </div>
             </div>
           </AccordionTrigger>
@@ -587,7 +587,7 @@ export default function AdminPage() {
               <Users className="h-5 w-5 text-pop-green" />
               <div className="text-left">
                 <h3 className="text-lg font-semibold text-pop-black">User Management</h3>
-                <p className="text-sm text-gray-600 font-normal">Manage user roles, permissions, and partner affiliations</p>
+                <p className="text-sm text-gray-600">Manage user roles, permissions, and partner affiliations</p>
                 
               </div>
             </div>
@@ -628,7 +628,7 @@ export default function AdminPage() {
               <Database className="h-5 w-5 text-pop-green" />
               <div className="text-left">
                 <h3 className="text-lg font-semibold text-pop-black">Production Stations</h3>
-                <p className="text-sm text-gray-600">Configure physical production stations</p>
+                <p className="text-sm text-gray-600 font-medium">Configure physical production stations</p>
               </div>
             </div>
             <ChevronDown className={`h-5 w-5 text-gray-400 transition-transform ${showProductionStations ? 'rotate-180' : ''}`} />
@@ -669,7 +669,7 @@ export default function AdminPage() {
               <QrCode className="h-5 w-5 text-pop-green" />
               <div className="text-left">
                 <h3 className="text-lg font-semibold text-pop-black">QR Code Configuration</h3>
-                <p className="font-md text-sm text-gray-600">Configure QR codes produced by the system</p>
+                <p className="text-sm text-gray-600 font-medium">Configure QR codes produced by the system</p>
               </div>
             </div>
             <ChevronDown className={`h-5 w-5 text-gray-400 transition-transform ${showQRSettings ? 'rotate-180' : ''}`} />
