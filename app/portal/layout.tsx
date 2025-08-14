@@ -4,7 +4,8 @@ import { useState } from 'react'
 import { usePathname } from 'next/navigation'
 import { 
   Users, 
-  Truck, 
+  Truck,
+  QrCode,
   Phone, 
   Building2, 
   DollarSign,
@@ -20,6 +21,7 @@ import {
 } from 'lucide-react'
 import { Button } from '../components/ui/button'
 import { Badge } from '../components/ui/badge'
+import { QRScanner } from '../components/operations/QRScanner'
 import Link from 'next/link'
 
 export default function PortalLayout({
@@ -30,6 +32,7 @@ export default function PortalLayout({
   const pathname = usePathname()
   const [sidebarCollapsed, setSidebarCollapsed] = useState(true)
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+  const [showScanModal, setShowScanModal] = useState(false)
 
   const sidebarItems = [
     { id: 'profile', label: 'Profile', icon: User, color: 'text-purple-600', activeColor: 'text-purple-600', activeBg: 'bg-purple-600/10', activeBorder: 'border-purple-600/20', href: '/portal/profile' },
@@ -71,7 +74,12 @@ export default function PortalLayout({
               Admin Access
             </Badge>
           </div>
+          
           <div className="flex items-center space-x-1 md:space-x-4">
+            <Button variant="ghost" size="sm" onClick={() => setShowScanModal(true)}>
+              <QrCode className="h-4 w-4 md:mr-2" />
+              <span className="hidden md:inline">QR Scanner</span>
+            </Button>
             <Button variant="ghost" size="sm" onClick={() => window.location.href = '/'}>
               <Home className="h-4 w-4 md:mr-2" />
               <span className="hidden md:inline">Public Site</span>
@@ -163,6 +171,9 @@ export default function PortalLayout({
           {children}
         </div>
       </main>
+
+      {/* QR Scanner Modal */}
+      <QRScanner open={showScanModal} onOpenChange={setShowScanModal} />
     </div>
   )
 }

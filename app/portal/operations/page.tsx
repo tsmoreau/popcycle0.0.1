@@ -496,18 +496,7 @@ export default function OperationsPage() {
         loading={loadingBins || loadingBatches || loadingOrders || loadingBlanks}
       />
 
-      {/* Unified Quick Scan Section */}
-      <div className="w-full border rounded-lg px-4 cursor-pointer hover:bg-gray-50" onClick={() => setShowScanModal(true)}>
-        <div className="py-4">
-          <div className="flex items-center gap-3">
-            <QrCode className="h-5 w-5 text-pop-green" />
-            <div className="text-left">
-              <h3 className="text-lg font-semibold text-pop-black">QR Scanner</h3>
-               <p className="text-sm font-medium text-gray-600">Universal quick view</p>
-            </div>
-          </div>
-        </div>
-      </div>
+    
 
       {/* Operations Management Accordion */}
       <Accordion type="single" collapsible className="w-full">
