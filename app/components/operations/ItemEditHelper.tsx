@@ -50,10 +50,10 @@ export async function saveItemData(item: any, updatedData: any): Promise<void> {
     throw new Error('Unable to determine API endpoint for this item type')
   }
 
-  // Ensure we include the _id field for the update
+  // Follow the same pattern as the working data table - merge updated data with original item
   const dataToSend = {
-    ...updatedData,
-    _id: item._id || item.id // Use _id if available, fallback to id
+    ...item,
+    ...updatedData
   }
 
   const response = await fetch(endpoint, {
