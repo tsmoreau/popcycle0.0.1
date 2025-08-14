@@ -131,6 +131,14 @@ export const QRScanner = ({ open, onOpenChange }: QRScannerProps) => {
     }
   };
 
+  const handleEditModalClose = async (open: boolean) => {
+    setIsEditModalOpen(open);
+    // Refresh data when modal closes to ensure we have latest changes
+    if (!open && scannedItem?.id) {
+      await fetchItemData(scannedItem.id);
+    }
+  };
+
   // Use useEffect to handle queue additions when scannedItem changes
   useEffect(() => {
     // Early exit if queue is not active
@@ -641,7 +649,7 @@ export const QRScanner = ({ open, onOpenChange }: QRScannerProps) => {
           item={scannedItem}
           editableFields={editConfig.fields}
           isOpen={isEditModalOpen}
-          onOpenChange={setIsEditModalOpen}
+          onOpenChange={handleEditModalClose}
           onSave={handleSaveItem}
           title={editConfig.itemType}
           isLoading={isLoadingItem}
