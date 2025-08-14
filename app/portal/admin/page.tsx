@@ -588,6 +588,7 @@ export default function AdminPage() {
               <div className="text-left">
                 <h3 className="text-lg font-semibold text-pop-black">User Management</h3>
                 <p className="text-sm text-gray-600">Manage user roles, permissions, and partner affiliations</p>
+                
               </div>
             </div>
           </AccordionTrigger>
@@ -619,287 +620,282 @@ export default function AdminPage() {
       </Accordion>
 
       {/* System Administration Section */}
-      <Card>
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2 ">
-            <Cog className="h-5 w-5 text-pop-green" />
-            System Administration
-          </CardTitle>
-          <CardDescription className="text-sm text-gray-60">Core system configuration and settings</CardDescription>
-        </CardHeader>
-        <CardContent className="space-y-4">
-          {/* Production Stations Dropdown */}
-          <div className="w-full border rounded-lg">
-            <div className="px-4 py-4 cursor-pointer hover:bg-gray-50" onClick={() => setShowProductionStations(!showProductionStations)}>
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-3">
-                  <Database className="h-5 w-5 text-pop-green" />
-                  <span className="font-medium">Production Station Configuration</span>
-                </div>
-                <ChevronDown className={`h-5 w-5 text-gray-400 transition-transform ${showProductionStations ? 'rotate-180' : ''}`} />
+      {/* Production Stations Dropdown */}
+      <div className="w-full border rounded-lg">
+        <div className="px-4 py-4 cursor-pointer hover:bg-gray-50" onClick={() => setShowProductionStations(!showProductionStations)}>
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-3">
+              <Database className="h-5 w-5 text-pop-green" />
+              <div className="text-left">
+                <h3 className="text-lg font-semibold text-pop-black">Production Stations</h3>
+                <p className="text-sm text-gray-600">Configure physical production stations</p>
               </div>
             </div>
-            {showProductionStations && (
-              <div className="px-4 pb-4 border-t bg-gray-50">
-                <div className="space-y-2 mt-4">
-                  {stationsData.map((station) => (
-                    <div key={station.id} className="flex items-center justify-between p-3 bg-white rounded-lg border">
-                      <div>
-                        <span className="font-medium text-sm">{station.name}: {station.type}</span>
-                        <p className="text-xs text-gray-600">{station.description}</p>
-                      </div>
-                      <Badge className={
-                        station.status === 'Online' ? 'bg-pop-green text-white' :
-                        station.status === 'Active' ? 'bg-pop-blue text-white' :
-                        'bg-gray-100 text-gray-800'
-                      }>
-                        {station.status}
-                      </Badge>
-                    </div>
-                  ))}
-                </div>
-                <div className="mt-4 space-y-2">
-                  <Button variant="outline" className="w-full">Add New Station</Button>
-                  <Button variant="outline" className="w-full">Configure Access Permissions</Button>
-                </div>
-              </div>
-            )}
+            <ChevronDown className={`h-5 w-5 text-gray-400 transition-transform ${showProductionStations ? 'rotate-180' : ''}`} />
           </div>
+        </div>
+        {showProductionStations && (
+          <div className="px-4 pb-4 border-t bg-gray-50">
+            <div className="space-y-2 mt-4">
+              {stationsData.map((station) => (
+                <div key={station.id} className="flex items-center justify-between p-3 bg-white rounded-lg border">
+                  <div>
+                    <span className="font-medium text-sm">{station.name}: {station.type}</span>
+                    <p className="text-xs text-gray-600">{station.description}</p>
+                  </div>
+                  <Badge className={
+                    station.status === 'Online' ? 'bg-pop-green text-white' :
+                    station.status === 'Active' ? 'bg-pop-blue text-white' :
+                    'bg-gray-100 text-gray-800'
+                  }>
+                    {station.status}
+                  </Badge>
+                </div>
+              ))}
+            </div>
+            <div className="mt-4 space-y-2">
+              <Button variant="outline" className="w-full">Add New Station</Button>
+              <Button variant="outline" className="w-full">Configure Access Permissions</Button>
+            </div>
+          </div>
+        )}
+      </div>
 
-          {/* QR Code Generation Settings Dropdown */}
-          <div className="w-full border rounded-lg">
-            <div className="px-4 py-4 cursor-pointer hover:bg-gray-50" onClick={() => setShowQRSettings(!showQRSettings)}>
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-3">
-                  <QrCode className="h-5 w-5 text-pop-green" />
-                  <span className="font-medium">QR Code Generation Configuration</span>
-                </div>
-                <ChevronDown className={`h-5 w-5 text-gray-400 transition-transform ${showQRSettings ? 'rotate-180' : ''}`} />
+      {/* QR Code Generation Settings Dropdown */}
+      <div className="w-full border rounded-lg">
+        <div className="px-4 py-4 cursor-pointer hover:bg-gray-50" onClick={() => setShowQRSettings(!showQRSettings)}>
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-3">
+              <QrCode className="h-5 w-5 text-pop-green" />
+              <div className="text-left">
+                <h3 className="text-lg font-semibold text-pop-black">QR Code Configuration</h3>
+                <p className="font-md text-sm text-gray-600">Configure QR codes produced by the system</p>
               </div>
             </div>
-            {showQRSettings && (
-              <div className="px-4 pb-4 border-t bg-gray-50">
-                <div className="space-y-3 mt-4">
-                  <div className="flex items-center justify-between p-3 bg-white rounded-lg border">
-                    <span className="text-sm">QR Code Size</span>
-                    <select className="border rounded px-2 py-1 text-sm">
-                      <option>Small (128px)</option>
-                      <option selected>Medium (256px)</option>
-                      <option>Large (512px)</option>
-                    </select>
-                  </div>
-                  <div className="flex items-center justify-between p-3 bg-white rounded-lg border">
-                    <span className="text-sm">Error Correction Level</span>
-                    <select className="border rounded px-2 py-1 text-sm">
-                      <option>Low (7%)</option>
-                      <option selected>Medium (15%)</option>
-                      <option>High (25%)</option>
-                    </select>
-                  </div>
-                  <div className="flex items-center justify-between p-3 bg-white rounded-lg border">
-                    <span className="text-sm">Logo Embedding</span>
-                    <Button size="sm" variant="outline">Upload Logo</Button>
-                  </div>
-                </div>
-                <Button variant="outline" className="w-full mt-4">Save QR Settings</Button>
-              </div>
-            )}
+            <ChevronDown className={`h-5 w-5 text-gray-400 transition-transform ${showQRSettings ? 'rotate-180' : ''}`} />
           </div>
+        </div>
+        {showQRSettings && (
+          <div className="px-4 pb-4 border-t bg-gray-50">
+            <div className="space-y-3 mt-4">
+              <div className="flex items-center justify-between p-3 bg-white rounded-lg border">
+                <span className="text-sm">QR Code Size</span>
+                <select className="border rounded px-2 py-1 text-sm">
+                  <option>Small (128px)</option>
+                  <option selected>Medium (256px)</option>
+                  <option>Large (512px)</option>
+                </select>
+              </div>
+              <div className="flex items-center justify-between p-3 bg-white rounded-lg border">
+                <span className="text-sm">Error Correction Level</span>
+                <select className="border rounded px-2 py-1 text-sm">
+                  <option>Low (7%)</option>
+                  <option selected>Medium (15%)</option>
+                  <option>High (25%)</option>
+                </select>
+              </div>
+              <div className="flex items-center justify-between p-3 bg-white rounded-lg border">
+                <span className="text-sm">Logo Embedding</span>
+                <Button size="sm" variant="outline">Upload Logo</Button>
+              </div>
+            </div>
+            <Button variant="outline" className="w-full mt-4">Save QR Settings</Button>
+          </div>
+        )}
+      </div>
 
-          {/* Product Configuration Dropdown */}
-          <div className="w-full border rounded-lg">
-            <div className="px-4 py-4 cursor-pointer hover:bg-gray-50" onClick={() => setShowProductConfiguration(!showProductConfiguration)}>
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-3">
-                  <Package className="h-5 w-5 text-pop-green" />
-                  <span className="font-medium">Product Configuration</span>
-                </div>
-                <ChevronDown className={`h-5 w-5 text-gray-400 transition-transform ${showProductConfiguration ? 'rotate-180' : ''}`} />
-              </div>
+      {/* Product Configuration Dropdown */}
+      <div className="w-full border rounded-lg">
+        <div className="px-4 py-4 cursor-pointer hover:bg-gray-50" onClick={() => setShowProductConfiguration(!showProductConfiguration)}>
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-3">
+              <Package className="h-5 w-5 text-pop-green" />
+              <span className="font-medium">Product Configuration</span>
             </div>
-            {showProductConfiguration && (
-              <div className="px-4 pb-4 border-t bg-gray-50">
-                <div className="mt-4">
-                  {loadingProducts ? (
-                    <div className="flex items-center justify-center p-8">
-                      <div className="text-sm text-gray-600">Loading products...</div>
-                    </div>
-                  ) : (
-                    <DataTable
-                      title=""
-                      description=""
-                      data={products}
-                      columns={productColumns}
-                      editableFields={productEditableFields}
-                      onSave={handleProductSave}
-                      onDelete={handleProductDelete}
-                      enableColumnSelection={true}
-                      enableFiltering={true}
-                      availableColumns={productColumns}
-                      defaultVisibleColumns={['name', 'category', 'difficulty', 'price', 'inStock']}
-                    />
-                  )}
-                </div>
-                <div className="mt-4 space-y-2">
-                  <Button variant="outline" className="w-full" onClick={fetchProducts}>
-                    {loadingProducts ? 'Refreshing...' : 'Refresh Products'}
-                  </Button>
-                  <Button className="w-full bg-pop-green hover:bg-pop-green/90">Add New Product</Button>
-                  <Button variant="outline" className="w-full">Import Products from CSV</Button>
-                  <Button variant="outline" className="w-full">Export Product Catalog</Button>
-                </div>
-              </div>
-            )}
+            <ChevronDown className={`h-5 w-5 text-gray-400 transition-transform ${showProductConfiguration ? 'rotate-180' : ''}`} />
           </div>
+        </div>
+        {showProductConfiguration && (
+          <div className="px-4 pb-4 border-t bg-gray-50">
+            <div className="mt-4">
+              {loadingProducts ? (
+                <div className="flex items-center justify-center p-8">
+                  <div className="text-sm text-gray-600">Loading products...</div>
+                </div>
+              ) : (
+                <DataTable
+                  title=""
+                  description=""
+                  data={products}
+                  columns={productColumns}
+                  editableFields={productEditableFields}
+                  onSave={handleProductSave}
+                  onDelete={handleProductDelete}
+                  enableColumnSelection={true}
+                  enableFiltering={true}
+                  availableColumns={productColumns}
+                  defaultVisibleColumns={['name', 'category', 'difficulty', 'price', 'inStock']}
+                />
+              )}
+            </div>
+            <div className="mt-4 space-y-2">
+              <Button variant="outline" className="w-full" onClick={fetchProducts}>
+                {loadingProducts ? 'Refreshing...' : 'Refresh Products'}
+              </Button>
+              <Button className="w-full bg-pop-green hover:bg-pop-green/90">Add New Product</Button>
+              <Button variant="outline" className="w-full">Import Products from CSV</Button>
+              <Button variant="outline" className="w-full">Export Product Catalog</Button>
+            </div>
+          </div>
+        )}
+      </div>
 
-          {/* External Integrations Dropdown */}
-          <div className="w-full border rounded-lg">
-            <div className="px-4 py-4 cursor-pointer hover:bg-gray-50" onClick={() => setShowIntegrations(!showIntegrations)}>
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-3">
-                  <Plug className="h-5 w-5 text-pop-green" />
-                  <span className="font-medium">External Integrations</span>
+      {/* External Integrations Dropdown */}
+      <div className="w-full border rounded-lg">
+        <div className="px-4 py-4 cursor-pointer hover:bg-gray-50" onClick={() => setShowIntegrations(!showIntegrations)}>
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-3">
+              <Plug className="h-5 w-5 text-pop-green" />
+              <span className="font-medium">External Integrations</span>
+            </div>
+            <ChevronDown className={`h-5 w-5 text-gray-400 transition-transform ${showIntegrations ? 'rotate-180' : ''}`} />
+          </div>
+        </div>
+        {showIntegrations && (
+          <div className="px-4 pb-4 border-t bg-gray-50">
+            <div className="space-y-2 mt-4">
+              <div className="flex items-center justify-between p-3 bg-white rounded-lg border">
+                <div>
+                  <span className="font-medium text-sm">Google Workspace</span>
+                  <p className="text-xs text-gray-600">Email automation & calendar sync</p>
                 </div>
-                <ChevronDown className={`h-5 w-5 text-gray-400 transition-transform ${showIntegrations ? 'rotate-180' : ''}`} />
+                <Badge className="bg-gray-100 text-gray-800">Not Set Up</Badge>
+              </div>
+              <div className="flex items-center justify-between p-3 bg-white rounded-lg border">
+                <div>
+                  <span className="font-medium text-sm">MongoDB Atlas</span>
+                  <p className="text-xs text-gray-600">Primary database & document storage</p>
+                </div>
+                {loadingMongo ? (
+                  <Badge className="bg-yellow-100 text-yellow-800">Checking...</Badge>
+                ) : (
+                  <Badge className={
+                    mongoStatus?.connected 
+                      ? "bg-pop-green text-white" 
+                      : "bg-pop-red text-white"
+                  }>
+                    {mongoStatus?.status || 'Unknown'}
+                  </Badge>
+                )}
+              </div>
+              <div className="flex items-center justify-between p-3 bg-white rounded-lg border">
+                <div>
+                  <span className="font-medium text-sm">QuickBooks</span>
+                  <p className="text-xs text-gray-600">Financial data synchronization</p>
+                </div>
+                <Badge className="bg-gray-100 text-gray-800">Not Set Up</Badge>
+              </div>
+              <div className="flex items-center justify-between p-3 bg-white rounded-lg border">
+                <div>
+                  <span className="font-medium text-sm">Stripe</span>
+                  <p className="text-xs text-gray-600">Payment processing</p>
+                </div>
+                <Badge className="bg-gray-100 text-gray-800">Not Set Up</Badge>
+              </div>
+              <div className="flex items-center justify-between p-3 bg-white rounded-lg border">
+                <div>
+                  <span className="font-medium text-sm">AWS S3</span>
+                  <p className="text-xs text-gray-600">Private file & image storage</p>
+                </div>
+                <Badge className="bg-gray-100 text-gray-800">Not Set Up</Badge>
               </div>
             </div>
-            {showIntegrations && (
-              <div className="px-4 pb-4 border-t bg-gray-50">
-                <div className="space-y-2 mt-4">
-                  <div className="flex items-center justify-between p-3 bg-white rounded-lg border">
-                    <div>
-                      <span className="font-medium text-sm">Google Workspace</span>
-                      <p className="text-xs text-gray-600">Email automation & calendar sync</p>
-                    </div>
-                    <Badge className="bg-gray-100 text-gray-800">Not Set Up</Badge>
-                  </div>
-                  <div className="flex items-center justify-between p-3 bg-white rounded-lg border">
-                    <div>
-                      <span className="font-medium text-sm">MongoDB Atlas</span>
-                      <p className="text-xs text-gray-600">Primary database & document storage</p>
-                    </div>
-                    {loadingMongo ? (
-                      <Badge className="bg-yellow-100 text-yellow-800">Checking...</Badge>
-                    ) : (
-                      <Badge className={
-                        mongoStatus?.connected 
-                          ? "bg-pop-green text-white" 
-                          : "bg-pop-red text-white"
-                      }>
-                        {mongoStatus?.status || 'Unknown'}
-                      </Badge>
-                    )}
-                  </div>
-                  <div className="flex items-center justify-between p-3 bg-white rounded-lg border">
-                    <div>
-                      <span className="font-medium text-sm">QuickBooks</span>
-                      <p className="text-xs text-gray-600">Financial data synchronization</p>
-                    </div>
-                    <Badge className="bg-gray-100 text-gray-800">Not Set Up</Badge>
-                  </div>
-                  <div className="flex items-center justify-between p-3 bg-white rounded-lg border">
-                    <div>
-                      <span className="font-medium text-sm">Stripe</span>
-                      <p className="text-xs text-gray-600">Payment processing</p>
-                    </div>
-                    <Badge className="bg-gray-100 text-gray-800">Not Set Up</Badge>
-                  </div>
-                  <div className="flex items-center justify-between p-3 bg-white rounded-lg border">
-                    <div>
-                      <span className="font-medium text-sm">AWS S3</span>
-                      <p className="text-xs text-gray-600">Private file & image storage</p>
-                    </div>
-                    <Badge className="bg-gray-100 text-gray-800">Not Set Up</Badge>
-                  </div>
-                </div>
-              </div>
-            )}
           </div>
+        )}
+      </div>
 
-          {/* MongoDB Database Operations Dropdown */}
-          <div className="w-full border rounded-lg">
-            <div className="px-4 py-4 cursor-pointer hover:bg-gray-50" onClick={() => setShowMongoDBOperations(!showMongoDBOperations)}>
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-3">
-                  <Database className="h-5 w-5 text-pop-green" />
-                  <span className="font-medium">MongoDB Database Operations</span>
+      {/* MongoDB Database Operations Dropdown */}
+      <div className="w-full border rounded-lg">
+        <div className="px-4 py-4 cursor-pointer hover:bg-gray-50" onClick={() => setShowMongoDBOperations(!showMongoDBOperations)}>
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-3">
+              <Database className="h-5 w-5 text-pop-green" />
+              <span className="font-medium">MongoDB Database Operations</span>
+            </div>
+            <ChevronDown className={`h-5 w-5 text-gray-400 transition-transform ${showMongoDBOperations ? 'rotate-180' : ''}`} />
+          </div>
+        </div>
+        {showMongoDBOperations && (
+          <div className="px-4 pb-4 border-t bg-gray-50">
+            <div className="space-y-2 mt-4">
+              <div className="flex items-center justify-between p-3 bg-white rounded-lg border">
+                <div>
+                  <span className="font-medium text-sm">Database Status</span>
+                  <p className="text-xs text-gray-600">
+                    {mongoStatus?.hostname || 'popcycle.esldhpo.mongodb.net'}
+                  </p>
                 </div>
-                <ChevronDown className={`h-5 w-5 text-gray-400 transition-transform ${showMongoDBOperations ? 'rotate-180' : ''}`} />
+                {loadingMongo ? (
+                  <Badge className="bg-yellow-100 text-yellow-800">Checking...</Badge>
+                ) : (
+                  <Badge className={
+                    mongoStatus?.connected 
+                      ? "bg-pop-green text-white" 
+                      : "bg-pop-red text-white"
+                  }>
+                    {mongoStatus?.status || 'Unknown'}
+                  </Badge>
+                )}
+              </div>
+              <div className="flex items-center justify-between p-3 bg-white rounded-lg border">
+                <div>
+                  <span className="font-medium text-sm">Collection Count</span>
+                  <p className="text-xs text-gray-600">Core data collections</p>
+                </div>
+                <span className="text-sm font-medium text-gray-900">
+                  {loadingMongo ? '...' : (mongoStatus?.collections || 0)}
+                </span>
+              </div>
+              <div className="flex items-center justify-between p-3 bg-white rounded-lg border">
+                <div>
+                  <span className="font-medium text-sm">Database Size</span>
+                  <p className="text-xs text-gray-600">Current storage usage</p>
+                </div>
+                <span className="text-sm font-medium text-gray-900">
+                  {loadingMongo ? '...' : `${mongoStatus?.dataSize || 0} MB`}
+                </span>
+              </div>
+              <div className="flex items-center justify-between p-3 bg-white rounded-lg border">
+                <div>
+                  <span className="font-medium text-sm">User Permissions</span>
+                  <p className="text-xs text-gray-600">popcycleapp user access level</p>
+                </div>
+                <Badge className="bg-pop-blue text-white">dbAdmin</Badge>
               </div>
             </div>
-            {showMongoDBOperations && (
-              <div className="px-4 pb-4 border-t bg-gray-50">
-                <div className="space-y-2 mt-4">
-                  <div className="flex items-center justify-between p-3 bg-white rounded-lg border">
-                    <div>
-                      <span className="font-medium text-sm">Database Status</span>
-                      <p className="text-xs text-gray-600">
-                        {mongoStatus?.hostname || 'popcycle.esldhpo.mongodb.net'}
-                      </p>
-                    </div>
-                    {loadingMongo ? (
-                      <Badge className="bg-yellow-100 text-yellow-800">Checking...</Badge>
-                    ) : (
-                      <Badge className={
-                        mongoStatus?.connected 
-                          ? "bg-pop-green text-white" 
-                          : "bg-pop-red text-white"
-                      }>
-                        {mongoStatus?.status || 'Unknown'}
-                      </Badge>
-                    )}
-                  </div>
-                  <div className="flex items-center justify-between p-3 bg-white rounded-lg border">
-                    <div>
-                      <span className="font-medium text-sm">Collection Count</span>
-                      <p className="text-xs text-gray-600">Core data collections</p>
-                    </div>
-                    <span className="text-sm font-medium text-gray-900">
-                      {loadingMongo ? '...' : (mongoStatus?.collections || 0)}
-                    </span>
-                  </div>
-                  <div className="flex items-center justify-between p-3 bg-white rounded-lg border">
-                    <div>
-                      <span className="font-medium text-sm">Database Size</span>
-                      <p className="text-xs text-gray-600">Current storage usage</p>
-                    </div>
-                    <span className="text-sm font-medium text-gray-900">
-                      {loadingMongo ? '...' : `${mongoStatus?.dataSize || 0} MB`}
-                    </span>
-                  </div>
-                  <div className="flex items-center justify-between p-3 bg-white rounded-lg border">
-                    <div>
-                      <span className="font-medium text-sm">User Permissions</span>
-                      <p className="text-xs text-gray-600">popcycleapp user access level</p>
-                    </div>
-                    <Badge className="bg-pop-blue text-white">dbAdmin</Badge>
-                  </div>
-                </div>
-                <div className="mt-4 space-y-2">
-                  <Button 
-                    variant="outline" 
-                    className="w-full"
-                    onClick={fetchMongoStatus}
-                    disabled={loadingMongo}
-                  >
-                    {loadingMongo ? 'Testing...' : 'Test Connection'}
-                  </Button>
-                  <Button 
-                    variant="outline" 
-                    className="w-full"
-                    onClick={generateSampleData}
-                    disabled={generatingData}
-                  >
-                    {generatingData ? 'Generating...' : 'Initialize Sample Data'}
-                  </Button>
-                  <Button variant="outline" className="w-full">View Collection Stats</Button>
-                  <Button variant="outline" className="w-full text-pop-red">Reset Development Data</Button>
-                </div>
-              </div>
-            )}
+            <div className="mt-4 space-y-2">
+              <Button 
+                variant="outline" 
+                className="w-full"
+                onClick={fetchMongoStatus}
+                disabled={loadingMongo}
+              >
+                {loadingMongo ? 'Testing...' : 'Test Connection'}
+              </Button>
+              <Button 
+                variant="outline" 
+                className="w-full"
+                onClick={generateSampleData}
+                disabled={generatingData}
+              >
+                {generatingData ? 'Generating...' : 'Initialize Sample Data'}
+              </Button>
+              <Button variant="outline" className="w-full">View Collection Stats</Button>
+              <Button variant="outline" className="w-full text-pop-red">Reset Development Data</Button>
+            </div>
           </div>
-        </CardContent>
-      </Card>
+        )}
+      </div>
     </div>
   )
 }
