@@ -55,7 +55,7 @@ export default function SignInPage() {
               <div className="bg-pop-green/10 border-2 border-pop-green p-4 mb-4">
                 <h3 className="systematic-caps text-sm text-pop-green mb-2">Google SSO</h3>
                 <Button
-                  onClick={() => signIn('google', { callbackUrl: '/' })}
+                  onClick={() => signIn('google', { callbackUrl: 'https://37ee3298-feeb-466d-b740-9cb9625b8c09-00-226i2ijuc5mhx.worf.replit.dev/' })}
                   className="w-full bg-pop-blue border-2 border-pop-black text-white hover:bg-pop-black hover:text-pop-blue systematic-caps text-sm h-12"
                 >
                   <svg className="w-5 h-5 mr-3" viewBox="0 0 24 24">

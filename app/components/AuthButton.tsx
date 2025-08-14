@@ -153,9 +153,9 @@ function AuthButtonContent() {
                 onClick={async () => {
                   setIsSigningIn(true)
                   try {
-                    // Use current page as callback URL to stay on the same page
-                    const currentUrl = window.location.href
-                    await signIn('google', { callbackUrl: currentUrl })
+                    // Force development environment URL
+                    const devUrl = 'https://37ee3298-feeb-466d-b740-9cb9625b8c09-00-226i2ijuc5mhx.worf.replit.dev' + window.location.pathname
+                    await signIn('google', { callbackUrl: devUrl })
                   } catch (error) {
                     console.error('Sign in error:', error)
                   } finally {
