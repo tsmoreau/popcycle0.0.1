@@ -305,27 +305,294 @@ export const QRScanner = ({ open, onOpenChange }: QRScannerProps) => {
   };
 
   return (
-    <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-lg max-h-[80vh] overflow-y-auto">
-        {/* Close button in upper right */}
-        <button
-          onClick={() => onOpenChange(false)}
-          className="absolute right-4 top-4 z-10 rounded-sm opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none data-[state=open]:bg-accent data-[state=open]:text-muted-foreground"
-        >
-          <X className="h-4 w-4" />
-          <span className="sr-only">Close</span>
-        </button>
-        
-        <DialogHeader>
-          <DialogTitle className="flex items-center gap-2 pr-8">
-            <Scan className="h-5 w-5 text-pop-green" />
-            QR Code Scanner
-          </DialogTitle>
-          <DialogDescription>
-            Scan any QR code for bin status, batch processing, or item tracking
-          </DialogDescription>
-        </DialogHeader>
-        <div className="space-y-4">
+    <>
+      {/* Mobile Full Screen View */}
+      {open && (
+        <div className="md:hidden fixed inset-0 z-50 bg-white">
+          {/* Mobile Header */}
+          <div className="flex items-center justify-between p-4 border-b bg-white">
+            <div className="flex items-center gap-2">
+              <Scan className="h-5 w-5 text-pop-green" />
+              <div>
+                <h2 className="text-lg font-semibold">QR Scanner</h2>
+                <p className="text-sm text-gray-600">Scan any QR code</p>
+              </div>
+            </div>
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={() => onOpenChange(false)}
+            >
+              <X className="h-5 w-5" />
+            </Button>
+          </div>
+
+          {/* Mobile Content */}
+          <div className="flex-1 p-4 space-y-4 overflow-y-auto">
+            {/* Camera feed with queue icons */}
+            <div className="relative aspect-square bg-gray-100 rounded-lg border-2 border-dashed border-gray-300 overflow-hidden">
+              {/* Always render video element so ref is available */}
+              <video
+                ref={videoRef}
+                className="w-full h-full object-cover rounded-lg"
+                style={{ display: isScanning ? 'block' : 'none' }}
+                autoPlay
+                playsInline
+                muted
+              />
+              
+              {/* Show overlays based on state */}
+              {cameraError ? (
+                <div className="absolute inset-0 flex items-center justify-center text-center p-4 bg-white">
+                  <div>
+                    <AlertCircle className="h-12 w-12 text-red-400 mx-auto mb-2" />
+                    <p className="text-sm text-red-600 font-medium">Camera Error</p>
+                    <p className="text-xs text-red-500 mt-1">{cameraError}</p>
+                  </div>
+                </div>
+              ) : !isScanning && (
+                <div className="absolute inset-0 flex items-center justify-center text-center bg-white">
+                  <div>
+                    <Camera className="h-12 w-12 text-gray-400 mx-auto mb-2" />
+                    <p className="text-sm text-gray-500">Initializing camera...</p>
+                  </div>
+                </div>
+              )}
+              
+              {/* Scanning overlay - only show corners, not blocking overlay */}
+              {isScanning && (
+                <div className="absolute inset-4 border-2 border-pop-green rounded-lg pointer-events-none">
+                  <div className="absolute top-0 left-0 w-4 h-4 border-t-2 border-l-2 border-pop-green"></div>
+                  <div className="absolute top-0 right-0 w-4 h-4 border-t-2 border-r-2 border-pop-green"></div>
+                  <div className="absolute bottom-0 left-0 w-4 h-4 border-b-2 border-l-2 border-pop-green"></div>
+                  <div className="absolute bottom-0 right-0 w-4 h-4 border-b-2 border-r-2 border-pop-green"></div>
+                  
+                  {/* Scanning indicator in bottom corner */}
+                  <div className="absolute bottom-2 right-2">
+                    <div className="bg-pop-green/90 text-white text-xs px-2 py-1 rounded">
+                      Scanning...
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {/* Queue icons on right side - now clickable pills */}
+              {queueActive && queuedItems.length > 0 && (
+                <div className="absolute -right-2 top-2 flex flex-col gap-1 max-h-full overflow-y-auto">
+                  {queuedItems.map((item, index) => (
+                    <button
+                      key={`${item.id}-${index}`}
+                      className="h-8 px-2 rounded-full bg-pop-green text-white text-xs flex items-center justify-center font-bold shadow-lg whitespace-nowrap hover:bg-pop-green/80 cursor-pointer transition-colors"
+                      title={`Click to view ${item.id} (${item.type})`}
+                      style={{ minWidth: 'fit-content' }}
+                      onClick={() => setScannedItem(item)}
+                    >
+                      {item.id || '?'}
+                    </button>
+                  ))}
+                </div>
+              )}
+            </div>
+
+            {/* Mobile Scanned item information - same as desktop but in mobile layout */}
+            {(lastScan || isLoadingItem || scannedItem) && (
+              <div className="pt-4 border-t space-y-3">
+                <div className="flex items-center justify-between">
+                  
+                  {/* Queue Active indicator - moved here */}
+                  {queueActive && (
+                    <div className="flex items-center gap-2 bg-pop-green/10 px-2 py-1 rounded">
+                      <span className="text-xs font-medium text-pop-green">
+                        {queueType.charAt(0).toUpperCase() + queueType.slice(1)} Queue Active
+                      </span>
+                      <span className="text-xs bg-pop-green text-white px-2 py-1 rounded">
+                        {queuedItems.length}
+                      </span>
+                    </div>
+                  )}
+                </div>
+
+                {/* Loading state */}
+                {isLoadingItem && (
+                  <div className="flex items-center gap-2 text-sm text-gray-600">
+                    <div className="animate-spin h-4 w-4 border-2 border-pop-green border-t-transparent rounded-full"></div>
+                    Loading item data...
+                  </div>
+                )}
+
+                {/* Queue Controls Section - Full Width above scanned items */}
+                {scannedItem && !scannedItem.error && (
+                  <div className="pb-3">
+                    {!queueActive ? (
+                      /* Start queue button - only show if we have a valid item */
+                      scannedItem.type && (
+                        <Button
+                          size="sm"
+                          variant="outline"
+                          className="w-full border-pop-green text-pop-green hover:bg-pop-green hover:text-white"
+                          onClick={() => startQueue(scannedItem.type)}
+                        >
+                          Start {scannedItem.type.charAt(0).toUpperCase() + scannedItem.type.slice(1)} Queue
+                        </Button>
+                      )
+                    ) : (
+                      /* Stop queue button when active */
+                      <Button
+                        size="sm"
+                        variant="outline"
+                        className="w-full border-red-400 text-red-600 hover:bg-red-50"
+                        onClick={stopQueue}
+                      >
+                        Stop Queue
+                      </Button>
+                    )}
+                  </div>
+                )}
+
+                <h3 className="text-sm font-medium text-gray-900">Active Item</h3>
+
+                {/* Active item display - show only the current scanned item */}
+                {scannedItem && !isLoadingItem && (
+                  <div className="space-y-3">
+                    {scannedItem.error ? (
+                      <div className="bg-red-50 border border-red-200 rounded-lg p-3">
+                        <p className="text-sm text-red-800">{scannedItem.error}</p>
+                      </div>
+                    ) : (
+                      <div className="bg-pop-green/5 border border-pop-green/20 rounded-lg p-3 space-y-2">
+                        {/* Item ID and Type */}
+                        <div className="flex items-center justify-between">
+                          <span className="text-lg font-mono font-bold text-pop-green">
+                            {scannedItem.id}
+                          </span>
+                          <span className="text-xs bg-pop-green text-white px-2 py-1 rounded uppercase">
+                            {scannedItem.type}
+                          </span>
+                        </div>
+
+                        {/* Item details - show different fields based on item type */}
+                        <div className="text-sm space-y-1">
+                          {/* Common fields */}
+                          {scannedItem.status && (
+                            <div><span className="font-medium">Status:</span> {scannedItem.status.replace(/_/g, ' ')}</div>
+                          )}
+                          {scannedItem.organization && (
+                            <div><span className="font-medium">Organization:</span> {scannedItem.organization.name}</div>
+                          )}
+
+                          {/* Batch-specific fields */}
+                          {scannedItem.type === 'batch' && (
+                            <>
+                              {scannedItem.materialType && (
+                                <div><span className="font-medium">Material:</span> {scannedItem.materialType}</div>
+                              )}
+                              {scannedItem.weight && (
+                                <div><span className="font-medium">Weight:</span> {scannedItem.weight}kg</div>
+                              )}
+                              {scannedItem.collectedBy && (
+                                <div><span className="font-medium">Collected By:</span> {scannedItem.collectedBy}</div>
+                              )}
+                              {scannedItem.collectionDate && (
+                                <div><span className="font-medium">Collection Date:</span> {new Date(scannedItem.collectionDate).toLocaleDateString()}</div>
+                              )}
+                              {scannedItem.binIds && scannedItem.binIds.length > 0 && (
+                                <div><span className="font-medium">Source Bins:</span> {scannedItem.binIds.join(', ')}</div>
+                              )}
+                            </>
+                          )}
+
+                          {/* Bin-specific fields */}
+                          {scannedItem.type === 'bin' && (
+                            <>
+                              {scannedItem.name && (
+                                <div><span className="font-medium">Name:</span> {scannedItem.name}</div>
+                              )}
+                              {scannedItem.location && (
+                                <div><span className="font-medium">Location:</span> {scannedItem.location}</div>
+                              )}
+                              {scannedItem.capacity && (
+                                <div><span className="font-medium">Capacity:</span> {scannedItem.capacity}L</div>
+                              )}
+                              {scannedItem.lastCollectionDate && (
+                                <div><span className="font-medium">Last Collection:</span> {new Date(scannedItem.lastCollectionDate).toLocaleDateString()}</div>
+                              )}
+                              {scannedItem.nextCollectionDate && (
+                                <div><span className="font-medium">Next Collection:</span> {new Date(scannedItem.nextCollectionDate).toLocaleDateString()}</div>
+                              )}
+                              {scannedItem.canBeAdopted !== undefined && (
+                                <div><span className="font-medium">Can Be Adopted:</span> {scannedItem.canBeAdopted ? 'Yes' : 'No'}</div>
+                              )}
+                              {scannedItem.adoptedBy && (
+                                <div><span className="font-medium">Adopted By:</span> {scannedItem.adoptedBy}</div>
+                              )}
+                            </>
+                          )}
+
+                          {/* Blank-specific fields - DEBUG VERSION */}
+                          {scannedItem.type === 'blank' && (
+                            <>
+                              <div className="text-xs text-red-500 mb-2">DEBUG: Type={scannedItem.type}, Has batchId={!!scannedItem.batchId}, Has productId={!!scannedItem.productId}</div>
+                              
+                              {console.log("BLANK RENDER DEBUG:", {
+                                type: scannedItem.type,
+                                batchId: scannedItem.batchId,
+                                productId: scannedItem.productId,
+                                binIds: scannedItem.binIds,
+                                allKeys: Object.keys(scannedItem)
+                              })}
+                              
+                              {/* Always show available fields with fallbacks */}
+                              <div><span className="font-medium">Batch ID:</span> {scannedItem.batchId || 'Not available'}</div>
+                              <div><span className="font-medium">Product ID:</span> {scannedItem.productId || 'Not available'}</div>
+                              <div><span className="font-medium">Weight:</span> {scannedItem.weight || 'Not available'}kg</div>
+                              <div><span className="font-medium">Source Bins:</span> {(scannedItem.binIds && scannedItem.binIds.length > 0) ? scannedItem.binIds.join(', ') : 'Not available'}</div>
+                            </>
+                          )}
+                        </div>
+
+                        {/* Action buttons for scanned item */}
+                        <div className="pt-2 space-y-2">
+                          <Button
+                            variant="outline"
+                            size="sm"
+                            className="w-full border-pop-green text-pop-green hover:bg-pop-green hover:text-white"
+                            onClick={() => router.push(`/track/${scannedItem.id}`)}
+                          >
+                            View Full Details
+                          </Button>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                )}
+              </div>
+            )}
+          </div>
+        </div>
+      )}
+
+      {/* Desktop Dialog View */}
+      <Dialog open={open} onOpenChange={onOpenChange}>
+        <DialogContent className="hidden md:block max-w-lg max-h-[80vh] overflow-y-auto">
+          {/* Close button in upper right */}
+          <button
+            onClick={() => onOpenChange(false)}
+            className="absolute right-4 top-4 z-10 rounded-sm opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none data-[state=open]:bg-accent data-[state=open]:text-muted-foreground"
+          >
+            <X className="h-4 w-4" />
+            <span className="sr-only">Close</span>
+          </button>
+          
+          <DialogHeader>
+            <DialogTitle className="flex items-center gap-2 pr-8">
+              <Scan className="h-5 w-5 text-pop-green" />
+              QR Code Scanner
+            </DialogTitle>
+            <DialogDescription>
+              Scan any QR code for bin status, batch processing, or item tracking
+            </DialogDescription>
+          </DialogHeader>
+          <div className="space-y-4">
           {/* Camera feed with queue icons */}
           <div className="relative aspect-square bg-gray-100 rounded-lg border-2 border-dashed border-gray-300 overflow-hidden">
             {/* Always render video element so ref is available */}
