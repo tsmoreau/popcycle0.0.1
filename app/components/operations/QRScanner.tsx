@@ -306,7 +306,7 @@ export const QRScanner = ({ open, onOpenChange }: QRScannerProps) => {
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-lg max-h-[80vh] md:max-h-[80vh] md:max-w-lg sm:h-screen sm:max-w-none sm:m-0 sm:rounded-none overflow-y-auto">
+      <DialogContent className="h-screen max-w-none m-0 rounded-none md:h-auto md:max-h-[80vh] md:max-w-lg md:m-6 md:rounded-lg overflow-y-auto">
         {/* Close button in upper right */}
         <button
           onClick={() => onOpenChange(false)}
