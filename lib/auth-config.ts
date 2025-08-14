@@ -59,9 +59,17 @@ export const authOptions: AuthOptions = {
     },
 
     async redirect({ url, baseUrl }) {
-      // Use the URL being redirected to determine if we should use the current origin
-      const currentOrigin = typeof window !== 'undefined' ? window.location.origin : baseUrl
-      const actualBaseUrl = currentOrigin
+      // Extract the origin from the URL being redirected to (this contains the actual request domain)
+      let actualBaseUrl = baseUrl
+      try {
+        const urlObj = new URL(url)
+        // If the URL has a different origin than baseUrl, use that origin
+        if (urlObj.origin !== baseUrl) {
+          actualBaseUrl = urlObj.origin
+        }
+      } catch (e) {
+        // If URL parsing fails, fall back to baseUrl
+      }
       
       console.log('NextAuth redirect called with url:', url, 'baseUrl:', baseUrl, 'using:', actualBaseUrl)
       
