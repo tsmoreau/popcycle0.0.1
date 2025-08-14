@@ -1,6 +1,13 @@
 import GoogleProvider from 'next-auth/providers/google'
 import type { AuthOptions } from 'next-auth'
 
+// Override NEXTAUTH_URL for development if it's not already set correctly
+if (typeof window === 'undefined' && process.env.NODE_ENV === 'development') {
+  process.env.NEXTAUTH_URL = process.env.NEXTAUTH_URL?.includes('37ee3298-feeb-466d-b740-9cb9625b8c09-00-226i2ijuc5mhx.worf.replit.dev') 
+    ? process.env.NEXTAUTH_URL 
+    : 'https://37ee3298-feeb-466d-b740-9cb9625b8c09-00-226i2ijuc5mhx.worf.replit.dev'
+}
+
 export const authOptions: AuthOptions = {
   secret: process.env.NEXTAUTH_SECRET,
   providers: [
