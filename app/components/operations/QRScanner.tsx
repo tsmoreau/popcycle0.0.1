@@ -12,6 +12,7 @@ import QrScanner from "qr-scanner";
 import { useRouter } from "next/navigation";
 import { EditItemModal } from "../ui/EditItemModal";
 import { getEditableFieldsForItem, getApiEndpointForItem } from "./ItemEditHelper";
+import { useOperationsData } from "../../../hooks/useOperationsData";
 
 interface QRScannerProps {
   open: boolean;
@@ -29,6 +30,7 @@ export const QRScanner = ({ open, onOpenChange }: QRScannerProps) => {
   const [isLoadingItem, setIsLoadingItem] = useState(false);
   const [lastScanTime, setLastScanTime] = useState<number>(0);
   const router = useRouter();
+  const operationsData = useOperationsData();
   
   // Queue state
   const [queueActive, setQueueActive] = useState(false);
