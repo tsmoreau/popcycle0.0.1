@@ -59,20 +59,24 @@ export const authOptions: AuthOptions = {
     },
 
     async redirect({ url, baseUrl }) {
-      console.log('NextAuth redirect called with url:', url, 'baseUrl:', baseUrl)
+      // Force development URL in development environment
+      const devBaseUrl = "https://37ee3298-feeb-466d-b740-9cb9625b8c09-00-226i2ijuc5mhx.worf.replit.dev"
+      const actualBaseUrl = process.env.NODE_ENV === 'development' ? devBaseUrl : baseUrl
+      
+      console.log('NextAuth redirect called with url:', url, 'baseUrl:', baseUrl, 'using:', actualBaseUrl)
       
       // Handle OAuth cancellation/access_denied - always redirect to home page
       if (url.includes('error=access_denied') || url.includes('error=Callback') || url.includes('/api/auth/signin')) {
         console.log('Redirecting to home page due to OAuth cancellation')
-        return baseUrl
+        return actualBaseUrl
       }
       
       // For successful auth, allow the redirect
-      if (url.startsWith("/")) return `${baseUrl}${url}`
-      else if (new URL(url).origin === baseUrl) return url
+      if (url.startsWith("/")) return `${actualBaseUrl}${url}`
+      else if (new URL(url).origin === actualBaseUrl) return url
       
       // Default to home page
-      return baseUrl
+      return actualBaseUrl
     }
   },
   session: {
