@@ -59,9 +59,9 @@ export const authOptions: AuthOptions = {
     },
 
     async redirect({ url, baseUrl }) {
-      // Force development URL in development environment
-      const devBaseUrl = "https://37ee3298-feeb-466d-b740-9cb9625b8c09-00-226i2ijuc5mhx.worf.replit.dev"
-      const actualBaseUrl = process.env.NODE_ENV === 'development' ? devBaseUrl : baseUrl
+      // Use the URL being redirected to determine if we should use the current origin
+      const currentOrigin = typeof window !== 'undefined' ? window.location.origin : baseUrl
+      const actualBaseUrl = currentOrigin
       
       console.log('NextAuth redirect called with url:', url, 'baseUrl:', baseUrl, 'using:', actualBaseUrl)
       
