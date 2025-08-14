@@ -1,17 +1,8 @@
 import GoogleProvider from 'next-auth/providers/google'
 import type { AuthOptions } from 'next-auth'
 
-// Dynamically set the base URL based on environment
-const getBaseUrl = () => {
-  if (process.env.REPLIT_DEV_DOMAIN) {
-    return `https://${process.env.REPLIT_DEV_DOMAIN}`
-  }
-  return process.env.NEXTAUTH_URL || 'https://popcycle.replit.app'
-}
-
 export const authOptions: AuthOptions = {
   secret: process.env.NEXTAUTH_SECRET,
-  useSecureCookies: true,
   providers: [
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID!.trim(),
@@ -68,21 +59,20 @@ export const authOptions: AuthOptions = {
     },
 
     async redirect({ url, baseUrl }) {
-      const dynamicBaseUrl = getBaseUrl()
-      console.log('NextAuth redirect called with url:', url, 'baseUrl:', baseUrl, 'dynamicBaseUrl:', dynamicBaseUrl)
+      console.log('NextAuth redirect called with url:', url, 'baseUrl:', baseUrl)
       
       // Handle OAuth cancellation/access_denied - always redirect to home page
       if (url.includes('error=access_denied') || url.includes('error=Callback') || url.includes('/api/auth/signin')) {
         console.log('Redirecting to home page due to OAuth cancellation')
-        return dynamicBaseUrl
+        return baseUrl
       }
       
       // For successful auth, allow the redirect
-      if (url.startsWith("/")) return `${dynamicBaseUrl}${url}`
-      else if (new URL(url).origin === dynamicBaseUrl) return url
+      if (url.startsWith("/")) return `${baseUrl}${url}`
+      else if (new URL(url).origin === baseUrl) return url
       
       // Default to home page
-      return dynamicBaseUrl
+      return baseUrl
     }
   },
   session: {
