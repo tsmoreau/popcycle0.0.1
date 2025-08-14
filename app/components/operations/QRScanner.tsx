@@ -121,27 +121,15 @@ export const QRScanner = ({ open, onOpenChange }: QRScannerProps) => {
 
   const handleSaveItem = async (updatedFormData: any) => {
     try {
-      const endpoint = getApiEndpointForItem(scannedItem);
-      if (!endpoint) throw new Error('Unable to determine API endpoint');
-      
-      // Add the _id field to the form data
-      const dataWithId = {
-        ...updatedFormData,
-        _id: scannedItem._id
-      };
-      
-      const response = await fetch(endpoint, {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(dataWithId)
-      });
-      
-      if (response.ok) {
-        await fetchItemData(scannedItem.id);
-        setIsEditModalOpen(false);
-      } else {
-        throw new Error('Failed to save item');
+      if (scannedItem.type === 'bin') {
+        await operationsData.saveBin(updatedFormData);
+      } else if (scannedItem.type === 'batch') {
+        await operationsData.saveBatch(updatedFormData);
+      } else if (scannedItem.type === 'blank') {
+        await operationsData.saveBlank(updatedFormData);
       }
+      await fetchItemData(scannedItem.id);
+      setIsEditModalOpen(false);
     } catch (error) {
       console.error('Failed to save item:', error);
       throw error;
