@@ -120,20 +120,14 @@ export const QRScanner = ({ open, onOpenChange }: QRScannerProps) => {
   };
 
   const handleSaveItem = async (updatedFormData: any) => {
-    try {
-      if (scannedItem.type === 'bin') {
-        await operationsData.saveBin(updatedFormData);
-      } else if (scannedItem.type === 'batch') {
-        await operationsData.saveBatch(updatedFormData);
-      } else if (scannedItem.type === 'blank') {
-        await operationsData.saveBlank(updatedFormData);
-      }
-      await fetchItemData(scannedItem.id);
-      setIsEditModalOpen(false);
-    } catch (error) {
-      console.error('Failed to save item:', error);
-      throw error;
+    if (scannedItem.type === 'bin') {
+      await operationsData.handleBinSave(updatedFormData);
+    } else if (scannedItem.type === 'batch') {
+      await operationsData.handleBatchSave(updatedFormData);
+    } else if (scannedItem.type === 'blank') {
+      await operationsData.handleBlankSave(updatedFormData);
     }
+    await fetchItemData(scannedItem.id);
   };
 
   const handleEditModalClose = async (open: boolean) => {
