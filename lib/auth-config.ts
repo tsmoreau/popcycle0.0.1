@@ -11,6 +11,7 @@ const getBaseUrl = () => {
 
 export const authOptions: AuthOptions = {
   secret: process.env.NEXTAUTH_SECRET,
+  useSecureCookies: true,
   providers: [
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID!.trim(),
