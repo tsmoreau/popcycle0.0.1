@@ -346,9 +346,9 @@ export const QRScanner = ({ open, onOpenChange }: QRScannerProps) => {
         </button>
         
         <DialogHeader className="">
-          <DialogTitle className="flex items-center gap-2 pr-8">
+          <DialogTitle className="flex mx-auto items-center gap-2">
             <Scan className="h-5 w-5 text-pop-green" />
-            QR Code Scanner
+            QR Scanner
           </DialogTitle>
         
         </DialogHeader>
@@ -404,7 +404,7 @@ export const QRScanner = ({ open, onOpenChange }: QRScannerProps) => {
 
             {/* Queue icons on right side - now clickable pills */}
             {queueActive && queuedItems.length > 0 && (
-              <div className="absolute -right-2 top-2 flex flex-col gap-1 max-h-full overflow-y-auto">
+              <div className="absolute -right-2 top-2 flex flex-col gap-1 max-h-full overflow-y-auto z-50">
                 {queuedItems.map((item, index) => (
                   <button
                     key={`${item.id}-${index}`}
@@ -448,7 +448,7 @@ export const QRScanner = ({ open, onOpenChange }: QRScannerProps) => {
 
               {/* Queue Controls Section - Full Width above scanned items */}
               {scannedItem && !scannedItem.error && (
-                <div className="pb-3">
+                <div className="">
                   {!queueActive ? (
                     /* Start queue button - only show if we have a valid item */
                     scannedItem.type && (
@@ -475,7 +475,9 @@ export const QRScanner = ({ open, onOpenChange }: QRScannerProps) => {
                 </div>
               )}
 
-              <h3 className="text-sm font-medium text-gray-900">Active Item</h3>
+              <div className="flex justify-center">
+                <span className="text-sm font-medium text-gray-900">Active Item:</span>
+              </div>
 
               {/* Active item display - show only the current scanned item */}
               {scannedItem && !isLoadingItem && (
