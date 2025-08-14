@@ -114,6 +114,9 @@ export const QRScanner = ({ open, onOpenChange }: QRScannerProps) => {
   const handleEditItem = () => {
     if (!scannedItem) return;
     
+    console.log('scannedItem structure:', JSON.stringify(scannedItem, null, 2));
+    console.log('scannedItem keys:', Object.keys(scannedItem));
+    
     const config = getEditableFieldsForItem(scannedItem);
     if (config) {
       setEditConfig(config);
