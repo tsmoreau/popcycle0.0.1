@@ -394,12 +394,19 @@ export const QRScanner = ({ open, onOpenChange }: QRScannerProps) => {
                   <div className="absolute top-0 right-0 w-4 h-4 border-t-2 border-r-2 border-pop-green"></div>
                   <div className="absolute bottom-0 left-0 w-4 h-4 border-b-2 border-l-2 border-pop-green"></div>
                   <div className="absolute bottom-0 right-0 w-4 h-4 border-b-2 border-r-2 border-pop-green"></div>
-                  
-                  {/* Scanning indicator in bottom corner */}
-                  <div className="absolute bottom-2 right-2">
-                    <div className="bg-pop-green/90 text-white text-xs px-2 py-1 rounded">
-                      Scanning...
-                    </div>
+                </div>
+              )}
+              
+              {/* Queue Active indicator in upper left corner */}
+              {queueActive && (
+                <div className="absolute top-2 left-2 z-40">
+                  <div className="flex items-center gap-2 bg-pop-green/90 px-2 py-1 rounded text-white">
+                    <span className="text-xs font-medium">
+                      {queueType.charAt(0).toUpperCase() + queueType.slice(1)} Queue
+                    </span>
+                    <span className="text-xs bg-white text-pop-green px-2 py-1 rounded">
+                      {queuedItems.length}
+                    </span>
                   </div>
                 </div>
               )}
@@ -426,20 +433,6 @@ export const QRScanner = ({ open, onOpenChange }: QRScannerProps) => {
           {/* Scanned item information */}
           {(lastScan || isLoadingItem || scannedItem) && (
             <div className="pt-4 border-t space-y-3">
-              <div className="flex items-center justify-between">
-                
-                {/* Queue Active indicator - moved here */}
-                {queueActive && (
-                  <div className="flex items-center gap-2 bg-pop-green/10 px-2 py-1 rounded">
-                    <span className="text-xs font-medium text-pop-green">
-                      {queueType.charAt(0).toUpperCase() + queueType.slice(1)} Queue Active
-                    </span>
-                    <span className="text-xs bg-pop-green text-white px-2 py-1 rounded">
-                      {queuedItems.length}
-                    </span>
-                  </div>
-                )}
-              </div>
 
               {/* Loading state */}
               {isLoadingItem && (
