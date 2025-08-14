@@ -11,7 +11,7 @@ import { useEffect, useRef, useState } from "react";
 import QrScanner from "qr-scanner";
 import { useRouter } from "next/navigation";
 import { EditItemModal } from "../ui/EditItemModal";
-import { getEditableFieldsForItem, saveItemData } from "./ItemEditHelper";
+import { getEditableFieldsForItem, getApiEndpointForItem } from "./ItemEditHelper";
 
 interface QRScannerProps {
   open: boolean;
@@ -119,15 +119,27 @@ export const QRScanner = ({ open, onOpenChange }: QRScannerProps) => {
     }
   };
 
-  const handleSaveItem = async (updatedItem: any) => {
+  const handleSaveItem = async (updatedFormData: any) => {
     try {
-      await saveItemData(scannedItem, updatedItem);
-      // Refresh the item data to show the updates
-      await fetchItemData(scannedItem.id);
-      setIsEditModalOpen(false);
+      // Use the exact same pattern as the working data table
+      const endpoint = getApiEndpointForItem(scannedItem);
+      if (!endpoint) throw new Error('Unable to determine API endpoint');
+      
+      const response = await fetch(endpoint, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(updatedFormData)
+      });
+      
+      if (response.ok) {
+        await fetchItemData(scannedItem.id);
+        setIsEditModalOpen(false);
+      } else {
+        throw new Error('Failed to save item');
+      }
     } catch (error) {
       console.error('Failed to save item:', error);
-      throw error; // Let the modal handle the error display
+      throw error;
     }
   };
 
