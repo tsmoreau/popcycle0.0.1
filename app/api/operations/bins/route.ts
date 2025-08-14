@@ -17,15 +17,22 @@ export async function GET() {
 export async function PUT(request: NextRequest) {
   try {
     const bin: Bin = await request.json()
+    console.log('PUT bin request - _id:', bin._id, 'type:', typeof bin._id)
     const db = await getDatabase()
     
     const { _id, ...updateData } = bin
     updateData.updatedAt = new Date()
     
+    console.log('Searching for bin with _id:', _id)
+    const existingBin = await db.collection<Bin>('bins').findOne({ _id })
+    console.log('Found existing bin:', existingBin ? 'YES' : 'NO')
+    
     const result = await db.collection<Bin>('bins').updateOne(
       { _id },
       { $set: updateData }
     )
+    
+    console.log('Update result:', { matchedCount: result.matchedCount })
     
     if (result.matchedCount === 0) {
       return NextResponse.json({ error: 'Bin not found' }, { status: 404 })
