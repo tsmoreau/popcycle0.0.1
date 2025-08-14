@@ -121,14 +121,19 @@ export const QRScanner = ({ open, onOpenChange }: QRScannerProps) => {
 
   const handleSaveItem = async (updatedFormData: any) => {
     try {
-      // Use the exact same pattern as the working data table
       const endpoint = getApiEndpointForItem(scannedItem);
       if (!endpoint) throw new Error('Unable to determine API endpoint');
+      
+      // Add the _id field to the form data
+      const dataWithId = {
+        ...updatedFormData,
+        _id: scannedItem._id
+      };
       
       const response = await fetch(endpoint, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(updatedFormData)
+        body: JSON.stringify(dataWithId)
       });
       
       if (response.ok) {
