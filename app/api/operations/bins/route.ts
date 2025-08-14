@@ -22,8 +22,18 @@ export async function PUT(request: NextRequest) {
     const { _id, ...updateData } = bin
     updateData.updatedAt = new Date()
     
+    // Convert _id to ObjectId if it's a string, or use the string as-is if it's the PopCycle ID
+    let query: any
+    if (typeof _id === 'string' && _id.length === 24 && /^[0-9a-fA-F]{24}$/.test(_id)) {
+      // If it looks like a MongoDB ObjectId, convert it
+      query = { _id: new ObjectId(_id) }
+    } else {
+      // Otherwise, assume it's the PopCycle ID field
+      query = { _id }
+    }
+    
     const result = await db.collection<Bin>('bins').updateOne(
-      { _id },
+      query,
       { $set: updateData }
     )
     

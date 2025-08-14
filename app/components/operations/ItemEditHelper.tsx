@@ -50,12 +50,18 @@ export async function saveItemData(item: any, updatedData: any): Promise<void> {
     throw new Error('Unable to determine API endpoint for this item type')
   }
 
+  // Ensure we include the _id field for the update
+  const dataToSend = {
+    ...updatedData,
+    _id: item._id || item.id // Use _id if available, fallback to id
+  }
+
   const response = await fetch(endpoint, {
     method: 'PUT',
     headers: {
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify(updatedData),
+    body: JSON.stringify(dataToSend),
   })
 
   if (!response.ok) {
