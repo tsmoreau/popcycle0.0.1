@@ -168,7 +168,7 @@ export function EditItemModal<T extends Record<string, any>>({
 
   return (
     <Dialog open={isOpen} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-2xl max-h-[80vh] overflow-hidden flex flex-col">
+      <DialogContent className="max-w-2xl h-[90vh] overflow-hidden flex flex-col">
         <DialogHeader>
           <DialogTitle className="flex items-center gap-2">
             <Edit2 className="h-5 w-5" />
@@ -179,7 +179,7 @@ export function EditItemModal<T extends Record<string, any>>({
           </DialogDescription>
         </DialogHeader>
         
-        <div className="space-y-4 mt-4 max-h-96 overflow-y-auto flex-1">
+        <div className="space-y-4 mt-4 overflow-y-auto flex-1">
           {editableFields?.map(field => {
             const value = editFormData[field.key as string]
             return (
