@@ -153,9 +153,9 @@ function AuthButtonContent() {
                 onClick={async () => {
                   setIsSigningIn(true)
                   try {
-                    // Force development environment URL
-                    const devUrl = 'https://37ee3298-feeb-466d-b740-9cb9625b8c09-00-226i2ijuc5mhx.worf.replit.dev' + window.location.pathname
-                    await signIn('google', { callbackUrl: devUrl })
+                    // Use current domain + path for callback URL
+                    const callbackUrl = window.location.origin + window.location.pathname
+                    await signIn('google', { callbackUrl })
                   } catch (error) {
                     console.error('Sign in error:', error)
                   } finally {
