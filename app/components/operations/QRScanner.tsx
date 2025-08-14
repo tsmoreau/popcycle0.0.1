@@ -132,6 +132,15 @@ export const QRScanner = ({ open, onOpenChange }: QRScannerProps) => {
     return () => Promise.resolve();
   };
 
+  const handleSaveWithRefresh = async (formData: any) => {
+    console.log('handleSaveWithRefresh - scannedItem:', scannedItem);
+    console.log('handleSaveWithRefresh - formData:', formData);
+    
+    const saveHandler = getSaveHandler();
+    await saveHandler(formData);
+    await fetchItemData(scannedItem.id);
+  };
+
   const handleEditModalClose = async (open: boolean) => {
     setIsEditModalOpen(open);
     // Refresh data when modal closes to ensure we have latest changes
@@ -651,7 +660,7 @@ export const QRScanner = ({ open, onOpenChange }: QRScannerProps) => {
           editableFields={editConfig.fields}
           isOpen={isEditModalOpen}
           onOpenChange={handleEditModalClose}
-          onSave={getSaveHandler()}
+          onSave={handleSaveWithRefresh}
           title={editConfig.itemType}
           isLoading={isLoadingItem}
         />
