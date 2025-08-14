@@ -43,31 +43,28 @@ export function getApiEndpointForItem(item: any): string | null {
   }
 }
 
-// Helper to create save function
+// Helper to create save function - EXACT same pattern as useOperationsData.tsx
 export async function saveItemData(item: any, updatedData: any): Promise<void> {
   const endpoint = getApiEndpointForItem(item)
   if (!endpoint) {
     throw new Error('Unable to determine API endpoint for this item type')
   }
 
-  // Follow the same pattern as the working data table - merge updated data with original item
-  const dataToSend = {
+  // Use EXACT same pattern as handleBinSave in useOperationsData.tsx
+  const finalItem = {
     ...item,
     ...updatedData
   }
 
   const response = await fetch(endpoint, {
     method: 'PUT',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(dataToSend),
-  })
-
-  if (!response.ok) {
-    const errorText = await response.text()
-    throw new Error(`Failed to save item: ${response.status} ${errorText}`)
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(finalItem)
+  });
+  
+  if (response.ok) {
+    return response.json()
+  } else {
+    throw new Error('Failed to save item');
   }
-
-  return response.json()
 }
