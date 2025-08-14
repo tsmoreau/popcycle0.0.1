@@ -1,4 +1,4 @@
-import { Camera, Scan, Package, Settings, Archive, Truck, AlertCircle, X } from "lucide-react";
+import { Camera, Scan, Package, Settings, Archive, Truck, AlertCircle, X, Edit2 } from "lucide-react";
 import { Button } from "../ui/button";
 import {
   Dialog,
@@ -10,6 +10,8 @@ import {
 import { useEffect, useRef, useState } from "react";
 import QrScanner from "qr-scanner";
 import { useRouter } from "next/navigation";
+import { EditItemModal } from "../ui/EditItemModal";
+import { getEditableFieldsForItem, saveItemData } from "./ItemEditHelper";
 
 interface QRScannerProps {
   open: boolean;
@@ -33,6 +35,10 @@ export const QRScanner = ({ open, onOpenChange }: QRScannerProps) => {
   const [queueType, setQueueType] = useState<string>('');
   const [queuedItems, setQueuedItems] = useState<any[]>([]);
   const [lastQueuedItemId, setLastQueuedItemId] = useState<string>('');
+  
+  // Edit modal state
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [editConfig, setEditConfig] = useState<{ fields: any[], itemType: string } | null>(null);
 
 
 
@@ -100,6 +106,29 @@ export const QRScanner = ({ open, onOpenChange }: QRScannerProps) => {
     setLastQueuedItemId('');
     
     console.log('Queue stopped - all state cleared');
+  };
+
+  // Edit functionality handlers
+  const handleEditItem = () => {
+    if (!scannedItem) return;
+    
+    const config = getEditableFieldsForItem(scannedItem);
+    if (config) {
+      setEditConfig(config);
+      setIsEditModalOpen(true);
+    }
+  };
+
+  const handleSaveItem = async (updatedItem: any) => {
+    try {
+      await saveItemData(scannedItem, updatedItem);
+      // Refresh the item data to show the updates
+      await fetchItemData(scannedItem.id);
+      setIsEditModalOpen(false);
+    } catch (error) {
+      console.error('Failed to save item:', error);
+      throw error; // Let the modal handle the error display
+    }
   };
 
   // Use useEffect to handle queue additions when scannedItem changes
@@ -576,17 +605,29 @@ export const QRScanner = ({ open, onOpenChange }: QRScannerProps) => {
                         </div>
                       )}
 
-                      {/* Action button to view full details */}
-                      <Button
-                        size="sm"
-                        className="w-full bg-pop-green hover:bg-pop-green/90"
-                        onClick={() => {
-                          onOpenChange(false);
-                          router.push(`/track/${scannedItem.id}`);
-                        }}
-                      >
-                        View Full Details
-                      </Button>
+                      {/* Action buttons */}
+                      <div className="space-y-2">
+                        <Button
+                          size="sm"
+                          className="w-full bg-pop-green hover:bg-pop-green/90"
+                          onClick={handleEditItem}
+                          disabled={!getEditableFieldsForItem(scannedItem)}
+                        >
+                          <Edit2 className="h-4 w-4 mr-2" />
+                          Edit Details
+                        </Button>
+                        <Button
+                          size="sm"
+                          variant="outline"
+                          className="w-full"
+                          onClick={() => {
+                            onOpenChange(false);
+                            router.push(`/track/${scannedItem.id}`);
+                          }}
+                        >
+                          View Full Details
+                        </Button>
+                      </div>
                     </div>
                   )}
                 </div>
@@ -595,6 +636,19 @@ export const QRScanner = ({ open, onOpenChange }: QRScannerProps) => {
           )}
         </div>
       </DialogContent>
+      
+      {/* Edit Modal */}
+      {editConfig && (
+        <EditItemModal
+          item={scannedItem}
+          editableFields={editConfig.fields}
+          isOpen={isEditModalOpen}
+          onOpenChange={setIsEditModalOpen}
+          onSave={handleSaveItem}
+          title={editConfig.itemType}
+          isLoading={isLoadingItem}
+        />
+      )}
     </Dialog>
   );
 };
