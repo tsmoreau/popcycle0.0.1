@@ -354,55 +354,58 @@ export const QRScanner = ({ open, onOpenChange }: QRScannerProps) => {
         </DialogHeader>
         <div className="space-y-4 ">
           
-          {/* Camera feed with queue icons */}
-          <div className="relative aspect-square bg-gray-100 rounded-lg border-2 border-dashed border-gray-300 overflow-hidden">
-            {/* Always render video element so ref is available */}
-            <video
-              ref={videoRef}
-              className="w-full h-full object-cover rounded-lg"
-              style={{ display: isScanning ? 'block' : 'none' }}
-              autoPlay
-              playsInline
-              muted
-            />
-            
-            {/* Show overlays based on state */}
-            {cameraError ? (
-              <div className="absolute inset-0 flex items-center justify-center text-center p-4 bg-white">
-                <div>
-                  <AlertCircle className="h-12 w-12 text-red-400 mx-auto mb-2" />
-                  <p className="text-sm text-red-600 font-medium">Camera Error</p>
-                  <p className="text-xs text-red-500 mt-1">{cameraError}</p>
-                </div>
-              </div>
-            ) : !isScanning && (
-              <div className="absolute inset-0 flex items-center justify-center text-center bg-white">
-                <div>
-                  <Camera className="h-12 w-12 text-gray-400 mx-auto mb-2" />
-                  <p className="text-sm text-gray-500">Initializing camera...</p>
-                  <p className="text-xs text-gray-400 mt-1">Check browser console for debug info</p>
-                </div>
-              </div>
-            )}
-            
-            {/* Scanning overlay - only show corners, not blocking overlay */}
-            {isScanning && (
-              <div className="absolute inset-4 border-2 border-pop-green rounded-lg pointer-events-none">
-                <div className="absolute top-0 left-0 w-4 h-4 border-t-2 border-l-2 border-pop-green"></div>
-                <div className="absolute top-0 right-0 w-4 h-4 border-t-2 border-r-2 border-pop-green"></div>
-                <div className="absolute bottom-0 left-0 w-4 h-4 border-b-2 border-l-2 border-pop-green"></div>
-                <div className="absolute bottom-0 right-0 w-4 h-4 border-b-2 border-r-2 border-pop-green"></div>
-                
-                {/* Scanning indicator in bottom corner */}
-                <div className="absolute bottom-2 right-2">
-                  <div className="bg-pop-green/90 text-white text-xs px-2 py-1 rounded">
-                    Scanning...
+          {/* Camera feed container with pills positioned outside */}
+          <div className="relative">
+            {/* Video container */}
+            <div className="relative aspect-square bg-gray-100 rounded-lg border-2 border-dashed border-gray-300 overflow-hidden">
+              {/* Always render video element so ref is available */}
+              <video
+                ref={videoRef}
+                className="w-full h-full object-cover rounded-lg"
+                style={{ display: isScanning ? 'block' : 'none' }}
+                autoPlay
+                playsInline
+                muted
+              />
+              
+              {/* Show overlays based on state */}
+              {cameraError ? (
+                <div className="absolute inset-0 flex items-center justify-center text-center p-4 bg-white">
+                  <div>
+                    <AlertCircle className="h-12 w-12 text-red-400 mx-auto mb-2" />
+                    <p className="text-sm text-red-600 font-medium">Camera Error</p>
+                    <p className="text-xs text-red-500 mt-1">{cameraError}</p>
                   </div>
                 </div>
-              </div>
-            )}
-
-            {/* Queue icons on right side - now clickable pills */}
+              ) : !isScanning && (
+                <div className="absolute inset-0 flex items-center justify-center text-center bg-white">
+                  <div>
+                    <Camera className="h-12 w-12 text-gray-400 mx-auto mb-2" />
+                    <p className="text-sm text-gray-500">Initializing camera...</p>
+                    <p className="text-xs text-gray-400 mt-1">Check browser console for debug info</p>
+                  </div>
+                </div>
+              )}
+              
+              {/* Scanning overlay - only show corners, not blocking overlay */}
+              {isScanning && (
+                <div className="absolute inset-4 border-2 border-pop-green rounded-lg pointer-events-none">
+                  <div className="absolute top-0 left-0 w-4 h-4 border-t-2 border-l-2 border-pop-green"></div>
+                  <div className="absolute top-0 right-0 w-4 h-4 border-t-2 border-r-2 border-pop-green"></div>
+                  <div className="absolute bottom-0 left-0 w-4 h-4 border-b-2 border-l-2 border-pop-green"></div>
+                  <div className="absolute bottom-0 right-0 w-4 h-4 border-b-2 border-r-2 border-pop-green"></div>
+                  
+                  {/* Scanning indicator in bottom corner */}
+                  <div className="absolute bottom-2 right-2">
+                    <div className="bg-pop-green/90 text-white text-xs px-2 py-1 rounded">
+                      Scanning...
+                    </div>
+                  </div>
+                </div>
+              )}
+            </div>
+            
+            {/* Queue icons positioned outside video container */}
             {queueActive && queuedItems.length > 0 && (
               <div className="absolute -right-2 top-2 flex flex-col gap-1 max-h-full overflow-y-auto z-50">
                 {queuedItems.map((item, index) => (
