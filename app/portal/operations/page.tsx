@@ -5,30 +5,12 @@ import {
   Package,
   Truck,
   Settings,
-  AlertCircle,
   Calendar,
   BarChart3,
   Users,
   MapPin,
-  Scale,
-  Camera,
-  Zap,
-  QrCode,
-  CheckCircle,
-  Clock,
-  ArrowRight,
-  Scan,
-  Droplets,
-  Scissors,
-  Zap as ShredIcon,
-  Wind,
-  Archive,
-  ChevronDown,
   Maximize,
-  Minimize,
   X,
-  Monitor,
-  Activity,
   Route,
 } from "lucide-react";
 import { Button } from "../../components/ui/button";
@@ -66,22 +48,11 @@ import {
 import {
   Dialog,
   DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
 } from "../../components/ui/dialog";
-import { DataTable, Column, EditableField } from "../../components/ui/data-table";
 import { Bin, Batch, Order, Blank } from "../../../lib/schemas";
-import { RoughWashStationCard } from "../../components/operations/stations/RoughWashStationCard";
-import { SortStationCard } from "../../components/operations/stations/SortStationCard";
-import { ShredStationCard } from "../../components/operations/stations/ShredStationCard";
 
 import { useOperationsData } from "../../../hooks/useOperationsData";
-import { QRScanner } from "../../components/operations/QRScanner";
 import { OperationsOverview } from "../../components/operations/OperationsOverview";
-import { ProcessingWorkflow } from "../../components/operations/ProcessingWorkflow";
-import { CollectionsWorkflow } from "../../components/operations/CollectionsWorkflow";
 import {
   getStatusBadge,
   getProcessingStatusBadge,
