@@ -13,6 +13,7 @@ import { useRouter } from "next/navigation";
 import { EditItemModal } from "../ui/EditItemModal";
 import { getEditableFieldsForItem, getApiEndpointForItem } from "./ItemEditHelper";
 import { useOperationsData } from "../../../hooks/useOperationsData";
+import { Bin, Batch, Blank } from "../../../lib/schemas";
 
 interface QRScannerProps {
   open: boolean;
@@ -327,7 +328,19 @@ export const QRScanner = ({ open, onOpenChange }: QRScannerProps) => {
     }
   };
 
-
+  // Union type handler for EditItemModal onSave prop
+  const handleItemSave = async (item: Bin | Batch | Blank) => {
+    switch (scannedItem?.type) {
+      case 'bin':
+        return operationsData.handleBinSave(item as Bin);
+      case 'batch':
+        return operationsData.handleBatchSave(item as Batch);
+      case 'blank':
+        return operationsData.handleBlankSave(item as Blank);
+      default:
+        throw new Error(`Unknown item type: ${scannedItem?.type}`);
+    }
+  };
 
   const handleManualScan = () => {
     if (qrScannerRef.current && !isScanning) {
@@ -659,9 +672,7 @@ export const QRScanner = ({ open, onOpenChange }: QRScannerProps) => {
           editableFields={editConfig.fields}
           isOpen={isEditModalOpen}
           onOpenChange={handleEditModalClose}
-          onSave={scannedItem.type === 'bin' ? operationsData.handleBinSave : 
-                scannedItem.type === 'batch' ? operationsData.handleBatchSave : 
-                operationsData.handleBlankSave}
+          onSave={handleItemSave}
           title={editConfig.itemType}
           isLoading={isLoadingItem}
         />
