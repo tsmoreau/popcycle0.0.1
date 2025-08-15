@@ -5,12 +5,30 @@ import {
   Package,
   Truck,
   Settings,
+  AlertCircle,
   Calendar,
   BarChart3,
   Users,
   MapPin,
+  Scale,
+  Camera,
+  Zap,
+  QrCode,
+  CheckCircle,
+  Clock,
+  ArrowRight,
+  Scan,
+  Droplets,
+  Scissors,
+  Zap as ShredIcon,
+  Wind,
+  Archive,
+  ChevronDown,
   Maximize,
+  Minimize,
   X,
+  Monitor,
+  Activity,
   Route,
 } from "lucide-react";
 import { Button } from "../../components/ui/button";
@@ -48,11 +66,22 @@ import {
 import {
   Dialog,
   DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
 } from "../../components/ui/dialog";
+import { DataTable, Column, EditableField } from "../../components/ui/data-table";
 import { Bin, Batch, Order, Blank } from "../../../lib/schemas";
+import { RoughWashStationCard } from "../../components/operations/stations/RoughWashStationCard";
+import { SortStationCard } from "../../components/operations/stations/SortStationCard";
+import { ShredStationCard } from "../../components/operations/stations/ShredStationCard";
 
 import { useOperationsData } from "../../../hooks/useOperationsData";
+import { QRScanner } from "../../components/operations/QRScanner";
 import { OperationsOverview } from "../../components/operations/OperationsOverview";
+import { ProcessingWorkflow } from "../../components/operations/ProcessingWorkflow";
+import { CollectionsWorkflow } from "../../components/operations/CollectionsWorkflow";
 import {
   getStatusBadge,
   getProcessingStatusBadge,
@@ -80,7 +109,13 @@ import { InventoryTab } from "../../components/operations/tabs/InventoryTab";
 
 export default function OperationsPage() {
   const [activeTab, setActiveTab] = useState("collections");
+  const [selectedBin, setSelectedBin] = useState(null);
+  const [showScanModal, setShowScanModal] = useState(false);
   const [isLogisticsFullscreen, setIsLogisticsFullscreen] = useState(false);
+
+  const [showRoughWashFullscreen, setShowRoughWashFullscreen] = useState(false);
+  const [showSortFullscreen, setShowSortFullscreen] = useState(false);
+  const [showShredFullscreen, setShowShredFullscreen] = useState(false);
 
   // Use the extracted data hook
   const {
@@ -118,9 +153,330 @@ export default function OperationsPage() {
   const [fulfillmentSortDirection, setFulfillmentSortDirection] = useState<"asc" | "desc">("asc");
 
   // Table configurations imported from separate file
-  // All modal functions moved to individual tab components
+  // Modal render functions
+  const renderCollectionsModal = (bin: any) => (
+    <>
+      <DialogHeader>
+        <DialogTitle>Bin Details - {bin.id}</DialogTitle>
+        <DialogDescription>
+          Universal scan modal - same interface as QR code scanning
+        </DialogDescription>
+      </DialogHeader>
+      <div className="space-y-4">
+        <div className="grid grid-cols-2 gap-4">
+          <div>
+            <Label className="text-sm font-medium text-gray-700">Organization</Label>
+            <p className="text-sm">{bin.orgName}</p>
+          </div>
+          <div>
+            <Label className="text-sm font-medium text-gray-700">Location</Label>
+            <p className="text-sm">{bin.location}</p>
+          </div>
+        </div>
+        <div className="grid grid-cols-2 gap-4">
+          <div>
+            <Label className="text-sm font-medium text-gray-700">Current Status</Label>
+            <div className="mt-1">{getStatusBadge(bin.status)}</div>
+          </div>
+          <div>
+            <Label className="text-sm font-medium text-gray-700">Capacity</Label>
+            <p className="text-sm">{bin.currentLevel}% of {bin.capacity}kg</p>
+          </div>
+        </div>
+        <div className="grid grid-cols-2 gap-4">
+          <div>
+            <Label className="text-sm font-medium text-gray-700">Type</Label>
+            <p className="text-sm capitalize">{bin.type}</p>
+          </div>
+          <div>
+            <Label className="text-sm font-medium text-gray-700">QR Code</Label>
+            <p className="text-sm font-mono">{bin.qrCode}</p>
+          </div>
+        </div>
+        {bin.adoptedBy && (
+          <div>
+            <Label className="text-sm font-medium text-gray-700">Adopted By</Label>
+            <p className="text-sm">{bin.adoptedBy}</p>
+          </div>
+        )}
+        <div className="pt-4 border-t">
+          <div className="space-y-2">
+            {bin.status === "Ready for Pickup" && (
+              <Button className="w-full bg-pop-green hover:bg-pop-green/90">
+                <CheckCircle className="h-4 w-4 mr-2" />
+                Check-in Bin
+              </Button>
+            )}
+            {bin.status === "Collected" && (
+              <Button className="w-full bg-pop-blue hover:bg-pop-blue/90">
+                <ArrowRight className="h-4 w-4 mr-2" />
+                Start Rough Wash
+              </Button>
+            )}
+            {bin.status === "Awaiting Rough Wash" && (
+              <Button className="w-full bg-pop-red hover:bg-pop-red/90">
+                <Droplets className="h-4 w-4 mr-2" />
+                Begin Processing
+              </Button>
+            )}
+          </div>
+        </div>
+      </div>
+    </>
+  );
 
-  // Badge functions now imported from StatusBadges component
+  const renderProcessingModal = (batch: any) => (
+    <>
+      <DialogHeader>
+        <DialogTitle>Batch Details - {batch.id}</DialogTitle>
+        <DialogDescription>
+          Universal scan modal - same interface as QR code scanning
+        </DialogDescription>
+      </DialogHeader>
+      <div className="space-y-4">
+        <div className="grid grid-cols-2 gap-4">
+          <div>
+            <Label className="text-sm font-medium text-gray-700">Organization</Label>
+            <p className="text-sm">{batch.orgName}</p>
+          </div>
+          <div>
+            <Label className="text-sm font-medium text-gray-700">Collection Date</Label>
+            <p className="text-sm">{new Date(batch.collectionDate).toLocaleDateString()}</p>
+          </div>
+        </div>
+        <div className="grid grid-cols-2 gap-4">
+          <div>
+            <Label className="text-sm font-medium text-gray-700">Weight</Label>
+            <p className="text-sm">{batch.weight} lbs</p>
+          </div>
+          <div>
+            <Label className="text-sm font-medium text-gray-700">Material Type</Label>
+            <div className="mt-1">{getMaterialTypeBadge(batch.materialType)}</div>
+          </div>
+        </div>
+        <div className="grid grid-cols-2 gap-4">
+          <div>
+            <Label className="text-sm font-medium text-gray-700">Current Status</Label>
+            <div className="mt-1">{getProcessingStatusBadge(batch.status)}</div>
+          </div>
+          <div>
+            <Label className="text-sm font-medium text-gray-700">Collected By</Label>
+            <p className="text-sm">{batch.collectedBy}</p>
+          </div>
+        </div>
+        <div className="grid grid-cols-2 gap-4">
+          <div>
+            <Label className="text-sm font-medium text-gray-700">Source Bins</Label>
+            {batch.binIds && batch.binIds.length > 0 ? (
+              <div className="space-y-1">
+                {batch.binIds.map((binId: string, index: number) => (
+                  <p key={index} className="text-sm font-mono">{binId}</p>
+                ))}
+              </div>
+            ) : (
+              <p className="text-sm text-gray-500">No bins assigned</p>
+            )}
+          </div>
+          <div>
+            <Label className="text-sm font-medium text-gray-700">QR Code</Label>
+            <p className="text-sm font-mono">{batch.qrCode}</p>
+          </div>
+        </div>
+        {batch.notes && (
+          <div>
+            <Label className="text-sm font-medium text-gray-700">Processing Notes</Label>
+            <p className="text-sm">{batch.notes}</p>
+          </div>
+        )}
+        <div className="pt-4 border-t">
+          <div className="space-y-2">
+            {batch.status === "collected" && (
+              <Button className="w-full bg-pop-blue hover:bg-pop-blue/90">
+                <Droplets className="h-4 w-4 mr-2" />
+                Start Rough Wash
+              </Button>
+            )}
+            {batch.status === "sorted" && (
+              <Button className="w-full bg-pop-green hover:bg-pop-green/90">
+                <Scissors className="h-4 w-4 mr-2" />
+                Begin Sorting
+              </Button>
+            )}
+            {batch.status === "cleaned" && (
+              <Button className="w-full bg-pop-red hover:bg-pop-red/90">
+                <ShredIcon className="h-4 w-4 mr-2" />
+                Start Shredding
+              </Button>
+            )}
+            {batch.status === "processed" && (
+              <div className="text-center">
+                <Badge className="bg-green-500 text-white">
+                  <CheckCircle className="h-3 w-3 mr-1" />
+                  Processing Complete
+                </Badge>
+                <Button className="w-full mt-2 bg-pop-black hover:bg-pop-black/90 text-white">
+                  <Archive className="h-4 w-4 mr-2" />
+                  Create Inventory Items
+                </Button>
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
+    </>
+  );
+
+  const renderFulfillmentModal = (order: any) => (
+    <>
+      <DialogHeader>
+        <DialogTitle>Order Details - {order.id}</DialogTitle>
+        <DialogDescription>
+          Customer order tracking and maker assignment
+        </DialogDescription>
+      </DialogHeader>
+      <div className="space-y-4">
+        <div className="grid grid-cols-2 gap-4">
+          <div>
+            <Label className="text-sm font-medium text-gray-700">Customer</Label>
+            <p className="text-sm">{order.customerName}</p>
+          </div>
+          <div>
+            <Label className="text-sm font-medium text-gray-700">Item Type</Label>
+            <p className="text-sm">{order.itemType}</p>
+          </div>
+        </div>
+        <div className="grid grid-cols-2 gap-4">
+          <div>
+            <Label className="text-sm font-medium text-gray-700">Quantity</Label>
+            <p className="text-sm">{order.quantity} units</p>
+          </div>
+          <div>
+            <Label className="text-sm font-medium text-gray-700">Due Date</Label>
+            <p className="text-sm">{order.dueDate}</p>
+          </div>
+        </div>
+        <div className="grid grid-cols-2 gap-4">
+          <div>
+            <Label className="text-sm font-medium text-gray-700">Status</Label>
+            <div className="mt-1">{getFulfillmentStatusBadge(order.status)}</div>
+          </div>
+          <div>
+            <Label className="text-sm font-medium text-gray-700">Priority</Label>
+            <p className="text-sm capitalize">{order.priority}</p>
+          </div>
+        </div>
+        <div className="grid grid-cols-2 gap-4">
+          <div>
+            <Label className="text-sm font-medium text-gray-700">Assigned Maker</Label>
+            <p className="text-sm">{order.assignedMaker || "Unassigned"}</p>
+          </div>
+          <div>
+            <Label className="text-sm font-medium text-gray-700">Batch ID</Label>
+            <p className="text-sm font-mono">{order.batchId}</p>
+          </div>
+        </div>
+        {order.notes && (
+          <div>
+            <Label className="text-sm font-medium text-gray-700">Notes</Label>
+            <p className="text-sm text-gray-600">{order.notes}</p>
+          </div>
+        )}
+        <div className="flex gap-2 pt-2">
+          {order.status === "ready" && (
+            <Button className="bg-pop-green hover:bg-pop-green/90">
+              Assign Maker
+            </Button>
+          )}
+          {order.status === "assembly" && (
+            <Button className="bg-pop-blue hover:bg-pop-blue/90">
+              Mark Complete
+            </Button>
+          )}
+          {order.status === "urgent" && (
+            <Button className="bg-pop-red hover:bg-pop-red/90">
+              Prioritize
+            </Button>
+          )}
+        </div>
+      </div>
+    </>
+  );
+
+  // Badge helper functions
+
+  const getStatusBadge = (status: string) => {
+    switch (status) {
+      case "Ready for Pickup":
+        return <Badge className="bg-pop-red text-white">Ready for Pickup</Badge>;
+      case "Collected":
+        return <Badge className="bg-pop-blue text-white">Collected</Badge>;
+      case "Awaiting Rough Wash":
+        return <Badge className="bg-pop-green text-white">Awaiting Wash</Badge>;
+      default:
+        return <Badge variant="outline">{status}</Badge>;
+    }
+  };
+
+  const getProcessingStatusBadge = (status: string) => {
+    switch (status) {
+      case "collected":
+        return <Badge className="bg-gray-500 text-white"><Package className="h-3 w-3 mr-1" />Collected</Badge>;
+      case "rough_wash":
+        return <Badge className="bg-pop-blue text-white"><Droplets className="h-3 w-3 mr-1" />Rough Wash</Badge>;
+      case "sort":
+        return <Badge className="bg-pop-green text-white"><Scissors className="h-3 w-3 mr-1" />Sort</Badge>;
+      case "first_dry":
+        return <Badge className="bg-yellow-500 text-white"><Wind className="h-3 w-3 mr-1" />First Dry</Badge>;
+      case "shred":
+        return <Badge className="bg-orange-500 text-white"><ShredIcon className="h-3 w-3 mr-1" />Shred</Badge>;
+      case "fine_wash":
+        return <Badge className="bg-blue-600 text-white"><Droplets className="h-3 w-3 mr-1" />Fine Wash</Badge>;
+      case "second_dry":
+        return <Badge className="bg-yellow-600 text-white"><Wind className="h-3 w-3 mr-1" />Second Dry</Badge>;
+      case "press":
+        return <Badge className="bg-purple-500 text-white"><Archive className="h-3 w-3 mr-1" />Press</Badge>;
+      case "weigh_photo":
+        return <Badge className="bg-indigo-500 text-white"><Scale className="h-3 w-3 mr-1" />Weigh & Photo</Badge>;
+      case "laser_marking":
+        return <Badge className="bg-pop-red text-white"><Zap className="h-3 w-3 mr-1" />Laser Marking</Badge>;
+      case "inventory_creation":
+        return <Badge className="bg-pop-black text-white"><Settings className="h-3 w-3 mr-1" />Inventory Creation</Badge>;
+      default:
+        return <Badge variant="outline">{status}</Badge>;
+    }
+  };
+
+  const getMaterialTypeBadge = (type: string) => {
+    switch (type) {
+      case "HDPE":
+        return <Badge variant="secondary" className="bg-blue-100 text-blue-800">HDPE</Badge>;
+      case "PET":
+        return <Badge variant="secondary" className="bg-green-100 text-green-800">PET</Badge>;
+      case "PP":
+        return <Badge variant="secondary" className="bg-purple-100 text-purple-800">PP</Badge>;
+      case "mixed":
+        return <Badge variant="secondary" className="bg-gray-100 text-gray-800">Mixed</Badge>;
+      default:
+        return <Badge variant="outline">{type}</Badge>;
+    }
+  };
+
+  const getFulfillmentStatusBadge = (status: string) => {
+    switch (status) {
+      case "urgent":
+        return <Badge className="bg-pop-red text-white">Urgent</Badge>;
+      case "assembly":
+        return <Badge className="bg-pop-blue text-white">Assembly</Badge>;
+      case "ready":
+        return <Badge className="bg-pop-green text-white">Ready</Badge>;
+      case "shipping":
+        return <Badge className="bg-orange-500 text-white">Shipping</Badge>;
+      case "shipped":
+        return <Badge className="bg-gray-500 text-white">Shipped</Badge>;
+      default:
+        return <Badge variant="outline">{status}</Badge>;
+    }
+  };
 
   return (
     <div className="space-y-6">

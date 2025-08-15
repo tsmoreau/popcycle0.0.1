@@ -46,13 +46,6 @@ PopCycle is built as a unified Next.js PWA with MongoDB, managing all core opera
 - **Authentication Strategy**: NextAuth handles authentication only (Google Workspace SSO for all users, magic links as backup). All user data stored in MongoDB User schema. Session management via JWT tokens. Configuration migrated to App Router compatible structure with `authOptions` in `lib/auth-config.ts` for proper deployment compatibility.
 - **Dashboard Architecture**: Route-based portal navigation under `/portal/` with color-coded themes for different dashboards: Main, Profile, Admin, Operations, CRM, Partner, and Financial. Operations functions are consolidated into a single page.
 
-### Deployment Architecture
-- **Platform-Agnostic Configuration**: Designed to deploy seamlessly across multiple hosting providers including Replit, Vercel, Railway, Render, and Netlify. Automatic platform detection with intelligent fallbacks for NEXTAUTH_URL configuration.
-- **Environment Variable Validation**: Comprehensive runtime validation for required secrets (NEXTAUTH_SECRET, GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET, MONGODB_URI) with detailed logging for deployment debugging.
-- **Multi-Platform URL Detection**: Automatic detection of hosting platform and URL construction using platform-specific environment variables (VERCEL_URL, RAILWAY_PUBLIC_DOMAIN, RENDER_EXTERNAL_URL, etc.).
-- **Production Readiness**: Enhanced MongoDB connection validation, proper error handling, and debugging capabilities for production deployments.
-- **Required Environment Variables**: All platforms need the same core secrets configured in their respective dashboards: NEXTAUTH_SECRET, GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET, MONGODB_URI. NEXTAUTH_URL can be auto-detected or explicitly set.
-
 ## External Dependencies
 
 - **Database**: MongoDB
