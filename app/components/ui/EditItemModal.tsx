@@ -42,8 +42,8 @@ export function EditItemModal<T extends Record<string, any>>({
     if (item) {
       // Ensure _id is set from id if needed
       const formData = { ...item };
-      if (item.id && !item._id) {
-        formData._id = item.id;
+      if ((item as any).id && !(item as any)._id) {
+        (formData as any)._id = (item as any).id;
       }
       setEditFormData(formData);
     }
