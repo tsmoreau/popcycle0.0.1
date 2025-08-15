@@ -1,16 +1,15 @@
-// Deployment configuration validation utility
-// This helps ensure all required environment variables are set for production deployment
+// Platform-agnostic deployment configuration validation utility
+// Works with Replit, Vercel, Railway, Render, Netlify, and other hosting providers
 
 export interface DeploymentConfig {
   environment: 'development' | 'production';
   nextAuthUrl: string;
   mongodbUri: string;
   port: string;
-  repoInfo: {
-    replId?: string;
-    replSlug?: string;
-    replOwner?: string;
-    deploymentUrl?: string;
+  platform: {
+    name: string;
+    detected: boolean;
+    info: Record<string, any>;
   };
 }
 
@@ -20,18 +19,48 @@ export function validateDeploymentConfig(): DeploymentConfig {
   const environment = (process.env.NODE_ENV as 'development' | 'production') || 'development';
   console.log(`🌍 Environment: ${environment}`);
   
-  // Validate NEXTAUTH_URL with fallbacks
+  // Platform detection and NEXTAUTH_URL validation with multi-platform fallbacks
   let nextAuthUrl = process.env.NEXTAUTH_URL;
+  let detectedPlatform = { name: 'unknown', detected: false, info: {} };
+  
+  // Detect hosting platform
+  if (process.env.VERCEL_URL) {
+    detectedPlatform = { name: 'Vercel', detected: true, info: { url: process.env.VERCEL_URL } };
+  } else if (process.env.RAILWAY_PUBLIC_DOMAIN) {
+    detectedPlatform = { name: 'Railway', detected: true, info: { domain: process.env.RAILWAY_PUBLIC_DOMAIN } };
+  } else if (process.env.RENDER_EXTERNAL_URL) {
+    detectedPlatform = { name: 'Render', detected: true, info: { url: process.env.RENDER_EXTERNAL_URL } };
+  } else if (process.env.NETLIFY_URL) {
+    detectedPlatform = { name: 'Netlify', detected: true, info: { url: process.env.NETLIFY_URL } };
+  } else if (process.env.REPL_SLUG) {
+    detectedPlatform = { name: 'Replit', detected: true, info: { slug: process.env.REPL_SLUG, owner: process.env.REPL_OWNER } };
+  } else if (environment === 'development') {
+    detectedPlatform = { name: 'Development', detected: true, info: { port: process.env.PORT || '3000' } };
+  }
+  
+  console.log(`🚀 Detected platform: ${detectedPlatform.name}`);
   
   if (!nextAuthUrl) {
-    console.warn('⚠️ NEXTAUTH_URL not explicitly set, using fallbacks...');
+    console.warn('⚠️ NEXTAUTH_URL not explicitly set, using platform-specific fallbacks...');
     
-    if (process.env.REPLIT_DEPLOYMENT_URL) {
+    if (process.env.VERCEL_URL) {
+      nextAuthUrl = `https://${process.env.VERCEL_URL}`;
+      console.log(`✅ Using Vercel URL: ${nextAuthUrl}`);
+    } else if (process.env.RAILWAY_PUBLIC_DOMAIN) {
+      nextAuthUrl = `https://${process.env.RAILWAY_PUBLIC_DOMAIN}`;
+      console.log(`✅ Using Railway domain: ${nextAuthUrl}`);
+    } else if (process.env.RENDER_EXTERNAL_URL) {
+      nextAuthUrl = process.env.RENDER_EXTERNAL_URL;
+      console.log(`✅ Using Render URL: ${nextAuthUrl}`);
+    } else if (process.env.NETLIFY_URL) {
+      nextAuthUrl = process.env.NETLIFY_URL;
+      console.log(`✅ Using Netlify URL: ${nextAuthUrl}`);
+    } else if (process.env.REPLIT_DEPLOYMENT_URL) {
       nextAuthUrl = process.env.REPLIT_DEPLOYMENT_URL;
-      console.log(`✅ Using REPLIT_DEPLOYMENT_URL: ${nextAuthUrl}`);
+      console.log(`✅ Using Replit deployment URL: ${nextAuthUrl}`);
     } else if (process.env.REPL_SLUG && process.env.REPL_OWNER) {
       nextAuthUrl = `https://${process.env.REPL_SLUG}.${process.env.REPL_OWNER}.repl.co`;
-      console.log(`✅ Using REPL domain: ${nextAuthUrl}`);
+      console.log(`✅ Using Replit domain: ${nextAuthUrl}`);
     } else if (environment === 'development') {
       nextAuthUrl = 'http://localhost:3000';
       console.log(`✅ Using development fallback: ${nextAuthUrl}`);
@@ -53,27 +82,14 @@ export function validateDeploymentConfig(): DeploymentConfig {
   const port = process.env.PORT || '3000';
   console.log(`✅ Port: ${port}`);
   
-  // Gather Replit environment info
-  const repoInfo = {
-    replId: process.env.REPL_ID,
-    replSlug: process.env.REPL_SLUG,
-    replOwner: process.env.REPL_OWNER,
-    deploymentUrl: process.env.REPLIT_DEPLOYMENT_URL,
-  };
-  
-  console.log('📊 Replit Environment Info:', {
-    replId: repoInfo.replId ? 'present' : 'missing',
-    replSlug: repoInfo.replSlug || 'missing',
-    replOwner: repoInfo.replOwner || 'missing',
-    deploymentUrl: repoInfo.deploymentUrl || 'missing',
-  });
+  console.log('📊 Platform Environment Info:', detectedPlatform.info);
   
   const config: DeploymentConfig = {
     environment,
     nextAuthUrl,
     mongodbUri,
     port,
-    repoInfo,
+    platform: detectedPlatform,
   };
   
   console.log('✅ Deployment configuration validated successfully');
