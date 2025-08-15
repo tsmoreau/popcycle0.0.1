@@ -1,8 +1,20 @@
 import GoogleProvider from 'next-auth/providers/google'
 import type { AuthOptions } from 'next-auth'
 
+// Get the proper base URL for this environment
+const getBaseUrl = () => {
+  if (process.env.NEXTAUTH_URL) return process.env.NEXTAUTH_URL;
+  if (process.env.VERCEL_URL) return `https://${process.env.VERCEL_URL}`;
+  if (process.env.RAILWAY_PUBLIC_DOMAIN) return `https://${process.env.RAILWAY_PUBLIC_DOMAIN}`;
+  if (process.env.RENDER_EXTERNAL_URL) return process.env.RENDER_EXTERNAL_URL;
+  if (process.env.REPLIT_DEPLOYMENT_URL) return process.env.REPLIT_DEPLOYMENT_URL;
+  if (process.env.REPL_SLUG && process.env.REPL_OWNER) {
+    return `https://${process.env.REPL_SLUG}.${process.env.REPL_OWNER}.repl.co`;
+  }
+  return 'http://localhost:3000';
+};
+
 export const authOptions: AuthOptions = {
-  url: process.env.NEXTAUTH_URL,
   secret: process.env.NEXTAUTH_SECRET,
   providers: [
     GoogleProvider({
@@ -60,17 +72,7 @@ export const authOptions: AuthOptions = {
     },
 
     async redirect({ url, baseUrl }) {
-      // Extract the origin from the URL being redirected to (this contains the actual request domain)
-      let actualBaseUrl = baseUrl
-      try {
-        const urlObj = new URL(url)
-        // If the URL has a different origin than baseUrl, use that origin
-        if (urlObj.origin !== baseUrl) {
-          actualBaseUrl = urlObj.origin
-        }
-      } catch (e) {
-        // If URL parsing fails, fall back to baseUrl
-      }
+      const actualBaseUrl = getBaseUrl();
       
       console.log('NextAuth redirect called with url:', url, 'baseUrl:', baseUrl, 'using:', actualBaseUrl)
       
