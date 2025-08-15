@@ -40,8 +40,8 @@ export function validateDeploymentConfig(): DeploymentConfig {
   
   console.log(`🚀 Detected platform: ${detectedPlatform.name}`);
   
-  if (!nextAuthUrl) {
-    console.warn('⚠️ NEXTAUTH_URL not explicitly set, using platform-specific fallbacks...');
+  if (!nextAuthUrl || nextAuthUrl === 'undefined') {
+    console.warn('⚠️ NEXTAUTH_URL not properly set, using platform-specific fallbacks...');
     
     if (process.env.VERCEL_URL) {
       nextAuthUrl = `https://${process.env.VERCEL_URL}`;
@@ -69,6 +69,11 @@ export function validateDeploymentConfig(): DeploymentConfig {
     }
   } else {
     console.log(`✅ NEXTAUTH_URL explicitly set: ${nextAuthUrl}`);
+  }
+  
+  // Validate that the URL is not undefined or contains undefined
+  if (!nextAuthUrl || nextAuthUrl.includes('undefined')) {
+    throw new Error(`Invalid NEXTAUTH_URL detected: ${nextAuthUrl}. Please check your environment variables.`);
   }
   
   // Validate MongoDB URI for production

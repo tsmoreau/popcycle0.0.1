@@ -10,7 +10,7 @@ function validateEnvironmentVariables() {
     NEXTAUTH_SECRET: process.env.NEXTAUTH_SECRET,
     GOOGLE_CLIENT_ID: process.env.GOOGLE_CLIENT_ID,
     GOOGLE_CLIENT_SECRET: process.env.GOOGLE_CLIENT_SECRET,
-    NEXTAUTH_URL: deploymentConfig.nextAuthUrl // Use validated URL from deployment config
+    NEXTAUTH_URL: process.env.NEXTAUTH_URL // Use environment variable directly
   };
   
   const missingVars = [];
