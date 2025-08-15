@@ -1,12 +1,52 @@
 import GoogleProvider from 'next-auth/providers/google'
 import type { AuthOptions } from 'next-auth'
+import { deploymentConfig } from './deployment-config'
+
+// Runtime environment variable validation and debug logging
+function validateEnvironmentVariables() {
+  console.log('=== NEXTAUTH ENVIRONMENT VALIDATION ===');
+  
+  const requiredVars = {
+    NEXTAUTH_SECRET: process.env.NEXTAUTH_SECRET,
+    GOOGLE_CLIENT_ID: process.env.GOOGLE_CLIENT_ID,
+    GOOGLE_CLIENT_SECRET: process.env.GOOGLE_CLIENT_SECRET,
+    NEXTAUTH_URL: deploymentConfig.nextAuthUrl // Use validated URL from deployment config
+  };
+  
+  const missingVars = [];
+  
+  for (const [key, value] of Object.entries(requiredVars)) {
+    if (!value) {
+      missingVars.push(key);
+      console.error(`❌ Missing environment variable: ${key}`);
+    } else {
+      console.log(`✅ ${key}: ${'*'.repeat(Math.min(value.length, 10))}`);
+    }
+  }
+  
+  if (missingVars.length > 0) {
+    const error = `Missing required environment variables: ${missingVars.join(', ')}`;
+    console.error('❌', error);
+    throw new Error(error);
+  }
+  
+  console.log('✅ All required environment variables are present');
+  return requiredVars;
+}
+
+// Validate environment variables at startup
+const envVars = validateEnvironmentVariables();
 
 export const authOptions: AuthOptions = {
-  secret: process.env.NEXTAUTH_SECRET,
+  secret: envVars.NEXTAUTH_SECRET,
+  // Dynamic NEXTAUTH_URL configuration for deployment
+  ...(process.env.NODE_ENV === 'production' && {
+    url: envVars.NEXTAUTH_URL || process.env.REPLIT_DEPLOYMENT_URL || `https://${process.env.REPL_SLUG}.${process.env.REPL_OWNER}.repl.co`
+  }),
   providers: [
     GoogleProvider({
-      clientId: process.env.GOOGLE_CLIENT_ID!.trim(),
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET!.trim(),
+      clientId: envVars.GOOGLE_CLIENT_ID!.trim(),
+      clientSecret: envVars.GOOGLE_CLIENT_SECRET!.trim(),
       authorization: {
         params: {
           scope: "openid email profile",
