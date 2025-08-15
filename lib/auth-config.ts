@@ -1,6 +1,5 @@
 import GoogleProvider from 'next-auth/providers/google'
 import type { AuthOptions } from 'next-auth'
-import { deploymentConfig } from './deployment-config'
 
 // Runtime environment variable validation and debug logging
 function validateEnvironmentVariables() {
@@ -39,10 +38,8 @@ const envVars = validateEnvironmentVariables();
 
 export const authOptions: AuthOptions = {
   secret: envVars.NEXTAUTH_SECRET,
-  // Dynamic NEXTAUTH_URL configuration for deployment
-  ...(process.env.NODE_ENV === 'production' && {
-    url: envVars.NEXTAUTH_URL || process.env.REPLIT_DEPLOYMENT_URL || `https://${process.env.REPL_SLUG}.${process.env.REPL_OWNER}.repl.co`
-  }),
+  // Explicitly set the URL to fix OAuth redirect issues
+  url: process.env.NEXTAUTH_URL || "https://popcycle.replit.app",
   providers: [
     GoogleProvider({
       clientId: envVars.GOOGLE_CLIENT_ID!.trim(),
