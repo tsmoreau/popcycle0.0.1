@@ -38,8 +38,6 @@ const envVars = validateEnvironmentVariables();
 
 export const authOptions: AuthOptions = {
   secret: envVars.NEXTAUTH_SECRET,
-  // Explicitly set the URL to fix OAuth redirect issues
-  url: process.env.NEXTAUTH_URL || "https://popcycle.replit.app",
   providers: [
     GoogleProvider({
       clientId: envVars.GOOGLE_CLIENT_ID!.trim(),
