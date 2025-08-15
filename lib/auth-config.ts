@@ -1,47 +1,13 @@
 import GoogleProvider from 'next-auth/providers/google'
 import type { AuthOptions } from 'next-auth'
 
-// Runtime environment variable validation and debug logging
-function validateEnvironmentVariables() {
-  console.log('=== NEXTAUTH ENVIRONMENT VALIDATION ===');
-  
-  const requiredVars = {
-    NEXTAUTH_SECRET: process.env.NEXTAUTH_SECRET,
-    GOOGLE_CLIENT_ID: process.env.GOOGLE_CLIENT_ID,
-    GOOGLE_CLIENT_SECRET: process.env.GOOGLE_CLIENT_SECRET,
-    NEXTAUTH_URL: process.env.NEXTAUTH_URL // Use environment variable directly
-  };
-  
-  const missingVars = [];
-  
-  for (const [key, value] of Object.entries(requiredVars)) {
-    if (!value) {
-      missingVars.push(key);
-      console.error(`❌ Missing environment variable: ${key}`);
-    } else {
-      console.log(`✅ ${key}: ${'*'.repeat(Math.min(value.length, 10))}`);
-    }
-  }
-  
-  if (missingVars.length > 0) {
-    const error = `Missing required environment variables: ${missingVars.join(', ')}`;
-    console.error('❌', error);
-    throw new Error(error);
-  }
-  
-  console.log('✅ All required environment variables are present');
-  return requiredVars;
-}
-
-// Validate environment variables at startup
-const envVars = validateEnvironmentVariables();
-
 export const authOptions: AuthOptions = {
-  secret: envVars.NEXTAUTH_SECRET,
+  url: process.env.NEXTAUTH_URL,
+  secret: process.env.NEXTAUTH_SECRET,
   providers: [
     GoogleProvider({
-      clientId: envVars.GOOGLE_CLIENT_ID!.trim(),
-      clientSecret: envVars.GOOGLE_CLIENT_SECRET!.trim(),
+      clientId: process.env.GOOGLE_CLIENT_ID!.trim(),
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET!.trim(),
       authorization: {
         params: {
           scope: "openid email profile",
