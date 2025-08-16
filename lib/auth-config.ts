@@ -59,17 +59,9 @@ export const authOptions: AuthOptions = {
     },
 
     async redirect({ url, baseUrl }) {
-      // Extract the origin from the URL being redirected to (this contains the actual request domain)
-      let actualBaseUrl = baseUrl
-      try {
-        const urlObj = new URL(url)
-        // If the URL has a different origin than baseUrl, use that origin
-        if (urlObj.origin !== baseUrl) {
-          actualBaseUrl = urlObj.origin
-        }
-      } catch (e) {
-        // If URL parsing fails, fall back to baseUrl
-      }
+      // Force use of deployment URL from environment variable
+      const deploymentUrl = process.env.NEXTAUTH_URL?.replace(/\/$/, '') || 'https://popcycle.replit.app'
+      const actualBaseUrl = deploymentUrl
       
       console.log('NextAuth redirect called with url:', url, 'baseUrl:', baseUrl, 'using:', actualBaseUrl)
       
