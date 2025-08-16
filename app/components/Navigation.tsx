@@ -53,7 +53,7 @@ export default function Navigation() {
   const servicesItems = [
     {
       href: "/services#community-partnerships",
-      label: "Audits & Impact Reports",
+      label: "Waste Audits & Impact Reports",
     },
     { href: "/services#collection-services", label: "Collection Services" },
     { href: "/services#custom-products", label: "Traceable Custom Products" },
@@ -125,12 +125,12 @@ export default function Navigation() {
               </button>
 
               {servicesOpen && (
-                <div className="absolute top-full left-0 w-80 bg-white border-4 border-pop-black pop-shadow-black">
+                <div className="absolute top-full left-0 w-max bg-white border-4 border-pop-black pop-shadow-black mr-4">
                   {servicesItems.map((item) => (
                     <Link
                       key={item.href}
                       href={item.href}
-                      className="block w-full text-left px-4 py-3 systematic-caps text-sm hover:bg-pop-green hover:text-white transition-colors whitespace-normal"
+                      className="block w-full text-left px-4 py-3 pr-6 systematic-caps text-sm hover:bg-pop-green hover:text-white transition-colors whitespace-normal"
                     >
                       {item.label}
                     </Link>
@@ -257,55 +257,10 @@ export default function Navigation() {
       {/* Mobile Menu */}
       {mobileMenuOpen && (
         <div className="lg:hidden bg-white border-t-4 border-pop-black">
+
+
+          
           <div className="px-4 py-6 space-y-4">
-            {/* Track Mobile Section */}
-            <div className="space-y-2">
-              <Link
-                href="/track"
-                onClick={() => setMobileMenuOpen(false)}
-                className="systematic-caps text-sm font-bold text-pop-black hover:text-pop-green transition-colors"
-              >
-                Track Our Plastic
-              </Link>
-            </div>
-
-            {/* Shop Mobile Section */}
-            <div className="space-y-2">
-              <Link
-                href="/shop"
-                onClick={() => setMobileMenuOpen(false)}
-                className="systematic-caps text-sm font-bold text-pop-black hover:text-pop-red transition-colors"
-              >
-                Shop
-              </Link>
-            </div>
-
-            {/* Services Mobile Accordion Section */}
-            <div className="space-y-2">
-              <button
-                onClick={() => setMobileServicesOpen(!mobileServicesOpen)}
-                className="flex items-center justify-between w-full systematic-caps text-sm font-bold text-pop-black hover:text-pop-blue transition-colors"
-              >
-                <span>Services</span>
-                <ChevronRight
-                  className={`w-4 h-4 transform transition-transform ${mobileServicesOpen ? "rotate-90" : ""}`}
-                />
-              </button>
-              {mobileServicesOpen && (
-                <div className="pl-4 space-y-1">
-                  {servicesItems.map((item) => (
-                    <Link
-                      key={item.href}
-                      href={item.href}
-                      onClick={() => setMobileMenuOpen(false)}
-                      className="block w-full text-left px-4 py-2 systematic-caps text-sm hover:bg-pop-blue hover:text-white transition-colors"
-                    >
-                      {item.label}
-                    </Link>
-                  ))}
-                </div>
-              )}
-            </div>
 
             {/* About Mobile Accordion Section */}
             <div className="space-y-2">
@@ -333,6 +288,59 @@ export default function Navigation() {
                 </div>
               )}
             </div>
+
+            {/* What We Do Mobile Accordion Section */}
+            <div className="space-y-2">
+              <button
+                onClick={() => setMobileServicesOpen(!mobileServicesOpen)}
+                className="flex items-center justify-between w-full systematic-caps text-sm font-bold text-pop-black hover:text-pop-blue transition-colors"
+              >
+                <span>What We Do</span>
+                <ChevronRight
+                  className={`w-4 h-4 transform transition-transform ${mobileServicesOpen ? "rotate-90" : ""}`}
+                />
+              </button>
+              {mobileServicesOpen && (
+                <div className="pl-4 space-y-1">
+                  {servicesItems.map((item) => (
+                    <Link
+                      key={item.href}
+                      href={item.href}
+                      onClick={() => setMobileMenuOpen(false)}
+                      className="block w-full text-left px-4 py-2 systematic-caps text-sm hover:bg-pop-blue hover:text-white transition-colors"
+                    >
+                      {item.label}
+                    </Link>
+                  ))}
+                </div>
+              )}
+            </div>
+            
+            {/* Track Mobile Section */}
+            <div className="space-y-2">
+              <Link
+                href="/track"
+                onClick={() => setMobileMenuOpen(false)}
+                className="systematic-caps text-sm font-bold text-pop-black hover:text-pop-green transition-colors"
+              >
+                Track Our Plastic
+              </Link>
+            </div>
+
+            {/* Shop Mobile Section */}
+            <div className="space-y-2">
+              <Link
+                href="/shop"
+                onClick={() => setMobileMenuOpen(false)}
+                className="systematic-caps text-sm font-bold text-pop-black hover:text-pop-red transition-colors"
+              >
+                Shop
+              </Link>
+            </div>
+
+      
+
+      
 
             {/* Mobile User Section */}
             <div className="pt-4 border-t-2 border-pop-black space-y-3">
