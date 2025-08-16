@@ -17,7 +17,8 @@ import {
   Warehouse,
   Shield,
   User,
-  BarChart3
+  BarChart3,
+  ChevronDown
 } from 'lucide-react'
 import { Button } from '../components/ui/button'
 import { Badge } from '../components/ui/badge'
@@ -33,9 +34,9 @@ export default function PortalLayout({
   const [sidebarCollapsed, setSidebarCollapsed] = useState(true)
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [showScanModal, setShowScanModal] = useState(false)
+  const [profileDropdownOpen, setProfileDropdownOpen] = useState(false)
 
   const sidebarItems = [
-    { id: 'profile', label: 'Profile', icon: User, color: 'text-purple-600', activeColor: 'text-purple-600', activeBg: 'bg-purple-600/10', activeBorder: 'border-purple-600/20', href: '/portal/profile' },
     { id: 'admin', label: 'Admin', icon: Shield, color: 'text-pop-black', activeColor: 'text-pop-black', activeBg: 'bg-pop-black/10', activeBorder: 'border-pop-black/20', href: '/portal/admin' },
     { id: 'operations', label: 'Operations', icon: BarChart3, color: 'text-pop-green', activeColor: 'text-pop-green', activeBg: 'bg-pop-green/10', activeBorder: 'border-pop-green/20', href: '/portal/operations' },
     { id: 'crm', label: 'CRM', icon: Phone, color: 'text-pop-blue', activeColor: 'text-pop-blue', activeBg: 'bg-pop-blue/10', activeBorder: 'border-pop-blue/20', href: '/portal/crm' },
@@ -80,14 +81,56 @@ export default function PortalLayout({
               <QrCode className="h-4 w-4 md:mr-2" />
               <span className="hidden md:inline">QR Scanner</span>
             </Button>
-            <Button variant="ghost" size="sm" onClick={() => window.location.href = '/'}>
-              <Home className="h-4 w-4 md:mr-2" />
-              <span className="hidden md:inline">Public Site</span>
-            </Button>
-            <Button variant="ghost" size="sm">
-              <LogOut className="h-4 w-4 md:mr-2" />
-              <span className="hidden md:inline">Logout</span>
-            </Button>
+            
+            {/* Profile Dropdown */}
+            <div className="relative">
+              <Button 
+                variant="ghost" 
+                size="sm" 
+                onClick={() => setProfileDropdownOpen(!profileDropdownOpen)}
+                className="flex items-center space-x-1"
+              >
+                <User className="h-4 w-4" />
+                <span className="hidden md:inline">Profile</span>
+                <ChevronDown className={`h-3 w-3 transition-transform ${profileDropdownOpen ? 'rotate-180' : ''}`} />
+              </Button>
+              
+              {/* Dropdown Menu */}
+              {profileDropdownOpen && (
+                <div className="absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-lg shadow-lg z-50">
+                  <div className="py-1">
+                    <Link 
+                      href="/portal/profile" 
+                      className="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-purple-600"
+                      onClick={() => setProfileDropdownOpen(false)}
+                    >
+                      <User className="h-4 w-4 mr-3 text-purple-600" />
+                      Profile
+                    </Link>
+                    <button 
+                      onClick={() => {
+                        window.location.href = '/'
+                        setProfileDropdownOpen(false)
+                      }}
+                      className="w-full flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-pop-black text-left"
+                    >
+                      <Home className="h-4 w-4 mr-3 text-pop-black" />
+                      Public Site
+                    </button>
+                    <button 
+                      onClick={() => {
+                        // Add actual logout functionality here
+                        setProfileDropdownOpen(false)
+                      }}
+                      className="w-full flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-red-600 text-left"
+                    >
+                      <LogOut className="h-4 w-4 mr-3 text-red-600" />
+                      Logout
+                    </button>
+                  </div>
+                </div>
+              )}
+            </div>
           </div>
         </div>
       </header>
