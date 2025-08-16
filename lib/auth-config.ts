@@ -1,6 +1,17 @@
 import GoogleProvider from 'next-auth/providers/google'
 import type { AuthOptions } from 'next-auth'
 
+// Dynamic NEXTAUTH_URL based on environment
+const getNextAuthUrl = () => {
+  if (process.env.NODE_ENV === 'development') {
+    return process.env.REPLIT_DOMAINS ? `https://${process.env.REPLIT_DOMAINS}` : 'http://localhost:5000'
+  }
+  return process.env.NEXTAUTH_URL
+}
+
+// Override NEXTAUTH_URL for NextAuth
+process.env.NEXTAUTH_URL = getNextAuthUrl()
+
 export const authOptions: AuthOptions = {
   secret: process.env.NEXTAUTH_SECRET,
   providers: [
@@ -59,10 +70,7 @@ export const authOptions: AuthOptions = {
     },
 
     async redirect({ url, baseUrl }) {
-      // In development, use baseUrl (auto-detected). In production, use NEXTAUTH_URL
-      const actualBaseUrl = process.env.NODE_ENV === 'development' 
-        ? baseUrl || 'http://localhost:5000'
-        : process.env.NEXTAUTH_URL || baseUrl || 'http://localhost:5000'
+      const actualBaseUrl = getNextAuthUrl() || baseUrl || 'http://localhost:5000'
       
       if (url.startsWith("/")) return `${actualBaseUrl}${url}`
       else if (new URL(url).origin === actualBaseUrl) return url
