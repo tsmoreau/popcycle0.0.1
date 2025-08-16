@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { usePathname } from 'next/navigation'
 import { 
   Users, 
@@ -35,6 +35,21 @@ export default function PortalLayout({
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [showScanModal, setShowScanModal] = useState(false)
   const [profileDropdownOpen, setProfileDropdownOpen] = useState(false)
+  const profileDropdownRef = useRef<HTMLDivElement>(null)
+
+  // Close profile dropdown when clicking outside
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      if (profileDropdownRef.current && !profileDropdownRef.current.contains(event.target as Node)) {
+        setProfileDropdownOpen(false)
+      }
+    }
+
+    document.addEventListener('mousedown', handleClickOutside)
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside)
+    }
+  }, [])
 
   const sidebarItems = [
     { id: 'admin', label: 'Admin', icon: Shield, color: 'text-pop-black', activeColor: 'text-pop-black', activeBg: 'bg-pop-black/10', activeBorder: 'border-pop-black/20', href: '/portal/admin' },
@@ -83,7 +98,7 @@ export default function PortalLayout({
             </Button>
             
             {/* Profile Dropdown */}
-            <div className="relative">
+            <div className="relative" ref={profileDropdownRef}>
               <Button 
                 variant="ghost" 
                 size="sm" 
