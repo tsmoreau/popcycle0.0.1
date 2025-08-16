@@ -3,7 +3,6 @@ import type { AuthOptions } from 'next-auth'
 
 export const authOptions: AuthOptions = {
   secret: process.env.NEXTAUTH_SECRET,
-  useSecureCookies: true,
   providers: [
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID!.trim(),
@@ -60,24 +59,20 @@ export const authOptions: AuthOptions = {
     },
 
     async redirect({ url, baseUrl }) {
-      // Force use of deployment URL from environment variable
-      const deploymentUrl = process.env.NEXTAUTH_URL?.replace(/\/$/, '') || 'https://popcycle.replit.app'
-      const actualBaseUrl = deploymentUrl
-      
-      console.log('NextAuth redirect called with url:', url, 'baseUrl:', baseUrl, 'using:', actualBaseUrl)
+      console.log('NextAuth redirect called with url:', url, 'baseUrl:', baseUrl)
       
       // Handle OAuth cancellation/access_denied - always redirect to home page
       if (url.includes('error=access_denied') || url.includes('error=Callback') || url.includes('/api/auth/signin')) {
         console.log('Redirecting to home page due to OAuth cancellation')
-        return actualBaseUrl
+        return baseUrl
       }
       
       // For successful auth, allow the redirect
-      if (url.startsWith("/")) return `${actualBaseUrl}${url}`
-      else if (new URL(url).origin === actualBaseUrl) return url
+      if (url.startsWith("/")) return `${baseUrl}${url}`
+      else if (new URL(url).origin === baseUrl) return url
       
       // Default to home page
-      return actualBaseUrl
+      return baseUrl
     }
   },
   session: {
