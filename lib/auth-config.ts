@@ -59,8 +59,10 @@ export const authOptions: AuthOptions = {
     },
 
     async redirect({ url, baseUrl }) {
-      // Use NEXTAUTH_URL as fallback when baseUrl is undefined
-      const actualBaseUrl = baseUrl || process.env.NEXTAUTH_URL || 'http://localhost:5000'
+      // In development, use baseUrl (auto-detected). In production, use NEXTAUTH_URL
+      const actualBaseUrl = process.env.NODE_ENV === 'development' 
+        ? baseUrl || 'http://localhost:5000'
+        : process.env.NEXTAUTH_URL || baseUrl || 'http://localhost:5000'
       
       if (url.startsWith("/")) return `${actualBaseUrl}${url}`
       else if (new URL(url).origin === actualBaseUrl) return url
