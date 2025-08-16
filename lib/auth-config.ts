@@ -59,10 +59,13 @@ export const authOptions: AuthOptions = {
     },
 
     async redirect({ url, baseUrl }) {
-      // Default NextAuth redirect behavior
-      if (url.startsWith("/")) return `${baseUrl}${url}`
-      else if (new URL(url).origin === baseUrl) return url
-      return baseUrl
+      // Use NEXTAUTH_URL as fallback when baseUrl is undefined
+      const actualBaseUrl = baseUrl || process.env.NEXTAUTH_URL || 'http://localhost:5000'
+      console.log('Redirect callback:', { url, baseUrl, actualBaseUrl })
+      
+      if (url.startsWith("/")) return `${actualBaseUrl}${url}`
+      else if (new URL(url).origin === actualBaseUrl) return url
+      return actualBaseUrl
     }
   },
   session: {
