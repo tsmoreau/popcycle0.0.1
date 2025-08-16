@@ -155,15 +155,14 @@ export default function PortalLayout({
         <div className="fixed inset-0 z-50 md:hidden">
           <div className="fixed inset-0 bg-black/20" onClick={() => setMobileMenuOpen(false)} />
           <nav className="fixed top-0 left-0 bottom-0 w-64 bg-white border-r border-gray-200 overflow-y-auto">
-            {/* Close button in top corner */}
-            <div className="flex justify-start items-center p-4 pb-2">
-              <Button 
-                variant="ghost" 
-                size="sm"
-                onClick={() => setMobileMenuOpen(false)}
-              >
-                <X className="h-4 w-4" />
-              </Button>
+          
+            <div className="flex justify-start items-end pt-8 pl-2 ml-8 pb-2 border-">
+
+              
+             
+              <h1 className="text-lg md:text-2xl font-bold text-pop-black pb-2 ">PopCycle Portal</h1>
+
+              
             </div>
             
             <div className="px-6 pt-2">
