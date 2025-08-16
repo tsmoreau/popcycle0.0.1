@@ -46,7 +46,7 @@ export default function Navigation() {
     { href: "/about#team", label: "Team" },
     { href: "/about#story", label: "Story" },
     { href: "/about#process", label: "Process" },
-    { href: "/about#process", label: "Contact" },
+    { href: "/about#contact", label: "Contact" },
     { href: "/about#faq", label: "FAQ" },
   ];
 
@@ -55,9 +55,9 @@ export default function Navigation() {
       href: "/services#community-partnerships",
       label: "Audits & Impact Reports",
     },
-    { href: "/services#corporate-esg-events", label: "Collection Services" },
-    { href: "/services#corporate-esg-events", label: "Traceable Custom Products" },
-    { href: "/services#corporate-esg-events", label: "Workshops & Events" },
+    { href: "/services#collection-services", label: "Collection Services" },
+    { href: "/services#custom-products", label: "Traceable Custom Products" },
+    { href: "/services#workshops-events", label: "Workshops & Events" },
   ];
 
   return (
