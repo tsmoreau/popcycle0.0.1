@@ -20,14 +20,14 @@ export default function Home() {
       <section className="py-32 px-4 bg-white">
         <div className="max-w-6xl mx-auto text-center">
           <h1 className="text-6xl lg:text-8xl helvetica-bold mb-8 tracking-tight">
-            <span className="text-pop-green">COMPLETE</span><br />
-            THE SUPPLY<br />
-            CHAIN
+            YOUR WASTE.<br />
+            <span className="text-pop-green">YOUR PRODUCTS.</span><br />
+            YOUR PROOF.
           </h1>
           
           <p className="text-xl lg:text-2xl max-w-4xl mx-auto mb-12 leading-relaxed text-pop-black">
-            Your stakeholders deserve the same transparency for your waste as your products. 
-            Track. Prove. Close the loop.
+            Transform your plastic waste into custom-branded products with complete traceability. 
+            Every item tells the verified story from your bin back to your space.
           </p>
           
           <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
@@ -106,8 +106,8 @@ export default function Home() {
               <span className="text-pop-blue">DON'T JUST PROMISE IT.</span>
             </h2>
             <p className="text-xl lg:text-2xl text-pop-gray max-w-4xl mx-auto leading-relaxed">
-              Complete circular economy tracking from your waste stream back to your products. 
-              Full transparency that turns sustainability claims into verifiable data.
+              Stock your spaces with custom products made from your own waste stream. 
+              Every piece comes with verifiable impact data and branded tracking portals.
             </p>
           </div>
           
