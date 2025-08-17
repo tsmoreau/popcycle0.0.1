@@ -125,7 +125,7 @@ export default function Footer() {
                 href="/about#contact"
                 className="block text-sm text-gray-300 hover:text-white transition-colors"
               >
-                Insight Rovers
+                Insight Robotics
               </Link>
             </div>
           </div>
