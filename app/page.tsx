@@ -20,14 +20,14 @@ export default function Home() {
       <section className="py-32 px-4 bg-white">
         <div className="max-w-6xl mx-auto text-center">
           <h1 className="text-6xl lg:text-8xl helvetica-bold mb-8 tracking-tight">
-            <span className="text-pop-green">COMPLETE</span><br />
-            THE SUPPLY<br />
-            CHAIN
+            <span className="text-pop-green">STOCK</span> YOUR<br />
+            SPACE WITH YOUR<br />
+            WASTE
           </h1>
           
           <p className="text-xl lg:text-2xl max-w-4xl mx-auto mb-12 leading-relaxed text-pop-black">
-            Your stakeholders deserve the same transparency for your waste as your products. 
-            Track. Prove. Close the loop.
+            Custom products made from your plastic waste, with full traceability and branded impact reports. 
+            Transform your front-of-house into proof of your circular commitment.
           </p>
           
           <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
@@ -106,8 +106,8 @@ export default function Home() {
               <span className="text-pop-blue">DON'T JUST PROMISE IT.</span>
             </h2>
             <p className="text-xl lg:text-2xl text-pop-gray max-w-4xl mx-auto leading-relaxed">
-              Complete circular economy tracking from your waste stream back to your products. 
-              Full transparency that turns sustainability claims into verifiable data.
+              Turn your plastic waste into custom branded products for your space. 
+              Complete tracking and branded impact portals that prove your circular economy commitment.
             </p>
           </div>
           
@@ -124,8 +124,8 @@ export default function Home() {
                     </div>
                     <h3 className="text-2xl helvetica-bold mb-4 systematic-caps">COLLECT & TRACK</h3>
                     <p className="leading-relaxed">
-                      Your waste becomes a traceable resource. Each bin gets a unique QR code that follows 
-                      your specific plastic through the entire circular journey back to you.
+                      Your waste becomes the raw material for your custom products. Each bin gets a unique QR code 
+                      that tracks your plastic's journey from disposal to branded front-of-house display.
                     </p>
                   </div>
                 </PopArtContainer>
@@ -154,10 +154,10 @@ export default function Home() {
                     <div className="w-16 h-16 bg-white rounded-full flex items-center justify-center mx-auto mb-6">
                       <Target className="w-8 h-8 text-pop-red" />
                     </div>
-                    <h3 className="text-2xl helvetica-bold mb-4 systematic-caps">DELIVER & VERIFY</h3>
+                    <h3 className="text-2xl helvetica-bold mb-4 systematic-caps">STOCK & REPORT</h3>
                     <p className="leading-relaxed">
-                      Your waste returns as custom products with complete provenance data. 
-                      Scan the QR code to see the verified journey from your bin to your hands.
+                      Custom branded products for your front-of-house, made from your waste. 
+                      Branded impact portals and reports prove your circular commitment to stakeholders.
                     </p>
                   </div>
                 </PopArtContainer>
