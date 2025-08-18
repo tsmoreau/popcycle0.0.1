@@ -20,14 +20,14 @@ export default function Home() {
       <section className="py-32 px-4 bg-white">
         <div className="max-w-6xl mx-auto text-center">
           <h1 className="text-6xl lg:text-8xl helvetica-bold mb-8 tracking-tight">
-            YOUR WASTE.<br />
-            <span className="text-pop-green">YOUR PRODUCTS.</span><br />
-            YOUR PROOF.
+            <span className="text-pop-green">TRACK</span><br />
+            YOUR PLASTIC'S<br />
+            JOURNEY
           </h1>
           
           <p className="text-xl lg:text-2xl max-w-4xl mx-auto mb-12 leading-relaxed text-pop-black">
-            Transform your plastic waste into custom-branded products with complete traceability. 
-            Every item tells the verified story from your bin back to your space.
+            Each PopCycle product tells an essential story of transformation from plastic waste to enduring engagement. 
+            Scan. Learn. Make.
           </p>
           
           <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
@@ -50,14 +50,14 @@ export default function Home() {
       <section className="py-24 px-4 bg-pop-black">
         <div className="max-w-5xl mx-auto text-center">
           <h2 className="text-5xl lg:text-7xl helvetica-bold mb-8 text-white leading-tight">
-            WE TRACK EVERYTHING<br />
-            <span className="text-pop-green">EXCEPT WHAT MATTERS.</span>
+            PLASTIC HAS A STORY.<br />
+            <span className="text-pop-green">WE HELP YOU TELL IT.</span>
           </h2>
           <p className="text-2xl lg:text-3xl text-white/90 mb-6 leading-relaxed max-w-4xl mx-auto">
-            Amazon can tell you where your package is at 2:47 AM. But where's your plastic bottle right now?
+            This isn't recycling. This is material storytelling.
           </p>
           <div className="text-xl text-pop-green font-medium">
-            True sustainability isn't what you buy — it's what you can prove about what you waste.
+            Every piece of plastic holds a history. We make that history visible.
           </div>
         </div>
       </section>
@@ -102,12 +102,12 @@ export default function Home() {
         <div className="max-w-4xl mx-auto">
           <div className="text-center mb-20">
             <h2 className="text-4xl lg:text-6xl helvetica-bold mb-8">
-              PROVE YOUR SUSTAINABILITY.<br />
-              <span className="text-pop-blue">DON'T JUST PROMISE IT.</span>
+              DON'T JUST RECYCLE.<br />
+              <span className="text-pop-blue">RECIRCULATE.</span>
             </h2>
             <p className="text-xl lg:text-2xl text-pop-gray max-w-4xl mx-auto leading-relaxed">
-              Stock your spaces with custom products made from your own waste stream. 
-              Every piece comes with verifiable impact data and branded tracking portals.
+              We use a material-honest approach to turn what's been discarded into something that inspires. 
+              Local, regenerative, and transparent from start to finish.
             </p>
           </div>
           
@@ -122,10 +122,10 @@ export default function Home() {
                     <div className="w-16 h-16 bg-white rounded-full flex items-center justify-center mx-auto mb-6">
                       <Recycle className="w-8 h-8 text-pop-green" />
                     </div>
-                    <h3 className="text-2xl helvetica-bold mb-4 systematic-caps">COLLECT & TRACK</h3>
+                    <h3 className="text-2xl helvetica-bold mb-4 systematic-caps">COLLECT & CONNECT</h3>
                     <p className="leading-relaxed">
-                      Your waste becomes a traceable resource. Each bin gets a unique QR code that follows 
-                      your specific plastic through the entire circular journey back to you.
+                      Your waste becomes a traceable resource. We install branded bins and collect plastic, 
+                      creating a direct link from your organization to the final product.
                     </p>
                   </div>
                 </PopArtContainer>
@@ -140,8 +140,8 @@ export default function Home() {
                     </div>
                     <h3 className="text-2xl helvetica-bold mb-4 systematic-caps">TRANSFORM & TRACE</h3>
                     <p className="leading-relaxed">
-                      Your plastic stays traceable through minimal processing. Each transformation step 
-                      is logged and verified, maintaining complete chain of custody from your waste bin.
+                      Minimal, non-destructive processes clean and shape plastic. Laser-etched QR codes 
+                      ensure every object carries its full provenance—raw material to finished product.
                     </p>
                   </div>
                 </PopArtContainer>
@@ -154,10 +154,10 @@ export default function Home() {
                     <div className="w-16 h-16 bg-white rounded-full flex items-center justify-center mx-auto mb-6">
                       <Target className="w-8 h-8 text-pop-red" />
                     </div>
-                    <h3 className="text-2xl helvetica-bold mb-4 systematic-caps">DELIVER & VERIFY</h3>
+                    <h3 className="text-2xl helvetica-bold mb-4 systematic-caps">MAKE & ENGAGE</h3>
                     <p className="leading-relaxed">
-                      Your waste returns as custom products with complete provenance data. 
-                      Scan the QR code to see the verified journey from your bin to your hands.
+                      Durable, educational products that prove sustainability doesn't have to be a buzzword. 
+                      Your material becomes stories of hands-on learning and real impact.
                     </p>
                   </div>
                 </PopArtContainer>
@@ -172,11 +172,10 @@ export default function Home() {
         <div className="max-w-4xl mx-auto">
           <div className="text-center mb-20">
             <h2 className="text-4xl lg:text-6xl helvetica-bold mb-8 text-pop-black">
-              THE TRACKING <span className="text-pop-red">GAP</span>
+              WHY THIS <span className="text-pop-red">MATTERS</span>
             </h2>
             <p className="text-xl lg:text-2xl text-pop-gray max-w-4xl mx-auto leading-relaxed">
-              Supply chains have tracking perfected. Waste streams don't. 
-              Organizations need verifiable circularity, not just good intentions.
+              Traditional recycling is a black box. You never see the impact. We're changing that.
             </p>
           </div>
           
@@ -191,10 +190,10 @@ export default function Home() {
                     <div className="w-16 h-16 bg-white rounded-full flex items-center justify-center mx-auto mb-6">
                       <Eye className="w-8 h-8 text-pop-red" />
                     </div>
-                    <h3 className="text-2xl helvetica-bold mb-4 systematic-caps">TRADITIONAL WASTE</h3>
+                    <h3 className="text-2xl helvetica-bold mb-4 systematic-caps">TRADITIONAL RECYCLING</h3>
                     <p className="leading-relaxed">
-                      Zero tracking after disposal. Your plastic disappears into generic processing. 
-                      No proof of impact for sustainability reporting.
+                      No visibility into what happens to your waste. Generic processing that downgrades materials. 
+                      No connection to educational impact.
                     </p>
                   </div>
                 </PopArtContainer>
@@ -207,10 +206,10 @@ export default function Home() {
                     <div className="w-16 h-16 bg-white rounded-full flex items-center justify-center mx-auto mb-6">
                       <RotateCcw className="w-8 h-8 text-pop-green" />
                     </div>
-                    <h3 className="text-2xl helvetica-bold mb-4 systematic-caps">POPCYCLE TRACKING</h3>
+                    <h3 className="text-2xl helvetica-bold mb-4 systematic-caps">POPCYCLE APPROACH</h3>
                     <p className="leading-relaxed">
-                      Complete transparency from your bin to your custom product. Every step tracked and verified. 
-                      Direct proof of your organization's circular impact.
+                      Complete transparency from bin to final product. Minimal processing that preserves material integrity. 
+                      Direct connection to educational outcomes.
                     </p>
                   </div>
                 </PopArtContainer>
@@ -225,8 +224,8 @@ export default function Home() {
                     </div>
                     <h3 className="text-2xl helvetica-bold mb-4 systematic-caps">THE RESULT</h3>
                     <p className="leading-relaxed">
-                      100% material accountability. Verifiable sustainability data. 
-                      Custom products that prove your circular economy commitment.
+                      100% material accountability. Local community manufacturing. 
+                      Lasting educational products that inspire hands-on learning.
                     </p>
                   </div>
                 </PopArtContainer>
@@ -240,17 +239,17 @@ export default function Home() {
       <section className="py-20 px-4 bg-pop-black">
         <div className="max-w-4xl mx-auto text-center">
           <h2 className="text-4xl lg:text-6xl helvetica-bold mb-8 text-white">
-            READY TO PROVE<br />
-            YOUR IMPACT?
+            READY TO TRANSFORM<br />
+            YOUR WASTE?
           </h2>
           
           <p className="text-xl mb-12 text-white leading-relaxed">
-            Join organizations already turning sustainability promises into verifiable circular data.
+            Join companies already turning their plastic waste into educational impact.
           </p>
           
           <Link href="/about#contact">
             <Button size="lg" className="bg-pop-green text-pop-black hover:bg-white hover:text-pop-black systematic-caps text-lg px-12 py-4">
-              PROVE YOUR SUSTAINABILITY
+              START PARTNERSHIP
               <ArrowRight className="ml-2 w-5 h-5" />
             </Button>
           </Link>
