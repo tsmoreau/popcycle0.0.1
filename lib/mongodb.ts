@@ -33,7 +33,7 @@ if (process.env.NODE_ENV === 'development') {
 
 export async function getDatabase(): Promise<Db> {
   const client = await clientPromise;
-  return client.db('PopCycle');
+  return client.db('popcycle'); // Use lowercase to match NextAuth adapter
 }
 
 export { clientPromise };
