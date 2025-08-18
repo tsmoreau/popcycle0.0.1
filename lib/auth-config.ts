@@ -45,19 +45,17 @@ export const authOptions: AuthOptions = {
     },
     
     async jwt({ token, user }) {
+      // If this is a new sign in (user object exists), sync with database
       if (user) {
         token.email = user.email
         token.name = user.name
-      }
-      
-      // Only fetch user data if we have an email (active session)
-      if (token?.email) {
+        
         try {
           // Create or update user in database
           const dbUser = await createOrUpdateUser({
-            name: token.name as string,
-            email: token.email as string,
-            image: token.picture as string
+            name: user.name as string,
+            email: user.email as string,
+            image: user.image as string
           });
           
           // Add database user info to token for middleware access
@@ -77,25 +75,12 @@ export const authOptions: AuthOptions = {
     },
     
     async session({ session, token }) {
-      // Only populate session if we have a valid token with email
-      if (token && token.email) {
+      // Only populate session if we have a valid active session and token
+      if (session?.user && token?.email && token?.userId) {
         session.user.id = token.userId as string
         session.user.userType = token.userType as string
         session.user.permissions = token.permissions as string[]
         session.user.orgId = token.orgId as string
-        
-        // Get fresh user data from database for session
-        try {
-          const dbUser = await getUserByEmail(token.email as string);
-          if (dbUser) {
-            session.user.skillLevel = dbUser.skillLevel
-            session.user.itemsAssembled = dbUser.itemsAssembled
-            session.user.location = dbUser.location
-            session.user.isActive = dbUser.isActive
-          }
-        } catch (error) {
-          console.error('Error fetching user data for session:', error)
-        }
       }
       return session
     },
