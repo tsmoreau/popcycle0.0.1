@@ -20,14 +20,14 @@ export default function Home() {
       <section className="py-32 px-4 bg-white">
         <div className="max-w-6xl mx-auto text-center">
           <h1 className="text-6xl lg:text-8xl helvetica-bold mb-8 tracking-tight">
-            <span className="text-pop-green">TRACK</span><br />
-            YOUR PLASTIC'S<br />
-            JOURNEY
+            TRACK 
+            <span className="text-pop-green"> YOUR</span><br />
+            PLASTIC<br />
+            
           </h1>
           
           <p className="text-xl lg:text-2xl max-w-4xl mx-auto mb-12 leading-relaxed text-pop-black">
-            Each PopCycle product tells an essential story of transformation from plastic waste to enduring engagement. 
-            Scan. Learn. Make.
+            Transform your plastic waste into custom products with complete traceability.<br /> Every item closes the loop from bin to back again.
           </p>
           
           <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
