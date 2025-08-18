@@ -1,7 +1,5 @@
 import GoogleProvider from 'next-auth/providers/google'
 import type { AuthOptions } from 'next-auth'
-import { MongoDBAdapter } from '@auth/mongodb-adapter'
-import { clientPromise } from './mongodb'
 import { createOrUpdateUser, getUserByEmail, getUserPermissions } from './auth-helpers'
 
 // Dynamic NEXTAUTH_URL based on environment
