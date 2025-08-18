@@ -2,12 +2,12 @@ import { withAuth } from 'next-auth/middleware'
 import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
 
-// Session tracking handled via client-side API calls to avoid Edge Runtime limitations
-
 export default withAuth(
-  function middleware(req) {
+  async function middleware(req) {
     const token = req.nextauth.token
     const { pathname } = req.nextUrl
+
+    // Session activity tracking handled by NextAuth adapter automatically
 
     // Role-based access control for portal routes
     if (pathname.startsWith('/portal')) {

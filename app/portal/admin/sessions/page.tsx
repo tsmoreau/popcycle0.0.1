@@ -13,6 +13,7 @@ interface SessionStats {
 interface OnlineUser {
   userId: string
   lastActivity: string
+  sessionToken?: string
 }
 
 export default function SessionsPage() {
@@ -40,12 +41,12 @@ export default function SessionsPage() {
     }
   }
 
-  const forceLogoutUser = async (userId: string) => {
+  const forceLogoutUser = async (userEmail: string) => {
     try {
       const response = await fetch('/api/admin/sessions', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ action: 'force-logout-user', userId })
+        body: JSON.stringify({ action: 'force-logout-user', userEmail })
       })
       
       if (response.ok) {
@@ -123,9 +124,9 @@ export default function SessionsPage() {
               {onlineUsers.map((user, index) => (
                 <div key={index} className="flex justify-between items-center p-3 bg-gray-50 rounded">
                   <div>
-                    <span className="font-medium">User ID: {user.userId}</span>
+                    <span className="font-medium">User: {user.userId}</span>
                     <p className="text-sm text-gray-600">
-                      Last active: {new Date(user.lastActivity).toLocaleString()}
+                      Session expires: {new Date(user.lastActivity).toLocaleString()}
                     </p>
                   </div>
                   <button

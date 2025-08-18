@@ -1,8 +1,8 @@
 import GoogleProvider from 'next-auth/providers/google'
 import type { AuthOptions } from 'next-auth'
+import { MongoDBAdapter } from '@auth/mongodb-adapter'
+import { clientPromise } from './mongodb'
 import { createOrUpdateUser, getUserByEmail, getUserPermissions } from './auth-helpers'
-import { createSession, deactivateSession } from './session-helpers'
-import { ObjectId } from 'mongodb'
 
 // Dynamic NEXTAUTH_URL based on environment
 const getNextAuthUrl = () => {
@@ -46,14 +46,10 @@ export const authOptions: AuthOptions = {
       return !!user?.email
     },
     
-    async jwt({ token, user, trigger, session }) {
-      // If this is a new sign in (user object exists), sync with database
+    async jwt({ token, user, account }) {
+      // On sign in, sync user data with our custom User collection
       if (user) {
-        token.email = user.email
-        token.name = user.name
-        
         try {
-          // Create or update user in database
           const dbUser = await createOrUpdateUser({
             name: user.name as string,
             email: user.email as string,
@@ -65,22 +61,8 @@ export const authOptions: AuthOptions = {
           token.userType = dbUser.userType
           token.permissions = getUserPermissions(dbUser)
           token.orgId = dbUser.orgId?.toString()
-          
-          // Create session tracking record
-          // Note: In production, get real IP from headers
-          const sessionToken = Math.random().toString(36).substring(2, 15)
-          token.sessionToken = sessionToken
-          
-          await createSession(
-            dbUser._id,
-            sessionToken,
-            '127.0.0.1', // Placeholder - would get from request headers in middleware
-            'Unknown' // Placeholder - would get from request headers
-          );
-          
         } catch (error) {
           console.error('Error syncing user with database:', error)
-          // Fallback for database errors
           token.userType = 'user'
           token.permissions = []
         }
@@ -90,8 +72,8 @@ export const authOptions: AuthOptions = {
     },
     
     async session({ session, token }) {
-      // Only populate session if we have a valid active session and token
-      if (session?.user && token?.email && token?.userId) {
+      // Add our custom user data from JWT token
+      if (session?.user && token) {
         session.user.id = token.userId as string
         session.user.userType = token.userType as string
         session.user.permissions = token.permissions as string[]
@@ -107,20 +89,6 @@ export const authOptions: AuthOptions = {
       else if (new URL(url).origin === actualBaseUrl) return url
       return actualBaseUrl
     }
-  },
-  events: {
-    async signOut(message) {
-      console.log('User signed out:', message)
-      
-      // Deactivate session in database
-      if (message.token?.sessionToken) {
-        try {
-          await deactivateSession(message.token.sessionToken as string, 'manual')
-        } catch (error) {
-          console.error('Error deactivating session:', error)
-        }
-      }
-    },
   },
   session: {
     strategy: 'jwt',

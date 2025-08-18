@@ -58,13 +58,12 @@ PopCycle is built as a unified Next.js PWA with MongoDB, managing all core opera
 - **Database Helpers**: Comprehensive user management functions for permissions, role checking, and user queries
 - **Enhanced SessionProvider**: Includes user context provider for organization-specific state management
 
-### Session Tracking System (January 2025)
-- **Session Collection**: New MongoDB collection tracks active user sessions with device info, activity timestamps, and session lifecycle
-- **Real-time Activity Tracking**: Client-side page visit tracking integrated into SessionProvider for continuous activity monitoring
-- **Session Management API**: Admin endpoints for session statistics, online user monitoring, and force logout capabilities
-- **Device Detection**: Automatic browser and device type identification for security and analytics
-- **Admin Dashboard**: Dedicated session management interface at `/portal/admin/sessions` for monitoring active users and session statistics
-- **Session Cleanup**: Automated expired session cleanup with manual admin controls for session hygiene
+### NextAuth Database Sessions (January 2025)
+- **MongoDB Adapter Integration**: NextAuth's official MongoDB adapter handles session persistence with standardized schema
+- **Database Session Strategy**: Switched from JWT to database sessions for better session management and tracking
+- **Server-side Session Management**: Session lifecycle handled entirely by NextAuth adapter in MongoDB sessions collection
+- **Admin Session Dashboard**: Interface at `/portal/admin/sessions` for monitoring active sessions and force logout capabilities
+- **Standard Session Schema**: Uses NextAuth's built-in session structure for compatibility and future-proofing
 
 ## External Dependencies
 

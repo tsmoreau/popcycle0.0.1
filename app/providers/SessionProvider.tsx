@@ -25,19 +25,7 @@ function UserContextProvider({ children }: { children: React.ReactNode }) {
     refreshUserData: async () => {}
   })
 
-  // Track session activity on page changes
-  useEffect(() => {
-    if (session?.user && (session as any).sessionToken) {
-      fetch('/api/sessions/activity', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ 
-          sessionToken: (session as any).sessionToken,
-          lastPage: pathname 
-        })
-      }).catch(error => console.error('Session tracking error:', error))
-    }
-  }, [session, pathname])
+  // Session activity now tracked server-side in middleware
 
   const refreshUserData = async () => {
     // Force session refresh to get latest database data
