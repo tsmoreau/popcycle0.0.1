@@ -71,20 +71,13 @@ export const authOptions: AuthOptions = {
       return token
     },
     
-    async session({ session, user }) {
-      // With database sessions, merge our custom user data
-      if (session?.user) {
-        try {
-          const dbUser = await getUserByEmail(session.user.email!);
-          if (dbUser) {
-            session.user.id = dbUser._id.toString()
-            session.user.userType = dbUser.userType
-            session.user.permissions = getUserPermissions(dbUser)
-            session.user.orgId = dbUser.orgId?.toString()
-          }
-        } catch (error) {
-          console.error('Error fetching user data for session:', error)
-        }
+    async session({ session, token }) {
+      // Add our custom user data from JWT token
+      if (session?.user && token) {
+        session.user.id = token.userId as string
+        session.user.userType = token.userType as string
+        session.user.permissions = token.permissions as string[]
+        session.user.orgId = token.orgId as string
       }
       return session
     },
