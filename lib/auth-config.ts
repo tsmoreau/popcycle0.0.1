@@ -61,15 +61,22 @@ export const authOptions: AuthOptions = {
     },
     
     async session({ session, user }) {
+      console.log('Session callback called - session:', session)
+      console.log('Session callback called - user:', user)
+      
       // With database sessions, merge our custom user data
       if (session?.user) {
         try {
           const dbUser = await getUserByEmail(session.user.email!);
+          console.log('Found dbUser:', dbUser)
           if (dbUser) {
             session.user.id = dbUser._id.toString()
             session.user.userType = dbUser.userType
             session.user.permissions = getUserPermissions(dbUser)
             session.user.orgId = dbUser.orgId?.toString()
+            console.log('Enhanced session:', session.user)
+          } else {
+            console.log('No dbUser found for email:', session.user.email)
           }
         } catch (error) {
           console.error('Error fetching user data for session:', error)
