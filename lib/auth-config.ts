@@ -43,33 +43,21 @@ export const authOptions: AuthOptions = {
         return false
       }
       
-      // Allow all Google OAuth users for now
-      return !!user?.email
-    },
-    
-    async jwt({ token, user, account }) {
-      // On sign in, sync user data with our custom User collection
-      if (user) {
+      // Sync NextAuth user with our custom User collection on sign in
+      if (user && account?.provider === 'google') {
         try {
-          const dbUser = await createOrUpdateUser({
+          await createOrUpdateUser({
             name: user.name as string,
             email: user.email as string,
             image: user.image as string
           });
-          
-          // Add database user info to token for middleware access
-          token.userId = dbUser._id.toString()
-          token.userType = dbUser.userType
-          token.permissions = getUserPermissions(dbUser)
-          token.orgId = dbUser.orgId?.toString()
         } catch (error) {
           console.error('Error syncing user with database:', error)
-          token.userType = 'user'
-          token.permissions = []
         }
       }
       
-      return token
+      // Allow all Google OAuth users for now
+      return !!user?.email
     },
     
     async session({ session, user }) {
