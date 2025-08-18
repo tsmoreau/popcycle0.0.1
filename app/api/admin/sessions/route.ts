@@ -155,10 +155,16 @@ async function getOnlineUsers(db: any) {
     if (!uniqueUsers.has(session.userId)) {
       // Get user email from users collection
       const user = await db.collection('users').findOne({ _id: session.userId });
+      
+      // NextAuth doesn't set createdAt on sessions, so we calculate when session was created
+      // Session expires in 30 days, so creation time = expires - 30 days
+      const sessionDuration = 30 * 24 * 60 * 60 * 1000; // 30 days in milliseconds
+      const sessionCreated = new Date(session.expires.getTime() - sessionDuration);
+      
       uniqueUsers.set(session.userId, {
         userId: user?.email || session.userId,
-        lastActivity: session.createdAt || session.expires, // Use session creation time, not expiration
-        sessionExpires: session.expires, // Add actual expiration time
+        lastActivity: sessionCreated.toISOString(),
+        sessionExpires: session.expires,
         sessionToken: session.sessionToken
       });
     }
