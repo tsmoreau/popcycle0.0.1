@@ -44,8 +44,19 @@ PopCycle is built as a unified Next.js PWA with MongoDB, managing all core opera
 
 ### User Access Architecture
 - **User Identity System**: Capability-based access; all users begin as makers, staff roles grant additional dashboard access. `orgId` provides read-only access for partner reporting.
-- **Authentication Strategy**: NextAuth handles authentication only (Google Workspace SSO for all users, magic links as backup). All user data stored in MongoDB User schema. Session management via JWT tokens. Configuration migrated to App Router compatible structure with `authOptions` in `lib/auth-config.ts` for proper deployment compatibility.
+- **Authentication Strategy**: NextAuth handles authentication with full MongoDB integration. Google Workspace SSO for all users with automatic user creation/sync in MongoDB User collection. Session management via JWT tokens with database-sourced roles and permissions. Database helpers in `lib/auth-helpers.ts` provide user management, role-based permissions, and organization access control. Enhanced SessionProvider includes user context for org-specific state. Granular middleware protection for portal routes with role-based access control. Configuration in `lib/auth-config.ts` supports App Router deployment compatibility.
 - **Dashboard Architecture**: Route-based portal navigation under `/portal/` with color-coded themes for different dashboards: Main, Profile, Admin, Operations, CRM, Partner, and Financial. Operations functions are consolidated into a single page.
+
+## Recent Architecture Changes
+
+### Database-Integrated Authentication (January 2025)
+- **Full MongoDB Integration**: Authentication system now queries MongoDB User collection instead of hardcoded role checks
+- **Dynamic Role Management**: User roles (`super_admin`, `admin`, `staff`, `user`, `partner_owner`) and permissions stored in database
+- **Auto User Creation**: New users automatically created in MongoDB on first OAuth signin with proper default values
+- **Enhanced Session Data**: Sessions include full user context (orgId, skillLevel, itemsAssembled, location, isActive)
+- **Granular Middleware**: Route protection with role-specific access control for portal sections
+- **Database Helpers**: Comprehensive user management functions for permissions, role checking, and user queries
+- **Enhanced SessionProvider**: Includes user context provider for organization-specific state management
 
 ## External Dependencies
 

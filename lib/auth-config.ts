@@ -1,5 +1,6 @@
 import GoogleProvider from 'next-auth/providers/google'
 import type { AuthOptions } from 'next-auth'
+import { createOrUpdateUser, getUserByEmail, getUserPermissions } from './auth-helpers'
 
 // Dynamic NEXTAUTH_URL based on environment
 const getNextAuthUrl = () => {
@@ -46,15 +47,30 @@ export const authOptions: AuthOptions = {
     async jwt({ token, user }) {
       if (user) {
         token.email = user.email
+        token.name = user.name
       }
       
-      // Add user type and permissions to token for middleware access
-      if (token?.email === 'terrencestasse@gmail.com') {
-        token.userType = 'super_admin'
-        token.permissions = ['admin', 'operations', 'crm', 'financial', 'partner']
-      } else {
-        token.userType = 'maker'
-        token.permissions = []
+      // Get or create user in database and add permissions to token
+      if (token?.email) {
+        try {
+          // Create or update user in database
+          const dbUser = await createOrUpdateUser({
+            name: token.name as string,
+            email: token.email as string,
+            image: token.picture as string
+          });
+          
+          // Add database user info to token for middleware access
+          token.userId = dbUser._id.toString()
+          token.userType = dbUser.userType
+          token.permissions = getUserPermissions(dbUser)
+          token.orgId = dbUser.orgId?.toString()
+        } catch (error) {
+          console.error('Error syncing user with database:', error)
+          // Fallback for database errors
+          token.userType = 'user'
+          token.permissions = []
+        }
       }
       
       return token
@@ -63,8 +79,23 @@ export const authOptions: AuthOptions = {
     async session({ session, token }) {
       // Transfer token data to session
       if (token) {
-        session.user.userType = token.userType
-        session.user.permissions = token.permissions
+        session.user.id = token.userId as string
+        session.user.userType = token.userType as string
+        session.user.permissions = token.permissions as string[]
+        session.user.orgId = token.orgId as string
+        
+        // Get fresh user data from database for session
+        try {
+          const dbUser = await getUserByEmail(token.email as string);
+          if (dbUser) {
+            session.user.skillLevel = dbUser.skillLevel
+            session.user.itemsAssembled = dbUser.itemsAssembled
+            session.user.location = dbUser.location
+            session.user.isActive = dbUser.isActive
+          }
+        } catch (error) {
+          console.error('Error fetching user data for session:', error)
+        }
       }
       return session
     },
