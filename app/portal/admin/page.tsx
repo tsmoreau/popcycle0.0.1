@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { Users, Settings, Shield, ChevronDown, Database, Cog, Eye, Zap, QrCode, Plug, Package } from 'lucide-react'
+import { Users, Settings, Shield, ChevronDown, Database, Cog, Eye, Zap, QrCode, Plug, Package, Monitor } from 'lucide-react'
 import { Button } from '../../components/ui/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../../components/ui/card'
 import { Badge } from '../../components/ui/badge'
@@ -48,6 +48,19 @@ interface MongoDBStatus {
   lastChecked?: string
 }
 
+interface SessionStats {
+  totalActiveSessions: number
+  uniqueActiveUsers: number
+  sessionsLast24Hours: number
+  averageSessionDuration: number
+}
+
+interface OnlineUser {
+  userId: string
+  lastActivity: string
+  sessionToken?: string
+}
+
 interface Product {
   _id: string
   name: string
@@ -81,11 +94,17 @@ export default function AdminPage() {
   const [loadingProducts, setLoadingProducts] = useState(false)
   const [users, setUsers] = useState<User[]>([])
   const [loadingUsers, setLoadingUsers] = useState(false)
+  
+  // Session management state
+  const [sessionStats, setSessionStats] = useState<SessionStats | null>(null)
+  const [onlineUsers, setOnlineUsers] = useState<OnlineUser[]>([])
+  const [loadingSessions, setLoadingSessions] = useState(true)
 
-  // Fetch MongoDB status, products, and users on component mount
+  // Fetch MongoDB status, products, users, and sessions on component mount
   useEffect(() => {
     fetchMongoStatus()
     fetchUsers()
+    fetchSessionData()
   }, [])
 
   const fetchUsers = async () => {
@@ -125,6 +144,55 @@ export default function AdminPage() {
       setProducts([])
     } finally {
       setLoadingProducts(false)
+    }
+  }
+
+  const fetchSessionData = async () => {
+    try {
+      setLoadingSessions(true)
+      const response = await fetch('/api/admin/sessions')
+      const data = await response.json()
+      setSessionStats(data.stats)
+      setOnlineUsers(data.onlineUsers)
+    } catch (error) {
+      console.error('Error fetching session data:', error)
+    } finally {
+      setLoadingSessions(false)
+    }
+  }
+
+  const forceLogoutUser = async (userEmail: string) => {
+    try {
+      const response = await fetch('/api/admin/sessions', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ action: 'force-logout-user', userEmail })
+      })
+      
+      if (response.ok) {
+        alert('User sessions logged out successfully')
+        fetchSessionData() // Refresh data
+      }
+    } catch (error) {
+      console.error('Error logging out user:', error)
+    }
+  }
+
+  const cleanupExpiredSessions = async () => {
+    try {
+      const response = await fetch('/api/admin/sessions', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ action: 'cleanup-expired' })
+      })
+      
+      if (response.ok) {
+        const result = await response.json()
+        alert(`Cleaned up ${result.sessionsCleanedUp} expired sessions`)
+        fetchSessionData() // Refresh data
+      }
+    } catch (error) {
+      console.error('Error cleaning up sessions:', error)
     }
   }
 
@@ -898,6 +966,122 @@ export default function AdminPage() {
                 <Button variant="outline" className="w-full">View Collection Stats</Button>
                 <Button variant="outline" className="w-full text-pop-red">Reset Development Data</Button>
               </div>
+            </div>
+          </AccordionContent>
+        </AccordionItem>
+      </Accordion>
+
+      {/* User Sessions - Accordion */}
+      <Accordion type="single" collapsible className="w-full">
+        <AccordionItem value="user-sessions" className="border rounded-lg px-4">
+          <AccordionTrigger className="hover:no-underline">
+            <div className="flex items-center gap-3">
+              <Monitor className="h-5 w-5 text-pop-green" />
+              <div className="text-left">
+                <h3 className="text-lg font-semibold text-pop-black">User Sessions</h3>
+                <p className="text-sm text-gray-600 font-medium">Live logged in user statistics</p>
+              </div>
+            </div>
+          </AccordionTrigger>
+          <AccordionContent>
+            <div className="pt-2 pb-4">
+              {loadingSessions ? (
+                <div className="flex justify-center items-center py-8">
+                  <LoadingSquare />
+                </div>
+              ) : (
+                <>
+                  {/* Session Statistics */}
+                  {sessionStats && (
+                    <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
+                      <div className="bg-gray-50 border border-gray-200 rounded-lg p-4">
+                        <div className="flex items-center justify-between mb-2">
+                          <Monitor className="h-5 w-5 text-gray-600" />
+                          <span className="text-xs font-medium text-gray-500 uppercase tracking-wide">Active</span>
+                        </div>
+                        <div className="text-2xl font-bold text-pop-green mb-1">{sessionStats.totalActiveSessions}</div>
+                        <div className="text-sm text-gray-600">Active Sessions</div>
+                      </div>
+                      <div className="bg-gray-50 border border-gray-200 rounded-lg p-4">
+                        <div className="flex items-center justify-between mb-2">
+                          <Users className="h-5 w-5 text-gray-600" />
+                          <span className="text-xs font-medium text-gray-500 uppercase tracking-wide">Online</span>
+                        </div>
+                        <div className="text-2xl font-bold text-pop-blue mb-1">{sessionStats.uniqueActiveUsers}</div>
+                        <div className="text-sm text-gray-600">Online Users</div>
+                      </div>
+                      <div className="bg-gray-50 border border-gray-200 rounded-lg p-4">
+                        <div className="flex items-center justify-between mb-2">
+                          <Settings className="h-5 w-5 text-gray-600" />
+                          <span className="text-xs font-medium text-gray-500 uppercase tracking-wide">24H</span>
+                        </div>
+                        <div className="text-2xl font-bold text-pop-red mb-1">{sessionStats.sessionsLast24Hours}</div>
+                        <div className="text-sm text-gray-600">Sessions (24h)</div>
+                      </div>
+                      <div className="bg-gray-50 border border-gray-200 rounded-lg p-4">
+                        <div className="flex items-center justify-between mb-2">
+                          <Zap className="h-5 w-5 text-gray-600" />
+                          <span className="text-xs font-medium text-gray-500 uppercase tracking-wide">Avg</span>
+                        </div>
+                        <div className="text-2xl font-bold text-pop-black mb-1">{sessionStats.averageSessionDuration}m</div>
+                        <div className="text-sm text-gray-600">Avg Duration</div>
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Online Users */}
+                  <div className="bg-white rounded-lg border mb-4">
+                    <div className="p-4 border-b">
+                      <h4 className="text-lg font-semibold">Currently Online Users</h4>
+                      <p className="text-sm text-gray-600">Users active in the last 5 minutes</p>
+                    </div>
+                    <div className="p-4">
+                      {onlineUsers.length === 0 ? (
+                        <p className="text-gray-500">No users currently online</p>
+                      ) : (
+                        <div className="space-y-3">
+                          {onlineUsers.map((user, index) => (
+                            <div key={index} className="flex justify-between items-center p-3 bg-gray-50 rounded">
+                              <div>
+                                <span className="font-medium">User: {user.userId}</span>
+                                <p className="text-sm text-gray-600">
+                                  Session expires: {new Date(user.lastActivity).toLocaleString()}
+                                </p>
+                              </div>
+                              <Button
+                                size="sm"
+                                variant="outline"
+                                onClick={() => forceLogoutUser(user.userId)}
+                                className="text-pop-red border-pop-red hover:bg-pop-red hover:text-white"
+                              >
+                                Force Logout
+                              </Button>
+                            </div>
+                          ))}
+                        </div>
+                      )}
+                    </div>
+                  </div>
+
+                  {/* Admin Actions */}
+                  <div className="space-y-2">
+                    <Button 
+                      variant="outline" 
+                      className="w-full"
+                      onClick={cleanupExpiredSessions}
+                    >
+                      Cleanup Expired Sessions
+                    </Button>
+                    <Button 
+                      variant="outline" 
+                      className="w-full"
+                      onClick={fetchSessionData}
+                    >
+                      Refresh Session Data
+                    </Button>
+                  </div>
+                </>
+              )}
             </div>
           </AccordionContent>
         </AccordionItem>
