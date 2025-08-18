@@ -77,13 +77,19 @@ export async function POST(request: NextRequest) {
         if (!userEmail) {
           return NextResponse.json({ error: 'User email required' }, { status: 400 });
         }
+        // Find user first to get their ID
+        const user = await db.collection('users').findOne({ email: userEmail });
+        if (!user) {
+          return NextResponse.json({ error: 'User not found' }, { status: 404 });
+        }
+        
         const result = await db.collection('sessions').deleteMany({
-          userEmail,
+          userId: user._id,
           expires: { $gt: new Date() }
         });
         return NextResponse.json({ 
-          message: `Logged out ${result.modifiedCount} sessions for user`,
-          sessionsLoggedOut: result.modifiedCount 
+          message: `Logged out ${result.deletedCount} sessions for user`,
+          sessionsLoggedOut: result.deletedCount 
         });
         
       case 'cleanup-expired':
@@ -105,50 +111,71 @@ export async function POST(request: NextRequest) {
   }
 }
 
-// Helper functions for user activity tracking
+// Helper functions for NextAuth sessions collection
 async function getSessionStats(db: any) {
-  // With JWT sessions, we'll track active users differently
   const now = new Date();
   const twentyFourHoursAgo = new Date(now.getTime() - 24 * 60 * 60 * 1000);
   
-  // Count active users from our User collection
-  const activeUsers = await db.collection('users').countDocuments({
-    isActive: true
+  // Active sessions (not expired)
+  const activeSessions = await db.collection('sessions').countDocuments({
+    expires: { $gt: now }
   });
   
-  // Count recently active users (those who signed in recently)
-  const recentUsers = await db.collection('users').countDocuments({
-    updatedAt: { $gt: twentyFourHoursAgo }
+  // Unique active users (not expired)
+  const activeUsers = await db.collection('sessions').distinct('userId', {
+    expires: { $gt: now }
+  });
+  
+  // Sessions created in last 24 hours
+  const recentSessions = await db.collection('sessions').countDocuments({
+    createdAt: { $gt: twentyFourHoursAgo }
   });
   
   return {
-    totalActiveSessions: activeUsers, // Approximation
-    uniqueActiveUsers: activeUsers,
-    sessionsLast24Hours: recentUsers,
-    averageSessionDuration: 45 // Placeholder - requires session tracking
+    totalActiveSessions: activeSessions,
+    uniqueActiveUsers: activeUsers.length,
+    sessionsLast24Hours: recentSessions,
+    averageSessionDuration: 45 // Placeholder - complex to calculate
   };
 }
 
 async function getOnlineUsers(db: any) {
-  // With JWT sessions, show recently active users
-  const fiveMinutesAgo = new Date(Date.now() - 5 * 60 * 1000);
+  const now = new Date();
   
-  const recentUsers = await db.collection('users')
+  const activeSessions = await db.collection('sessions')
     .find({
-      isActive: true,
-      updatedAt: { $gt: fiveMinutesAgo }
+      expires: { $gt: now }
     })
-    .sort({ updatedAt: -1 })
+    .sort({ expires: -1 })
     .toArray();
   
-  return recentUsers.map((user: any) => ({
-    userId: user.email,
-    lastActivity: user.updatedAt
-  }));
+  // Group by user ID to get unique users with their latest session
+  const uniqueUsers = new Map();
+  for (const session of activeSessions) {
+    if (!uniqueUsers.has(session.userId)) {
+      // Get user email from users collection
+      const user = await db.collection('users').findOne({ _id: session.userId });
+      uniqueUsers.set(session.userId, {
+        userId: user?.email || session.userId,
+        lastActivity: session.expires,
+        sessionToken: session.sessionToken
+      });
+    }
+  }
+  
+  return Array.from(uniqueUsers.values());
 }
 
 async function getUserActiveSessions(db: any, userEmail: string) {
-  // With JWT sessions, return user info instead
+  // Find user first to get their ID
   const user = await db.collection('users').findOne({ email: userEmail });
-  return user ? [user] : [];
+  if (!user) return [];
+  
+  return await db.collection('sessions')
+    .find({ 
+      userId: user._id,
+      expires: { $gt: new Date() }
+    })
+    .sort({ expires: -1 })
+    .toArray();
 }
