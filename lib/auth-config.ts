@@ -50,7 +50,7 @@ export const authOptions: AuthOptions = {
         token.name = user.name
       }
       
-      // Get or create user in database and add permissions to token
+      // Only fetch user data if we have an email (active session)
       if (token?.email) {
         try {
           // Create or update user in database
@@ -77,8 +77,8 @@ export const authOptions: AuthOptions = {
     },
     
     async session({ session, token }) {
-      // Transfer token data to session
-      if (token) {
+      // Only populate session if we have a valid token with email
+      if (token && token.email) {
         session.user.id = token.userId as string
         session.user.userType = token.userType as string
         session.user.permissions = token.permissions as string[]
@@ -109,7 +109,8 @@ export const authOptions: AuthOptions = {
     }
   },
   session: {
-    strategy: 'jwt'
+    strategy: 'jwt',
+    maxAge: 24 * 60 * 60, // 24 hours
   },
   pages: {
     signIn: '/',

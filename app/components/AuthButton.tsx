@@ -104,9 +104,9 @@ function AuthButtonContent() {
               
               {/* Sign Out */}
               <button
-                onClick={() => {
+                onClick={async () => {
                   setDropdownOpen(false)
-                  signOut({ callbackUrl: '/' })
+                  await signOut({ callbackUrl: '/', redirect: true })
                 }}
                 className="w-full flex items-center px-3 py-2 text-sm text-gray-700 hover:bg-pop-red hover:text-white systematic-caps text-left"
               >

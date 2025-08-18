@@ -218,9 +218,9 @@ export default function Navigation() {
                       )}
                       
                       <button
-                        onClick={() => {
+                        onClick={async () => {
                           setUserMenuOpen(false)
-                          signOut({ callbackUrl: '/' })
+                          await signOut({ callbackUrl: '/', redirect: true })
                         }}
                         className="w-full flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-pop-red hover:text-white systematic-caps text-left whitespace-nowrap"
                       >
