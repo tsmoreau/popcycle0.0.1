@@ -60,8 +60,7 @@ export default function About() {
                   </CardHeader>
                   <CardContent>
                     <p className="text-pop-gray">
-                      Builder, artist, and teacher. Responsible for product
-                      development, backend systems, and hands-on R&D.
+                      Builder, artist, and teacher. Leads product development, systems design, and hands-on R&D.
                     </p>
                   </CardContent>
                 </Card>
@@ -82,8 +81,7 @@ export default function About() {
                   </CardHeader>
                   <CardContent>
                     <p className="text-pop-gray">
-                      Connects people with systems of impact, education, and
-                      enjoyment. Leads outreach and collaborations.
+                      Connector of people, impact, and ideas. Heads outreach, collaborations, and partnerships.
                     </p>
                   </CardContent>
                 </Card>
@@ -98,7 +96,7 @@ export default function About() {
                     <CardTitle className="systematic-caps text-pop-black px-10 pb-4 pt-2">
                      Argo
                     </CardTitle>
-                    <CardTitle className="systematic-caps text-pop-black">
+<br/>                    <CardTitle className="systematic-caps text-pop-black">
                       Human Relations Lead
                     </CardTitle>
                   </CardHeader>

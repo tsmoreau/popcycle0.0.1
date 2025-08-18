@@ -27,7 +27,7 @@ export default function Home() {
           
           <p className="text-xl lg:text-2xl max-w-4xl mx-auto mb-12 leading-relaxed text-pop-black">
             Transform your plastic waste into custom-branded products with complete traceability. 
-            Every item tells the verified story from your bin back to your space.
+            Every item tells a story of sustaiabilty, from your bins and back again.
           </p>
           
           <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
@@ -57,7 +57,7 @@ export default function Home() {
             Amazon can tell you where your package is at 2:47 AM. But where's your plastic bottle right now?
           </p>
           <div className="text-xl text-pop-green font-medium">
-            True sustainability isn't what you buy — it's what you can prove about what you waste.
+            True sustainability isn't just about what you buy, it's about what you waste.
           </div>
         </div>
       </section>
