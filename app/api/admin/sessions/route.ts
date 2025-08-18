@@ -111,71 +111,49 @@ export async function POST(request: NextRequest) {
   }
 }
 
-// Helper functions for NextAuth sessions collection
+// Helper functions for session tracking with JWT + user activity
 async function getSessionStats(db: any) {
   const now = new Date();
   const twentyFourHoursAgo = new Date(now.getTime() - 24 * 60 * 60 * 1000);
+  const fiveMinutesAgo = new Date(now.getTime() - 5 * 60 * 1000);
   
-  // Active sessions (not expired)
-  const activeSessions = await db.collection('sessions').countDocuments({
-    expires: { $gt: now }
+  // Count active users (those who signed in recently)
+  const activeUsers = await db.collection('users').countDocuments({
+    isActive: true,
+    updatedAt: { $gt: fiveMinutesAgo }
   });
   
-  // Unique active users (not expired)
-  const activeUsers = await db.collection('sessions').distinct('userId', {
-    expires: { $gt: now }
-  });
-  
-  // Sessions created in last 24 hours
-  const recentSessions = await db.collection('sessions').countDocuments({
-    createdAt: { $gt: twentyFourHoursAgo }
+  // Count users who signed in in last 24 hours
+  const recentUsers = await db.collection('users').countDocuments({
+    updatedAt: { $gt: twentyFourHoursAgo }
   });
   
   return {
-    totalActiveSessions: activeSessions,
-    uniqueActiveUsers: activeUsers.length,
-    sessionsLast24Hours: recentSessions,
-    averageSessionDuration: 45 // Placeholder - complex to calculate
+    totalActiveSessions: activeUsers,
+    uniqueActiveUsers: activeUsers,
+    sessionsLast24Hours: recentUsers,
+    averageSessionDuration: 45
   };
 }
 
 async function getOnlineUsers(db: any) {
-  const now = new Date();
+  const fiveMinutesAgo = new Date(Date.now() - 5 * 60 * 1000);
   
-  const activeSessions = await db.collection('sessions')
+  const recentUsers = await db.collection('users')
     .find({
-      expires: { $gt: now }
+      isActive: true,
+      updatedAt: { $gt: fiveMinutesAgo }
     })
-    .sort({ expires: -1 })
+    .sort({ updatedAt: -1 })
     .toArray();
   
-  // Group by user ID to get unique users with their latest session
-  const uniqueUsers = new Map();
-  for (const session of activeSessions) {
-    if (!uniqueUsers.has(session.userId)) {
-      // Get user email from users collection
-      const user = await db.collection('users').findOne({ _id: session.userId });
-      uniqueUsers.set(session.userId, {
-        userId: user?.email || session.userId,
-        lastActivity: session.expires,
-        sessionToken: session.sessionToken
-      });
-    }
-  }
-  
-  return Array.from(uniqueUsers.values());
+  return recentUsers.map((user: any) => ({
+    userId: user.email,
+    lastActivity: user.updatedAt
+  }));
 }
 
 async function getUserActiveSessions(db: any, userEmail: string) {
-  // Find user first to get their ID
   const user = await db.collection('users').findOne({ email: userEmail });
-  if (!user) return [];
-  
-  return await db.collection('sessions')
-    .find({ 
-      userId: user._id,
-      expires: { $gt: new Date() }
-    })
-    .sort({ expires: -1 })
-    .toArray();
+  return user ? [user] : [];
 }
