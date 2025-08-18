@@ -200,3 +200,38 @@ export interface Order {
   createdAt: Date;
   updatedAt: Date;
 }
+
+// Session - Active user session tracking for "who's online" and device management
+export interface Session {
+  _id: ObjectId;
+  userId: ObjectId;              // Reference to User
+  sessionToken: string;          // NextAuth JWT token or session identifier
+  
+  // Device & Connection Info
+  ipAddress: string;
+  userAgent: string;
+  deviceType: 'desktop' | 'mobile' | 'tablet' | 'unknown';
+  browser: string;               // Chrome, Firefox, Safari, etc.
+  
+  // Session Lifecycle
+  createdAt: Date;              // When session started
+  lastActivity: Date;           // Last API call or page visit
+  expiresAt: Date;              // When session expires
+  isActive: boolean;            // Currently active
+  
+  // Activity Tracking
+  pageViews: number;            // Total pages visited this session
+  lastPage: string;             // Last URL visited
+  loginMethod: 'google';        // Currently only Google OAuth
+  
+  // Optional Metadata
+  location?: {
+    country?: string;
+    city?: string;
+    timezone?: string;
+  };
+  
+  // Logout tracking
+  loggedOutAt?: Date;
+  logoutReason?: 'manual' | 'expired' | 'forced';
+}

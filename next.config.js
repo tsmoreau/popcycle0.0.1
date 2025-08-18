@@ -5,7 +5,8 @@ const nextConfig = {
   },
   env: {
     PORT: process.env.PORT || "3000"
-  }
+  },
+  serverExternalPackages: ['mongodb']
 }
 
 module.exports = nextConfig

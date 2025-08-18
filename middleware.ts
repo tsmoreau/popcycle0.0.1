@@ -1,83 +1,83 @@
-import { withAuth } from "next-auth/middleware"
+import { withAuth } from 'next-auth/middleware'
+import { NextResponse } from 'next/server'
+import type { NextRequest } from 'next/server'
+
+// Session tracking handled via client-side API calls to avoid Edge Runtime limitations
 
 export default withAuth(
   function middleware(req) {
     const token = req.nextauth.token
-    const pathname = req.nextUrl.pathname
-    
-    // Portal route protection with granular permissions
-    if (pathname.startsWith("/portal")) {
-      const userType = token?.userType
-      const permissions = token?.permissions || []
-      
-      // Super admin has access to everything
-      if (userType === 'super_admin') {
-        return
+    const { pathname } = req.nextUrl
+
+    // Role-based access control for portal routes
+    if (pathname.startsWith('/portal')) {
+      if (!token) {
+        return NextResponse.redirect(new URL('/', req.url))
       }
-      
-      // Check specific portal routes
-      if (pathname.startsWith("/portal/admin")) {
-        const hasAdminAccess = ['admin'].some(role => userType === role) || 
-                               permissions.includes('admin')
-        if (!hasAdminAccess) {
-          return new Response("Admin access required", { status: 403 })
+
+      const userType = token.userType as string
+      const permissions = token.permissions as string[]
+
+      // Admin portal - requires admin or super_admin
+      if (pathname.startsWith('/portal/admin')) {
+        if (!['admin', 'super_admin'].includes(userType)) {
+          return NextResponse.redirect(new URL('/portal', req.url))
         }
       }
-      
-      if (pathname.startsWith("/portal/operations")) {
-        const hasOpsAccess = ['admin', 'staff'].some(role => userType === role) || 
-                            permissions.includes('operations')
-        if (!hasOpsAccess) {
-          return new Response("Operations access required", { status: 403 })
+
+      // Operations portal - requires staff level access
+      if (pathname.startsWith('/portal/operations')) {
+        if (!['staff', 'admin', 'super_admin'].includes(userType)) {
+          return NextResponse.redirect(new URL('/portal', req.url))
         }
       }
-      
-      if (pathname.startsWith("/portal/crm")) {
-        const hasCrmAccess = ['admin', 'staff'].some(role => userType === role) || 
-                            permissions.includes('crm')
-        if (!hasCrmAccess) {
-          return new Response("CRM access required", { status: 403 })
+
+      // CRM portal - requires staff level access
+      if (pathname.startsWith('/portal/crm')) {
+        if (!['staff', 'admin', 'super_admin'].includes(userType)) {
+          return NextResponse.redirect(new URL('/portal', req.url))
         }
       }
-      
-      if (pathname.startsWith("/portal/financial")) {
-        const hasFinancialAccess = ['admin'].some(role => userType === role) || 
-                                   permissions.includes('financial')
-        if (!hasFinancialAccess) {
-          return new Response("Financial access required", { status: 403 })
+
+      // Financial portal - requires admin level access
+      if (pathname.startsWith('/portal/financial')) {
+        if (!['admin', 'super_admin'].includes(userType)) {
+          return NextResponse.redirect(new URL('/portal', req.url))
         }
       }
-      
-      if (pathname.startsWith("/portal/partner")) {
-        const hasPartnerAccess = ['partner_owner'].some(role => userType === role) || 
-                                permissions.includes('partner')
-        if (!hasPartnerAccess) {
-          return new Response("Partner access required", { status: 403 })
+
+      // Partner portal - requires partner_owner or admin level access
+      if (pathname.startsWith('/portal/partner')) {
+        if (!['partner_owner', 'admin', 'super_admin'].includes(userType)) {
+          return NextResponse.redirect(new URL('/portal', req.url))
         }
-      }
-      
-      // General portal access - must have some role or permissions
-      const hasGeneralPortalAccess = (userType && ['super_admin', 'admin', 'staff', 'partner_owner'].includes(userType)) || 
-                                     permissions.length > 0
-      
-      if (!hasGeneralPortalAccess) {
-        return new Response("Portal access requires staff privileges", { status: 403 })
       }
     }
+
+    return NextResponse.next()
   },
   {
     callbacks: {
       authorized: ({ token, req }) => {
+        // Allow access to public routes
+        if (req.nextUrl.pathname.startsWith('/api/auth') || 
+            req.nextUrl.pathname === '/' ||
+            req.nextUrl.pathname.startsWith('/shop') ||
+            req.nextUrl.pathname.startsWith('/track') ||
+            req.nextUrl.pathname.startsWith('/about') ||
+            req.nextUrl.pathname.startsWith('/services')) {
+          return true
+        }
+        
         // Require authentication for portal routes
-        if (req.nextUrl.pathname.startsWith("/portal")) {
+        if (req.nextUrl.pathname.startsWith('/portal') || 
+            req.nextUrl.pathname.startsWith('/profile')) {
           return !!token
         }
+        
         return true
       },
     },
   }
 )
 
-export const config = {
-  matcher: ["/portal/:path*"]
-}

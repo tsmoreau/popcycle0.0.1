@@ -3,6 +3,7 @@
 import { SessionProvider } from 'next-auth/react'
 import { createContext, useContext, useEffect, useState } from 'react'
 import { useSession } from 'next-auth/react'
+import { usePathname } from 'next/navigation'
 
 // Extended user context for organization-specific state
 interface UserContextType {
@@ -16,12 +17,27 @@ const UserContext = createContext<UserContextType | null>(null)
 
 function UserContextProvider({ children }: { children: React.ReactNode }) {
   const { data: session, update } = useSession()
+  const pathname = usePathname()
   const [contextData, setContextData] = useState<UserContextType>({
     isStaff: false,
     hasPortalAccess: false,
     orgId: null,
     refreshUserData: async () => {}
   })
+
+  // Track session activity on page changes
+  useEffect(() => {
+    if (session?.user && (session as any).sessionToken) {
+      fetch('/api/sessions/activity', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ 
+          sessionToken: (session as any).sessionToken,
+          lastPage: pathname 
+        })
+      }).catch(error => console.error('Session tracking error:', error))
+    }
+  }, [session, pathname])
 
   const refreshUserData = async () => {
     // Force session refresh to get latest database data

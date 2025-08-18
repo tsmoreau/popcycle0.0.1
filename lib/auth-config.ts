@@ -1,6 +1,8 @@
 import GoogleProvider from 'next-auth/providers/google'
 import type { AuthOptions } from 'next-auth'
 import { createOrUpdateUser, getUserByEmail, getUserPermissions } from './auth-helpers'
+import { createSession, deactivateSession } from './session-helpers'
+import { ObjectId } from 'mongodb'
 
 // Dynamic NEXTAUTH_URL based on environment
 const getNextAuthUrl = () => {
@@ -44,7 +46,7 @@ export const authOptions: AuthOptions = {
       return !!user?.email
     },
     
-    async jwt({ token, user }) {
+    async jwt({ token, user, trigger, session }) {
       // If this is a new sign in (user object exists), sync with database
       if (user) {
         token.email = user.email
@@ -63,6 +65,19 @@ export const authOptions: AuthOptions = {
           token.userType = dbUser.userType
           token.permissions = getUserPermissions(dbUser)
           token.orgId = dbUser.orgId?.toString()
+          
+          // Create session tracking record
+          // Note: In production, get real IP from headers
+          const sessionToken = Math.random().toString(36).substring(2, 15)
+          token.sessionToken = sessionToken
+          
+          await createSession(
+            dbUser._id,
+            sessionToken,
+            '127.0.0.1', // Placeholder - would get from request headers in middleware
+            'Unknown' // Placeholder - would get from request headers
+          );
+          
         } catch (error) {
           console.error('Error syncing user with database:', error)
           // Fallback for database errors
@@ -92,6 +107,20 @@ export const authOptions: AuthOptions = {
       else if (new URL(url).origin === actualBaseUrl) return url
       return actualBaseUrl
     }
+  },
+  events: {
+    async signOut(message) {
+      console.log('User signed out:', message)
+      
+      // Deactivate session in database
+      if (message.token?.sessionToken) {
+        try {
+          await deactivateSession(message.token.sessionToken as string, 'manual')
+        } catch (error) {
+          console.error('Error deactivating session:', error)
+        }
+      }
+    },
   },
   session: {
     strategy: 'jwt',
