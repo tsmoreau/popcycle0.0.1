@@ -17,7 +17,6 @@ process.env.NEXTAUTH_URL = getNextAuthUrl()
 
 export const authOptions: AuthOptions = {
   secret: process.env.NEXTAUTH_SECRET,
-  adapter: MongoDBAdapter(clientPromise),
   providers: [
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID!.trim(),
@@ -99,9 +98,8 @@ export const authOptions: AuthOptions = {
     }
   },
   session: {
-    strategy: 'database',
+    strategy: 'jwt',
     maxAge: 24 * 60 * 60, // 24 hours
-    updateAge: 24 * 60 * 60, // 24 hours
   },
   pages: {
     signIn: '/',
