@@ -13,6 +13,7 @@ interface SessionStats {
 interface OnlineUser {
   userId: string
   lastActivity: string
+  sessionExpires?: string
   sessionToken?: string
 }
 
@@ -126,8 +127,13 @@ export default function SessionsPage() {
                   <div>
                     <span className="font-medium">User: {user.userId}</span>
                     <p className="text-sm text-gray-600">
-                      Session expires: {new Date(user.lastActivity).toLocaleString()}
+                      Last active: {new Date(user.lastActivity).toLocaleString()}
                     </p>
+                    {user.sessionExpires && (
+                      <p className="text-xs text-gray-500">
+                        Session expires: {new Date(user.sessionExpires).toLocaleString()}
+                      </p>
+                    )}
                   </div>
                   <button
                     onClick={() => forceLogoutUser(user.userId)}

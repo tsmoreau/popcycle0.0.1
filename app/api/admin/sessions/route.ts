@@ -157,7 +157,8 @@ async function getOnlineUsers(db: any) {
       const user = await db.collection('users').findOne({ _id: session.userId });
       uniqueUsers.set(session.userId, {
         userId: user?.email || session.userId,
-        lastActivity: session.expires,
+        lastActivity: session.createdAt || session.expires, // Use session creation time, not expiration
+        sessionExpires: session.expires, // Add actual expiration time
         sessionToken: session.sessionToken
       });
     }
