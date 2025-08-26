@@ -43,6 +43,31 @@ export const authOptions: AuthOptions = {
         return false
       }
       
+      // Clean up expired sessions for this user on login
+      if (user?.email) {
+        try {
+          const client = await clientPromise
+          const db = client.db('PopCycle')
+          
+          // Find the user first to get their ObjectId
+          const dbUser = await getUserByEmail(user.email)
+          if (dbUser) {
+            // Delete expired sessions for this user
+            const result = await db.collection('sessions').deleteMany({
+              userId: dbUser._id,
+              expires: { $lt: new Date() }
+            })
+            
+            if (result.deletedCount > 0) {
+              console.log(`Cleaned up ${result.deletedCount} expired sessions for user ${user.email}`)
+            }
+          }
+        } catch (error) {
+          console.error('Error cleaning up expired sessions:', error)
+          // Don't block login if cleanup fails
+        }
+      }
+      
       // Sync NextAuth user with our custom User collection on sign in
       if (user && account?.provider === 'google') {
         try {
