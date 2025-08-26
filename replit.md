@@ -65,6 +65,18 @@ PopCycle is built as a unified Next.js PWA with MongoDB, managing all core opera
 - **Admin Session Dashboard**: Interface at `/portal/admin/sessions` for monitoring active sessions and force logout capabilities
 - **Standard Session Schema**: Uses NextAuth's built-in session structure for compatibility and future-proofing
 
+### Session Management and Activity Logging Strategy (January 2025)
+- **Two-Tier Data Architecture**: Separation of authentication state (sessions collection) from historical activity data (future activity collection)
+- **Session Cleanup Strategy**: Login-time cleanup approach removes expired sessions for userId on new authentication, preventing session accumulation without requiring scheduled jobs
+- **Serverless-Compatible Design**: User-triggered maintenance fits serverless architecture, avoiding external cron dependencies
+- **Activity Collection Schema**: Planned comprehensive logging system with structured data: `{userId, domain, action, resource, timestamp, metadata}` supporting business analytics, compliance auditing, and user behavior tracking
+- **Database Collections**:
+  - **sessions**: Current authentication state (NextAuth managed)
+  - **accounts**: OAuth provider linkages (NextAuth managed) 
+  - **users**: Core user profiles and application data
+  - **activity** (planned): Historical event logging across all system domains
+- **Activity Scope**: Captures authentication events, operations workflow, admin actions, QR code scans, user interactions, and system changes with cross-referenced metadata for comprehensive audit trails
+
 ## External Dependencies
 
 - **Database**: MongoDB
