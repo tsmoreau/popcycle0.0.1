@@ -74,20 +74,21 @@ export default function Navigation() {
 
   return (
     <nav className="sticky top-0 z-50 bg-white border-b border-gray-200">
-      <div className="max-w-7xl mx-auto px-6">
-        <div className="relative flex items-center justify-between h-20">
+      <div className="max-w-full mx-auto pt-2">
+        <div className=" relative flex  justify-between h-20">
+          <div className="flex mb-1">
           {/* Logo */}
-          <Link href="/" className="flex items-center space-x-3 group">
-            <div className="w-12 h-12 bg-pop-green flex items-center justify-center transition-all group-hover:bg-opacity-90">
+          <Link href="/" className="ml-12 self-end mb-2 flex items-center space-x-2 group">
+            <div className="w-10 h-10 bg-pop-green flex items-center justify-center transition-all group-hover:bg-opacity-90 mt-1.5">
               <span className="text-white helvetica-bold text-xl">P</span>
             </div>
-            <span className="helvetica-bold text-2xl tracking-tight text-gray-900">
+            <span className="helvetica-bold text-4xl mt-2 tracking-tighter text-gray-900">
               PopCycle
             </span>
           </Link>
 
           {/* Absolutely centered navigation links */}
-          <div className="hidden lg:flex items-center space-x-8 absolute left-1/2 transform -translate-x-1/2 whitespace-nowrap">
+          <div className="hidden self-end lg:flex items-center space-x-8 ml-8">
             {/* About Dropdown */}
             <div
               className="relative"
@@ -95,7 +96,7 @@ export default function Navigation() {
               onMouseLeave={() => setAboutOpen(false)}
             >
               <button
-                className={`systematic-caps text-sm hover:text-pop-green transition-colors flex items-center space-x-1 py-2 ${
+                className={`font-base text-normal hover:text-pop-green transition-colors flex items-center space-x-1 py-2 ${
                   pathname?.startsWith("/about") ? "nav-link-active" : ""
                 }`}
               >
@@ -124,7 +125,7 @@ export default function Navigation() {
               onMouseLeave={() => setServicesOpen(false)}
             >
               <button
-                className={`font-semibold text-sm hover:text-pop-green transition-colors flex items-center space-x-1 py-2 ${
+                className={`font-base text-normal hover:text-pop-green transition-colors flex items-center space-x-1 py-2 ${
                   pathname === "/services" ? "nav-link-active" : ""
                 }`}
               >
@@ -149,7 +150,7 @@ export default function Navigation() {
             {/* Shop */}
             <Link
               href="/shop"
-              className={`font-semibold text-sm hover:text-pop-green transition-colors py-2 ${
+              className={`font-base text-normal hover:text-pop-green transition-colors py-2 ${
                 pathname === "/shop" ? "nav-link-active" : ""
               }`}
             >
@@ -159,18 +160,21 @@ export default function Navigation() {
             {/* Track */}
             <Link
               href="/track"
-              className={`systematic-caps text-sm hover:text-pop-green transition-colors py-2 ${
+              className={`font-base text-normal hover:text-pop-green transition-colors py-2 ${
                 pathname === "/track" ? "nav-link-active" : ""
               }`}
             >
               Track
             </Link>
           </div>
+            </div>
+            
 
           {/* Right-aligned User Menu / Auth Button */}
-          <div className="hidden lg:block">
+          <div className="hidden lg:block self-center mr-12">
             {session ? (
-              <div className="relative" ref={userMenuRef}>
+              <div className="relative " ref={userMenuRef}>
+                
                 <button
                   onClick={() => setUserMenuOpen(!userMenuOpen)}
                   className="flex items-center space-x-3 hover:opacity-80 transition-opacity"
@@ -245,7 +249,7 @@ export default function Navigation() {
           </div>
 
           {/* Mobile menu button */}
-          <div className="lg:hidden">
+          <div className="lg:hidden self-center mr-12">
             <Button
               variant="ghost"
               size="sm"
