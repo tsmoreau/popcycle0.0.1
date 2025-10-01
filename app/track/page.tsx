@@ -155,28 +155,32 @@ export default function Track() {
           </div>
 
           {/* Categories Filter */}
-          <div className="mb-16 max-w-full">
-            <div className="flex flex-wrap gap-4 justify-center">
-              {[
-                "ALL",
-                "ACTIVE BINS",
-                "COLLECTED BATCHES",
-                "PRESSED BLANKS",
-                "MANUFACTURED ITEMS",
-                "ASSEMBLED ITEMS",
-              ].map((category) => (
-                <button
-                  key={category}
-                  className={`px-6 py-3 border border-gray-300 transition-colors systematic-caps ${
-                    selectedFilter === category
-                      ? "bg-pop-black text-white"
-                      : "bg-white hover:bg-pop-black hover:text-white"
-                  }`}
-                  onClick={() => setSelectedFilter(category)}
+          <div className="mb-16 max-w-full border-b border-gray-200 pb-8">
+            <div className="flex items-center justify-between gap-4 flex-wrap">
+              <div className="flex items-center gap-4">
+                <span className="text-sm text-pop-gray">Filter items:</span>
+                <select
+                  value={selectedFilter}
+                  onChange={(e) => setSelectedFilter(e.target.value)}
+                  className="border border-gray-300 bg-white px-4 py-2 text-sm systematic-caps appearance-none cursor-pointer hover:border-gray-400 transition-colors"
                 >
-                  {category}
-                </button>
-              ))}
+                  {[
+                    "ALL",
+                    "ACTIVE BINS",
+                    "COLLECTED BATCHES",
+                    "PRESSED BLANKS",
+                    "MANUFACTURED ITEMS",
+                    "ASSEMBLED ITEMS",
+                  ].map((category) => (
+                    <option key={category} value={category}>
+                      {category}
+                    </option>
+                  ))}
+                </select>
+              </div>
+              <div className="text-sm text-pop-gray">
+                {getFilteredCodes().length} {getFilteredCodes().length === 1 ? 'item' : 'items'}
+              </div>
             </div>
           </div>
         </div><div>
