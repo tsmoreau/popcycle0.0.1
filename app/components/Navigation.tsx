@@ -205,33 +205,57 @@ export default function Navigation() {
               {servicesOpen && (
                 <div className="fixed left-0 right-0 top-[88px] z-50 bg-white border-t border-gray-200 shadow-lg">
                   <div className="max-w-7xl mx-auto px-12 py-12">
-                    <div className="grid grid-cols-4 gap-12">
-                      {servicesSections.map((section, idx) => (
-                        <div key={idx}>
-                          <h3 className="systematic-caps text-sm font-bold text-gray-400 mb-4">
-                            {section.title}
-                          </h3>
-                          <div className="space-y-2">
-                            {section.items.map((item) => (
-                              <Link
-                                key={item.href}
-                                href={item.href}
-                                className="block text-sm hover:text-pop-green transition-colors"
-                              >
-                                {item.label}
-                              </Link>
-                            ))}
+                    <div className="grid grid-cols-6 gap-8">
+                      <div className="col-span-1">
+                        {servicesSections.map((section, idx) => (
+                          <div key={idx} className="mb-8">
+                            <h3 className="systematic-caps text-sm font-bold text-gray-400 mb-4">
+                              {section.title}
+                            </h3>
+                            <div className="space-y-2">
+                              {section.items.map((item) => (
+                                <Link
+                                  key={item.href}
+                                  href={item.href}
+                                  className="block text-sm hover:text-pop-green transition-colors"
+                                >
+                                  {item.label}
+                                </Link>
+                              ))}
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                      <div className="col-span-5 grid grid-cols-3 gap-6">
+                        <div className="aspect-[3/4] bg-gray-100 relative group cursor-pointer overflow-hidden">
+                          <div className="absolute inset-0 flex items-center justify-center">
+                            <div className="text-center">
+                              <div className="w-12 h-12 bg-pop-blue mx-auto mb-3 flex items-center justify-center">
+                                <span className="text-white helvetica-bold text-xl">P</span>
+                              </div>
+                              <p className="systematic-caps text-xs text-gray-600 px-4">Collection</p>
+                            </div>
                           </div>
                         </div>
-                      ))}
-                      <div className="col-span-2 bg-gray-100 -m-4 p-8 flex items-center justify-center">
-                        <div className="text-center">
-                          <div className="w-16 h-16 bg-pop-blue mx-auto mb-4 flex items-center justify-center">
-                            <span className="text-white helvetica-bold text-3xl">P</span>
+                        <div className="aspect-[3/4] bg-gray-100 relative group cursor-pointer overflow-hidden">
+                          <div className="absolute inset-0 flex items-center justify-center">
+                            <div className="text-center">
+                              <div className="w-12 h-12 bg-pop-blue mx-auto mb-3 flex items-center justify-center">
+                                <span className="text-white helvetica-bold text-xl">P</span>
+                              </div>
+                              <p className="systematic-caps text-xs text-gray-600 px-4">Processing</p>
+                            </div>
                           </div>
-                          <p className="systematic-caps text-sm text-gray-600">
-                            Complete circular economy solutions
-                          </p>
+                        </div>
+                        <div className="aspect-[3/4] bg-gray-100 relative group cursor-pointer overflow-hidden">
+                          <div className="absolute inset-0 flex items-center justify-center">
+                            <div className="text-center">
+                              <div className="w-12 h-12 bg-pop-blue mx-auto mb-3 flex items-center justify-center">
+                                <span className="text-white helvetica-bold text-xl">P</span>
+                              </div>
+                              <p className="systematic-caps text-xs text-gray-600 px-4">Products</p>
+                            </div>
+                          </div>
                         </div>
                       </div>
                     </div>
