@@ -57,23 +57,43 @@ export default function Navigation() {
     return null;
   }
 
-  const aboutItems = [
-    { href: "/about#team", label: "Team" },
-    { href: "/about#story", label: "Story" },
-    { href: "/about#process", label: "Process" },
-    { href: "/about#contact", label: "Contact" },
-    { href: "/about#faq", label: "FAQ" },
+  const aboutSections = [
+    {
+      title: "Company",
+      items: [
+        { href: "/about#team", label: "Team" },
+        { href: "/about#story", label: "Story" },
+        { href: "/about#process", label: "Process" },
+      ],
+    },
+    {
+      title: "Connect",
+      items: [
+        { href: "/about#contact", label: "Contact" },
+        { href: "/about#faq", label: "FAQ" },
+      ],
+    },
   ];
 
-  const servicesItems = [
+  const servicesSections = [
     {
-      href: "/services#community-partnerships",
-      label: "Waste Audits & Impact Reports",
+      title: "For Organizations",
+      items: [
+        { href: "/services#community-partnerships", label: "Waste Audits & Impact Reports" },
+        { href: "/services#collection-services", label: "Collection Services" },
+      ],
     },
-    { href: "/services#collection-services", label: "Collection Services" },
-    { href: "/services#custom-products", label: "Traceable Custom Products" },
-    { href: "/services#workshops-events", label: "Workshops & Events" },
+    {
+      title: "For Communities",
+      items: [
+        { href: "/services#custom-products", label: "Traceable Custom Products" },
+        { href: "/services#workshops-events", label: "Workshops & Events" },
+      ],
+    },
   ];
+
+  const aboutItems = aboutSections.flatMap(section => section.items);
+  const servicesItems = servicesSections.flatMap(section => section.items);
 
   return (
     <nav className="sticky top-0 z-50 bg-white border-b border-gray-200">
@@ -107,16 +127,39 @@ export default function Navigation() {
               </button>
 
               {aboutOpen && (
-                <div className="absolute top-full left-0 min-w-max bg-white border border-gray-200 whitespace-nowrap overflow-hidden mt-2">
-                  {aboutItems.map((item) => (
-                    <Link
-                      key={item.href}
-                      href={item.href}
-                      className="block w-full text-left px-5 py-3 systematic-caps text-sm hover:bg-pop-green hover:text-white transition-colors"
-                    >
-                      {item.label}
-                    </Link>
-                  ))}
+                <div className="fixed left-0 right-0 top-[88px] z-50 bg-white border-t border-gray-200 shadow-lg">
+                  <div className="max-w-7xl mx-auto px-12 py-12">
+                    <div className="grid grid-cols-4 gap-12">
+                      {aboutSections.map((section, idx) => (
+                        <div key={idx}>
+                          <h3 className="systematic-caps text-sm font-bold text-gray-400 mb-4">
+                            {section.title}
+                          </h3>
+                          <div className="space-y-2">
+                            {section.items.map((item) => (
+                              <Link
+                                key={item.href}
+                                href={item.href}
+                                className="block text-sm hover:text-pop-green transition-colors"
+                              >
+                                {item.label}
+                              </Link>
+                            ))}
+                          </div>
+                        </div>
+                      ))}
+                      <div className="col-span-2 bg-gray-100 -m-4 p-8 flex items-center justify-center">
+                        <div className="text-center">
+                          <div className="w-16 h-16 bg-pop-green mx-auto mb-4 flex items-center justify-center">
+                            <span className="text-white helvetica-bold text-3xl">P</span>
+                          </div>
+                          <p className="systematic-caps text-sm text-gray-600">
+                            Transforming waste into impact
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               )}
             </div>
@@ -136,16 +179,39 @@ export default function Navigation() {
               </button>
 
               {servicesOpen && (
-                <div className="absolute top-full left-0 w-max bg-white border border-gray-200 mr-4 overflow-hidden mt-2">
-                  {servicesItems.map((item) => (
-                    <Link
-                      key={item.href}
-                      href={item.href}
-                      className="block w-full text-left px-5 py-3 pr-6 systematic-caps text-sm hover:bg-pop-green hover:text-white transition-colors whitespace-normal"
-                    >
-                      {item.label}
-                    </Link>
-                  ))}
+                <div className="fixed left-0 right-0 top-[88px] z-50 bg-white border-t border-gray-200 shadow-lg">
+                  <div className="max-w-7xl mx-auto px-12 py-12">
+                    <div className="grid grid-cols-4 gap-12">
+                      {servicesSections.map((section, idx) => (
+                        <div key={idx}>
+                          <h3 className="systematic-caps text-sm font-bold text-gray-400 mb-4">
+                            {section.title}
+                          </h3>
+                          <div className="space-y-2">
+                            {section.items.map((item) => (
+                              <Link
+                                key={item.href}
+                                href={item.href}
+                                className="block text-sm hover:text-pop-green transition-colors"
+                              >
+                                {item.label}
+                              </Link>
+                            ))}
+                          </div>
+                        </div>
+                      ))}
+                      <div className="col-span-2 bg-gray-100 -m-4 p-8 flex items-center justify-center">
+                        <div className="text-center">
+                          <div className="w-16 h-16 bg-pop-blue mx-auto mb-4 flex items-center justify-center">
+                            <span className="text-white helvetica-bold text-3xl">P</span>
+                          </div>
+                          <p className="systematic-caps text-sm text-gray-600">
+                            Complete circular economy solutions
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               )}
             </div>
