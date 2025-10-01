@@ -199,36 +199,24 @@ export default function Services() {
             </p>
           </div>
           
-          <div className="grid md:grid-cols-3 gap-8">
-            <PopArtContainer color="green" shadow>
-              <Card className="border border-gray-200 text-center">
-                <CardContent className="p-6">
-                  <Wrench className="w-12 h-12 text-pop-green mx-auto mb-4" />
-                  <h3 className="systematic-caps text-lg mb-2">Design Consultation</h3>
-                  <p className="text-sm text-pop-gray">Custom product development tailored to your educational needs</p>
-                </CardContent>
-              </Card>
-            </PopArtContainer>
+          <div className="grid md:grid-cols-3 gap-0 border border-gray-200 divide-x divide-y divide-gray-200 bg-white">
+            <div className="text-center p-8">
+              <Wrench className="w-12 h-12 text-pop-green mx-auto mb-4" />
+              <h3 className="systematic-caps text-lg mb-2 font-bold">Design Consultation</h3>
+              <p className="text-sm text-pop-gray">Custom product development tailored to your educational needs</p>
+            </div>
             
-            <PopArtContainer color="blue" shadow>
-              <Card className="border border-gray-200 text-center">
-                <CardContent className="p-6">
-                  <Factory className="w-12 h-12 text-pop-blue mx-auto mb-4" />
-                  <h3 className="systematic-caps text-lg mb-2">Prototyping</h3>
-                  <p className="text-sm text-pop-gray">Rapid prototyping and testing before full production runs</p>
-                </CardContent>
-              </Card>
-            </PopArtContainer>
+            <div className="text-center p-8">
+              <Factory className="w-12 h-12 text-pop-blue mx-auto mb-4" />
+              <h3 className="systematic-caps text-lg mb-2 font-bold">Prototyping</h3>
+              <p className="text-sm text-pop-gray">Rapid prototyping and testing before full production runs</p>
+            </div>
             
-            <PopArtContainer color="red" shadow>
-              <Card className="border border-gray-200 text-center">
-                <CardContent className="p-6">
-                  <Package className="w-12 h-12 text-pop-red mx-auto mb-4" />
-                  <h3 className="systematic-caps text-lg mb-2">Production</h3>
-                  <p className="text-sm text-pop-gray">Scalable manufacturing with complete QR provenance tracking</p>
-                </CardContent>
-              </Card>
-            </PopArtContainer>
+            <div className="text-center p-8">
+              <Package className="w-12 h-12 text-pop-red mx-auto mb-4" />
+              <h3 className="systematic-caps text-lg mb-2 font-bold">Production</h3>
+              <p className="text-sm text-pop-gray">Scalable manufacturing with complete QR provenance tracking</p>
+            </div>
           </div>
           
           <div className="text-center mt-12">
