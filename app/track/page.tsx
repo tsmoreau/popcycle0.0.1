@@ -168,7 +168,7 @@ export default function Track() {
           </div>
 
           {/* Categories Filter */}
-          <div className="mb-16 max-w-full pb-8">
+          <div className="mb-8 max-w-full">
             <div className="flex items-center justify-between gap-4 flex-wrap">
               <div className="flex items-center gap-4">
                 <span className="text-sm text-pop-gray">Filter items:</span>
@@ -211,21 +211,19 @@ export default function Track() {
               </div>
             </div>
           </div>
-        </div><div>
 
           {/* QR Codes */}
-          <div className="mb-16 mt-32">
-           
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-0 border border-gray-200 divide-x divide-y divide-gray-200 bg-white max-w-7xl mx-auto">
+          <div className="mb-16">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
               {loading ? (
-                <div className="col-span-full flex justify-center items-center py-16">
+                <div className="col-span-full flex justify-center items-center py-16 border border-gray-200">
                   <LoadingSquare color="green" text="Loading Items..." />
                 </div>
               ) : (
                 getFilteredCodes().map((code, index) => {
                 return (
                   <Link key={code.id} href={`/track/${code.id}`}>
-                    <div className="bg-white p-8 hover:bg-gray-50 transition-colors cursor-pointer aspect-square flex flex-col justify-center items-center text-center">
+                    <div className="bg-white border border-gray-200 p-8 hover:bg-gray-50 transition-colors cursor-pointer aspect-square flex flex-col justify-center items-center text-center -ml-[1px] -mt-[1px]">
                       <QRCodeElement
                         qrCode={code.id}
                         size="md"
@@ -244,55 +242,6 @@ export default function Track() {
               )}
             </div>
           </div>
-
-          {/* How It Works */}
-          {/* <section>
-            <h2 className="text-3xl helvetica-bold mb-8 text-center">
-              <span className="text-pop-blue">HOW QR TRACKING WORKS</span>
-            </h2>
-            <div className="grid md:grid-cols-3 gap-8">
-              <div className="text-center">
-                <div className="w-16 h-16 bg-pop-green border border-gray-300 mx-auto mb-4 flex items-center justify-center">
-                  <QrCode className="w-8 h-8 text-pop-black" />
-                </div>
-                <h3 className="systematic-caps text-lg mb-2">
-                  Scan or Enter Code
-                </h3>
-                <p className="text-pop-gray text-sm">
-                  Each recycled item gets a unique QR code when it enters our
-                  system
-                </p>
-              </div>
-
-              <div className="text-center">
-                <div className="w-16 h-16 bg-pop-blue border border-gray-300 mx-auto mb-4 flex items-center justify-center">
-                  <span className="text-pop-black helvetica-bold text-xl">
-                    →
-                  </span>
-                </div>
-                <h3 className="systematic-caps text-lg mb-2">
-                  See Full Journey
-                </h3>
-                <p className="text-pop-gray text-sm">
-                  Track transformation from corporate waste through processing
-                  to final product
-                </p>
-              </div>
-
-              <div className="text-center">
-                <div className="w-16 h-16 bg-pop-red border border-gray-300 mx-auto mb-4 flex items-center justify-center">
-                  <span className="text-pop-black helvetica-bold text-xl">
-                    !
-                  </span>
-                </div>
-                <h3 className="systematic-caps text-lg mb-2">Learn Impact</h3>
-                <p className="text-pop-gray text-sm">
-                  Discover environmental impact, carbon offset, and educational
-                  value created
-                </p>
-              </div>
-            </div>
-          </section> */}
         </div>
       </div>
 
