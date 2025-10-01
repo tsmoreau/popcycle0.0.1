@@ -77,7 +77,7 @@ export default function SessionsPage() {
     }
   }
 
-  if (!session?.user || !['admin', 'super_admin'].includes(session.user.userType)) {
+  if (!session?.user || !session.user.userType || !['admin', 'super_admin'].includes(session.user.userType)) {
     return <div className="p-8">Access denied. Admin permissions required.</div>
   }
 
