@@ -370,7 +370,7 @@ export default function TrackItem() {
             {/* Bins: Show only Collection step */}
             {data.id.startsWith("B") && (
               <div className="text-center flex-1 max-w-[200px]">
-                <div className={`w-20 h-20 mx-auto mb-3 border border-gray-200 flex items-center justify-center rounded-lg shadow-lg ${
+                <div className={`w-20 h-20 mx-auto mb-3 border border-gray-200 flex items-center justify-center  ${
                   data.collectionDate || data.lastCollectionDate || data.id.startsWith("B") 
                     ? "bg-pop-green" 
                     : "bg-gray-200"
@@ -402,7 +402,7 @@ export default function TrackItem() {
               <>
                 {/* Step 1: COLLECTION */}
                 <div className="text-center flex-1 max-w-[140px]">
-                  <div className={`w-20 h-20 mx-auto mb-3 border border-gray-200 flex items-center justify-center rounded-lg shadow-lg ${
+                  <div className={`w-20 h-20 mx-auto mb-3 border border-gray-200 flex items-center justify-center  ${
                     data.collectionDate || data.lastCollectionDate || data.id.startsWith("B") 
                       ? "bg-pop-green" 
                       : "bg-gray-200"
@@ -430,7 +430,7 @@ export default function TrackItem() {
 
                 {/* Step 2: PROCESSING */}
                 <div className="text-center flex-1 max-w-[140px]">
-                  <div className={`w-20 h-20 mx-auto mb-3 border border-gray-200 flex items-center justify-center rounded-lg shadow-lg ${
+                  <div className={`w-20 h-20 mx-auto mb-3 border border-gray-200 flex items-center justify-center  ${
                     isProcessed 
                       ? "bg-pop-blue" 
                       : "bg-gray-200"
@@ -456,7 +456,7 @@ export default function TrackItem() {
               <>
                 {/* Step 1: PROCESSING */}
                 <div className="text-center flex-1 max-w-[140px]">
-                  <div className={`w-20 h-20 mx-auto mb-3 border border-gray-200 flex items-center justify-center rounded-lg shadow-lg ${
+                  <div className={`w-20 h-20 mx-auto mb-3 border border-gray-200 flex items-center justify-center  ${
                     isProcessed 
                       ? "bg-pop-blue" 
                       : "bg-gray-200"
@@ -484,7 +484,7 @@ export default function TrackItem() {
 
                 {/* Step 2: PURCHASED/DONATED */}
                 <div className="text-center flex-1 max-w-[140px]">
-                  <div className={`w-20 h-20 mx-auto mb-3 border border-gray-200 flex items-center justify-center rounded-lg shadow-lg ${
+                  <div className={`w-20 h-20 mx-auto mb-3 border border-gray-200 flex items-center justify-center  ${
                     data.productId 
                       ? "bg-pop-red" 
                       : "bg-gray-200"
@@ -528,7 +528,7 @@ export default function TrackItem() {
 
                     {/* Step 3: ASSEMBLED */}
                     <div className="text-center flex-1 max-w-[140px]">
-                      <div className={`w-20 h-20 mx-auto mb-3 border border-gray-200 flex items-center justify-center rounded-lg shadow-lg ${
+                      <div className={`w-20 h-20 mx-auto mb-3 border border-gray-200 flex items-center justify-center  ${
                         data.userId 
                           ? "bg-pop-red" 
                           : "bg-gray-200"
@@ -879,7 +879,7 @@ export default function TrackItem() {
                     ) : (
                       // Unregistered State - Show CTA
                       <div className="text-center py-8">
-                        <div className="w-16 h-16 mx-auto mb-4 border-2 border-dashed border-pop-gray rounded-full flex items-center justify-center">
+                        <div className="w-16 h-16 mx-auto mb-4 border-2 border-dashed border-pop-gray  flex items-center justify-center">
                           <Plus className="w-8 h-8 text-pop-gray" />
                         </div>
                         <h3 className="text-lg helvetica-bold mb-2">

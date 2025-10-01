@@ -87,7 +87,7 @@ export default function ProfilePage() {
         <div className="max-w-4xl mx-auto px-4 py-8">
           <div className="flex flex-col md:flex-row items-center md:items-center justify-between gap-6">
             <div className="flex flex-col md:flex-row items-center space-y-4 md:space-y-0 md:space-x-6">
-              <div className="w-24 h-24 bg-pop-green border border-gray-200 rounded-full flex items-center justify-center flex-shrink-0">
+              <div className="w-24 h-24 bg-pop-green border border-gray-200  flex items-center justify-center flex-shrink-0">
                 <User className="w-12 h-12 text-pop-black" />
               </div>
               <div className="text-center md:text-left">
@@ -260,7 +260,7 @@ export default function ProfilePage() {
             ) : assembledItems.length > 0 ? (
               <div className="space-y-4">
                 {assembledItems.map((item) => (
-                  <div key={item.id} className="p-4 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors">
+                  <div key={item.id} className="p-4 border border-gray-300  hover:bg-gray-50 transition-colors">
                     <div className="flex items-start justify-between">
                       <div className="flex-1">
                         <div className="flex items-center space-x-3 mb-2">
@@ -358,19 +358,19 @@ export default function ProfilePage() {
           </CardHeader>
           <CardContent>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-center">
-              <div className="p-4 bg-pop-green/5 border border-pop-green/20 rounded-lg">
+              <div className="p-4 bg-pop-green/5 border border-pop-green/20 ">
                 <Trophy className="w-8 h-8 text-pop-green mx-auto mb-2" />
                 <h3 className="systematic-caps font-medium text-pop-black mb-1">Maker Achievements</h3>
                 <p className="text-sm text-gray-600">Track your progress and unlock new skill badges</p>
               </div>
               
-              <div className="p-4 bg-pop-blue/5 border border-pop-blue/20 rounded-lg">
+              <div className="p-4 bg-pop-blue/5 border border-pop-blue/20 ">
                 <Users className="w-8 h-8 text-pop-blue mx-auto mb-2" />
                 <h3 className="systematic-caps font-medium text-pop-black mb-1">Community Features</h3>
                 <p className="text-sm text-gray-600">Connect with other makers and share projects</p>
               </div>
               
-              <div className="p-4 bg-pop-red/5 border border-pop-red/20 rounded-lg">
+              <div className="p-4 bg-pop-red/5 border border-pop-red/20 ">
                 <Settings className="w-8 h-8 text-pop-red mx-auto mb-2" />
                 <h3 className="systematic-caps font-medium text-pop-black mb-1">Profile Customization</h3>
                 <p className="text-sm text-gray-600">Personalize your profile and privacy settings</p>

@@ -36,10 +36,10 @@ export default function SignInPage() {
           Back to PopCycle
         </Link>
         
-        <Card className="bg-white border border-gray-200 shadow-2xl">
+        <Card className="bg-white border border-gray-200 ">
           <CardHeader className="space-y-4 pb-6">
             <div className="text-center">
-              <div className="w-16 h-16 bg-pop-green border border-gray-200 rounded-full flex items-center justify-center mx-auto mb-4">
+              <div className="w-16 h-16 bg-pop-green border border-gray-200  flex items-center justify-center mx-auto mb-4">
                 <span className="text-pop-black helvetica-bold text-2xl">P</span>
               </div>
               <CardTitle className="text-2xl helvetica-bold text-pop-black">Welcome to PopCycle</CardTitle>

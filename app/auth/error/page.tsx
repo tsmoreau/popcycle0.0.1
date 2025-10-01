@@ -27,10 +27,10 @@ function AuthErrorContent() {
           Back to PopCycle
         </Link>
         
-        <Card className="bg-white border-4 border-pop-black shadow-2xl">
+        <Card className="bg-white border-4 border-pop-black ">
           <CardHeader className="space-y-4 pb-6">
             <div className="text-center">
-              <div className="w-16 h-16 bg-pop-red border-4 border-pop-black rounded-full flex items-center justify-center mx-auto mb-4">
+              <div className="w-16 h-16 bg-pop-red border-4 border-pop-black  flex items-center justify-center mx-auto mb-4">
                 <AlertTriangle className="text-white w-8 h-8" />
               </div>
               <CardTitle className="text-2xl helvetica-bold text-pop-black">Sign In Error</CardTitle>
@@ -69,7 +69,7 @@ export default function AuthErrorPage() {
   return (
     <Suspense fallback={
       <div className="min-h-screen flex items-center justify-center">
-        <div className="w-8 h-8 border-2 border-pop-red border-t-transparent rounded-full animate-spin"></div>
+        <div className="w-8 h-8 border-2 border-pop-red border-t-transparent  animate-spin"></div>
       </div>
     }>
       <AuthErrorContent />

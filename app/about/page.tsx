@@ -48,7 +48,7 @@ export default function About() {
               <PopArtContainer color="green" shadow>
                 <Card className="border border-gray-200">
                   <CardHeader className="text-center">
-                    <div className="w-64 h-64 mx-auto mb-4 rounded-full bg-pop-green border border-gray-200 flex items-center justify-center">
+                    <div className="w-64 h-64 mx-auto mb-4  bg-pop-green border border-gray-200 flex items-center justify-center">
                       <Users className="w-10 h-10 text-pop-black" />
                     </div>
                     <CardTitle className="systematic-caps text-pop-black px-10 pb-4 pt-2">
@@ -69,7 +69,7 @@ export default function About() {
               <PopArtContainer color="blue" shadow>
                 <Card className="border border-gray-200">
                   <CardHeader className="text-center">
-                    <div className="w-64 h-64 mx-auto mb-4 rounded-full bg-pop-blue border border-gray-200 flex items-center justify-center">
+                    <div className="w-64 h-64 mx-auto mb-4  bg-pop-blue border border-gray-200 flex items-center justify-center">
                       <Target className="w-10 h-10 text-pop-black" />
                     </div>
                     <CardTitle className="systematic-caps text-pop-black px-10 pb-4 pt-2">
@@ -90,7 +90,7 @@ export default function About() {
               <PopArtContainer color="red" shadow>
                 <Card className="border border-gray-200">
                   <CardHeader className="text-center">
-                    <div className="w-64 h-64 mx-auto mb-4 rounded-full bg-pop-red border border-gray-200 flex items-center justify-center">
+                    <div className="w-64 h-64 mx-auto mb-4  bg-pop-red border border-gray-200 flex items-center justify-center">
                       <Cog className="w-10 h-10 text-pop-black" />
                     </div>
                     <CardTitle className="systematic-caps text-pop-black px-10 pb-4 pt-2">
@@ -118,7 +118,7 @@ export default function About() {
               <span className="text-pop-black">STORY</span>
             </h2>
             <div className="max-w-4xl mx-auto">
-              <Card className="border border-gray-200 pop-shadow-green">
+              <Card className="border border-gray-200">
                 <CardContent className="p-8">
                   <p className="text-lg leading-relaxed mb-6">
                     PopCycle emerged from the intersection of waste crisis and
@@ -256,7 +256,7 @@ export default function About() {
           </div>
           
           <div className="text-center mt-12">
-            <Card className="border border-gray-200 pop-shadow-red max-w-3xl mx-auto">
+            <Card className="border border-gray-200 max-w-3xl mx-auto">
               <CardContent className="p-8">
                 <p className="text-lg mb-4">
                   Our partner network creates the circular ecosystem where plastic waste becomes educational opportunity. Each QR code tells the complete story from corporate waste stream to classroom learning experience.
