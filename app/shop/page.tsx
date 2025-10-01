@@ -2,20 +2,8 @@
 
 import { useState, useEffect, useRef } from "react";
 import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-} from "../components/ui/card";
-import { Badge } from "../components/ui/badge";
-import { PopArtContainer } from "../components/PopArtElements";
-import {
   Package,
-  ShoppingCart,
-  Heart,
-  Star,
   Calendar,
-  Weight,
   ChevronDown,
 } from "lucide-react";
 import { LoadingSquare } from "../components/ui/loading-square";
@@ -189,100 +177,46 @@ export default function Shop() {
             )}
           </div>
         ) : (
-          <div className="grid md:grid-cols-2 lg:grid-cols-3">
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-12">
             {filteredProducts.map((product) => (
-              <div key={product._id} className="bg-white border border-gray-200 p-8 flex flex-col h-full -ml-[1px] -mt-[1px]">
-                  <div className="pb-4">
-                    <div className="w-full h-48 bg-gray-50 mb-4 flex items-center justify-center overflow-hidden">
-                      {product.designFiles.photos && product.designFiles.photos.length > 0 ? (
-                        <img 
-                          src={product.designFiles.photos[0]} 
-                          alt={product.name}
-                          className="w-full h-full object-cover"
-                        />
-                      ) : (
-                        <Package className="w-16 h-16 text-gray-300" />
-                      )}
-                    </div>
-                    <div className="flex justify-between items-start mb-2">
-                      <Badge
-                        className={`${product.inStock ? "bg-pop-green" : "bg-pop-gray"} text-pop-black`}
-                      >
-                        {categoryMap[product.category]}
-                      </Badge>
-                      <div className="text-right">
-                        <div className="text-2xl helvetica-bold text-pop-black">
-                          ${product.price}
-                        </div>
-                      </div>
-                    </div>
-                    <div className="systematic-caps text-lg mb-2 font-bold">
-                      {product.name}
-                    </div>
-                  </div>
-                  <div className="space-y-4">
-                    <p className="text-sm text-pop-gray leading-relaxed">
-                      {product.description}
-                    </p>
-
-                    <div className="space-y-2 text-xs">
-                      <div className="flex justify-between">
-                        <span className="systematic-caps text-pop-gray">
-                          Material
-                        </span>
-                        <span>{product.materialRequirements.plasticType}</span>
-                      </div>
-                      <div className="flex justify-between items-center">
-                        <span className="systematic-caps text-pop-gray">
-                          Weight
-                        </span>
-                        <span className="flex items-center">
-                          <Weight className="w-3 h-3 mr-1" />
-                          {product.materialRequirements.weight}kg recycled plastic
-                        </span>
-                      </div>
-                      <div className="flex justify-between items-center">
-                        <span className="systematic-caps text-pop-gray">
-                          Difficulty
-                        </span>
-                        <span className="capitalize">{product.difficulty}</span>
-                      </div>
-                      <div className="flex justify-between items-center">
-                        <span className="systematic-caps text-pop-gray">
-                          Assembly Time
-                        </span>
-                        <span>{product.estimatedAssemblyTime} min</span>
-                      </div>
-                      <div className="flex justify-between items-center">
-                        <span className="systematic-caps text-pop-gray">
-                          Rating
-                        </span>
-                        <div className="flex items-center">
-                          <Star className="w-3 h-3 mr-1 fill-pop-black" />
-                          <span>
-                            {product.rating} ({product.reviewCount})
-                          </span>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div className="flex gap-2 pt-4">
-                      <button
-                        className={`flex-1 py-3 px-4 transition-colors systematic-caps ${
-                          product.inStock
-                            ? "bg-pop-blue text-pop-black hover:bg-pop-black hover:text-white"
-                            : "bg-pop-gray text-pop-black cursor-not-allowed"
-                        }`}
-                        disabled={!product.inStock}
-                      >
-                        <ShoppingCart className="w-4 h-4 mr-2 inline" />
-                        {product.inStock ? "Add to Cart" : "Out of Stock"}
-                      </button>
-                      <button className="p-3 bg-white hover:bg-pop-red hover:text-white transition-colors">
-                        <Heart className="w-4 h-4" />
-                      </button>
-                    </div>
-                  </div>
+              <div 
+                key={product._id} 
+                className="bg-white"
+                data-testid={`card-product-${product._id}`}
+              >
+                <div className="w-full h-64 mb-4 flex items-center justify-center overflow-hidden bg-gray-50">
+                  {product.designFiles.photos && product.designFiles.photos.length > 0 ? (
+                    <img 
+                      src={product.designFiles.photos[0]} 
+                      alt={product.name}
+                      className="w-full h-full object-contain"
+                      data-testid={`img-product-${product._id}`}
+                      onError={(e) => {
+                        e.currentTarget.style.display = 'none';
+                        const parent = e.currentTarget.parentElement;
+                        if (parent) {
+                          const icon = document.createElement('div');
+                          icon.innerHTML = '<svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-gray-300"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.29 7 12 12 20.71 7"></polyline><line x1="12" y1="22" x2="12" y2="12"></line></svg>';
+                          parent.appendChild(icon.firstChild!);
+                        }
+                      }}
+                    />
+                  ) : (
+                    <Package className="w-16 h-16 text-gray-300" />
+                  )}
+                </div>
+                
+                <div>
+                  <h3 className="text-base mb-1 text-pop-black" data-testid={`text-product-name-${product._id}`}>
+                    {product.name}
+                  </h3>
+                  <p className="text-sm text-pop-gray mb-2" data-testid={`text-product-category-${product._id}`}>
+                    {categoryMap[product.category]}
+                  </p>
+                  <p className="text-sm text-pop-black" data-testid={`text-product-price-${product._id}`}>
+                    {new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', minimumFractionDigits: 2 }).format(product.price)}
+                  </p>
+                </div>
               </div>
             ))}
           </div>
