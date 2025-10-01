@@ -127,51 +127,20 @@ export default function Track() {
       <div className="bg-white py-0 pt-32">
         <div className="max-w-7xl mx-auto px-6 text-center">
           <h1 className="text-6xl helvetica-bold mb-6 text-pop-black">
-            TRACK OUR PLASTIC
+            TRACK
           </h1>
           <p className="text-xl text-pop-gray max-w-3xl mx-auto mb-6">
-            Enter an item code to see the complete journey from corporate waste
-            to educational wonder.
+            Enter an item code to see that item's PopCycle journey. Track our plastic from waste bin to collected batch to pressed blank to finished product.
           </p>
         </div>
       </div>
 
-      <div className="pb-24 pt-0">
-        <div className="max-w-7xl mx-auto px-6">
-          {/* QR Code Search */}
-          <div className="mb-16 mx-auto max-w-3xl">
-            <PopArtContainer color="green" shadow>
-              <Card className="border border-gray-200">
-                <CardContent className="p-8">
-                  <div className="flex flex-col sm:flex-row gap-4">
-                    <div className="flex-1">
-                      <Input
-                        placeholder="Enter item code (e.g. B1234567)"
-                        className="border border-gray-300 text-lg h-12"
-                        value={searchTerm}
-                        onChange={(e) => setSearchTerm(e.target.value)}
-                        onKeyPress={(e) => e.key === 'Enter' && handleSearch()}
-                      />
-                    </div>
-                    <Button
-                      size="lg"
-                      className="bg-pop-green text-pop-black hover:bg-pop-black hover:text-white systematic-caps h-12 px-8"
-                      onClick={handleSearch}
-                    >
-                      <Search className="w-5 h-5 mr-2" />
-                      Track Item
-                    </Button>
-                  </div>
-                </CardContent>
-              </Card>
-            </PopArtContainer>
-          </div>
-        </div>
-      </div>
+      <div className=" pt-0">
+       </div>
 
       {/* Categories Filter */}
       <div className="max-w-7xl mx-auto px-6 py-8">
-        <div className="flex items-center justify-between gap-4 flex-wrap">
+        <div className="flex items-center justify-between ">
           <div className="flex items-center gap-4">
             <span className="text-sm text-pop-gray">Filter items:</span>
             <div className="relative" ref={filterRef}>
@@ -208,6 +177,35 @@ export default function Track() {
               )}
             </div>
           </div>
+
+        
+            {/* QR Code Search */}
+            <div className=" mx-auto max-w-xl w-full ">
+
+               
+                    <div className="flex flex-col sm:flex-row gap-4  p-2">
+                      <div className="flex-1">
+                        <Input
+                          placeholder="Enter item code (e.g. B1234567)"
+                          className="border-0 border-gray-0 text-lg text-gray-300 h-8"
+                          value={searchTerm}
+                          onChange={(e) => setSearchTerm(e.target.value)}
+                          onKeyPress={(e) => e.key === 'Enter' && handleSearch()}
+                        />
+                      </div>
+                      <Button
+                        size="lg"
+                        className="bg-pop-green text-white hover:bg-pop-black hover:text-white systematic-caps h-8 px-8"
+                        onClick={handleSearch}
+                      >
+                        <Search className="w-5 h-5 mr-2" />
+                        Track Item
+                      </Button>
+                    </div>
+
+          </div>
+
+          
           <div className="text-sm text-pop-gray">
             {getFilteredCodes().length} {getFilteredCodes().length === 1 ? 'item' : 'items'}
           </div>

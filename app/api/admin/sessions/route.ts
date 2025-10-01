@@ -13,7 +13,7 @@ export async function GET(request: NextRequest) {
     }
 
     // Check if user has admin permissions
-    if (!['admin', 'super_admin'].includes(session.user.userType)) {
+    if (!session.user.userType || !['admin', 'super_admin'].includes(session.user.userType)) {
       return NextResponse.json({ error: 'Insufficient permissions' }, { status: 403 });
     }
 
@@ -64,7 +64,7 @@ export async function POST(request: NextRequest) {
     }
 
     // Check if user has admin permissions
-    if (!['admin', 'super_admin'].includes(session.user.userType)) {
+    if (!session.user.userType || !['admin', 'super_admin'].includes(session.user.userType)) {
       return NextResponse.json({ error: 'Insufficient permissions' }, { status: 403 });
     }
 
