@@ -177,7 +177,7 @@ export default function Shop() {
             )}
           </div>
         ) : (
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-12">
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-12">
             {filteredProducts.map((product) => (
               <div 
                 key={product._id} 
@@ -206,7 +206,7 @@ export default function Shop() {
                   )}
                 </div>
                 
-                <div>
+                <div className="flex-col mx-auto items-center">
                   <h3 className="text-base mb-1 text-pop-black" data-testid={`text-product-name-${product._id}`}>
                     {product.name}
                   </h3>
