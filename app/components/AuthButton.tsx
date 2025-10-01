@@ -124,10 +124,10 @@ function AuthButtonContent() {
     <>
       <button
         onClick={() => setSignInModalOpen(true)}
-        className="w-8 h-8 rounded-full bg-pop-green flex items-center justify-center hover:opacity-80 transition-opacity"
+        className="w-8 h-8 rounded-full bg-white border-pop-gray flex items-center justify-center hover:opacity-80 transition-opacity"
         data-testid="button-signin"
       >
-        <User className="w-4 h-4 text-white" />
+        <User className="w-6 h-6 text-pop-gray" />
       </button>
 
       {/* Sign In Modal */}

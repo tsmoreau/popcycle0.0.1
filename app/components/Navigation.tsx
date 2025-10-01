@@ -288,7 +288,7 @@ export default function Navigation() {
             
 
           {/* Right-aligned User Menu / Auth Button */}
-          <div className="hidden lg:block self-center mr-12">
+          <div className="hidden lg:block self-end mb-2 mr-12">
             {session ? (
               <div className="relative " ref={userMenuRef}>
                 
@@ -297,7 +297,7 @@ export default function Navigation() {
                   className="flex items-center space-x-3 hover:opacity-80 transition-opacity"
                 >
                   <div className="flex items-center space-x-2">
-                    <div className="w-8 h-8 bg-pop-green flex items-center justify-center">
+                    <div className="w-8 h-8 rounded-full bg-pop-green flex items-center justify-center">
                       <User className="w-4 h-4 text-white" />
                     </div>
                     <div className="text-left">
