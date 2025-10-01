@@ -16,6 +16,9 @@ import {
 } from "lucide-react";
 import AuthButton from "./AuthButton";
 
+// Manual nav changes: User adjusted vertical alignment of centered nav elements (About, Services, Shop, Track)
+// Modified items-center positioning on centered nav container for individual control of nav link vertical positions
+
 export default function Navigation() {
   const pathname = usePathname();
   const [aboutOpen, setAboutOpen] = useState(false);
