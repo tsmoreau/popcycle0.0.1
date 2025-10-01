@@ -189,9 +189,9 @@ export default function Shop() {
             )}
           </div>
         ) : (
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-0 border border-gray-200 divide-x divide-y divide-gray-200 bg-white">
+          <div className="grid md:grid-cols-2 lg:grid-cols-3">
             {filteredProducts.map((product) => (
-              <div key={product._id} className="bg-white p-8 flex flex-col h-full">
+              <div key={product._id} className="bg-white border border-gray-200 p-8 flex flex-col h-full -ml-[1px] -mt-[1px]">
                   <div className="pb-4">
                     <div className="w-full h-48 bg-gray-50 mb-4 flex items-center justify-center overflow-hidden">
                       {product.designFiles.photos && product.designFiles.photos.length > 0 ? (
