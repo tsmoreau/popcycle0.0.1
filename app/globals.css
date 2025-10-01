@@ -28,21 +28,12 @@
   font-weight: 600;
 }
 
-/* Refined Shadows - Softer, More Sophisticated */
-.pop-shadow-green {
-  box-shadow: 0 4px 20px rgba(0, 179, 65, 0.15);
-}
-
-.pop-shadow-blue {
-  box-shadow: 0 4px 20px rgba(0, 123, 255, 0.15);
-}
-
-.pop-shadow-red {
-  box-shadow: 0 4px 20px rgba(255, 51, 102, 0.15);
-}
-
+/* Minimal Shadows - Grid-Based Design */
+.pop-shadow-green,
+.pop-shadow-blue,
+.pop-shadow-red,
 .pop-shadow-black {
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  box-shadow: none;
 }
 
 /* Navigation */

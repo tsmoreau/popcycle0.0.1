@@ -32,13 +32,13 @@ export default function Home() {
           
           <div className="flex flex-col sm:flex-row gap-5 justify-center items-center">
             <Link href="/track">
-              <Button size="lg" className="bg-pop-green text-white hover:bg-opacity-90 systematic-caps text-base px-10 py-6 rounded-lg transition-all">
+              <Button size="lg" className="bg-pop-green text-white hover:bg-opacity-90 systematic-caps text-base px-10 py-6 transition-all">
                 Track Plastic
               </Button>
             </Link>
 
             <Link href="/about#faq">
-              <Button variant="outline" size="lg" className="border border-gray-300 text-gray-900 hover:bg-gray-900 hover:text-white systematic-caps text-base px-10 py-6 rounded-lg transition-all">
+              <Button variant="outline" size="lg" className="border border-gray-300 text-gray-900 hover:bg-gray-900 hover:text-white systematic-caps text-base px-10 py-6 transition-all">
                 Learn More
               </Button>
             </Link>
@@ -114,12 +114,12 @@ export default function Home() {
           <div className="space-y-20">
             <div className="relative">
               <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-                <PopArtContainer color="green" shadow className="bg-white border border-gray-200 text-gray-900 p-10 relative rounded-xl">
-                  <div className="absolute -top-4 -left-4 w-12 h-12 bg-pop-green text-white rounded-full flex items-center justify-center font-bold text-lg shadow-lg">
+                <PopArtContainer color="green" shadow className="bg-white border border-gray-200 text-gray-900 p-10 relative ">
+                  <div className="absolute -top-4 -left-4 w-12 h-12 bg-pop-green text-white  flex items-center justify-center font-bold text-lg ">
                     01
                   </div>
                   <div className="text-center pt-4">
-                    <div className="w-16 h-16 bg-pop-green/10 rounded-full flex items-center justify-center mx-auto mb-6">
+                    <div className="w-16 h-16 bg-pop-green/10 border border-gray-200 flex items-center justify-center mx-auto mb-6">
                       <Recycle className="w-8 h-8 text-pop-green" />
                     </div>
                     <h3 className="text-xl helvetica-bold mb-4 systematic-caps text-pop-green">COLLECT & TRACK</h3>
@@ -130,12 +130,12 @@ export default function Home() {
                   </div>
                 </PopArtContainer>
 
-                <PopArtContainer color="blue" shadow className="bg-white border border-gray-200 text-gray-900 p-10 relative rounded-xl">
-                  <div className="absolute -top-4 -left-4 w-12 h-12 bg-pop-blue text-white rounded-full flex items-center justify-center font-bold text-lg shadow-lg">
+                <PopArtContainer color="blue" shadow className="bg-white border border-gray-200 text-gray-900 p-10 relative ">
+                  <div className="absolute -top-4 -left-4 w-12 h-12 bg-pop-blue text-white  flex items-center justify-center font-bold text-lg ">
                     02
                   </div>
                   <div className="text-center pt-4">
-                    <div className="w-16 h-16 bg-pop-blue/10 rounded-full flex items-center justify-center mx-auto mb-6">
+                    <div className="w-16 h-16 bg-pop-blue/10 border border-gray-200 flex items-center justify-center mx-auto mb-6">
                       <Factory className="w-8 h-8 text-pop-blue" />
                     </div>
                     <h3 className="text-xl helvetica-bold mb-4 systematic-caps text-pop-blue">TRANSFORM & TRACE</h3>
@@ -146,12 +146,12 @@ export default function Home() {
                   </div>
                 </PopArtContainer>
 
-                <PopArtContainer color="red" shadow className="bg-white border border-gray-200 text-gray-900 p-10 relative rounded-xl">
-                  <div className="absolute -top-4 -left-4 w-12 h-12 bg-pop-red text-white rounded-full flex items-center justify-center font-bold text-lg shadow-lg">
+                <PopArtContainer color="red" shadow className="bg-white border border-gray-200 text-gray-900 p-10 relative ">
+                  <div className="absolute -top-4 -left-4 w-12 h-12 bg-pop-red text-white  flex items-center justify-center font-bold text-lg ">
                     03
                   </div>
                   <div className="text-center pt-4">
-                    <div className="w-16 h-16 bg-pop-red/10 rounded-full flex items-center justify-center mx-auto mb-6">
+                    <div className="w-16 h-16 bg-pop-red/10 border border-gray-200 flex items-center justify-center mx-auto mb-6">
                       <Target className="w-8 h-8 text-pop-red" />
                     </div>
                     <h3 className="text-xl helvetica-bold mb-4 systematic-caps text-pop-red">DELIVER & VERIFY</h3>
@@ -183,12 +183,12 @@ export default function Home() {
           <div className="space-y-20">
             <div className="relative">
               <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-                <PopArtContainer color="red" shadow className="bg-white border border-gray-200 text-gray-900 p-10 relative rounded-xl">
-                  <div className="absolute -top-4 -left-4 w-12 h-12 bg-pop-red text-white rounded-full flex items-center justify-center font-bold text-lg shadow-lg">
+                <PopArtContainer color="red" shadow className="bg-white border border-gray-200 text-gray-900 p-10 relative ">
+                  <div className="absolute -top-4 -left-4 w-12 h-12 bg-pop-red text-white  flex items-center justify-center font-bold text-lg ">
                     ✗
                   </div>
                   <div className="text-center pt-4">
-                    <div className="w-16 h-16 bg-pop-red/10 rounded-full flex items-center justify-center mx-auto mb-6">
+                    <div className="w-16 h-16 bg-pop-red/10 border border-gray-200 flex items-center justify-center mx-auto mb-6">
                       <Eye className="w-8 h-8 text-pop-red" />
                     </div>
                     <h3 className="text-xl helvetica-bold mb-4 systematic-caps text-pop-red">TRADITIONAL WASTE</h3>
@@ -199,12 +199,12 @@ export default function Home() {
                   </div>
                 </PopArtContainer>
 
-                <PopArtContainer color="green" shadow className="bg-white border border-gray-200 text-gray-900 p-10 relative rounded-xl">
-                  <div className="absolute -top-4 -left-4 w-12 h-12 bg-pop-green text-white rounded-full flex items-center justify-center font-bold text-lg shadow-lg">
+                <PopArtContainer color="green" shadow className="bg-white border border-gray-200 text-gray-900 p-10 relative ">
+                  <div className="absolute -top-4 -left-4 w-12 h-12 bg-pop-green text-white  flex items-center justify-center font-bold text-lg ">
                     ✓
                   </div>
                   <div className="text-center pt-4">
-                    <div className="w-16 h-16 bg-pop-green/10 rounded-full flex items-center justify-center mx-auto mb-6">
+                    <div className="w-16 h-16 bg-pop-green/10 border border-gray-200 flex items-center justify-center mx-auto mb-6">
                       <RotateCcw className="w-8 h-8 text-pop-green" />
                     </div>
                     <h3 className="text-xl helvetica-bold mb-4 systematic-caps text-pop-green">POPCYCLE TRACKING</h3>
@@ -215,12 +215,12 @@ export default function Home() {
                   </div>
                 </PopArtContainer>
 
-                <PopArtContainer color="blue" shadow className="bg-white border border-gray-200 text-gray-900 p-10 relative rounded-xl">
-                  <div className="absolute -top-4 -left-4 w-12 h-12 bg-pop-blue text-white rounded-full flex items-center justify-center font-bold text-lg shadow-lg">
+                <PopArtContainer color="blue" shadow className="bg-white border border-gray-200 text-gray-900 p-10 relative ">
+                  <div className="absolute -top-4 -left-4 w-12 h-12 bg-pop-blue text-white  flex items-center justify-center font-bold text-lg ">
                     ∞
                   </div>
                   <div className="text-center pt-4">
-                    <div className="w-16 h-16 bg-pop-blue/10 rounded-full flex items-center justify-center mx-auto mb-6">
+                    <div className="w-16 h-16 bg-pop-blue/10 border border-gray-200 flex items-center justify-center mx-auto mb-6">
                       <Target className="w-8 h-8 text-pop-blue" />
                     </div>
                     <h3 className="text-xl helvetica-bold mb-4 systematic-caps text-pop-blue">THE RESULT</h3>
@@ -249,7 +249,7 @@ export default function Home() {
           </p>
           
           <Link href="/about#contact">
-            <Button size="lg" className="bg-pop-green text-white hover:bg-opacity-90 systematic-caps text-base px-12 py-6 rounded-lg transition-all shadow-lg">
+            <Button size="lg" className="bg-pop-green text-white hover:bg-opacity-90 systematic-caps text-base px-12 py-6  transition-all ">
               PROVE YOUR SUSTAINABILITY
               <ArrowRight className="ml-2 w-5 h-5" />
             </Button>

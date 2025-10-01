@@ -73,12 +73,12 @@ export default function Navigation() {
   ];
 
   return (
-    <nav className="sticky top-0 z-50 bg-white border-b border-gray-200 shadow-sm">
+    <nav className="sticky top-0 z-50 bg-white border-b border-gray-200">
       <div className="max-w-7xl mx-auto px-6">
         <div className="relative flex items-center justify-between h-20">
           {/* Logo */}
           <Link href="/" className="flex items-center space-x-3 group">
-            <div className="w-12 h-12 bg-pop-green rounded-md flex items-center justify-center transition-all group-hover:bg-opacity-90">
+            <div className="w-12 h-12 bg-pop-green flex items-center justify-center transition-all group-hover:bg-opacity-90">
               <span className="text-white helvetica-bold text-xl">P</span>
             </div>
             <span className="helvetica-bold text-2xl tracking-tight text-gray-900">
@@ -103,7 +103,7 @@ export default function Navigation() {
               </button>
 
               {aboutOpen && (
-                <div className="absolute top-full left-0 min-w-max bg-white border border-gray-200 rounded-lg shadow-lg whitespace-nowrap overflow-hidden mt-2">
+                <div className="absolute top-full left-0 min-w-max bg-white border border-gray-200 whitespace-nowrap overflow-hidden mt-2">
                   {aboutItems.map((item) => (
                     <Link
                       key={item.href}
@@ -132,7 +132,7 @@ export default function Navigation() {
               </button>
 
               {servicesOpen && (
-                <div className="absolute top-full left-0 w-max bg-white border border-gray-200 rounded-lg shadow-lg mr-4 overflow-hidden mt-2">
+                <div className="absolute top-full left-0 w-max bg-white border border-gray-200 mr-4 overflow-hidden mt-2">
                   {servicesItems.map((item) => (
                     <Link
                       key={item.href}
@@ -176,7 +176,7 @@ export default function Navigation() {
                   className="flex items-center space-x-3 hover:opacity-80 transition-opacity"
                 >
                   <div className="flex items-center space-x-2">
-                    <div className="w-8 h-8 bg-pop-green rounded-full flex items-center justify-center shadow-sm">
+                    <div className="w-8 h-8 bg-pop-green flex items-center justify-center">
                       <User className="w-4 h-4 text-white" />
                     </div>
                     <div className="text-left">
@@ -197,7 +197,7 @@ export default function Navigation() {
 
                 {/* User Dropdown */}
                 {userMenuOpen && (
-                  <div className="absolute right-0 mt-2 min-w-max bg-white border border-gray-200 rounded-lg shadow-lg overflow-hidden">
+                  <div className="absolute right-0 mt-2 min-w-max bg-white border border-gray-200 overflow-hidden">
                     <div className="px-5 py-3 border-b border-gray-200">
                       <div className="text-sm font-semibold text-gray-900 whitespace-nowrap">
                         {session.user?.email}
@@ -349,7 +349,7 @@ export default function Navigation() {
                   {/* User Profile Header */}
                   <div className="flex items-center justify-between">
                     <div className="flex items-center space-x-3">
-                      <div className="w-10 h-10 bg-pop-green rounded-full flex items-center justify-center shadow-md">
+                      <div className="w-10 h-10 bg-pop-green flex items-center justify-center">
                         <User className="w-5 h-5 text-white" />
                       </div>
                       <div>
