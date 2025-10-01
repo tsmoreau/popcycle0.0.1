@@ -113,9 +113,9 @@ export default function Home() {
           
           <div className="space-y-20">
             <div className="relative">
-              <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-                <PopArtContainer color="green" shadow className="bg-white border border-gray-200 text-gray-900 p-10 relative ">
-                  <div className="absolute -top-4 -left-4 w-12 h-12 bg-pop-green text-white  flex items-center justify-center font-bold text-lg ">
+              <div className="grid grid-cols-1 lg:grid-cols-3 gap-0 border border-gray-200 divide-x divide-y divide-gray-200 bg-white">
+                <div className="bg-white p-10 relative">
+                  <div className="absolute -top-4 -left-4 w-12 h-12 bg-pop-green text-white flex items-center justify-center font-bold text-lg">
                     01
                   </div>
                   <div className="text-center pt-4">
@@ -128,10 +128,10 @@ export default function Home() {
                       your specific plastic through the entire circular journey back to you.
                     </p>
                   </div>
-                </PopArtContainer>
+                </div>
 
-                <PopArtContainer color="blue" shadow className="bg-white border border-gray-200 text-gray-900 p-10 relative ">
-                  <div className="absolute -top-4 -left-4 w-12 h-12 bg-pop-blue text-white  flex items-center justify-center font-bold text-lg ">
+                <div className="bg-white p-10 relative">
+                  <div className="absolute -top-4 -left-4 w-12 h-12 bg-pop-blue text-white flex items-center justify-center font-bold text-lg">
                     02
                   </div>
                   <div className="text-center pt-4">
@@ -144,10 +144,10 @@ export default function Home() {
                       is logged and verified, maintaining complete chain of custody from your waste bin.
                     </p>
                   </div>
-                </PopArtContainer>
+                </div>
 
-                <PopArtContainer color="red" shadow className="bg-white border border-gray-200 text-gray-900 p-10 relative ">
-                  <div className="absolute -top-4 -left-4 w-12 h-12 bg-pop-red text-white  flex items-center justify-center font-bold text-lg ">
+                <div className="bg-white p-10 relative">
+                  <div className="absolute -top-4 -left-4 w-12 h-12 bg-pop-red text-white flex items-center justify-center font-bold text-lg">
                     03
                   </div>
                   <div className="text-center pt-4">
@@ -160,7 +160,7 @@ export default function Home() {
                       Scan the QR code to see the verified journey from your bin to your hands.
                     </p>
                   </div>
-                </PopArtContainer>
+                </div>
               </div>
             </div>
           </div>
@@ -182,9 +182,9 @@ export default function Home() {
           
           <div className="space-y-20">
             <div className="relative">
-              <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-                <PopArtContainer color="red" shadow className="bg-white border border-gray-200 text-gray-900 p-10 relative ">
-                  <div className="absolute -top-4 -left-4 w-12 h-12 bg-pop-red text-white  flex items-center justify-center font-bold text-lg ">
+              <div className="grid grid-cols-1 lg:grid-cols-3 gap-0 border border-gray-200 divide-x divide-y divide-gray-200 bg-white">
+                <div className="bg-white p-10 relative">
+                  <div className="absolute -top-4 -left-4 w-12 h-12 bg-pop-red text-white flex items-center justify-center font-bold text-lg">
                     ✗
                   </div>
                   <div className="text-center pt-4">
@@ -197,10 +197,10 @@ export default function Home() {
                       No proof of impact for sustainability reporting.
                     </p>
                   </div>
-                </PopArtContainer>
+                </div>
 
-                <PopArtContainer color="green" shadow className="bg-white border border-gray-200 text-gray-900 p-10 relative ">
-                  <div className="absolute -top-4 -left-4 w-12 h-12 bg-pop-green text-white  flex items-center justify-center font-bold text-lg ">
+                <div className="bg-white p-10 relative">
+                  <div className="absolute -top-4 -left-4 w-12 h-12 bg-pop-green text-white flex items-center justify-center font-bold text-lg">
                     ✓
                   </div>
                   <div className="text-center pt-4">
@@ -213,10 +213,10 @@ export default function Home() {
                       Direct proof of your organization's circular impact.
                     </p>
                   </div>
-                </PopArtContainer>
+                </div>
 
-                <PopArtContainer color="blue" shadow className="bg-white border border-gray-200 text-gray-900 p-10 relative ">
-                  <div className="absolute -top-4 -left-4 w-12 h-12 bg-pop-blue text-white  flex items-center justify-center font-bold text-lg ">
+                <div className="bg-white p-10 relative">
+                  <div className="absolute -top-4 -left-4 w-12 h-12 bg-pop-blue text-white flex items-center justify-center font-bold text-lg">
                     ∞
                   </div>
                   <div className="text-center pt-4">
@@ -229,7 +229,7 @@ export default function Home() {
                       Custom products that prove your circular economy commitment.
                     </p>
                   </div>
-                </PopArtContainer>
+                </div>
               </div>
             </div>
           </div>
