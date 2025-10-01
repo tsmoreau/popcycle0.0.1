@@ -137,9 +137,9 @@ export default function Track() {
       </div>
 
       <div className="pb-24 pt-0">
-        <div className="max-w-5xl mx-auto px-6 sm:px-8">
+        <div className="max-w-7xl mx-auto px-6">
           {/* QR Code Search */}
-          <div className="mb-16 mx-auto  max-w-3xl">
+          <div className="mb-16 mx-auto max-w-3xl">
             <PopArtContainer color="green" shadow>
               <Card className="border border-gray-200">
                 <CardContent className="p-8">
@@ -166,55 +166,57 @@ export default function Track() {
               </Card>
             </PopArtContainer>
           </div>
+        </div>
+      </div>
 
-          {/* Categories Filter */}
-          <div className="mb-8 max-w-full">
-            <div className="flex items-center justify-between gap-4 flex-wrap">
-              <div className="flex items-center gap-4">
-                <span className="text-sm text-pop-gray">Filter items:</span>
-                <div className="relative" ref={filterRef}>
-                  <button
-                    onClick={() => setFilterOpen(!filterOpen)}
-                    className="border border-gray-200 bg-white pl-5 pr-10 py-3 text-sm systematic-caps cursor-pointer hover:bg-gray-50 transition-colors flex items-center whitespace-nowrap"
-                  >
-                    {selectedFilter}
-                    <ChevronDown className="ml-2 w-4 h-4 text-pop-black" />
-                  </button>
-                  
-                  {filterOpen && (
-                    <div className="absolute top-full left-0 min-w-full bg-white border border-gray-200 mt-2 overflow-hidden z-10">
-                      {[
-                        "ALL",
-                        "ACTIVE BINS",
-                        "COLLECTED BATCHES",
-                        "PRESSED BLANKS",
-                        "MANUFACTURED ITEMS",
-                        "ASSEMBLED ITEMS",
-                      ].map((category) => (
-                        <button
-                          key={category}
-                          onClick={() => {
-                            setSelectedFilter(category);
-                            setFilterOpen(false);
-                          }}
-                          className="block w-full text-left px-5 py-3 systematic-caps text-sm hover:bg-pop-green hover:text-white transition-colors whitespace-nowrap"
-                        >
-                          {category}
-                        </button>
-                      ))}
-                    </div>
-                  )}
+      {/* Categories Filter */}
+      <div className="max-w-7xl mx-auto px-6 py-8">
+        <div className="flex items-center justify-between gap-4 flex-wrap">
+          <div className="flex items-center gap-4">
+            <span className="text-sm text-pop-gray">Filter items:</span>
+            <div className="relative" ref={filterRef}>
+              <button
+                onClick={() => setFilterOpen(!filterOpen)}
+                className="border border-gray-200 bg-white pl-5 pr-10 py-3 text-sm systematic-caps cursor-pointer hover:bg-gray-50 transition-colors flex items-center whitespace-nowrap"
+              >
+                {selectedFilter}
+                <ChevronDown className="ml-2 w-4 h-4 text-pop-black" />
+              </button>
+              
+              {filterOpen && (
+                <div className="absolute top-full left-0 min-w-full bg-white border border-gray-200 mt-2 overflow-hidden z-10">
+                  {[
+                    "ALL",
+                    "ACTIVE BINS",
+                    "COLLECTED BATCHES",
+                    "PRESSED BLANKS",
+                    "MANUFACTURED ITEMS",
+                    "ASSEMBLED ITEMS",
+                  ].map((category) => (
+                    <button
+                      key={category}
+                      onClick={() => {
+                        setSelectedFilter(category);
+                        setFilterOpen(false);
+                      }}
+                      className="block w-full text-left px-5 py-3 systematic-caps text-sm hover:bg-pop-green hover:text-white transition-colors whitespace-nowrap"
+                    >
+                      {category}
+                    </button>
+                  ))}
                 </div>
-              </div>
-              <div className="text-sm text-pop-gray">
-                {getFilteredCodes().length} {getFilteredCodes().length === 1 ? 'item' : 'items'}
-              </div>
+              )}
             </div>
           </div>
+          <div className="text-sm text-pop-gray">
+            {getFilteredCodes().length} {getFilteredCodes().length === 1 ? 'item' : 'items'}
+          </div>
+        </div>
+      </div>
 
-          {/* QR Codes */}
-          <div className="mb-16">
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+      {/* QR Codes */}
+      <div className="max-w-7xl mx-auto px-6 pb-16">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
               {loading ? (
                 <div className="col-span-full flex justify-center items-center py-16 border border-gray-200">
                   <LoadingSquare color="green" text="Loading Items..." />
@@ -240,8 +242,6 @@ export default function Track() {
                 );
                 })
               )}
-            </div>
-          </div>
         </div>
       </div>
 
