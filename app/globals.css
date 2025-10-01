@@ -2,11 +2,11 @@
 @tailwind components;
 @tailwind utilities;
 
-/* PopCycle Brand Colors */
+/* PopCycle Brand Colors - Softer Pastel Palette */
 :root {
-  --pop-green: 142 100% 35%;
-  --pop-blue: 214 100% 50%;
-  --pop-red: 348 100% 60%;
+  --pop-green: 142 65% 45%;
+  --pop-blue: 214 70% 60%;
+  --pop-red: 348 75% 65%;
   --pop-black: 0 0% 0%;
   --pop-white: 0 0% 100%;
   --pop-gray: 0 0% 20%;
@@ -85,7 +85,7 @@
 .login-button {
   background-color: hsl(var(--pop-green)) !important;
   color: white !important;
-  border: 2px solid white !important;
+  border: 1px solid white !important;
 }
 
 .login-button:hover {

@@ -3,9 +3,17 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState, useEffect, useRef } from "react";
-import { useSession, signOut } from 'next-auth/react';
+import { useSession, signOut } from "next-auth/react";
 import { Button } from "./ui/button";
-import { ChevronDown, Menu, X, ChevronRight, User, Settings, LogOut } from "lucide-react";
+import {
+  ChevronDown,
+  Menu,
+  X,
+  ChevronRight,
+  User,
+  Settings,
+  LogOut,
+} from "lucide-react";
 import AuthButton from "./AuthButton";
 
 export default function Navigation() {
@@ -20,20 +28,24 @@ export default function Navigation() {
   const userMenuRef = useRef<HTMLDivElement>(null);
 
   const { data: session } = useSession();
-  const hasPortalAccess = session?.user?.userType === 'super_admin' || 
+  const hasPortalAccess =
+    session?.user?.userType === "super_admin" ||
     (session?.user?.permissions && session.user.permissions.length > 0);
 
   // Close dropdown when clicking outside
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
-      if (userMenuRef.current && !userMenuRef.current.contains(event.target as Node)) {
+      if (
+        userMenuRef.current &&
+        !userMenuRef.current.contains(event.target as Node)
+      ) {
         setUserMenuOpen(false);
       }
     }
 
-    document.addEventListener('mousedown', handleClickOutside);
+    document.addEventListener("mousedown", handleClickOutside);
     return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
+      document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
 
@@ -76,7 +88,6 @@ export default function Navigation() {
 
           {/* Absolutely centered navigation links */}
           <div className="hidden lg:flex items-center space-x-8 absolute left-1/2 transform -translate-x-1/2 whitespace-nowrap">
-
             {/* About Dropdown */}
             <div
               className="relative"
@@ -88,7 +99,6 @@ export default function Navigation() {
                   pathname?.startsWith("/about") ? "nav-link-active" : ""
                 }`}
               >
-                <ChevronDown className="w-3 h-3" />
                 <span>About</span>
               </button>
 
@@ -103,12 +113,10 @@ export default function Navigation() {
                       {item.label}
                     </Link>
                   ))}
-
                 </div>
               )}
-
             </div>
-           
+
             {/* Services Dropdown */}
             <div
               className="relative"
@@ -120,8 +128,7 @@ export default function Navigation() {
                   pathname === "/services" ? "nav-link-active" : ""
                 }`}
               >
-                <ChevronDown className="w-3 h-3" />
-                <span>What We Do</span>
+                <span>Services</span>
               </button>
 
               {servicesOpen && (
@@ -139,18 +146,6 @@ export default function Navigation() {
               )}
             </div>
 
-         
-            {/* Track */}
-            <Link
-              href="/track"
-              className={`systematic-caps text-sm hover:text-pop-green transition-colors py-2 ${
-                pathname === "/track" ? "nav-link-active" : ""
-              }`}
-            >
-              Track Your Plastic
-            </Link>
-
-
             {/* Shop */}
             <Link
               href="/shop"
@@ -161,6 +156,15 @@ export default function Navigation() {
               Shop
             </Link>
 
+            {/* Track */}
+            <Link
+              href="/track"
+              className={`systematic-caps text-sm hover:text-pop-green transition-colors py-2 ${
+                pathname === "/track" ? "nav-link-active" : ""
+              }`}
+            >
+              Track
+            </Link>
           </div>
 
           {/* Right-aligned User Menu / Auth Button */}
@@ -177,14 +181,18 @@ export default function Navigation() {
                     </div>
                     <div className="text-left">
                       <div className="text-sm font-semibold text-pop-black">
-                        {session.user?.name?.split(' ')[0] || 'User'}
+                        {session.user?.name?.split(" ")[0] || "User"}
                       </div>
                       <div className="text-xs text-pop-green systematic-caps">
-                        {session.user?.userType === 'super_admin' ? 'Super Admin' : 'Maker'}
+                        {session.user?.userType === "super_admin"
+                          ? "Super Admin"
+                          : "Maker"}
                       </div>
                     </div>
                   </div>
-                  <ChevronDown className={`w-4 h-4 text-pop-black transform transition-transform ${userMenuOpen ? 'rotate-180' : ''}`} />
+                  <ChevronDown
+                    className={`w-4 h-4 text-pop-black transform transition-transform ${userMenuOpen ? "rotate-180" : ""}`}
+                  />
                 </button>
 
                 {/* User Dropdown */}
@@ -195,7 +203,7 @@ export default function Navigation() {
                         {session.user?.email}
                       </div>
                     </div>
-                    
+
                     <div className="py-1">
                       <Link
                         href="/profile"
@@ -205,7 +213,7 @@ export default function Navigation() {
                         <User className="w-4 h-4 mr-3" />
                         Profile
                       </Link>
-                      
+
                       {hasPortalAccess && (
                         <Link
                           href="/portal"
@@ -216,11 +224,11 @@ export default function Navigation() {
                           Portal
                         </Link>
                       )}
-                      
+
                       <button
                         onClick={() => {
-                          setUserMenuOpen(false)
-                          signOut({ callbackUrl: '/' })
+                          setUserMenuOpen(false);
+                          signOut({ callbackUrl: "/" });
                         }}
                         className="w-full flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-pop-red hover:text-white systematic-caps text-left whitespace-nowrap"
                       >
@@ -257,11 +265,7 @@ export default function Navigation() {
       {/* Mobile Menu */}
       {mobileMenuOpen && (
         <div className="lg:hidden bg-white border-t border-gray-200">
-
-
-          
           <div className="px-4 py-6 space-y-4">
-
             {/* About Mobile Accordion Section */}
             <div className="space-y-2">
               <button
@@ -315,7 +319,7 @@ export default function Navigation() {
                 </div>
               )}
             </div>
-            
+
             {/* Track Mobile Section */}
             <div className="space-y-2">
               <Link
@@ -338,10 +342,6 @@ export default function Navigation() {
               </Link>
             </div>
 
-      
-
-      
-
             {/* Mobile User Section */}
             <div className="pt-4 border-t border-gray-200 space-y-3">
               {session ? (
@@ -354,15 +354,17 @@ export default function Navigation() {
                       </div>
                       <div>
                         <div className="systematic-caps text-sm font-bold text-pop-black">
-                          {session.user?.name?.split(' ')[0] || 'User'}
+                          {session.user?.name?.split(" ")[0] || "User"}
                         </div>
                         <div className="systematic-caps text-xs font-medium text-pop-green mt-1">
-                          {session.user?.userType === 'super_admin' ? 'Super Admin' : 'Maker'}
+                          {session.user?.userType === "super_admin"
+                            ? "Super Admin"
+                            : "Maker"}
                         </div>
                       </div>
                     </div>
                   </div>
-                  
+
                   {/* User Menu Items */}
                   <div className="space-y-2">
                     <Link
@@ -404,8 +406,6 @@ export default function Navigation() {
           </div>
         </div>
       )}
-
-
     </nav>
   );
 }
