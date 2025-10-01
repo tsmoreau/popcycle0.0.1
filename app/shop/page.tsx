@@ -177,11 +177,11 @@ export default function Shop() {
             )}
           </div>
         ) : (
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-12">
+          <div className="grid md:grid-cols-2 lg:grid-cols-4">
             {filteredProducts.map((product) => (
               <div 
                 key={product._id} 
-                className="bg-white"
+                className="bg-white border border-gray-200 p-8 -ml-[1px] -mt-[1px]"
                 data-testid={`card-product-${product._id}`}
               >
                 <div className="w-full h-64 mb-4 flex items-center justify-center overflow-hidden bg-gray-50">
@@ -206,7 +206,7 @@ export default function Shop() {
                   )}
                 </div>
                 
-                <div className="flex-col mx-auto items-center">
+                <div className="text-center">
                   <h3 className="text-base mb-1 text-pop-black" data-testid={`text-product-name-${product._id}`}>
                     {product.name}
                   </h3>
