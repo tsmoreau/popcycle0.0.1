@@ -156,15 +156,10 @@ export default function Shop() {
             )}
           </div>
         ) : (
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-0 border border-gray-200 divide-x divide-y divide-gray-200 bg-white">
             {filteredProducts.map((product) => (
-              <PopArtContainer
-                key={product._id}
-                color={product.inStock ? "blue" : "black"}
-                shadow
-              >
-                <Card className="border border-gray-200 h-full">
-                  <CardHeader className="pb-4">
+              <div key={product._id} className="bg-white p-8 flex flex-col h-full">
+                  <div className="pb-4">
                     <div className="w-full h-48 bg-pop-white border border-gray-300 mb-4 flex items-center justify-center">
                       {product.designFiles.photos && product.designFiles.photos.length > 0 ? (
                         <img 
@@ -188,11 +183,11 @@ export default function Shop() {
                         </div>
                       </div>
                     </div>
-                    <CardTitle className="systematic-caps text-lg mb-2">
+                    <div className="systematic-caps text-lg mb-2 font-bold">
                       {product.name}
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent className="space-y-4">
+                    </div>
+                  </div>
+                  <div className="space-y-4">
                     <p className="text-sm text-pop-gray leading-relaxed">
                       {product.description}
                     </p>
@@ -254,9 +249,8 @@ export default function Shop() {
                         <Heart className="w-4 h-4" />
                       </button>
                     </div>
-                  </CardContent>
-                </Card>
-              </PopArtContainer>
+                  </div>
+              </div>
             ))}
           </div>
         )}

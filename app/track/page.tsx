@@ -184,41 +184,28 @@ export default function Track() {
           {/* QR Codes */}
           <div className="mb-16 mt-32">
            
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 max-w-7xl mx-auto px-12">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-0 border border-gray-200 divide-x divide-y divide-gray-200 bg-white max-w-7xl mx-auto">
               {loading ? (
                 <div className="col-span-full flex justify-center items-center py-16">
                   <LoadingSquare color="green" text="Loading Items..." />
                 </div>
               ) : (
                 getFilteredCodes().map((code, index) => {
-                const colors = [
-                  "green",
-                  "blue",
-                  "red",
-                  "black",
-                  "green",
-                  "blue",
-                  "red",
-                ] as const;
                 return (
                   <Link key={code.id} href={`/track/${code.id}`}>
-                    <PopArtContainer color={colors[index]} shadow>
-                      <Card className="border border-gray-200 hover:scale-105 transition-transform cursor-pointer bg-white aspect-square">
-                        <CardContent className="p-4 text-center bg-white h-full flex flex-col justify-center">
-                          <QRCodeElement
-                            qrCode={code.id}
-                            size="md"
-                            className="mx-auto mb-4"
-                          />
-                          <div className="systematic-caps text-lg helvetica-bold">
-                            {code.id}
-                          </div>
-                          <div className="text-xs text-pop-gray mt-1">
-                            {code.type.toUpperCase()} • Click to track
-                          </div>
-                        </CardContent>
-                      </Card>
-                    </PopArtContainer>
+                    <div className="bg-white p-8 hover:bg-gray-50 transition-colors cursor-pointer aspect-square flex flex-col justify-center items-center text-center">
+                      <QRCodeElement
+                        qrCode={code.id}
+                        size="md"
+                        className="mx-auto mb-4"
+                      />
+                      <div className="systematic-caps text-lg helvetica-bold">
+                        {code.id}
+                      </div>
+                      <div className="text-xs text-pop-gray mt-1">
+                        {code.type.toUpperCase()} • Click to track
+                      </div>
+                    </div>
                   </Link>
                 );
                 })
