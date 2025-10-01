@@ -9,7 +9,7 @@ import {
 import { Button } from "../components/ui/button";
 import { Input } from "../components/ui/input";
 import { PopArtContainer, QRCodeElement } from "../components/PopArtElements";
-import { Search, QrCode, ArrowRight } from "lucide-react";
+import { Search, QrCode, ArrowRight, ChevronDown } from "lucide-react";
 import Link from "next/link";
 import { useState, useEffect } from "react";
 import { LoadingSquare } from "../components/ui/loading-square";
@@ -155,28 +155,31 @@ export default function Track() {
           </div>
 
           {/* Categories Filter */}
-          <div className="mb-16 max-w-full border-b border-gray-200 pb-8">
+          <div className="mb-16 max-w-full pb-8">
             <div className="flex items-center justify-between gap-4 flex-wrap">
               <div className="flex items-center gap-4">
                 <span className="text-sm text-pop-gray">Filter items:</span>
-                <select
-                  value={selectedFilter}
-                  onChange={(e) => setSelectedFilter(e.target.value)}
-                  className="border border-gray-300 bg-white px-4 py-2 text-sm systematic-caps appearance-none cursor-pointer hover:border-gray-400 transition-colors"
-                >
-                  {[
-                    "ALL",
-                    "ACTIVE BINS",
-                    "COLLECTED BATCHES",
-                    "PRESSED BLANKS",
-                    "MANUFACTURED ITEMS",
-                    "ASSEMBLED ITEMS",
-                  ].map((category) => (
-                    <option key={category} value={category}>
-                      {category}
-                    </option>
-                  ))}
-                </select>
+                <div className="relative">
+                  <select
+                    value={selectedFilter}
+                    onChange={(e) => setSelectedFilter(e.target.value)}
+                    className="border border-gray-200 bg-white pl-5 pr-10 py-3 text-sm systematic-caps appearance-none cursor-pointer hover:bg-gray-50 transition-colors"
+                  >
+                    {[
+                      "ALL",
+                      "ACTIVE BINS",
+                      "COLLECTED BATCHES",
+                      "PRESSED BLANKS",
+                      "MANUFACTURED ITEMS",
+                      "ASSEMBLED ITEMS",
+                    ].map((category) => (
+                      <option key={category} value={category}>
+                        {category}
+                      </option>
+                    ))}
+                  </select>
+                  <ChevronDown className="absolute right-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-pop-black pointer-events-none" />
+                </div>
               </div>
               <div className="text-sm text-pop-gray">
                 {getFilteredCodes().length} {getFilteredCodes().length === 1 ? 'item' : 'items'}

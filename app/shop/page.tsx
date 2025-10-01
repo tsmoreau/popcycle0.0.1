@@ -16,6 +16,7 @@ import {
   Star,
   Calendar,
   Weight,
+  ChevronDown,
 } from "lucide-react";
 import { LoadingSquare } from "../components/ui/loading-square";
 
@@ -118,21 +119,24 @@ export default function Shop() {
       </div>
 
       {/* Categories Filter */}
-      <div className="max-w-7xl mx-auto px-6 py-8 border-b border-gray-200">
+      <div className="max-w-7xl mx-auto px-6 py-8">
         <div className="flex items-center justify-between gap-4 flex-wrap">
           <div className="flex items-center gap-4">
             <span className="text-sm text-pop-gray">Filter products:</span>
-            <select
-              value={selectedCategory}
-              onChange={(e) => setSelectedCategory(e.target.value)}
-              className="border border-gray-300 bg-white px-4 py-2 text-sm systematic-caps appearance-none cursor-pointer hover:border-gray-400 transition-colors"
-            >
-              {categories.map((category) => (
-                <option key={category} value={category}>
-                  {category}
-                </option>
-              ))}
-            </select>
+            <div className="relative">
+              <select
+                value={selectedCategory}
+                onChange={(e) => setSelectedCategory(e.target.value)}
+                className="border border-gray-200 bg-white pl-5 pr-10 py-3 text-sm systematic-caps appearance-none cursor-pointer hover:bg-gray-50 transition-colors"
+              >
+                {categories.map((category) => (
+                  <option key={category} value={category}>
+                    {category}
+                  </option>
+                ))}
+              </select>
+              <ChevronDown className="absolute right-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-pop-black pointer-events-none" />
+            </div>
           </div>
           <div className="text-sm text-pop-gray">
             {filteredProducts.length} {filteredProducts.length === 1 ? 'product' : 'products'}
