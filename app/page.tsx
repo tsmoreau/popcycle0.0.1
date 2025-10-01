@@ -119,7 +119,7 @@ export default function Home() {
                     01
                   </div>
                   <div className="text-center pt-4">
-                    <div className="w-16 h-16 bg-pop-green/10 border border-gray-200 flex items-center justify-center mx-auto mb-6">
+                    <div className="w-16 h-16 bg-pop-green/10 flex items-center justify-center mx-auto mb-6">
                       <Recycle className="w-8 h-8 text-pop-green" />
                     </div>
                     <h3 className="text-xl helvetica-bold mb-4 systematic-caps text-pop-green">COLLECT & TRACK</h3>
@@ -135,7 +135,7 @@ export default function Home() {
                     02
                   </div>
                   <div className="text-center pt-4">
-                    <div className="w-16 h-16 bg-pop-blue/10 border border-gray-200 flex items-center justify-center mx-auto mb-6">
+                    <div className="w-16 h-16 bg-pop-blue/10 flex items-center justify-center mx-auto mb-6">
                       <Factory className="w-8 h-8 text-pop-blue" />
                     </div>
                     <h3 className="text-xl helvetica-bold mb-4 systematic-caps text-pop-blue">TRANSFORM & TRACE</h3>
@@ -151,7 +151,7 @@ export default function Home() {
                     03
                   </div>
                   <div className="text-center pt-4">
-                    <div className="w-16 h-16 bg-pop-red/10 border border-gray-200 flex items-center justify-center mx-auto mb-6">
+                    <div className="w-16 h-16 bg-pop-red/10 flex items-center justify-center mx-auto mb-6">
                       <Target className="w-8 h-8 text-pop-red" />
                     </div>
                     <h3 className="text-xl helvetica-bold mb-4 systematic-caps text-pop-red">DELIVER & VERIFY</h3>
@@ -188,7 +188,7 @@ export default function Home() {
                     ✗
                   </div>
                   <div className="text-center pt-4">
-                    <div className="w-16 h-16 bg-pop-red/10 border border-gray-200 flex items-center justify-center mx-auto mb-6">
+                    <div className="w-16 h-16 bg-pop-red/10 flex items-center justify-center mx-auto mb-6">
                       <Eye className="w-8 h-8 text-pop-red" />
                     </div>
                     <h3 className="text-xl helvetica-bold mb-4 systematic-caps text-pop-red">TRADITIONAL WASTE</h3>
@@ -204,7 +204,7 @@ export default function Home() {
                     ✓
                   </div>
                   <div className="text-center pt-4">
-                    <div className="w-16 h-16 bg-pop-green/10 border border-gray-200 flex items-center justify-center mx-auto mb-6">
+                    <div className="w-16 h-16 bg-pop-green/10 flex items-center justify-center mx-auto mb-6">
                       <RotateCcw className="w-8 h-8 text-pop-green" />
                     </div>
                     <h3 className="text-xl helvetica-bold mb-4 systematic-caps text-pop-green">POPCYCLE TRACKING</h3>
@@ -220,7 +220,7 @@ export default function Home() {
                     ∞
                   </div>
                   <div className="text-center pt-4">
-                    <div className="w-16 h-16 bg-pop-blue/10 border border-gray-200 flex items-center justify-center mx-auto mb-6">
+                    <div className="w-16 h-16 bg-pop-blue/10 flex items-center justify-center mx-auto mb-6">
                       <Target className="w-8 h-8 text-pop-blue" />
                     </div>
                     <h3 className="text-xl helvetica-bold mb-4 systematic-caps text-pop-blue">THE RESULT</h3>
