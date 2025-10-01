@@ -43,9 +43,7 @@ function AuthButtonContent() {
   }, [])
 
   if (status === 'loading') {
-    return (
-      <div className="w-8 h-8 border border-pop-green border-t-transparent rounded-full animate-spin"></div>
-    )
+    return <div className="w-8 h-8"></div>
   }
 
   if (session) {
@@ -193,9 +191,7 @@ function AuthButtonContent() {
 
 export default function AuthButton() {
   return (
-    <Suspense fallback={
-      <div className="w-8 h-8 border border-pop-green border-t-transparent rounded-full animate-spin"></div>
-    }>
+    <Suspense fallback={<div className="w-8 h-8"></div>}>
       <AuthButtonContent />
     </Suspense>
   )
