@@ -44,7 +44,7 @@ function AuthButtonContent() {
 
   if (status === 'loading') {
     return (
-      <div className="w-8 h-8 border-2 border-pop-green border-t-transparent rounded-full animate-spin"></div>
+      <div className="w-8 h-8 border border-pop-green border-t-transparent rounded-full animate-spin"></div>
     )
   }
 
@@ -58,9 +58,9 @@ function AuthButtonContent() {
         <Button
           onClick={() => setDropdownOpen(!dropdownOpen)}
           variant="outline"
-          className="flex items-center space-x-2 border-2 border-pop-black hover:bg-pop-green systematic-caps"
+          className="flex items-center space-x-2 border border-gray-300 hover:bg-pop-green systematic-caps"
         >
-          <div className="w-6 h-6 bg-pop-green border-2 border-pop-black rounded-full flex items-center justify-center">
+          <div className="w-6 h-6 bg-pop-green border border-gray-300 rounded-full flex items-center justify-center">
             <User className="w-3 h-3 text-pop-black" />
           </div>
           <span className="hidden md:inline text-sm font-semibold">
@@ -71,7 +71,7 @@ function AuthButtonContent() {
         
         {/* Dropdown Menu */}
         {dropdownOpen && (
-          <div className="absolute right-0 mt-2 w-48 bg-white border-2 border-pop-black shadow-lg z-50">
+          <div className="absolute right-0 mt-2 w-48 bg-white border border-gray-300 shadow-lg z-50">
             <div className="p-2">
               <div className="px-3 py-2 text-sm font-semibold text-pop-black border-b border-gray-200">
                 {session.user?.email}
@@ -131,10 +131,10 @@ function AuthButtonContent() {
 
       {/* Sign In Modal */}
       <Dialog open={signInModalOpen} onOpenChange={setSignInModalOpen}>
-        <DialogContent className="sm:max-w-md bg-white border-4 border-pop-black">
+        <DialogContent className="sm:max-w-md bg-white border border-gray-200">
           <DialogHeader className="space-y-4 pb-4">
             <div className="text-center">
-              <div className="w-16 h-16 bg-pop-green border-4 border-pop-black  flex items-center justify-center mx-auto mb-4">
+              <div className="w-16 h-16 bg-pop-green border border-gray-200  flex items-center justify-center mx-auto mb-4">
                 <span className="text-pop-black helvetica-bold text-2xl">P</span>
               </div>
               <DialogTitle className="text-xl helvetica-bold text-pop-black">
@@ -147,7 +147,7 @@ function AuthButtonContent() {
           </DialogHeader>
           
           <div className="space-y-4">
-            <div className="bg-pop-green/10 border-2 border-pop-green p-4">
+            <div className="bg-pop-green/10 border border-pop-green p-4">
               <h3 className="systematic-caps text-sm text-pop-green mb-2">Google SSO</h3>
               <Button
                 onClick={async () => {
@@ -164,7 +164,7 @@ function AuthButtonContent() {
                   }
                 }}
                 disabled={isSigningIn}
-                className="w-full bg-pop-blue border-2 border-pop-black text-white hover:bg-pop-black hover:text-pop-blue systematic-caps text-sm h-12"
+                className="w-full bg-pop-blue border border-gray-300 text-white hover:bg-pop-black hover:text-pop-blue systematic-caps text-sm h-12"
               >
                 {isSigningIn ? (
                   <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin mr-3" />
@@ -193,7 +193,7 @@ function AuthButtonContent() {
 export default function AuthButton() {
   return (
     <Suspense fallback={
-      <div className="w-8 h-8 border-2 border-pop-green border-t-transparent rounded-full animate-spin"></div>
+      <div className="w-8 h-8 border border-pop-green border-t-transparent rounded-full animate-spin"></div>
     }>
       <AuthButtonContent />
     </Suspense>

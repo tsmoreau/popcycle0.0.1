@@ -60,7 +60,7 @@ export default function Services() {
               </Link>
             </div>
             <PopArtContainer color="green" shadow>
-              <Card className="border-4 border-pop-black">
+              <Card className="border border-gray-200">
                 <CardContent className="p-8">
                   <Recycle className="w-16 h-16 text-pop-green mb-6" />
                   <div className="grid grid-cols-2 gap-4">
@@ -115,7 +115,7 @@ export default function Services() {
               </Link>
             </div>
             <PopArtContainer color="blue" shadow>
-              <Card className="border-4 border-pop-black">
+              <Card className="border border-gray-200">
                 <CardContent className="p-8">
                   <Factory className="w-16 h-16 text-pop-blue mb-6" />
                   <div className="space-y-4">
@@ -174,7 +174,7 @@ export default function Services() {
               </Link>
             </div>
             <PopArtContainer color="red" shadow>
-              <Card className="border-4 border-pop-black">
+              <Card className="border border-gray-200">
                 <CardContent className="p-8">
                   <Package className="w-16 h-16 text-pop-red mb-6" />
                   <div className="space-y-3">
@@ -201,7 +201,7 @@ export default function Services() {
           
           <div className="grid md:grid-cols-3 gap-8">
             <PopArtContainer color="green" shadow>
-              <Card className="border-4 border-pop-black text-center">
+              <Card className="border border-gray-200 text-center">
                 <CardContent className="p-6">
                   <Wrench className="w-12 h-12 text-pop-green mx-auto mb-4" />
                   <h3 className="systematic-caps text-lg mb-2">Design Consultation</h3>
@@ -211,7 +211,7 @@ export default function Services() {
             </PopArtContainer>
             
             <PopArtContainer color="blue" shadow>
-              <Card className="border-4 border-pop-black text-center">
+              <Card className="border border-gray-200 text-center">
                 <CardContent className="p-6">
                   <Factory className="w-12 h-12 text-pop-blue mx-auto mb-4" />
                   <h3 className="systematic-caps text-lg mb-2">Prototyping</h3>
@@ -221,7 +221,7 @@ export default function Services() {
             </PopArtContainer>
             
             <PopArtContainer color="red" shadow>
-              <Card className="border-4 border-pop-black text-center">
+              <Card className="border border-gray-200 text-center">
                 <CardContent className="p-6">
                   <Package className="w-12 h-12 text-pop-red mx-auto mb-4" />
                   <h3 className="systematic-caps text-lg mb-2">Production</h3>

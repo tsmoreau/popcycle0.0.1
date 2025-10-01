@@ -128,13 +128,13 @@ export default function Track() {
           {/* QR Code Search */}
           <div className="mb-16 mx-auto  max-w-3xl">
             <PopArtContainer color="green" shadow>
-              <Card className="border-4 border-pop-black">
+              <Card className="border border-gray-200">
                 <CardContent className="p-8">
                   <div className="flex flex-col sm:flex-row gap-4">
                     <div className="flex-1">
                       <Input
                         placeholder="Enter item code (e.g. B1234567)"
-                        className="border-2 border-pop-black text-lg h-12"
+                        className="border border-gray-300 text-lg h-12"
                         value={searchTerm}
                         onChange={(e) => setSearchTerm(e.target.value)}
                         onKeyPress={(e) => e.key === 'Enter' && handleSearch()}
@@ -167,7 +167,7 @@ export default function Track() {
               ].map((category) => (
                 <button
                   key={category}
-                  className={`px-6 py-3 border-2 border-pop-black transition-colors systematic-caps ${
+                  className={`px-6 py-3 border border-gray-300 transition-colors systematic-caps ${
                     selectedFilter === category
                       ? "bg-pop-black text-white"
                       : "bg-white hover:bg-pop-black hover:text-white"
@@ -203,7 +203,7 @@ export default function Track() {
                 return (
                   <Link key={code.id} href={`/track/${code.id}`}>
                     <PopArtContainer color={colors[index]} shadow>
-                      <Card className="border-4 border-pop-black hover:scale-105 transition-transform cursor-pointer bg-white aspect-square">
+                      <Card className="border border-gray-200 hover:scale-105 transition-transform cursor-pointer bg-white aspect-square">
                         <CardContent className="p-4 text-center bg-white h-full flex flex-col justify-center">
                           <QRCodeElement
                             qrCode={code.id}
@@ -233,7 +233,7 @@ export default function Track() {
             </h2>
             <div className="grid md:grid-cols-3 gap-8">
               <div className="text-center">
-                <div className="w-16 h-16 bg-pop-green border-2 border-pop-black mx-auto mb-4 flex items-center justify-center">
+                <div className="w-16 h-16 bg-pop-green border border-gray-300 mx-auto mb-4 flex items-center justify-center">
                   <QrCode className="w-8 h-8 text-pop-black" />
                 </div>
                 <h3 className="systematic-caps text-lg mb-2">
@@ -246,7 +246,7 @@ export default function Track() {
               </div>
 
               <div className="text-center">
-                <div className="w-16 h-16 bg-pop-blue border-2 border-pop-black mx-auto mb-4 flex items-center justify-center">
+                <div className="w-16 h-16 bg-pop-blue border border-gray-300 mx-auto mb-4 flex items-center justify-center">
                   <span className="text-pop-black helvetica-bold text-xl">
                     →
                   </span>
@@ -261,7 +261,7 @@ export default function Track() {
               </div>
 
               <div className="text-center">
-                <div className="w-16 h-16 bg-pop-red border-2 border-pop-black mx-auto mb-4 flex items-center justify-center">
+                <div className="w-16 h-16 bg-pop-red border border-gray-300 mx-auto mb-4 flex items-center justify-center">
                   <span className="text-pop-black helvetica-bold text-xl">
                     !
                   </span>

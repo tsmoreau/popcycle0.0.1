@@ -38,7 +38,7 @@ export default function Home() {
             </Link>
 
             <Link href="/about#faq">
-              <Button variant="outline" size="lg" className="border-2 border-gray-900 text-gray-900 hover:bg-gray-900 hover:text-white systematic-caps text-base px-10 py-6 rounded-lg transition-all">
+              <Button variant="outline" size="lg" className="border border-gray-300 text-gray-900 hover:bg-gray-900 hover:text-white systematic-caps text-base px-10 py-6 rounded-lg transition-all">
                 Learn More
               </Button>
             </Link>

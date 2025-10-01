@@ -162,7 +162,7 @@ export default function TrackItem() {
     return (
       <div className="min-h-screen flex items-center justify-center">
         <PopArtContainer color="red" shadow>
-          <Card className="border-4 border-pop-black">
+          <Card className="border border-gray-200">
             <CardContent className="p-8 text-center">
               <h2 className="text-3xl helvetica-bold mb-4">Item Not Found</h2>
               <p className="text-pop-gray mb-6">
@@ -358,7 +358,7 @@ export default function TrackItem() {
         {/* QR Code Display */}
         <div className="flex justify-center mb-12">
           <PopArtContainer color="green" shadow>
-            <div className="p-8 bg-white border-4 border-pop-black">
+            <div className="p-8 bg-white border border-gray-200">
               <QRCodeElement qrCode={data.id} size="lg" />
             </div>
           </PopArtContainer>
@@ -370,7 +370,7 @@ export default function TrackItem() {
             {/* Bins: Show only Collection step */}
             {data.id.startsWith("B") && (
               <div className="text-center flex-1 max-w-[200px]">
-                <div className={`w-20 h-20 mx-auto mb-3 border-4 border-pop-black flex items-center justify-center rounded-lg shadow-lg ${
+                <div className={`w-20 h-20 mx-auto mb-3 border border-gray-200 flex items-center justify-center rounded-lg shadow-lg ${
                   data.collectionDate || data.lastCollectionDate || data.id.startsWith("B") 
                     ? "bg-pop-green" 
                     : "bg-gray-200"
@@ -402,7 +402,7 @@ export default function TrackItem() {
               <>
                 {/* Step 1: COLLECTION */}
                 <div className="text-center flex-1 max-w-[140px]">
-                  <div className={`w-20 h-20 mx-auto mb-3 border-4 border-pop-black flex items-center justify-center rounded-lg shadow-lg ${
+                  <div className={`w-20 h-20 mx-auto mb-3 border border-gray-200 flex items-center justify-center rounded-lg shadow-lg ${
                     data.collectionDate || data.lastCollectionDate || data.id.startsWith("B") 
                       ? "bg-pop-green" 
                       : "bg-gray-200"
@@ -430,7 +430,7 @@ export default function TrackItem() {
 
                 {/* Step 2: PROCESSING */}
                 <div className="text-center flex-1 max-w-[140px]">
-                  <div className={`w-20 h-20 mx-auto mb-3 border-4 border-pop-black flex items-center justify-center rounded-lg shadow-lg ${
+                  <div className={`w-20 h-20 mx-auto mb-3 border border-gray-200 flex items-center justify-center rounded-lg shadow-lg ${
                     isProcessed 
                       ? "bg-pop-blue" 
                       : "bg-gray-200"
@@ -456,7 +456,7 @@ export default function TrackItem() {
               <>
                 {/* Step 1: PROCESSING */}
                 <div className="text-center flex-1 max-w-[140px]">
-                  <div className={`w-20 h-20 mx-auto mb-3 border-4 border-pop-black flex items-center justify-center rounded-lg shadow-lg ${
+                  <div className={`w-20 h-20 mx-auto mb-3 border border-gray-200 flex items-center justify-center rounded-lg shadow-lg ${
                     isProcessed 
                       ? "bg-pop-blue" 
                       : "bg-gray-200"
@@ -484,7 +484,7 @@ export default function TrackItem() {
 
                 {/* Step 2: PURCHASED/DONATED */}
                 <div className="text-center flex-1 max-w-[140px]">
-                  <div className={`w-20 h-20 mx-auto mb-3 border-4 border-pop-black flex items-center justify-center rounded-lg shadow-lg ${
+                  <div className={`w-20 h-20 mx-auto mb-3 border border-gray-200 flex items-center justify-center rounded-lg shadow-lg ${
                     data.productId 
                       ? "bg-pop-red" 
                       : "bg-gray-200"
@@ -528,7 +528,7 @@ export default function TrackItem() {
 
                     {/* Step 3: ASSEMBLED */}
                     <div className="text-center flex-1 max-w-[140px]">
-                      <div className={`w-20 h-20 mx-auto mb-3 border-4 border-pop-black flex items-center justify-center rounded-lg shadow-lg ${
+                      <div className={`w-20 h-20 mx-auto mb-3 border border-gray-200 flex items-center justify-center rounded-lg shadow-lg ${
                         data.userId 
                           ? "bg-pop-red" 
                           : "bg-gray-200"
@@ -562,7 +562,7 @@ export default function TrackItem() {
         <div className="flex flex-col gap-8 mb-12 max-w-2xl mx-auto">
           {/* Source Details Card */}
           <PopArtContainer color="green" shadow>
-            <Card className="border-4 border-pop-black">
+            <Card className="border border-gray-200">
               <CardHeader>
                 <CardTitle className="systematic-caps flex items-center justify-center">
                   <Building className="w-5 h-5 mr-2" />
@@ -752,7 +752,7 @@ export default function TrackItem() {
           {!isSourceOnly && (
             <>
               <PopArtContainer color={isCharity ? "red" : "blue"} shadow>
-                <Card className="border-4 border-pop-black">
+                <Card className="border border-gray-200">
                   <CardHeader>
                     <CardTitle className="systematic-caps flex items-center">
                       <Package className="w-5 h-5 mr-2" />
@@ -822,7 +822,7 @@ export default function TrackItem() {
 
               {/* ========== MAKER DETAILS ========== */}
               <PopArtContainer color="red" shadow>
-                <Card className="border-4 border-pop-black">
+                <Card className="border border-gray-200">
                   <CardHeader>
                     <CardTitle className="systematic-caps flex items-center">
                       <User className="w-5 h-5 mr-2" />
@@ -890,7 +890,7 @@ export default function TrackItem() {
                             ? `Did you assemble this item${data.destination ? ` at ${data.destination}` : ""}? Share your story and connect this donation to its educational impact.`
                             : "Did you assemble this item? Share your story and become part of the circular economy narrative."}
                         </p>
-                        <button className="w-full bg-pop-red text-white font-semibold py-3 px-6 border-2 border-pop-black hover:bg-pop-black transition-colors systematic-caps">
+                        <button className="w-full bg-pop-red text-white font-semibold py-3 px-6 border border-gray-300 hover:bg-pop-black transition-colors systematic-caps">
                           Register as Maker
                         </button>
                         <p className="text-xs text-pop-gray mt-3">
@@ -908,7 +908,7 @@ export default function TrackItem() {
         {/* Impact Metrics - Commented out for now */}
         {false && !isSourceOnly && impactMetrics && (
           <PopArtContainer color="red" shadow>
-            <Card className="border-4 border-pop-black">
+            <Card className="border border-gray-200">
               <CardHeader>
                 <CardTitle className="systematic-caps flex items-center justify-center text-2xl">
                   <Leaf className="w-6 h-6 mr-2" />
@@ -949,7 +949,7 @@ export default function TrackItem() {
         {data.id.startsWith("T") && relatedItems.blanks.length > 0 && (
           <div className="max-w-2xl mx-auto">
             <PopArtContainer color="red" shadow>
-              <Card className="border-4 border-pop-black">
+              <Card className="border border-gray-200">
                 <CardHeader>
                   <CardTitle className="systematic-caps flex items-center justify-center text-2xl">
                     <Package className="w-6 h-6 mr-2" />
@@ -993,7 +993,7 @@ export default function TrackItem() {
         {data.id.startsWith("B") && relatedItems.batches.length > 0 && (
           <div className="max-w-2xl mx-auto">
             <PopArtContainer color="green" shadow>
-              <Card className="border-4 border-pop-black">
+              <Card className="border border-gray-200">
                 <CardHeader>
                   <CardTitle className="systematic-caps flex items-center justify-center text-2xl">
                     <Package className="w-6 h-6 mr-2" />

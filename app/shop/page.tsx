@@ -124,7 +124,7 @@ export default function Shop() {
             <button
               key={category}
               onClick={() => setSelectedCategory(category)}
-              className={`px-6 py-3 border-2 border-pop-black transition-colors systematic-caps ${
+              className={`px-6 py-3 border border-gray-300 transition-colors systematic-caps ${
                 selectedCategory === category 
                   ? 'bg-pop-black text-white' 
                   : 'bg-white hover:bg-pop-black hover:text-white'
@@ -163,9 +163,9 @@ export default function Shop() {
                 color={product.inStock ? "blue" : "black"}
                 shadow
               >
-                <Card className="border-4 border-pop-black h-full">
+                <Card className="border border-gray-200 h-full">
                   <CardHeader className="pb-4">
-                    <div className="w-full h-48 bg-pop-white border-2 border-pop-black mb-4 flex items-center justify-center">
+                    <div className="w-full h-48 bg-pop-white border border-gray-300 mb-4 flex items-center justify-center">
                       {product.designFiles.photos && product.designFiles.photos.length > 0 ? (
                         <img 
                           src={product.designFiles.photos[0]} 
@@ -240,7 +240,7 @@ export default function Shop() {
 
                     <div className="flex gap-2 pt-4">
                       <button
-                        className={`flex-1 py-3 px-4 border-2 border-pop-black transition-colors systematic-caps ${
+                        className={`flex-1 py-3 px-4 border border-gray-300 transition-colors systematic-caps ${
                           product.inStock
                             ? "bg-pop-blue text-pop-black hover:bg-pop-black hover:text-white"
                             : "bg-pop-gray text-pop-black cursor-not-allowed"
@@ -250,7 +250,7 @@ export default function Shop() {
                         <ShoppingCart className="w-4 h-4 mr-2 inline" />
                         {product.inStock ? "Add to Cart" : "Out of Stock"}
                       </button>
-                      <button className="p-3 border-2 border-pop-black bg-white hover:bg-pop-red hover:text-white transition-colors">
+                      <button className="p-3 border border-gray-300 bg-white hover:bg-pop-red hover:text-white transition-colors">
                         <Heart className="w-4 h-4" />
                       </button>
                     </div>

@@ -61,12 +61,12 @@ export default function ProfilePage() {
   if (!session) {
     return (
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-        <Card className="bg-white border-2 border-pop-black max-w-md mx-auto">
+        <Card className="bg-white border border-gray-300 max-w-md mx-auto">
           <CardContent className="p-8 text-center">
             <h1 className="text-xl helvetica-bold text-pop-black mb-4">Sign In Required</h1>
             <p className="text-gray-600 mb-6">You need to be signed in to view your profile.</p>
             <Link href="/auth/signin">
-              <Button className="systematic-caps bg-pop-green border-2 border-pop-black text-pop-black hover:bg-pop-black hover:text-pop-green">
+              <Button className="systematic-caps bg-pop-green border border-gray-300 text-pop-black hover:bg-pop-black hover:text-pop-green">
                 Sign In
               </Button>
             </Link>
@@ -87,7 +87,7 @@ export default function ProfilePage() {
         <div className="max-w-4xl mx-auto px-4 py-8">
           <div className="flex flex-col md:flex-row items-center md:items-center justify-between gap-6">
             <div className="flex flex-col md:flex-row items-center space-y-4 md:space-y-0 md:space-x-6">
-              <div className="w-24 h-24 bg-pop-green border-4 border-pop-black rounded-full flex items-center justify-center flex-shrink-0">
+              <div className="w-24 h-24 bg-pop-green border border-gray-200 rounded-full flex items-center justify-center flex-shrink-0">
                 <User className="w-12 h-12 text-pop-black" />
               </div>
               <div className="text-center md:text-left">
@@ -115,13 +115,13 @@ export default function ProfilePage() {
             <div className="flex flex-col space-y-3">
               {hasPortalAccess && (
                 <Link href="/portal">
-                  <Button className="systematic-caps bg-pop-blue border-2 border-pop-black text-pop-black hover:bg-pop-black hover:text-pop-blue w-full">
+                  <Button className="systematic-caps bg-pop-blue border border-gray-300 text-pop-black hover:bg-pop-black hover:text-pop-blue w-full">
                     <Settings className="w-4 h-4 mr-2" />
                     Go to Portal
                   </Button>
                 </Link>
               )}
-              <Button variant="outline" className="systematic-caps border-2 border-pop-black hover:bg-pop-green hover:text-white">
+              <Button variant="outline" className="systematic-caps border border-gray-300 hover:bg-pop-green hover:text-white">
                 <Edit className="w-4 h-4 mr-2" />
                 Edit Profile
               </Button>
@@ -134,7 +134,7 @@ export default function ProfilePage() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
           
           {/* Account Information */}
-          <Card className="bg-white border-2 border-pop-black">
+          <Card className="bg-white border border-gray-300">
             <CardHeader>
               <CardTitle className="systematic-caps text-pop-black">Account Information</CardTitle>
             </CardHeader>
@@ -197,38 +197,38 @@ export default function ProfilePage() {
           </Card>
 
           {/* Quick Actions */}
-          <Card className="bg-white border-2 border-pop-black">
+          <Card className="bg-white border border-gray-300">
             <CardHeader>
               <CardTitle className="systematic-caps text-pop-black">Quick Actions</CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
               <div className="grid gap-3">
                 <Link href="/track">
-                  <Button variant="outline" className="w-full systematic-caps border-2 border-pop-black hover:bg-pop-green hover:text-white justify-start">
+                  <Button variant="outline" className="w-full systematic-caps border border-gray-300 hover:bg-pop-green hover:text-white justify-start">
                     Track Plastic Items
                   </Button>
                 </Link>
                 
                 <Link href="/shop">
-                  <Button variant="outline" className="w-full systematic-caps border-2 border-pop-black hover:bg-pop-red hover:text-white justify-start">
+                  <Button variant="outline" className="w-full systematic-caps border border-gray-300 hover:bg-pop-red hover:text-white justify-start">
                     Browse Shop
                   </Button>
                 </Link>
 
-                <Button variant="outline" className="w-full systematic-caps border-2 border-pop-black hover:bg-gray-100 justify-start" disabled>
+                <Button variant="outline" className="w-full systematic-caps border border-gray-300 hover:bg-gray-100 justify-start" disabled>
                   Purchase History
                   <span className="ml-auto text-xs text-gray-400">Coming Soon</span>
                 </Button>
 
                 {hasPortalAccess && (
                   <Link href="/portal">
-                    <Button variant="outline" className="w-full systematic-caps border-2 border-pop-black hover:bg-pop-blue hover:text-white justify-start">
+                    <Button variant="outline" className="w-full systematic-caps border border-gray-300 hover:bg-pop-blue hover:text-white justify-start">
                       Access Portal Dashboard
                     </Button>
                   </Link>
                 )}
                 
-                <Button variant="outline" className="w-full systematic-caps border-2 border-pop-black hover:bg-gray-100 justify-start" disabled>
+                <Button variant="outline" className="w-full systematic-caps border border-gray-300 hover:bg-gray-100 justify-start" disabled>
                   Edit Profile Settings
                   <span className="ml-auto text-xs text-gray-400">Coming Soon</span>
                 </Button>
@@ -245,7 +245,7 @@ export default function ProfilePage() {
         </div>
 
         {/* Assembled Items Section */}
-        <Card className="bg-white border-2 border-pop-black mt-8">
+        <Card className="bg-white border border-gray-300 mt-8">
           <CardHeader>
             <CardTitle className="systematic-caps text-pop-black flex items-center">
               <Package className="w-5 h-5 mr-2" />
@@ -260,7 +260,7 @@ export default function ProfilePage() {
             ) : assembledItems.length > 0 ? (
               <div className="space-y-4">
                 {assembledItems.map((item) => (
-                  <div key={item.id} className="p-4 border-2 border-pop-black rounded-lg hover:bg-gray-50 transition-colors">
+                  <div key={item.id} className="p-4 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors">
                     <div className="flex items-start justify-between">
                       <div className="flex-1">
                         <div className="flex items-center space-x-3 mb-2">
@@ -342,7 +342,7 @@ export default function ProfilePage() {
                 <h3 className="text-lg font-medium text-gray-600 mb-2">No Assembled Items Yet</h3>
                 <p className="text-gray-500 mb-4">You haven't assembled any items yet. Start by browsing available products!</p>
                 <Link href="/shop">
-                  <Button className="systematic-caps bg-pop-green border-2 border-pop-black text-pop-black hover:bg-pop-black hover:text-pop-green">
+                  <Button className="systematic-caps bg-pop-green border border-gray-300 text-pop-black hover:bg-pop-black hover:text-pop-green">
                     Browse Shop
                   </Button>
                 </Link>
@@ -352,7 +352,7 @@ export default function ProfilePage() {
         </Card>
 
         {/* Coming Soon Section */}
-        <Card className="bg-white border-2 border-pop-black mt-8">
+        <Card className="bg-white border border-gray-300 mt-8">
           <CardHeader>
             <CardTitle className="systematic-caps text-pop-black">Coming Soon</CardTitle>
           </CardHeader>

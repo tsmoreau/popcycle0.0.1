@@ -52,7 +52,7 @@ export function QRCodeElement({
   return (
     <div
       className={cn(
-        "bg-white border-2 border-pop-black flex items-center justify-center",
+        "bg-white border border-gray-300 flex items-center justify-center",
         sizeClasses[size],
         className,
       )}
