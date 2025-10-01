@@ -13,6 +13,7 @@ import {
   User,
   Settings,
   LogOut,
+  ShoppingCart,
 } from "lucide-react";
 import AuthButton from "./AuthButton";
 
@@ -287,8 +288,8 @@ export default function Navigation() {
             </div>
             
 
-          {/* Right-aligned User Menu / Auth Button */}
-          <div className="hidden lg:block self-end mb-2 mr-12">
+          {/* Right-aligned User Menu / Auth Button / Cart */}
+          <div className="hidden lg:flex items-center space-x-4 self-end mb-2 mr-12">
             {session ? (
               <div className="relative " ref={userMenuRef}>
                 
@@ -363,6 +364,14 @@ export default function Navigation() {
             ) : (
               <AuthButton />
             )}
+
+            {/* Shopping Cart */}
+            <button
+              className="hover:opacity-80 transition-opacity"
+              data-testid="button-cart"
+            >
+              <ShoppingCart className="w-6 h-6 text-pop-black" />
+            </button>
           </div>
 
           {/* Mobile menu button */}
