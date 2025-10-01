@@ -47,7 +47,7 @@ export default function About() {
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-0 border border-gray-200 divide-x divide-y divide-gray-200 bg-white">
               <div className="bg-white p-8">
                 <div className="text-center">
-                    <div className="w-64 h-64 mx-auto mb-4  bg-pop-green border border-gray-200 flex items-center justify-center">
+                    <div className="w-64 h-64 mx-auto mb-4 bg-pop-green flex items-center justify-center">
                       <Users className="w-10 h-10 text-pop-black" />
                     </div>
                     <div className="systematic-caps text-pop-black px-10 pb-4 pt-2 font-bold">
@@ -64,7 +64,7 @@ export default function About() {
 
               <div className="bg-white p-8">
                 <div className="text-center">
-                    <div className="w-64 h-64 mx-auto mb-4  bg-pop-blue border border-gray-200 flex items-center justify-center">
+                    <div className="w-64 h-64 mx-auto mb-4 bg-pop-blue flex items-center justify-center">
                       <Target className="w-10 h-10 text-pop-black" />
                     </div>
                     <div className="systematic-caps text-pop-black px-10 pb-4 pt-2 font-bold">
@@ -81,7 +81,7 @@ export default function About() {
 
               <div className="bg-white p-8">
                 <div className="text-center">
-                    <div className="w-64 h-64 mx-auto mb-4  bg-pop-red border border-gray-200 flex items-center justify-center">
+                    <div className="w-64 h-64 mx-auto mb-4 bg-pop-red flex items-center justify-center">
                       <Cog className="w-10 h-10 text-pop-black" />
                     </div>
                     <div className="systematic-caps text-pop-black px-10 pb-4 pt-2 font-bold">
@@ -136,7 +136,7 @@ export default function About() {
             </h2>
             <div className="grid md:grid-cols-4 gap-0 border border-gray-200 divide-x divide-y divide-gray-200 bg-white">
               <div className="text-center p-8">
-                <div className="w-16 h-16 bg-pop-green border border-gray-200 mx-auto mb-4 flex items-center justify-center">
+                <div className="w-16 h-16 bg-pop-green mx-auto mb-4 flex items-center justify-center">
                   <span className="text-pop-black helvetica-bold text-xl">
                     1
                   </span>
@@ -149,7 +149,7 @@ export default function About() {
               </div>
 
               <div className="text-center p-8">
-                <div className="w-16 h-16 bg-pop-blue border border-gray-200 mx-auto mb-4 flex items-center justify-center">
+                <div className="w-16 h-16 bg-pop-blue mx-auto mb-4 flex items-center justify-center">
                   <span className="text-pop-black helvetica-bold text-xl">
                     2
                   </span>
@@ -162,7 +162,7 @@ export default function About() {
               </div>
 
               <div className="text-center p-8">
-                <div className="w-16 h-16 bg-pop-red border border-gray-200 mx-auto mb-4 flex items-center justify-center">
+                <div className="w-16 h-16 bg-pop-red mx-auto mb-4 flex items-center justify-center">
                   <span className="text-pop-black helvetica-bold text-xl">
                     3
                   </span>
@@ -175,7 +175,7 @@ export default function About() {
               </div>
 
               <div className="text-center p-8">
-                <div className="w-16 h-16 bg-pop-black border border-gray-200 mx-auto mb-4 flex items-center justify-center">
+                <div className="w-16 h-16 bg-pop-black mx-auto mb-4 flex items-center justify-center">
                   <span className="text-white helvetica-bold text-xl">4</span>
                 </div>
                 <h3 className="systematic-caps text-lg mb-2 font-bold">Distribution</h3>
