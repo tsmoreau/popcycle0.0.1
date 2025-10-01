@@ -15,34 +15,34 @@
   --foreground: 0 0% 0%;
 }
 
-/* Typography */
+/* Typography - Refined */
 .helvetica-bold {
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-  font-weight: 900;
-  letter-spacing: -0.02em;
+  font-weight: 700;
+  letter-spacing: -0.03em;
 }
 
 .systematic-caps {
   text-transform: uppercase;
-  letter-spacing: 0.1em;
-  font-weight: 700;
+  letter-spacing: 0.08em;
+  font-weight: 600;
 }
 
-/* Pop Art Elements */
+/* Refined Shadows - Softer, More Sophisticated */
 .pop-shadow-green {
-  box-shadow: 8px 8px 0px hsl(var(--pop-green));
+  box-shadow: 0 4px 20px rgba(0, 179, 65, 0.15);
 }
 
 .pop-shadow-blue {
-  box-shadow: 8px 8px 0px hsl(var(--pop-blue));
+  box-shadow: 0 4px 20px rgba(0, 123, 255, 0.15);
 }
 
 .pop-shadow-red {
-  box-shadow: 8px 8px 0px hsl(var(--pop-red));
+  box-shadow: 0 4px 20px rgba(255, 51, 102, 0.15);
 }
 
 .pop-shadow-black {
-  box-shadow: 8px 8px 0px hsl(var(--pop-black));
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
 }
 
 /* Navigation */

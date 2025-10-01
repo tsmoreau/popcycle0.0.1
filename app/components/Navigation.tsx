@@ -61,15 +61,15 @@ export default function Navigation() {
   ];
 
   return (
-    <nav className="sticky top-0 z-50 bg-white border-b-4 border-pop-black">
-      <div className="max-w-6xl mx-auto px-4">
+    <nav className="sticky top-0 z-50 bg-white border-b border-gray-200 shadow-sm">
+      <div className="max-w-7xl mx-auto px-6">
         <div className="relative flex items-center justify-between h-20">
           {/* Logo */}
-          <Link href="/" className="flex items-center space-x-3">
-            <div className="w-12 h-12 bg-pop-green border-2 border-pop-black flex items-center justify-center">
-              <span className="text-pop-black helvetica-bold text-xl">P</span>
+          <Link href="/" className="flex items-center space-x-3 group">
+            <div className="w-12 h-12 bg-pop-green rounded-md flex items-center justify-center transition-all group-hover:bg-opacity-90">
+              <span className="text-white helvetica-bold text-xl">P</span>
             </div>
-            <span className="helvetica-bold text-2xl tracking-tight text-pop-black">
+            <span className="helvetica-bold text-2xl tracking-tight text-gray-900">
               PopCycle
             </span>
           </Link>
@@ -93,12 +93,12 @@ export default function Navigation() {
               </button>
 
               {aboutOpen && (
-                <div className="absolute top-full left-0 min-w-max bg-white border-4 border-pop-black pop-shadow-black whitespace-nowrap">
+                <div className="absolute top-full left-0 min-w-max bg-white border border-gray-200 rounded-lg shadow-lg whitespace-nowrap overflow-hidden mt-2">
                   {aboutItems.map((item) => (
                     <Link
                       key={item.href}
                       href={item.href}
-                      className="block w-full text-left px-4 py-3 systematic-caps text-sm hover:bg-pop-green hover:text-white transition-colors"
+                      className="block w-full text-left px-5 py-3 systematic-caps text-sm hover:bg-pop-green hover:text-white transition-colors"
                     >
                       {item.label}
                     </Link>
@@ -125,12 +125,12 @@ export default function Navigation() {
               </button>
 
               {servicesOpen && (
-                <div className="absolute top-full left-0 w-max bg-white border-4 border-pop-black pop-shadow-black mr-4">
+                <div className="absolute top-full left-0 w-max bg-white border border-gray-200 rounded-lg shadow-lg mr-4 overflow-hidden mt-2">
                   {servicesItems.map((item) => (
                     <Link
                       key={item.href}
                       href={item.href}
-                      className="block w-full text-left px-4 py-3 pr-6 systematic-caps text-sm hover:bg-pop-green hover:text-white transition-colors whitespace-normal"
+                      className="block w-full text-left px-5 py-3 pr-6 systematic-caps text-sm hover:bg-pop-green hover:text-white transition-colors whitespace-normal"
                     >
                       {item.label}
                     </Link>
@@ -172,8 +172,8 @@ export default function Navigation() {
                   className="flex items-center space-x-3 hover:opacity-80 transition-opacity"
                 >
                   <div className="flex items-center space-x-2">
-                    <div className="w-8 h-8 bg-pop-green border-2 border-pop-black rounded-full flex items-center justify-center">
-                      <User className="w-4 h-4 text-pop-black" />
+                    <div className="w-8 h-8 bg-pop-green rounded-full flex items-center justify-center shadow-sm">
+                      <User className="w-4 h-4 text-white" />
                     </div>
                     <div className="text-left">
                       <div className="text-sm font-semibold text-pop-black">
@@ -189,9 +189,9 @@ export default function Navigation() {
 
                 {/* User Dropdown */}
                 {userMenuOpen && (
-                  <div className="absolute right-0 mt-2 min-w-max bg-white border-4 border-pop-black pop-shadow-black">
-                    <div className="px-4 py-3 border-b border-gray-200">
-                      <div className="text-sm font-semibold text-pop-black whitespace-nowrap">
+                  <div className="absolute right-0 mt-2 min-w-max bg-white border border-gray-200 rounded-lg shadow-lg overflow-hidden">
+                    <div className="px-5 py-3 border-b border-gray-200">
+                      <div className="text-sm font-semibold text-gray-900 whitespace-nowrap">
                         {session.user?.email}
                       </div>
                     </div>
@@ -256,7 +256,7 @@ export default function Navigation() {
 
       {/* Mobile Menu */}
       {mobileMenuOpen && (
-        <div className="lg:hidden bg-white border-t-4 border-pop-black">
+        <div className="lg:hidden bg-white border-t border-gray-200">
 
 
           
@@ -343,14 +343,14 @@ export default function Navigation() {
       
 
             {/* Mobile User Section */}
-            <div className="pt-4 border-t-2 border-pop-black space-y-3">
+            <div className="pt-4 border-t border-gray-200 space-y-3">
               {session ? (
                 <>
                   {/* User Profile Header */}
                   <div className="flex items-center justify-between">
                     <div className="flex items-center space-x-3">
-                      <div className="w-10 h-10 bg-pop-green border-2 border-pop-black rounded-full flex items-center justify-center">
-                        <User className="w-5 h-5 text-pop-black" />
+                      <div className="w-10 h-10 bg-pop-green rounded-full flex items-center justify-center shadow-md">
+                        <User className="w-5 h-5 text-white" />
                       </div>
                       <div>
                         <div className="systematic-caps text-sm font-bold text-pop-black">
