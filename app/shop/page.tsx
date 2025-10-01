@@ -193,7 +193,7 @@ export default function Shop() {
             {filteredProducts.map((product) => (
               <div key={product._id} className="bg-white p-8 flex flex-col h-full">
                   <div className="pb-4">
-                    <div className="w-full h-48 bg-pop-white border border-gray-300 mb-4 flex items-center justify-center">
+                    <div className="w-full h-48 bg-gray-50 mb-4 flex items-center justify-center overflow-hidden">
                       {product.designFiles.photos && product.designFiles.photos.length > 0 ? (
                         <img 
                           src={product.designFiles.photos[0]} 
@@ -201,7 +201,7 @@ export default function Shop() {
                           className="w-full h-full object-cover"
                         />
                       ) : (
-                        <Package className="w-16 h-16 text-pop-black" />
+                        <Package className="w-16 h-16 text-gray-300" />
                       )}
                     </div>
                     <div className="flex justify-between items-start mb-2">
@@ -268,7 +268,7 @@ export default function Shop() {
 
                     <div className="flex gap-2 pt-4">
                       <button
-                        className={`flex-1 py-3 px-4 border border-gray-300 transition-colors systematic-caps ${
+                        className={`flex-1 py-3 px-4 transition-colors systematic-caps ${
                           product.inStock
                             ? "bg-pop-blue text-pop-black hover:bg-pop-black hover:text-white"
                             : "bg-pop-gray text-pop-black cursor-not-allowed"
@@ -278,7 +278,7 @@ export default function Shop() {
                         <ShoppingCart className="w-4 h-4 mr-2 inline" />
                         {product.inStock ? "Add to Cart" : "Out of Stock"}
                       </button>
-                      <button className="p-3 border border-gray-300 bg-white hover:bg-pop-red hover:text-white transition-colors">
+                      <button className="p-3 bg-white hover:bg-pop-red hover:text-white transition-colors">
                         <Heart className="w-4 h-4" />
                       </button>
                     </div>
