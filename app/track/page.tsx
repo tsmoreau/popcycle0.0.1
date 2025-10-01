@@ -11,7 +11,7 @@ import { Input } from "../components/ui/input";
 import { PopArtContainer, QRCodeElement } from "../components/PopArtElements";
 import { Search, QrCode, ArrowRight, ChevronDown } from "lucide-react";
 import Link from "next/link";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { LoadingSquare } from "../components/ui/loading-square";
 
 interface SampleQRCodes {
@@ -29,6 +29,19 @@ export default function Track() {
   const [selectedFilter, setSelectedFilter] = useState<string>("ALL");
   const [searchTerm, setSearchTerm] = useState<string>("");
   const [loading, setLoading] = useState(true);
+  const [filterOpen, setFilterOpen] = useState(false);
+  const filterRef = useRef<HTMLDivElement>(null);
+
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      if (filterRef.current && !filterRef.current.contains(event.target as Node)) {
+        setFilterOpen(false);
+      }
+    }
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
 
   useEffect(() => {
     // Fetch existing QR codes from the database
@@ -159,26 +172,38 @@ export default function Track() {
             <div className="flex items-center justify-between gap-4 flex-wrap">
               <div className="flex items-center gap-4">
                 <span className="text-sm text-pop-gray">Filter items:</span>
-                <div className="relative">
-                  <select
-                    value={selectedFilter}
-                    onChange={(e) => setSelectedFilter(e.target.value)}
-                    className="border border-gray-200 bg-white pl-5 pr-10 py-3 text-sm systematic-caps appearance-none cursor-pointer hover:bg-gray-50 transition-colors"
+                <div className="relative" ref={filterRef}>
+                  <button
+                    onClick={() => setFilterOpen(!filterOpen)}
+                    className="border border-gray-200 bg-white pl-5 pr-10 py-3 text-sm systematic-caps cursor-pointer hover:bg-gray-50 transition-colors flex items-center whitespace-nowrap"
                   >
-                    {[
-                      "ALL",
-                      "ACTIVE BINS",
-                      "COLLECTED BATCHES",
-                      "PRESSED BLANKS",
-                      "MANUFACTURED ITEMS",
-                      "ASSEMBLED ITEMS",
-                    ].map((category) => (
-                      <option key={category} value={category}>
-                        {category}
-                      </option>
-                    ))}
-                  </select>
-                  <ChevronDown className="absolute right-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-pop-black pointer-events-none" />
+                    {selectedFilter}
+                    <ChevronDown className="ml-2 w-4 h-4 text-pop-black" />
+                  </button>
+                  
+                  {filterOpen && (
+                    <div className="absolute top-full left-0 min-w-full bg-white border border-gray-200 mt-2 overflow-hidden z-10">
+                      {[
+                        "ALL",
+                        "ACTIVE BINS",
+                        "COLLECTED BATCHES",
+                        "PRESSED BLANKS",
+                        "MANUFACTURED ITEMS",
+                        "ASSEMBLED ITEMS",
+                      ].map((category) => (
+                        <button
+                          key={category}
+                          onClick={() => {
+                            setSelectedFilter(category);
+                            setFilterOpen(false);
+                          }}
+                          className="block w-full text-left px-5 py-3 systematic-caps text-sm hover:bg-pop-green hover:text-white transition-colors whitespace-nowrap"
+                        >
+                          {category}
+                        </button>
+                      ))}
+                    </div>
+                  )}
                 </div>
               </div>
               <div className="text-sm text-pop-gray">
