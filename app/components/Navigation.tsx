@@ -124,7 +124,7 @@ export default function Navigation() {
               onMouseLeave={() => setServicesOpen(false)}
             >
               <button
-                className={`systematic-caps text-sm hover:text-pop-green transition-colors flex items-center space-x-1 py-2 ${
+                className={`font-semibold text-sm hover:text-pop-green transition-colors flex items-center space-x-1 py-2 ${
                   pathname === "/services" ? "nav-link-active" : ""
                 }`}
               >
@@ -149,7 +149,7 @@ export default function Navigation() {
             {/* Shop */}
             <Link
               href="/shop"
-              className={`systematic-caps text-sm hover:text-pop-green transition-colors py-2 ${
+              className={`font-semibold text-sm hover:text-pop-green transition-colors py-2 ${
                 pathname === "/shop" ? "nav-link-active" : ""
               }`}
             >
@@ -349,7 +349,7 @@ export default function Navigation() {
                   {/* User Profile Header */}
                   <div className="flex items-center justify-between">
                     <div className="flex items-center space-x-3">
-                      <div className="w-10 h-10 bg-pop-green flex items-center justify-center">
+                      <div className="w-10 h-10 bg-pop-green rounded-full flex items-center justify-center shadow-md">
                         <User className="w-5 h-5 text-white" />
                       </div>
                       <div>
