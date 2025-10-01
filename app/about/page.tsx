@@ -44,71 +44,58 @@ export default function About() {
             <h2 className="text-4xl helvetica-bold mb-12 text-center">
               <span className="text-black">TEAM</span>
             </h2>
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-              <PopArtContainer color="green" shadow>
-                <Card className="border border-gray-200">
-                  <CardHeader className="text-center">
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-0 border border-gray-200 divide-x divide-y divide-gray-200 bg-white">
+              <div className="bg-white p-8">
+                <div className="text-center">
                     <div className="w-64 h-64 mx-auto mb-4  bg-pop-green border border-gray-200 flex items-center justify-center">
                       <Users className="w-10 h-10 text-pop-black" />
                     </div>
-                    <CardTitle className="systematic-caps text-pop-black px-10 pb-4 pt-2">
+                    <div className="systematic-caps text-pop-black px-10 pb-4 pt-2 font-bold">
                      Terrence Stasse
-                    </CardTitle>
-                    <CardTitle className="systematic-caps text-pop-black mt-12">
+                    </div>
+                    <div className="systematic-caps text-pop-black mt-12 font-bold">
                       Founder & Creative Lead
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <p className="text-pop-gray">
+                    </div>
+                    <p className="text-pop-gray mt-6">
                       Builder, artist, and teacher. Leads product development, systems design, and hands-on R&D.
                     </p>
-                  </CardContent>
-                </Card>
-              </PopArtContainer>
+                </div>
+              </div>
 
-              <PopArtContainer color="blue" shadow>
-                <Card className="border border-gray-200">
-                  <CardHeader className="text-center">
+              <div className="bg-white p-8">
+                <div className="text-center">
                     <div className="w-64 h-64 mx-auto mb-4  bg-pop-blue border border-gray-200 flex items-center justify-center">
                       <Target className="w-10 h-10 text-pop-black" />
                     </div>
-                    <CardTitle className="systematic-caps text-pop-black px-10 pb-4 pt-2">
+                    <div className="systematic-caps text-pop-black px-10 pb-4 pt-2 font-bold">
                      Oxana Ermolova
-                    </CardTitle>
-                    <CardTitle className="systematic-caps text-pop-black">
+                    </div>
+                    <div className="systematic-caps text-pop-black font-bold">
                       Development & Partnerships Lead
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <p className="text-pop-gray">
+                    </div>
+                    <p className="text-pop-gray mt-6">
                       Connector of people, impact, and ideas. Heads outreach, collaborations, and partnerships.
                     </p>
-                  </CardContent>
-                </Card>
-              </PopArtContainer>
+                </div>
+              </div>
 
-              <PopArtContainer color="red" shadow>
-                <Card className="border border-gray-200">
-                  <CardHeader className="text-center">
+              <div className="bg-white p-8">
+                <div className="text-center">
                     <div className="w-64 h-64 mx-auto mb-4  bg-pop-red border border-gray-200 flex items-center justify-center">
                       <Cog className="w-10 h-10 text-pop-black" />
                     </div>
-                    <CardTitle className="systematic-caps text-pop-black px-10 pb-4 pt-2">
+                    <div className="systematic-caps text-pop-black px-10 pb-4 pt-2 font-bold">
                      Argo
-                    </CardTitle>
-<br/>                    <CardTitle className="systematic-caps text-pop-black">
+                    </div>
+                    <div className="systematic-caps text-pop-black font-bold">
                       Human Relations Lead
-                    </CardTitle>
-                  </CardHeader>
-                 
-                  <CardContent>
-                    <p className="text-pop-gray">
+                    </div>
+                    <p className="text-pop-gray mt-6">
                       In charge of distractions, snacks, and walks.
                       Enthusiastically leads the studio greeting committee.
                     </p>
-                  </CardContent>
-                </Card>
-              </PopArtContainer>
+                </div>
+              </div>
             </div>
           </section>
 
@@ -147,51 +134,51 @@ export default function About() {
             <h2 className="text-4xl helvetica-bold mb-12 text-center">
               <span className="text-pop-black">PROCESS</span>
             </h2>
-            <div className="grid md:grid-cols-4 gap-6">
-              <div className="text-center">
-                <div className="w-16 h-16 bg-pop-green border border-gray-300 mx-auto mb-4 flex items-center justify-center">
+            <div className="grid md:grid-cols-4 gap-0 border border-gray-200 divide-x divide-y divide-gray-200 bg-white">
+              <div className="text-center p-8">
+                <div className="w-16 h-16 bg-pop-green border border-gray-200 mx-auto mb-4 flex items-center justify-center">
                   <span className="text-pop-black helvetica-bold text-xl">
                     1
                   </span>
                 </div>
-                <h3 className="systematic-caps text-lg mb-2">Collection</h3>
+                <h3 className="systematic-caps text-lg mb-2 font-bold">Collection</h3>
                 <p className="text-pop-gray text-sm">
                   Partner companies separate plastic waste for circular
                   transformation
                 </p>
               </div>
 
-              <div className="text-center">
-                <div className="w-16 h-16 bg-pop-blue border border-gray-300 mx-auto mb-4 flex items-center justify-center">
+              <div className="text-center p-8">
+                <div className="w-16 h-16 bg-pop-blue border border-gray-200 mx-auto mb-4 flex items-center justify-center">
                   <span className="text-pop-black helvetica-bold text-xl">
                     2
                   </span>
                 </div>
-                <h3 className="systematic-caps text-lg mb-2">Processing</h3>
+                <h3 className="systematic-caps text-lg mb-2 font-bold">Processing</h3>
                 <p className="text-pop-gray text-sm">
                   Clean, sort, and prepare materials for manufacturing
                   transformation
                 </p>
               </div>
 
-              <div className="text-center">
-                <div className="w-16 h-16 bg-pop-red border border-gray-300 mx-auto mb-4 flex items-center justify-center">
+              <div className="text-center p-8">
+                <div className="w-16 h-16 bg-pop-red border border-gray-200 mx-auto mb-4 flex items-center justify-center">
                   <span className="text-pop-black helvetica-bold text-xl">
                     3
                   </span>
                 </div>
-                <h3 className="systematic-caps text-lg mb-2">Manufacturing</h3>
+                <h3 className="systematic-caps text-lg mb-2 font-bold">Manufacturing</h3>
                 <p className="text-pop-gray text-sm">
                   Transform processed plastic into educational tools and
                   components
                 </p>
               </div>
 
-              <div className="text-center">
-                <div className="w-16 h-16 bg-pop-black border border-gray-300 mx-auto mb-4 flex items-center justify-center">
+              <div className="text-center p-8">
+                <div className="w-16 h-16 bg-pop-black border border-gray-200 mx-auto mb-4 flex items-center justify-center">
                   <span className="text-white helvetica-bold text-xl">4</span>
                 </div>
-                <h3 className="systematic-caps text-lg mb-2">Distribution</h3>
+                <h3 className="systematic-caps text-lg mb-2 font-bold">Distribution</h3>
                 <p className="text-pop-gray text-sm">
                   Deliver QR-coded products to educational institutions and
                   makerspaces
