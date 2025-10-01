@@ -122,12 +122,13 @@ function AuthButtonContent() {
 
   return (
     <>
-      <Button
+      <button
         onClick={() => setSignInModalOpen(true)}
-        className="bg-pop-green text-white hover:bg-pop-black hover:text-white systematic-caps w-full lg:w-auto"
+        className="hover:opacity-80 transition-opacity"
+        data-testid="button-signin"
       >
-        Sign In
-      </Button>
+        <User className="w-6 h-6 text-pop-black" />
+      </button>
 
       {/* Sign In Modal */}
       <Dialog open={signInModalOpen} onOpenChange={setSignInModalOpen}>

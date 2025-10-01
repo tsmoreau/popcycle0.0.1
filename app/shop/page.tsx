@@ -127,7 +127,7 @@ export default function Shop() {
             <div className="relative" ref={filterRef}>
               <button
                 onClick={() => setFilterOpen(!filterOpen)}
-                className="border border-gray-200 bg-white pl-5 pr-10 py-3 text-sm systematic-caps cursor-pointer hover:bg-gray-50 transition-colors flex items-center whitespace-nowrap"
+                className="border border-gray-200 bg-white pl-4 pr-5 py-2 text-sm systematic-caps cursor-pointer hover:bg-gray-50 transition-colors flex items-center whitespace-nowrap"
               >
                 {selectedCategory}
                 <ChevronDown className="ml-2 w-4 h-4 text-pop-black" />

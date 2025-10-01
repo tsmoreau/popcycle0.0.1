@@ -135,18 +135,17 @@ export default function Track() {
         </div>
       </div>
 
-      <div className=" pt-0">
-       </div>
 
       {/* Categories Filter */}
       <div className="max-w-7xl mx-auto px-6 py-8">
         <div className="flex items-center justify-between ">
+          <div className="flex items-center">
           <div className="flex items-center gap-4">
             <span className="text-sm text-pop-gray">Filter items:</span>
             <div className="relative" ref={filterRef}>
               <button
                 onClick={() => setFilterOpen(!filterOpen)}
-                className="border border-gray-200 bg-white pl-5 pr-10 py-3 text-sm systematic-caps cursor-pointer hover:bg-gray-50 transition-colors flex items-center whitespace-nowrap"
+                className="border border-gray-200 bg-white pl-4 pr-5 py-2 text-sm systematic-caps cursor-pointer hover:bg-gray-50 transition-colors flex items-center whitespace-nowrap"
               >
                 {selectedFilter}
                 <ChevronDown className="ml-2 w-4 h-4 text-pop-black" />
@@ -178,33 +177,36 @@ export default function Track() {
             </div>
           </div>
 
+            
+  </div>
         
             {/* QR Code Search */}
-            <div className=" mx-auto max-w-xl w-full ">
 
-               
-                    <div className="flex flex-col sm:flex-row gap-4  p-2">
-                      <div className="flex-1">
-                        <Input
-                          placeholder="Enter item code (e.g. B1234567)"
-                          className="border-0 border-gray-0 text-lg text-gray-300 h-8"
-                          value={searchTerm}
-                          onChange={(e) => setSearchTerm(e.target.value)}
-                          onKeyPress={(e) => e.key === 'Enter' && handleSearch()}
-                        />
+
+          <div className=" flex space-x-4 mr-24">
+
+
+
+                          <Input
+                            placeholder="Enter item code (e.g. B1234567)"
+                            className="flex w-3xl max-w-full h-10  text-lg text-gray-300"
+                            value={searchTerm}
+                            onChange={(e) => setSearchTerm(e.target.value)}
+                            onKeyPress={(e) => e.key === 'Enter' && handleSearch()}
+                          />
+
+                        <Button
+                          size="lg"
+                          className="bg-pop-green text-white hover:bg-pop-black hover:text-white systematic-caps h-10 px-4"
+                          onClick={handleSearch}
+                        >
+                          Track Item
+                        </Button>
                       </div>
-                      <Button
-                        size="lg"
-                        className="bg-pop-green text-white hover:bg-pop-black hover:text-white systematic-caps h-8 px-8"
-                        onClick={handleSearch}
-                      >
-                        <Search className="w-5 h-5 mr-2" />
-                        Track Item
-                      </Button>
-                    </div>
 
-          </div>
 
+
+         
           
           <div className="text-sm text-pop-gray">
             {getFilteredCodes().length} {getFilteredCodes().length === 1 ? 'item' : 'items'}
