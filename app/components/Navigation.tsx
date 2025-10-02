@@ -107,7 +107,7 @@ export default function Navigation() {
             <div className="w-10 h-10 bg-pop-green flex items-center justify-center transition-all group-hover:bg-opacity-90 mt-1.5">
               <span className="text-white helvetica-bold text-xl">P</span>
             </div>
-            <span className="helvetica-bold text-4xl mt-2 tracking-tighter text-gray-900">
+            <span className="font-jost font-semibold text-4xl mt-2 tracking-tighter text-gray-900">
               PopCycle
             </span>
           </Link>
