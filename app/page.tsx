@@ -15,11 +15,11 @@ const impactMetrics = {
 
 export default function Home() {
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen font-jost">
       {/* Hero Section */}
-      <section className="py-40 lg:py-48 px-6 bg-white">
+      <section className="py-40 lg:py-48 px-6 bg-white font-jost">
         <div className="max-w-7xl mx-auto text-center">
-          <h1 className="text-5xl lg:text-7xl helvetica-bold mb-10 tracking-tight leading-tight">
+          <h1 className="text-5xl lg:text-7xl mb-10 tracking-tight leading-tight">
             YOUR WASTE.<br />
             <span className="text-pop-green">YOUR PRODUCTS.</span><br />
             YOUR PROOF.
@@ -49,7 +49,7 @@ export default function Home() {
       {/* Bold Hook Statement */}
       <section className="py-28 lg:py-32 px-6 bg-gray-900">
         <div className="max-w-5xl mx-auto text-center">
-          <h2 className="text-4xl lg:text-6xl helvetica-bold mb-10 text-white leading-tight">
+          <h2 className="text-4xl lg:text-6xl  mb-10 text-white leading-tight">
             WE TRACK EVERYTHING<br />
             <span className="text-pop-green">EXCEPT WHAT MATTERS.</span>
           </h2>
@@ -63,32 +63,32 @@ export default function Home() {
       </section>
 
       {/* Impact Metrics */}
-      <section className="py-20 lg:py-24 bg-pop-green text-white">
+      <section className="py-20 lg:py-24 bg-pop-green text-white font-jost">
         <div className="max-w-6xl mx-auto px-6">
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-12">
             <div className="text-center">
-              <div className="text-4xl lg:text-5xl helvetica-bold text-white mb-3">
+              <div className="text-4xl lg:text-5xl font-bold text-white mb-3">
                 {impactMetrics.totalPieces.toLocaleString()}
               </div>
               <div className="systematic-caps text-sm tracking-wider opacity-90">Stories Tracked</div>
             </div>
             
             <div className="text-center">
-              <div className="text-4xl lg:text-5xl helvetica-bold text-white mb-3">
+              <div className="text-4xl lg:text-5xl font-bold text-white mb-3">
                 {impactMetrics.totalWeight}kg
               </div>
               <div className="systematic-caps text-sm tracking-wider opacity-90">Materials Transformed</div>
             </div>
             
             <div className="text-center">
-              <div className="text-4xl lg:text-5xl helvetica-bold text-white mb-3">
+              <div className="text-4xl lg:text-5xl font-bold text-white mb-3">
                 {impactMetrics.totalCarbonOffset}kg
               </div>
               <div className="systematic-caps text-sm tracking-wider opacity-90">CO₂ Impact</div>
             </div>
             
             <div className="text-center">
-              <div className="text-4xl lg:text-5xl helvetica-bold text-white mb-3">
+              <div className="text-4xl lg:text-5xl font-bold text-white mb-3">
                 {impactMetrics.companiesPartnered}
               </div>
               <div className="systematic-caps text-sm tracking-wider opacity-90">Storytellers</div>
@@ -101,7 +101,7 @@ export default function Home() {
       <section className="py-28 lg:py-32 px-6 bg-gray-50">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-24">
-            <h2 className="text-4xl lg:text-5xl helvetica-bold mb-8 leading-tight">
+            <h2 className="text-4xl lg:text-5xl font-bold mb-8 leading-tight">
               PROVE YOUR SUSTAINABILITY.<br />
               <span className="text-pop-blue">DON'T JUST PROMISE IT.</span>
             </h2>

@@ -23,6 +23,8 @@ module.exports = {
         'fredoka': ['var(--font-fredoka)', 'sans-serif'],
         'parkinsans': ['var(--font-parkinsans)', 'sans-serif'],
         'sulphur-point': ['var(--font-sulphur-point)', 'sans-serif'],
+        'lexend': ['var(--font-lexend)', 'sans-serif'],
+        'gabarito': ['var(--font-gabarito)', 'sans-serif'],
         'helvetica': ['Helvetica Neue', 'Helvetica', 'Arial', 'sans-serif'],
       },
       colors: {

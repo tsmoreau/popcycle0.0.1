@@ -1,5 +1,5 @@
 import './globals.css'
-import { Inter, Jost, Kumbh_Sans, Fredoka, Parkinsans, Sulphur_Point } from 'next/font/google'
+import { Inter, Jost, Kumbh_Sans, Fredoka, Parkinsans, Sulphur_Point, Lexend, Gabarito } from 'next/font/google'
 import Navigation from './components/Navigation'
 import Footer from './components/Footer'
 import AuthSessionProvider from './providers/SessionProvider'
@@ -35,6 +35,16 @@ const sulphurPoint = Sulphur_Point({
   variable: '--font-sulphur-point'
 })
 
+const lexend = Lexend({ 
+  subsets: ['latin'],
+  variable: '--font-lexend'
+})
+
+const gabarito = Gabarito({ 
+  subsets: ['latin'],
+  variable: '--font-gabarito'
+})
+
 export const metadata = {
   title: 'PopCycle - Circular Plastic Tracking',
   description: 'Transform corporate plastic waste into trackable, educational products',
@@ -47,7 +57,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={`${inter.variable} ${jost.variable} ${kumbhSans.variable} ${fredoka.variable} ${parkinsans.variable} ${sulphurPoint.variable}`}>
+      <body className={`${inter.variable} ${jost.variable} ${kumbhSans.variable} ${fredoka.variable} ${parkinsans.variable} ${sulphurPoint.variable} ${lexend.variable} ${gabarito.variable}`}>
         <AuthSessionProvider>
           <div className="min-h-screen bg-background text-foreground">
             <Navigation />
