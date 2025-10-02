@@ -1,5 +1,5 @@
 import './globals.css'
-import { Inter, Jost } from 'next/font/google'
+import { Inter, Jost, Kumbh_Sans, Fredoka, Parkinsans, Sulphur_Point } from 'next/font/google'
 import Navigation from './components/Navigation'
 import Footer from './components/Footer'
 import AuthSessionProvider from './providers/SessionProvider'
@@ -14,6 +14,27 @@ const jost = Jost({
   variable: '--font-jost'
 })
 
+const kumbhSans = Kumbh_Sans({ 
+  subsets: ['latin'],
+  variable: '--font-kumbh-sans'
+})
+
+const fredoka = Fredoka({ 
+  subsets: ['latin'],
+  variable: '--font-fredoka'
+})
+
+const parkinsans = Parkinsans({ 
+  subsets: ['latin'],
+  variable: '--font-parkinsans'
+})
+
+const sulphurPoint = Sulphur_Point({ 
+  subsets: ['latin'],
+  weight: ['300', '400', '700'],
+  variable: '--font-sulphur-point'
+})
+
 export const metadata = {
   title: 'PopCycle - Circular Plastic Tracking',
   description: 'Transform corporate plastic waste into trackable, educational products',
@@ -26,7 +47,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={`${inter.variable} ${jost.variable}`}>
+      <body className={`${inter.variable} ${jost.variable} ${kumbhSans.variable} ${fredoka.variable} ${parkinsans.variable} ${sulphurPoint.variable}`}>
         <AuthSessionProvider>
           <div className="min-h-screen bg-background text-foreground">
             <Navigation />

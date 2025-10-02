@@ -19,6 +19,10 @@ module.exports = {
       fontFamily: {
         'jost': ['var(--font-jost)', 'sans-serif'],
         'inter': ['var(--font-inter)', 'sans-serif'],
+        'kumbh-sans': ['var(--font-kumbh-sans)', 'sans-serif'],
+        'fredoka': ['var(--font-fredoka)', 'sans-serif'],
+        'parkinsans': ['var(--font-parkinsans)', 'sans-serif'],
+        'sulphur-point': ['var(--font-sulphur-point)', 'sans-serif'],
         'helvetica': ['Helvetica Neue', 'Helvetica', 'Arial', 'sans-serif'],
       },
       colors: {
