@@ -98,7 +98,7 @@ export default function Navigation() {
   const servicesItems = servicesSections.flatMap(section => section.items);
 
   return (
-    <nav className="sticky top-0 z-50 bg-white border-b border-gray-200">
+    <nav className="font-sulphur-point sticky top-0 z-50 bg-white border-b border-gray-200">
       <div className="max-w-full mx-auto pt-2">
         <div className=" relative flex  justify-between h-20">
           <div className="flex mb-1">
@@ -107,7 +107,7 @@ export default function Navigation() {
             <div className="w-10 h-10 bg-pop-green flex items-center justify-center transition-all group-hover:bg-opacity-90 mt-1.5">
               <span className="text-white helvetica-bold text-xl">P</span>
             </div>
-            <span className="font-jost font-semibold text-4xl mt-2 tracking-tight text-gray-900">
+            <span className="text-4xl mt-2 tracking-tight text-gray-900">
               PopCycle
             </span>
           </Link>
