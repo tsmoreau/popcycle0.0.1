@@ -16,6 +16,11 @@ module.exports = {
       },
     },
     extend: {
+      fontFamily: {
+        'jost': ['var(--font-jost)', 'sans-serif'],
+        'inter': ['var(--font-inter)', 'sans-serif'],
+        'helvetica': ['Helvetica Neue', 'Helvetica', 'Arial', 'sans-serif'],
+      },
       colors: {
         // PopCycle Brand Colors
         'pop-green': 'hsl(var(--pop-green))',
