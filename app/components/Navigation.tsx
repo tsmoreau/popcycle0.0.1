@@ -98,7 +98,7 @@ export default function Navigation() {
   const servicesItems = servicesSections.flatMap(section => section.items);
 
   return (
-    <nav className="font-jost sticky top-0 z-50 bg-white border-b border-gray-200">
+    <nav className="font-gabarito font-light sticky top-0 z-50 bg-white border-b border-gray-200">
       <div className="max-w-full mx-auto pt-2">
         <div className=" relative flex  justify-between h-20">
           <div className="flex mb-1">
