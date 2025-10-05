@@ -24,10 +24,12 @@ import AuthButton from "./AuthButton";
 export default function Navigation() {
   const pathname = usePathname();
   const [aboutOpen, setAboutOpen] = useState(false);
+  const [productsOpen, setProductsOpen] = useState(false);
   const [servicesOpen, setServicesOpen] = useState(false);
   const [userMenuOpen, setUserMenuOpen] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [mobileAboutOpen, setMobileAboutOpen] = useState(false);
+  const [mobileProductsOpen, setMobileProductsOpen] = useState(false);
   const [mobileServicesOpen, setMobileServicesOpen] = useState(false);
 
   const userMenuRef = useRef<HTMLDivElement>(null);
@@ -77,6 +79,24 @@ export default function Navigation() {
     },
   ];
 
+  const productsSections = [
+    {
+      title: "Shop",
+      items: [
+        { href: "/shop#all", label: "All Products" },
+        { href: "/shop#bags", label: "Bags" },
+        { href: "/shop#accessories", label: "Accessories" },
+      ],
+    },
+    {
+      title: "Custom",
+      items: [
+        { href: "/shop#custom-orders", label: "Custom Orders" },
+        { href: "/shop#bulk-orders", label: "Bulk Orders" },
+      ],
+    },
+  ];
+
   const servicesSections = [
     {
       title: "For Organizations",
@@ -95,6 +115,7 @@ export default function Navigation() {
   ];
 
   const aboutItems = aboutSections.flatMap(section => section.items);
+  const productsItems = productsSections.flatMap(section => section.items);
   const servicesItems = servicesSections.flatMap(section => section.items);
 
   return (
@@ -207,14 +228,81 @@ export default function Navigation() {
               )}
             </div>
 
-            <Link
-              href="/shop"
-              className={`text-lg hover:text-pop-green transition-colors py-2 ${
-                pathname === "/shop" ? "nav-link-active" : ""
-              }`}
+            {/* Products Dropdown */}
+            <div
+              className="relative"
+              onMouseEnter={() => setProductsOpen(true)}
+              onMouseLeave={() => setProductsOpen(false)}
             >
-              Products
-            </Link>
+              <button
+                className={`text-lg hover:text-pop-green transition-colors flex items-center space-x-1 py-2 ${
+                  pathname === "/shop" ? "nav-link-active" : ""
+                }`}
+              >
+                <span>Products</span>
+              </button>
+
+              {productsOpen && (
+                <div className="fixed left-0 right-0 top-[88px] z-50 bg-white border-t border-gray-200 shadow-lg">
+                  <div className="max-w-7xl mx-auto px-12 py-12">
+                    <div className="grid grid-cols-6 gap-8">
+                      <div className="col-span-1">
+                        {productsSections.map((section, idx) => (
+                          <div key={idx} className="mb-8">
+                            <h3 className="systematic-caps text-sm font-bold text-gray-400 mb-4">
+                              {section.title}
+                            </h3>
+                            <div className="space-y-2">
+                              {section.items.map((item) => (
+                                <Link
+                                  key={item.href}
+                                  href={item.href}
+                                  className="block text-sm hover:text-pop-green transition-colors"
+                                >
+                                  {item.label}
+                                </Link>
+                              ))}
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                      <div className="col-span-5 grid grid-cols-3 gap-6">
+                        <div className="aspect-[3/4] bg-gray-100 relative group cursor-pointer overflow-hidden">
+                          <div className="absolute inset-0 flex items-center justify-center">
+                            <div className="text-center">
+                              <div className="w-12 h-12 bg-pop-red mx-auto mb-3 flex items-center justify-center">
+                                <span className="text-white helvetica-bold text-xl">P</span>
+                              </div>
+                              <p className="systematic-caps text-xs text-gray-600 px-4">Featured Products</p>
+                            </div>
+                          </div>
+                        </div>
+                        <div className="aspect-[3/4] bg-gray-100 relative group cursor-pointer overflow-hidden">
+                          <div className="absolute inset-0 flex items-center justify-center">
+                            <div className="text-center">
+                              <div className="w-12 h-12 bg-pop-red mx-auto mb-3 flex items-center justify-center">
+                                <span className="text-white helvetica-bold text-xl">P</span>
+                              </div>
+                              <p className="systematic-caps text-xs text-gray-600 px-4">New Arrivals</p>
+                            </div>
+                          </div>
+                        </div>
+                        <div className="aspect-[3/4] bg-gray-100 relative group cursor-pointer overflow-hidden">
+                          <div className="absolute inset-0 flex items-center justify-center">
+                            <div className="text-center">
+                              <div className="w-12 h-12 bg-pop-red mx-auto mb-3 flex items-center justify-center">
+                                <span className="text-white helvetica-bold text-xl">P</span>
+                              </div>
+                              <p className="systematic-caps text-xs text-gray-600 px-4">Best Sellers</p>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              )}
+            </div>
 
             {/* Services Dropdown */}
             <div
@@ -464,6 +552,33 @@ export default function Navigation() {
               )}
             </div>
 
+            {/* Products Mobile Accordion Section */}
+            <div className="space-y-2">
+              <button
+                onClick={() => setMobileProductsOpen(!mobileProductsOpen)}
+                className="flex items-center w-full systematic-caps text-sm font-bold text-pop-black hover:text-pop-red transition-colors"
+              >
+                <ChevronRight
+                  className={`w-4 h-4 mr-2 transform transition-transform ${mobileProductsOpen ? "rotate-90" : ""}`}
+                />
+                <span>Products</span>
+              </button>
+              {mobileProductsOpen && (
+                <div className="pl-4 space-y-1">
+                  {productsItems.map((item) => (
+                    <Link
+                      key={item.href}
+                      href={item.href}
+                      onClick={() => setMobileMenuOpen(false)}
+                      className="block w-full text-left px-4 py-2 systematic-caps text-sm hover:bg-pop-red hover:text-white transition-colors"
+                    >
+                      {item.label}
+                    </Link>
+                  ))}
+                </div>
+              )}
+            </div>
+
             {/* Track Mobile Section */}
             <div className="space-y-2">
               <Link
@@ -472,17 +587,6 @@ export default function Navigation() {
                 className="systematic-caps text-sm font-bold text-pop-black hover:text-pop-green transition-colors"
               >
                 Track Our Plastic
-              </Link>
-            </div>
-
-            {/* Shop Mobile Section */}
-            <div className="space-y-2">
-              <Link
-                href="/shop"
-                onClick={() => setMobileMenuOpen(false)}
-                className="systematic-caps text-sm font-bold text-pop-black hover:text-pop-red transition-colors"
-              >
-                Shop
               </Link>
             </div>
 
