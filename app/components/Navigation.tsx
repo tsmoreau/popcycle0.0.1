@@ -391,11 +391,13 @@ export default function Navigation() {
             
 
           {/* Right-aligned User Menu / Auth Button / Cart */}
-          <div className="hidden lg:flex items-center space-x-4 self-end mb-4 mr-16 relative">
+          <div 
+            className="hidden lg:flex items-center space-x-4 self-end mb-4 mr-16 relative"
+            onMouseLeave={() => setIconDropdownOpen(null)}
+          >
             {/* Search Icon */}
             <button
               onMouseEnter={() => setIconDropdownOpen('search')}
-              onMouseLeave={() => setIconDropdownOpen(null)}
               className="hover:opacity-80 transition-opacity"
               data-testid="button-search"
             >
@@ -405,7 +407,6 @@ export default function Navigation() {
             {/* User Icon */}
             <button
               onMouseEnter={() => setIconDropdownOpen('user')}
-              onMouseLeave={() => setIconDropdownOpen(null)}
               className="hover:opacity-80 transition-opacity"
               data-testid="button-user"
             >
@@ -415,7 +416,6 @@ export default function Navigation() {
             {/* Shopping Cart */}
             <button
               onMouseEnter={() => setIconDropdownOpen('cart')}
-              onMouseLeave={() => setIconDropdownOpen(null)}
               className="hover:opacity-80 transition-opacity"
               data-testid="button-cart"
             >
@@ -424,39 +424,37 @@ export default function Navigation() {
 
             {/* Unified Dropdown */}
             {iconDropdownOpen && (
-              <div 
-                className="absolute right-0 top-full mt-2 w-80 bg-white border border-gray-200 shadow-lg p-6"
-                onMouseEnter={() => setIconDropdownOpen(iconDropdownOpen)}
-                onMouseLeave={() => setIconDropdownOpen(null)}
-              >
-                {iconDropdownOpen === 'search' && (
-                  <div>
-                    <h3 className="font-jost text-lg font-semibold mb-4 text-pop-black">Search</h3>
-                    <input
-                      type="text"
-                      placeholder="Search..."
-                      className="w-full px-4 py-2 border border-gray-300 rounded-md font-jost focus:outline-none focus:border-pop-green"
-                    />
-                  </div>
-                )}
+              <div className="absolute right-0 top-full pt-2">
+                <div className="w-80 bg-white border border-gray-200 shadow-lg p-6">
+                  {iconDropdownOpen === 'search' && (
+                    <div>
+                      <h3 className="font-jost text-lg font-semibold mb-4 text-pop-black">Search</h3>
+                      <input
+                        type="text"
+                        placeholder="Search..."
+                        className="w-full px-4 py-2 border border-gray-300 rounded-md font-jost focus:outline-none focus:border-pop-green"
+                      />
+                    </div>
+                  )}
 
-                {iconDropdownOpen === 'user' && (
-                  <div>
-                    <h3 className="font-jost text-lg font-semibold mb-4 text-pop-black">Account</h3>
-                    <button className="w-full px-6 py-2 bg-pop-green text-white font-jost rounded-md hover:bg-opacity-90 transition-colors">
-                      Login
-                    </button>
-                  </div>
-                )}
+                  {iconDropdownOpen === 'user' && (
+                    <div>
+                      <h3 className="font-jost text-lg font-semibold mb-4 text-pop-black">Account</h3>
+                      <button className="w-full px-6 py-2 bg-pop-green text-white font-jost rounded-md hover:bg-opacity-90 transition-colors">
+                        Login
+                      </button>
+                    </div>
+                  )}
 
-                {iconDropdownOpen === 'cart' && (
-                  <div>
-                    <h3 className="font-jost text-lg font-semibold mb-4 text-pop-black">Shopping Cart</h3>
-                    <button className="w-full px-6 py-2 bg-pop-red text-white font-jost rounded-md hover:bg-opacity-90 transition-colors">
-                      View Products
-                    </button>
-                  </div>
-                )}
+                  {iconDropdownOpen === 'cart' && (
+                    <div>
+                      <h3 className="font-jost text-lg font-semibold mb-4 text-pop-black">Shopping Cart</h3>
+                      <button className="w-full px-6 py-2 bg-pop-red text-white font-jost rounded-md hover:bg-opacity-90 transition-colors">
+                        View Products
+                      </button>
+                    </div>
+                  )}
+                </div>
               </div>
             )}
           </div>
