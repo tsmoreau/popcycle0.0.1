@@ -502,12 +502,12 @@ export default function Navigation() {
             <div className="space-y-2">
               <button
                 onClick={() => setMobileAboutOpen(!mobileAboutOpen)}
-                className="flex items-center w-full systematic-caps text-sm text-pop-black hover:text-pop-green transition-colors"
+                className="flex items-center w-full font-jost text-sm text-pop-black hover:text-pop-green transition-colors"
               >
                 <ChevronRight
                   className={`w-4 h-4 mr-2 transform transition-transform ${mobileAboutOpen ? "rotate-90" : ""}`}
                 />
-                <span className="font-jost font-light ">About</span>
+                <span className="font-jost">About</span>
               </button>
               {mobileAboutOpen && (
                 <div className="pl-4 space-y-1">
@@ -516,34 +516,7 @@ export default function Navigation() {
                       key={item.href}
                       href={item.href}
                       onClick={() => setMobileMenuOpen(false)}
-                      className="block w-full text-left px-4 py-2 systematic-caps text-sm hover:bg-pop-green hover:text-white transition-colors"
-                    >
-                      {item.label}
-                    </Link>
-                  ))}
-                </div>
-              )}
-            </div>
-
-            {/* What We Do Mobile Accordion Section */}
-            <div className="space-y-2 ">
-              <button
-                onClick={() => setMobileServicesOpen(!mobileServicesOpen)}
-                className="flex items-center w-full systematic-caps text-sm font-bold text-pop-black hover:text-pop-blue transition-colors "
-              >
-                <ChevronRight
-                  className={`w-4 h-4 mr-2 transform transition-transform ${mobileServicesOpen ? "rotate-90" : ""}`}
-                />
-                <span>What We Do</span>
-              </button>
-              {mobileServicesOpen && (
-                <div className="pl-4 space-y-1">
-                  {servicesItems.map((item) => (
-                    <Link
-                      key={item.href}
-                      href={item.href}
-                      onClick={() => setMobileMenuOpen(false)}
-                      className="block w-full text-left px-4 py-2 systematic-caps text-sm hover:bg-pop-blue hover:text-white transition-colors"
+                      className="block w-full text-left px-4 py-2 font-jost text-sm hover:bg-pop-green hover:text-white transition-colors"
                     >
                       {item.label}
                     </Link>
@@ -556,12 +529,12 @@ export default function Navigation() {
             <div className="space-y-2">
               <button
                 onClick={() => setMobileProductsOpen(!mobileProductsOpen)}
-                className="flex items-center w-full systematic-caps text-sm font-bold text-pop-black hover:text-pop-red transition-colors"
+                className="flex items-center w-full font-jost text-sm text-pop-black hover:text-pop-red transition-colors"
               >
                 <ChevronRight
                   className={`w-4 h-4 mr-2 transform transition-transform ${mobileProductsOpen ? "rotate-90" : ""}`}
                 />
-                <span>Products</span>
+                <span className="font-jost">Products</span>
               </button>
               {mobileProductsOpen && (
                 <div className="pl-4 space-y-1">
@@ -570,7 +543,7 @@ export default function Navigation() {
                       key={item.href}
                       href={item.href}
                       onClick={() => setMobileMenuOpen(false)}
-                      className="block w-full text-left px-4 py-2 systematic-caps text-sm hover:bg-pop-red hover:text-white transition-colors"
+                      className="block w-full text-left px-4 py-2 font-jost text-sm hover:bg-pop-red hover:text-white transition-colors"
                     >
                       {item.label}
                     </Link>
@@ -579,15 +552,31 @@ export default function Navigation() {
               )}
             </div>
 
-            {/* Track Mobile Section */}
+            {/* Services Mobile Accordion Section */}
             <div className="space-y-2">
-              <Link
-                href="/track"
-                onClick={() => setMobileMenuOpen(false)}
-                className="systematic-caps text-sm font-bold text-pop-black hover:text-pop-green transition-colors"
+              <button
+                onClick={() => setMobileServicesOpen(!mobileServicesOpen)}
+                className="flex items-center w-full font-jost text-sm text-pop-black hover:text-pop-blue transition-colors"
               >
-                Track Our Plastic
-              </Link>
+                <ChevronRight
+                  className={`w-4 h-4 mr-2 transform transition-transform ${mobileServicesOpen ? "rotate-90" : ""}`}
+                />
+                <span className="font-jost">Services</span>
+              </button>
+              {mobileServicesOpen && (
+                <div className="pl-4 space-y-1">
+                  {servicesItems.map((item) => (
+                    <Link
+                      key={item.href}
+                      href={item.href}
+                      onClick={() => setMobileMenuOpen(false)}
+                      className="block w-full text-left px-4 py-2 font-jost text-sm hover:bg-pop-blue hover:text-white transition-colors"
+                    >
+                      {item.label}
+                    </Link>
+                  ))}
+                </div>
+              )}
             </div>
 
             {/* Mobile User Section */}
@@ -605,10 +594,10 @@ export default function Navigation() {
                         <User className="w-5 h-5 text-white" /> 
                       </div>
                       <div>
-                        <div className="systematic-caps text-sm font-bold text-pop-black">
+                        <div className="font-jost text-sm font-bold text-pop-black">
                           {session.user?.name?.split(" ")[0] || "User"}
                         </div>
-                        <div className="systematic-caps text-xs font-medium text-pop-green mt-1">
+                        <div className="font-jost text-xs font-medium text-pop-green mt-1">
                           {session.user?.userType === "super_admin"
                             ? "Super Admin"
                             : "Maker"}
@@ -622,7 +611,7 @@ export default function Navigation() {
                     <Link
                       href="/profile"
                       onClick={() => setMobileMenuOpen(false)}
-                      className="w-full flex items-center px-4 py-2 systematic-caps text-sm rounded-md hover:bg-pop-green hover:text-white transition-colors"
+                      className="w-full flex items-center px-4 py-2 font-jost text-sm rounded-md hover:bg-pop-green hover:text-white transition-colors"
                     >
                       <User className="w-4 h-4 mr-3" />
                       Profile
@@ -631,7 +620,7 @@ export default function Navigation() {
                       <Link
                         href="/portal"
                         onClick={() => setMobileMenuOpen(false)}
-                        className="w-full flex items-center px-4 py-2 systematic-caps text-sm rounded-md hover:bg-pop-blue hover:text-white transition-colors"
+                        className="w-full flex items-center px-4 py-2 font-jost text-sm rounded-md hover:bg-pop-blue hover:text-white transition-colors"
                       >
                         <Settings className="w-4 h-4 mr-3" />
                         Portal
@@ -642,7 +631,7 @@ export default function Navigation() {
                         signOut();
                         setMobileMenuOpen(false);
                       }}
-                      className="w-full flex items-center px-4 py-2 systematic-caps text-sm rounded-md hover:bg-pop-red hover:text-white transition-colors text-left"
+                      className="w-full flex items-center px-4 py-2 font-jost text-sm rounded-md hover:bg-pop-red hover:text-white transition-colors text-left"
                     >
                       <LogOut className="w-4 h-4 mr-3" />
                       Sign Out
@@ -650,8 +639,8 @@ export default function Navigation() {
                   </div>
                 </>
               ) : (
-                <div className="space-y-2 flex items-center">
-                  <AuthButton /> Profile
+                <div className="space-y-2">
+                  <AuthButton />
                 </div>
               )}
             </div>
