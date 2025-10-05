@@ -639,8 +639,8 @@ export default function Navigation() {
                   </div>
                 </>
               ) : (
-                <div className="space-y-2">
-                  <AuthButton />
+                <div className="space-y-2 flex items-center">
+                  <AuthButton /> Login  or Sign Up
                 </div>
               )}
             </div>
