@@ -101,9 +101,25 @@ export default function Navigation() {
     <nav className="font-jost font-light sticky top-0 z-50 bg-white border-b border-gray-200">
       <div className="max-w-full mx-auto pt-2">
         <div className=" relative flex  justify-between h-20">
+          {/* Mobile menu button - moved to left */}
+          <div className="lg:hidden self-center ml-4">
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              className="hover:bg-pop-green hover:text-white"
+            >
+              {mobileMenuOpen ? (
+                <X className="w-4 h-4" />
+              ) : (
+                <Menu className="w-4 h-4" />
+              )}
+            </Button>
+          </div>
+
           <div className="flex mb-1">
           {/* Logo */}
-          <Link href="/" className="pl-12 self-end pb-2 flex items-center space-x-2 group">
+          <Link href="/" className="pl-12 lg:pl-12 pl-0 self-end pb-2 flex items-center space-x-2 group lg:mx-0 mx-auto">
             <div className="w-10 h-10 bg-pop-green flex items-center justify-center transition-all group-hover:bg-opacity-90 mt-1">
               <span className="text-white font-bold helvetica-bold text-xl">P</span>
             </div>
@@ -372,20 +388,8 @@ export default function Navigation() {
             </button>
           </div>
 
-          {/* Mobile menu button */}
-          <div className="lg:hidden self-center mr-12">
-            <Button
-              variant="ghost"
-              size="sm"
-              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="hover:bg-pop-green hover:text-white"
-            >
-              {mobileMenuOpen ? (
-                <X className="w-4 h-4" />
-              ) : (
-                <Menu className="w-4 h-4" />
-              )}
-            </Button>
+          {/* Spacer for mobile to balance centering */}
+          <div className="lg:hidden self-center mr-4 w-10">
           </div>
         </div>
       </div>
@@ -398,12 +402,12 @@ export default function Navigation() {
             <div className="space-y-2">
               <button
                 onClick={() => setMobileAboutOpen(!mobileAboutOpen)}
-                className="flex items-center justify-between w-full systematic-caps text-sm text-pop-black hover:text-pop-green transition-colors"
+                className="flex items-center w-full systematic-caps text-sm text-pop-black hover:text-pop-green transition-colors"
               >
-                <span className="font-jost font-light ">About</span>
                 <ChevronRight
-                  className={`w-4 h-4 transform transition-transform ${mobileAboutOpen ? "rotate-90" : ""}`}
+                  className={`w-4 h-4 mr-2 transform transition-transform ${mobileAboutOpen ? "rotate-90" : ""}`}
                 />
+                <span className="font-jost font-light ">About</span>
               </button>
               {mobileAboutOpen && (
                 <div className="pl-4 space-y-1">
@@ -425,12 +429,12 @@ export default function Navigation() {
             <div className="space-y-2 ">
               <button
                 onClick={() => setMobileServicesOpen(!mobileServicesOpen)}
-                className="flex items-center justify-between w-full systematic-caps text-sm font-bold text-pop-black hover:text-pop-blue transition-colors "
+                className="flex items-center w-full systematic-caps text-sm font-bold text-pop-black hover:text-pop-blue transition-colors "
               >
-                <span>What We Do</span>
                 <ChevronRight
-                  className={`w-4 h-4 transform transition-transform ${mobileServicesOpen ? "rotate-90" : ""}`}
+                  className={`w-4 h-4 mr-2 transform transition-transform ${mobileServicesOpen ? "rotate-90" : ""}`}
                 />
+                <span>What We Do</span>
               </button>
               {mobileServicesOpen && (
                 <div className="pl-4 space-y-1">
