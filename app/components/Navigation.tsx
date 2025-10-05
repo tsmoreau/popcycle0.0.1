@@ -31,6 +31,7 @@ export default function Navigation() {
   const [mobileAboutOpen, setMobileAboutOpen] = useState(false);
   const [mobileProductsOpen, setMobileProductsOpen] = useState(false);
   const [mobileServicesOpen, setMobileServicesOpen] = useState(false);
+  const [iconDropdownOpen, setIconDropdownOpen] = useState<'search' | 'user' | 'cart' | null>(null);
 
   const userMenuRef = useRef<HTMLDivElement>(null);
 
@@ -390,90 +391,74 @@ export default function Navigation() {
             
 
           {/* Right-aligned User Menu / Auth Button / Cart */}
-          <div className="hidden lg:flex items-center space-x-2 self-end mb-4 mr-16">
-            <Search />
-            {session ? (
-              <div className="relative " ref={userMenuRef}>
-                
-                <button
-                  onClick={() => setUserMenuOpen(!userMenuOpen)}
-                  className="flex items-center space-x-3 hover:opacity-80 transition-opacity"
-                >
-                  <div className="flex items-center space-x-2">
-                    <div className="w-8 h-8 rounded-full bg-pop-green flex items-center justify-center">
-                      <User className="w-4 h-4 text-white" />
-                    </div>
-                    <div className="text-left">
-                      <div className="text-sm font-semibold text-pop-black">
-                        {session.user?.name?.split(" ")[0] || "User"}
-                      </div>
-                      <div className="text-xs text-pop-green systematic-caps">
-                        {session.user?.userType === "super_admin"
-                          ? "Super Admin"
-                          : "Maker"}
-                      </div>
-                    </div>
-                  </div>
-                  <ChevronDown
-                    className={`w-4 h-4 text-pop-black transform transition-transform ${userMenuOpen ? "rotate-180" : ""}`}
-                  />
-                </button>
+          <div className="hidden lg:flex items-center space-x-4 self-end mb-4 mr-16 relative">
+            {/* Search Icon */}
+            <button
+              onMouseEnter={() => setIconDropdownOpen('search')}
+              onMouseLeave={() => setIconDropdownOpen(null)}
+              className="hover:opacity-80 transition-opacity"
+              data-testid="button-search"
+            >
+              <Search className="w-6 h-6 text-gray-700" />
+            </button>
 
-                {/* User Dropdown */}
-                {userMenuOpen && (
-                  <div className="absolute right-0 mt-2 min-w-max bg-white border border-gray-200 overflow-hidden">
-                    <div className="px-5 py-3 border-b border-gray-200">
-                      <div className="text-sm font-semibold text-gray-900 whitespace-nowrap">
-                        {session.user?.email}
-                      </div>
-                    </div>
-
-                    <div className="py-1">
-                      <Link
-                        href="/profile"
-                        onClick={() => setUserMenuOpen(false)}
-                        className="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-pop-green hover:text-white systematic-caps whitespace-nowrap"
-                      >
-                        <User className="w-4 h-4 mr-3" />
-                        Profile
-                      </Link>
-
-                      {hasPortalAccess && (
-                        <Link
-                          href="/portal"
-                          onClick={() => setUserMenuOpen(false)}
-                          className="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-pop-blue hover:text-white systematic-caps whitespace-nowrap"
-                        >
-                          <Settings className="w-4 h-4 mr-3" />
-                          Portal
-                        </Link>
-                      )}
-
-                      <button
-                        onClick={() => {
-                          setUserMenuOpen(false);
-                          signOut({ callbackUrl: "/" });
-                        }}
-                        className="w-full flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-pop-red hover:text-white systematic-caps text-left whitespace-nowrap"
-                      >
-                        <LogOut className="w-4 h-4 mr-3" />
-                        Sign Out
-                      </button>
-                    </div>
-                  </div>
-                )}
-              </div>
-            ) : (
-              <AuthButton />
-            )}
+            {/* User Icon */}
+            <button
+              onMouseEnter={() => setIconDropdownOpen('user')}
+              onMouseLeave={() => setIconDropdownOpen(null)}
+              className="hover:opacity-80 transition-opacity"
+              data-testid="button-user"
+            >
+              <User className="w-6 h-6 text-gray-700" />
+            </button>
 
             {/* Shopping Cart */}
             <button
-              className=" bg-white border-pop-gray flex items-center justify-center hover:opacity-80 transition-opacity"
+              onMouseEnter={() => setIconDropdownOpen('cart')}
+              onMouseLeave={() => setIconDropdownOpen(null)}
+              className="hover:opacity-80 transition-opacity"
               data-testid="button-cart"
             >
               <ShoppingCart className="w-6 h-6 text-gray-700" />
             </button>
+
+            {/* Unified Dropdown */}
+            {iconDropdownOpen && (
+              <div 
+                className="absolute right-0 top-full mt-2 w-80 bg-white border border-gray-200 shadow-lg p-6"
+                onMouseEnter={() => setIconDropdownOpen(iconDropdownOpen)}
+                onMouseLeave={() => setIconDropdownOpen(null)}
+              >
+                {iconDropdownOpen === 'search' && (
+                  <div>
+                    <h3 className="font-jost text-lg font-semibold mb-4 text-pop-black">Search</h3>
+                    <input
+                      type="text"
+                      placeholder="Search..."
+                      className="w-full px-4 py-2 border border-gray-300 rounded-md font-jost focus:outline-none focus:border-pop-green"
+                    />
+                  </div>
+                )}
+
+                {iconDropdownOpen === 'user' && (
+                  <div>
+                    <h3 className="font-jost text-lg font-semibold mb-4 text-pop-black">Account</h3>
+                    <button className="w-full px-6 py-2 bg-pop-green text-white font-jost rounded-md hover:bg-opacity-90 transition-colors">
+                      Login
+                    </button>
+                  </div>
+                )}
+
+                {iconDropdownOpen === 'cart' && (
+                  <div>
+                    <h3 className="font-jost text-lg font-semibold mb-4 text-pop-black">Shopping Cart</h3>
+                    <button className="w-full px-6 py-2 bg-pop-red text-white font-jost rounded-md hover:bg-opacity-90 transition-colors">
+                      View Products
+                    </button>
+                  </div>
+                )}
+              </div>
+            )}
           </div>
 
           {/* Mobile icons - search and cart */}
