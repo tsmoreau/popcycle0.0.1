@@ -100,7 +100,7 @@ export default function Navigation() {
   return (
     <nav className="font-jost font-light sticky top-0 z-50 bg-white border-b border-gray-200">
       <div className="max-w-full mx-auto pt-2">
-        <div className=" relative flex  justify-between h-20">
+        <div className=" relative flex  justify-between h-16 lg:h-20">
           {/* Mobile menu button - moved to left */}
           <div className="lg:hidden self-center ml-4">
             <Button
@@ -119,7 +119,7 @@ export default function Navigation() {
 
           <div className="flex mb-1">
           {/* Logo */}
-          <Link href="/" className="pl-12 lg:pl-12 pl-0 self-end pb-2 flex items-center space-x-2 group lg:mx-0 mx-auto">
+          <Link href="/" className="pl-2 lg:pl-12 pl-0 self-end pb-2 flex items-center space-x-2 group lg:mx-0 mx-auto">
             <div className="w-10 h-10 bg-pop-green flex items-center justify-center transition-all group-hover:bg-opacity-90 mt-1">
               <span className="text-white font-bold helvetica-bold text-xl">P</span>
             </div>
