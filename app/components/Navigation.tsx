@@ -388,8 +388,20 @@ export default function Navigation() {
             </button>
           </div>
 
-          {/* Spacer for mobile to balance centering */}
-          <div className="lg:hidden self-center mr-4 w-10">
+          {/* Mobile icons - search and cart */}
+          <div className="lg:hidden flex items-center space-x-2 self-center mr-4">
+            <button
+              className="hover:opacity-80 transition-opacity"
+              data-testid="button-search-mobile"
+            >
+              <Search className="w-5 h-5 text-gray-700" />
+            </button>
+            <button
+              className="hover:opacity-80 transition-opacity"
+              data-testid="button-cart-mobile"
+            >
+              <ShoppingCart className="w-5 h-5 text-gray-700" />
+            </button>
           </div>
         </div>
       </div>
@@ -476,13 +488,17 @@ export default function Navigation() {
 
             {/* Mobile User Section */}
             <div className="pt-4 border-t border-gray-200 space-y-3">
+              
               {session ? (
                 <>
                   {/* User Profile Header */}
                   <div className="flex items-center justify-between">
+                   
                     <div className="flex items-center space-x-3">
+                      
                       <div className="w-10 h-10 bg-pop-green rounded-full flex items-center justify-center shadow-md">
-                        <User className="w-5 h-5 text-white" />
+                        
+                        <User className="w-5 h-5 text-white" /> 
                       </div>
                       <div>
                         <div className="systematic-caps text-sm font-bold text-pop-black">
@@ -530,8 +546,8 @@ export default function Navigation() {
                   </div>
                 </>
               ) : (
-                <div className="space-y-2">
-                  <AuthButton />
+                <div className="space-y-2 flex items-center">
+                  <AuthButton /> Profile
                 </div>
               )}
             </div>
