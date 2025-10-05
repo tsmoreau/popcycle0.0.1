@@ -98,19 +98,20 @@ export default function Navigation() {
   const servicesItems = servicesSections.flatMap(section => section.items);
 
   return (
-    <nav className="font-gabarito font-light sticky top-0 z-50 bg-white border-b border-gray-200">
+    <nav className="font-jost font-light sticky top-0 z-50 bg-white border-b border-gray-200">
       <div className="max-w-full mx-auto pt-2">
         <div className=" relative flex  justify-between h-20">
           <div className="flex mb-1">
           {/* Logo */}
-          <Link href="/" className="ml-12 self-end mb-2 flex items-center space-x-2 group">
+          <Link href="/" className="pl-12 self-end pb-2 flex items-center space-x-2 group">
             <div className="w-10 h-10 bg-pop-green flex items-center justify-center transition-all group-hover:bg-opacity-90 mt-1">
-              <span className="text-white font-bold text-2xl">P</span>
+              <span className="text-white font-bold helvetica-bold text-xl">P</span>
             </div>
             <span className="text-4xl mt-1.5 tracking-tighter font-base text-gray-900">
               PopCycle
             </span>
           </Link>
+            
 
           {/* Absolutely centered navigation links */}
           <div className="mt-0.5 hidden self-end lg:flex items-center space-x-8 ml-8">
@@ -190,6 +191,15 @@ export default function Navigation() {
               )}
             </div>
 
+            <Link
+              href="/shop"
+              className={`text-lg hover:text-pop-green transition-colors py-2 ${
+                pathname === "/shop" ? "nav-link-active" : ""
+              }`}
+            >
+              Products
+            </Link>
+
             {/* Services Dropdown */}
             <div
               className="relative"
@@ -267,24 +277,10 @@ export default function Navigation() {
             </div>
 
             {/* Shop */}
-            <Link
-              href="/shop"
-              className={`text-lg hover:text-pop-green transition-colors py-2 ${
-                pathname === "/shop" ? "nav-link-active" : ""
-              }`}
-            >
-              Products
-            </Link>
+            
 
             {/* Track */}
-            <Link
-              href="/track"
-              className={`text-lg hover:text-pop-green transition-colors py-2 ${
-                pathname === "/track" ? "nav-link-active" : ""
-              }`}
-            >
-              Track
-            </Link>
+           
           </div>
             </div>
             
@@ -396,15 +392,15 @@ export default function Navigation() {
 
       {/* Mobile Menu */}
       {mobileMenuOpen && (
-        <div className="lg:hidden bg-white border-t border-gray-200">
+        <div className="lg:hidden font-jost font-light bg-white border-t border-gray-200">
           <div className="px-4 py-6 space-y-4">
             {/* About Mobile Accordion Section */}
             <div className="space-y-2">
               <button
                 onClick={() => setMobileAboutOpen(!mobileAboutOpen)}
-                className="flex items-center justify-between w-full systematic-caps text-sm font-bold text-pop-black hover:text-pop-green transition-colors"
+                className="flex items-center justify-between w-full systematic-caps text-sm text-pop-black hover:text-pop-green transition-colors"
               >
-                <span>About</span>
+                <span className="font-jost font-light ">About</span>
                 <ChevronRight
                   className={`w-4 h-4 transform transition-transform ${mobileAboutOpen ? "rotate-90" : ""}`}
                 />
@@ -426,10 +422,10 @@ export default function Navigation() {
             </div>
 
             {/* What We Do Mobile Accordion Section */}
-            <div className="space-y-2">
+            <div className="space-y-2 ">
               <button
                 onClick={() => setMobileServicesOpen(!mobileServicesOpen)}
-                className="flex items-center justify-between w-full systematic-caps text-sm font-bold text-pop-black hover:text-pop-blue transition-colors"
+                className="flex items-center justify-between w-full systematic-caps text-sm font-bold text-pop-black hover:text-pop-blue transition-colors "
               >
                 <span>What We Do</span>
                 <ChevronRight
