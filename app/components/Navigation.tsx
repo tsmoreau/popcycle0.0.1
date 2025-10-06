@@ -82,35 +82,57 @@ export default function Navigation() {
 
   const productsSections = [
     {
-      title: "Shop",
+      title: "Coasters",
       items: [
-        { href: "/shop#all", label: "All Products" },
-        { href: "/shop#bags", label: "Bags" },
-        { href: "/shop#accessories", label: "Accessories" },
+        { href: "/shop#all", label: "Commons" },
+        { href: "/shop#bags", label: "Studio Editions" },
       ],
     },
     {
-      title: "Custom",
+      title: "Cutting Boards",
       items: [
-        { href: "/shop#custom-orders", label: "Custom Orders" },
-        { href: "/shop#bulk-orders", label: "Bulk Orders" },
+        { href: "/shop#custom-orders", label: "Abstract Boards" },
+        { href: "/shop#bulk-orders", label: "Still Life Boards " },
       ],
+    },
+
+    {
+      title: "Lighting",
+      items: [
+        { href: "/shop#custom-orders", label: "Statement Lamps" },
+        { href: "/shop#bulk-orders", label: "" },
+      ],
+    },
+    {
+      title: "Other Works",
+      items: [],
     },
   ];
 
   const servicesSections = [
+    
+  
     {
-      title: "For Organizations",
+      title: "Studio Retainer",
       items: [
-        { href: "/services#community-partnerships", label: "Waste Audits & Impact Reports" },
-        { href: "/services#collection-services", label: "Collection Services" },
+        { href: "/services#custom-products", label: "Seasonal Collections" },
+        { href: "/services#workshops-events", label: "Add-On Services" },
       ],
     },
     {
-      title: "For Communities",
+      title: "Limited Commission",
       items: [
-        { href: "/services#custom-products", label: "Traceable Custom Products" },
-        { href: "/services#workshops-events", label: "Workshops & Events" },
+        { href: "/services#collection-services", label: "Custom Collection" },
+        { href: "/services#workshops-events", label: "Installations" },
+        { href: "/services#workshops-events", label: "Workshops" },
+        { href: "/services#workshops-events", label: "Donations" },
+      ],
+    },
+    {
+      title: "Community Partners",
+      items: [
+        { href: "/services#community-partnerships", label: "" },
+        { href: "/services#collection-services", label: "" },
       ],
     },
   ];
@@ -274,7 +296,7 @@ export default function Navigation() {
                               <div className="w-12 h-12 bg-pop-red mx-auto mb-3 flex items-center justify-center">
                                 <span className="text-white helvetica-bold text-xl">P</span>
                               </div>
-                              <p className="systematic-caps text-xs text-gray-600 px-4">Featured Products</p>
+                              <p className="systematic-caps text-xs text-gray-600 px-4">New Arrivals</p>
                             </div>
                           </div>
                         </div>
@@ -284,7 +306,7 @@ export default function Navigation() {
                               <div className="w-12 h-12 bg-pop-red mx-auto mb-3 flex items-center justify-center">
                                 <span className="text-white helvetica-bold text-xl">P</span>
                               </div>
-                              <p className="systematic-caps text-xs text-gray-600 px-4">New Arrivals</p>
+                              <p className="systematic-caps text-xs text-gray-600 px-4">Featured Products</p>
                             </div>
                           </div>
                         </div>
@@ -350,7 +372,7 @@ export default function Navigation() {
                               <div className="w-12 h-12 bg-pop-blue mx-auto mb-3 flex items-center justify-center">
                                 <span className="text-white helvetica-bold text-xl">P</span>
                               </div>
-                              <p className="systematic-caps text-xs text-gray-600 px-4">Collection</p>
+                              <p className="systematic-caps text-xs text-gray-600 px-4">Studio Process</p>
                             </div>
                           </div>
                         </div>
@@ -360,7 +382,7 @@ export default function Navigation() {
                               <div className="w-12 h-12 bg-pop-blue mx-auto mb-3 flex items-center justify-center">
                                 <span className="text-white helvetica-bold text-xl">P</span>
                               </div>
-                              <p className="systematic-caps text-xs text-gray-600 px-4">Processing</p>
+                              <p className="systematic-caps text-xs text-gray-600 px-4">Material Sourcing</p>
                             </div>
                           </div>
                         </div>
@@ -370,7 +392,7 @@ export default function Navigation() {
                               <div className="w-12 h-12 bg-pop-blue mx-auto mb-3 flex items-center justify-center">
                                 <span className="text-white helvetica-bold text-xl">P</span>
                               </div>
-                              <p className="systematic-caps text-xs text-gray-600 px-4">Products</p>
+                              <p className="systematic-caps text-xs text-gray-600 px-4">Universal Provenance</p>
                             </div>
                           </div>
                         </div>
