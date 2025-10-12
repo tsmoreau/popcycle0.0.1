@@ -112,13 +112,7 @@ export default function Navigation() {
   const servicesSections = [
     
   
-    {
-      title: "Studio Retainer",
-      items: [
-        { href: "/services#custom-products", label: "Seasonal Collections" },
-        { href: "/services#workshops-events", label: "Add-On Services" },
-      ],
-    },
+    
     {
       title: "Limited Commission",
       items: [
@@ -126,6 +120,13 @@ export default function Navigation() {
         { href: "/services#workshops-events", label: "Installations" },
         { href: "/services#workshops-events", label: "Workshops" },
         { href: "/services#workshops-events", label: "Donations" },
+      ],
+    },
+    {
+      title: "Studio Retainer",
+      items: [
+        { href: "/services#custom-products", label: "Seasonal Collections" },
+        { href: "/services#workshops-events", label: "Add-On Services" },
       ],
     },
     {
