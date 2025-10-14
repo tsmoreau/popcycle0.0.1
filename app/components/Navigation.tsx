@@ -271,10 +271,10 @@ export default function Navigation() {
                 >
                   <div className="max-w-7xl mx-auto px-12 py-12">
                     <div className="flex gap-12">
-                      {/* Left navigation - flows into columns */}
-                      <div className="flex gap-12 min-w-fit">
+                      {/* Left navigation - flows vertically first, then into columns */}
+                      <div className="columns-2 gap-12 min-w-fit">
                         {aboutSections.map((section, idx) => (
-                          <div key={idx} className="min-w-[160px]">
+                          <div key={idx} className="break-inside-avoid mb-8">
                             <h3 className="systematic-caps text-sm font-bold text-gray-400 mb-4">
                               {section.title}
                             </h3>
@@ -367,10 +367,10 @@ export default function Navigation() {
                 >
                   <div className="max-w-7xl mx-auto px-12 py-12">
                     <div className="flex gap-12">
-                      {/* Left navigation - flows into columns */}
-                      <div className="flex gap-12 min-w-fit">
+                      {/* Left navigation - flows vertically first, then into columns */}
+                      <div className="columns-2 gap-12 min-w-fit">
                         {productsSections.map((section, idx) => (
-                          <div key={idx} className="min-w-[160px]">
+                          <div key={idx} className="break-inside-avoid mb-8">
                             <h3 className="systematic-caps text-sm font-bold text-gray-400 mb-4">
                               {section.title}
                             </h3>
@@ -463,10 +463,10 @@ export default function Navigation() {
                 >
                   <div className="max-w-7xl mx-auto px-12 py-12">
                     <div className="flex gap-12">
-                      {/* Left navigation - flows into columns */}
-                      <div className="flex gap-12 min-w-fit">
+                      {/* Left navigation - flows vertically first, then into columns */}
+                      <div className="columns-2 gap-12 min-w-fit">
                         {servicesSections.map((section, idx) => (
-                          <div key={idx} className="min-w-[160px]">
+                          <div key={idx} className="break-inside-avoid mb-8">
                             <h3 className="systematic-caps text-sm font-bold text-gray-400 mb-4">
                               {section.title}
                             </h3>
