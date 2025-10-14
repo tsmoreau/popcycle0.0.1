@@ -218,10 +218,10 @@ export default function Navigation() {
 
               {aboutOpen && (
                 <div className="fixed left-0 right-0 top-[88px] z-50 bg-white border-t border-gray-200 shadow-lg">
-                  <div className="max-w-7xl mx-auto px-12 py-6 flex gap-8">
-                    <div style={{ columnWidth: '180px', columnGap: '2rem', columnFill: 'auto', maxHeight: '400px', flex: '1' }}>
+                  <div className="max-w-7xl mx-auto px-12 py-6 flex gap-8 min-h-[300px]">
+                    <div style={{ columnWidth: '180px', columnGap: '1rem', columnFill: 'auto', maxHeight: '400px', flex: '1' }}>
                       {aboutSections.map((section, idx) => (
-                        <div key={idx} className="mb-8 break-inside-avoid">
+                        <div key={idx} className="mb-6 break-inside-avoid">
                           <h3 className="systematic-caps text-sm font-bold text-gray-400 mb-4">
                             {section.title}
                           </h3>
@@ -292,10 +292,10 @@ export default function Navigation() {
 
               {productsOpen && (
                 <div className="fixed left-0 right-0 top-[88px] z-50 bg-white border-t border-gray-200 shadow-lg">
-                  <div className="max-w-7xl mx-auto px-12 py-6 flex gap-8">
-                    <div style={{ columnWidth: '180px', columnGap: '2rem', columnFill: 'auto', maxHeight: '400px', flex: '1' }}>
+                  <div className="max-w-7xl mx-auto px-12 py-6 flex gap-8 min-h-[300px]">
+                    <div style={{ columnWidth: '180px', columnGap: '1rem', columnFill: 'auto', maxHeight: '400px', flex: '1' }}>
                       {productsSections.map((section, idx) => (
-                        <div key={idx} className="mb-8 break-inside-avoid">
+                        <div key={idx} className="mb-6 break-inside-avoid">
                           <h3 className="systematic-caps text-sm font-bold text-gray-400 mb-4">
                             {section.title}
                           </h3>
@@ -366,10 +366,10 @@ export default function Navigation() {
 
               {servicesOpen && (
                 <div className="fixed left-0 right-0 top-[88px] z-50 bg-white border-t border-gray-200 shadow-lg">
-                  <div className="max-w-7xl mx-auto px-12 py-6 flex gap-8">
-                    <div style={{ columnWidth: '180px', columnGap: '2rem', columnFill: 'auto', maxHeight: '400px', flex: '1' }}>
+                  <div className="max-w-7xl mx-auto px-12 py-6 flex gap-8 min-h-[300px]">
+                    <div style={{ columnWidth: '180px', columnGap: '1rem', columnFill: 'auto', maxHeight: '400px', flex: '1' }}>
                       {servicesSections.map((section, idx) => (
-                        <div key={idx} className="mb-8 break-inside-avoid">
+                        <div key={idx} className="mb-6 break-inside-avoid">
                           <h3 className="systematic-caps text-sm font-bold text-gray-400 mb-4">
                             {section.title}
                           </h3>
