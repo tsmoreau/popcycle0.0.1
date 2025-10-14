@@ -458,8 +458,8 @@ export default function Navigation() {
 
               {productsOpen && (
                 <div className="fixed left-0 right-0 top-[88px] z-50 bg-white border-t border-gray-200 shadow-lg">
-                  <div className="max-w-7xl bg-pop-blue mx-auto px-12 py-6 flex h-96">
-                    <div className="columns-[180px] gap-4 max-h-[400px] bg-pop-red">
+                  <div className="max-w-7xl mx-auto px-12 py-6 flex h-96">
+                    <div className="columns-[180px] gap-4 max-h-[400px] bg-pop-red flex-shrink-0">
                       {productsSections.map((section, idx) => (
                         <div key={idx} className="mb-6 break-inside-avoid min-w-[120px]">
                           <Link href={section.items?.[0]?.href || '/shop#all'}>
@@ -483,7 +483,7 @@ export default function Navigation() {
                         </div>
                       ))}
                     </div>
-                    <div className="gap-6 flex bg-pop-green flex-shrink-0">
+                    <div className="gap-6 flex flex-shrink-0 ml-8">
                       <div className="w-48 aspect-[3/4] bg-gray-100 relative group cursor-pointer overflow-hidden">
                         <div className="absolute inset-0 flex items-center justify-center">
                           <div className="text-center">
