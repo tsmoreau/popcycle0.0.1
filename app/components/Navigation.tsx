@@ -287,6 +287,15 @@ export default function Navigation() {
         { href: "/shop#custom-bookmarks", label: "Bookmarks" },
         { href: "/shop#custom-combs", label: "Combs" },
       ],
+    },  {
+      title: "Make Your Own",
+      items: [
+        { href: "/shop#custom-coasters", label: "Custom Coasters" },
+        { href: "/shop#custom-keychains", label: "Keychains" },
+        { href: "/shop#custom-magnets", label: "Magnets" },
+        { href: "/shop#custom-bookmarks", label: "Bookmarks" },
+        { href: "/shop#custom-combs", label: "Combs" },
+      ],
     },
     {
       title: "All Products",
@@ -458,8 +467,8 @@ export default function Navigation() {
 
               {productsOpen && (
                 <div className="fixed left-0 right-0 top-[88px] z-50 bg-white border-t border-gray-200 shadow-lg">
-                  <div className="max-w-7xl mx-auto px-12 py-6 flex h-96">
-                    <div className="columns-[180px] gap-4 max-h-[400px] bg-pop-red pr-8 w-auto">
+                  <div className="max-w-7xl mx-auto px-12 py-6 h-96 overflow-x-auto">
+                    <div className="columns-[200px] gap-6 bg-pop-red pr-8 h-full w-max">
                       {productsSections.map((section, idx) => (
                         <div key={idx} className="mb-6 break-inside-avoid">
                           <Link href={section.items?.[0]?.href || '/shop#all'}>
