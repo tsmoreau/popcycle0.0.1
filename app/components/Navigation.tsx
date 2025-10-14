@@ -118,25 +118,27 @@ export default function Navigation() {
     {
       title: "Limited Editions",
       items: [
-        { href: "/shop#all", label: "Coasters" },
-        { href: "/shop#bags", label: "Cutting Boards" },
-        { href: "/shop#bags", label: "Clocks" },
-        { href: "/shop#bags", label: "Lighting" },
+        { href: "/shop#limited-coasters", label: "Coasters" },
+        { href: "/shop#limited-boards", label: "Cutting Boards" },
+        { href: "/shop#limited-clocks", label: "Clocks" },
+        { href: "/shop#limited-lighting", label: "Lighting" },
       ],
     },
     {
       title: "Make Your Own",
       items: [
-        { href: "/shop#custom-orders", label: "Coasters" },
-        { href: "/shop#bulk-orders", label: "Keychains" },
-        { href: "/shop#bags", label: "Magnets" },
-        { href: "/shop#bags", label: "Bookmarks" },
-        { href: "/shop#bags", label: "Combs" },
+        { href: "/shop#custom-coasters", label: "Custom Coasters" },
+        { href: "/shop#custom-keychains", label: "Keychains" },
+        { href: "/shop#custom-magnets", label: "Magnets" },
+        { href: "/shop#custom-bookmarks", label: "Bookmarks" },
+        { href: "/shop#custom-combs", label: "Combs" },
       ],
     },
     {
-      title: "All Products",
-      items: [],
+      title: "Browse",
+      items: [
+        { href: "/shop#all", label: "All Products" },
+      ],
     },
   ];
 
