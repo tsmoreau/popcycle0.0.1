@@ -81,38 +81,47 @@ export default function Navigation() {
   ];
 
   const productsSections = [
+
+
     {
-      title: "Coasters",
+      title: "Limited Editions",
       items: [
-        { href: "/shop#all", label: "Commons" },
-        { href: "/shop#bags", label: "Studio Editions" },
+        { href: "/shop#all", label: "Coasters" },
+        { href: "/shop#bags", label: "Cutting Boards" },
+        { href: "/shop#bags", label: "Clocks" },
+        { href: "/shop#bags", label: "Lighting" },
       ],
     },
     {
-      title: "Cutting Boards",
+      title: "Make Your Own",
       items: [
-        { href: "/shop#custom-orders", label: "Abstract Boards" },
-        { href: "/shop#bulk-orders", label: "Still Life Boards " },
+        { href: "/shop#custom-orders", label: "Coasters" },
+        { href: "/shop#bulk-orders", label: "Keychains" },
+        { href: "/shop#bags", label: "Magnets" },
+        { href: "/shop#bags", label: "Bookmarks" },
+        { href: "/shop#bags", label: "Combs" },
       ],
     },
 
+   
+
     {
-      title: "Lighting",
-      items: [
-        { href: "/shop#custom-orders", label: "Statement Lamps" },
-        { href: "/shop#bulk-orders", label: "" },
-      ],
-    },
-    {
-      title: "Other Works",
+      title: "All Products",
       items: [],
     },
+
   ];
 
   const servicesSections = [
-    
-  
-    
+
+    {
+      title: "Studio Retainer",
+      items: [
+        { href: "/services#custom-products", label: "Seasonal Collections" },
+        { href: "/services#custom-products", label: "Everyday Objects" },
+      ],
+    },
+
     {
       title: "Limited Commission",
       items: [
@@ -122,13 +131,7 @@ export default function Navigation() {
         { href: "/services#workshops-events", label: "Donations" },
       ],
     },
-    {
-      title: "Studio Retainer",
-      items: [
-        { href: "/services#custom-products", label: "Seasonal Collections" },
-        { href: "/services#workshops-events", label: "Add-On Services" },
-      ],
-    },
+
     {
       title: "Community Partners",
       items: [
@@ -165,17 +168,22 @@ export default function Navigation() {
           <div className="flex mb-1">
           {/* Logo */}
           <Link href="/" className="pl-2 lg:pl-12 pl-0 self-end pb-2 flex items-center space-x-2 group lg:mx-0 mx-auto">
-            <div className="w-10 h-10 bg-pop-green flex items-center justify-center transition-all group-hover:bg-opacity-90 mt-1">
+            <div className="w-12 h-12 bg-pop-green flex items-center justify-center transition-all group-hover:bg-opacity-90 mt-1">
               <span className="text-white font-bold helvetica-bold text-xl">P</span>
             </div>
-            <span className="text-4xl mt-1.5 tracking-tighter font-base text-gray-900">
+            <div className="flex-col flex mt-2">
+            <span className="text-4xl  tracking-tighter font-base text-gray-900">
               PopCycle
             </span>
+            <span className="hidden mt-0.0 ml-1 tracking-[2.2em] text-[8px] font-bold text-gray-900">
+              STUDIO
+            </span>
+              </div>
           </Link>
-            
+
 
           {/* Absolutely centered navigation links */}
-          <div className="mt-0.5 hidden self-end lg:flex items-center space-x-8 ml-8">
+          <div className="  hidden self-end lg:flex items-end space-x-10 ml-8">
             {/* About Dropdown */}
             <div
               className="relative"
@@ -317,7 +325,7 @@ export default function Navigation() {
                               <div className="w-12 h-12 bg-pop-red mx-auto mb-3 flex items-center justify-center">
                                 <span className="text-white helvetica-bold text-xl">P</span>
                               </div>
-                              <p className="systematic-caps text-xs text-gray-600 px-4">Best Sellers</p>
+                              <p className="systematic-caps text-xs text-gray-600 px-4">Collections</p>
                             </div>
                           </div>
                         </div>
@@ -405,13 +413,13 @@ export default function Navigation() {
             </div>
 
             {/* Shop */}
-            
+
 
             {/* Track */}
-           
+
           </div>
             </div>
-            
+
 
           {/* Right-aligned User Menu / Auth Button / Cart */}
           <div 
@@ -587,16 +595,16 @@ export default function Navigation() {
 
             {/* Mobile User Section */}
             <div className="pt-4 border-t border-gray-200 space-y-3">
-              
+
               {session ? (
                 <>
                   {/* User Profile Header */}
                   <div className="flex items-center justify-between">
-                   
+
                     <div className="flex items-center space-x-3">
-                      
+
                       <div className="w-10 h-10 bg-pop-green rounded-full flex items-center justify-center shadow-md">
-                        
+
                         <User className="w-5 h-5 text-white" /> 
                       </div>
                       <div>

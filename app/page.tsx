@@ -18,12 +18,11 @@ export default function Home() {
     <div className="min-h-screen font-jost">
       {/* Hero Section */}
       <section className="py-40 lg:py-48 px-6 bg-white font-jost">
-        <div className="max-w-7xl mx-auto text-center">
-          <h1 className="text-5xl lg:text-7xl mb-10 tracking-tight leading-tight">
-            YOUR WASTE.<br />
-            <span className="text-pop-green">YOUR PRODUCTS.</span><br />
-            YOUR PROOF.
-          </h1>
+        <div className="max-w-5xl mx-auto text-center">
+          <span className="text-5xl lg:text-7xl mb-10 tracking-tight leading-tight">
+            exploring <span className="text-pop-green">aesthetic</span> and <span className="text-pop-red">systemic</span> dimensions of <span className="text-pop-blue">recycled</span> materials
+           
+          </span>
           
           <p className="text-lg lg:text-xl max-w-3xl mx-auto mb-14 leading-relaxed text-gray-700">
             Transform your plastic waste into custom-branded products with complete traceability. 
@@ -31,11 +30,7 @@ export default function Home() {
           </p>
           
           <div className="flex flex-col sm:flex-row gap-5 justify-center items-center">
-            <Link href="/track">
-              <Button size="lg" className="bg-pop-green text-white hover:bg-opacity-90 systematic-caps text-base px-10 py-6 transition-all">
-                Track Plastic
-              </Button>
-            </Link>
+          
 
             <Link href="/about#faq">
               <Button variant="outline" size="lg" className="border border-gray-300 text-gray-900 hover:bg-gray-900 hover:text-white systematic-caps text-base px-10 py-6 transition-all">

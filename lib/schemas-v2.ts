@@ -138,8 +138,6 @@ export interface Blank {
   userId?: ObjectId;
   status: 'blank' | 'assembled' | 'delivered';
   weight: number;
-  
-  // Sheet inventory fields for D2C selection
   photoUrl?: string;
   thumbnailUrl?: string;
   materialDescription?: string;
