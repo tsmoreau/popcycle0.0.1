@@ -305,7 +305,7 @@ export default function Navigation() {
                   <div className="max-w-7xl mx-auto px-12 py-6 flex h-96">
                     <div className="columns-[180px] gap-4 max-h-[400px] shrink-0">
                       {productsSections.map((section, idx) => (
-                        <div key={idx} className="mb-6 break-inside-avoid">
+                        <div key={idx} className="mb-6 break-inside-avoid min-w-[120px]">
                           <h3 className="systematic-caps text-sm font-bold text-gray-400 mb-4">
                             {section.title}
                           </h3>
