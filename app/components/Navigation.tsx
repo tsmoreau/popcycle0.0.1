@@ -264,7 +264,11 @@ export default function Navigation() {
               </button>
 
               {aboutOpen && (
-                <div className="fixed left-0 right-0 top-[88px] z-50 bg-white border-t border-gray-200 shadow-lg">
+                <div 
+                  className="fixed left-0 right-0 top-[88px] z-50 bg-white border-t border-gray-200 shadow-lg"
+                  onMouseEnter={() => setAboutOpen(true)}
+                  onMouseLeave={() => setAboutOpen(false)}
+                >
                   <div className="max-w-7xl mx-auto px-12 py-12">
                     <div className="flex gap-12">
                       {/* Left navigation - flows into columns */}
@@ -356,7 +360,11 @@ export default function Navigation() {
               </button>
 
               {productsOpen && (
-                <div className="fixed left-0 right-0 top-[88px] z-50 bg-white border-t border-gray-200 shadow-lg">
+                <div 
+                  className="fixed left-0 right-0 top-[88px] z-50 bg-white border-t border-gray-200 shadow-lg"
+                  onMouseEnter={() => setProductsOpen(true)}
+                  onMouseLeave={() => setProductsOpen(false)}
+                >
                   <div className="max-w-7xl mx-auto px-12 py-12">
                     <div className="flex gap-12">
                       {/* Left navigation - flows into columns */}
@@ -448,7 +456,11 @@ export default function Navigation() {
               </button>
 
               {servicesOpen && (
-                <div className="fixed left-0 right-0 top-[88px] z-50 bg-white border-t border-gray-200 shadow-lg">
+                <div 
+                  className="fixed left-0 right-0 top-[88px] z-50 bg-white border-t border-gray-200 shadow-lg"
+                  onMouseEnter={() => setServicesOpen(true)}
+                  onMouseLeave={() => setServicesOpen(false)}
+                >
                   <div className="max-w-7xl mx-auto px-12 py-12">
                     <div className="flex gap-12">
                       {/* Left navigation - flows into columns */}
