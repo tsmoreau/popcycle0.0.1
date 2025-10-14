@@ -305,9 +305,9 @@ export default function Navigation() {
               {productsOpen && (
                 <div className="fixed left-0 right-0 top-[88px] z-50 bg-white border-t border-gray-200 shadow-lg">
                   <div className="max-w-7xl mx-auto px-12 py-6 flex gap-8 h-96">
-                    <div className="grid grid-flow-col auto-cols-[180px] gap-6 bg-pop-red pr-8 h-full">
+                    <div className="flex flex-col flex-wrap gap-6 bg-pop-red pr-8 h-full w-auto">
                       {productsSections.map((section, idx) => (
-                        <div key={idx} className="mb-6">
+                        <div key={idx} className="mb-6 w-[180px]">
                           <Link href={section.items?.[0]?.href || '/shop#all'}>
                             <h3 className="systematic-caps text-sm font-bold text-gray-400 mb-4 hover:text-pop-green transition-colors cursor-pointer">
                               {section.title}
