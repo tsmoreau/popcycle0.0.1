@@ -197,10 +197,20 @@ export default function Navigation() {
     }
   };
 
-  const canScrollLeft = (position: number) => position > 0;
+  const [aboutHasOverflow, setAboutHasOverflow] = useState(false);
+  const [productsHasOverflow, setProductsHasOverflow] = useState(false);
+  const [servicesHasOverflow, setServicesHasOverflow] = useState(false);
+
+  const canScrollLeft = (position: number) => position > 5;
   const canScrollRight = (ref: React.RefObject<HTMLDivElement | null>) => {
     if (!ref.current) return false;
-    return ref.current.scrollLeft < ref.current.scrollWidth - ref.current.clientWidth - 10;
+    const { scrollLeft, scrollWidth, clientWidth } = ref.current;
+    return scrollLeft < scrollWidth - clientWidth - 5;
+  };
+  
+  const checkOverflow = (ref: React.RefObject<HTMLDivElement | null>) => {
+    if (!ref.current) return false;
+    return ref.current.scrollWidth > ref.current.clientWidth;
   };
 
   // Track scroll position
@@ -214,18 +224,21 @@ export default function Navigation() {
   useEffect(() => {
     if (aboutOpen && aboutCardsRef.current) {
       setAboutScrollPosition(aboutCardsRef.current.scrollLeft);
+      setAboutHasOverflow(checkOverflow(aboutCardsRef));
     }
   }, [aboutOpen]);
 
   useEffect(() => {
     if (productsOpen && productsCardsRef.current) {
       setProductsScrollPosition(productsCardsRef.current.scrollLeft);
+      setProductsHasOverflow(checkOverflow(productsCardsRef));
     }
   }, [productsOpen]);
 
   useEffect(() => {
     if (servicesOpen && servicesCardsRef.current) {
       setServicesScrollPosition(servicesCardsRef.current.scrollLeft);
+      setServicesHasOverflow(checkOverflow(servicesCardsRef));
     }
   }, [servicesOpen]);
 
@@ -291,9 +304,9 @@ export default function Navigation() {
                   <div className="max-w-7xl mx-auto px-12 py-12">
                     <div className="flex gap-12">
                       {/* Left navigation - flows vertically first, then into columns */}
-                      <div className="columns-2 gap-12 min-w-fit">
+                      <div style={{ columnCount: 2, columnGap: '3rem', minWidth: 'fit-content' }}>
                         {aboutSections.map((section, idx) => (
-                          <div key={idx} className="break-inside-avoid mb-8">
+                          <div key={idx} style={{ breakInside: 'avoid' }} className="mb-8">
                             <h3 className="systematic-caps text-sm font-bold text-gray-400 mb-4">
                               {section.title}
                             </h3>
@@ -314,7 +327,7 @@ export default function Navigation() {
                       
                       {/* Right cards - horizontal scroll with arrows */}
                       <div className="flex-1 relative">
-                        {canScrollLeft(aboutScrollPosition) && (
+                        {aboutHasOverflow && canScrollLeft(aboutScrollPosition) && (
                           <button
                             onClick={() => scrollCards(aboutCardsRef, 'left')}
                             className="absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-white shadow-lg border border-gray-200 p-2 hover:bg-gray-50"
@@ -348,7 +361,7 @@ export default function Navigation() {
                           ))}
                         </div>
                         
-                        {canScrollRight(aboutCardsRef) && (
+                        {aboutHasOverflow && canScrollRight(aboutCardsRef) && (
                           <button
                             onClick={() => scrollCards(aboutCardsRef, 'right')}
                             className="absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-white shadow-lg border border-gray-200 p-2 hover:bg-gray-50"
@@ -387,9 +400,9 @@ export default function Navigation() {
                   <div className="max-w-7xl mx-auto px-12 py-12">
                     <div className="flex gap-12">
                       {/* Left navigation - flows vertically first, then into columns */}
-                      <div className="columns-2 gap-12 min-w-fit">
+                      <div style={{ columnCount: 2, columnGap: '3rem', minWidth: 'fit-content' }}>
                         {productsSections.map((section, idx) => (
-                          <div key={idx} className="break-inside-avoid mb-8">
+                          <div key={idx} style={{ breakInside: 'avoid' }} className="mb-8">
                             <h3 className="systematic-caps text-sm font-bold text-gray-400 mb-4">
                               {section.title}
                             </h3>
@@ -410,7 +423,7 @@ export default function Navigation() {
                       
                       {/* Right cards - horizontal scroll with arrows */}
                       <div className="flex-1 relative">
-                        {canScrollLeft(productsScrollPosition) && (
+                        {productsHasOverflow && canScrollLeft(productsScrollPosition) && (
                           <button
                             onClick={() => scrollCards(productsCardsRef, 'left')}
                             className="absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-white shadow-lg border border-gray-200 p-2 hover:bg-gray-50"
@@ -444,7 +457,7 @@ export default function Navigation() {
                           ))}
                         </div>
                         
-                        {canScrollRight(productsCardsRef) && (
+                        {productsHasOverflow && canScrollRight(productsCardsRef) && (
                           <button
                             onClick={() => scrollCards(productsCardsRef, 'right')}
                             className="absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-white shadow-lg border border-gray-200 p-2 hover:bg-gray-50"
@@ -483,9 +496,9 @@ export default function Navigation() {
                   <div className="max-w-7xl mx-auto px-12 py-12">
                     <div className="flex gap-12">
                       {/* Left navigation - flows vertically first, then into columns */}
-                      <div className="columns-2 gap-12 min-w-fit">
+                      <div style={{ columnCount: 2, columnGap: '3rem', minWidth: 'fit-content' }}>
                         {servicesSections.map((section, idx) => (
-                          <div key={idx} className="break-inside-avoid mb-8">
+                          <div key={idx} style={{ breakInside: 'avoid' }} className="mb-8">
                             <h3 className="systematic-caps text-sm font-bold text-gray-400 mb-4">
                               {section.title}
                             </h3>
@@ -506,7 +519,7 @@ export default function Navigation() {
                       
                       {/* Right cards - horizontal scroll with arrows */}
                       <div className="flex-1 relative">
-                        {canScrollLeft(servicesScrollPosition) && (
+                        {servicesHasOverflow && canScrollLeft(servicesScrollPosition) && (
                           <button
                             onClick={() => scrollCards(servicesCardsRef, 'left')}
                             className="absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-white shadow-lg border border-gray-200 p-2 hover:bg-gray-50"
@@ -540,7 +553,7 @@ export default function Navigation() {
                           ))}
                         </div>
                         
-                        {canScrollRight(servicesCardsRef) && (
+                        {servicesHasOverflow && canScrollRight(servicesCardsRef) && (
                           <button
                             onClick={() => scrollCards(servicesCardsRef, 'right')}
                             className="absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-white shadow-lg border border-gray-200 p-2 hover:bg-gray-50"
