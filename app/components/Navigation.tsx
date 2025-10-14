@@ -219,7 +219,7 @@ export default function Navigation() {
               {aboutOpen && (
                 <div className="fixed left-0 right-0 top-[88px] z-50 bg-white border-t border-gray-200 shadow-lg">
                   <div className="max-w-7xl mx-auto px-12 py-6 flex gap-8 h-96 border-4 ">
-                    <div className="border-4 w-min columns-md gap-4 max-h-[400px] flex-1">
+                    <div className="border-4 columns-md gap-4 max-h-[400px]">
                       {aboutSections.map((section, idx) => (
                         <div key={idx} className="mb-6 break-inside-avoid">
                           <h3 className="systematic-caps text-sm font-bold text-gray-400 mb-4">
