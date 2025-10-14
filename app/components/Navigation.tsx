@@ -78,6 +78,27 @@ export default function Navigation() {
         { href: "/about#faq", label: "FAQ" },
       ],
     },
+    {
+      title: "Connect",
+      items: [
+        { href: "/about#contact", label: "Contact" },
+        { href: "/about#faq", label: "FAQ" },
+      ],
+    },
+    {
+      title: "Connect",
+      items: [
+        { href: "/about#contact", label: "Contact" },
+        { href: "/about#faq", label: "FAQ" },
+      ],
+    },
+    {
+      title: "Connect",
+      items: [
+        { href: "/about#contact", label: "Contact" },
+        { href: "/about#faq", label: "FAQ" },
+      ],
+    },
   ];
 
   const productsSections = [
@@ -218,8 +239,8 @@ export default function Navigation() {
 
               {aboutOpen && (
                 <div className="fixed left-0 right-0 top-[88px] z-50 bg-white border-t border-gray-200 shadow-lg">
-                  <div className="max-w-7xl mx-auto px-12 py-6 flex gap-8 h-96 border-4 items-start">
-                    <div className="border-4 columns-md gap-4 max-h-[400px] max-w-md">
+                  <div className="max-w-7xl mx-auto px-12 py-6 flex gap-8 h-96 border-4">
+                    <div className="border-4 columns-3xs gap-4 max-h-[400px] shrink-0">
                       {aboutSections.map((section, idx) => (
                         <div key={idx} className="mb-6 break-inside-avoid">
                           <h3 className="systematic-caps text-sm font-bold text-gray-400 mb-4">
@@ -239,7 +260,7 @@ export default function Navigation() {
                         </div>
                       ))}
                     </div>
-                    <div className="flex gap-6 flex-shrink-0">
+                    <div className="border-6 flex gap-6 flex-shrink-0">
                       <div className="w-48 aspect-[3/4] bg-gray-100 relative group cursor-pointer overflow-hidden">
                         <div className="absolute inset-0 flex items-center justify-center">
                           <div className="text-center">
@@ -292,8 +313,8 @@ export default function Navigation() {
 
               {productsOpen && (
                 <div className="fixed left-0 right-0 top-[88px] z-50 bg-white border-t border-gray-200 shadow-lg">
-                  <div className="max-w-7xl mx-auto px-12 py-6 flex gap-8 min-h-[300px]">
-                    <div className="columns-[180px] gap-4 max-h-[400px] flex-1">
+                  <div className="max-w-7xl mx-auto px-12 py-6 flex  h-96">
+                    <div className="bg-pop-red columns-3xs gap-4 flex-1 mx-auto">
                       {productsSections.map((section, idx) => (
                         <div key={idx} className="mb-6 break-inside-avoid">
                           <h3 className="systematic-caps text-sm font-bold text-gray-400 mb-4">
@@ -313,7 +334,7 @@ export default function Navigation() {
                         </div>
                       ))}
                     </div>
-                    <div className="flex gap-6 flex-shrink-0">
+                    <div className="gap-6 flex bg-pop-green">
                       <div className="w-48 aspect-[3/4] bg-gray-100 relative group cursor-pointer overflow-hidden">
                         <div className="absolute inset-0 flex items-center justify-center">
                           <div className="text-center">
