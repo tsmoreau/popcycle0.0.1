@@ -10,7 +10,6 @@ import {
   Menu,
   X,
   ChevronRight,
-  ChevronLeft,
   User,
   Settings,
   LogOut,
@@ -21,14 +20,6 @@ import AuthButton from "./AuthButton";
 
 // Manual nav changes: User adjusted vertical alignment of centered nav elements (About, Services, Shop, Track)
 // Modified items-center positioning on centered nav container for individual control of nav link vertical positions
-
-interface DropdownCard {
-  title: string;
-  description?: string;
-  image?: string;
-  color: "green" | "blue" | "red" | "black";
-  href?: string;
-}
 
 export default function Navigation() {
   const pathname = usePathname();
@@ -41,14 +32,6 @@ export default function Navigation() {
   const [mobileProductsOpen, setMobileProductsOpen] = useState(false);
   const [mobileServicesOpen, setMobileServicesOpen] = useState(false);
   const [iconDropdownOpen, setIconDropdownOpen] = useState<'search' | 'user' | 'cart' | null>(null);
-  
-  const [aboutScrollPosition, setAboutScrollPosition] = useState(0);
-  const [productsScrollPosition, setProductsScrollPosition] = useState(0);
-  const [servicesScrollPosition, setServicesScrollPosition] = useState(0);
-  
-  const aboutCardsRef = useRef<HTMLDivElement>(null);
-  const productsCardsRef = useRef<HTMLDivElement>(null);
-  const servicesCardsRef = useRef<HTMLDivElement>(null);
 
   const userMenuRef = useRef<HTMLDivElement>(null);
 
@@ -97,14 +80,9 @@ export default function Navigation() {
     },
   ];
 
-  const aboutCards: DropdownCard[] = [
-    { title: "Team Stories", color: "green", href: "/about#team" },
-    { title: "Our Process", color: "green", href: "/about#process" },
-    { title: "Impact", color: "green", href: "/about#story" },
-    { title: "Contact Us", color: "green", href: "/about#contact" },
-  ];
-
   const productsSections = [
+
+
     {
       title: "Limited Editions",
       items: [
@@ -124,21 +102,18 @@ export default function Navigation() {
         { href: "/shop#bags", label: "Combs" },
       ],
     },
+
+   
+
     {
       title: "All Products",
       items: [],
     },
-  ];
 
-  const productsCards: DropdownCard[] = [
-    { title: "New Arrivals", color: "red", href: "/shop" },
-    { title: "Featured Products", color: "red", href: "/shop" },
-    { title: "Collections", color: "red", href: "/shop" },
-    { title: "Limited Editions", color: "red", href: "/shop" },
-    { title: "Make Your Own", color: "red", href: "/shop" },
   ];
 
   const servicesSections = [
+
     {
       title: "Studio Retainer",
       items: [
@@ -146,6 +121,7 @@ export default function Navigation() {
         { href: "/services#custom-products", label: "Everyday Objects" },
       ],
     },
+
     {
       title: "Limited Commission",
       items: [
@@ -155,6 +131,7 @@ export default function Navigation() {
         { href: "/services#workshops-events", label: "Donations" },
       ],
     },
+
     {
       title: "Community Partners",
       items: [
@@ -164,83 +141,9 @@ export default function Navigation() {
     },
   ];
 
-  const servicesCards: DropdownCard[] = [
-    { title: "Studio Process", color: "blue", href: "/services" },
-    { title: "Material Sourcing", color: "blue", href: "/services" },
-    { title: "Universal Provenance", color: "blue", href: "/services" },
-    { title: "Community Partnerships", color: "blue", href: "/services#community-partnerships" },
-  ];
-
   const aboutItems = aboutSections.flatMap(section => section.items);
   const productsItems = productsSections.flatMap(section => section.items);
   const servicesItems = servicesSections.flatMap(section => section.items);
-
-  // Get color class for card
-  const getColorClass = (color: string) => {
-    const colorMap: { [key: string]: string } = {
-      green: 'bg-pop-green',
-      blue: 'bg-pop-blue',
-      red: 'bg-pop-red',
-      black: 'bg-pop-black',
-    };
-    return colorMap[color] || 'bg-pop-green';
-  };
-
-  // Scroll functions for card containers
-  const scrollCards = (ref: React.RefObject<HTMLDivElement | null>, direction: 'left' | 'right') => {
-    if (ref.current) {
-      const scrollAmount = 300;
-      const newPosition = direction === 'left' 
-        ? ref.current.scrollLeft - scrollAmount 
-        : ref.current.scrollLeft + scrollAmount;
-      ref.current.scrollTo({ left: newPosition, behavior: 'smooth' });
-    }
-  };
-
-  const [aboutHasOverflow, setAboutHasOverflow] = useState(false);
-  const [productsHasOverflow, setProductsHasOverflow] = useState(false);
-  const [servicesHasOverflow, setServicesHasOverflow] = useState(false);
-
-  const canScrollLeft = (position: number) => position > 5;
-  const canScrollRight = (ref: React.RefObject<HTMLDivElement | null>) => {
-    if (!ref.current) return false;
-    const { scrollLeft, scrollWidth, clientWidth } = ref.current;
-    return scrollLeft < scrollWidth - clientWidth - 5;
-  };
-  
-  const checkOverflow = (ref: React.RefObject<HTMLDivElement | null>) => {
-    if (!ref.current) return false;
-    return ref.current.scrollWidth > ref.current.clientWidth;
-  };
-
-  // Track scroll position
-  const handleScroll = (ref: React.RefObject<HTMLDivElement | null>, setter: (pos: number) => void) => {
-    if (ref.current) {
-      setter(ref.current.scrollLeft);
-    }
-  };
-
-  // Check overflow when dropdowns open
-  useEffect(() => {
-    if (aboutOpen && aboutCardsRef.current) {
-      setAboutScrollPosition(aboutCardsRef.current.scrollLeft);
-      setAboutHasOverflow(checkOverflow(aboutCardsRef));
-    }
-  }, [aboutOpen]);
-
-  useEffect(() => {
-    if (productsOpen && productsCardsRef.current) {
-      setProductsScrollPosition(productsCardsRef.current.scrollLeft);
-      setProductsHasOverflow(checkOverflow(productsCardsRef));
-    }
-  }, [productsOpen]);
-
-  useEffect(() => {
-    if (servicesOpen && servicesCardsRef.current) {
-      setServicesScrollPosition(servicesCardsRef.current.scrollLeft);
-      setServicesHasOverflow(checkOverflow(servicesCardsRef));
-    }
-  }, [servicesOpen]);
 
   return (
     <nav className="font-jost font-light sticky top-0 z-50 bg-white border-b border-gray-200">
@@ -296,17 +199,12 @@ export default function Navigation() {
               </button>
 
               {aboutOpen && (
-                <div 
-                  className="fixed left-0 right-0 top-[88px] z-50 bg-white border-t border-gray-200 shadow-lg"
-                  onMouseEnter={() => setAboutOpen(true)}
-                  onMouseLeave={() => setAboutOpen(false)}
-                >
+                <div className="fixed left-0 right-0 top-[88px] z-50 bg-white border-t border-gray-200 shadow-lg">
                   <div className="max-w-7xl mx-auto px-12 py-12">
-                    <div className="flex gap-12">
-                      {/* Left navigation - flows vertically first, then into columns */}
-                      <div style={{ columnCount: 2, columnGap: '3rem', minWidth: 'fit-content' }}>
+                    <div className="grid grid-cols-6 gap-8">
+                      <div className="col-span-1">
                         {aboutSections.map((section, idx) => (
-                          <div key={idx} style={{ breakInside: 'avoid' }} className="mb-8">
+                          <div key={idx} className="mb-8">
                             <h3 className="systematic-caps text-sm font-bold text-gray-400 mb-4">
                               {section.title}
                             </h3>
@@ -324,53 +222,36 @@ export default function Navigation() {
                           </div>
                         ))}
                       </div>
-                      
-                      {/* Right cards - horizontal scroll with arrows */}
-                      <div className="flex-1">
-                        <div className="flex items-center gap-4">
-                          {aboutHasOverflow && canScrollLeft(aboutScrollPosition) && (
-                            <button
-                              onClick={() => scrollCards(aboutCardsRef, 'left')}
-                              className="flex-shrink-0 hover:opacity-70 transition-opacity"
-                              data-testid="button-scroll-left-about"
-                            >
-                              <ChevronLeft className="w-6 h-6 text-gray-900" />
-                            </button>
-                          )}
-                          
-                          <div 
-                            ref={aboutCardsRef}
-                            onScroll={() => handleScroll(aboutCardsRef, setAboutScrollPosition)}
-                            className="flex gap-6 overflow-x-auto scrollbar-hide scroll-smooth flex-1"
-                            style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
-                          >
-                            {aboutCards.map((card, idx) => (
-                              <Link
-                                key={idx}
-                                href={card.href || '#'}
-                                className="flex-shrink-0 w-[240px] aspect-[3/4] bg-gray-100 relative group cursor-pointer overflow-hidden"
-                              >
-                                <div className="absolute inset-0 flex items-center justify-center">
-                                  <div className="text-center">
-                                    <div className={`w-12 h-12 ${getColorClass(card.color)} mx-auto mb-3 flex items-center justify-center`}>
-                                      <span className="text-white helvetica-bold text-xl">P</span>
-                                    </div>
-                                    <p className="systematic-caps text-xs text-gray-600 px-4">{card.title}</p>
-                                  </div>
-                                </div>
-                              </Link>
-                            ))}
+                      <div className="col-span-5 grid grid-cols-3 gap-6">
+                        <div className="aspect-[3/4] bg-gray-100 relative group cursor-pointer overflow-hidden">
+                          <div className="absolute inset-0 flex items-center justify-center">
+                            <div className="text-center">
+                              <div className="w-12 h-12 bg-pop-green mx-auto mb-3 flex items-center justify-center">
+                                <span className="text-white helvetica-bold text-xl">P</span>
+                              </div>
+                              <p className="systematic-caps text-xs text-gray-600 px-4">Team Stories</p>
+                            </div>
                           </div>
-                          
-                          {aboutHasOverflow && canScrollRight(aboutCardsRef) && (
-                            <button
-                              onClick={() => scrollCards(aboutCardsRef, 'right')}
-                              className="flex-shrink-0 hover:opacity-70 transition-opacity"
-                              data-testid="button-scroll-right-about"
-                            >
-                              <ChevronRight className="w-6 h-6 text-gray-900" />
-                            </button>
-                          )}
+                        </div>
+                        <div className="aspect-[3/4] bg-gray-100 relative group cursor-pointer overflow-hidden">
+                          <div className="absolute inset-0 flex items-center justify-center">
+                            <div className="text-center">
+                              <div className="w-12 h-12 bg-pop-green mx-auto mb-3 flex items-center justify-center">
+                                <span className="text-white helvetica-bold text-xl">P</span>
+                              </div>
+                              <p className="systematic-caps text-xs text-gray-600 px-4">Our Process</p>
+                            </div>
+                          </div>
+                        </div>
+                        <div className="aspect-[3/4] bg-gray-100 relative group cursor-pointer overflow-hidden">
+                          <div className="absolute inset-0 flex items-center justify-center">
+                            <div className="text-center">
+                              <div className="w-12 h-12 bg-pop-green mx-auto mb-3 flex items-center justify-center">
+                                <span className="text-white helvetica-bold text-xl">P</span>
+                              </div>
+                              <p className="systematic-caps text-xs text-gray-600 px-4">Impact</p>
+                            </div>
+                          </div>
                         </div>
                       </div>
                     </div>
@@ -394,17 +275,12 @@ export default function Navigation() {
               </button>
 
               {productsOpen && (
-                <div 
-                  className="fixed left-0 right-0 top-[88px] z-50 bg-white border-t border-gray-200 shadow-lg"
-                  onMouseEnter={() => setProductsOpen(true)}
-                  onMouseLeave={() => setProductsOpen(false)}
-                >
+                <div className="fixed left-0 right-0 top-[88px] z-50 bg-white border-t border-gray-200 shadow-lg">
                   <div className="max-w-7xl mx-auto px-12 py-12">
-                    <div className="flex gap-12">
-                      {/* Left navigation - flows vertically first, then into columns */}
-                      <div style={{ columnCount: 2, columnGap: '3rem', minWidth: 'fit-content' }}>
+                    <div className="grid grid-cols-6 gap-8">
+                      <div className="col-span-1">
                         {productsSections.map((section, idx) => (
-                          <div key={idx} style={{ breakInside: 'avoid' }} className="mb-8">
+                          <div key={idx} className="mb-8">
                             <h3 className="systematic-caps text-sm font-bold text-gray-400 mb-4">
                               {section.title}
                             </h3>
@@ -422,53 +298,36 @@ export default function Navigation() {
                           </div>
                         ))}
                       </div>
-                      
-                      {/* Right cards - horizontal scroll with arrows */}
-                      <div className="flex-1">
-                        <div className="flex items-center gap-4">
-                          {productsHasOverflow && canScrollLeft(productsScrollPosition) && (
-                            <button
-                              onClick={() => scrollCards(productsCardsRef, 'left')}
-                              className="flex-shrink-0 hover:opacity-70 transition-opacity"
-                              data-testid="button-scroll-left-products"
-                            >
-                              <ChevronLeft className="w-6 h-6 text-gray-900" />
-                            </button>
-                          )}
-                          
-                          <div 
-                            ref={productsCardsRef}
-                            onScroll={() => handleScroll(productsCardsRef, setProductsScrollPosition)}
-                            className="flex gap-6 overflow-x-auto scrollbar-hide scroll-smooth flex-1"
-                            style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
-                          >
-                            {productsCards.map((card, idx) => (
-                              <Link
-                                key={idx}
-                                href={card.href || '#'}
-                                className="flex-shrink-0 w-[240px] aspect-[3/4] bg-gray-100 relative group cursor-pointer overflow-hidden"
-                              >
-                                <div className="absolute inset-0 flex items-center justify-center">
-                                  <div className="text-center">
-                                    <div className={`w-12 h-12 ${getColorClass(card.color)} mx-auto mb-3 flex items-center justify-center`}>
-                                      <span className="text-white helvetica-bold text-xl">P</span>
-                                    </div>
-                                    <p className="systematic-caps text-xs text-gray-600 px-4">{card.title}</p>
-                                  </div>
-                                </div>
-                              </Link>
-                            ))}
+                      <div className="col-span-5 grid grid-cols-3 gap-6">
+                        <div className="aspect-[3/4] bg-gray-100 relative group cursor-pointer overflow-hidden">
+                          <div className="absolute inset-0 flex items-center justify-center">
+                            <div className="text-center">
+                              <div className="w-12 h-12 bg-pop-red mx-auto mb-3 flex items-center justify-center">
+                                <span className="text-white helvetica-bold text-xl">P</span>
+                              </div>
+                              <p className="systematic-caps text-xs text-gray-600 px-4">New Arrivals</p>
+                            </div>
                           </div>
-                          
-                          {productsHasOverflow && canScrollRight(productsCardsRef) && (
-                            <button
-                              onClick={() => scrollCards(productsCardsRef, 'right')}
-                              className="flex-shrink-0 hover:opacity-70 transition-opacity"
-                              data-testid="button-scroll-right-products"
-                            >
-                              <ChevronRight className="w-6 h-6 text-gray-900" />
-                            </button>
-                          )}
+                        </div>
+                        <div className="aspect-[3/4] bg-gray-100 relative group cursor-pointer overflow-hidden">
+                          <div className="absolute inset-0 flex items-center justify-center">
+                            <div className="text-center">
+                              <div className="w-12 h-12 bg-pop-red mx-auto mb-3 flex items-center justify-center">
+                                <span className="text-white helvetica-bold text-xl">P</span>
+                              </div>
+                              <p className="systematic-caps text-xs text-gray-600 px-4">Featured Products</p>
+                            </div>
+                          </div>
+                        </div>
+                        <div className="aspect-[3/4] bg-gray-100 relative group cursor-pointer overflow-hidden">
+                          <div className="absolute inset-0 flex items-center justify-center">
+                            <div className="text-center">
+                              <div className="w-12 h-12 bg-pop-red mx-auto mb-3 flex items-center justify-center">
+                                <span className="text-white helvetica-bold text-xl">P</span>
+                              </div>
+                              <p className="systematic-caps text-xs text-gray-600 px-4">Collections</p>
+                            </div>
+                          </div>
                         </div>
                       </div>
                     </div>
@@ -492,17 +351,12 @@ export default function Navigation() {
               </button>
 
               {servicesOpen && (
-                <div 
-                  className="fixed left-0 right-0 top-[88px] z-50 bg-white border-t border-gray-200 shadow-lg"
-                  onMouseEnter={() => setServicesOpen(true)}
-                  onMouseLeave={() => setServicesOpen(false)}
-                >
+                <div className="fixed left-0 right-0 top-[88px] z-50 bg-white border-t border-gray-200 shadow-lg">
                   <div className="max-w-7xl mx-auto px-12 py-12">
-                    <div className="flex gap-12">
-                      {/* Left navigation - flows vertically first, then into columns */}
-                      <div style={{ columnCount: 2, columnGap: '3rem', minWidth: 'fit-content' }}>
+                    <div className="grid grid-cols-6 gap-8">
+                      <div className="col-span-1">
                         {servicesSections.map((section, idx) => (
-                          <div key={idx} style={{ breakInside: 'avoid' }} className="mb-8">
+                          <div key={idx} className="mb-8">
                             <h3 className="systematic-caps text-sm font-bold text-gray-400 mb-4">
                               {section.title}
                             </h3>
@@ -520,53 +374,36 @@ export default function Navigation() {
                           </div>
                         ))}
                       </div>
-                      
-                      {/* Right cards - horizontal scroll with arrows */}
-                      <div className="flex-1">
-                        <div className="flex items-center gap-4">
-                          {servicesHasOverflow && canScrollLeft(servicesScrollPosition) && (
-                            <button
-                              onClick={() => scrollCards(servicesCardsRef, 'left')}
-                              className="flex-shrink-0 hover:opacity-70 transition-opacity"
-                              data-testid="button-scroll-left-services"
-                            >
-                              <ChevronLeft className="w-6 h-6 text-gray-900" />
-                            </button>
-                          )}
-                          
-                          <div 
-                            ref={servicesCardsRef}
-                            onScroll={() => handleScroll(servicesCardsRef, setServicesScrollPosition)}
-                            className="flex gap-6 overflow-x-auto scrollbar-hide scroll-smooth flex-1"
-                            style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
-                          >
-                            {servicesCards.map((card, idx) => (
-                              <Link
-                                key={idx}
-                                href={card.href || '#'}
-                                className="flex-shrink-0 w-[240px] aspect-[3/4] bg-gray-100 relative group cursor-pointer overflow-hidden"
-                              >
-                                <div className="absolute inset-0 flex items-center justify-center">
-                                  <div className="text-center">
-                                    <div className={`w-12 h-12 ${getColorClass(card.color)} mx-auto mb-3 flex items-center justify-center`}>
-                                      <span className="text-white helvetica-bold text-xl">P</span>
-                                    </div>
-                                    <p className="systematic-caps text-xs text-gray-600 px-4">{card.title}</p>
-                                  </div>
-                                </div>
-                              </Link>
-                            ))}
+                      <div className="col-span-5 grid grid-cols-3 gap-6">
+                        <div className="aspect-[3/4] bg-gray-100 relative group cursor-pointer overflow-hidden">
+                          <div className="absolute inset-0 flex items-center justify-center">
+                            <div className="text-center">
+                              <div className="w-12 h-12 bg-pop-blue mx-auto mb-3 flex items-center justify-center">
+                                <span className="text-white helvetica-bold text-xl">P</span>
+                              </div>
+                              <p className="systematic-caps text-xs text-gray-600 px-4">Studio Process</p>
+                            </div>
                           </div>
-                          
-                          {servicesHasOverflow && canScrollRight(servicesCardsRef) && (
-                            <button
-                              onClick={() => scrollCards(servicesCardsRef, 'right')}
-                              className="flex-shrink-0 hover:opacity-70 transition-opacity"
-                              data-testid="button-scroll-right-services"
-                            >
-                              <ChevronRight className="w-6 h-6 text-gray-900" />
-                            </button>
-                          )}
+                        </div>
+                        <div className="aspect-[3/4] bg-gray-100 relative group cursor-pointer overflow-hidden">
+                          <div className="absolute inset-0 flex items-center justify-center">
+                            <div className="text-center">
+                              <div className="w-12 h-12 bg-pop-blue mx-auto mb-3 flex items-center justify-center">
+                                <span className="text-white helvetica-bold text-xl">P</span>
+                              </div>
+                              <p className="systematic-caps text-xs text-gray-600 px-4">Material Sourcing</p>
+                            </div>
+                          </div>
+                        </div>
+                        <div className="aspect-[3/4] bg-gray-100 relative group cursor-pointer overflow-hidden">
+                          <div className="absolute inset-0 flex items-center justify-center">
+                            <div className="text-center">
+                              <div className="w-12 h-12 bg-pop-blue mx-auto mb-3 flex items-center justify-center">
+                                <span className="text-white helvetica-bold text-xl">P</span>
+                              </div>
+                              <p className="systematic-caps text-xs text-gray-600 px-4">Universal Provenance</p>
+                            </div>
+                          </div>
                         </div>
                       </div>
                     </div>
