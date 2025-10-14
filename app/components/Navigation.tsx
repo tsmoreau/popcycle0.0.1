@@ -210,6 +210,25 @@ export default function Navigation() {
     }
   };
 
+  // Check overflow when dropdowns open
+  useEffect(() => {
+    if (aboutOpen && aboutCardsRef.current) {
+      setAboutScrollPosition(aboutCardsRef.current.scrollLeft);
+    }
+  }, [aboutOpen]);
+
+  useEffect(() => {
+    if (productsOpen && productsCardsRef.current) {
+      setProductsScrollPosition(productsCardsRef.current.scrollLeft);
+    }
+  }, [productsOpen]);
+
+  useEffect(() => {
+    if (servicesOpen && servicesCardsRef.current) {
+      setServicesScrollPosition(servicesCardsRef.current.scrollLeft);
+    }
+  }, [servicesOpen]);
+
   return (
     <nav className="font-jost font-light sticky top-0 z-50 bg-white border-b border-gray-200">
       <div className="max-w-full mx-auto pt-2">
