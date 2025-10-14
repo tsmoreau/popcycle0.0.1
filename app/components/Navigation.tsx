@@ -218,57 +218,55 @@ export default function Navigation() {
 
               {aboutOpen && (
                 <div className="fixed left-0 right-0 top-[88px] z-50 bg-white border-t border-gray-200 shadow-lg">
-                  <div className="max-w-7xl mx-auto px-12 py-6">
-                    <div className="flex gap-8">
-                      <div style={{ columnWidth: '180px', columnGap: '2rem', columnFill: 'auto', maxHeight: '400px' }}>
-                        {aboutSections.map((section, idx) => (
-                          <div key={idx} className="mb-8 break-inside-avoid">
-                            <h3 className="systematic-caps text-sm font-bold text-gray-400 mb-4">
-                              {section.title}
-                            </h3>
-                            <div className="space-y-2">
-                              {section.items.map((item) => (
-                                <Link
-                                  key={item.href}
-                                  href={item.href}
-                                  className="block text-sm hover:text-pop-green transition-colors"
-                                >
-                                  {item.label}
-                                </Link>
-                              ))}
-                            </div>
+                  <div className="max-w-7xl mx-auto px-12 py-6 flex gap-8">
+                    <div style={{ columnWidth: '180px', columnGap: '2rem', columnFill: 'auto', maxHeight: '400px', flex: '1' }}>
+                      {aboutSections.map((section, idx) => (
+                        <div key={idx} className="mb-8 break-inside-avoid">
+                          <h3 className="systematic-caps text-sm font-bold text-gray-400 mb-4">
+                            {section.title}
+                          </h3>
+                          <div className="space-y-2">
+                            {section.items.map((item) => (
+                              <Link
+                                key={item.href}
+                                href={item.href}
+                                className="block text-sm hover:text-pop-green transition-colors"
+                              >
+                                {item.label}
+                              </Link>
+                            ))}
                           </div>
-                        ))}
+                        </div>
+                      ))}
+                    </div>
+                    <div className="flex gap-6 flex-shrink-0">
+                      <div className="w-48 aspect-[3/4] bg-gray-100 relative group cursor-pointer overflow-hidden">
+                        <div className="absolute inset-0 flex items-center justify-center">
+                          <div className="text-center">
+                            <div className="w-12 h-12 bg-pop-green mx-auto mb-3 flex items-center justify-center">
+                              <span className="text-white helvetica-bold text-xl">P</span>
+                            </div>
+                            <p className="systematic-caps text-xs text-gray-600 px-4">Team Stories</p>
+                          </div>
+                        </div>
                       </div>
-                      <div className="flex gap-6">
-                        <div className="w-48 aspect-[3/4] bg-gray-100 relative group cursor-pointer overflow-hidden">
-                          <div className="absolute inset-0 flex items-center justify-center">
-                            <div className="text-center">
-                              <div className="w-12 h-12 bg-pop-green mx-auto mb-3 flex items-center justify-center">
-                                <span className="text-white helvetica-bold text-xl">P</span>
-                              </div>
-                              <p className="systematic-caps text-xs text-gray-600 px-4">Team Stories</p>
+                      <div className="w-48 aspect-[3/4] bg-gray-100 relative group cursor-pointer overflow-hidden">
+                        <div className="absolute inset-0 flex items-center justify-center">
+                          <div className="text-center">
+                            <div className="w-12 h-12 bg-pop-green mx-auto mb-3 flex items-center justify-center">
+                              <span className="text-white helvetica-bold text-xl">P</span>
                             </div>
+                            <p className="systematic-caps text-xs text-gray-600 px-4">Our Process</p>
                           </div>
                         </div>
-                        <div className="w-48 aspect-[3/4] bg-gray-100 relative group cursor-pointer overflow-hidden">
-                          <div className="absolute inset-0 flex items-center justify-center">
-                            <div className="text-center">
-                              <div className="w-12 h-12 bg-pop-green mx-auto mb-3 flex items-center justify-center">
-                                <span className="text-white helvetica-bold text-xl">P</span>
-                              </div>
-                              <p className="systematic-caps text-xs text-gray-600 px-4">Our Process</p>
+                      </div>
+                      <div className="w-48 aspect-[3/4] bg-gray-100 relative group cursor-pointer overflow-hidden">
+                        <div className="absolute inset-0 flex items-center justify-center">
+                          <div className="text-center">
+                            <div className="w-12 h-12 bg-pop-green mx-auto mb-3 flex items-center justify-center">
+                              <span className="text-white helvetica-bold text-xl">P</span>
                             </div>
-                          </div>
-                        </div>
-                        <div className="w-48 aspect-[3/4] bg-gray-100 relative group cursor-pointer overflow-hidden">
-                          <div className="absolute inset-0 flex items-center justify-center">
-                            <div className="text-center">
-                              <div className="w-12 h-12 bg-pop-green mx-auto mb-3 flex items-center justify-center">
-                                <span className="text-white helvetica-bold text-xl">P</span>
-                              </div>
-                              <p className="systematic-caps text-xs text-gray-600 px-4">Impact</p>
-                            </div>
+                            <p className="systematic-caps text-xs text-gray-600 px-4">Impact</p>
                           </div>
                         </div>
                       </div>
@@ -294,57 +292,55 @@ export default function Navigation() {
 
               {productsOpen && (
                 <div className="fixed left-0 right-0 top-[88px] z-50 bg-white border-t border-gray-200 shadow-lg">
-                  <div className="max-w-7xl mx-auto px-12 py-6">
-                    <div className="flex gap-8">
-                      <div style={{ columnWidth: '180px', columnGap: '2rem', columnFill: 'auto', maxHeight: '400px' }}>
-                        {productsSections.map((section, idx) => (
-                          <div key={idx} className="mb-8 break-inside-avoid">
-                            <h3 className="systematic-caps text-sm font-bold text-gray-400 mb-4">
-                              {section.title}
-                            </h3>
-                            <div className="space-y-2">
-                              {section.items.map((item) => (
-                                <Link
-                                  key={item.href}
-                                  href={item.href}
-                                  className="block text-sm hover:text-pop-green transition-colors"
-                                >
-                                  {item.label}
-                                </Link>
-                              ))}
-                            </div>
+                  <div className="max-w-7xl mx-auto px-12 py-6 flex gap-8">
+                    <div style={{ columnWidth: '180px', columnGap: '2rem', columnFill: 'auto', maxHeight: '400px', flex: '1' }}>
+                      {productsSections.map((section, idx) => (
+                        <div key={idx} className="mb-8 break-inside-avoid">
+                          <h3 className="systematic-caps text-sm font-bold text-gray-400 mb-4">
+                            {section.title}
+                          </h3>
+                          <div className="space-y-2">
+                            {section.items.map((item) => (
+                              <Link
+                                key={item.href}
+                                href={item.href}
+                                className="block text-sm hover:text-pop-green transition-colors"
+                              >
+                                {item.label}
+                              </Link>
+                            ))}
                           </div>
-                        ))}
+                        </div>
+                      ))}
+                    </div>
+                    <div className="flex gap-6 flex-shrink-0">
+                      <div className="w-48 aspect-[3/4] bg-gray-100 relative group cursor-pointer overflow-hidden">
+                        <div className="absolute inset-0 flex items-center justify-center">
+                          <div className="text-center">
+                            <div className="w-12 h-12 bg-pop-red mx-auto mb-3 flex items-center justify-center">
+                              <span className="text-white helvetica-bold text-xl">P</span>
+                            </div>
+                            <p className="systematic-caps text-xs text-gray-600 px-4">New Arrivals</p>
+                          </div>
+                        </div>
                       </div>
-                      <div className="flex gap-6">
-                        <div className="w-48 aspect-[3/4] bg-gray-100 relative group cursor-pointer overflow-hidden">
-                          <div className="absolute inset-0 flex items-center justify-center">
-                            <div className="text-center">
-                              <div className="w-12 h-12 bg-pop-red mx-auto mb-3 flex items-center justify-center">
-                                <span className="text-white helvetica-bold text-xl">P</span>
-                              </div>
-                              <p className="systematic-caps text-xs text-gray-600 px-4">New Arrivals</p>
+                      <div className="w-48 aspect-[3/4] bg-gray-100 relative group cursor-pointer overflow-hidden">
+                        <div className="absolute inset-0 flex items-center justify-center">
+                          <div className="text-center">
+                            <div className="w-12 h-12 bg-pop-red mx-auto mb-3 flex items-center justify-center">
+                              <span className="text-white helvetica-bold text-xl">P</span>
                             </div>
+                            <p className="systematic-caps text-xs text-gray-600 px-4">Featured Products</p>
                           </div>
                         </div>
-                        <div className="w-48 aspect-[3/4] bg-gray-100 relative group cursor-pointer overflow-hidden">
-                          <div className="absolute inset-0 flex items-center justify-center">
-                            <div className="text-center">
-                              <div className="w-12 h-12 bg-pop-red mx-auto mb-3 flex items-center justify-center">
-                                <span className="text-white helvetica-bold text-xl">P</span>
-                              </div>
-                              <p className="systematic-caps text-xs text-gray-600 px-4">Featured Products</p>
+                      </div>
+                      <div className="w-48 aspect-[3/4] bg-gray-100 relative group cursor-pointer overflow-hidden">
+                        <div className="absolute inset-0 flex items-center justify-center">
+                          <div className="text-center">
+                            <div className="w-12 h-12 bg-pop-red mx-auto mb-3 flex items-center justify-center">
+                              <span className="text-white helvetica-bold text-xl">P</span>
                             </div>
-                          </div>
-                        </div>
-                        <div className="w-48 aspect-[3/4] bg-gray-100 relative group cursor-pointer overflow-hidden">
-                          <div className="absolute inset-0 flex items-center justify-center">
-                            <div className="text-center">
-                              <div className="w-12 h-12 bg-pop-red mx-auto mb-3 flex items-center justify-center">
-                                <span className="text-white helvetica-bold text-xl">P</span>
-                              </div>
-                              <p className="systematic-caps text-xs text-gray-600 px-4">Collections</p>
-                            </div>
+                            <p className="systematic-caps text-xs text-gray-600 px-4">Collections</p>
                           </div>
                         </div>
                       </div>
@@ -370,57 +366,55 @@ export default function Navigation() {
 
               {servicesOpen && (
                 <div className="fixed left-0 right-0 top-[88px] z-50 bg-white border-t border-gray-200 shadow-lg">
-                  <div className="max-w-7xl mx-auto px-12 py-6">
-                    <div className="flex gap-8">
-                      <div style={{ columnWidth: '180px', columnGap: '2rem', columnFill: 'auto', maxHeight: '400px' }}>
-                        {servicesSections.map((section, idx) => (
-                          <div key={idx} className="mb-8 break-inside-avoid">
-                            <h3 className="systematic-caps text-sm font-bold text-gray-400 mb-4">
-                              {section.title}
-                            </h3>
-                            <div className="space-y-2">
-                              {section.items.map((item) => (
-                                <Link
-                                  key={item.href}
-                                  href={item.href}
-                                  className="block text-sm hover:text-pop-green transition-colors"
-                                >
-                                  {item.label}
-                                </Link>
-                              ))}
-                            </div>
+                  <div className="max-w-7xl mx-auto px-12 py-6 flex gap-8">
+                    <div style={{ columnWidth: '180px', columnGap: '2rem', columnFill: 'auto', maxHeight: '400px', flex: '1' }}>
+                      {servicesSections.map((section, idx) => (
+                        <div key={idx} className="mb-8 break-inside-avoid">
+                          <h3 className="systematic-caps text-sm font-bold text-gray-400 mb-4">
+                            {section.title}
+                          </h3>
+                          <div className="space-y-2">
+                            {section.items.map((item) => (
+                              <Link
+                                key={item.href}
+                                href={item.href}
+                                className="block text-sm hover:text-pop-green transition-colors"
+                              >
+                                {item.label}
+                              </Link>
+                            ))}
                           </div>
-                        ))}
+                        </div>
+                      ))}
+                    </div>
+                    <div className="flex gap-6 flex-shrink-0">
+                      <div className="w-48 aspect-[3/4] bg-gray-100 relative group cursor-pointer overflow-hidden">
+                        <div className="absolute inset-0 flex items-center justify-center">
+                          <div className="text-center">
+                            <div className="w-12 h-12 bg-pop-blue mx-auto mb-3 flex items-center justify-center">
+                              <span className="text-white helvetica-bold text-xl">P</span>
+                            </div>
+                            <p className="systematic-caps text-xs text-gray-600 px-4">Studio Process</p>
+                          </div>
+                        </div>
                       </div>
-                      <div className="flex gap-6">
-                        <div className="w-48 aspect-[3/4] bg-gray-100 relative group cursor-pointer overflow-hidden">
-                          <div className="absolute inset-0 flex items-center justify-center">
-                            <div className="text-center">
-                              <div className="w-12 h-12 bg-pop-blue mx-auto mb-3 flex items-center justify-center">
-                                <span className="text-white helvetica-bold text-xl">P</span>
-                              </div>
-                              <p className="systematic-caps text-xs text-gray-600 px-4">Studio Process</p>
+                      <div className="w-48 aspect-[3/4] bg-gray-100 relative group cursor-pointer overflow-hidden">
+                        <div className="absolute inset-0 flex items-center justify-center">
+                          <div className="text-center">
+                            <div className="w-12 h-12 bg-pop-blue mx-auto mb-3 flex items-center justify-center">
+                              <span className="text-white helvetica-bold text-xl">P</span>
                             </div>
+                            <p className="systematic-caps text-xs text-gray-600 px-4">Material Sourcing</p>
                           </div>
                         </div>
-                        <div className="w-48 aspect-[3/4] bg-gray-100 relative group cursor-pointer overflow-hidden">
-                          <div className="absolute inset-0 flex items-center justify-center">
-                            <div className="text-center">
-                              <div className="w-12 h-12 bg-pop-blue mx-auto mb-3 flex items-center justify-center">
-                                <span className="text-white helvetica-bold text-xl">P</span>
-                              </div>
-                              <p className="systematic-caps text-xs text-gray-600 px-4">Material Sourcing</p>
+                      </div>
+                      <div className="w-48 aspect-[3/4] bg-gray-100 relative group cursor-pointer overflow-hidden">
+                        <div className="absolute inset-0 flex items-center justify-center">
+                          <div className="text-center">
+                            <div className="w-12 h-12 bg-pop-blue mx-auto mb-3 flex items-center justify-center">
+                              <span className="text-white helvetica-bold text-xl">P</span>
                             </div>
-                          </div>
-                        </div>
-                        <div className="w-48 aspect-[3/4] bg-gray-100 relative group cursor-pointer overflow-hidden">
-                          <div className="absolute inset-0 flex items-center justify-center">
-                            <div className="text-center">
-                              <div className="w-12 h-12 bg-pop-blue mx-auto mb-3 flex items-center justify-center">
-                                <span className="text-white helvetica-bold text-xl">P</span>
-                              </div>
-                              <p className="systematic-caps text-xs text-gray-600 px-4">Universal Provenance</p>
-                            </div>
+                            <p className="systematic-caps text-xs text-gray-600 px-4">Universal Provenance</p>
                           </div>
                         </div>
                       </div>
