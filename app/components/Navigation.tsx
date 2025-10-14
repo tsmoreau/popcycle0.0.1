@@ -218,8 +218,8 @@ export default function Navigation() {
 
               {aboutOpen && (
                 <div className="fixed left-0 right-0 top-[88px] z-50 bg-white border-t border-gray-200 shadow-lg">
-                  <div className="max-w-7xl mx-auto px-12 py-12">
-                    <div style={{ columnWidth: '180px', columnGap: '2rem', columnFill: 'auto', maxHeight: '400px' }}>
+                  <div className="max-w-7xl mx-auto px-12 py-8">
+                    <div style={{ columnWidth: '180px', columnGap: '1.5rem', columnFill: 'auto', maxHeight: '400px' }}>
                       {aboutSections.map((section, idx) => (
                         <div key={idx} className="mb-8 break-inside-avoid">
                           <h3 className="systematic-caps text-sm font-bold text-gray-400 mb-4">
@@ -238,7 +238,7 @@ export default function Navigation() {
                           </div>
                         </div>
                       ))}
-                      <div className="aspect-[3/4] w-64 bg-gray-100 relative group cursor-pointer overflow-hidden mb-8 break-inside-avoid inline-block">
+                      <div className="aspect-[3/4] w-64 bg-gray-100 relative group cursor-pointer overflow-hidden mb-6 break-inside-avoid inline-block mr-6">
                         <div className="absolute inset-0 flex items-center justify-center">
                           <div className="text-center">
                             <div className="w-12 h-12 bg-pop-green mx-auto mb-3 flex items-center justify-center">
@@ -248,7 +248,7 @@ export default function Navigation() {
                           </div>
                         </div>
                       </div>
-                      <div className="aspect-[3/4] w-64 bg-gray-100 relative group cursor-pointer overflow-hidden mb-8 break-inside-avoid inline-block">
+                      <div className="aspect-[3/4] w-64 bg-gray-100 relative group cursor-pointer overflow-hidden mb-6 break-inside-avoid inline-block mr-6">
                         <div className="absolute inset-0 flex items-center justify-center">
                           <div className="text-center">
                             <div className="w-12 h-12 bg-pop-green mx-auto mb-3 flex items-center justify-center">
@@ -258,7 +258,7 @@ export default function Navigation() {
                           </div>
                         </div>
                       </div>
-                      <div className="aspect-[3/4] w-64 bg-gray-100 relative group cursor-pointer overflow-hidden mb-8 break-inside-avoid inline-block">
+                      <div className="aspect-[3/4] w-64 bg-gray-100 relative group cursor-pointer overflow-hidden mb-6 break-inside-avoid inline-block mr-6">
                         <div className="absolute inset-0 flex items-center justify-center">
                           <div className="text-center">
                             <div className="w-12 h-12 bg-pop-green mx-auto mb-3 flex items-center justify-center">
@@ -290,8 +290,8 @@ export default function Navigation() {
 
               {productsOpen && (
                 <div className="fixed left-0 right-0 top-[88px] z-50 bg-white border-t border-gray-200 shadow-lg">
-                  <div className="max-w-7xl mx-auto px-12 py-12">
-                    <div style={{ columnWidth: '180px', columnGap: '2rem', columnFill: 'auto', maxHeight: '400px' }}>
+                  <div className="max-w-7xl mx-auto px-12 py-8">
+                    <div style={{ columnWidth: '180px', columnGap: '1.5rem', columnFill: 'auto', maxHeight: '400px' }}>
                       {productsSections.map((section, idx) => (
                         <div key={idx} className="mb-8 break-inside-avoid">
                           <h3 className="systematic-caps text-sm font-bold text-gray-400 mb-4">
@@ -310,7 +310,7 @@ export default function Navigation() {
                           </div>
                         </div>
                       ))}
-                      <div className="aspect-[3/4] w-64 bg-gray-100 relative group cursor-pointer overflow-hidden mb-8 break-inside-avoid inline-block">
+                      <div className="aspect-[3/4] w-64 bg-gray-100 relative group cursor-pointer overflow-hidden mb-6 break-inside-avoid inline-block mr-6">
                         <div className="absolute inset-0 flex items-center justify-center">
                           <div className="text-center">
                             <div className="w-12 h-12 bg-pop-red mx-auto mb-3 flex items-center justify-center">
@@ -320,7 +320,7 @@ export default function Navigation() {
                           </div>
                         </div>
                       </div>
-                      <div className="aspect-[3/4] w-64 bg-gray-100 relative group cursor-pointer overflow-hidden mb-8 break-inside-avoid inline-block">
+                      <div className="aspect-[3/4] w-64 bg-gray-100 relative group cursor-pointer overflow-hidden mb-6 break-inside-avoid inline-block mr-6">
                         <div className="absolute inset-0 flex items-center justify-center">
                           <div className="text-center">
                             <div className="w-12 h-12 bg-pop-red mx-auto mb-3 flex items-center justify-center">
@@ -330,7 +330,7 @@ export default function Navigation() {
                           </div>
                         </div>
                       </div>
-                      <div className="aspect-[3/4] w-64 bg-gray-100 relative group cursor-pointer overflow-hidden mb-8 break-inside-avoid inline-block">
+                      <div className="aspect-[3/4] w-64 bg-gray-100 relative group cursor-pointer overflow-hidden mb-6 break-inside-avoid inline-block mr-6">
                         <div className="absolute inset-0 flex items-center justify-center">
                           <div className="text-center">
                             <div className="w-12 h-12 bg-pop-red mx-auto mb-3 flex items-center justify-center">
@@ -362,8 +362,8 @@ export default function Navigation() {
 
               {servicesOpen && (
                 <div className="fixed left-0 right-0 top-[88px] z-50 bg-white border-t border-gray-200 shadow-lg">
-                  <div className="max-w-7xl mx-auto px-12 py-12">
-                    <div style={{ columnWidth: '180px', columnGap: '2rem', columnFill: 'auto', maxHeight: '400px' }}>
+                  <div className="max-w-7xl mx-auto px-12 py-8">
+                    <div style={{ columnWidth: '180px', columnGap: '1.5rem', columnFill: 'auto', maxHeight: '400px' }}>
                       {servicesSections.map((section, idx) => (
                         <div key={idx} className="mb-8 break-inside-avoid">
                           <h3 className="systematic-caps text-sm font-bold text-gray-400 mb-4">
@@ -382,7 +382,7 @@ export default function Navigation() {
                           </div>
                         </div>
                       ))}
-                      <div className="aspect-[3/4] w-64 bg-gray-100 relative group cursor-pointer overflow-hidden mb-8 break-inside-avoid inline-block">
+                      <div className="aspect-[3/4] w-64 bg-gray-100 relative group cursor-pointer overflow-hidden mb-6 break-inside-avoid inline-block mr-6">
                         <div className="absolute inset-0 flex items-center justify-center">
                           <div className="text-center">
                             <div className="w-12 h-12 bg-pop-blue mx-auto mb-3 flex items-center justify-center">
@@ -392,7 +392,7 @@ export default function Navigation() {
                           </div>
                         </div>
                       </div>
-                      <div className="aspect-[3/4] w-64 bg-gray-100 relative group cursor-pointer overflow-hidden mb-8 break-inside-avoid inline-block">
+                      <div className="aspect-[3/4] w-64 bg-gray-100 relative group cursor-pointer overflow-hidden mb-6 break-inside-avoid inline-block mr-6">
                         <div className="absolute inset-0 flex items-center justify-center">
                           <div className="text-center">
                             <div className="w-12 h-12 bg-pop-blue mx-auto mb-3 flex items-center justify-center">
@@ -402,7 +402,7 @@ export default function Navigation() {
                           </div>
                         </div>
                       </div>
-                      <div className="aspect-[3/4] w-64 bg-gray-100 relative group cursor-pointer overflow-hidden mb-8 break-inside-avoid inline-block">
+                      <div className="aspect-[3/4] w-64 bg-gray-100 relative group cursor-pointer overflow-hidden mb-6 break-inside-avoid inline-block mr-6">
                         <div className="absolute inset-0 flex items-center justify-center">
                           <div className="text-center">
                             <div className="w-12 h-12 bg-pop-blue mx-auto mb-3 flex items-center justify-center">
