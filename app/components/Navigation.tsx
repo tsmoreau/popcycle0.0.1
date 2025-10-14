@@ -101,27 +101,20 @@ export default function Navigation() {
     },
   ];
 
+  const allProductItems = [
+    { href: "/shop#limited-coasters", label: "Coasters", category: "Limited Editions" },
+    { href: "/shop#limited-boards", label: "Cutting Boards", category: "Limited Editions" },
+    { href: "/shop#limited-clocks", label: "Clocks", category: "Limited Editions" },
+    { href: "/shop#limited-lighting", label: "Lighting", category: "Limited Editions" },
+    { href: "/shop#custom-coasters", label: "Custom Coasters", category: "Make Your Own" },
+    { href: "/shop#custom-keychains", label: "Keychains", category: "Make Your Own" },
+    { href: "/shop#custom-magnets", label: "Magnets", category: "Make Your Own" },
+    { href: "/shop#custom-bookmarks", label: "Bookmarks", category: "Make Your Own" },
+    { href: "/shop#custom-combs", label: "Combs", category: "Make Your Own" },
+    { href: "/shop#all", label: "All Products", category: "Browse" },
+  ];
+
   const productsSections = [
-
-
-    {
-      title: "Limited Editions",
-      items: [
-        { href: "/shop#all", label: "Coasters" },
-        { href: "/shop#bags", label: "Cutting Boards" },
-        { href: "/shop#bags", label: "Clocks" },
-        { href: "/shop#bags", label: "Lighting" },
-      ],
-    },
-    {
-      title: "Limited Editions",
-      items: [
-        { href: "/shop#all", label: "Coasters" },
-        { href: "/shop#bags", label: "Cutting Boards" },
-        { href: "/shop#bags", label: "Clocks" },
-        { href: "/shop#bags", label: "Lighting" },
-      ],
-    },
     {
       title: "Limited Editions",
       items: [
@@ -141,14 +134,10 @@ export default function Navigation() {
         { href: "/shop#bags", label: "Combs" },
       ],
     },
-
-
-
     {
       title: "All Products",
       items: [],
     },
-
   ];
 
   const servicesSections = [
@@ -314,22 +303,15 @@ export default function Navigation() {
               {productsOpen && (
                 <div className="fixed left-0 right-0 top-[88px] z-50 bg-white border-t border-gray-200 shadow-lg">
                   <div className="max-w-7xl mx-auto px-12 py-6 flex h-96">
-                    <div className="grid auto-rows-min grid-flow-col gap-x-12 gap-y-3">
-                      {productsSections.map((section, idx) => (
-                        <div key={idx} className="flex flex-col">
-                          <h3 className="systematic-caps text-sm font-bold text-gray-400 mb-3">
-                            {section.title}
-                          </h3>
-                          {section.items.map((item) => (
-                            <Link
-                              key={item.href}
-                              href={item.href}
-                              className="block text-sm hover:text-pop-green transition-colors whitespace-nowrap mb-2"
-                            >
-                              {item.label}
-                            </Link>
-                          ))}
-                        </div>
+                    <div className="grid grid-rows-6 grid-flow-col gap-x-12 gap-y-3 auto-cols-max">
+                      {allProductItems.map((item, idx) => (
+                        <Link
+                          key={idx}
+                          href={item.href}
+                          className="block text-sm hover:text-pop-green transition-colors whitespace-nowrap"
+                        >
+                          {item.label}
+                        </Link>
                       ))}
                     </div>
                     <div className="gap-6 flex bg-pop-green">
