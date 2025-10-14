@@ -326,50 +326,52 @@ export default function Navigation() {
                       </div>
                       
                       {/* Right cards - horizontal scroll with arrows */}
-                      <div className="flex-1 relative">
-                        {aboutHasOverflow && canScrollLeft(aboutScrollPosition) && (
-                          <button
-                            onClick={() => scrollCards(aboutCardsRef, 'left')}
-                            className="absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-white shadow-lg border border-gray-200 p-2 hover:bg-gray-50"
-                            data-testid="button-scroll-left-about"
-                          >
-                            <ChevronLeft className="w-5 h-5" />
-                          </button>
-                        )}
-                        
-                        <div 
-                          ref={aboutCardsRef}
-                          onScroll={() => handleScroll(aboutCardsRef, setAboutScrollPosition)}
-                          className="flex gap-6 overflow-x-auto scrollbar-hide scroll-smooth"
-                          style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
-                        >
-                          {aboutCards.map((card, idx) => (
-                            <Link
-                              key={idx}
-                              href={card.href || '#'}
-                              className="flex-shrink-0 w-[240px] aspect-[3/4] bg-gray-100 relative group cursor-pointer overflow-hidden"
+                      <div className="flex-1">
+                        <div className="flex items-center gap-4">
+                          {aboutHasOverflow && canScrollLeft(aboutScrollPosition) && (
+                            <button
+                              onClick={() => scrollCards(aboutCardsRef, 'left')}
+                              className="flex-shrink-0 hover:opacity-70 transition-opacity"
+                              data-testid="button-scroll-left-about"
                             >
-                              <div className="absolute inset-0 flex items-center justify-center">
-                                <div className="text-center">
-                                  <div className={`w-12 h-12 ${getColorClass(card.color)} mx-auto mb-3 flex items-center justify-center`}>
-                                    <span className="text-white helvetica-bold text-xl">P</span>
-                                  </div>
-                                  <p className="systematic-caps text-xs text-gray-600 px-4">{card.title}</p>
-                                </div>
-                              </div>
-                            </Link>
-                          ))}
-                        </div>
-                        
-                        {aboutHasOverflow && canScrollRight(aboutCardsRef) && (
-                          <button
-                            onClick={() => scrollCards(aboutCardsRef, 'right')}
-                            className="absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-white shadow-lg border border-gray-200 p-2 hover:bg-gray-50"
-                            data-testid="button-scroll-right-about"
+                              <ChevronLeft className="w-6 h-6 text-gray-900" />
+                            </button>
+                          )}
+                          
+                          <div 
+                            ref={aboutCardsRef}
+                            onScroll={() => handleScroll(aboutCardsRef, setAboutScrollPosition)}
+                            className="flex gap-6 overflow-x-auto scrollbar-hide scroll-smooth flex-1"
+                            style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
                           >
-                            <ChevronRight className="w-5 h-5" />
-                          </button>
-                        )}
+                            {aboutCards.map((card, idx) => (
+                              <Link
+                                key={idx}
+                                href={card.href || '#'}
+                                className="flex-shrink-0 w-[240px] aspect-[3/4] bg-gray-100 relative group cursor-pointer overflow-hidden"
+                              >
+                                <div className="absolute inset-0 flex items-center justify-center">
+                                  <div className="text-center">
+                                    <div className={`w-12 h-12 ${getColorClass(card.color)} mx-auto mb-3 flex items-center justify-center`}>
+                                      <span className="text-white helvetica-bold text-xl">P</span>
+                                    </div>
+                                    <p className="systematic-caps text-xs text-gray-600 px-4">{card.title}</p>
+                                  </div>
+                                </div>
+                              </Link>
+                            ))}
+                          </div>
+                          
+                          {aboutHasOverflow && canScrollRight(aboutCardsRef) && (
+                            <button
+                              onClick={() => scrollCards(aboutCardsRef, 'right')}
+                              className="flex-shrink-0 hover:opacity-70 transition-opacity"
+                              data-testid="button-scroll-right-about"
+                            >
+                              <ChevronRight className="w-6 h-6 text-gray-900" />
+                            </button>
+                          )}
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -422,50 +424,52 @@ export default function Navigation() {
                       </div>
                       
                       {/* Right cards - horizontal scroll with arrows */}
-                      <div className="flex-1 relative">
-                        {productsHasOverflow && canScrollLeft(productsScrollPosition) && (
-                          <button
-                            onClick={() => scrollCards(productsCardsRef, 'left')}
-                            className="absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-white shadow-lg border border-gray-200 p-2 hover:bg-gray-50"
-                            data-testid="button-scroll-left-products"
-                          >
-                            <ChevronLeft className="w-5 h-5" />
-                          </button>
-                        )}
-                        
-                        <div 
-                          ref={productsCardsRef}
-                          onScroll={() => handleScroll(productsCardsRef, setProductsScrollPosition)}
-                          className="flex gap-6 overflow-x-auto scrollbar-hide scroll-smooth"
-                          style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
-                        >
-                          {productsCards.map((card, idx) => (
-                            <Link
-                              key={idx}
-                              href={card.href || '#'}
-                              className="flex-shrink-0 w-[240px] aspect-[3/4] bg-gray-100 relative group cursor-pointer overflow-hidden"
+                      <div className="flex-1">
+                        <div className="flex items-center gap-4">
+                          {productsHasOverflow && canScrollLeft(productsScrollPosition) && (
+                            <button
+                              onClick={() => scrollCards(productsCardsRef, 'left')}
+                              className="flex-shrink-0 hover:opacity-70 transition-opacity"
+                              data-testid="button-scroll-left-products"
                             >
-                              <div className="absolute inset-0 flex items-center justify-center">
-                                <div className="text-center">
-                                  <div className={`w-12 h-12 ${getColorClass(card.color)} mx-auto mb-3 flex items-center justify-center`}>
-                                    <span className="text-white helvetica-bold text-xl">P</span>
-                                  </div>
-                                  <p className="systematic-caps text-xs text-gray-600 px-4">{card.title}</p>
-                                </div>
-                              </div>
-                            </Link>
-                          ))}
-                        </div>
-                        
-                        {productsHasOverflow && canScrollRight(productsCardsRef) && (
-                          <button
-                            onClick={() => scrollCards(productsCardsRef, 'right')}
-                            className="absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-white shadow-lg border border-gray-200 p-2 hover:bg-gray-50"
-                            data-testid="button-scroll-right-products"
+                              <ChevronLeft className="w-6 h-6 text-gray-900" />
+                            </button>
+                          )}
+                          
+                          <div 
+                            ref={productsCardsRef}
+                            onScroll={() => handleScroll(productsCardsRef, setProductsScrollPosition)}
+                            className="flex gap-6 overflow-x-auto scrollbar-hide scroll-smooth flex-1"
+                            style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
                           >
-                            <ChevronRight className="w-5 h-5" />
-                          </button>
-                        )}
+                            {productsCards.map((card, idx) => (
+                              <Link
+                                key={idx}
+                                href={card.href || '#'}
+                                className="flex-shrink-0 w-[240px] aspect-[3/4] bg-gray-100 relative group cursor-pointer overflow-hidden"
+                              >
+                                <div className="absolute inset-0 flex items-center justify-center">
+                                  <div className="text-center">
+                                    <div className={`w-12 h-12 ${getColorClass(card.color)} mx-auto mb-3 flex items-center justify-center`}>
+                                      <span className="text-white helvetica-bold text-xl">P</span>
+                                    </div>
+                                    <p className="systematic-caps text-xs text-gray-600 px-4">{card.title}</p>
+                                  </div>
+                                </div>
+                              </Link>
+                            ))}
+                          </div>
+                          
+                          {productsHasOverflow && canScrollRight(productsCardsRef) && (
+                            <button
+                              onClick={() => scrollCards(productsCardsRef, 'right')}
+                              className="flex-shrink-0 hover:opacity-70 transition-opacity"
+                              data-testid="button-scroll-right-products"
+                            >
+                              <ChevronRight className="w-6 h-6 text-gray-900" />
+                            </button>
+                          )}
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -518,50 +522,52 @@ export default function Navigation() {
                       </div>
                       
                       {/* Right cards - horizontal scroll with arrows */}
-                      <div className="flex-1 relative">
-                        {servicesHasOverflow && canScrollLeft(servicesScrollPosition) && (
-                          <button
-                            onClick={() => scrollCards(servicesCardsRef, 'left')}
-                            className="absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-white shadow-lg border border-gray-200 p-2 hover:bg-gray-50"
-                            data-testid="button-scroll-left-services"
-                          >
-                            <ChevronLeft className="w-5 h-5" />
-                          </button>
-                        )}
-                        
-                        <div 
-                          ref={servicesCardsRef}
-                          onScroll={() => handleScroll(servicesCardsRef, setServicesScrollPosition)}
-                          className="flex gap-6 overflow-x-auto scrollbar-hide scroll-smooth"
-                          style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
-                        >
-                          {servicesCards.map((card, idx) => (
-                            <Link
-                              key={idx}
-                              href={card.href || '#'}
-                              className="flex-shrink-0 w-[240px] aspect-[3/4] bg-gray-100 relative group cursor-pointer overflow-hidden"
+                      <div className="flex-1">
+                        <div className="flex items-center gap-4">
+                          {servicesHasOverflow && canScrollLeft(servicesScrollPosition) && (
+                            <button
+                              onClick={() => scrollCards(servicesCardsRef, 'left')}
+                              className="flex-shrink-0 hover:opacity-70 transition-opacity"
+                              data-testid="button-scroll-left-services"
                             >
-                              <div className="absolute inset-0 flex items-center justify-center">
-                                <div className="text-center">
-                                  <div className={`w-12 h-12 ${getColorClass(card.color)} mx-auto mb-3 flex items-center justify-center`}>
-                                    <span className="text-white helvetica-bold text-xl">P</span>
-                                  </div>
-                                  <p className="systematic-caps text-xs text-gray-600 px-4">{card.title}</p>
-                                </div>
-                              </div>
-                            </Link>
-                          ))}
-                        </div>
-                        
-                        {servicesHasOverflow && canScrollRight(servicesCardsRef) && (
-                          <button
-                            onClick={() => scrollCards(servicesCardsRef, 'right')}
-                            className="absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-white shadow-lg border border-gray-200 p-2 hover:bg-gray-50"
-                            data-testid="button-scroll-right-services"
+                              <ChevronLeft className="w-6 h-6 text-gray-900" />
+                            </button>
+                          )}
+                          
+                          <div 
+                            ref={servicesCardsRef}
+                            onScroll={() => handleScroll(servicesCardsRef, setServicesScrollPosition)}
+                            className="flex gap-6 overflow-x-auto scrollbar-hide scroll-smooth flex-1"
+                            style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
                           >
-                            <ChevronRight className="w-5 h-5" />
-                          </button>
-                        )}
+                            {servicesCards.map((card, idx) => (
+                              <Link
+                                key={idx}
+                                href={card.href || '#'}
+                                className="flex-shrink-0 w-[240px] aspect-[3/4] bg-gray-100 relative group cursor-pointer overflow-hidden"
+                              >
+                                <div className="absolute inset-0 flex items-center justify-center">
+                                  <div className="text-center">
+                                    <div className={`w-12 h-12 ${getColorClass(card.color)} mx-auto mb-3 flex items-center justify-center`}>
+                                      <span className="text-white helvetica-bold text-xl">P</span>
+                                    </div>
+                                    <p className="systematic-caps text-xs text-gray-600 px-4">{card.title}</p>
+                                  </div>
+                                </div>
+                              </Link>
+                            ))}
+                          </div>
+                          
+                          {servicesHasOverflow && canScrollRight(servicesCardsRef) && (
+                            <button
+                              onClick={() => scrollCards(servicesCardsRef, 'right')}
+                              className="flex-shrink-0 hover:opacity-70 transition-opacity"
+                              data-testid="button-scroll-right-services"
+                            >
+                              <ChevronRight className="w-6 h-6 text-gray-900" />
+                            </button>
+                          )}
+                        </div>
                       </div>
                     </div>
                   </div>
