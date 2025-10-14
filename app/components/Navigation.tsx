@@ -304,7 +304,8 @@ export default function Navigation() {
                 <div className="fixed left-0 right-0 top-[88px] z-50 bg-white border-t border-gray-200 shadow-lg">
                   <div className="max-w-7xl mx-auto px-12 py-6 flex h-96">
                     <div className="grid grid-rows-6 grid-flow-col gap-x-12 gap-y-3 auto-cols-max">
-                      {allProductItems.map((item, idx) => (
+                      <h3 className="systematic-caps text-sm font-bold text-gray-400">Limited Editions</h3>
+                      {allProductItems.slice(0, 4).map((item, idx) => (
                         <Link
                           key={idx}
                           href={item.href}
@@ -313,8 +314,28 @@ export default function Navigation() {
                           {item.label}
                         </Link>
                       ))}
+                      <h3 className="systematic-caps text-sm font-bold text-gray-400 mt-1">Make Your Own</h3>
+                      {allProductItems.slice(4, 9).map((item, idx) => (
+                        <Link
+                          key={idx + 4}
+                          href={item.href}
+                          className="block text-sm hover:text-pop-green transition-colors whitespace-nowrap"
+                        >
+                          {item.label}
+                        </Link>
+                      ))}
+                      <h3 className="systematic-caps text-sm font-bold text-gray-400 mt-1">Browse</h3>
+                      {allProductItems.slice(9).map((item, idx) => (
+                        <Link
+                          key={idx + 9}
+                          href={item.href}
+                          className="block text-sm hover:text-pop-green transition-colors whitespace-nowrap"
+                        >
+                          {item.label}
+                        </Link>
+                      ))}
                     </div>
-                    <div className="gap-6 flex bg-pop-green">
+                    <div className="gap-6 flex">
                       <div className="w-48 aspect-[3/4] bg-gray-100 relative group cursor-pointer overflow-hidden">
                         <div className="absolute inset-0 flex items-center justify-center">
                           <div className="text-center">
