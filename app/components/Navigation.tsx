@@ -135,10 +135,8 @@ export default function Navigation() {
       ],
     },
     {
-      title: "Browse",
-      items: [
-        { href: "/shop#all", label: "All Products" },
-      ],
+      title: "All Products",
+     
     },
   ];
 
