@@ -136,9 +136,7 @@ export default function Navigation() {
     },
     {
       title: "All Products",
-      items: [
-        { href: "/shop#all", label: "Browse All" },
-      ],
+     
     },
   ];
 
@@ -308,9 +306,11 @@ export default function Navigation() {
                     <div className="columns-[180px] gap-4 max-h-[400px] shrink-0">
                       {productsSections.map((section, idx) => (
                         <div key={idx} className="mb-6 break-inside-avoid min-w-[120px]">
-                          <h3 className="systematic-caps text-sm font-bold text-gray-400 mb-4">
-                            {section.title}
-                          </h3>
+                          <Link href={section.items?.[0]?.href || '/shop#all'}>
+                            <h3 className="systematic-caps text-sm font-bold text-gray-400 mb-4 hover:text-pop-green transition-colors cursor-pointer">
+                              {section.title}
+                            </h3>
+                          </Link>
                           {section.items && section.items.length > 0 && (
                             <div className="space-y-2">
                               {section.items.map((item) => (
