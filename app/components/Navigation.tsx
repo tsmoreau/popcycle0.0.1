@@ -238,7 +238,7 @@ export default function Navigation() {
                           </div>
                         </div>
                       ))}
-                      <div className="aspect-[3/4] w-48 bg-gray-100 relative group cursor-pointer overflow-hidden mb-8 break-inside-avoid inline-block">
+                      <div className="aspect-[3/4] w-64 bg-gray-100 relative group cursor-pointer overflow-hidden mb-8 break-inside-avoid inline-block">
                         <div className="absolute inset-0 flex items-center justify-center">
                           <div className="text-center">
                             <div className="w-12 h-12 bg-pop-green mx-auto mb-3 flex items-center justify-center">
@@ -248,7 +248,7 @@ export default function Navigation() {
                           </div>
                         </div>
                       </div>
-                      <div className="aspect-[3/4] w-48 bg-gray-100 relative group cursor-pointer overflow-hidden mb-8 break-inside-avoid inline-block">
+                      <div className="aspect-[3/4] w-64 bg-gray-100 relative group cursor-pointer overflow-hidden mb-8 break-inside-avoid inline-block">
                         <div className="absolute inset-0 flex items-center justify-center">
                           <div className="text-center">
                             <div className="w-12 h-12 bg-pop-green mx-auto mb-3 flex items-center justify-center">
@@ -258,7 +258,7 @@ export default function Navigation() {
                           </div>
                         </div>
                       </div>
-                      <div className="aspect-[3/4] w-48 bg-gray-100 relative group cursor-pointer overflow-hidden mb-8 break-inside-avoid inline-block">
+                      <div className="aspect-[3/4] w-64 bg-gray-100 relative group cursor-pointer overflow-hidden mb-8 break-inside-avoid inline-block">
                         <div className="absolute inset-0 flex items-center justify-center">
                           <div className="text-center">
                             <div className="w-12 h-12 bg-pop-green mx-auto mb-3 flex items-center justify-center">
@@ -310,7 +310,7 @@ export default function Navigation() {
                           </div>
                         </div>
                       ))}
-                      <div className="aspect-[3/4] w-48 bg-gray-100 relative group cursor-pointer overflow-hidden mb-8 break-inside-avoid inline-block">
+                      <div className="aspect-[3/4] w-64 bg-gray-100 relative group cursor-pointer overflow-hidden mb-8 break-inside-avoid inline-block">
                         <div className="absolute inset-0 flex items-center justify-center">
                           <div className="text-center">
                             <div className="w-12 h-12 bg-pop-red mx-auto mb-3 flex items-center justify-center">
@@ -320,7 +320,7 @@ export default function Navigation() {
                           </div>
                         </div>
                       </div>
-                      <div className="aspect-[3/4] w-48 bg-gray-100 relative group cursor-pointer overflow-hidden mb-8 break-inside-avoid inline-block">
+                      <div className="aspect-[3/4] w-64 bg-gray-100 relative group cursor-pointer overflow-hidden mb-8 break-inside-avoid inline-block">
                         <div className="absolute inset-0 flex items-center justify-center">
                           <div className="text-center">
                             <div className="w-12 h-12 bg-pop-red mx-auto mb-3 flex items-center justify-center">
@@ -330,7 +330,7 @@ export default function Navigation() {
                           </div>
                         </div>
                       </div>
-                      <div className="aspect-[3/4] w-48 bg-gray-100 relative group cursor-pointer overflow-hidden mb-8 break-inside-avoid inline-block">
+                      <div className="aspect-[3/4] w-64 bg-gray-100 relative group cursor-pointer overflow-hidden mb-8 break-inside-avoid inline-block">
                         <div className="absolute inset-0 flex items-center justify-center">
                           <div className="text-center">
                             <div className="w-12 h-12 bg-pop-red mx-auto mb-3 flex items-center justify-center">
@@ -382,7 +382,7 @@ export default function Navigation() {
                           </div>
                         </div>
                       ))}
-                      <div className="aspect-[3/4] w-48 bg-gray-100 relative group cursor-pointer overflow-hidden mb-8 break-inside-avoid inline-block">
+                      <div className="aspect-[3/4] w-64 bg-gray-100 relative group cursor-pointer overflow-hidden mb-8 break-inside-avoid inline-block">
                         <div className="absolute inset-0 flex items-center justify-center">
                           <div className="text-center">
                             <div className="w-12 h-12 bg-pop-blue mx-auto mb-3 flex items-center justify-center">
@@ -392,7 +392,7 @@ export default function Navigation() {
                           </div>
                         </div>
                       </div>
-                      <div className="aspect-[3/4] w-48 bg-gray-100 relative group cursor-pointer overflow-hidden mb-8 break-inside-avoid inline-block">
+                      <div className="aspect-[3/4] w-64 bg-gray-100 relative group cursor-pointer overflow-hidden mb-8 break-inside-avoid inline-block">
                         <div className="absolute inset-0 flex items-center justify-center">
                           <div className="text-center">
                             <div className="w-12 h-12 bg-pop-blue mx-auto mb-3 flex items-center justify-center">
@@ -402,7 +402,7 @@ export default function Navigation() {
                           </div>
                         </div>
                       </div>
-                      <div className="aspect-[3/4] w-48 bg-gray-100 relative group cursor-pointer overflow-hidden mb-8 break-inside-avoid inline-block">
+                      <div className="aspect-[3/4] w-64 bg-gray-100 relative group cursor-pointer overflow-hidden mb-8 break-inside-avoid inline-block">
                         <div className="absolute inset-0 flex items-center justify-center">
                           <div className="text-center">
                             <div className="w-12 h-12 bg-pop-blue mx-auto mb-3 flex items-center justify-center">
