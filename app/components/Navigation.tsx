@@ -238,7 +238,7 @@ export default function Navigation() {
                           </div>
                         </div>
                       ))}
-                      <div className="break-inside-avoid mb-8">
+                      <div className="break-inside-avoid mb-8 min-w-[640px]">
                         <div className="flex gap-6">
                           <div className="w-48 aspect-[3/4] bg-gray-100 relative group cursor-pointer overflow-hidden">
                             <div className="absolute inset-0 flex items-center justify-center">
@@ -314,7 +314,7 @@ export default function Navigation() {
                           </div>
                         </div>
                       ))}
-                      <div className="break-inside-avoid mb-8">
+                      <div className="break-inside-avoid mb-8 min-w-[640px]">
                         <div className="flex gap-6">
                           <div className="w-48 aspect-[3/4] bg-gray-100 relative group cursor-pointer overflow-hidden">
                             <div className="absolute inset-0 flex items-center justify-center">
@@ -390,7 +390,7 @@ export default function Navigation() {
                           </div>
                         </div>
                       ))}
-                      <div className="break-inside-avoid mb-8">
+                      <div className="break-inside-avoid mb-8 min-w-[640px]">
                         <div className="flex gap-6">
                           <div className="w-48 aspect-[3/4] bg-gray-100 relative group cursor-pointer overflow-hidden">
                             <div className="absolute inset-0 flex items-center justify-center">
