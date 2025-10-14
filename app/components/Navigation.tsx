@@ -93,6 +93,24 @@ export default function Navigation() {
       ],
     },
     {
+      title: "Limited Editions",
+      items: [
+        { href: "/shop#all", label: "Coasters" },
+        { href: "/shop#bags", label: "Cutting Boards" },
+        { href: "/shop#bags", label: "Clocks" },
+        { href: "/shop#bags", label: "Lighting" },
+      ],
+    },
+    {
+      title: "Limited Editions",
+      items: [
+        { href: "/shop#all", label: "Coasters" },
+        { href: "/shop#bags", label: "Cutting Boards" },
+        { href: "/shop#bags", label: "Clocks" },
+        { href: "/shop#bags", label: "Lighting" },
+      ],
+    },
+    {
       title: "Make Your Own",
       items: [
         { href: "/shop#custom-orders", label: "Coasters" },
