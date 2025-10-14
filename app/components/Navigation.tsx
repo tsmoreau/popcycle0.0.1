@@ -309,7 +309,7 @@ export default function Navigation() {
                           <h3 className="systematic-caps text-sm font-bold text-gray-400 mb-4">
                             {section.title}
                           </h3>
-                          {section.items && (
+                          {section.items && section.items.length > 0 && (
                             <div className="space-y-2">
                               {section.items.map((item) => (
                                 <Link
