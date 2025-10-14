@@ -219,7 +219,7 @@ export default function Navigation() {
               {aboutOpen && (
                 <div className="fixed left-0 right-0 top-[88px] z-50 bg-white border-t border-gray-200 shadow-lg">
                   <div className="max-w-7xl mx-auto px-12 py-6">
-                    <div style={{ columnWidth: '200px', columnGap: '2rem', columnFill: 'auto' }}>
+                    <div style={{ columnWidth: '200px', columnGap: '2rem', columnFill: 'auto', maxHeight: '400px' }}>
                       {aboutSections.map((section, idx) => (
                         <div key={idx} className="mb-8 break-inside-avoid">
                           <h3 className="systematic-caps text-sm font-bold text-gray-400 mb-4">
@@ -291,7 +291,7 @@ export default function Navigation() {
               {productsOpen && (
                 <div className="fixed left-0 right-0 top-[88px] z-50 bg-white border-t border-gray-200 shadow-lg">
                   <div className="max-w-7xl mx-auto px-12 py-6">
-                    <div style={{ columnWidth: '200px', columnGap: '2rem', columnFill: 'auto' }}>
+                    <div style={{ columnWidth: '200px', columnGap: '2rem', columnFill: 'auto', maxHeight: '400px' }}>
                       {productsSections.map((section, idx) => (
                         <div key={idx} className="mb-8 break-inside-avoid">
                           <h3 className="systematic-caps text-sm font-bold text-gray-400 mb-4">
@@ -363,7 +363,7 @@ export default function Navigation() {
               {servicesOpen && (
                 <div className="fixed left-0 right-0 top-[88px] z-50 bg-white border-t border-gray-200 shadow-lg">
                   <div className="max-w-7xl mx-auto px-12 py-6">
-                    <div style={{ columnWidth: '200px', columnGap: '2rem', columnFill: 'auto' }}>
+                    <div style={{ columnWidth: '200px', columnGap: '2rem', columnFill: 'auto', maxHeight: '400px' }}>
                       {servicesSections.map((section, idx) => (
                         <div key={idx} className="mb-8 break-inside-avoid">
                           <h3 className="systematic-caps text-sm font-bold text-gray-400 mb-4">
