@@ -187,3 +187,13 @@
 .folder-tab-black[data-state="active"]::after {
   background: linear-gradient(45deg, transparent 50%, hsl(var(--pop-black)) 50%, hsl(var(--pop-black)) 51%, transparent 52%);
 }
+
+/* Hide scrollbar for horizontal scroll */
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
