@@ -309,17 +309,19 @@ export default function Navigation() {
                           <h3 className="systematic-caps text-sm font-bold text-gray-400 mb-4">
                             {section.title}
                           </h3>
-                          <div className="space-y-2">
-                            {section.items.map((item) => (
-                              <Link
-                                key={item.href}
-                                href={item.href}
-                                className="block text-sm hover:text-pop-green transition-colors"
-                              >
-                                {item.label}
-                              </Link>
-                            ))}
-                          </div>
+                          {section.items && (
+                            <div className="space-y-2">
+                              {section.items.map((item) => (
+                                <Link
+                                  key={item.href}
+                                  href={item.href}
+                                  className="block text-sm hover:text-pop-green transition-colors"
+                                >
+                                  {item.label}
+                                </Link>
+                              ))}
+                            </div>
+                          )}
                         </div>
                       ))}
                     </div>
