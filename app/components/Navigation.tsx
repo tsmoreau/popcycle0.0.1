@@ -314,9 +314,9 @@ export default function Navigation() {
               {productsOpen && (
                 <div className="fixed left-0 right-0 top-[88px] z-50 bg-white border-t border-gray-200 shadow-lg">
                   <div className="max-w-7xl mx-auto px-12 py-6 flex  h-96">
-                    <div className="bg-pop-red columns-3xs gap-4 flex-1 mx-auto">
+                    <div className="grid grid-cols-4 gap-x-8 gap-y-6 shrink-0 w-[720px]">
                       {productsSections.map((section, idx) => (
-                        <div key={idx} className="mb-6 break-inside-avoid">
+                        <div key={idx}>
                           <h3 className="systematic-caps text-sm font-bold text-gray-400 mb-4">
                             {section.title}
                           </h3>
