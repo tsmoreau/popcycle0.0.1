@@ -219,8 +219,8 @@ export default function Navigation() {
               {aboutOpen && (
                 <div className="fixed left-0 right-0 top-[88px] z-50 bg-white border-t border-gray-200 shadow-lg">
                   <div className="max-w-7xl mx-auto px-12 py-12">
-                    <div className="flex gap-8">
-                      <div className="flex-1 columns-1 sm:columns-2 lg:columns-3 column-gap-8">
+                    <div className="grid grid-cols-6 gap-8">
+                      <div className="col-span-2 columns-1 sm:columns-2 column-gap-8">
                         {aboutSections.map((section, idx) => (
                           <div key={idx} className="mb-8 break-inside-avoid">
                             <h3 className="systematic-caps text-sm font-bold text-gray-400 mb-4">
@@ -240,7 +240,7 @@ export default function Navigation() {
                           </div>
                         ))}
                       </div>
-                      <div className="flex-shrink-0 grid grid-cols-3 gap-6">
+                      <div className="col-span-4 grid grid-cols-3 gap-6">
                         <div className="aspect-[3/4] bg-gray-100 relative group cursor-pointer overflow-hidden">
                           <div className="absolute inset-0 flex items-center justify-center">
                             <div className="text-center">
@@ -295,8 +295,8 @@ export default function Navigation() {
               {productsOpen && (
                 <div className="fixed left-0 right-0 top-[88px] z-50 bg-white border-t border-gray-200 shadow-lg">
                   <div className="max-w-7xl mx-auto px-12 py-12">
-                    <div className="flex gap-8">
-                      <div className="flex-1 columns-1 sm:columns-2 lg:columns-3 column-gap-8">
+                    <div className="grid grid-cols-6 gap-8">
+                      <div className="col-span-2 columns-1 sm:columns-2 column-gap-8">
                         {productsSections.map((section, idx) => (
                           <div key={idx} className="mb-8 break-inside-avoid">
                             <h3 className="systematic-caps text-sm font-bold text-gray-400 mb-4">
@@ -316,7 +316,7 @@ export default function Navigation() {
                           </div>
                         ))}
                       </div>
-                      <div className="flex-shrink-0 grid grid-cols-3 gap-6">
+                      <div className="col-span-4 grid grid-cols-3 gap-6">
                         <div className="aspect-[3/4] bg-gray-100 relative group cursor-pointer overflow-hidden">
                           <div className="absolute inset-0 flex items-center justify-center">
                             <div className="text-center">
@@ -371,8 +371,8 @@ export default function Navigation() {
               {servicesOpen && (
                 <div className="fixed left-0 right-0 top-[88px] z-50 bg-white border-t border-gray-200 shadow-lg">
                   <div className="max-w-7xl mx-auto px-12 py-12">
-                    <div className="flex gap-8">
-                      <div className="flex-1 columns-1 sm:columns-2 lg:columns-3 column-gap-8">
+                    <div className="grid grid-cols-6 gap-8">
+                      <div className="col-span-2 columns-1 sm:columns-2 column-gap-8">
                         {servicesSections.map((section, idx) => (
                           <div key={idx} className="mb-8 break-inside-avoid">
                             <h3 className="systematic-caps text-sm font-bold text-gray-400 mb-4">
@@ -392,7 +392,7 @@ export default function Navigation() {
                           </div>
                         ))}
                       </div>
-                      <div className="flex-shrink-0 grid grid-cols-3 gap-6">
+                      <div className="col-span-4 grid grid-cols-3 gap-6">
                         <div className="aspect-[3/4] bg-gray-100 relative group cursor-pointer overflow-hidden">
                           <div className="absolute inset-0 flex items-center justify-center">
                             <div className="text-center">
