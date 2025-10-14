@@ -313,11 +313,11 @@ export default function Navigation() {
 
               {productsOpen && (
                 <div className="fixed left-0 right-0 top-[88px] z-50 bg-white border-t border-gray-200 shadow-lg">
-                  <div className="max-w-7xl mx-auto px-12 py-6 flex gap-8 h-96">
-                    <div className="flex gap-8 shrink-0">
+                  <div className="max-w-7xl mx-auto px-12 py-6 flex h-96">
+                    <div className="grid grid-rows-6 grid-flow-col gap-x-8 gap-y-3 auto-cols-max">
                       {productsSections.map((section, idx) => (
-                        <div key={idx} className="flex flex-col">
-                          <h3 className="systematic-caps text-sm font-bold text-gray-400 mb-4">
+                        <div key={idx}>
+                          <h3 className="systematic-caps text-sm font-bold text-gray-400 mb-2">
                             {section.title}
                           </h3>
                           <div className="space-y-2">
