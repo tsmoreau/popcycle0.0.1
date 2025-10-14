@@ -220,7 +220,7 @@ export default function Navigation() {
                 <div className="fixed left-0 right-0 top-[88px] z-50 bg-white border-t border-gray-200 shadow-lg">
                   <div className="max-w-7xl mx-auto px-12 py-12">
                     <div className="grid grid-cols-6 gap-8">
-                      <div className="col-span-2 columns-1 sm:columns-2 column-gap-8">
+                      <div className="col-span-2" style={{ columns: 2, columnGap: '2rem', columnFill: 'auto', maxHeight: '400px' }}>
                         {aboutSections.map((section, idx) => (
                           <div key={idx} className="mb-8 break-inside-avoid">
                             <h3 className="systematic-caps text-sm font-bold text-gray-400 mb-4">
@@ -296,7 +296,7 @@ export default function Navigation() {
                 <div className="fixed left-0 right-0 top-[88px] z-50 bg-white border-t border-gray-200 shadow-lg">
                   <div className="max-w-7xl mx-auto px-12 py-12">
                     <div className="grid grid-cols-6 gap-8">
-                      <div className="col-span-2 columns-1 sm:columns-2 column-gap-8">
+                      <div className="col-span-2" style={{ columns: 2, columnGap: '2rem', columnFill: 'auto', maxHeight: '400px' }}>
                         {productsSections.map((section, idx) => (
                           <div key={idx} className="mb-8 break-inside-avoid">
                             <h3 className="systematic-caps text-sm font-bold text-gray-400 mb-4">
@@ -372,7 +372,7 @@ export default function Navigation() {
                 <div className="fixed left-0 right-0 top-[88px] z-50 bg-white border-t border-gray-200 shadow-lg">
                   <div className="max-w-7xl mx-auto px-12 py-12">
                     <div className="grid grid-cols-6 gap-8">
-                      <div className="col-span-2 columns-1 sm:columns-2 column-gap-8">
+                      <div className="col-span-2" style={{ columns: 2, columnGap: '2rem', columnFill: 'auto', maxHeight: '400px' }}>
                         {servicesSections.map((section, idx) => (
                           <div key={idx} className="mb-8 break-inside-avoid">
                             <h3 className="systematic-caps text-sm font-bold text-gray-400 mb-4">
