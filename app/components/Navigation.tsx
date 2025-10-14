@@ -459,9 +459,9 @@ export default function Navigation() {
               {productsOpen && (
                 <div className="fixed left-0 right-0 top-[88px] z-50 bg-white border-t border-gray-200 shadow-lg">
                   <div className="max-w-7xl mx-auto px-12 py-6 flex h-96">
-                    <div className="flex flex-wrap flex-col gap-x-8 gap-y-4 max-h-[400px] bg-pop-red pr-8">
+                    <div className="columns-[180px] gap-4 max-h-[400px] bg-pop-red pr-8 w-auto">
                       {productsSections.map((section, idx) => (
-                        <div key={idx} className="mb-2">
+                        <div key={idx} className="mb-6 break-inside-avoid">
                           <Link href={section.items?.[0]?.href || '/shop#all'}>
                             <h3 className="systematic-caps text-sm font-bold text-gray-400 mb-4 hover:text-pop-green transition-colors cursor-pointer">
                               {section.title}
