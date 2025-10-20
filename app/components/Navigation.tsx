@@ -63,160 +63,38 @@ export default function Navigation() {
     return null;
   }
 
-  const vitraMenuData = [
-    {
-      title: "Home",
-      items: [
-        { href: "#", label: "Living room" },
-        { href: "#", label: "Dining room" },
-        { href: "#", label: "Home Office" },
-        { href: "#", label: "Children's room" },
-        { href: "#", label: "Outdoor" },
-      ],
-    },
-    {
-      title: "Office spaces",
-      items: [
-        { href: "#", label: "Workspace" },
-        { href: "#", label: "Focus" },
-        { href: "#", label: "Meeting" },
-        { href: "#", label: "Workshop" },
-        { href: "#", label: "More" },
-      ],
-    },
-    {
-      title: "Public spaces",
-      items: [
-        { href: "#", label: "Hospitality" },
-        { href: "#", label: "Airports" },
-        { href: "#", label: "Education" },
-        { href: "#", label: "Co-Working" },
-        { href: "#", label: "Healthcare" },
-      ],
-    },
-    {
-      title: "Discover",
-      items: [
-        { href: "#", label: "Home Stories" },
-        { href: "#", label: "Augmented Reality" },
-        { href: "#", label: "Colours & materials" },
-        { href: "#", label: "Home Selection" },
-      ],
-    },
+  // Mobile menu item arrays
+  const aboutItems = [
+    { href: "/about#team", label: "Team" },
+    { href: "/about#story", label: "Story" },
+    { href: "/about#process", label: "Process" },
+    { href: "/about#contact", label: "Contact" },
+    { href: "/about#faq", label: "FAQ" },
   ];
 
-  const aboutSections = [
-    {
-      title: "Company",
-      items: [
-        { href: "/about#team", label: "Team" },
-        { href: "/about#story", label: "Story" },
-        { href: "/about#process", label: "Process" },
-      ],
-    },
-    {
-      title: "Connect",
-      items: [
-        { href: "/about#contact", label: "Contact" },
-        { href: "/about#faq", label: "FAQ" },
-      ],
-    },
-    {
-      title: "Connect",
-      items: [
-        { href: "/about#contact", label: "Contact" },
-        { href: "/about#faq", label: "FAQ" },
-      ],
-    },
-    {
-      title: "Connect",
-      items: [
-        { href: "/about#contact", label: "Contact" },
-        { href: "/about#faq", label: "FAQ" },
-      ],
-    },
-    {
-      title: "Connect",
-      items: [
-        { href: "/about#contact", label: "Contact" },
-        { href: "/about#faq", label: "FAQ" },
-      ],
-    },
+  const productsItems = [
+    { href: "/shop#limited-coasters", label: "Coasters" },
+    { href: "/shop#limited-boards", label: "Cutting Boards" },
+    { href: "/shop#limited-clocks", label: "Clocks" },
+    { href: "/shop#limited-lighting", label: "Lighting" },
+    { href: "/shop#custom-coasters", label: "Custom Coasters" },
+    { href: "/shop#custom-keychains", label: "Keychains" },
+    { href: "/shop#custom-magnets", label: "Magnets" },
+    { href: "/shop#custom-bookmarks", label: "Bookmarks" },
+    { href: "/shop#custom-combs", label: "Combs" },
+    { href: "/shop#all", label: "Browse All" },
   ];
 
-  const allProductItems = [
-    { href: "/shop#limited-coasters", label: "Coasters", category: "Limited Editions" },
-    { href: "/shop#limited-boards", label: "Cutting Boards", category: "Limited Editions" },
-    { href: "/shop#limited-clocks", label: "Clocks", category: "Limited Editions" },
-    { href: "/shop#limited-lighting", label: "Lighting", category: "Limited Editions" },
-    { href: "/shop#custom-coasters", label: "Custom Coasters", category: "Make Your Own" },
-    { href: "/shop#custom-keychains", label: "Keychains", category: "Make Your Own" },
-    { href: "/shop#custom-magnets", label: "Magnets", category: "Make Your Own" },
-    { href: "/shop#custom-bookmarks", label: "Bookmarks", category: "Make Your Own" },
-    { href: "/shop#custom-combs", label: "Combs", category: "Make Your Own" },
-    { href: "/shop#all", label: "All Products", category: "Browse" },
+  const servicesItems = [
+    { href: "/services#custom-products", label: "Seasonal Collections" },
+    { href: "/services#custom-products", label: "Everyday Objects" },
+    { href: "/services#collection-services", label: "Custom Collection" },
+    { href: "/services#workshops-events", label: "Installations" },
+    { href: "/services#workshops-events", label: "Workshops" },
+    { href: "/services#workshops-events", label: "Donations" },
+    { href: "/services#community-partnerships", label: "Local Partnerships" },
+    { href: "/services#collection-services", label: "Global Initiatives" },
   ];
-
-  const productsSections = [
-    {
-      title: "Limited Editions",
-      items: [
-        { href: "/shop#limited-coasters", label: "Coasters" },
-        { href: "/shop#limited-boards", label: "Cutting Boards" },
-        { href: "/shop#limited-clocks", label: "Clocks" },
-        { href: "/shop#limited-lighting", label: "Lighting" },
-      ],
-    },
-    {
-      title: "Make Your Own",
-      items: [
-        { href: "/shop#custom-coasters", label: "Custom Coasters" },
-        { href: "/shop#custom-keychains", label: "Keychains" },
-        { href: "/shop#custom-magnets", label: "Magnets" },
-        { href: "/shop#custom-bookmarks", label: "Bookmarks" },
-        { href: "/shop#custom-combs", label: "Combs" },
-      ],
-    },
-    {
-      title: "All Products",
-      items: [
-        { href: "/shop#all", label: "Browse All" },
-      ],
-    },
-  ];
-
-  const servicesSections = [
-
-    {
-      title: "Studio Retainer",
-      items: [
-        { href: "/services#custom-products", label: "Seasonal Collections" },
-        { href: "/services#custom-products", label: "Everyday Objects" },
-      ],
-    },
-
-    {
-      title: "Limited Commission",
-      items: [
-        { href: "/services#collection-services", label: "Custom Collection" },
-        { href: "/services#workshops-events", label: "Installations" },
-        { href: "/services#workshops-events", label: "Workshops" },
-        { href: "/services#workshops-events", label: "Donations" },
-      ],
-    },
-
-    {
-      title: "Community Partners",
-      items: [
-        { href: "/services#community-partnerships", label: "" },
-        { href: "/services#collection-services", label: "" },
-      ],
-    },
-  ];
-
-  const aboutItems = aboutSections.flatMap(section => section.items);
-  const productsItems = productsSections.flatMap(section => section.items);
-  const servicesItems = servicesSections.flatMap(section => section.items);
 
   return (
     <nav className="font-jost font-light sticky top-0 z-50 bg-white border-b border-gray-200">
@@ -271,65 +149,100 @@ export default function Navigation() {
                 <span>About</span>
               </button>
 
-              {aboutOpen && (
-                <div className="fixed left-0 right-0 top-[88px] z-50 bg-white border-t border-gray-200 shadow-lg">
-                  <div className="max-w-7xl mx-auto px-12 py-6 h-96 flow-root">
+              {aboutOpen && (() => {
+                // 1. DATA STRUCTURE
+                // We define the sections that will be used.
+                const companySection = {
+                  title: "Company",
+                  items: [
+                    { href: "/about#team", label: "Team" },
+                    { href: "/about#story", label: "Story" },
+                    { href: "/about#process", label: "Process" },
+                  ],
+                };
+                const connectSection = {
+                  title: "Connect",
+                  items: [
+                    { href: "/about#contact", label: "Contact" },
+                    { href: "/about#faq", label: "FAQ" },
+                  ],
+                };
 
-                    <div className="columns-[180px] gap-4 h-full w-[600px] float-left">
-                      {aboutSections.map((section, idx) => (
-                        <div key={idx} className="mb-6 break-inside-avoid">
-                          <h3 className="systematic-caps text-sm font-bold text-gray-400 mb-4">
-                            {section.title}
-                          </h3>
-                          <div className="space-y-2">
-                            {section.items.map((item) => (
-                              <Link
-                                key={item.href}
-                                href={item.href}
-                                className="block text-sm hover:text-pop-green transition-colors"
-                              >
-                                {item.label}
-                              </Link>
+                // This nested array defines the columns. Each inner array is a column.
+                const aboutColumns = [
+                  [ // Column 1
+                    companySection,
+                  ],
+                  [ // Column 2
+                    connectSection,
+                  ],
+                ];
+
+                // The data for the image cards on the right.
+                const aboutCardData = [
+                    { caption: "Team Stories", color: "bg-pop-green" },
+                    { caption: "Our Process", color: "bg-pop-green" },
+                    { caption: "Impact", color: "bg-pop-green" },
+                ];
+
+                return (
+                  <div className="fixed left-0 right-0 top-[88px] z-50 bg-white border-t border-gray-200 shadow-lg ">
+                    {/* 2. LAYOUT: A simple flex container. `justify-between` creates the space. */}
+                    <div className="max-w-7xl  mx-auto px-12 py-6 h-full flex items-start justify-start mt-2">
+
+                      {/* Container for the text columns */}
+                      <div className="flex gap-8 h-full">
+                        {/* Outer loop creates the columns */}
+                        {aboutColumns.map((column, colIndex) => (
+                          <div key={colIndex} className="w-[180px] flex-shrink-0">
+                            {/* Inner loop renders the stacked sections inside each column */}
+                            {column.map((section, secIndex) => (
+                              <div key={secIndex} className="mb-8">
+                                <Link href={section.items?.[0]?.href || '#'} className="block systematic-caps text-sm font-normal text-gray-400 mb-4 hover:text-pop-green transition-colors cursor-pointer ">
+                                  {section.title}
+                                </Link>
+                                <div className="space-y-2">
+                                  {section.items.map((item) => (
+                                    <Link
+                                      key={item.href}
+                                      href={item.href}
+                                      className="block text-sm hover:text-pop-green transition-colors"
+                                    >
+                                      {item.label}
+                                    </Link>
+                                  ))}
+                                </div>
+                              </div>
                             ))}
                           </div>
-                        </div>
-                      ))}
-                    </div>
-                    <div className="flex gap-6 float-left ml-8">
-                      <div className="w-48 aspect-[3/4] bg-gray-100 relative group cursor-pointer overflow-hidden">
-                        <div className="absolute inset-0 flex items-center justify-center">
-                          <div className="text-center">
-                            <div className="w-12 h-12 bg-pop-green mx-auto mb-3 flex items-center justify-center">
-                              <span className="text-white helvetica-bold text-xl">P</span>
-                            </div>
-                            <p className="systematic-caps text-xs text-gray-600 px-4">Team Stories</p>
-                          </div>
-                        </div>
+                        ))}
                       </div>
-                      <div className="w-48 aspect-[3/4] bg-gray-100 relative group cursor-pointer overflow-hidden">
-                        <div className="absolute inset-0 flex items-center justify-center">
-                          <div className="text-center">
-                            <div className="w-12 h-12 bg-pop-green mx-auto mb-3 flex items-center justify-center">
-                              <span className="text-white helvetica-bold text-xl">P</span>
-                            </div>
-                            <p className="systematic-caps text-xs text-gray-600 px-4">Our Process</p>
-                          </div>
-                        </div>
-                      </div>
-                      <div className="w-48 aspect-[3/4] bg-gray-100 relative group cursor-pointer overflow-hidden">
-                        <div className="absolute inset-0 flex items-center justify-center">
-                          <div className="text-center">
-                            <div className="w-12 h-12 bg-pop-green mx-auto mb-3 flex items-center justify-center">
-                              <span className="text-white helvetica-bold text-xl">P</span>
-                            </div>
-                            <p className="systematic-caps text-xs text-gray-600 px-4">Impact</p>
-                          </div>
-                        </div>
+
+                      {/* Container for the image cards */}
+                     <div className="relative overflow-hidden"> 
+                       <div className="relative  flex gap-6 w-full overflow-x-auto"><div className="w-min aboslute right-0 overflow-x-a flex gap-4">
+
+                     {aboutCardData.map((card, cardIndex) => (
+                       <div key={cardIndex} className="w-72  px-1 bg-gray-100 rounded-md  relative h-96 cursor-pointer ">
+                         <div className="absolute inset-0 flex items-center justify-center">
+                           <div className="text-center">
+                             <div className={`w-12 h-12 ${card.color} mx-auto mb-3 flex items-center justify-center`}>
+                               <span className="text-white helvetica-bold text-xl">P</span>
+                             </div>
+                             <p className="systematic-caps text-xs text-gray-600 px-4">{card.caption}</p>
+                           </div>
+                         </div>
+                       </div>
+                     ))}
+                     </div>
+                     </div>
+</div>
+                     
                       </div>
                     </div>
-                  </div>
-                </div>
-              )}
+                 
+                );
+              })()}
             </div>
 
             {/* Products Dropdown */}
@@ -349,13 +262,30 @@ export default function Navigation() {
               {productsOpen && (() => {
                 // 1. DATA STRUCTURE
                 // We define the sections that will be used.
-                const limitedEditionsSection = {
-                  title: "Limited Editions",
+                const coastersSection = {
+                  title: "Coasters",
                   items: [
-                    { href: "/shop#limited-coasters", label: "Coasters" },
-                    { href: "/shop#limited-boards", label: "Cutting Boards" },
-                    { href: "/shop#limited-clocks", label: "Clocks" },
-                    { href: "/shop#limited-lighting", label: "Lighting" },
+                    { href: "/shop#all", label: "Themed Sets" },
+                  ],
+                };
+                const boardsSection = {
+                  title: "Cutting Boards",
+                  items: [
+                    { href: "/shop#all", label: "Abstracts" },
+                    { href: "/shop#all", label: "Still Lifes" },
+                  ],
+                };
+                const clocksSection = {
+                  title: "Clocks",
+                  items: [
+                    { href: "/shop#all", label: "Desk Clocks" },
+                    { href: "/shop#all", label: "Wall Clocks" },
+                  ],
+                };
+                const lightingSection = {
+                  title: "Lighting",
+                  items: [
+                    { href: "/shop#all", label: "Designer Lights" },
                   ],
                 };
                 const makeYourOwnSection = {
@@ -368,38 +298,6 @@ export default function Navigation() {
                     { href: "/shop#custom-combs", label: "More" },
                   ],
                 };
-                const allProductsSection = {
-                  title: "All Products",
-                  items: [
-                    { href: "/shop#all", label: "" },
-                  ],
-                };
-              const coastersSection = {
-                title: "Coasters",
-                items: [
-                  { href: "/shop#all", label: "Themed Sets" },
-                ],
-              };
-              const boardsSection = {
-                title: "Cutting Boards",
-                items: [
-                  { href: "/shop#all", label: "Abstracts" },
-                  { href: "/shop#all", label: "Still Lifes" },
-                ],
-              };
-              const clocksSection = {
-                title: "Clocks",
-                items: [
-                  { href: "/shop#all", label: "Desk Clocks" },
-                  { href: "/shop#all", label: "Wall Clocks" },
-                ],
-              };
-              const lightingSection = {
-                title: "Lighting",
-                items: [
-                  { href: "/shop#all", label: "Designer Lights" },
-                ],
-              };
 
                 // This nested array defines the columns. Each inner array is a column.
                 // "Make Your Own" is included in both Column 1 and Column 2.
@@ -497,64 +395,109 @@ export default function Navigation() {
                 <span>Services</span>
               </button>
 
-              {servicesOpen && (
-                <div className="fixed left-0 right-0 top-[88px] z-50 bg-white border-t border-gray-200 shadow-lg">
-                  <div className="max-w-7xl mx-auto px-12 py-6 flex gap-8 min-h-[300px]">
-                    <div className="columns-[180px] gap-4 max-h-[400px] flex-1">
-                      {servicesSections.map((section, idx) => (
-                        <div key={idx} className="mb-6 break-inside-avoid">
-                          <h3 className="systematic-caps text-sm font-bold text-gray-400 mb-4">
-                            {section.title}
-                          </h3>
-                          <div className="space-y-2">
-                            {section.items.map((item) => (
-                              <Link
-                                key={item.href}
-                                href={item.href}
-                                className="block text-sm hover:text-pop-green transition-colors"
-                              >
-                                {item.label}
-                              </Link>
+              {servicesOpen && (() => {
+                // 1. DATA STRUCTURE
+                // We define the sections that will be used.
+                const studioRetainerSection = {
+                  title: "Studio Retainer",
+                  items: [
+                    { href: "/services#custom-products", label: "Seasonal Collections" },
+                    { href: "/services#custom-products", label: "Everyday Objects" },
+                  ],
+                };
+                const limitedCommissionSection = {
+                  title: "Limited Commission",
+                  items: [
+                    { href: "/services#collection-services", label: "Custom Collection" },
+                    { href: "/services#workshops-events", label: "Installations" },
+                    { href: "/services#workshops-events", label: "Workshops" },
+                    { href: "/services#workshops-events", label: "Donations" },
+                  ],
+                };
+                const communityPartnersSection = {
+                  title: "Community Partners",
+                  items: [
+                    { href: "/services#community-partnerships", label: "Local Partnerships" },
+                    { href: "/services#collection-services", label: "Global Initiatives" },
+                  ],
+                };
+
+                // This nested array defines the columns. Each inner array is a column.
+                const servicesColumns = [
+                  [ // Column 1
+                    studioRetainerSection,
+                  ],
+                  [ // Column 2
+                    limitedCommissionSection,
+                    communityPartnersSection,
+                  ],
+                ];
+
+                // The data for the image cards on the right.
+                const servicesCardData = [
+                    { caption: "Studio Process", color: "bg-pop-blue" },
+                    { caption: "Material Sourcing", color: "bg-pop-blue" },
+                    { caption: "Universal Provenance", color: "bg-pop-blue" },
+                ];
+
+                return (
+                  <div className="fixed left-0 right-0 top-[88px] z-50 bg-white border-t border-gray-200 shadow-lg ">
+                    {/* 2. LAYOUT: A simple flex container. `justify-between` creates the space. */}
+                    <div className="max-w-7xl  mx-auto px-12 py-6 h-full flex items-start justify-start mt-2">
+
+                      {/* Container for the text columns */}
+                      <div className="flex gap-8 h-full">
+                        {/* Outer loop creates the columns */}
+                        {servicesColumns.map((column, colIndex) => (
+                          <div key={colIndex} className="w-[180px] flex-shrink-0">
+                            {/* Inner loop renders the stacked sections inside each column */}
+                            {column.map((section, secIndex) => (
+                              <div key={secIndex} className="mb-8">
+                                <Link href={section.items?.[0]?.href || '#'} className="block systematic-caps text-sm font-normal text-gray-400 mb-4 hover:text-pop-green transition-colors cursor-pointer ">
+                                  {section.title}
+                                </Link>
+                                <div className="space-y-2">
+                                  {section.items.map((item) => (
+                                    <Link
+                                      key={item.href}
+                                      href={item.href}
+                                      className="block text-sm hover:text-pop-green transition-colors"
+                                    >
+                                      {item.label}
+                                    </Link>
+                                  ))}
+                                </div>
+                              </div>
                             ))}
                           </div>
-                        </div>
-                      ))}
-                    </div>
-                    <div className="flex gap-6 flex-shrink-0">
-                      <div className="w-48 aspect-[3/4] bg-gray-100 relative group cursor-pointer overflow-hidden">
-                        <div className="absolute inset-0 flex items-center justify-center">
-                          <div className="text-center">
-                            <div className="w-12 h-12 bg-pop-blue mx-auto mb-3 flex items-center justify-center">
-                              <span className="text-white helvetica-bold text-xl">P</span>
-                            </div>
-                            <p className="systematic-caps text-xs text-gray-600 px-4">Studio Process</p>
-                          </div>
-                        </div>
+                        ))}
                       </div>
-                      <div className="w-48 aspect-[3/4] bg-gray-100 relative group cursor-pointer overflow-hidden">
-                        <div className="absolute inset-0 flex items-center justify-center">
-                          <div className="text-center">
-                            <div className="w-12 h-12 bg-pop-blue mx-auto mb-3 flex items-center justify-center">
-                              <span className="text-white helvetica-bold text-xl">P</span>
-                            </div>
-                            <p className="systematic-caps text-xs text-gray-600 px-4">Material Sourcing</p>
-                          </div>
-                        </div>
-                      </div>
-                      <div className="w-48 aspect-[3/4] bg-gray-100 relative group cursor-pointer overflow-hidden">
-                        <div className="absolute inset-0 flex items-center justify-center">
-                          <div className="text-center">
-                            <div className="w-12 h-12 bg-pop-blue mx-auto mb-3 flex items-center justify-center">
-                              <span className="text-white helvetica-bold text-xl">P</span>
-                            </div>
-                            <p className="systematic-caps text-xs text-gray-600 px-4">Universal Provenance</p>
-                          </div>
-                        </div>
+
+                      {/* Container for the image cards */}
+                     <div className="relative overflow-hidden"> 
+                       <div className="relative  flex gap-6 w-full overflow-x-auto"><div className="w-min aboslute right-0 overflow-x-a flex gap-4">
+
+                     {servicesCardData.map((card, cardIndex) => (
+                       <div key={cardIndex} className="w-72  px-1 bg-gray-100 rounded-md  relative h-96 cursor-pointer ">
+                         <div className="absolute inset-0 flex items-center justify-center">
+                           <div className="text-center">
+                             <div className={`w-12 h-12 ${card.color} mx-auto mb-3 flex items-center justify-center`}>
+                               <span className="text-white helvetica-bold text-xl">P</span>
+                             </div>
+                             <p className="systematic-caps text-xs text-gray-600 px-4">{card.caption}</p>
+                           </div>
+                         </div>
+                       </div>
+                     ))}
+                     </div>
+                     </div>
+</div>
+                     
                       </div>
                     </div>
-                  </div>
-                </div>
-              )}
+                 
+                );
+              })()}
             </div>
 
             {/* Shop */}
