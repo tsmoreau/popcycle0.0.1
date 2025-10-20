@@ -10,6 +10,7 @@ import {
   Menu,
   X,
   ChevronRight,
+  ChevronLeft,
   User,
   Settings,
   LogOut,
@@ -61,6 +62,48 @@ export default function Navigation() {
   if (pathname?.startsWith("/portal")) {
     return null;
   }
+
+  const vitraMenuData = [
+    {
+      title: "Home",
+      items: [
+        { href: "#", label: "Living room" },
+        { href: "#", label: "Dining room" },
+        { href: "#", label: "Home Office" },
+        { href: "#", label: "Children's room" },
+        { href: "#", label: "Outdoor" },
+      ],
+    },
+    {
+      title: "Office spaces",
+      items: [
+        { href: "#", label: "Workspace" },
+        { href: "#", label: "Focus" },
+        { href: "#", label: "Meeting" },
+        { href: "#", label: "Workshop" },
+        { href: "#", label: "More" },
+      ],
+    },
+    {
+      title: "Public spaces",
+      items: [
+        { href: "#", label: "Hospitality" },
+        { href: "#", label: "Airports" },
+        { href: "#", label: "Education" },
+        { href: "#", label: "Co-Working" },
+        { href: "#", label: "Healthcare" },
+      ],
+    },
+    {
+      title: "Discover",
+      items: [
+        { href: "#", label: "Home Stories" },
+        { href: "#", label: "Augmented Reality" },
+        { href: "#", label: "Colours & materials" },
+        { href: "#", label: "Home Selection" },
+      ],
+    },
+  ];
 
   const aboutSections = [
     {
@@ -230,8 +273,9 @@ export default function Navigation() {
 
               {aboutOpen && (
                 <div className="fixed left-0 right-0 top-[88px] z-50 bg-white border-t border-gray-200 shadow-lg">
-                  <div className="max-w-7xl mx-auto px-12 py-6 flex gap-8 h-96 items-start">
-                    <div className="columns-[180px] gap-4 max-h-[400px] shrink-0">
+                  <div className="max-w-7xl mx-auto px-12 py-6 h-96 flow-root">
+
+                    <div className="columns-[180px] gap-4 h-full w-[600px] float-left">
                       {aboutSections.map((section, idx) => (
                         <div key={idx} className="mb-6 break-inside-avoid">
                           <h3 className="systematic-caps text-sm font-bold text-gray-400 mb-4">
@@ -251,7 +295,7 @@ export default function Navigation() {
                         </div>
                       ))}
                     </div>
-                    <div className="border-6 flex gap-6 flex-shrink-0">
+                    <div className="flex gap-6 float-left ml-8">
                       <div className="w-48 aspect-[3/4] bg-gray-100 relative group cursor-pointer overflow-hidden">
                         <div className="absolute inset-0 flex items-center justify-center">
                           <div className="text-center">
@@ -302,70 +346,143 @@ export default function Navigation() {
                 <span>Products</span>
               </button>
 
-              {productsOpen && (
-                <div className="fixed left-0 right-0 top-[88px] z-50 bg-white border-t border-gray-200 shadow-lg">
-                  <div className="max-w-7xl mx-auto px-12 py-6 flex gap-8 h-96">
-                    <div className="flex flex-col flex-wrap gap-6 bg-pop-red pr-8 h-full w-auto">
-                      {productsSections.map((section, idx) => (
-                        <div key={idx} className="mb-6 w-[180px]">
-                          <Link href={section.items?.[0]?.href || '/shop#all'}>
-                            <h3 className="systematic-caps text-sm font-bold text-gray-400 mb-4 hover:text-pop-green transition-colors cursor-pointer">
-                              {section.title}
-                            </h3>
-                          </Link>
-                          {section.items && section.items.length > 0 && (
-                            <div className="space-y-2">
-                              {section.items.map((item) => (
-                                <Link
-                                  key={item.href}
-                                  href={item.href}
-                                  className="block text-sm hover:text-pop-green transition-colors"
-                                >
-                                  {item.label}
-                                </Link>
-                              ))}
-                            </div>
-                          )}
-                        </div>
-                      ))}
-                    </div>
-                    <div className="gap-6 flex flex-shrink-0">
-                      <div className="w-48 aspect-[3/4] bg-gray-100 relative group cursor-pointer overflow-hidden">
-                        <div className="absolute inset-0 flex items-center justify-center">
-                          <div className="text-center">
-                            <div className="w-12 h-12 bg-pop-red mx-auto mb-3 flex items-center justify-center">
-                              <span className="text-white helvetica-bold text-xl">P</span>
-                            </div>
-                            <p className="systematic-caps text-xs text-gray-600 px-4">New Arrivals</p>
-                          </div>
-                        </div>
-                      </div>
-                      <div className="w-48 aspect-[3/4] bg-gray-100 relative group cursor-pointer overflow-hidden">
-                        <div className="absolute inset-0 flex items-center justify-center">
-                          <div className="text-center">
-                            <div className="w-12 h-12 bg-pop-red mx-auto mb-3 flex items-center justify-center">
-                              <span className="text-white helvetica-bold text-xl">P</span>
-                            </div>
-                            <p className="systematic-caps text-xs text-gray-600 px-4">Featured Products</p>
-                          </div>
-                        </div>
-                      </div>
-                      <div className="w-48 aspect-[3/4] bg-gray-100 relative group cursor-pointer overflow-hidden">
-                        <div className="absolute inset-0 flex items-center justify-center">
-                          <div className="text-center">
-                            <div className="w-12 h-12 bg-pop-red mx-auto mb-3 flex items-center justify-center">
-                              <span className="text-white helvetica-bold text-xl">P</span>
-                            </div>
-                            <p className="systematic-caps text-xs text-gray-600 px-4">Collections</p>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              )}
-            </div>
+              {productsOpen && (() => {
+                // 1. DATA STRUCTURE
+                // We define the sections that will be used.
+                const limitedEditionsSection = {
+                  title: "Limited Editions",
+                  items: [
+                    { href: "/shop#limited-coasters", label: "Coasters" },
+                    { href: "/shop#limited-boards", label: "Cutting Boards" },
+                    { href: "/shop#limited-clocks", label: "Clocks" },
+                    { href: "/shop#limited-lighting", label: "Lighting" },
+                  ],
+                };
+                const makeYourOwnSection = {
+                  title: "Make-Your-Own",
+                  items: [
+                    { href: "/shop#custom-coasters", label: "Coasters" },
+                    { href: "/shop#custom-keychains", label: "Keychains" },
+                    { href: "/shop#custom-magnets", label: "Magnets" },
+                    { href: "/shop#custom-bookmarks", label: "Bookmarks" },
+                    { href: "/shop#custom-combs", label: "More" },
+                  ],
+                };
+                const allProductsSection = {
+                  title: "All Products",
+                  items: [
+                    { href: "/shop#all", label: "" },
+                  ],
+                };
+              const coastersSection = {
+                title: "Coasters",
+                items: [
+                  { href: "/shop#all", label: "Themed Sets" },
+                ],
+              };
+              const boardsSection = {
+                title: "Cutting Boards",
+                items: [
+                  { href: "/shop#all", label: "Abstracts" },
+                  { href: "/shop#all", label: "Still Lifes" },
+                ],
+              };
+              const clocksSection = {
+                title: "Clocks",
+                items: [
+                  { href: "/shop#all", label: "Desk Clocks" },
+                  { href: "/shop#all", label: "Wall Clocks" },
+                ],
+              };
+              const lightingSection = {
+                title: "Lighting",
+                items: [
+                  { href: "/shop#all", label: "Designer Lights" },
+                ],
+              };
 
+                // This nested array defines the columns. Each inner array is a column.
+                // "Make Your Own" is included in both Column 1 and Column 2.
+                const productColumns = [
+                  [ // Column 1
+                    coastersSection,
+                    boardsSection,
+                    clocksSection,
+                   
+                  ],
+                  [ // Column 2
+                     lightingSection,
+                    makeYourOwnSection,
+                  ],
+                ];
+
+                // The data for the image cards on the right.
+                const cardData = [
+                    { caption: "New Arrivals", color: "bg-pop-red" },
+                    { caption: "Featured Products", color: "bg-pop-red" },
+                    { caption: "Studio Collections", color: "bg-pop-red" },  { caption: "Studio Collections", color: "bg-pop-red" },
+                ];
+
+                return (
+                  <div className="fixed left-0 right-0 top-[88px] z-50 bg-white border-t border-gray-200 shadow-lg ">
+                    {/* 2. LAYOUT: A simple flex container. `justify-between` creates the space. */}
+                    <div className="max-w-7xl  mx-auto px-12 py-6 h-full flex items-start justify-start mt-2">
+
+                      {/* Container for the text columns */}
+                      <div className="flex gap-8 h-full">
+                        {/* Outer loop creates the columns */}
+                        {productColumns.map((column, colIndex) => (
+                          <div key={colIndex} className="w-[180px] flex-shrink-0">
+                            {/* Inner loop renders the stacked sections inside each column */}
+                            {column.map((section, secIndex) => (
+                              <div key={secIndex} className="mb-8">
+                                <Link href={section.items?.[0]?.href || '#'} className="block systematic-caps text-sm font-normal text-gray-400 mb-4 hover:text-pop-green transition-colors cursor-pointer ">
+                                  {section.title}
+                                </Link>
+                                <div className="space-y-2">
+                                  {section.items.map((item) => (
+                                    <Link
+                                      key={item.href}
+                                      href={item.href}
+                                      className="block text-sm hover:text-pop-green transition-colors"
+                                    >
+                                      {item.label}
+                                    </Link>
+                                  ))}
+                                </div>
+                              </div>
+                            ))}
+                          </div>
+                        ))}
+                      </div>
+
+                      {/* Container for the image cards */}
+                     <div className="relative overflow-hidden"> 
+                       <div className="relative  flex gap-6 w-full overflow-x-auto"><div className="w-min aboslute right-0 overflow-x-a flex gap-4">
+
+                     {cardData.map((card, cardIndex) => (
+                       <div key={cardIndex} className="w-72  px-1 bg-gray-100 rounded-md  relative h-96 cursor-pointer ">
+                         <div className="absolute inset-0 flex items-center justify-center">
+                           <div className="text-center">
+                             <div className={`w-12 h-12 ${card.color} mx-auto mb-3 flex items-center justify-center`}>
+                               <span className="text-white helvetica-bold text-xl">P</span>
+                             </div>
+                             <p className="systematic-caps text-xs text-gray-600 px-4">{card.caption}</p>
+                           </div>
+                         </div>
+                       </div>
+                     ))}
+                     </div>
+                     </div>
+</div>
+                     
+                      </div>
+                    </div>
+                 
+                );
+              })()}
+            </div>
+            
             {/* Services Dropdown */}
             <div
               className="relative"

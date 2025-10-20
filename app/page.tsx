@@ -20,13 +20,13 @@ export default function Home() {
       <section className="py-40 lg:py-48 px-6 bg-white font-jost">
         <div className="max-w-5xl mx-auto text-center">
           <span className="text-5xl lg:text-7xl mb-10 tracking-tight leading-tight">
-            exploring <span className="text-pop-green">aesthetic</span> and <span className="text-pop-red">systemic</span> dimensions of <span className="text-pop-blue">recycled</span> materials
+            connecting <span className="text-pop-green">systemic</span> and <span className="text-pop-red">aesthetic</span> dimensions of <span className="text-pop-blue">recycled</span> materials
            
           </span>
           
           <p className="text-lg lg:text-xl max-w-3xl mx-auto mb-14 leading-relaxed text-gray-700">
-            Transform your plastic waste into custom-branded products with complete traceability. 
-            Every item tells a story of sustainability, from your bins and back again.
+            we transform plastic waste into custom-branded products with complete traceability. 
+            every item tells a story of sustainability, from bins and back again.
           </p>
           
           <div className="flex flex-col sm:flex-row gap-5 justify-center items-center">
