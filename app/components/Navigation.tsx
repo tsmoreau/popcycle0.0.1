@@ -137,7 +137,7 @@ export default function Navigation() {
           <div className="  hidden self-end lg:flex items-end space-x-10 ml-8">
             {/* About Dropdown */}
             <div
-              className="relative"
+              className="relative pb-4"
               onMouseEnter={() => setAboutOpen(true)}
               onMouseLeave={() => setAboutOpen(false)}
             >
@@ -247,7 +247,7 @@ export default function Navigation() {
 
             {/* Products Dropdown */}
             <div
-              className="relative"
+              className="relative pb-4"
               onMouseEnter={() => setProductsOpen(true)}
               onMouseLeave={() => setProductsOpen(false)}
             >
@@ -383,7 +383,7 @@ export default function Navigation() {
             
             {/* Services Dropdown */}
             <div
-              className="relative"
+              className="relative pb-4"
               onMouseEnter={() => setServicesOpen(true)}
               onMouseLeave={() => setServicesOpen(false)}
             >
