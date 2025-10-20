@@ -172,10 +172,9 @@ export default function Navigation() {
                 const aboutColumns = [
                   [ // Column 1
                     companySection,
-                  ],
-                  [ // Column 2
                     connectSection,
                   ],
+               
                 ];
 
                 // The data for the image cards on the right.
@@ -417,20 +416,18 @@ export default function Navigation() {
                 const communityPartnersSection = {
                   title: "Community Partners",
                   items: [
-                    { href: "/services#community-partnerships", label: "Local Partnerships" },
-                    { href: "/services#collection-services", label: "Global Initiatives" },
+                    
                   ],
                 };
 
                 // This nested array defines the columns. Each inner array is a column.
                 const servicesColumns = [
                   [ // Column 1
+                     limitedCommissionSection,
                     studioRetainerSection,
+                     communityPartnersSection,
                   ],
-                  [ // Column 2
-                    limitedCommissionSection,
-                    communityPartnersSection,
-                  ],
+                
                 ];
 
                 // The data for the image cards on the right.
