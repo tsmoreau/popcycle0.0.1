@@ -206,7 +206,8 @@ export default function Navigation() {
               className="hover:opacity-80 transition-opacity"
               data-testid="button-user"
             >
-              <User className="w-6 h-6 text-gray-700" />
+              
+              <AuthButton />
             </button>
 
             {/* Shopping Cart */}
