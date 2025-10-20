@@ -186,13 +186,9 @@ export default function Navigation() {
                 ];
 
                 return (
-                  <div 
-                    className="fixed left-0 right-0 top-[88px] z-50 bg-white border-t border-gray-200 shadow-lg pt-2"
-                    onMouseEnter={() => setAboutOpen(true)}
-                    onMouseLeave={() => setAboutOpen(false)}
-                  >
+                  <div className="fixed left-0 right-0 top-[88px] z-50 bg-white border-t border-gray-200 shadow-lg ">
                     {/* 2. LAYOUT: A simple flex container. `justify-between` creates the space. */}
-                    <div className="max-w-7xl  mx-auto px-12 py-6 h-full flex items-start justify-start">
+                    <div className="max-w-7xl  mx-auto px-12 py-6 h-full flex items-start justify-start mt-2">
 
                       {/* Container for the text columns */}
                       <div className="flex gap-8 h-full">
@@ -326,13 +322,9 @@ export default function Navigation() {
                 ];
 
                 return (
-                  <div 
-                    className="fixed left-0 right-0 top-[88px] z-50 bg-white border-t border-gray-200 shadow-lg pt-2"
-                    onMouseEnter={() => setProductsOpen(true)}
-                    onMouseLeave={() => setProductsOpen(false)}
-                  >
+                  <div className="fixed left-0 right-0 top-[88px] z-50 bg-white border-t border-gray-200 shadow-lg ">
                     {/* 2. LAYOUT: A simple flex container. `justify-between` creates the space. */}
-                    <div className="max-w-7xl  mx-auto px-12 py-6 h-full flex items-start justify-start">
+                    <div className="max-w-7xl  mx-auto px-12 py-6 h-full flex items-start justify-start mt-2">
 
                       {/* Container for the text columns */}
                       <div className="flex gap-8 h-full">
@@ -449,13 +441,9 @@ export default function Navigation() {
                 ];
 
                 return (
-                  <div 
-                    className="fixed left-0 right-0 top-[88px] z-50 bg-white border-t border-gray-200 shadow-lg pt-2"
-                    onMouseEnter={() => setServicesOpen(true)}
-                    onMouseLeave={() => setServicesOpen(false)}
-                  >
+                  <div className="fixed left-0 right-0 top-[88px] z-50 bg-white border-t border-gray-200 shadow-lg ">
                     {/* 2. LAYOUT: A simple flex container. `justify-between` creates the space. */}
-                    <div className="max-w-7xl  mx-auto px-12 py-6 h-full flex items-start justify-start">
+                    <div className="max-w-7xl  mx-auto px-12 py-6 h-full flex items-start justify-start mt-2">
 
                       {/* Container for the text columns */}
                       <div className="flex gap-8 h-full">
