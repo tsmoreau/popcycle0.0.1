@@ -185,7 +185,7 @@ export default function Navigation() {
                 ];
 
                 return (
-                  <div className="absolute left-0 right-0 top-full z-50 bg-white border-t border-gray-200 shadow-lg ">
+                  <div className="fixed left-0 right-0 top-[88px] z-50 bg-white border-t border-gray-200 shadow-lg ">
                     {/* 2. LAYOUT: A simple flex container. `justify-between` creates the space. */}
                     <div className="max-w-7xl  mx-auto px-12 py-6 h-full flex items-start justify-start mt-2">
 
@@ -321,7 +321,7 @@ export default function Navigation() {
                 ];
 
                 return (
-                  <div className="absolute left-0 right-0 top-full z-50 bg-white border-t border-gray-200 shadow-lg ">
+                  <div className="fixed left-0 right-0 top-[88px] z-50 bg-white border-t border-gray-200 shadow-lg ">
                     {/* 2. LAYOUT: A simple flex container. `justify-between` creates the space. */}
                     <div className="max-w-7xl  mx-auto px-12 py-6 h-full flex items-start justify-start mt-2">
 
@@ -438,7 +438,7 @@ export default function Navigation() {
                 ];
 
                 return (
-                  <div className="absolute left-0 right-0 top-full z-50 bg-white border-t border-gray-200 shadow-lg ">
+                  <div className="fixed left-0 right-0 top-[88px] z-50 bg-white border-t border-gray-200 shadow-lg ">
                     {/* 2. LAYOUT: A simple flex container. `justify-between` creates the space. */}
                     <div className="max-w-7xl  mx-auto px-12 py-6 h-full flex items-start justify-start mt-2">
 
