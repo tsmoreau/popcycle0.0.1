@@ -583,7 +583,7 @@ export default function AdminPage() {
         await handleProductSave(productData)
         props.onCancel()
       }}
-      onDelete={props.item?._id ? async () => {
+      onDelete={!props.isAdding && props.item ? async () => {
         await handleProductDelete(props.item!)
         props.onCancel()
       } : undefined}
