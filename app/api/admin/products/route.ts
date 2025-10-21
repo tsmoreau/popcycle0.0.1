@@ -112,27 +112,30 @@ export async function POST(request: Request) {
     
     const body = await request.json();
     
+    // Remove _id if present (let MongoDB generate it)
+    const { _id, ...insertData } = body;
+    
     // Convert string booleans to actual booleans
-    if (typeof body.inStock === 'string') {
-      body.inStock = body.inStock === 'true';
+    if (typeof insertData.inStock === 'string') {
+      insertData.inStock = insertData.inStock === 'true';
     }
     
     // Ensure numeric fields are numbers
-    if (body.price) body.price = Number(body.price);
-    if (body.estimatedAssemblyTime) body.estimatedAssemblyTime = Number(body.estimatedAssemblyTime);
-    if (body.rating) body.rating = Number(body.rating);
-    if (body.reviewCount) body.reviewCount = Number(body.reviewCount);
+    if (insertData.price) insertData.price = Number(insertData.price);
+    if (insertData.estimatedAssemblyTime) insertData.estimatedAssemblyTime = Number(insertData.estimatedAssemblyTime);
+    if (insertData.rating) insertData.rating = Number(insertData.rating);
+    if (insertData.reviewCount) insertData.reviewCount = Number(insertData.reviewCount);
     
     // Handle nested material requirements
-    if (body.materialRequirements?.weight) {
-      body.materialRequirements.weight = Number(body.materialRequirements.weight);
+    if (insertData.materialRequirements?.weight) {
+      insertData.materialRequirements.weight = Number(insertData.materialRequirements.weight);
     }
     
     // Add timestamps
-    body.createdAt = new Date();
-    body.updatedAt = new Date();
+    insertData.createdAt = new Date();
+    insertData.updatedAt = new Date();
     
-    const result = await db.collection('products').insertOne(body);
+    const result = await db.collection('products').insertOne(insertData);
     
     return NextResponse.json({ 
       message: 'Product created successfully',
