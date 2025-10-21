@@ -529,8 +529,11 @@ export default function AdminPage() {
 
   const handleProductSave = async (product: Product) => {
     try {
+      // Determine if adding new product or updating existing
+      const isAdding = !product._id;
+      
       const response = await fetch('/api/admin/products', {
-        method: 'PUT',
+        method: isAdding ? 'POST' : 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(product)
       })
@@ -539,7 +542,7 @@ export default function AdminPage() {
         // Refresh products list
         await fetchProducts()
       } else {
-        throw new Error('Failed to save product')
+        throw new Error(`Failed to ${isAdding ? 'create' : 'update'} product`)
       }
     } catch (error) {
       console.error('Error saving product:', error)

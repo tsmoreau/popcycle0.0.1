@@ -103,7 +103,51 @@ export async function DELETE(request: Request) {
   }
 }
 
-export async function POST() {
+export async function POST(request: Request) {
+  const client = new MongoClient(MONGODB_URI);
+  
+  try {
+    await client.connect();
+    const db = client.db('PopCycle');
+    
+    const body = await request.json();
+    
+    // Convert string booleans to actual booleans
+    if (typeof body.inStock === 'string') {
+      body.inStock = body.inStock === 'true';
+    }
+    
+    // Ensure numeric fields are numbers
+    if (body.price) body.price = Number(body.price);
+    if (body.estimatedAssemblyTime) body.estimatedAssemblyTime = Number(body.estimatedAssemblyTime);
+    if (body.rating) body.rating = Number(body.rating);
+    if (body.reviewCount) body.reviewCount = Number(body.reviewCount);
+    
+    // Handle nested material requirements
+    if (body.materialRequirements?.weight) {
+      body.materialRequirements.weight = Number(body.materialRequirements.weight);
+    }
+    
+    // Add timestamps
+    body.createdAt = new Date();
+    body.updatedAt = new Date();
+    
+    const result = await db.collection('products').insertOne(body);
+    
+    return NextResponse.json({ 
+      message: 'Product created successfully',
+      productId: result.insertedId 
+    });
+  } catch (error) {
+    console.error('Error creating product:', error);
+    return NextResponse.json({ error: 'Failed to create product' }, { status: 500 });
+  } finally {
+    await client.close();
+  }
+}
+
+// Seed sample products (kept for reference)
+export async function SEED_SAMPLE_PRODUCTS() {
   const client = new MongoClient(MONGODB_URI);
   
   try {
