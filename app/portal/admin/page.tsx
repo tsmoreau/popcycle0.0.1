@@ -577,11 +577,19 @@ export default function AdminPage() {
     onDelete?: () => Promise<void>
     isSaving: boolean
   }) => {
+    console.log('renderProductEditModal props:', {
+      hasItem: !!props.item,
+      itemId: props.item?._id,
+      isAdding: props.isAdding
+    })
+    
     // Always pass the delete handler if item exists
     const deleteHandler = props.item?._id ? async () => {
       await handleProductDelete(props.item!)
       props.onCancel()
     } : undefined
+    
+    console.log('deleteHandler:', deleteHandler ? 'EXISTS' : 'UNDEFINED')
     
     return <ProductEditModal 
       item={props.item}
