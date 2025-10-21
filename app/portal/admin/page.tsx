@@ -438,24 +438,6 @@ export default function AdminPage() {
         </Badge>
       )
     },
-    {
-      key: 'difficulty',
-      header: 'Difficulty',
-      render: (product) => (
-        <Badge className={
-          product.difficulty === 'easy' ? 'bg-pop-green text-white' :
-          product.difficulty === 'medium' ? 'bg-yellow-500 text-white' :
-          'bg-pop-red text-white'
-        }>
-          {product.difficulty}
-        </Badge>
-      )
-    },
-    { 
-      key: 'estimatedAssemblyTime', 
-      header: 'Assembly Time',
-      render: (product) => `${product.estimatedAssemblyTime} min`
-    },
     { 
       key: 'price', 
       header: 'Price',
@@ -501,36 +483,6 @@ export default function AdminPage() {
         { value: 'earrings', label: 'Earrings' },
         { value: 'lighting', label: 'Lighting' },
         { value: 'cutting_boards', label: 'Cutting Boards' }
-      ]
-    },
-    { 
-      key: 'difficulty', 
-      label: 'Difficulty', 
-      type: 'select', 
-      required: true,
-      options: [
-        { value: 'easy', label: 'Easy' },
-        { value: 'medium', label: 'Medium' },
-        { value: 'hard', label: 'Hard' }
-      ]
-    },
-    { key: 'estimatedAssemblyTime', label: 'Assembly Time (minutes)', type: 'number', required: true },
-    { 
-      key: 'materialRequirements', 
-      label: 'Material Requirements', 
-      type: 'nested',
-      nested: [
-        { 
-          key: 'plasticType', 
-          label: 'Plastic Type', 
-          type: 'select',
-          options: [
-            { value: 'HDPE', label: 'HDPE' },
-            { value: 'PET', label: 'PET' },
-            { value: 'PP', label: 'PP' }
-          ]
-        },
-        { key: 'weight', label: 'Weight (kg)', type: 'number' }
       ]
     },
     { key: 'price', label: 'Price ($)', type: 'number', required: true },
