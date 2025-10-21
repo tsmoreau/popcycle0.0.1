@@ -231,7 +231,7 @@ export default function AdminPage() {
       const data = await response.json()
       
       if (data.success) {
-        alert(`Sample data generated successfully!\n\nSummary:\n- ${data.summary.organizations} Organizations\n- ${data.summary.bins} Bins\n- ${data.summary.batches} Batches\n- ${data.summary.items} Items\n- ${data.summary.users} Users\n- ${data.summary.products} Products\n- ${data.summary.orders} Orders`)
+        alert(`Sample data generated successfully!\n\nSummary:\n- ${data.summary.organizations} Organizations\n- ${data.summary.events} Events\n- ${data.summary.bins} Bins\n- ${data.summary.batches} Batches\n- ${data.summary.blanks} Blanks\n- ${data.summary.users} Users\n- ${data.summary.products} Products\n- ${data.summary.orders} Orders`)
         // Refresh MongoDB status to show new collection count
         await fetchMongoStatus()
       } else {

@@ -1008,9 +1008,11 @@ export async function POST() {
       message: 'Sample data generated successfully',
       summary: {
         organizations: orgs.length,
+        events: events.length,
         bins: bins.length,
         batches: batches.length,
         blanks: blanks.length,
+        items: blanks.length,
         users: users.length,
         products: products.length,
         orders: orders.length
