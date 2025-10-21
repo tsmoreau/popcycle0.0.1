@@ -874,57 +874,6 @@ export async function POST() {
     
     await db.collection('users').insertMany(users);
     
-    // Generate Blanks with QR codes - only for batches that finished processing 
-    const blanks: any[] = [];
-    const completedBatches = batches.filter(batch => batch.status === 'inventory_creation');
-    
-    completedBatches.forEach((batch, batchIndex) => {
-      const orgIndex = orgs.findIndex(org => {
-        const bin = bins.find(b => batch.binIds && batch.binIds.includes(b._id));
-        return bin && org._id.equals(bin.orgId);
-      });
-      
-      // Generate 5-8 blanks per completed batch (6 batches = ~30-40 blanks total)
-      const blankCount = Math.floor(Math.random() * 4) + 5;
-      for (let i = 0; i < blankCount; i++) {
-        const qrCode = generateQRCode(orgIndex, 'item');
-        
-        // Logical progression: blank -> assembled -> delivered
-        const hasAssembly = Math.random() > 0.4; // 60% chance of being assembled
-        const hasDelivery = hasAssembly && Math.random() > 0.5; // 50% of assembled items get delivered
-        
-        let status: 'blank' | 'assembled' | 'delivered' = 'blank';
-        
-        if (hasDelivery) {
-          status = 'delivered';
-        } else if (hasAssembly) {
-          status = 'assembled';
-        }
-        
-        blanks.push({
-          _id: qrCode,
-          batchIds: [batch._id], // v3 schema uses array
-          productId: hasAssembly ? products[Math.floor(Math.random() * products.length)]._id : undefined,
-          orderId: hasDelivery ? orders[Math.floor(Math.random() * orders.length)]._id : undefined,
-          userId: hasAssembly ? users[Math.floor(Math.random() * users.length)]._id : undefined,
-          status: status,
-          weight: Math.round((Math.random() * 0.5 + 0.2) * 100) / 100,
-          materialDescription: `Recycled ${batch.materialType} plastic sheet`,
-          dimensions: {
-            width: Math.round((Math.random() * 5 + 10) * 10) / 10,
-            height: Math.round((Math.random() * 5 + 10) * 10) / 10,
-            thickness: Math.round((Math.random() * 0.5 + 0.3) * 10) / 10
-          },
-          assemblyDate: hasAssembly ? new Date(Date.now() - Math.random() * 14 * 24 * 60 * 60 * 1000) : undefined,
-          deliveryDate: hasDelivery ? new Date(Date.now() - Math.random() * 7 * 24 * 60 * 60 * 1000) : undefined,
-          createdAt: new Date(),
-          updatedAt: new Date()
-        });
-      }
-    });
-    
-    await db.collection('blanks').insertMany(blanks);
-    
     // Generate Orders
     const orders = [
       {
@@ -993,6 +942,57 @@ export async function POST() {
     ];
     
     await db.collection('orders').insertMany(orders);
+    
+    // Generate Blanks with QR codes - only for batches that finished processing 
+    const blanks: any[] = [];
+    const completedBatches = batches.filter(batch => batch.status === 'inventory_creation');
+    
+    completedBatches.forEach((batch, batchIndex) => {
+      const orgIndex = orgs.findIndex(org => {
+        const bin = bins.find(b => batch.binIds && batch.binIds.includes(b._id));
+        return bin && org._id.equals(bin.orgId);
+      });
+      
+      // Generate 5-8 blanks per completed batch (6 batches = ~30-40 blanks total)
+      const blankCount = Math.floor(Math.random() * 4) + 5;
+      for (let i = 0; i < blankCount; i++) {
+        const qrCode = generateQRCode(orgIndex, 'item');
+        
+        // Logical progression: blank -> assembled -> delivered
+        const hasAssembly = Math.random() > 0.4; // 60% chance of being assembled
+        const hasDelivery = hasAssembly && Math.random() > 0.5; // 50% of assembled items get delivered
+        
+        let status: 'blank' | 'assembled' | 'delivered' = 'blank';
+        
+        if (hasDelivery) {
+          status = 'delivered';
+        } else if (hasAssembly) {
+          status = 'assembled';
+        }
+        
+        blanks.push({
+          _id: qrCode,
+          batchIds: [batch._id], // v3 schema uses array
+          productId: hasAssembly ? products[Math.floor(Math.random() * products.length)]._id : undefined,
+          orderId: hasDelivery ? orders[Math.floor(Math.random() * orders.length)]._id : undefined,
+          userId: hasAssembly ? users[Math.floor(Math.random() * users.length)]._id : undefined,
+          status: status,
+          weight: Math.round((Math.random() * 0.5 + 0.2) * 100) / 100,
+          materialDescription: `Recycled ${batch.materialType} plastic sheet`,
+          dimensions: {
+            width: Math.round((Math.random() * 5 + 10) * 10) / 10,
+            height: Math.round((Math.random() * 5 + 10) * 10) / 10,
+            thickness: Math.round((Math.random() * 0.5 + 0.3) * 10) / 10
+          },
+          assemblyDate: hasAssembly ? new Date(Date.now() - Math.random() * 14 * 24 * 60 * 60 * 1000) : undefined,
+          deliveryDate: hasDelivery ? new Date(Date.now() - Math.random() * 7 * 24 * 60 * 60 * 1000) : undefined,
+          createdAt: new Date(),
+          updatedAt: new Date()
+        });
+      }
+    });
+    
+    await db.collection('blanks').insertMany(blanks);
     
     await client.close();
     
