@@ -825,6 +825,7 @@ export default function AdminPage() {
                     columns={productColumns}
                     editableFields={productEditableFields}
                     onSave={handleProductSave}
+                    onAdd={handleProductSave}
                     onDelete={handleProductDelete}
                     renderEditModal={renderProductEditModal}
                     enableColumnSelection={true}
