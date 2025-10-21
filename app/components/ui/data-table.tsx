@@ -59,8 +59,16 @@ export interface DataTableProps<T> {
   sortField?: string
   sortDirection?: SortDirection
   onSort?: (field: string, direction: SortDirection) => void
-  // Legacy support for custom modals
+  // Custom modal renderers
   renderModal?: (item: T) => React.ReactNode
+  renderEditModal?: (props: {
+    item: T | null
+    isAdding: boolean
+    onSave: (item: any) => Promise<void>
+    onCancel: () => void
+    onDelete?: () => Promise<void>
+    isSaving: boolean
+  }) => React.ReactNode
   // Column selection and filtering (optional)
   availableColumns?: Column<T>[]
   defaultVisibleColumns?: string[]
@@ -85,6 +93,7 @@ export function DataTable<T extends Record<string, any>>({
   sortDirection: externalSortDirection,
   onSort,
   renderModal,
+  renderEditModal: customRenderEditModal,
   availableColumns,
   defaultVisibleColumns,
   enableColumnSelection = false,
@@ -446,20 +455,34 @@ export function DataTable<T extends Record<string, any>>({
     }
   }
 
-  const renderEditModal = (item: T) => (
-    <div>
-      <DialogHeader>
-        <DialogTitle className="flex items-center gap-2">
-          {isAdding ? <Plus className="h-5 w-5" /> : <Edit2 className="h-5 w-5" />}
-          {isAdding ? 'Add New' : 'Edit'} {title.replace(' Management', '').replace(' Configuration', '')}
-        </DialogTitle>
-        <DialogDescription>
-          {isAdding 
-            ? 'Add a new entry to the database. Fill in all required fields below.'
-            : 'Make changes to this item. All database fields are shown below.'
-          }
-        </DialogDescription>
-      </DialogHeader>
+  const renderEditModal = (item: T) => {
+    // Use custom edit modal if provided
+    if (customRenderEditModal) {
+      return customRenderEditModal({
+        item: isAdding ? null : item,
+        isAdding,
+        onSave: handleSave,
+        onCancel: handleCancelEdit,
+        onDelete: onDelete ? handleDelete : undefined,
+        isSaving
+      })
+    }
+    
+    // Default edit modal
+    return (
+      <div>
+        <DialogHeader>
+          <DialogTitle className="flex items-center gap-2">
+            {isAdding ? <Plus className="h-5 w-5" /> : <Edit2 className="h-5 w-5" />}
+            {isAdding ? 'Add New' : 'Edit'} {title.replace(' Management', '').replace(' Configuration', '')}
+          </DialogTitle>
+          <DialogDescription>
+            {isAdding 
+              ? 'Add a new entry to the database. Fill in all required fields below.'
+              : 'Make changes to this item. All database fields are shown below.'
+            }
+          </DialogDescription>
+        </DialogHeader>
       
       <div className="space-y-4 mt-4 max-h-96 overflow-y-auto">
         {editableFields?.map(field => {
@@ -525,7 +548,8 @@ export function DataTable<T extends Record<string, any>>({
         )}
       </div>
     </div>
-  )
+    )
+  }
 
   const renderNestedValue = (value: any, nestedFields?: EditableField<any>[]) => {
     if (!value || typeof value !== 'object') return String(value || 'Not provided')

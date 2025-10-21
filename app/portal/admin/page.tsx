@@ -8,6 +8,7 @@ import { Badge } from '../../components/ui/badge'
 import { DataTable, Column, EditableField } from '../../components/ui/data-table'
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '../../components/ui/accordion'
 import { LoadingSquare } from '../../components/ui/loading-square'
+import { ProductEditModal } from '../../components/ProductEditModal'
 
 interface User {
   _id: string
@@ -68,12 +69,22 @@ interface Product {
   description: string
   category: 'workshop' | 'studio_edition' | 'client_edition'
   productType: 'coasters' | 'keychains' | 'bookmarks' | 'magnets' | 'earrings' | 'lighting' | 'cutting_boards'
-  difficulty: 'easy' | 'medium' | 'hard'
-  estimatedAssemblyTime: number
-  materialRequirements: {
-    plasticType: 'HDPE' | 'PET' | 'PP'
-    weight: number
+  designFiles?: {
+    cncVectors?: string[]
+    laserVectors?: string[]
+    instructionsPdfs?: string[]
+    photos?: string[]
   }
+  assets?: Array<{
+    id: string
+    type: 'image' | 'video' | 'document' | 'model'
+    url: string
+    thumbnail?: string
+    alt?: string
+    description?: string
+    isPrimary?: boolean
+    order?: number
+  }>
   price: number
   inStock: boolean
   rating: number
@@ -532,6 +543,88 @@ export default function AdminPage() {
     }
   }
 
+  // Custom edit modal for products with tabs
+  const renderProductEditModal = (props: {
+    item: Product | null
+    isAdding: boolean
+    onSave: (productData: any) => Promise<void>
+    onCancel: () => void
+    onDelete?: () => Promise<void>
+    isSaving: boolean
+  }) => {
+    return <ProductEditModal {...props} />
+  }
+
+  return (
+    <div className="space-y-6">
+      <div>
+        <h2 className="text-3xl font-bold text-pop-black">Admin Dashboard</h2>
+      </div>
+
+      {/* Admin Overview - Mobile-Ready Collapsible */}
+      <Accordion type="single" collapsible className="w-full">
+        <AccordionItem value="admin-overview" className="border rounded-lg px-4">
+          <AccordionTrigger className="hover:no-underline">
+            <div className="flex items-center gap-3">
+              <Shield className="h-5 w-5 text-pop-green" />
+              <div className="text-left">
+                <h3 className="text-lg font-semibold text-pop-black">Admin Overview</h3>
+                 <p className="text-sm text-gray-600 font-medium">User stats, data, and integration overviews</p>
+              </div>
+            </div>
+          </AccordionTrigger>
+          <AccordionContent>
+            {/* Mobile-First Grid Layout */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 pt-2 pb-4">
+              {/* Total Users */}
+              <div className="bg-gray-50 border border-gray-200 rounded-lg p-4">
+                <div className="flex items-center justify-between mb-2">
+                  <Users className="h-5 w-5 text-gray-600" />
+                  <span className="text-xs font-medium text-gray-500 uppercase tracking-wide">Users</span>
+                </div>
+                <div className="text-2xl font-bold text-pop-black mb-1">2,847</div>
+                <div className="text-sm text-gray-600 mb-2">Total Users</div>
+                <div className="flex gap-2 text-xs">
+                  <span className="bg-gray-100 text-gray-700 px-2 py-1 rounded">2,793 Active</span>
+                  <span className="bg-gray-100 text-gray-700 px-2 py-1 rounded">54 Inactive</span>
+                </div>
+              </div>
+
+              {/* Active Staff */}
+              <div className="bg-gray-50 border border-gray-200 rounded-lg p-4">
+                <div className="flex items-center justify-between mb-2">
+                  <Settings className="h-5 w-5 text-gray-600" />
+                  <span className="text-xs font-medium text-gray-500 uppercase tracking-wide">Staff</span>
+                </div>
+                <div className="text-2xl font-bold text-pop-black mb-1">12</div>
+                <div className="text-sm text-gray-600 mb-2">Active Staff</div>
+                <div className="flex gap-2 text-xs">
+                  <span className="bg-gray-100 text-gray-700 px-2 py-1 rounded">8 Operations</span>
+                  <span className="bg-gray-100 text-gray-700 px-2 py-1 rounded">4 CRM</span>
+                </div>
+              </div>
+
+              {/* Partner Access */}
+              <div className="bg-gray-50 border border-gray-200 rounded-lg p-4">
+                <div className="flex items-center justify-between mb-2">
+                  <Users className="h-5 w-5 text-gray-600" />
+                  <span className="text-xs font-medium text-gray-500 uppercase tracking-wide">Partners</span>
+                </div>
+                <div className="text-2xl font-bold text-pop-black mb-1">54</div>
+                <div className="text-sm text-gray-600 mb-2">Partner Access</div>
+                <div className="flex gap-2 text-xs">
+                  <span className="bg-gray-100 text-gray-700 px-2 py-1 rounded">18 Orgs</span>
+                  <span className="bg-gray-100 text-gray-700 px-2 py-1 rounded">36 Affiliates</span>
+                </div>
+              </div>
+
+              {/* System Health */}
+              <div className="bg-gray-50 border border-gray-200 rounded-lg p-4">
+                <div className="flex items-center justify-between mb-2">
+                  <Zap className="h-5 w-5 text-gray-600" />
+    onSave: (productData: any) => Promise<void>
+    onCancel: () => void
+    onDelete?: () => Promise<void>
   return (
     <div className="space-y-6">
       <div>
@@ -766,10 +859,11 @@ export default function AdminPage() {
                     editableFields={productEditableFields}
                     onSave={handleProductSave}
                     onDelete={handleProductDelete}
+                    renderEditModal={renderProductEditModal}
                     enableColumnSelection={true}
                     enableFiltering={true}
                     availableColumns={productColumns}
-                    defaultVisibleColumns={['name', 'category', 'difficulty', 'price', 'inStock']}
+                    defaultVisibleColumns={['name', 'category', 'price', 'inStock']}
                   />
                 )}
               </div>

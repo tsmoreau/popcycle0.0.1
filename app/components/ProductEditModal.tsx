@@ -1,20 +1,48 @@
 "use client"
 
-import { useState } from "react"
-import { Product } from "@/lib/schemas-v3"
+import { useState, useEffect } from "react"
 import { Button } from "./ui/button"
 import { Input } from "./ui/input"
 import { Textarea } from "./ui/textarea"
 import { Label } from "./ui/label"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "./ui/tabs"
 import { Badge } from "./ui/badge"
+import { DialogHeader, DialogTitle, DialogDescription } from "./ui/dialog"
 import { 
   Save, X, Plus, Trash2, Upload, File, Image as ImageIcon,
-  Video, FileText, Box
+  FileText, Edit2
 } from "lucide-react"
 
+interface Product {
+  _id: string
+  name: string
+  description: string
+  category: 'workshop' | 'studio_edition' | 'client_edition'
+  productType: 'coasters' | 'keychains' | 'bookmarks' | 'magnets' | 'earrings' | 'lighting' | 'cutting_boards'
+  designFiles?: {
+    cncVectors?: string[]
+    laserVectors?: string[]
+    instructionsPdfs?: string[]
+    photos?: string[]
+  }
+  assets?: Array<{
+    id: string
+    type: 'image' | 'video' | 'document' | 'model'
+    url: string
+    thumbnail?: string
+    alt?: string
+    description?: string
+    isPrimary?: boolean
+    order?: number
+  }>
+  price: number
+  inStock: boolean
+  rating: number
+  reviewCount: number
+}
+
 interface ProductEditModalProps {
-  product: Product | null
+  item: Product | null
   isAdding: boolean
   onSave: (productData: any) => Promise<void>
   onCancel: () => void
@@ -23,118 +51,143 @@ interface ProductEditModalProps {
 }
 
 export function ProductEditModal({
-  product,
+  item,
   isAdding,
   onSave,
   onCancel,
   onDelete,
   isSaving
 }: ProductEditModalProps) {
-  // Basic Info State
-  const [name, setName] = useState(product?.name || "")
-  const [description, setDescription] = useState(product?.description || "")
-  const [category, setCategory] = useState(product?.category || "workshop")
-  const [productType, setProductType] = useState(product?.productType || "coasters")
-  const [price, setPrice] = useState(product?.price || 0)
-  const [inStock, setInStock] = useState(product?.inStock ?? true)
-  const [rating, setRating] = useState(product?.rating || 0)
-  const [reviewCount, setReviewCount] = useState(product?.reviewCount || 0)
+  const [formData, setFormData] = useState<any>({
+    _id: '',
+    name: '',
+    description: '',
+    category: 'workshop',
+    productType: 'coasters',
+    price: 0,
+    inStock: true,
+    rating: 0,
+    reviewCount: 0,
+    designFiles: {
+      cncVectors: [],
+      laserVectors: [],
+      instructionsPdfs: [],
+      photos: []
+    },
+    assets: []
+  })
 
-  // Design Files State
-  const [cncVectors, setCncVectors] = useState<string[]>(
-    product?.designFiles?.cncVectors || []
-  )
-  const [laserVectors, setLaserVectors] = useState<string[]>(
-    product?.designFiles?.laserVectors || []
-  )
-  const [instructionsPdfs, setInstructionsPdfs] = useState<string[]>(
-    product?.designFiles?.instructionsPdfs || []
-  )
-  const [photos, setPhotos] = useState<string[]>(
-    product?.designFiles?.photos || []
-  )
-
-  // Assets State
-  const [assets, setAssets] = useState<Array<{
-    id: string
-    type: "image" | "video" | "document" | "model"
-    url: string
-    thumbnail?: string
-    alt?: string
-    description?: string
-    isPrimary?: boolean
-    order?: number
-  }>>(product?.assets || [])
-
-  const handleSave = async () => {
-    const productData = {
-      ...(product || {}),
-      name,
-      description,
-      category,
-      productType,
-      price,
-      inStock,
-      rating,
-      reviewCount,
-      designFiles: {
-        cncVectors,
-        laserVectors,
-        instructionsPdfs,
-        photos
-      },
-      assets
+  useEffect(() => {
+    if (item) {
+      setFormData({
+        _id: item._id || '',
+        name: item.name || '',
+        description: item.description || '',
+        category: item.category || 'workshop',
+        productType: item.productType || 'coasters',
+        price: item.price || 0,
+        inStock: item.inStock ?? true,
+        rating: item.rating || 0,
+        reviewCount: item.reviewCount || 0,
+        designFiles: {
+          cncVectors: item.designFiles?.cncVectors || [],
+          laserVectors: item.designFiles?.laserVectors || [],
+          instructionsPdfs: item.designFiles?.instructionsPdfs || [],
+          photos: item.designFiles?.photos || []
+        },
+        assets: item.assets || []
+      })
+    } else {
+      setFormData({
+        _id: '',
+        name: '',
+        description: '',
+        category: 'workshop',
+        productType: 'coasters',
+        price: 0,
+        inStock: true,
+        rating: 0,
+        reviewCount: 0,
+        designFiles: {
+          cncVectors: [],
+          laserVectors: [],
+          instructionsPdfs: [],
+          photos: []
+        },
+        assets: []
+      })
     }
-    await onSave(productData)
+  }, [item])
+
+  const handleFieldChange = (field: string, value: any) => {
+    setFormData((prev: any) => ({ ...prev, [field]: value }))
   }
 
-  // Mock file upload handler - generates placeholder URL
-  const handleFileUpload = (
-    fileList: string[],
-    setFileList: (files: string[]) => void
-  ) => {
-    // In real implementation, this would upload to S3
+  const handleDesignFileAdd = (field: keyof typeof formData.designFiles) => {
     const mockUrl = `https://s3.example.com/files/${Date.now()}-${Math.random().toString(36).substr(2, 9)}.pdf`
-    setFileList([...fileList, mockUrl])
-  }
-
-  const removeFile = (
-    fileList: string[],
-    setFileList: (files: string[]) => void,
-    index: number
-  ) => {
-    setFileList(fileList.filter((_, i) => i !== index))
-  }
-
-  const addAsset = () => {
-    setAssets([
-      ...assets,
-      {
-        id: `asset-${Date.now()}`,
-        type: "image",
-        url: "",
-        order: assets.length
+    setFormData((prev: any) => ({
+      ...prev,
+      designFiles: {
+        ...prev.designFiles,
+        [field]: [...prev.designFiles[field], mockUrl]
       }
-    ])
+    }))
   }
 
-  const removeAsset = (index: number) => {
-    setAssets(assets.filter((_, i) => i !== index))
+  const handleDesignFileRemove = (field: keyof typeof formData.designFiles, index: number) => {
+    setFormData((prev: any) => ({
+      ...prev,
+      designFiles: {
+        ...prev.designFiles,
+        [field]: prev.designFiles[field].filter((_: any, i: number) => i !== index)
+      }
+    }))
   }
 
-  const updateAsset = (index: number, field: string, value: any) => {
-    const updated = [...assets]
-    updated[index] = { ...updated[index], [field]: value }
-    setAssets(updated)
+  const handleAssetAdd = () => {
+    setFormData((prev: any) => ({
+      ...prev,
+      assets: [
+        ...prev.assets,
+        {
+          id: `asset-${Date.now()}`,
+          type: 'image',
+          url: '',
+          order: prev.assets.length
+        }
+      ]
+    }))
+  }
+
+  const handleAssetRemove = (index: number) => {
+    setFormData((prev: any) => ({
+      ...prev,
+      assets: prev.assets.filter((_: any, i: number) => i !== index)
+    }))
+  }
+
+  const handleAssetChange = (index: number, field: string, value: any) => {
+    setFormData((prev: any) => ({
+      ...prev,
+      assets: prev.assets.map((asset: any, i: number) =>
+        i === index ? { ...asset, [field]: value } : asset
+      )
+    }))
   }
 
   return (
     <div className="space-y-4">
-      <div className="flex items-center justify-between">
-        <h2 className="text-xl font-semibold">
-          {isAdding ? "Add New Product" : "Edit Product"}
-        </h2>
-      </div>
+      <DialogHeader>
+        <DialogTitle className="flex items-center gap-2">
+          {isAdding ? <Plus className="h-5 w-5" /> : <Edit2 className="h-5 w-5" />}
+          {isAdding ? 'Add New Product' : 'Edit Product'}
+        </DialogTitle>
+        <DialogDescription>
+          {isAdding 
+            ? 'Add a new product to the catalog with design files and assets'
+            : 'Edit product information, design files, and assets'}
+        </DialogDescription>
+      </DialogHeader>
 
       <Tabs defaultValue="basic" className="w-full">
         <TabsList className="grid w-full grid-cols-3">
@@ -143,38 +196,34 @@ export function ProductEditModal({
           <TabsTrigger value="assets">Assets</TabsTrigger>
         </TabsList>
 
-        {/* Basic Info Tab */}
         <TabsContent value="basic" className="space-y-4 max-h-96 overflow-y-auto">
           <div>
             <Label>Product ID</Label>
-            <Input value={product?._id?.toString() || "Auto-generated"} disabled />
+            <Input value={formData._id || 'Auto-generated'} disabled />
           </div>
-
           <div>
             <Label>Name *</Label>
             <Input
-              value={name}
-              onChange={(e) => setName(e.target.value)}
+              value={formData.name}
+              onChange={(e) => handleFieldChange('name', e.target.value)}
               placeholder="Enter product name"
             />
           </div>
-
           <div>
             <Label>Description *</Label>
             <Textarea
-              value={description}
-              onChange={(e) => setDescription(e.target.value)}
+              value={formData.description}
+              onChange={(e) => handleFieldChange('description', e.target.value)}
               placeholder="Describe the product"
               rows={3}
             />
           </div>
-
           <div className="grid grid-cols-2 gap-4">
             <div>
               <Label>Category *</Label>
               <select
-                value={category}
-                onChange={(e) => setCategory(e.target.value as any)}
+                value={formData.category}
+                onChange={(e) => handleFieldChange('category', e.target.value)}
                 className="border rounded px-3 py-2 w-full"
               >
                 <option value="workshop">Workshop</option>
@@ -182,12 +231,11 @@ export function ProductEditModal({
                 <option value="client_edition">Client Edition</option>
               </select>
             </div>
-
             <div>
               <Label>Product Type *</Label>
               <select
-                value={productType}
-                onChange={(e) => setProductType(e.target.value as any)}
+                value={formData.productType}
+                onChange={(e) => handleFieldChange('productType', e.target.value)}
                 className="border rounded px-3 py-2 w-full"
               >
                 <option value="coasters">Coasters</option>
@@ -200,23 +248,21 @@ export function ProductEditModal({
               </select>
             </div>
           </div>
-
           <div className="grid grid-cols-2 gap-4">
             <div>
               <Label>Price ($) *</Label>
               <Input
                 type="number"
-                value={price}
-                onChange={(e) => setPrice(parseFloat(e.target.value) || 0)}
+                value={formData.price}
+                onChange={(e) => handleFieldChange('price', parseFloat(e.target.value) || 0)}
                 step="0.01"
               />
             </div>
-
             <div>
               <Label>In Stock</Label>
               <select
-                value={inStock ? "true" : "false"}
-                onChange={(e) => setInStock(e.target.value === "true")}
+                value={formData.inStock ? 'true' : 'false'}
+                onChange={(e) => handleFieldChange('inStock', e.target.value === 'true')}
                 className="border rounded px-3 py-2 w-full"
               >
                 <option value="true">In Stock</option>
@@ -224,48 +270,44 @@ export function ProductEditModal({
               </select>
             </div>
           </div>
-
           <div className="grid grid-cols-2 gap-4">
             <div>
               <Label>Rating (1-5)</Label>
               <Input
                 type="number"
-                value={rating}
-                onChange={(e) => setRating(parseFloat(e.target.value) || 0)}
+                value={formData.rating}
+                onChange={(e) => handleFieldChange('rating', parseFloat(e.target.value) || 0)}
                 min="0"
                 max="5"
                 step="0.1"
               />
             </div>
-
             <div>
               <Label>Review Count</Label>
               <Input
                 type="number"
-                value={reviewCount}
-                onChange={(e) => setReviewCount(parseInt(e.target.value) || 0)}
+                value={formData.reviewCount}
+                onChange={(e) => handleFieldChange('reviewCount', parseInt(e.target.value) || 0)}
                 min="0"
               />
             </div>
           </div>
         </TabsContent>
 
-        {/* Design Files Tab */}
         <TabsContent value="design" className="space-y-6 max-h-96 overflow-y-auto">
-          {/* CNC Vectors */}
           <div>
             <Label className="flex items-center gap-2 mb-2">
               <File className="h-4 w-4" />
               CNC Vectors
             </Label>
             <div className="space-y-2">
-              {cncVectors.map((file, index) => (
+              {formData.designFiles.cncVectors.map((file: string, index: number) => (
                 <div key={index} className="flex items-center gap-2 p-2 border rounded">
                   <span className="flex-1 text-sm truncate">{file}</span>
                   <Button
                     size="sm"
                     variant="ghost"
-                    onClick={() => removeFile(cncVectors, setCncVectors, index)}
+                    onClick={() => handleDesignFileRemove('cncVectors', index)}
                   >
                     <Trash2 className="h-4 w-4" />
                   </Button>
@@ -274,7 +316,7 @@ export function ProductEditModal({
               <Button
                 variant="outline"
                 size="sm"
-                onClick={() => handleFileUpload(cncVectors, setCncVectors)}
+                onClick={() => handleDesignFileAdd('cncVectors')}
                 className="w-full"
               >
                 <Upload className="h-4 w-4 mr-2" />
@@ -283,20 +325,19 @@ export function ProductEditModal({
             </div>
           </div>
 
-          {/* Laser Vectors */}
           <div>
             <Label className="flex items-center gap-2 mb-2">
               <File className="h-4 w-4" />
               Laser Vectors
             </Label>
             <div className="space-y-2">
-              {laserVectors.map((file, index) => (
+              {formData.designFiles.laserVectors.map((file: string, index: number) => (
                 <div key={index} className="flex items-center gap-2 p-2 border rounded">
                   <span className="flex-1 text-sm truncate">{file}</span>
                   <Button
                     size="sm"
                     variant="ghost"
-                    onClick={() => removeFile(laserVectors, setLaserVectors, index)}
+                    onClick={() => handleDesignFileRemove('laserVectors', index)}
                   >
                     <Trash2 className="h-4 w-4" />
                   </Button>
@@ -305,7 +346,7 @@ export function ProductEditModal({
               <Button
                 variant="outline"
                 size="sm"
-                onClick={() => handleFileUpload(laserVectors, setLaserVectors)}
+                onClick={() => handleDesignFileAdd('laserVectors')}
                 className="w-full"
               >
                 <Upload className="h-4 w-4 mr-2" />
@@ -314,20 +355,19 @@ export function ProductEditModal({
             </div>
           </div>
 
-          {/* Instructions PDFs */}
           <div>
             <Label className="flex items-center gap-2 mb-2">
               <FileText className="h-4 w-4" />
               Instructions PDFs
             </Label>
             <div className="space-y-2">
-              {instructionsPdfs.map((file, index) => (
+              {formData.designFiles.instructionsPdfs.map((file: string, index: number) => (
                 <div key={index} className="flex items-center gap-2 p-2 border rounded">
                   <span className="flex-1 text-sm truncate">{file}</span>
                   <Button
                     size="sm"
                     variant="ghost"
-                    onClick={() => removeFile(instructionsPdfs, setInstructionsPdfs, index)}
+                    onClick={() => handleDesignFileRemove('instructionsPdfs', index)}
                   >
                     <Trash2 className="h-4 w-4" />
                   </Button>
@@ -336,7 +376,7 @@ export function ProductEditModal({
               <Button
                 variant="outline"
                 size="sm"
-                onClick={() => handleFileUpload(instructionsPdfs, setInstructionsPdfs)}
+                onClick={() => handleDesignFileAdd('instructionsPdfs')}
                 className="w-full"
               >
                 <Upload className="h-4 w-4 mr-2" />
@@ -345,20 +385,19 @@ export function ProductEditModal({
             </div>
           </div>
 
-          {/* Photos */}
           <div>
             <Label className="flex items-center gap-2 mb-2">
               <ImageIcon className="h-4 w-4" />
               Photos
             </Label>
             <div className="space-y-2">
-              {photos.map((file, index) => (
+              {formData.designFiles.photos.map((file: string, index: number) => (
                 <div key={index} className="flex items-center gap-2 p-2 border rounded">
                   <span className="flex-1 text-sm truncate">{file}</span>
                   <Button
                     size="sm"
                     variant="ghost"
-                    onClick={() => removeFile(photos, setPhotos, index)}
+                    onClick={() => handleDesignFileRemove('photos', index)}
                   >
                     <Trash2 className="h-4 w-4" />
                   </Button>
@@ -367,7 +406,7 @@ export function ProductEditModal({
               <Button
                 variant="outline"
                 size="sm"
-                onClick={() => handleFileUpload(photos, setPhotos)}
+                onClick={() => handleDesignFileAdd('photos')}
                 className="w-full"
               >
                 <Upload className="h-4 w-4 mr-2" />
@@ -377,16 +416,15 @@ export function ProductEditModal({
           </div>
         </TabsContent>
 
-        {/* Assets Tab */}
         <TabsContent value="assets" className="space-y-4 max-h-96 overflow-y-auto">
-          {assets.map((asset, index) => (
+          {formData.assets.map((asset: any, index: number) => (
             <div key={asset.id} className="p-4 border rounded space-y-3">
               <div className="flex items-center justify-between">
                 <Badge>{asset.type}</Badge>
                 <Button
                   size="sm"
                   variant="ghost"
-                  onClick={() => removeAsset(index)}
+                  onClick={() => handleAssetRemove(index)}
                 >
                   <Trash2 className="h-4 w-4" />
                 </Button>
@@ -397,16 +435,15 @@ export function ProductEditModal({
                   <Label className="text-xs">Asset ID</Label>
                   <Input
                     value={asset.id}
-                    onChange={(e) => updateAsset(index, "id", e.target.value)}
+                    onChange={(e) => handleAssetChange(index, 'id', e.target.value)}
                     className="h-8 text-sm"
                   />
                 </div>
-
                 <div>
                   <Label className="text-xs">Type</Label>
                   <select
                     value={asset.type}
-                    onChange={(e) => updateAsset(index, "type", e.target.value)}
+                    onChange={(e) => handleAssetChange(index, 'type', e.target.value)}
                     className="border rounded px-2 py-1 w-full h-8 text-sm"
                   >
                     <option value="image">Image</option>
@@ -421,7 +458,7 @@ export function ProductEditModal({
                 <Label className="text-xs">URL</Label>
                 <Input
                   value={asset.url}
-                  onChange={(e) => updateAsset(index, "url", e.target.value)}
+                  onChange={(e) => handleAssetChange(index, 'url', e.target.value)}
                   placeholder="https://..."
                   className="h-8 text-sm"
                 />
@@ -430,8 +467,8 @@ export function ProductEditModal({
               <div>
                 <Label className="text-xs">Thumbnail URL</Label>
                 <Input
-                  value={asset.thumbnail || ""}
-                  onChange={(e) => updateAsset(index, "thumbnail", e.target.value)}
+                  value={asset.thumbnail || ''}
+                  onChange={(e) => handleAssetChange(index, 'thumbnail', e.target.value)}
                   placeholder="https://..."
                   className="h-8 text-sm"
                 />
@@ -440,8 +477,8 @@ export function ProductEditModal({
               <div>
                 <Label className="text-xs">Alt Text</Label>
                 <Input
-                  value={asset.alt || ""}
-                  onChange={(e) => updateAsset(index, "alt", e.target.value)}
+                  value={asset.alt || ''}
+                  onChange={(e) => handleAssetChange(index, 'alt', e.target.value)}
                   className="h-8 text-sm"
                 />
               </div>
@@ -449,8 +486,8 @@ export function ProductEditModal({
               <div>
                 <Label className="text-xs">Description</Label>
                 <Textarea
-                  value={asset.description || ""}
-                  onChange={(e) => updateAsset(index, "description", e.target.value)}
+                  value={asset.description || ''}
+                  onChange={(e) => handleAssetChange(index, 'description', e.target.value)}
                   rows={2}
                   className="text-sm"
                 />
@@ -461,18 +498,17 @@ export function ProductEditModal({
                   <input
                     type="checkbox"
                     checked={asset.isPrimary || false}
-                    onChange={(e) => updateAsset(index, "isPrimary", e.target.checked)}
+                    onChange={(e) => handleAssetChange(index, 'isPrimary', e.target.checked)}
                     className="h-4 w-4"
                   />
                   <Label className="text-xs">Primary Asset</Label>
                 </div>
-
                 <div>
                   <Label className="text-xs">Display Order</Label>
                   <Input
                     type="number"
                     value={asset.order || 0}
-                    onChange={(e) => updateAsset(index, "order", parseInt(e.target.value) || 0)}
+                    onChange={(e) => handleAssetChange(index, 'order', parseInt(e.target.value) || 0)}
                     className="h-8 text-sm"
                   />
                 </div>
@@ -482,7 +518,7 @@ export function ProductEditModal({
 
           <Button
             variant="outline"
-            onClick={addAsset}
+            onClick={handleAssetAdd}
             className="w-full"
           >
             <Plus className="h-4 w-4 mr-2" />
@@ -491,15 +527,14 @@ export function ProductEditModal({
         </TabsContent>
       </Tabs>
 
-      {/* Action Buttons */}
       <div className="flex gap-2 mt-6 pt-4 border-t">
         <Button
-          onClick={handleSave}
+          onClick={() => onSave(formData)}
           disabled={isSaving}
           className="flex-1 bg-pop-green hover:bg-pop-green/90"
         >
           <Save className="h-4 w-4 mr-2" />
-          {isSaving ? (isAdding ? "Adding..." : "Saving...") : (isAdding ? "Add Product" : "Save Changes")}
+          {isSaving ? (isAdding ? 'Adding...' : 'Saving...') : (isAdding ? 'Add Product' : 'Save Changes')}
         </Button>
         <Button
           variant="outline"
