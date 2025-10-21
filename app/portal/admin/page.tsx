@@ -449,10 +449,32 @@ export default function AdminPage() {
         </Badge>
       )
     },
+    {
+      key: 'productType',
+      header: 'Product Type',
+      sortable: true,
+      render: (product) => (
+        <span className="capitalize">
+          {product.productType.replace('_', ' ')}
+        </span>
+      )
+    },
     { 
       key: 'price', 
       header: 'Price',
+      sortable: true,
       render: (product) => `$${product.price.toFixed(2)}`
+    },
+    {
+      key: 'rating',
+      header: 'Rating',
+      sortable: true,
+      render: (product) => (
+        <div className="flex items-center gap-1">
+          <span>{product.rating.toFixed(1)}</span>
+          <span className="text-xs text-gray-500">({product.reviewCount})</span>
+        </div>
+      )
     },
     {
       key: 'inStock',
@@ -798,7 +820,7 @@ export default function AdminPage() {
                     enableColumnSelection={true}
                     enableFiltering={true}
                     availableColumns={productColumns}
-                    defaultVisibleColumns={['name', 'category', 'price', 'inStock']}
+                    defaultVisibleColumns={['name', 'category', 'productType', 'price', 'rating', 'inStock']}
                   />
                 )}
               </div>
