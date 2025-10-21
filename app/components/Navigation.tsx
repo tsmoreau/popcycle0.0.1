@@ -206,8 +206,7 @@ export default function Navigation() {
               className="hover:opacity-80 transition-opacity"
               data-testid="button-user"
             >
-              
-              <AuthButton />
+              <User className="w-6 h-6 text-gray-700" />
             </button>
 
             {/* Shopping Cart */}
@@ -237,9 +236,7 @@ export default function Navigation() {
                   {iconDropdownOpen === 'user' && (
                     <div>
                       <h3 className="font-jost text-lg font-semibold mb-4 text-pop-black">Account</h3>
-                      <button className="w-full px-6 py-2 bg-pop-green text-white font-jost rounded-md hover:bg-opacity-90 transition-colors">
-                        Login
-                      </button>
+                     <AuthButton />
                     </div>
                   )}
 
