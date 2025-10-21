@@ -574,7 +574,17 @@ export default function AdminPage() {
     onDelete?: () => Promise<void>
     isSaving: boolean
   }) => {
-    return <ProductEditModal {...props} />
+    return <ProductEditModal 
+      {...props}
+      onSave={async (productData: any) => {
+        await handleProductSave(productData)
+        props.onCancel() // Close the modal after save
+      }}
+      onDelete={props.item ? async () => {
+        await handleProductDelete(props.item!)
+        props.onCancel() // Close the modal after delete
+      } : undefined}
+    />
   }
 
   return (
