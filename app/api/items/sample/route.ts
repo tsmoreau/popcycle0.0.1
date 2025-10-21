@@ -20,7 +20,7 @@ interface BatchItem {
 
 interface BlankItem {
   id: string;
-  batchId: string;
+  batchIds: string[];
   userId: string;
   status: string;
   productId?: string;
@@ -70,11 +70,11 @@ export async function GET(request: Request) {
         collectionDate: batch.collectionDate
       }));
     } else if (type === 'blanks') {
-      const query = batchId ? { batchId } : {};
+      const query = batchId ? { batchIds: batchId } : {};
       const blankDocs = await db.collection('blanks').find(query).limit(20).toArray();
       items = blankDocs.map((blank: any): BlankItem => ({ 
         id: blank._id.toString(), 
-        batchId: blank.batchId, 
+        batchIds: blank.batchIds || [], 
         userId: blank.userId, 
         status: blank.status,
         productId: blank.productId
@@ -101,7 +101,7 @@ export async function GET(request: Request) {
         })),
         blanks: blankDocs.map((blank: any): BlankItem => ({ 
           id: blank._id.toString(), 
-          batchId: blank.batchId, 
+          batchIds: blank.batchIds || [], 
           userId: blank.userId, 
           status: blank.status 
         }))

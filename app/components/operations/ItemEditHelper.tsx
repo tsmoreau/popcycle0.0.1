@@ -1,6 +1,6 @@
 import { EditableField } from "../ui/data-table"
 import { binEditableFields, batchEditableFields, blankEditableFields } from "./TableConfigurations"
-import { Bin, Batch, Blank } from "../../../lib/schemas"
+import { Bin, Batch, Blank } from "../../../lib/schemas-v3"
 
 // Helper to determine item type and return appropriate editable fields
 export function getEditableFieldsForItem(item: any): { fields: EditableField<any>[], itemType: string } | null {

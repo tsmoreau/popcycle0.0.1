@@ -3,7 +3,7 @@ import { Badge } from "../../ui/badge";
 import { Button } from "../../ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../../ui/card";
 import { DataTable, Column, EditableField } from "../../ui/data-table";
-import { Order } from "../../../../lib/schemas";
+import { Order } from "../../../../lib/schemas-v3";
 
 interface FulfillmentTabProps {
   orders: Order[];

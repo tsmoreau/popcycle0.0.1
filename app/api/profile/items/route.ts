@@ -5,7 +5,7 @@ import { authOptions } from '@/lib/auth-config';
 
 interface AssembledItem {
   id: string;
-  batchId: string;
+  batchIds: string[];
   productId?: string;
   status: string;
   assemblyDate?: string;
@@ -64,7 +64,7 @@ export async function GET(request: Request) {
       
       return {
         id: blank._id.toString(),
-        batchId: blank.batchId,
+        batchIds: blank.batchIds || [],
         productId: blank.productId?.toString(),
         status: blank.status,
         assemblyDate: blank.assemblyDate,

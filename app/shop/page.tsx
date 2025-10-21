@@ -12,7 +12,8 @@ interface Product {
   _id: string;
   name: string;
   description: string;
-  category: 'flora_fauna' | 'kinetic_sculptures' | 'vehicles_vessels' | 'pop_bots' | 'everyday_objects' | 'limited_editions';
+  category: 'workshop' | 'studio_edition' | 'client_edition';
+  productType: 'coasters' | 'keychains' | 'bookmarks' | 'magnets' | 'earrings' | 'lighting' | 'cutting_boards';
   difficulty: 'easy' | 'medium' | 'hard';
   estimatedAssemblyTime: number;
   materialRequirements: {
@@ -44,22 +45,16 @@ interface Product {
 
 // Map database categories to display categories
 const categoryMap = {
-  'flora_fauna': 'Flora & Fauna',
-  'kinetic_sculptures': 'Kinetic Sculptures',
-  'vehicles_vessels': 'Vehicles & Vessels',
-  'pop_bots': 'Pop Bots',
-  'everyday_objects': 'Everyday Objects',
-  'limited_editions': 'Limited Editions'
+  'workshop': 'Workshop',
+  'studio_edition': 'Studio Edition',
+  'client_edition': 'Client Edition'
 };
 
 const categories = [
   "All",
-  "Flora & Fauna",
-  "Kinetic Sculptures",
-  "Vehicles & Vessels",
-  "Pop Bots",
-  "Everyday Objects",
-  "Limited Editions",
+  "Workshop",
+  "Studio Edition",
+  "Client Edition",
 ];
 
 export default function Shop() {

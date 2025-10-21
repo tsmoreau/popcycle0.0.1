@@ -29,18 +29,64 @@ export async function POST() {
     const db = client.db('PopCycle');
     
     // Clear existing data
-    const collections = ['orgs', 'bins', 'batches', 'blanks', 'users', 'products', 'orders'];
+    const collections = ['orgs', 'bins', 'batches', 'blanks', 'users', 'products', 'orders', 'events'];
     for (const collName of collections) {
       await db.collection(collName).deleteMany({});
     }
     
-    // Generate Organizations (Partners)
+    // Generate Events first (top-level collection in v3)
+    const events = [
+      {
+        _id: new ObjectId(),
+        orgId: new ObjectId(), // Will be updated with actual org IDs below
+        eventId: 'summer-camp-2025',
+        name: 'Summer Science Camp 2025',
+        type: 'recurring' as const,
+        description: 'Weekly summer camps with plastic collection activities',
+        scheduledDate: new Date('2025-06-15'),
+        location: 'Main Exhibition Hall',
+        binIds: [],
+        status: 'planned' as const,
+        createdAt: new Date(),
+        updatedAt: new Date()
+      },
+      {
+        _id: new ObjectId(),
+        orgId: new ObjectId(), // Will be updated below
+        eventId: 'cultural-workshop-2025',
+        name: 'Cultural Workshop Series 2025',
+        type: 'recurring' as const,
+        description: 'Monthly workshops highlighting sustainability in Mexican culture',
+        scheduledDate: new Date('2025-03-15'),
+        location: 'Main Gallery',
+        binIds: [],
+        status: 'planned' as const,
+        createdAt: new Date(),
+        updatedAt: new Date()
+      },
+      {
+        _id: new ObjectId(),
+        orgId: new ObjectId(), // Will be updated below
+        eventId: 'sustainability-week-2025',
+        name: 'Sustainability Week 2025',
+        type: 'ad_hoc' as const,
+        description: 'Week-long sustainability initiative for hotel guests',
+        scheduledDate: new Date('2025-04-01'),
+        location: 'Hotel Lobby & Restaurant',
+        binIds: [],
+        status: 'planned' as const,
+        createdAt: new Date(),
+        updatedAt: new Date()
+      }
+    ];
+    
+    // Generate Organizations (Partners) - v3 schema
     const orgs = [
       {
         _id: new ObjectId(),
         name: 'PopCycle',
         slug: 'popcycle',
-        type: 'corporate' as const,
+        orgType: 'retailer' as const,
         description: 'Circular plastic waste tracking and recycling management system',
         contactInfo: {
           email: 'hello@popcycle.org',
@@ -53,7 +99,15 @@ export async function POST() {
           secondaryColor: '#0074D9',
           trackingPageMessage: 'Welcome to PopCycle! Track your plastic items through their circular journey from waste to product.'
         },
-        events: [],
+        retailer: {
+          buyerContactName: 'Jordan Lee',
+          buyerContactEmail: 'jordan@popcycle.org',
+          buyerContactPhone: '(555) 100-0001',
+          accountsPayableEmail: 'ap@popcycle.org',
+          paymentTerms: 'Net 30',
+          exclusivityType: 'none' as const
+        },
+        eventIds: [],
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -61,7 +115,7 @@ export async function POST() {
         _id: new ObjectId(),
         name: 'Discovery Cube',
         slug: 'discoverycube',
-        type: 'educational' as const,
+        orgType: 'community_partner' as const,
         description: 'Interactive science museum in Santa Ana',
         contactInfo: {
           email: 'partnerships@discoverycube.org',
@@ -74,18 +128,29 @@ export async function POST() {
           secondaryColor: '#004B87',
           trackingPageMessage: 'See how your Discovery Cube visit contributed to our circular plastic program!'
         },
-        events: [
-          {
-            eventId: 'summer-camp-2025',
-            name: 'Summer Science Camp 2025',
-            type: 'recurring' as const,
-            description: 'Weekly summer camps with plastic collection activities',
-            scheduledDate: new Date('2025-06-15'),
-            location: 'Main Exhibition Hall',
-            binIds: [],
-            status: 'planned' as const
+        communityPartner: {
+          mission: 'Inspire and educate young minds through interactive science exhibits',
+          storyContent: 'Discovery Cube has been a leader in STEM education for over 30 years, serving hundreds of thousands of students annually.',
+          organizationType: 'nonprofit',
+          socialMedia: {
+            instagram: '@discoverycube',
+            facebook: 'discoverycube',
+            twitter: '@discoverycube'
+          },
+          directorName: 'Dr. Jennifer Williams',
+          directorTitle: 'Executive Director',
+          directorBio: 'Leading STEM education advocate with 15 years of museum experience',
+          pickupSchedule: 'Bi-weekly on Wednesdays',
+          accessRequirements: 'Loading dock access, advance notice required',
+          metrics: {
+            totalWeightCollected: 245.8,
+            averageWeightPerPickup: 18.5,
+            contaminationRate: 0.05,
+            pickupCount: 13,
+            lastPickupDate: new Date('2025-02-10')
           }
-        ],
+        },
+        eventIds: ['summer-camp-2025'],
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -93,7 +158,7 @@ export async function POST() {
         _id: new ObjectId(),
         name: 'LA Plaza de Cultura y Artes',
         slug: 'laplaza',
-        type: 'educational' as const,
+        orgType: 'community_partner' as const,
         description: 'Cultural center dedicated to Mexican and Mexican American culture',
         contactInfo: {
           email: 'sustainability@lapca.org',
@@ -106,18 +171,28 @@ export async function POST() {
           secondaryColor: '#8B4513',
           trackingPageMessage: 'Your La Plaza visit helped transform plastic waste into educational resources celebrating our culture!'
         },
-        events: [
-          {
-            eventId: 'cultural-workshop-2025',
-            name: 'Cultural Workshop Series 2025',
-            type: 'recurring' as const,
-            description: 'Monthly workshops highlighting sustainability in Mexican culture',
-            scheduledDate: new Date('2025-03-15'),
-            location: 'Main Gallery',
-            binIds: [],
-            status: 'planned' as const
+        communityPartner: {
+          mission: 'Preserve and celebrate the history and culture of Mexicans and Mexican Americans',
+          storyContent: 'LA Plaza serves as a cultural hub bringing together art, history, and community in downtown Los Angeles.',
+          organizationType: 'nonprofit',
+          socialMedia: {
+            instagram: '@laplazaLA',
+            facebook: 'laplazaLA'
+          },
+          directorName: 'Maria Hernandez',
+          directorTitle: 'Cultural Director',
+          directorBio: 'Passionate advocate for cultural preservation and community engagement',
+          pickupSchedule: 'Monthly on the first Monday',
+          accessRequirements: 'Street-level pickup, coordinate with events calendar',
+          metrics: {
+            totalWeightCollected: 128.3,
+            averageWeightPerPickup: 16.0,
+            contaminationRate: 0.03,
+            pickupCount: 8,
+            lastPickupDate: new Date('2025-02-01')
           }
-        ],
+        },
+        eventIds: ['cultural-workshop-2025'],
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -125,7 +200,7 @@ export async function POST() {
         _id: new ObjectId(),
         name: 'Ace Hotel Downtown LA',
         slug: 'acehotel',
-        type: 'corporate' as const,
+        orgType: 'venue' as const,
         description: 'Boutique hotel with sustainability focus',
         contactInfo: {
           email: 'sustainability@acehotel.com',
@@ -138,24 +213,30 @@ export async function POST() {
           secondaryColor: '#F5F5F5',
           trackingPageMessage: 'Your stay at Ace Hotel contributed to our zero-waste initiative!'
         },
-        events: [
-          {
-            eventId: 'sustainability-week-2025',
-            name: 'Sustainability Week 2025',
-            type: 'ad_hoc' as const,
-            description: 'Week-long sustainability initiative for hotel guests',
-            scheduledDate: new Date('2025-04-01'),
-            location: 'Hotel Lobby & Restaurant',
-            binIds: [],
-            status: 'planned' as const
+        venue: {
+          partnershipTier: 'integrated' as const,
+          retainerAmount: 2500,
+          contractStartDate: new Date('2024-01-01'),
+          contractEndDate: new Date('2026-12-31'),
+          integrateOwnWaste: true,
+          monthlyDeliveryCap: 50,
+          productPreferences: {
+            exclusionList: ['pop_bots']
           }
-        ],
+        },
+        eventIds: ['sustainability-week-2025'],
         createdAt: new Date(),
         updatedAt: new Date()
       }
     ];
     
+    // Update event orgIds with actual org IDs
+    events[0].orgId = orgs[1]._id; // Discovery Cube
+    events[1].orgId = orgs[2]._id; // LA Plaza
+    events[2].orgId = orgs[3]._id; // Ace Hotel
+    
     await db.collection('orgs').insertMany(orgs);
+    await db.collection('events').insertMany(events);
     
     // Generate Bins with QR codes
     const bins: any[] = [];
@@ -171,10 +252,10 @@ export async function POST() {
         
         const binStatuses = ['bin_on_vehicle', 'bin_on_site', 'ready_for_processing'] as const;
         
-        // Assign some bins to events defined in the org (30% chance)
+        // Assign some bins to events defined for the org (30% chance)
         let eventId: string | undefined = undefined;
-        if (org.events.length > 0 && Math.random() > 0.7) {
-          eventId = org.events[Math.floor(Math.random() * org.events.length)].eventId;
+        if (org.eventIds && org.eventIds.length > 0 && Math.random() > 0.7) {
+          eventId = org.eventIds[Math.floor(Math.random() * org.eventIds.length)];
         }
         
         const adoptedBy = i === 0 ? 'Education Team' : undefined;
@@ -294,524 +375,445 @@ export async function POST() {
     
     await db.collection('batches').insertMany(batches);
     
-    // Generate Products with new categories
+    // Generate Products with v3 schema
     const products = [
-      // Flora & Fauna (2 products)
+      // Workshop products - hands-on educational items (5 products)
       {
         _id: new ObjectId(),
-        name: 'Butterfly Garden Mobile',
-        description: 'Delicate kinetic mobile featuring colorful butterfly sculptures that dance in the breeze',
-        category: 'flora_fauna' as const,
-        difficulty: 'medium' as const,
-        estimatedAssemblyTime: 90,
-        materialRequirements: {
-          plasticType: 'PET' as const,
-          weight: 0.8
-        },
+        name: 'DIY Coaster Set Workshop Kit',
+        description: 'Make your own set of 4 colorful recycled plastic coasters in our workshop',
+        category: 'workshop' as const,
+        productType: 'coasters' as const,
         designFiles: {
-          instructionsPdf: 'butterfly-mobile-instructions.pdf',
-          templateSvg: 'butterfly-template.svg',
-          photos: ['butterfly-mobile-1.jpg', 'butterfly-mobile-2.jpg']
+          cncVectors: ['coaster-cnc-v1.svg', 'coaster-cnc-v2.svg'],
+          laserVectors: ['coaster-laser-patterns.svg'],
+          instructionsPdfs: ['coaster-workshop-guide.pdf', 'coaster-safety.pdf'],
+          photos: ['coaster-1.jpg', 'coaster-2.jpg']
         },
         assets: [
           {
-            id: 'butterfly-main-1',
-            type: 'image',
-            url: '/images/products/butterfly-mobile-main.jpg',
-            thumbnail: '/images/products/thumbs/butterfly-mobile-main.jpg',
-            alt: 'Butterfly Garden Mobile hanging display',
-            description: 'Colorful butterfly mobile in natural setting',
+            id: 'coaster-main-1',
+            type: 'image' as const,
+            url: '/images/products/coasters-main.jpg',
+            thumbnail: '/images/products/thumbs/coasters-main.jpg',
+            alt: 'Colorful recycled plastic coasters',
+            description: 'Set of 4 handmade coasters in workshop',
             isPrimary: true,
             order: 1
           },
           {
-            id: 'butterfly-detail-1',
-            type: 'image',
-            url: '/images/products/butterfly-mobile-detail.jpg',
-            thumbnail: '/images/products/thumbs/butterfly-mobile-detail.jpg',
-            alt: 'Close-up of butterfly sculptures',
-            description: 'Detailed view of individual butterfly elements',
+            id: 'coaster-detail-1',
+            type: 'image' as const,
+            url: '/images/products/coasters-detail.jpg',
+            thumbnail: '/images/products/thumbs/coasters-detail.jpg',
+            alt: 'Close-up of coaster texture',
+            description: 'Detailed view of recycled plastic texture',
             isPrimary: false,
             order: 2
           }
         ],
-        price: 32.99,
+        price: 15.99,
+        inStock: true,
+        rating: 4.8,
+        reviewCount: 142,
+        createdAt: new Date(),
+        updatedAt: new Date()
+      },
+      {
+        _id: new ObjectId(),
+        name: 'Keychain Making Workshop',
+        description: 'Design and create custom keychains from recycled plastic in a fun hands-on session',
+        category: 'workshop' as const,
+        productType: 'keychains' as const,
+        designFiles: {
+          laserVectors: ['keychain-templates.svg'],
+          instructionsPdfs: ['keychain-workshop.pdf'],
+          photos: ['keychain-1.jpg', 'keychain-2.jpg', 'keychain-3.jpg']
+        },
+        assets: [
+          {
+            id: 'keychain-main-1',
+            type: 'image' as const,
+            url: '/images/products/keychain-main.jpg',
+            thumbnail: '/images/products/thumbs/keychain-main.jpg',
+            alt: 'Assorted recycled plastic keychains',
+            description: 'Various keychain designs and colors',
+            isPrimary: true,
+            order: 1
+          }
+        ],
+        price: 8.50,
+        inStock: true,
+        rating: 4.6,
+        reviewCount: 87,
+        createdAt: new Date(),
+        updatedAt: new Date()
+      },
+      {
+        _id: new ObjectId(),
+        name: 'Bookmark Workshop Kit',
+        description: 'Create unique bookmarks with custom designs in our workshop',
+        category: 'workshop' as const,
+        productType: 'bookmarks' as const,
+        designFiles: {
+          laserVectors: ['bookmark-designs.svg'],
+          instructionsPdfs: ['bookmark-workshop.pdf'],
+          photos: ['bookmark-1.jpg', 'bookmark-2.jpg']
+        },
+        assets: [
+          {
+            id: 'bookmark-main-1',
+            type: 'image' as const,
+            url: '/images/products/bookmarks-main.jpg',
+            thumbnail: '/images/products/thumbs/bookmarks-main.jpg',
+            alt: 'Colorful recycled plastic bookmarks',
+            description: 'Variety of bookmark designs',
+            isPrimary: true,
+            order: 1
+          }
+        ],
+        price: 6.99,
         inStock: true,
         rating: 4.7,
-        reviewCount: 43,
+        reviewCount: 65,
         createdAt: new Date(),
         updatedAt: new Date()
       },
       {
         _id: new ObjectId(),
-        name: 'Succulent Planter Set',
-        description: 'Modern geometric planters perfect for small succulents and air plants',
-        category: 'flora_fauna' as const,
-        difficulty: 'easy' as const,
-        estimatedAssemblyTime: 45,
-        materialRequirements: {
-          plasticType: 'HDPE' as const,
-          weight: 1.2
-        },
+        name: 'Magnet Making Workshop',
+        description: 'Hands-on workshop to create fun fridge magnets from recycled plastic',
+        category: 'workshop' as const,
+        productType: 'magnets' as const,
         designFiles: {
-          instructionsPdf: 'succulent-planter-instructions.pdf',
-          photos: ['succulent-planter-1.jpg', 'succulent-planter-2.jpg']
+          cncVectors: ['magnet-shapes.svg'],
+          laserVectors: ['magnet-details.svg'],
+          instructionsPdfs: ['magnet-workshop.pdf'],
+          photos: ['magnet-1.jpg']
         },
         assets: [
           {
-            id: 'succulent-main-1',
-            type: 'image',
-            url: '/images/products/succulent-planter-main.jpg',
-            thumbnail: '/images/products/thumbs/succulent-planter-main.jpg',
-            alt: 'Geometric succulent planter set',
-            description: 'Modern planters with live succulents',
+            id: 'magnet-main-1',
+            type: 'image' as const,
+            url: '/images/products/magnets-main.jpg',
+            thumbnail: '/images/products/thumbs/magnets-main.jpg',
+            alt: 'Colorful recycled plastic magnets',
+            description: 'Various magnet shapes and designs',
             isPrimary: true,
             order: 1
           }
         ],
-        price: 28.50,
-        inStock: true,
-        rating: 4.8,
-        reviewCount: 67,
-        createdAt: new Date(),
-        updatedAt: new Date()
-      },
-
-      // Kinetic Sculptures (3 products)
-      {
-        _id: new ObjectId(),
-        name: 'Wave Motion Pendulum',
-        description: 'Mesmerizing kinetic sculpture demonstrating wave physics through synchronized pendulum motion',
-        category: 'kinetic_sculptures' as const,
-        difficulty: 'hard' as const,
-        estimatedAssemblyTime: 180,
-        materialRequirements: {
-          plasticType: 'PET' as const,
-          weight: 2.1
-        },
-        designFiles: {
-          instructionsPdf: 'wave-pendulum-instructions.pdf',
-          templateSvg: 'pendulum-template.svg',
-          photos: ['wave-pendulum-1.jpg', 'wave-pendulum-2.jpg']
-        },
-        assets: [
-          {
-            id: 'pendulum-main-1',
-            type: 'image',
-            url: '/images/products/wave-pendulum-main.jpg',
-            thumbnail: '/images/products/thumbs/wave-pendulum-main.jpg',
-            alt: 'Wave Motion Pendulum sculpture',
-            description: 'Kinetic pendulum showing wave motion',
-            isPrimary: true,
-            order: 1
-          },
-          {
-            id: 'pendulum-motion-vid',
-            type: 'video',
-            url: '/videos/products/pendulum-motion.mp4',
-            thumbnail: '/images/products/thumbs/pendulum-motion-thumb.jpg',
-            alt: 'Pendulum motion demonstration',
-            description: 'Video showing mesmerizing wave motion',
-            isPrimary: false,
-            order: 2
-          }
-        ],
-        price: 89.99,
-        inStock: true,
-        rating: 4.9,
-        reviewCount: 28,
-        createdAt: new Date(),
-        updatedAt: new Date()
-      },
-      {
-        _id: new ObjectId(),
-        name: 'Wind Spiral Tower',
-        description: 'Elegant vertical sculpture that spins and rotates in response to air currents',
-        category: 'kinetic_sculptures' as const,
-        difficulty: 'medium' as const,
-        estimatedAssemblyTime: 120,
-        materialRequirements: {
-          plasticType: 'PP' as const,
-          weight: 1.5
-        },
-        designFiles: {
-          instructionsPdf: 'wind-spiral-instructions.pdf',
-          photos: ['wind-spiral-1.jpg', 'wind-spiral-2.jpg']
-        },
-        assets: [
-          {
-            id: 'spiral-main-1',
-            type: 'image',
-            url: '/images/products/wind-spiral-main.jpg',
-            thumbnail: '/images/products/thumbs/wind-spiral-main.jpg',
-            alt: 'Wind Spiral Tower sculpture',
-            description: 'Tall kinetic tower sculpture spinning in wind',
-            isPrimary: true,
-            order: 1
-          }
-        ],
-        price: 64.50,
-        inStock: false,
-        rating: 4.6,
-        reviewCount: 19,
-        createdAt: new Date(),
-        updatedAt: new Date()
-      },
-      {
-        _id: new ObjectId(),
-        name: 'Balance Point Mobile',
-        description: 'Delicate kinetic balance sculpture exploring equilibrium and motion',
-        category: 'kinetic_sculptures' as const,
-        difficulty: 'medium' as const,
-        estimatedAssemblyTime: 90,
-        materialRequirements: {
-          plasticType: 'PET' as const,
-          weight: 0.9
-        },
-        designFiles: {
-          instructionsPdf: 'balance-mobile-instructions.pdf',
-          photos: ['balance-mobile-1.jpg']
-        },
-        assets: [
-          {
-            id: 'balance-main-1',
-            type: 'image',
-            url: '/images/products/balance-mobile-main.jpg',
-            thumbnail: '/images/products/thumbs/balance-mobile-main.jpg',
-            alt: 'Balance Point Mobile sculpture',
-            description: 'Kinetic balance mobile in motion',
-            isPrimary: true,
-            order: 1
-          }
-        ],
-        price: 45.75,
+        price: 9.99,
         inStock: true,
         rating: 4.5,
-        reviewCount: 32,
+        reviewCount: 54,
         createdAt: new Date(),
         updatedAt: new Date()
       },
-
-      // Vehicles & Vessels (2 products)
       {
         _id: new ObjectId(),
-        name: 'Solar Racing Car Kit',
-        description: 'Build and race your own solar-powered vehicle with this comprehensive kit',
-        category: 'vehicles_vessels' as const,
-        difficulty: 'hard' as const,
-        estimatedAssemblyTime: 240,
-        materialRequirements: {
-          plasticType: 'HDPE' as const,
-          weight: 2.8
-        },
+        name: 'Earring Workshop Kit',
+        description: 'Design and assemble your own lightweight earrings from recycled plastic',
+        category: 'workshop' as const,
+        productType: 'earrings' as const,
         designFiles: {
-          instructionsPdf: 'solar-car-instructions.pdf',
-          templateSvg: 'car-chassis-template.svg',
-          photos: ['solar-car-1.jpg', 'solar-car-2.jpg', 'solar-car-3.jpg']
+          laserVectors: ['earring-templates.svg'],
+          instructionsPdfs: ['earring-workshop.pdf', 'safety-guidelines.pdf'],
+          photos: ['earring-1.jpg', 'earring-2.jpg', 'earring-3.jpg']
         },
         assets: [
           {
-            id: 'solar-car-main-1',
-            type: 'image',
-            url: '/images/products/solar-car-main.jpg',
-            thumbnail: '/images/products/thumbs/solar-car-main.jpg',
-            alt: 'Solar Racing Car complete kit',
-            description: 'Assembled solar car ready for racing',
+            id: 'earring-main-1',
+            type: 'image' as const,
+            url: '/images/products/earrings-main.jpg',
+            thumbnail: '/images/products/thumbs/earrings-main.jpg',
+            alt: 'Recycled plastic earrings display',
+            description: 'Assorted earring designs',
             isPrimary: true,
             order: 1
           },
           {
-            id: 'solar-car-build-vid',
-            type: 'video',
-            url: '/videos/products/solar-car-build.mp4',
-            thumbnail: '/images/products/thumbs/solar-build-thumb.jpg',
-            alt: 'Solar car assembly tutorial',
-            description: 'Complete build tutorial video',
+            id: 'earring-vid-1',
+            type: 'video' as const,
+            url: '/videos/products/earring-making.mp4',
+            thumbnail: '/images/products/thumbs/earring-thumb.jpg',
+            alt: 'Earring making demonstration',
+            description: 'Workshop tutorial video',
             isPrimary: false,
             order: 2
           }
         ],
-        price: 125.00,
+        price: 12.50,
+        inStock: true,
+        rating: 4.9,
+        reviewCount: 78,
+        createdAt: new Date(),
+        updatedAt: new Date()
+      },
+      
+      // Studio Edition products - limited production runs (4 products)
+      {
+        _id: new ObjectId(),
+        name: 'Artisan Coaster Collection',
+        description: 'Hand-finished coaster set with unique patterns - Studio Edition',
+        category: 'studio_edition' as const,
+        productType: 'coasters' as const,
+        designFiles: {
+          cncVectors: ['artisan-coaster-v1.svg', 'artisan-coaster-v2.svg'],
+          laserVectors: ['artisan-patterns.svg'],
+          instructionsPdfs: ['artisan-finishing-guide.pdf'],
+          photos: ['artisan-coaster-1.jpg', 'artisan-coaster-2.jpg']
+        },
+        assets: [
+          {
+            id: 'artisan-coaster-main',
+            type: 'image' as const,
+            url: '/images/products/artisan-coaster-main.jpg',
+            thumbnail: '/images/products/thumbs/artisan-coaster-main.jpg',
+            alt: 'Artisan coaster collection',
+            description: 'Premium hand-finished coasters',
+            isPrimary: true,
+            order: 1
+          }
+        ],
+        price: 45.00,
         inStock: true,
         rating: 4.8,
-        reviewCount: 156,
+        reviewCount: 34,
         createdAt: new Date(),
         updatedAt: new Date()
       },
       {
         _id: new ObjectId(),
-        name: 'Paddle Boat Explorer',
-        description: 'Floating vessel kit perfect for pool and pond adventures',
-        category: 'vehicles_vessels' as const,
-        difficulty: 'medium' as const,
-        estimatedAssemblyTime: 90,
-        materialRequirements: {
-          plasticType: 'HDPE' as const,
-          weight: 1.8
-        },
+        name: 'Designer Lighting Fixture',
+        description: 'Contemporary pendant light - Limited studio production',
+        category: 'studio_edition' as const,
+        productType: 'lighting' as const,
         designFiles: {
-          instructionsPdf: 'paddle-boat-instructions.pdf',
-          photos: ['paddle-boat-1.jpg', 'paddle-boat-2.jpg']
+          cncVectors: ['lighting-base.svg', 'lighting-shade.svg'],
+          instructionsPdfs: ['lighting-assembly.pdf', 'electrical-safety.pdf'],
+          photos: ['lighting-1.jpg', 'lighting-2.jpg', 'lighting-3.jpg']
         },
         assets: [
           {
-            id: 'boat-main-1',
-            type: 'image',
-            url: '/images/products/paddle-boat-main.jpg',
-            thumbnail: '/images/products/thumbs/paddle-boat-main.jpg',
-            alt: 'Paddle Boat Explorer on water',
-            description: 'Paddle boat floating on calm water',
+            id: 'lighting-main-1',
+            type: 'image' as const,
+            url: '/images/products/lighting-main.jpg',
+            thumbnail: '/images/products/thumbs/lighting-main.jpg',
+            alt: 'Designer lighting fixture',
+            description: 'Contemporary recycled plastic pendant light',
+            isPrimary: true,
+            order: 1
+          },
+          {
+            id: 'lighting-detail',
+            type: 'image' as const,
+            url: '/images/products/lighting-detail.jpg',
+            thumbnail: '/images/products/thumbs/lighting-detail.jpg',
+            alt: 'Lighting detail view',
+            description: 'Close-up of light diffusion pattern',
+            isPrimary: false,
+            order: 2
+          }
+        ],
+        price: 135.00,
+        inStock: true,
+        rating: 4.9,
+        reviewCount: 22,
+        createdAt: new Date(),
+        updatedAt: new Date()
+      },
+      {
+        _id: new ObjectId(),
+        name: 'Artisan Cutting Board',
+        description: 'Premium cutting board with unique patterns - Studio Edition',
+        category: 'studio_edition' as const,
+        productType: 'cutting_boards' as const,
+        designFiles: {
+          cncVectors: ['cutting-board-shape.svg'],
+          instructionsPdfs: ['food-safe-finishing.pdf'],
+          photos: ['cutting-board-1.jpg', 'cutting-board-2.jpg']
+        },
+        assets: [
+          {
+            id: 'cutting-board-main',
+            type: 'image' as const,
+            url: '/images/products/cutting-board-main.jpg',
+            thumbnail: '/images/products/thumbs/cutting-board-main.jpg',
+            alt: 'Artisan cutting board',
+            description: 'Premium recycled plastic cutting board',
             isPrimary: true,
             order: 1
           }
         ],
-        price: 38.75,
+        price: 75.00,
+        inStock: false,
+        rating: 5.0,
+        reviewCount: 18,
+        createdAt: new Date(),
+        updatedAt: new Date()
+      },
+      {
+        _id: new ObjectId(),
+        name: 'Statement Earring Collection',
+        description: 'Bold geometric earrings - Limited studio run',
+        category: 'studio_edition' as const,
+        productType: 'earrings' as const,
+        designFiles: {
+          laserVectors: ['statement-earring-designs.svg'],
+          instructionsPdfs: ['premium-finishing.pdf'],
+          photos: ['statement-earring-1.jpg', 'statement-earring-2.jpg']
+        },
+        assets: [
+          {
+            id: 'statement-earring-main',
+            type: 'image' as const,
+            url: '/images/products/statement-earring-main.jpg',
+            thumbnail: '/images/products/thumbs/statement-earring-main.jpg',
+            alt: 'Statement earring collection',
+            description: 'Bold geometric earring designs',
+            isPrimary: true,
+            order: 1
+          }
+        ],
+        price: 38.00,
+        inStock: true,
+        rating: 4.7,
+        reviewCount: 41,
+        createdAt: new Date(),
+        updatedAt: new Date()
+      },
+      
+      // Client Edition products - custom branded items (4 products)
+      {
+        _id: new ObjectId(),
+        name: 'Custom Branded Coasters',
+        description: 'Personalized coasters with custom branding for venues and retailers',
+        category: 'client_edition' as const,
+        productType: 'coasters' as const,
+        designFiles: {
+          cncVectors: ['branded-coaster-template.svg'],
+          laserVectors: ['logo-placeholder.svg'],
+          instructionsPdfs: ['custom-branding-specs.pdf'],
+          photos: ['branded-coaster-1.jpg', 'branded-coaster-2.jpg']
+        },
+        assets: [
+          {
+            id: 'branded-coaster-main',
+            type: 'image' as const,
+            url: '/images/products/branded-coaster-main.jpg',
+            thumbnail: '/images/products/thumbs/branded-coaster-main.jpg',
+            alt: 'Custom branded coasters',
+            description: 'Coasters with venue branding',
+            isPrimary: true,
+            order: 1
+          }
+        ],
+        price: 24.00,
+        inStock: true,
+        rating: 4.6,
+        reviewCount: 56,
+        createdAt: new Date(),
+        updatedAt: new Date()
+      },
+      {
+        _id: new ObjectId(),
+        name: 'Venue Keychains',
+        description: 'Custom keychains for gift shops and merchandising',
+        category: 'client_edition' as const,
+        productType: 'keychains' as const,
+        designFiles: {
+          laserVectors: ['venue-keychain-template.svg'],
+          instructionsPdfs: ['merchandising-guide.pdf'],
+          photos: ['venue-keychain-1.jpg']
+        },
+        assets: [
+          {
+            id: 'venue-keychain-main',
+            type: 'image' as const,
+            url: '/images/products/venue-keychain-main.jpg',
+            thumbnail: '/images/products/thumbs/venue-keychain-main.jpg',
+            alt: 'Custom venue keychains',
+            description: 'Branded keychains for retail',
+            isPrimary: true,
+            order: 1
+          }
+        ],
+        price: 11.00,
         inStock: true,
         rating: 4.4,
-        reviewCount: 73,
+        reviewCount: 92,
         createdAt: new Date(),
         updatedAt: new Date()
       },
-
-      // Pop Bots (3 products)
       {
         _id: new ObjectId(),
-        name: 'Walking Wobble Bot',
-        description: 'Colorful robot that walks with a distinctive wobbling gait',
-        category: 'pop_bots' as const,
-        difficulty: 'easy' as const,
-        estimatedAssemblyTime: 60,
-        materialRequirements: {
-          plasticType: 'PP' as const,
-          weight: 0.6
-        },
+        name: 'Retail Lighting Solutions',
+        description: 'Custom lighting fixtures for retail spaces and venues',
+        category: 'client_edition' as const,
+        productType: 'lighting' as const,
         designFiles: {
-          instructionsPdf: 'wobble-bot-instructions.pdf',
-          photos: ['wobble-bot-1.jpg', 'wobble-bot-2.jpg']
+          cncVectors: ['retail-lighting-v1.svg', 'retail-lighting-v2.svg'],
+          instructionsPdfs: ['retail-installation.pdf', 'electrical-specs.pdf'],
+          photos: ['retail-lighting-1.jpg', 'retail-lighting-2.jpg']
         },
         assets: [
           {
-            id: 'wobble-bot-main-1',
-            type: 'image',
-            url: '/images/products/wobble-bot-main.jpg',
-            thumbnail: '/images/products/thumbs/wobble-bot-main.jpg',
-            alt: 'Walking Wobble Bot robot',
-            description: 'Colorful wobbling robot toy',
+            id: 'retail-lighting-main',
+            type: 'image' as const,
+            url: '/images/products/retail-lighting-main.jpg',
+            thumbnail: '/images/products/thumbs/retail-lighting-main.jpg',
+            alt: 'Retail lighting fixtures',
+            description: 'Custom lighting for commercial spaces',
             isPrimary: true,
             order: 1
           },
           {
-            id: 'wobble-action-vid',
-            type: 'video',
-            url: '/videos/products/wobble-bot-action.mp4',
-            thumbnail: '/images/products/thumbs/wobble-action-thumb.jpg',
-            alt: 'Wobble bot walking demonstration',
-            description: 'Robot demonstrating wobbling walk',
+            id: 'retail-lighting-installed',
+            type: 'image' as const,
+            url: '/images/products/retail-lighting-installed.jpg',
+            thumbnail: '/images/products/thumbs/retail-lighting-installed.jpg',
+            alt: 'Installed retail lighting',
+            description: 'Lighting installation in venue',
             isPrimary: false,
             order: 2
           }
         ],
-        price: 22.50,
-        inStock: true,
-        rating: 4.7,
-        reviewCount: 94,
-        createdAt: new Date(),
-        updatedAt: new Date()
-      },
-      {
-        _id: new ObjectId(),
-        name: 'Light Chaser Bot',
-        description: 'Smart robot that follows light sources and responds to shadows',
-        category: 'pop_bots' as const,
-        difficulty: 'hard' as const,
-        estimatedAssemblyTime: 200,
-        materialRequirements: {
-          plasticType: 'PET' as const,
-          weight: 1.1
-        },
-        designFiles: {
-          instructionsPdf: 'light-chaser-instructions.pdf',
-          templateSvg: 'robot-body-template.svg',
-          photos: ['light-chaser-1.jpg', 'light-chaser-2.jpg']
-        },
-        assets: [
-          {
-            id: 'light-chaser-main-1',
-            type: 'image',
-            url: '/images/products/light-chaser-main.jpg',
-            thumbnail: '/images/products/thumbs/light-chaser-main.jpg',
-            alt: 'Light Chaser Bot with sensors',
-            description: 'Advanced robot with light-sensing capability',
-            isPrimary: true,
-            order: 1
-          }
-        ],
-        price: 67.25,
-        inStock: true,
-        rating: 4.9,
-        reviewCount: 47,
-        createdAt: new Date(),
-        updatedAt: new Date()
-      },
-      {
-        _id: new ObjectId(),
-        name: 'Spin Dance Bot',
-        description: 'Entertaining robot that spins and dances to music rhythms',
-        category: 'pop_bots' as const,
-        difficulty: 'medium' as const,
-        estimatedAssemblyTime: 105,
-        materialRequirements: {
-          plasticType: 'PP' as const,
-          weight: 0.8
-        },
-        designFiles: {
-          instructionsPdf: 'spin-bot-instructions.pdf',
-          photos: ['spin-bot-1.jpg']
-        },
-        assets: [
-          {
-            id: 'spin-bot-main-1',
-            type: 'image',
-            url: '/images/products/spin-bot-main.jpg',
-            thumbnail: '/images/products/thumbs/spin-bot-main.jpg',
-            alt: 'Spin Dance Bot in action',
-            description: 'Dancing robot with spinning motion',
-            isPrimary: true,
-            order: 1
-          }
-        ],
-        price: 41.00,
-        inStock: false,
-        rating: 4.6,
-        reviewCount: 61,
-        createdAt: new Date(),
-        updatedAt: new Date()
-      },
-
-      // Everyday Objects (2 products)
-      {
-        _id: new ObjectId(),
-        name: 'Modular Storage Cubes',
-        description: 'Stackable storage system perfect for organizing any space',
-        category: 'everyday_objects' as const,
-        difficulty: 'easy' as const,
-        estimatedAssemblyTime: 30,
-        materialRequirements: {
-          plasticType: 'HDPE' as const,
-          weight: 1.4
-        },
-        designFiles: {
-          instructionsPdf: 'storage-cube-instructions.pdf',
-          templateSvg: 'cube-template.svg',
-          photos: ['storage-cubes-1.jpg', 'storage-cubes-2.jpg']
-        },
-        assets: [
-          {
-            id: 'storage-main-1',
-            type: 'image',
-            url: '/images/products/storage-cubes-main.jpg',
-            thumbnail: '/images/products/thumbs/storage-cubes-main.jpg',
-            alt: 'Modular Storage Cubes stacked',
-            description: 'Colorful stackable storage cube system',
-            isPrimary: true,
-            order: 1
-          }
-        ],
-        price: 34.99,
-        inStock: true,
-        rating: 4.5,
-        reviewCount: 128,
-        createdAt: new Date(),
-        updatedAt: new Date()
-      },
-      {
-        _id: new ObjectId(),
-        name: 'Ergonomic Phone Stand',
-        description: 'Adjustable phone stand with perfect viewing angles for work and entertainment',
-        category: 'everyday_objects' as const,
-        difficulty: 'easy' as const,
-        estimatedAssemblyTime: 20,
-        materialRequirements: {
-          plasticType: 'PET' as const,
-          weight: 0.3
-        },
-        designFiles: {
-          instructionsPdf: 'phone-stand-instructions.pdf',
-          photos: ['phone-stand-1.jpg']
-        },
-        assets: [
-          {
-            id: 'phone-stand-main-1',
-            type: 'image',
-            url: '/images/products/phone-stand-main.jpg',
-            thumbnail: '/images/products/thumbs/phone-stand-main.jpg',
-            alt: 'Ergonomic Phone Stand with device',
-            description: 'Sleek phone stand holding smartphone',
-            isPrimary: true,
-            order: 1
-          }
-        ],
-        price: 15.75,
+        price: 185.00,
         inStock: true,
         rating: 4.8,
-        reviewCount: 203,
+        reviewCount: 15,
         createdAt: new Date(),
         updatedAt: new Date()
       },
-
-      // Limited Editions (1 product)
       {
         _id: new ObjectId(),
-        name: 'Ocean Waves Art Piece',
-        description: 'Limited edition sculptural art piece capturing the essence of ocean movements - Only 50 made',
-        category: 'limited_editions' as const,
-        difficulty: 'hard' as const,
-        estimatedAssemblyTime: 300,
-        materialRequirements: {
-          plasticType: 'PET' as const,
-          weight: 3.2
-        },
+        name: 'Professional Cutting Boards',
+        description: 'Custom branded cutting boards for restaurant merchandising',
+        category: 'client_edition' as const,
+        productType: 'cutting_boards' as const,
         designFiles: {
-          instructionsPdf: 'ocean-waves-instructions.pdf',
-          templateSvg: 'waves-template.svg',
-          photos: ['ocean-waves-1.jpg', 'ocean-waves-2.jpg', 'ocean-waves-3.jpg']
+          cncVectors: ['professional-board.svg'],
+          laserVectors: ['restaurant-branding.svg'],
+          instructionsPdfs: ['commercial-specs.pdf'],
+          photos: ['pro-board-1.jpg', 'pro-board-2.jpg']
         },
         assets: [
           {
-            id: 'waves-art-main-1',
-            type: 'image',
-            url: '/images/products/ocean-waves-main.jpg',
-            thumbnail: '/images/products/thumbs/ocean-waves-main.jpg',
-            alt: 'Ocean Waves Art Piece sculpture',
-            description: 'Limited edition ocean-inspired art sculpture',
+            id: 'pro-board-main',
+            type: 'image' as const,
+            url: '/images/products/pro-board-main.jpg',
+            thumbnail: '/images/products/thumbs/pro-board-main.jpg',
+            alt: 'Professional cutting boards',
+            description: 'Custom branded boards for restaurants',
             isPrimary: true,
             order: 1
-          },
-          {
-            id: 'waves-detail-1',
-            type: 'image',
-            url: '/images/products/ocean-waves-detail.jpg',
-            thumbnail: '/images/products/thumbs/ocean-waves-detail.jpg',
-            alt: 'Close-up of wave details',
-            description: 'Intricate wave pattern details',
-            isPrimary: false,
-            order: 2
-          },
-          {
-            id: 'waves-process-vid',
-            type: 'video',
-            url: '/videos/products/waves-creation-process.mp4',
-            thumbnail: '/images/products/thumbs/waves-process-thumb.jpg',
-            alt: 'Art piece creation process',
-            description: 'Behind-the-scenes creation video',
-            isPrimary: false,
-            order: 3
           }
         ],
-        price: 299.99,
+        price: 95.00,
         inStock: true,
-        rating: 5.0,
-        reviewCount: 12,
+        rating: 4.7,
+        reviewCount: 28,
         createdAt: new Date(),
         updatedAt: new Date()
       }
@@ -887,28 +889,34 @@ export async function POST() {
       for (let i = 0; i < blankCount; i++) {
         const qrCode = generateQRCode(orgIndex, 'item');
         
-        // Logical progression: blank -> purchased -> assembled
-        const hasPurchase = Math.random() > 0.3; // 70% chance of being purchased
-        const hasAssembly = hasPurchase && Math.random() > 0.4; // 60% of purchased items get assembled
+        // Logical progression: blank -> assembled -> delivered
+        const hasAssembly = Math.random() > 0.4; // 60% chance of being assembled
+        const hasDelivery = hasAssembly && Math.random() > 0.5; // 50% of assembled items get delivered
         
-        let itemType: 'blank' | 'finished' = 'blank';
-        let status: 'blank' | 'assembled' = 'blank';
+        let status: 'blank' | 'assembled' | 'delivered' = 'blank';
         
-        if (hasAssembly) {
-          itemType = 'finished';
+        if (hasDelivery) {
+          status = 'delivered';
+        } else if (hasAssembly) {
           status = 'assembled';
         }
         
         blanks.push({
           _id: qrCode,
-          batchId: batch._id,
-          productId: hasPurchase ? products[Math.floor(Math.random() * products.length)]._id : null,
-          userId: hasAssembly ? users[Math.floor(Math.random() * users.length)]._id : null,
-          type: itemType,
+          batchIds: [batch._id], // v3 schema uses array
+          productId: hasAssembly ? products[Math.floor(Math.random() * products.length)]._id : undefined,
+          orderId: hasDelivery ? orders[Math.floor(Math.random() * orders.length)]._id : undefined,
+          userId: hasAssembly ? users[Math.floor(Math.random() * users.length)]._id : undefined,
           status: status,
           weight: Math.round((Math.random() * 0.5 + 0.2) * 100) / 100,
+          materialDescription: `Recycled ${batch.materialType} plastic sheet`,
+          dimensions: {
+            width: Math.round((Math.random() * 5 + 10) * 10) / 10,
+            height: Math.round((Math.random() * 5 + 10) * 10) / 10,
+            thickness: Math.round((Math.random() * 0.5 + 0.3) * 10) / 10
+          },
           assemblyDate: hasAssembly ? new Date(Date.now() - Math.random() * 14 * 24 * 60 * 60 * 1000) : undefined,
-          deliveryDate: hasAssembly && Math.random() > 0.5 ? new Date(Date.now() - Math.random() * 7 * 24 * 60 * 60 * 1000) : undefined,
+          deliveryDate: hasDelivery ? new Date(Date.now() - Math.random() * 7 * 24 * 60 * 60 * 1000) : undefined,
           createdAt: new Date(),
           updatedAt: new Date()
         });
@@ -992,7 +1000,7 @@ export async function POST() {
     const sampleQRCodes = {
       bins: bins.slice(0, 3).map(b => ({ id: b._id, name: b.name })),
       batches: batches.slice(0, 3).map(b => ({ id: b._id, binIds: b.binIds })),
-      blanks: blanks.slice(0, 3).map(b => ({ id: b._id, batchId: b.batchId }))
+      blanks: blanks.slice(0, 3).map(b => ({ id: b._id, batchIds: b.batchIds }))
     };
     
     return NextResponse.json({

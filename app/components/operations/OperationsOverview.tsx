@@ -5,7 +5,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "../ui/accordion";
-import { Bin, Batch, Order, Blank } from "../../../lib/schemas";
+import { Bin, Batch, Order, Blank } from "../../../lib/schemas-v3";
 
 interface OperationsOverviewProps {
   bins: Bin[];

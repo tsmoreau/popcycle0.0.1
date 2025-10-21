@@ -1,6 +1,6 @@
 import { Package } from "lucide-react";
 import { DataTable, Column, EditableField } from "../../ui/data-table";
-import { Bin } from "../../../../lib/schemas";
+import { Bin } from "../../../../lib/schemas-v3";
 import { CollectionsWorkflow } from "../CollectionsWorkflow";
 
 interface CollectionsTabProps {

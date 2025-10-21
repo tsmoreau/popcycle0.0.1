@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Bin, Batch, Order, Blank } from '../lib/schemas';
+import { Bin, Batch, Order, Blank } from '../lib/schemas-v3';
 
 export const useOperationsData = () => {
   // Data state

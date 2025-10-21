@@ -13,7 +13,7 @@ import { useRouter } from "next/navigation";
 import { EditItemModal } from "../ui/EditItemModal";
 import { getEditableFieldsForItem, getApiEndpointForItem } from "./ItemEditHelper";
 import { useOperationsData } from "../../../hooks/useOperationsData";
-import { Bin, Batch, Blank } from "../../../lib/schemas";
+import { Bin, Batch, Blank } from "../../../lib/schemas-v3";
 
 interface QRScannerProps {
   open: boolean;

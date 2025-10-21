@@ -2,7 +2,7 @@ import { Settings, ArrowRight, Droplets, Package2, Wind, Scissors, Sparkles, Zap
 import { Badge } from "../../ui/badge";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../../ui/card";
 import { DataTable, Column, EditableField } from "../../ui/data-table";
-import { Batch } from "../../../../lib/schemas";
+import { Batch } from "../../../../lib/schemas-v3";
 
 interface ProcessingTabProps {
   batches: Batch[];

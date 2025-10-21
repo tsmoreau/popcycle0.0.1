@@ -12,9 +12,8 @@ interface Organization {
   _id: string
   name: string
   slug: string
-  type: 'corporate' | 'educational' | 'community'
+  orgType: 'community_partner' | 'venue' | 'retailer'
   description: string
-  logoUrl?: string
   contactInfo: {
     email?: string
     phone?: string
@@ -24,11 +23,57 @@ interface Organization {
   branding: {
     primaryColor?: string
     secondaryColor?: string
+    logoUrl?: string
     logoS3Key?: string
     customDomain?: string
     trackingPageMessage?: string
   }
-  events: any[]
+  communityPartner?: {
+    mission: string
+    storyContent: string
+    organizationType: string
+    socialMedia?: {
+      instagram?: string
+      facebook?: string
+      twitter?: string
+    }
+    directorName?: string
+    directorTitle?: string
+    directorBio?: string
+    pickupSchedule?: string
+    accessRequirements?: string
+    metrics?: {
+      totalWeightCollected: number
+      averageWeightPerPickup: number
+      contaminationRate: number
+      pickupCount: number
+      lastPickupDate?: Date
+    }
+  }
+  venue?: {
+    partnershipTier: "foundation" | "integrated" | "premium"
+    retainerAmount: number
+    contractStartDate: Date
+    contractEndDate: Date
+    chosenPartnerOrgId?: string
+    integrateOwnWaste?: boolean
+    monthlyDeliveryCap?: number
+    productPreferences?: {
+      exclusionList?: string[]
+    }
+  }
+  retailer?: {
+    buyerContactName?: string
+    buyerContactEmail?: string
+    buyerContactPhone?: string
+    accountsPayableEmail?: string
+    paymentTerms?: string
+    exclusivityType?: "design" | "colorway" | "category" | "none"
+    exclusivityDetails?: string[]
+    exclusivityExpirationDate?: Date
+    featuredPartnerOrgId?: string
+  }
+  eventIds: string[]
   createdAt: Date
   updatedAt: Date
 }
@@ -74,15 +119,16 @@ export default function CRMPage() {
       render: (org) => org.contactInfo.email || 'No contact info'
     },
     {
-      key: 'type',
+      key: 'orgType',
       header: 'Type',
       render: (org) => (
         <Badge className={
-          org.type === 'corporate' ? 'bg-pop-blue text-white' :
-          org.type === 'educational' ? 'bg-pop-green text-white' :
+          org.orgType === 'community_partner' ? 'bg-pop-green text-white' :
+          org.orgType === 'venue' ? 'bg-pop-blue text-white' :
           'bg-purple-600 text-white'
         }>
-          {org.type}
+          {org.orgType === 'community_partner' ? 'Community Partner' :
+           org.orgType === 'venue' ? 'Venue' : 'Retailer'}
         </Badge>
       )
     },
@@ -93,9 +139,9 @@ export default function CRMPage() {
       render: (org) => new Date(org.createdAt).toLocaleDateString()
     },
     { 
-      key: 'events', 
+      key: 'eventIds', 
       header: 'Events',
-      render: (org) => org.events.length
+      render: (org) => org.eventIds ? org.eventIds.length : 0
     }
   ]
 
@@ -105,14 +151,14 @@ export default function CRMPage() {
     { key: 'name', label: 'Organization Name', type: 'text', required: true, placeholder: 'Enter organization name' },
     { key: 'slug', label: 'URL Slug', type: 'text', required: true, placeholder: 'organization-slug' },
     { 
-      key: 'type', 
+      key: 'orgType', 
       label: 'Organization Type', 
       type: 'select', 
       required: true,
       options: [
-        { value: 'corporate', label: 'Corporate' },
-        { value: 'educational', label: 'Educational' },
-        { value: 'community', label: 'Community' }
+        { value: 'community_partner', label: 'Community Partner' },
+        { value: 'venue', label: 'Venue' },
+        { value: 'retailer', label: 'Retailer' }
       ]
     },
     { key: 'description', label: 'Description', type: 'textarea', required: true, placeholder: 'Describe the organization' },

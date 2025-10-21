@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { ObjectId } from 'mongodb'
 import { getDatabase } from '../../../../lib/mongodb'
-import { Blank } from '../../../../lib/schemas'
+import { Blank } from '../../../../lib/schemas-v3'
 
 export async function GET() {
   try {

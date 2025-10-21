@@ -1,6 +1,6 @@
 import { Badge } from "../ui/badge";
 import { Column, EditableField } from "../ui/data-table";
-import { Bin, Batch, Order, Blank } from "../../../lib/schemas";
+import { Bin, Batch, Order, Blank } from "../../../lib/schemas-v3";
 import {
   getStatusBadge,
   getProcessingStatusBadge,
@@ -372,18 +372,14 @@ export const defaultOrderColumns = ["_id", "orderNumber", "type", "serviceDescri
 // Complete Blank column definitions with ALL database fields
 export const allBlankColumns: Column<Blank>[] = [
   { key: "_id", header: "Blank ID" },
-  { key: "batchId", header: "Batch ID" },
-  { key: "productId", header: "Product ID" },
-  { key: "userId", header: "User ID" },
   { 
-    key: "type", 
-    header: "Type",
-    render: (item) => (
-      <Badge variant={item.type === "finished" ? "default" : "secondary"}>
-        {item.type}
-      </Badge>
-    )
+    key: "batchIds", 
+    header: "Batch IDs",
+    render: (item) => item.batchIds && item.batchIds.length > 0 ? item.batchIds.join(', ') : 'N/A'
   },
+  { key: "productId", header: "Product ID" },
+  { key: "orderId", header: "Order ID" },
+  { key: "userId", header: "User ID" },
   { 
     key: "status", 
     header: "Status",
@@ -428,4 +424,4 @@ export const allBlankColumns: Column<Blank>[] = [
   }
 ];
 
-export const defaultBlankColumns = ["_id", "batchId", "type", "status", "weight"];
+export const defaultBlankColumns = ["_id", "batchIds", "status", "weight"];

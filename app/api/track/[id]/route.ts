@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { ObjectId } from 'mongodb';
 import { getDatabase } from '../../../../lib/mongodb';
-import { Bin, Batch, Blank } from '../../../../lib/schemas';
+import { Bin, Batch, Blank } from '../../../../lib/schemas-v3';
 
 // Function to determine collection type from QR code
 function getCollectionType(qrCode: string): 'bin' | 'batch' | 'blank' | null {
@@ -53,10 +53,13 @@ export async function GET(
         return NextResponse.json({ error: 'Bin not found' }, { status: 404 });
       }
       
-      // Find event information if bin has an eventId
+      // Find event information if bin has an eventId (v3: query events collection)
       let eventInfo = null;
-      if ((record as Bin).eventId && org && org.events) {
-        eventInfo = org.events.find((event: any) => event.eventId === (record as Bin).eventId);
+      if ((record as Bin).eventId) {
+        const eventDoc = await db.collection('events').findOne({ eventId: (record as Bin).eventId } as any);
+        if (eventDoc) {
+          eventInfo = { name: eventDoc.name };
+        }
       }
       
       const binRecord = record as Bin;
@@ -77,7 +80,7 @@ export async function GET(
         event: eventInfo ? eventInfo.name : null,
         organization: org ? {
           name: org.name,
-          type: org.type,
+          type: org.orgType,
           description: org.description,
           branding: org.branding
         } : null,
@@ -119,7 +122,7 @@ export async function GET(
         notes: batchRecord.notes,
         organization: org ? {
           name: org.name,
-          type: org.type,
+          type: org.orgType,
           description: org.description,
           branding: org.branding
         } : null,
@@ -136,7 +139,10 @@ export async function GET(
       let batch: Batch | null = null;
       if (record) {
         const blankRecord = record as Blank;
-        batch = await db.collection('batches').findOne({ _id: blankRecord.batchId } as any) as Batch | null;
+        // batchIds is now an array, get the first batch for organization lookup
+        batch = blankRecord.batchIds && blankRecord.batchIds.length > 0
+          ? await db.collection('batches').findOne({ _id: blankRecord.batchIds[0] } as any) as Batch | null
+          : null;
         if (batch) {
           // Get the first bin for organization lookup (batches can come from multiple bins)
           if (batch.binIds && batch.binIds.length > 0) {
@@ -162,11 +168,11 @@ export async function GET(
       return NextResponse.json({
         id: blankRecord._id,
         type: 'blank',
-        batchId: blankRecord.batchId,
+        batchIds: blankRecord.batchIds || [],
         binIds: batch ? batch.binIds : [], // Include the bin IDs from the batch
         productId: blankRecord.productId,
         userId: blankRecord.userId,
-        itemType: blankRecord.type,
+        itemType: blankRecord.status,
         status: blankRecord.status,
         weight: blankRecord.weight,
         assemblyDate: blankRecord.assemblyDate,
@@ -180,7 +186,7 @@ export async function GET(
         } : null,
         organization: org ? {
           name: org.name,
-          type: org.type,
+          type: org.orgType,
           description: org.description,
           branding: org.branding
         } : null,

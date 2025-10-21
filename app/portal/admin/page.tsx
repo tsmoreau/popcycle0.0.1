@@ -66,7 +66,8 @@ interface Product {
   _id: string
   name: string
   description: string
-  category: 'flora_fauna' | 'kinetic_sculptures' | 'vehicles_vessels' | 'pop_bots' | 'everyday_objects' | 'limited_editions'
+  category: 'workshop' | 'studio_edition' | 'client_edition'
+  productType: 'coasters' | 'keychains' | 'bookmarks' | 'magnets' | 'earrings' | 'lighting' | 'cutting_boards'
   difficulty: 'easy' | 'medium' | 'hard'
   estimatedAssemblyTime: number
   materialRequirements: {
@@ -482,12 +483,24 @@ export default function AdminPage() {
       type: 'select', 
       required: true,
       options: [
-        { value: 'flora_fauna', label: 'Flora & Fauna' },
-        { value: 'kinetic_sculptures', label: 'Kinetic Sculptures' },
-        { value: 'vehicles_vessels', label: 'Vehicles & Vessels' },
-        { value: 'pop_bots', label: 'Pop Bots' },
-        { value: 'everyday_objects', label: 'Everyday Objects' },
-        { value: 'limited_editions', label: 'Limited Editions' }
+        { value: 'workshop', label: 'Workshop' },
+        { value: 'studio_edition', label: 'Studio Edition' },
+        { value: 'client_edition', label: 'Client Edition' }
+      ]
+    },
+    { 
+      key: 'productType', 
+      label: 'Product Type', 
+      type: 'select', 
+      required: true,
+      options: [
+        { value: 'coasters', label: 'Coasters' },
+        { value: 'keychains', label: 'Keychains' },
+        { value: 'bookmarks', label: 'Bookmarks' },
+        { value: 'magnets', label: 'Magnets' },
+        { value: 'earrings', label: 'Earrings' },
+        { value: 'lighting', label: 'Lighting' },
+        { value: 'cutting_boards', label: 'Cutting Boards' }
       ]
     },
     { 
