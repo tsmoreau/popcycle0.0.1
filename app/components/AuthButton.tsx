@@ -69,7 +69,7 @@ function AuthButtonContent() {
         
         {/* Dropdown Menu */}
         {dropdownOpen && (
-          <div className="absolute right-0 mt-2 w-48 bg-white border border-gray-300 shadow-lg z-50">
+          <div className="absolute w-80 bg-white border border-gray-200 shadow-lg p-6">
             <div className="p-2">
               <div className="px-3 py-2 text-sm font-semibold text-pop-black border-b border-gray-200">
                 {session.user?.email}
