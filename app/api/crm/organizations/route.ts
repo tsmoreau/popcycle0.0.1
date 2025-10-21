@@ -32,7 +32,7 @@ export async function POST(request: NextRequest) {
       _id: new ObjectId(),
       name: body.name,
       slug: body.slug || body.name.toLowerCase().replace(/\s+/g, ''),
-      type: body.type,
+      orgType: body.orgType,
       description: body.description,
       logoUrl: body.logoUrl || '',
       contactInfo: {
@@ -48,7 +48,7 @@ export async function POST(request: NextRequest) {
         customDomain: body.customDomain || '',
         trackingPageMessage: body.trackingPageMessage || ''
       },
-      events: [],
+      eventIds: [],
       createdAt: new Date(),
       updatedAt: new Date()
     }

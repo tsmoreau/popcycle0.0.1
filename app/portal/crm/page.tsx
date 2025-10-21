@@ -12,7 +12,7 @@ interface Organization {
   _id: string
   name: string
   slug: string
-  type: 'corporate' | 'educational' | 'community'
+  orgType: 'community_partner' | 'venue' | 'retailer'
   description: string
   logoUrl?: string
   contactInfo: {
@@ -28,7 +28,7 @@ interface Organization {
     customDomain?: string
     trackingPageMessage?: string
   }
-  events: any[]
+  eventIds: string[]
   createdAt: Date
   updatedAt: Date
 }
@@ -74,28 +74,28 @@ export default function CRMPage() {
       render: (org) => org.contactInfo.email || 'No contact info'
     },
     {
-      key: 'type',
+      key: 'orgType',
       header: 'Type',
       render: (org) => (
         <Badge className={
-          org.type === 'corporate' ? 'bg-pop-blue text-white' :
-          org.type === 'educational' ? 'bg-pop-green text-white' :
-          'bg-purple-600 text-white'
+          org.orgType === 'community_partner' ? 'bg-pop-green text-white' :
+          org.orgType === 'venue' ? 'bg-pop-blue text-white' :
+          'bg-pop-red text-white'
         }>
-          {org.type}
+          {org.orgType.replace('_', ' ')}
         </Badge>
       )
     },
     { key: 'slug', header: 'Slug' },
-    { 
-      key: 'createdAt', 
+    {
+      key: 'createdAt',
       header: 'Created',
       render: (org) => new Date(org.createdAt).toLocaleDateString()
     },
-    { 
-      key: 'events', 
+    {
+      key: 'eventIds',
       header: 'Events',
-      render: (org) => org.events.length
+      render: (org) => org.eventIds.length
     }
   ]
 
@@ -104,15 +104,15 @@ export default function CRMPage() {
     { key: '_id', label: 'Organization ID', type: 'readonly' },
     { key: 'name', label: 'Organization Name', type: 'text', required: true, placeholder: 'Enter organization name' },
     { key: 'slug', label: 'URL Slug', type: 'text', required: true, placeholder: 'organization-slug' },
-    { 
-      key: 'type', 
-      label: 'Organization Type', 
-      type: 'select', 
+    {
+      key: 'orgType',
+      label: 'Organization Type',
+      type: 'select',
       required: true,
       options: [
-        { value: 'corporate', label: 'Corporate' },
-        { value: 'educational', label: 'Educational' },
-        { value: 'community', label: 'Community' }
+        { value: 'community_partner', label: 'Community Partner' },
+        { value: 'venue', label: 'Venue' },
+        { value: 'retailer', label: 'Retailer' }
       ]
     },
     { key: 'description', label: 'Description', type: 'textarea', required: true, placeholder: 'Describe the organization' },
