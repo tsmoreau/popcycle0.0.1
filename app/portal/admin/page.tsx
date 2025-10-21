@@ -762,7 +762,12 @@ export default function AdminPage() {
       </div>
 
       {/* Product Configuration - Accordion */}
-      <Accordion type="single" collapsible className="w-full">
+      <Accordion 
+        type="single" 
+        collapsible 
+        className="w-full"
+        onValueChange={(value) => setShowProductConfiguration(value === 'product-configuration')}
+      >
         <AccordionItem value="product-configuration" className="border rounded-lg px-4">
           <AccordionTrigger className="hover:no-underline">
             <div className="flex items-center gap-3">
