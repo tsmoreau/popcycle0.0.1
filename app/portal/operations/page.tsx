@@ -23,6 +23,7 @@ import {
   X,
   Monitor,
   Route,
+  UserCog,
 } from "lucide-react";
 import { Button } from "../../components/ui/button";
 import {
@@ -163,7 +164,7 @@ export default function OperationsPage() {
             {/* Main Operations Tabs */}
             <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
         <div className="relative">
-          <div className="flex items-center justify-between mb-4">
+          <div className="flex items-center justify-between">
             <TabsList className="relative z-10 p-0 bg-transparent h-auto gap-0 flex-nowrap overflow-visible">
               <TabsTrigger value="collections" className="folder-tab-white relative z-[4] text-xs sm:text-sm px-3 sm:px-4 py-2 sm:py-2">
                 <Package className="w-4 h-4 mr-2 text-pop-green" />

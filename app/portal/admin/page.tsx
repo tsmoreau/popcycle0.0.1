@@ -839,7 +839,7 @@ export default function AdminPage() {
                     enableColumnSelection={true}
                     enableFiltering={true}
                     availableColumns={productColumns}
-                    defaultVisibleColumns={['name', 'category', 'productType', 'price', 'rating', 'inStock']}
+                    defaultVisibleColumns={['name', 'category', 'productType',]}
                   />
                 )}
               </div>
@@ -910,7 +910,7 @@ export default function AdminPage() {
                 </div>
                 <div className="flex items-center justify-between p-3 bg-white rounded-lg border">
                   <div>
-                    <span className="font-medium text-sm">AWS S3</span>
+                    <span className="font-medium text-sm">Google Cloud Storage</span>
                     <p className="text-xs text-gray-600">Private file & image storage</p>
                   </div>
                   <Badge className="bg-gray-100 text-gray-800">Not Set Up</Badge>

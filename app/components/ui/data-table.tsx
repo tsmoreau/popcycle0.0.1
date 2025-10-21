@@ -730,7 +730,7 @@ export function DataTable<T extends Record<string, any>>({
                 {sortedData.map((item, index) => {
                   const hasModal = renderModal || editableFields
                   const RowContent = (
-                    <TableRow className={hasModal ? "cursor-pointer hover:bg-gray-50" : ""}>
+                    <TableRow className={hasModal ? "cursor-pointer bg-white" : ""}>
                       {visibleColumns.map((column) => (
                         <TableCell
                           key={String(column.key)}

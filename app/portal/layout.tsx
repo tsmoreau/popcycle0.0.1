@@ -18,7 +18,12 @@ import {
   Shield,
   User,
   BarChart3,
-  ChevronDown
+  ChevronDown,
+  UserCog,
+  Monitor,
+  HeartHandshake,
+  UserStar,
+  CircleDollarSign,
 } from 'lucide-react'
 import { Button } from '../components/ui/button'
 import { Badge } from '../components/ui/badge'
@@ -52,10 +57,10 @@ export default function PortalLayout({
   }, [])
 
   const sidebarItems = [
-    { id: 'admin', label: 'Admin', icon: Shield, color: 'text-pop-black', activeColor: 'text-pop-black', activeBg: 'bg-pop-black/10', activeBorder: 'border-pop-black/20', href: '/portal/admin' },
-    { id: 'operations', label: 'Operations', icon: BarChart3, color: 'text-pop-green', activeColor: 'text-pop-green', activeBg: 'bg-pop-green/10', activeBorder: 'border-pop-green/20', href: '/portal/operations' },
-    { id: 'crm', label: 'CRM', icon: Phone, color: 'text-pop-blue', activeColor: 'text-pop-blue', activeBg: 'bg-pop-blue/10', activeBorder: 'border-pop-blue/20', href: '/portal/crm' },
-    { id: 'partner', label: 'Partner', icon: Building2, color: 'text-pop-red', activeColor: 'text-pop-red', activeBg: 'bg-pop-red/10', activeBorder: 'border-pop-red/20', href: '/portal/partner' },
+    { id: 'admin', label: 'Admin', icon: Settings, color: 'text-pop-black', activeColor: 'text-pop-black', activeBg: 'bg-pop-black/10', activeBorder: 'border-pop-black/20', href: '/portal/admin' },
+    { id: 'operations', label: 'Operations', icon: Monitor, color: 'text-pop-green', activeColor: 'text-pop-green', activeBg: 'bg-pop-green/10', activeBorder: 'border-pop-green/20', href: '/portal/operations' },
+    { id: 'crm', label: 'CRM', icon: HeartHandshake, color: 'text-pop-blue', activeColor: 'text-pop-blue', activeBg: 'bg-pop-blue/10', activeBorder: 'border-pop-blue/20', href: '/portal/crm' },
+    { id: 'partner', label: 'Partner', icon: User, color: 'text-pop-red', activeColor: 'text-pop-red', activeBg: 'bg-pop-red/10', activeBorder: 'border-pop-red/20', href: '/portal/partner' },
     { id: 'financial', label: 'Finance', icon: DollarSign, color: 'text-orange-600', activeColor: 'text-orange-600', activeBg: 'bg-orange-600/10', activeBorder: 'border-orange-600/20', href: '/portal/financial' },
   ]
 
@@ -224,7 +229,7 @@ export default function PortalLayout({
       <main className={`mt-16 min-h-[calc(100vh-4rem)] overflow-y-auto transition-all duration-300 ${
         sidebarCollapsed ? 'md:ml-16' : 'md:ml-64'
       } ml-0`}>
-        <div className="p-4 md:p-6 pb-12">
+        <div className="p-4 md:p-6 pb-12 bg-gray-50">
           {children}
         </div>
       </main>
