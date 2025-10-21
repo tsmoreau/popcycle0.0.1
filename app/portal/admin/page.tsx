@@ -49,6 +49,17 @@ interface MongoDBStatus {
   lastChecked?: string
 }
 
+interface GCSStatus {
+  connected: boolean
+  status: string
+  bucket?: string
+  projectId?: string
+  location?: string
+  storageClass?: string
+  error?: string
+  lastChecked?: string
+}
+
 interface SessionStats {
   totalActiveSessions: number
   uniqueActiveUsers: number
@@ -102,6 +113,8 @@ export default function AdminPage() {
   const [showMongoDBOperations, setShowMongoDBOperations] = useState(false)
   const [mongoStatus, setMongoStatus] = useState<MongoDBStatus | null>(null)
   const [loadingMongo, setLoadingMongo] = useState(true)
+  const [gcsStatus, setGcsStatus] = useState<GCSStatus | null>(null)
+  const [loadingGcs, setLoadingGcs] = useState(true)
   const [generatingData, setGeneratingData] = useState(false)
   const [products, setProducts] = useState<Product[]>([])
   const [loadingProducts, setLoadingProducts] = useState(false)
@@ -113,9 +126,10 @@ export default function AdminPage() {
   const [onlineUsers, setOnlineUsers] = useState<OnlineUser[]>([])
   const [loadingSessions, setLoadingSessions] = useState(true)
 
-  // Fetch MongoDB status, products, users, and sessions on component mount
+  // Fetch MongoDB status, GCS status, products, users, and sessions on component mount
   useEffect(() => {
     fetchMongoStatus()
+    fetchGcsStatus()
     fetchUsers()
     fetchSessionData()
   }, [])
@@ -230,6 +244,23 @@ export default function AdminPage() {
       })
     } finally {
       setLoadingMongo(false)
+    }
+  }
+
+  const fetchGcsStatus = async () => {
+    try {
+      setLoadingGcs(true)
+      const response = await fetch('/api/admin/gcs-status')
+      const data = await response.json()
+      setGcsStatus(data)
+    } catch (error) {
+      setGcsStatus({
+        connected: false,
+        status: 'Connection Error',
+        error: 'Failed to check GCS status'
+      })
+    } finally {
+      setLoadingGcs(false)
     }
   }
 
@@ -913,7 +944,17 @@ export default function AdminPage() {
                     <span className="font-medium text-sm">Google Cloud Storage</span>
                     <p className="text-xs text-gray-600">Private file & image storage</p>
                   </div>
-                  <Badge className="bg-gray-100 text-gray-800">Not Set Up</Badge>
+                  {loadingGcs ? (
+                    <Badge className="bg-yellow-100 text-yellow-800">Checking...</Badge>
+                  ) : (
+                    <Badge className={
+                      gcsStatus?.connected 
+                        ? "bg-pop-green text-white" 
+                        : "bg-pop-red text-white"
+                    }>
+                      {gcsStatus?.status || 'Unknown'}
+                    </Badge>
+                  )}
                 </div>
               </div>
             </div>
