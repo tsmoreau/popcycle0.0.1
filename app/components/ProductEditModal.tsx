@@ -180,7 +180,7 @@ export function ProductEditModal({
       <DialogHeader>
         <DialogTitle className="flex items-center gap-2">
           {isAdding ? <Plus className="h-5 w-5" /> : <Edit2 className="h-5 w-5" />}
-          {isAdding ? 'Add New Product' : 'Edit Product'}
+          {isAdding ? 'Add New Product' : `Edit Product: ${item?.name || 'Product'}`}
         </DialogTitle>
         <DialogDescription>
           {isAdding 
@@ -276,10 +276,8 @@ export function ProductEditModal({
               <Input
                 type="number"
                 value={formData.rating}
-                onChange={(e) => handleFieldChange('rating', parseFloat(e.target.value) || 0)}
-                min="0"
-                max="5"
-                step="0.1"
+                disabled
+                className="bg-gray-50 cursor-not-allowed"
               />
             </div>
             <div>
@@ -287,8 +285,8 @@ export function ProductEditModal({
               <Input
                 type="number"
                 value={formData.reviewCount}
-                onChange={(e) => handleFieldChange('reviewCount', parseInt(e.target.value) || 0)}
-                min="0"
+                disabled
+                className="bg-gray-50 cursor-not-allowed"
               />
             </div>
           </div>

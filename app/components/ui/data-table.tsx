@@ -748,7 +748,7 @@ export function DataTable<T extends Record<string, any>>({
                         <DialogTrigger asChild>
                           {RowContent}
                         </DialogTrigger>
-                        <DialogContent className="max-w-2xl max-h-[80vh] overflow-y-auto">
+                        <DialogContent className="max-w-5xl max-h-[85vh] overflow-y-auto">
                           {isEditing && editingItem === item ? 
                             renderEditModal(item) : 
                             renderModal ? renderModal(item) : renderViewModal(item)
@@ -815,7 +815,7 @@ export function DataTable<T extends Record<string, any>>({
                     <DialogTrigger asChild>
                       {CardContent}
                     </DialogTrigger>
-                    <DialogContent className="max-w-2xl max-h-[80vh] overflow-y-auto">
+                    <DialogContent className="max-w-5xl max-h-[85vh] overflow-y-auto">
                       {isEditing && editingItem === item ? 
                         renderEditModal(item) : 
                         renderModal ? renderModal(item) : renderViewModal(item)
@@ -834,7 +834,7 @@ export function DataTable<T extends Record<string, any>>({
       {/* Add Entry Dialog */}
       {editableFields && onAdd && (
         <Dialog open={isAdding && isEditing}>
-          <DialogContent className="max-w-2xl max-h-[80vh] overflow-y-auto">
+          <DialogContent className="max-w-5xl max-h-[85vh] overflow-y-auto">
             {renderEditModal({} as T)}
           </DialogContent>
         </Dialog>
