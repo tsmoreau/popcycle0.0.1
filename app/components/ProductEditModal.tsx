@@ -545,7 +545,7 @@ export function ProductEditModal({
         {!isAdding && onDelete && (
           <Button
             variant="destructive"
-            onClick={onDelete}
+            onClick={() => onDelete()}
             disabled={isSaving}
           >
             <Trash2 className="h-4 w-4 mr-2" />

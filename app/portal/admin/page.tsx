@@ -581,11 +581,11 @@ export default function AdminPage() {
       {...props}
       onSave={async (productData: any) => {
         await handleProductSave(productData)
-        props.onCancel() // Close the modal after save
+        props.onCancel()
       }}
-      onDelete={props.item ? async () => {
+      onDelete={props.item?._id ? async () => {
         await handleProductDelete(props.item!)
-        props.onCancel() // Close the modal after delete
+        props.onCancel()
       } : undefined}
     />
   }
