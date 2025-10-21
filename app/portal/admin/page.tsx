@@ -839,7 +839,6 @@ export default function AdminPage() {
                 <Button variant="outline" className="w-full" onClick={fetchProducts}>
                   {loadingProducts ? 'Refreshing...' : 'Refresh Products'}
                 </Button>
-                <Button className="w-full bg-pop-green hover:bg-pop-green/90">Add New Product</Button>
                 <Button variant="outline" className="w-full">Import Products from CSV</Button>
                 <Button variant="outline" className="w-full">Export Product Catalog</Button>
               </div>
