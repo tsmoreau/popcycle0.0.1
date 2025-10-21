@@ -200,18 +200,14 @@ export default function Navigation() {
               <Search className="w-6 h-6 text-gray-700" />
             </button>
 
-            {/* User Icon / Auth Button */}
-            {session ? (
-              <AuthButton />
-            ) : (
-              <button
-                onMouseEnter={() => setIconDropdownOpen('user')}
-                className="hover:opacity-80 transition-opacity"
-                data-testid="button-user"
-              >
-                <User className="w-6 h-6 text-gray-700" />
-              </button>
-            )}
+            {/* User Icon */}
+            <button
+              onMouseEnter={() => setIconDropdownOpen('user')}
+              className="hover:opacity-80 transition-opacity"
+              data-testid="button-user"
+            >
+              <User className="w-6 h-6 text-gray-700" />
+            </button>
 
             {/* Shopping Cart */}
             <button
@@ -237,10 +233,10 @@ export default function Navigation() {
                     </div>
                   )}
 
-                  {iconDropdownOpen === 'user' && !session && (
+                  {iconDropdownOpen === 'user' && (
                     <div>
                       <h3 className="font-jost text-lg font-semibold mb-4 text-pop-black">Account</h3>
-                      <AuthButton />
+                     <AuthButton />
                     </div>
                   )}
 
