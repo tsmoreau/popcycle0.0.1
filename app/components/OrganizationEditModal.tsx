@@ -26,7 +26,7 @@ interface Organization {
   _id: string
   name: string
   slug: string
-  orgType: 'community_partner' | 'venue' | 'retailer'
+  orgType: 'community_partner' | 'client' | 'wholesaler'
   description: string
   contactInfo?: {
     email?: string
@@ -34,7 +34,7 @@ interface Organization {
     address?: string
     website?: string
   }
-  status?: 'prospect' | 'contacted' | 'in_talks' | 'proposal_sent' | 'negotiation' | 'active_partner' | 'onboarding' | 'closed_lost'
+  status?: 'prospect' | 'contacted' | 'in_talks' | 'proposal_sent' | 'negotiation' | 'active_partner' | 'onboarding' | 'closed_lost' | 'n_a'
   internalNotes?: string
   activities?: Activity[]
   lastContactDate?: Date
@@ -196,8 +196,8 @@ export function OrganizationEditModal({
                 data-testid="select-org-type"
               >
                 <option value="community_partner">Community Partner</option>
-                <option value="venue">Venue</option>
-                <option value="retailer">Retailer</option>
+                <option value="client">Client</option>
+                <option value="wholesaler">Wholesaler</option>
               </select>
             </div>
             <div>
@@ -208,6 +208,7 @@ export function OrganizationEditModal({
                 className="w-full border rounded-md px-3 py-2"
                 data-testid="select-org-status"
               >
+                <option value="n_a">N/A</option>
                 <option value="prospect">Prospect</option>
                 <option value="contacted">Contacted</option>
                 <option value="in_talks">In Talks</option>

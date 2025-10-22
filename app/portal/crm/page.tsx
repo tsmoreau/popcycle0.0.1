@@ -25,7 +25,7 @@ interface Organization {
   _id: string
   name: string
   slug: string
-  orgType: 'community_partner' | 'venue' | 'retailer'
+  orgType: 'community_partner' | 'client' | 'wholesaler'
   description: string
   contactInfo: {
     email?: string
@@ -63,7 +63,7 @@ interface Organization {
       lastPickupDate?: Date
     }
   }
-  venue?: {
+  client?: {
     partnershipTier: "foundation" | "integrated" | "premium"
     retainerAmount: number
     contractStartDate: Date
@@ -75,7 +75,7 @@ interface Organization {
       exclusionList?: string[]
     }
   }
-  retailer?: {
+  wholesaler?: {
     buyerContactName?: string
     buyerContactEmail?: string
     buyerContactPhone?: string
@@ -87,7 +87,7 @@ interface Organization {
     featuredPartnerOrgId?: string
   }
   eventIds: string[]
-  status?: 'prospect' | 'contacted' | 'in_talks' | 'proposal_sent' | 'negotiation' | 'active_partner' | 'onboarding' | 'closed_lost'
+  status?: 'prospect' | 'contacted' | 'in_talks' | 'proposal_sent' | 'negotiation' | 'active_partner' | 'onboarding' | 'closed_lost' | 'n_a'
   internalNotes?: string
   activities?: Activity[]
   lastContactDate?: Date
@@ -143,11 +143,11 @@ export default function CRMPage() {
       render: (org) => (
         <Badge className={
           org.orgType === 'community_partner' ? 'bg-pop-green text-white' :
-          org.orgType === 'venue' ? 'bg-pop-blue text-white' :
+          org.orgType === 'client' ? 'bg-pop-blue text-white' :
           'bg-purple-600 text-white'
         }>
           {org.orgType === 'community_partner' ? 'Community Partner' :
-           org.orgType === 'venue' ? 'Venue' : 'Retailer'}
+           org.orgType === 'client' ? 'Client' : 'Wholesaler'}
         </Badge>
       )
     },
@@ -157,6 +157,7 @@ export default function CRMPage() {
       render: (org) => {
         if (!org.status) return <Badge variant="outline">Not Set</Badge>
         const statusConfig: Record<string, { label: string; className: string }> = {
+          n_a: { label: 'N/A', className: 'bg-gray-400 text-white' },
           prospect: { label: 'Prospect', className: 'bg-gray-500 text-white' },
           contacted: { label: 'Contacted', className: 'bg-blue-500 text-white' },
           in_talks: { label: 'In Talks', className: 'bg-purple-500 text-white' },
@@ -231,8 +232,8 @@ export default function CRMPage() {
       required: true,
       options: [
         { value: 'community_partner', label: 'Community Partner' },
-        { value: 'venue', label: 'Venue' },
-        { value: 'retailer', label: 'Retailer' }
+        { value: 'client', label: 'Client' },
+        { value: 'wholesaler', label: 'Wholesaler' }
       ]
     },
     { key: 'description', label: 'Description', type: 'textarea', required: true, placeholder: 'Describe the organization' },
@@ -264,6 +265,7 @@ export default function CRMPage() {
       label: 'Pipeline Status',
       type: 'select',
       options: [
+        { value: 'n_a', label: 'N/A' },
         { value: 'prospect', label: 'Prospect' },
         { value: 'contacted', label: 'Contacted' },
         { value: 'in_talks', label: 'In Talks' },
