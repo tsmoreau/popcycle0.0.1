@@ -35,7 +35,8 @@ export async function POST(request: NextRequest) {
       nextActionDate: activity.nextActionDate ? new Date(activity.nextActionDate) : undefined
     }))
     
-    const newOrganization = {
+    // Build base organization object
+    const newOrganization: any = {
       _id: new ObjectId(),
       name: body.name,
       slug: body.slug || body.name.toLowerCase().replace(/\s+/g, ''),
@@ -62,29 +63,31 @@ export async function POST(request: NextRequest) {
       nextActionDate: body.nextActionDate ? new Date(body.nextActionDate) : null,
       assignedTo: body.assignedTo || '',
       eventIds: body.eventIds || [],
-      ...(body.communityPartner && { communityPartner: body.communityPartner }),
-      ...(body.limitedClient && { 
-        limitedClient: {
-          ...body.limitedClient,
-          contractStartDate: body.limitedClient.contractStartDate ? new Date(body.limitedClient.contractStartDate) : undefined,
-          contractEndDate: body.limitedClient.contractEndDate ? new Date(body.limitedClient.contractEndDate) : undefined
-        }
-      }),
-      ...(body.retainerClient && { 
-        retainerClient: {
-          ...body.retainerClient,
-          contractStartDate: body.retainerClient.contractStartDate ? new Date(body.retainerClient.contractStartDate) : undefined,
-          contractEndDate: body.retainerClient.contractEndDate ? new Date(body.retainerClient.contractEndDate) : undefined
-        }
-      }),
-      ...(body.wholesaler && { 
-        wholesaler: {
-          ...body.wholesaler,
-          exclusivityExpirationDate: body.wholesaler.exclusivityExpirationDate ? new Date(body.wholesaler.exclusivityExpirationDate) : undefined
-        }
-      }),
       createdAt: new Date(),
       updatedAt: new Date()
+    }
+
+    // Add only the type-specific object matching current orgType
+    const orgType = body.orgType || 'community_partner'
+    if (orgType === 'community_partner' && body.communityPartner) {
+      newOrganization.communityPartner = body.communityPartner
+    } else if (orgType === 'limited_client' && body.limitedClient) {
+      newOrganization.limitedClient = {
+        ...body.limitedClient,
+        contractStartDate: body.limitedClient.contractStartDate ? new Date(body.limitedClient.contractStartDate) : undefined,
+        contractEndDate: body.limitedClient.contractEndDate ? new Date(body.limitedClient.contractEndDate) : undefined
+      }
+    } else if (orgType === 'retainer_client' && body.retainerClient) {
+      newOrganization.retainerClient = {
+        ...body.retainerClient,
+        contractStartDate: body.retainerClient.contractStartDate ? new Date(body.retainerClient.contractStartDate) : undefined,
+        contractEndDate: body.retainerClient.contractEndDate ? new Date(body.retainerClient.contractEndDate) : undefined
+      }
+    } else if (orgType === 'wholesaler' && body.wholesaler) {
+      newOrganization.wholesaler = {
+        ...body.wholesaler,
+        exclusivityExpirationDate: body.wholesaler.exclusivityExpirationDate ? new Date(body.wholesaler.exclusivityExpirationDate) : undefined
+      }
     }
     
     const result = await db.collection('orgs').insertOne(newOrganization)
@@ -112,53 +115,56 @@ export async function PUT(request: NextRequest) {
     await client.connect()
     const db = client.db('PopCycle')
     
-    const { _id, ...updateData } = body
+    const { _id, communityPartner, limitedClient, retainerClient, wholesaler, ...baseUpdateData } = body
     
     // Convert date strings to Date objects
-    if (updateData.lastContactDate) {
-      updateData.lastContactDate = new Date(updateData.lastContactDate)
+    if (baseUpdateData.lastContactDate) {
+      baseUpdateData.lastContactDate = new Date(baseUpdateData.lastContactDate)
     }
-    if (updateData.nextActionDate) {
-      updateData.nextActionDate = new Date(updateData.nextActionDate)
+    if (baseUpdateData.nextActionDate) {
+      baseUpdateData.nextActionDate = new Date(baseUpdateData.nextActionDate)
     }
     
     // Convert activity dates to Date objects
-    if (updateData.activities && Array.isArray(updateData.activities)) {
-      updateData.activities = updateData.activities.map((activity: any) => ({
+    if (baseUpdateData.activities && Array.isArray(baseUpdateData.activities)) {
+      baseUpdateData.activities = baseUpdateData.activities.map((activity: any) => ({
         ...activity,
         date: activity.date ? new Date(activity.date) : new Date(),
         nextActionDate: activity.nextActionDate ? new Date(activity.nextActionDate) : undefined
       }))
     }
     
-    // Convert type-specific date fields
-    if (updateData.limitedClient) {
-      if (updateData.limitedClient.contractStartDate) {
-        updateData.limitedClient.contractStartDate = new Date(updateData.limitedClient.contractStartDate)
+    baseUpdateData.updatedAt = new Date()
+
+    // Build the $set object with base fields
+    const setObject: any = { ...baseUpdateData }
+
+    // Add only the type-specific object matching current orgType
+    const orgType = body.orgType
+    if (orgType === 'community_partner' && communityPartner) {
+      setObject.communityPartner = communityPartner
+    } else if (orgType === 'limited_client' && limitedClient) {
+      setObject.limitedClient = {
+        ...limitedClient,
+        contractStartDate: limitedClient.contractStartDate ? new Date(limitedClient.contractStartDate) : undefined,
+        contractEndDate: limitedClient.contractEndDate ? new Date(limitedClient.contractEndDate) : undefined
       }
-      if (updateData.limitedClient.contractEndDate) {
-        updateData.limitedClient.contractEndDate = new Date(updateData.limitedClient.contractEndDate)
+    } else if (orgType === 'retainer_client' && retainerClient) {
+      setObject.retainerClient = {
+        ...retainerClient,
+        contractStartDate: retainerClient.contractStartDate ? new Date(retainerClient.contractStartDate) : undefined,
+        contractEndDate: retainerClient.contractEndDate ? new Date(retainerClient.contractEndDate) : undefined
+      }
+    } else if (orgType === 'wholesaler' && wholesaler) {
+      setObject.wholesaler = {
+        ...wholesaler,
+        exclusivityExpirationDate: wholesaler.exclusivityExpirationDate ? new Date(wholesaler.exclusivityExpirationDate) : undefined
       }
     }
-    
-    if (updateData.retainerClient) {
-      if (updateData.retainerClient.contractStartDate) {
-        updateData.retainerClient.contractStartDate = new Date(updateData.retainerClient.contractStartDate)
-      }
-      if (updateData.retainerClient.contractEndDate) {
-        updateData.retainerClient.contractEndDate = new Date(updateData.retainerClient.contractEndDate)
-      }
-    }
-    
-    if (updateData.wholesaler?.exclusivityExpirationDate) {
-      updateData.wholesaler.exclusivityExpirationDate = new Date(updateData.wholesaler.exclusivityExpirationDate)
-    }
-    
-    updateData.updatedAt = new Date()
     
     const result = await db.collection('orgs').updateOne(
       { _id: new ObjectId(_id) },
-      { $set: updateData }
+      { $set: setObject }
     )
     
     await client.close()
