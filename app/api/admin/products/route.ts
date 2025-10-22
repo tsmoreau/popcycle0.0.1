@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import { MongoClient, ObjectId } from 'mongodb';
+import { generateSignedUrls, getPublicUrl } from '../../../../lib/gcs';
 
 const MONGODB_URI = process.env.MONGODB_URI!;
 
@@ -17,7 +18,45 @@ export async function GET() {
     
     const products = await db.collection('products').find({}).toArray();
     
-    return NextResponse.json(products);
+    // Generate signed URLs for private files
+    const productsWithUrls = await Promise.all(
+      products.map(async (product) => {
+        const privateFiles: string[] = [];
+        
+        // Collect all private file paths
+        if (product.designFiles?.cncVectors) {
+          privateFiles.push(...product.designFiles.cncVectors);
+        }
+        if (product.designFiles?.laserVectors) {
+          privateFiles.push(...product.designFiles.laserVectors);
+        }
+        if (product.designFiles?.instructionsPdfs) {
+          privateFiles.push(...product.designFiles.instructionsPdfs);
+        }
+        
+        // Generate signed URLs for private files (1 hour expiration)
+        let signedUrls: Record<string, string> = {};
+        if (privateFiles.length > 0) {
+          try {
+            signedUrls = await generateSignedUrls(privateFiles, 60);
+          } catch (error) {
+            console.error('Error generating signed URLs:', error);
+          }
+        }
+        
+        // Convert photo paths to public URLs
+        const photos = product.designFiles?.photos || [];
+        const photoUrls = photos.map((path: string) => getPublicUrl(path));
+        
+        return {
+          ...product,
+          _signedUrls: signedUrls, // Add signed URLs as separate field
+          _photoUrls: photoUrls // Add public photo URLs
+        };
+      })
+    );
+    
+    return NextResponse.json(productsWithUrls);
   } catch (error) {
     console.error('Error fetching products:', error);
     return NextResponse.json({ error: 'Failed to fetch products' }, { status: 500 });
