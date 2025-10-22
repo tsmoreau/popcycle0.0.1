@@ -123,25 +123,105 @@ export function ProductEditModal({
     setFormData((prev: any) => ({ ...prev, [field]: value }))
   }
 
-  const handleDesignFileAdd = (field: keyof typeof formData.designFiles) => {
-    const mockUrl = `https://s3.example.com/files/${Date.now()}-${Math.random().toString(36).substr(2, 9)}.pdf`
-    setFormData((prev: any) => ({
-      ...prev,
-      designFiles: {
-        ...prev.designFiles,
-        [field]: [...prev.designFiles[field], mockUrl]
-      }
-    }))
+  const [uploadingFiles, setUploadingFiles] = useState<Record<string, boolean>>({})
+
+  const handleFileUpload = async (
+    file: File,
+    category: 'cnc' | 'laser' | 'instructions' | 'photos'
+  ) => {
+    if (!formData._id) {
+      alert('Please save the product first before uploading files')
+      return
+    }
+
+    const uploadKey = `${category}-${Date.now()}`
+    setUploadingFiles(prev => ({ ...prev, [uploadKey]: true }))
+
+    try {
+      const formDataObj = new FormData()
+      formDataObj.append('file', file)
+      formDataObj.append('category', category)
+
+      const response = await fetch(`/api/admin/products/${formData._id}/files`, {
+        method: 'POST',
+        body: formDataObj
+      })
+
+      if (!response.ok) throw new Error('Upload failed')
+
+      const result = await response.json()
+      
+      // Update local state with new file path
+      const field = getCategoryField(category)
+      setFormData((prev: any) => ({
+        ...prev,
+        designFiles: {
+          ...prev.designFiles,
+          [field]: [...prev.designFiles[field], result.filePath]
+        }
+      }))
+    } catch (error) {
+      console.error('File upload error:', error)
+      alert('Failed to upload file')
+    } finally {
+      setUploadingFiles(prev => {
+        const newState = { ...prev }
+        delete newState[uploadKey]
+        return newState
+      })
+    }
   }
 
-  const handleDesignFileRemove = (field: keyof typeof formData.designFiles, index: number) => {
-    setFormData((prev: any) => ({
-      ...prev,
-      designFiles: {
-        ...prev.designFiles,
-        [field]: prev.designFiles[field].filter((_: any, i: number) => i !== index)
-      }
-    }))
+  const handleDesignFileRemove = async (
+    field: keyof typeof formData.designFiles,
+    index: number
+  ) => {
+    const filePath = formData.designFiles[field][index]
+    
+    if (!formData._id || !filePath) return
+
+    try {
+      const category = getFieldCategory(field)
+      const response = await fetch(`/api/admin/products/${formData._id}/files`, {
+        method: 'DELETE',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ filePath, category })
+      })
+
+      if (!response.ok) throw new Error('Delete failed')
+
+      // Update local state
+      setFormData((prev: any) => ({
+        ...prev,
+        designFiles: {
+          ...prev.designFiles,
+          [field]: prev.designFiles[field].filter((_: any, i: number) => i !== index)
+        }
+      }))
+    } catch (error) {
+      console.error('File delete error:', error)
+      alert('Failed to delete file')
+    }
+  }
+
+  const getCategoryField = (category: string): keyof typeof formData.designFiles => {
+    switch (category) {
+      case 'cnc': return 'cncVectors'
+      case 'laser': return 'laserVectors'
+      case 'instructions': return 'instructionsPdfs'
+      case 'photos': return 'photos'
+      default: return 'photos'
+    }
+  }
+
+  const getFieldCategory = (field: keyof typeof formData.designFiles): 'cnc' | 'laser' | 'instructions' | 'photos' => {
+    switch (field) {
+      case 'cncVectors': return 'cnc'
+      case 'laserVectors': return 'laser'
+      case 'instructionsPdfs': return 'instructions'
+      case 'photos': return 'photos'
+      default: return 'photos'
+    }
   }
 
   const handleAssetAdd = () => {
@@ -300,26 +380,46 @@ export function ProductEditModal({
             </Label>
             <div className="space-y-2">
               {formData.designFiles.cncVectors.map((file: string, index: number) => (
-                <div key={index} className="flex items-center gap-2 p-2 border rounded">
-                  <span className="flex-1 text-sm truncate">{file}</span>
+                <div key={index} className="flex items-center gap-2 p-2 border rounded bg-gray-50">
+                  <File className="h-4 w-4 text-gray-500" />
+                  <span className="flex-1 text-sm truncate">{file.split('/').pop()}</span>
                   <Button
                     size="sm"
                     variant="ghost"
                     onClick={() => handleDesignFileRemove('cncVectors', index)}
+                    data-testid={`button-delete-cnc-${index}`}
                   >
                     <Trash2 className="h-4 w-4" />
                   </Button>
                 </div>
               ))}
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={() => handleDesignFileAdd('cncVectors')}
-                className="w-full"
-              >
-                <Upload className="h-4 w-4 mr-2" />
-                Upload CNC Vector
-              </Button>
+              <label className="block">
+                <input
+                  type="file"
+                  accept=".dxf,.ai,.eps,.svg"
+                  className="hidden"
+                  onChange={(e) => {
+                    const file = e.target.files?.[0]
+                    if (file) handleFileUpload(file, 'cnc')
+                    e.target.value = ''
+                  }}
+                  data-testid="input-upload-cnc"
+                />
+                <Button
+                  variant="outline"
+                  size="sm"
+                  className="w-full"
+                  onClick={(e) => {
+                    e.preventDefault()
+                    e.currentTarget.previousElementSibling?.dispatchEvent(new MouseEvent('click'))
+                  }}
+                  disabled={!formData._id || Object.keys(uploadingFiles).some(k => k.startsWith('cnc-'))}
+                  data-testid="button-upload-cnc"
+                >
+                  <Upload className="h-4 w-4 mr-2" />
+                  {Object.keys(uploadingFiles).some(k => k.startsWith('cnc-')) ? 'Uploading...' : 'Upload CNC Vector'}
+                </Button>
+              </label>
             </div>
           </div>
 
@@ -330,26 +430,46 @@ export function ProductEditModal({
             </Label>
             <div className="space-y-2">
               {formData.designFiles.laserVectors.map((file: string, index: number) => (
-                <div key={index} className="flex items-center gap-2 p-2 border rounded">
-                  <span className="flex-1 text-sm truncate">{file}</span>
+                <div key={index} className="flex items-center gap-2 p-2 border rounded bg-gray-50">
+                  <File className="h-4 w-4 text-gray-500" />
+                  <span className="flex-1 text-sm truncate">{file.split('/').pop()}</span>
                   <Button
                     size="sm"
                     variant="ghost"
                     onClick={() => handleDesignFileRemove('laserVectors', index)}
+                    data-testid={`button-delete-laser-${index}`}
                   >
                     <Trash2 className="h-4 w-4" />
                   </Button>
                 </div>
               ))}
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={() => handleDesignFileAdd('laserVectors')}
-                className="w-full"
-              >
-                <Upload className="h-4 w-4 mr-2" />
-                Upload Laser Vector
-              </Button>
+              <label className="block">
+                <input
+                  type="file"
+                  accept=".dxf,.ai,.eps,.svg"
+                  className="hidden"
+                  onChange={(e) => {
+                    const file = e.target.files?.[0]
+                    if (file) handleFileUpload(file, 'laser')
+                    e.target.value = ''
+                  }}
+                  data-testid="input-upload-laser"
+                />
+                <Button
+                  variant="outline"
+                  size="sm"
+                  className="w-full"
+                  onClick={(e) => {
+                    e.preventDefault()
+                    e.currentTarget.previousElementSibling?.dispatchEvent(new MouseEvent('click'))
+                  }}
+                  disabled={!formData._id || Object.keys(uploadingFiles).some(k => k.startsWith('laser-'))}
+                  data-testid="button-upload-laser"
+                >
+                  <Upload className="h-4 w-4 mr-2" />
+                  {Object.keys(uploadingFiles).some(k => k.startsWith('laser-')) ? 'Uploading...' : 'Upload Laser Vector'}
+                </Button>
+              </label>
             </div>
           </div>
 
@@ -360,26 +480,46 @@ export function ProductEditModal({
             </Label>
             <div className="space-y-2">
               {formData.designFiles.instructionsPdfs.map((file: string, index: number) => (
-                <div key={index} className="flex items-center gap-2 p-2 border rounded">
-                  <span className="flex-1 text-sm truncate">{file}</span>
+                <div key={index} className="flex items-center gap-2 p-2 border rounded bg-gray-50">
+                  <FileText className="h-4 w-4 text-gray-500" />
+                  <span className="flex-1 text-sm truncate">{file.split('/').pop()}</span>
                   <Button
                     size="sm"
                     variant="ghost"
                     onClick={() => handleDesignFileRemove('instructionsPdfs', index)}
+                    data-testid={`button-delete-instructions-${index}`}
                   >
                     <Trash2 className="h-4 w-4" />
                   </Button>
                 </div>
               ))}
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={() => handleDesignFileAdd('instructionsPdfs')}
-                className="w-full"
-              >
-                <Upload className="h-4 w-4 mr-2" />
-                Upload PDF
-              </Button>
+              <label className="block">
+                <input
+                  type="file"
+                  accept=".pdf"
+                  className="hidden"
+                  onChange={(e) => {
+                    const file = e.target.files?.[0]
+                    if (file) handleFileUpload(file, 'instructions')
+                    e.target.value = ''
+                  }}
+                  data-testid="input-upload-instructions"
+                />
+                <Button
+                  variant="outline"
+                  size="sm"
+                  className="w-full"
+                  onClick={(e) => {
+                    e.preventDefault()
+                    e.currentTarget.previousElementSibling?.dispatchEvent(new MouseEvent('click'))
+                  }}
+                  disabled={!formData._id || Object.keys(uploadingFiles).some(k => k.startsWith('instructions-'))}
+                  data-testid="button-upload-instructions"
+                >
+                  <Upload className="h-4 w-4 mr-2" />
+                  {Object.keys(uploadingFiles).some(k => k.startsWith('instructions-')) ? 'Uploading...' : 'Upload PDF'}
+                </Button>
+              </label>
             </div>
           </div>
 
@@ -389,27 +529,49 @@ export function ProductEditModal({
               Photos
             </Label>
             <div className="space-y-2">
-              {formData.designFiles.photos.map((file: string, index: number) => (
-                <div key={index} className="flex items-center gap-2 p-2 border rounded">
-                  <span className="flex-1 text-sm truncate">{file}</span>
-                  <Button
-                    size="sm"
-                    variant="ghost"
-                    onClick={() => handleDesignFileRemove('photos', index)}
-                  >
-                    <Trash2 className="h-4 w-4" />
-                  </Button>
-                </div>
-              ))}
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={() => handleDesignFileAdd('photos')}
-                className="w-full"
-              >
-                <Upload className="h-4 w-4 mr-2" />
-                Upload Photo
-              </Button>
+              <div className="grid grid-cols-3 gap-2 mb-2">
+                {formData.designFiles.photos.map((file: string, index: number) => (
+                  <div key={index} className="relative aspect-square border rounded overflow-hidden bg-gray-50">
+                    <ImageIcon className="absolute inset-0 m-auto h-8 w-8 text-gray-400" />
+                    <Button
+                      size="sm"
+                      variant="destructive"
+                      className="absolute top-1 right-1 h-6 w-6 p-0"
+                      onClick={() => handleDesignFileRemove('photos', index)}
+                      data-testid={`button-delete-photo-${index}`}
+                    >
+                      <Trash2 className="h-3 w-3" />
+                    </Button>
+                  </div>
+                ))}
+              </div>
+              <label className="block">
+                <input
+                  type="file"
+                  accept="image/*"
+                  className="hidden"
+                  onChange={(e) => {
+                    const file = e.target.files?.[0]
+                    if (file) handleFileUpload(file, 'photos')
+                    e.target.value = ''
+                  }}
+                  data-testid="input-upload-photos"
+                />
+                <Button
+                  variant="outline"
+                  size="sm"
+                  className="w-full"
+                  onClick={(e) => {
+                    e.preventDefault()
+                    e.currentTarget.previousElementSibling?.dispatchEvent(new MouseEvent('click'))
+                  }}
+                  disabled={!formData._id || Object.keys(uploadingFiles).some(k => k.startsWith('photos-'))}
+                  data-testid="button-upload-photos"
+                >
+                  <Upload className="h-4 w-4 mr-2" />
+                  {Object.keys(uploadingFiles).some(k => k.startsWith('photos-')) ? 'Uploading...' : 'Upload Photo'}
+                </Button>
+              </label>
             </div>
           </div>
         </TabsContent>

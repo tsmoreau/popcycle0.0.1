@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { ObjectId } from 'mongodb';
 import { getDatabase } from '../../../../../../lib/mongodb';
 import { uploadFile, deleteFile, getPublicUrl } from '../../../../../../lib/gcs';
 
@@ -17,8 +18,8 @@ export async function POST(
       return NextResponse.json({ error: 'No file provided' }, { status: 400 });
     }
     
-    if (!category) {
-      return NextResponse.json({ error: 'Category is required' }, { status: 400 });
+    if (!category || !['cnc', 'laser', 'instructions', 'photos'].includes(category)) {
+      return NextResponse.json({ error: 'Valid category is required' }, { status: 400 });
     }
     
     // Convert file to buffer
@@ -39,7 +40,7 @@ export async function POST(
     const updateField = getUpdateField(category);
     
     await db.collection('products').updateOne(
-      { _id: productId },
+      { _id: new ObjectId(productId) },
       { 
         $push: { [updateField]: filePath },
         $set: { updatedAt: new Date() }
@@ -82,6 +83,10 @@ export async function DELETE(
       );
     }
     
+    if (!['cnc', 'laser', 'instructions', 'photos'].includes(category)) {
+      return NextResponse.json({ error: 'Invalid category' }, { status: 400 });
+    }
+    
     // Delete from GCS
     await deleteFile(filePath);
     
@@ -90,7 +95,7 @@ export async function DELETE(
     const updateField = getUpdateField(category);
     
     await db.collection('products').updateOne(
-      { _id: productId },
+      { _id: new ObjectId(productId) },
       { 
         $pull: { [updateField]: filePath },
         $set: { updatedAt: new Date() }
