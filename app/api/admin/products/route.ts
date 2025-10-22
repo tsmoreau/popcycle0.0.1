@@ -74,7 +74,7 @@ export async function PUT(request: Request) {
     const db = client.db('PopCycle');
     
     const body = await request.json();
-    const { _id, ...updateData } = body;
+    const { _id, _signedUrls, _photoUrls, ...updateData } = body;
     
     // Convert string booleans to actual booleans
     if (typeof updateData.inStock === 'string') {
@@ -90,6 +90,18 @@ export async function PUT(request: Request) {
     // Handle nested material requirements
     if (updateData.materialRequirements?.weight) {
       updateData.materialRequirements.weight = Number(updateData.materialRequirements.weight);
+    }
+    
+    // Clean assets array - remove filePath (internal field) and ensure proper types
+    if (updateData.assets && Array.isArray(updateData.assets)) {
+      updateData.assets = updateData.assets.map((asset: any) => {
+        const { filePath, ...cleanAsset } = asset;
+        return {
+          ...cleanAsset,
+          isPrimary: Boolean(cleanAsset.isPrimary),
+          order: Number(cleanAsset.order) || 0
+        };
+      });
     }
     
     updateData.updatedAt = new Date();
