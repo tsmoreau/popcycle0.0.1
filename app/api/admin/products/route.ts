@@ -201,7 +201,8 @@ export async function POST(request: Request) {
 }
 
 // Seed sample products (kept for reference)
-export async function SEED_SAMPLE_PRODUCTS() {
+// Not exported - Next.js API routes only allow HTTP method exports
+async function SEED_SAMPLE_PRODUCTS() {
   const client = new MongoClient(MONGODB_URI);
   
   try {
