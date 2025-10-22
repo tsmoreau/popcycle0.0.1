@@ -26,7 +26,7 @@ interface Organization {
   _id: string
   name: string
   slug: string
-  orgType: 'community_partner' | 'client' | 'wholesaler'
+  orgType: 'community_partner' | 'limited_client' | 'retainer_client' | 'wholesaler'
   description: string
   contactInfo?: {
     email?: string
@@ -40,6 +40,10 @@ interface Organization {
   lastContactDate?: Date
   nextActionDate?: Date
   assignedTo?: string
+  communityPartner?: any
+  limitedClient?: any
+  retainerClient?: any
+  wholesaler?: any
 }
 
 interface OrganizationEditModalProps {
@@ -76,7 +80,11 @@ export function OrganizationEditModal({
     activities: [],
     lastContactDate: null,
     nextActionDate: null,
-    assignedTo: ''
+    assignedTo: '',
+    communityPartner: {},
+    limitedClient: {},
+    retainerClient: {},
+    wholesaler: {}
   })
 
   useEffect(() => {
@@ -89,7 +97,11 @@ export function OrganizationEditModal({
         internalNotes: item.internalNotes || '',
         assignedTo: item.assignedTo || '',
         lastContactDate: item.lastContactDate || null,
-        nextActionDate: item.nextActionDate || null
+        nextActionDate: item.nextActionDate || null,
+        communityPartner: item.communityPartner || {},
+        limitedClient: item.limitedClient || {},
+        retainerClient: item.retainerClient || {},
+        wholesaler: item.wholesaler || {}
       })
     } else {
       setFormData({
@@ -109,7 +121,11 @@ export function OrganizationEditModal({
         activities: [],
         lastContactDate: null,
         nextActionDate: null,
-        assignedTo: ''
+        assignedTo: '',
+        communityPartner: {},
+        limitedClient: {},
+        retainerClient: {},
+        wholesaler: {}
       })
     }
   }, [item])
@@ -124,6 +140,19 @@ export function OrganizationEditModal({
       [parent]: {
         ...prev[parent],
         [field]: value
+      }
+    }))
+  }
+
+  const handleDoubleNestedChange = (parent: string, child: string, field: string, value: any) => {
+    setFormData((prev: any) => ({
+      ...prev,
+      [parent]: {
+        ...prev[parent],
+        [child]: {
+          ...(prev[parent]?.[child] || {}),
+          [field]: value
+        }
       }
     }))
   }
@@ -196,7 +225,8 @@ export function OrganizationEditModal({
                 data-testid="select-org-type"
               >
                 <option value="community_partner">Community Partner</option>
-                <option value="client">Client</option>
+                <option value="limited_client">Limited Client</option>
+                <option value="retainer_client">Retainer Client</option>
                 <option value="wholesaler">Wholesaler</option>
               </select>
             </div>
@@ -317,6 +347,196 @@ export function OrganizationEditModal({
               />
             </div>
           </div>
+
+          {/* Type-specific fields */}
+          {formData.orgType === 'community_partner' && (
+            <div className="space-y-4 pt-4 mt-4 border-t">
+              <h3 className="font-semibold text-lg">Community Partner Details</h3>
+              <div>
+                <Label>Mission</Label>
+                <Textarea
+                  value={formData.communityPartner?.mission || ''}
+                  onChange={(e) => handleNestedChange('communityPartner', 'mission', e.target.value)}
+                  placeholder="Organization's mission statement"
+                  rows={2}
+                />
+              </div>
+              <div>
+                <Label>Story Content</Label>
+                <Textarea
+                  value={formData.communityPartner?.storyContent || ''}
+                  onChange={(e) => handleNestedChange('communityPartner', 'storyContent', e.target.value)}
+                  placeholder="Partner story for tracking page"
+                  rows={3}
+                />
+              </div>
+              <div>
+                <Label>Organization Type</Label>
+                <Input
+                  value={formData.communityPartner?.organizationType || ''}
+                  onChange={(e) => handleNestedChange('communityPartner', 'organizationType', e.target.value)}
+                  placeholder="e.g., nonprofit, cafe, restaurant"
+                />
+              </div>
+              <div>
+                <Label>Pickup Schedule</Label>
+                <Input
+                  value={formData.communityPartner?.pickupSchedule || ''}
+                  onChange={(e) => handleNestedChange('communityPartner', 'pickupSchedule', e.target.value)}
+                  placeholder="e.g., Weekly on Tuesdays"
+                />
+              </div>
+            </div>
+          )}
+
+          {formData.orgType === 'limited_client' && (
+            <div className="space-y-4 pt-4 mt-4 border-t">
+              <h3 className="font-semibold text-lg">Limited Client Details</h3>
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <Label>Contract Start Date</Label>
+                  <Input
+                    type="date"
+                    value={formData.limitedClient?.contractStartDate ? new Date(formData.limitedClient.contractStartDate).toISOString().split('T')[0] : ''}
+                    onChange={(e) => handleNestedChange('limitedClient', 'contractStartDate', e.target.value ? new Date(e.target.value) : null)}
+                  />
+                </div>
+                <div>
+                  <Label>Contract End Date</Label>
+                  <Input
+                    type="date"
+                    value={formData.limitedClient?.contractEndDate ? new Date(formData.limitedClient.contractEndDate).toISOString().split('T')[0] : ''}
+                    onChange={(e) => handleNestedChange('limitedClient', 'contractEndDate', e.target.value ? new Date(e.target.value) : null)}
+                  />
+                </div>
+              </div>
+              <div>
+                <Label>Monthly Delivery Cap</Label>
+                <Input
+                  type="number"
+                  value={formData.limitedClient?.monthlyDeliveryCap || ''}
+                  onChange={(e) => handleNestedChange('limitedClient', 'monthlyDeliveryCap', e.target.value ? Number(e.target.value) : null)}
+                  placeholder="Maximum monthly deliveries"
+                />
+              </div>
+              <div className="flex items-center gap-2">
+                <input
+                  type="checkbox"
+                  checked={formData.limitedClient?.integrateOwnWaste || false}
+                  onChange={(e) => handleNestedChange('limitedClient', 'integrateOwnWaste', e.target.checked)}
+                  className="h-4 w-4"
+                />
+                <Label>Integrate Own Waste</Label>
+              </div>
+            </div>
+          )}
+
+          {formData.orgType === 'retainer_client' && (
+            <div className="space-y-4 pt-4 mt-4 border-t">
+              <h3 className="font-semibold text-lg">Retainer Client Details</h3>
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <Label>Contract Start Date</Label>
+                  <Input
+                    type="date"
+                    value={formData.retainerClient?.contractStartDate ? new Date(formData.retainerClient.contractStartDate).toISOString().split('T')[0] : ''}
+                    onChange={(e) => handleNestedChange('retainerClient', 'contractStartDate', e.target.value ? new Date(e.target.value) : null)}
+                  />
+                </div>
+                <div>
+                  <Label>Contract End Date</Label>
+                  <Input
+                    type="date"
+                    value={formData.retainerClient?.contractEndDate ? new Date(formData.retainerClient.contractEndDate).toISOString().split('T')[0] : ''}
+                    onChange={(e) => handleNestedChange('retainerClient', 'contractEndDate', e.target.value ? new Date(e.target.value) : null)}
+                  />
+                </div>
+              </div>
+              <div>
+                <Label>Monthly Delivery Cap</Label>
+                <Input
+                  type="number"
+                  value={formData.retainerClient?.monthlyDeliveryCap || ''}
+                  onChange={(e) => handleNestedChange('retainerClient', 'monthlyDeliveryCap', e.target.value ? Number(e.target.value) : null)}
+                  placeholder="Maximum monthly deliveries"
+                />
+              </div>
+              <div className="flex items-center gap-2">
+                <input
+                  type="checkbox"
+                  checked={formData.retainerClient?.integrateOwnWaste || false}
+                  onChange={(e) => handleNestedChange('retainerClient', 'integrateOwnWaste', e.target.checked)}
+                  className="h-4 w-4"
+                />
+                <Label>Integrate Own Waste</Label>
+              </div>
+            </div>
+          )}
+
+          {formData.orgType === 'wholesaler' && (
+            <div className="space-y-4 pt-4 mt-4 border-t">
+              <h3 className="font-semibold text-lg">Wholesaler Details</h3>
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <Label>Buyer Contact Name</Label>
+                  <Input
+                    value={formData.wholesaler?.buyerContactName || ''}
+                    onChange={(e) => handleNestedChange('wholesaler', 'buyerContactName', e.target.value)}
+                    placeholder="Primary buyer name"
+                  />
+                </div>
+                <div>
+                  <Label>Buyer Contact Email</Label>
+                  <Input
+                    type="email"
+                    value={formData.wholesaler?.buyerContactEmail || ''}
+                    onChange={(e) => handleNestedChange('wholesaler', 'buyerContactEmail', e.target.value)}
+                    placeholder="buyer@wholesaler.com"
+                  />
+                </div>
+              </div>
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <Label>Buyer Contact Phone</Label>
+                  <Input
+                    value={formData.wholesaler?.buyerContactPhone || ''}
+                    onChange={(e) => handleNestedChange('wholesaler', 'buyerContactPhone', e.target.value)}
+                    placeholder="(555) 123-4567"
+                  />
+                </div>
+                <div>
+                  <Label>Accounts Payable Email</Label>
+                  <Input
+                    type="email"
+                    value={formData.wholesaler?.accountsPayableEmail || ''}
+                    onChange={(e) => handleNestedChange('wholesaler', 'accountsPayableEmail', e.target.value)}
+                    placeholder="ap@wholesaler.com"
+                  />
+                </div>
+              </div>
+              <div>
+                <Label>Payment Terms</Label>
+                <Input
+                  value={formData.wholesaler?.paymentTerms || ''}
+                  onChange={(e) => handleNestedChange('wholesaler', 'paymentTerms', e.target.value)}
+                  placeholder="e.g., Net 30"
+                />
+              </div>
+              <div>
+                <Label>Exclusivity Type</Label>
+                <select
+                  value={formData.wholesaler?.exclusivityType || 'none'}
+                  onChange={(e) => handleNestedChange('wholesaler', 'exclusivityType', e.target.value)}
+                  className="w-full border rounded-md px-3 py-2"
+                >
+                  <option value="none">None</option>
+                  <option value="design">Design</option>
+                  <option value="colorway">Colorway</option>
+                  <option value="category">Category</option>
+                </select>
+              </div>
+            </div>
+          )}
         </TabsContent>
 
         <TabsContent value="activities" className="mt-4">

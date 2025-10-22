@@ -23,7 +23,7 @@ export interface Org {
   _id: ObjectId;
   name: string;
   slug: string;
-  orgType: "community_partner" | "venue" | "retailer";
+  orgType: "community_partner" | "limited_client" | "retainer_client" | "wholesaler";
   description: string;
 
   // Universal contact information

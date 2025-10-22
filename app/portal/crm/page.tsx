@@ -25,7 +25,7 @@ interface Organization {
   _id: string
   name: string
   slug: string
-  orgType: 'community_partner' | 'client' | 'wholesaler'
+  orgType: 'community_partner' | 'limited_client' | 'retainer_client' | 'wholesaler'
   description: string
   contactInfo: {
     email?: string
@@ -143,11 +143,13 @@ export default function CRMPage() {
       render: (org) => (
         <Badge className={
           org.orgType === 'community_partner' ? 'bg-pop-green text-white' :
-          org.orgType === 'client' ? 'bg-pop-blue text-white' :
+          org.orgType === 'limited_client' ? 'bg-blue-400 text-white' :
+          org.orgType === 'retainer_client' ? 'bg-pop-blue text-white' :
           'bg-purple-600 text-white'
         }>
           {org.orgType === 'community_partner' ? 'Community Partner' :
-           org.orgType === 'client' ? 'Client' : 'Wholesaler'}
+           org.orgType === 'limited_client' ? 'Limited Client' :
+           org.orgType === 'retainer_client' ? 'Retainer Client' : 'Wholesaler'}
         </Badge>
       )
     },
@@ -232,7 +234,8 @@ export default function CRMPage() {
       required: true,
       options: [
         { value: 'community_partner', label: 'Community Partner' },
-        { value: 'client', label: 'Client' },
+        { value: 'limited_client', label: 'Limited Client' },
+        { value: 'retainer_client', label: 'Retainer Client' },
         { value: 'wholesaler', label: 'Wholesaler' }
       ]
     },
