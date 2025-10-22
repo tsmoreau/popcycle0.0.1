@@ -55,7 +55,7 @@ export interface UploadFileOptions {
   buffer: Buffer;
   originalFilename: string;
   productId: string;
-  category: 'cnc' | 'laser' | 'instructions' | 'photos';
+  category: 'cnc' | 'laser' | 'instructions' | 'photos' | 'assets';
   makePublic?: boolean;
 }
 
@@ -82,6 +82,9 @@ export async function uploadFile(options: UploadFileOptions): Promise<string> {
       break;
     case 'photos':
       filePath = `products/${productId}/photos/${filename}`;
+      break;
+    case 'assets':
+      filePath = `products/${productId}/assets/${filename}`;
       break;
   }
   
@@ -147,12 +150,16 @@ function getContentType(filename: string): string {
     '.jpeg': 'image/jpeg',
     '.png': 'image/png',
     '.gif': 'image/gif',
+    '.webp': 'image/webp',
     '.svg': 'image/svg+xml',
     '.pdf': 'application/pdf',
     '.dxf': 'application/dxf',
     '.ai': 'application/postscript',
     '.eps': 'application/postscript',
     '.dwg': 'application/acad',
+    '.mp4': 'video/mp4',
+    '.webm': 'video/webm',
+    '.ogg': 'video/ogg',
   };
   
   return contentTypes[ext] || 'application/octet-stream';

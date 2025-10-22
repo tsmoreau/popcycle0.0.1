@@ -153,7 +153,7 @@ export function ProductEditModal({
 
   const handleFileUpload = async (
     file: File,
-    category: 'cnc' | 'laser' | 'instructions' | 'photos'
+    category: 'cnc' | 'laser' | 'instructions' | 'photos' | 'assets'
   ) => {
     if (!formData._id) {
       alert('Please save the product first before uploading files')
@@ -177,15 +177,23 @@ export function ProductEditModal({
 
       const result = await response.json()
       
-      // Update local state with new file path
-      const field = getCategoryField(category)
-      setFormData((prev: any) => ({
-        ...prev,
-        designFiles: {
-          ...prev.designFiles,
-          [field]: [...prev.designFiles[field], result.filePath]
-        }
-      }))
+      if (category === 'assets') {
+        // For assets, add the returned asset object to assets array
+        setFormData((prev: any) => ({
+          ...prev,
+          assets: [...prev.assets, result.asset]
+        }))
+      } else {
+        // For design files, update the appropriate designFiles field
+        const field = getCategoryField(category)
+        setFormData((prev: any) => ({
+          ...prev,
+          designFiles: {
+            ...prev.designFiles,
+            [field]: [...prev.designFiles[field], result.filePath]
+          }
+        }))
+      }
     } catch (error) {
       console.error('File upload error:', error)
       alert('Failed to upload file')
@@ -270,6 +278,49 @@ export function ProductEditModal({
       ...prev,
       assets: prev.assets.filter((_: any, i: number) => i !== index)
     }))
+  }
+
+  const handleAssetFileRemove = async (index: number) => {
+    const asset = formData.assets[index]
+    
+    if (!formData._id || !asset) return
+
+    // Determine filePath - use stored filePath or extract from URL for legacy assets
+    let filePath = asset.filePath
+    
+    if (!filePath && asset.url && asset.url.includes('storage.googleapis.com')) {
+      // Legacy asset without filePath - extract from URL
+      // URL format: https://storage.googleapis.com/{bucket}/{filePath}
+      const urlParts = asset.url.split('storage.googleapis.com/')[1]
+      if (urlParts) {
+        filePath = urlParts.split('/').slice(1).join('/')
+      }
+    }
+
+    // Check if this is a GCS-uploaded file
+    if (filePath) {
+      try {
+        const response = await fetch(`/api/admin/products/${formData._id}/files`, {
+          method: 'DELETE',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ filePath, category: 'assets', assetId: asset.id })
+        })
+
+        if (!response.ok) throw new Error('Delete failed')
+
+        // Update local state
+        setFormData((prev: any) => ({
+          ...prev,
+          assets: prev.assets.filter((_: any, i: number) => i !== index)
+        }))
+      } catch (error) {
+        console.error('Asset file delete error:', error)
+        alert('Failed to delete asset file')
+      }
+    } else {
+      // For non-GCS assets (external URLs or manual entries), just remove from local state
+      handleAssetRemove(index)
+    }
   }
 
   const handleAssetChange = (index: number, field: string, value: any) => {
@@ -654,7 +705,8 @@ export function ProductEditModal({
                 <Button
                   size="sm"
                   variant="ghost"
-                  onClick={() => handleAssetRemove(index)}
+                  onClick={() => handleAssetFileRemove(index)}
+                  data-testid={`button-delete-asset-${index}`}
                 >
                   <Trash2 className="h-4 w-4" />
                 </Button>
@@ -746,14 +798,43 @@ export function ProductEditModal({
             </div>
           ))}
 
-          <Button
-            variant="outline"
-            onClick={handleAssetAdd}
-            className="w-full"
-          >
-            <Plus className="h-4 w-4 mr-2" />
-            Add Asset
-          </Button>
+          <div className="grid grid-cols-2 gap-2">
+            <label className="block">
+              <input
+                type="file"
+                accept="image/*,video/*,.pdf,.doc,.docx,.obj,.stl,.fbx,.gltf"
+                className="hidden"
+                onChange={(e) => {
+                  const file = e.target.files?.[0]
+                  if (file) handleFileUpload(file, 'assets')
+                  e.target.value = ''
+                }}
+                data-testid="input-upload-asset"
+              />
+              <Button
+                variant="outline"
+                className="w-full"
+                onClick={(e) => {
+                  e.preventDefault()
+                  e.currentTarget.previousElementSibling?.dispatchEvent(new MouseEvent('click'))
+                }}
+                disabled={!formData._id || Object.keys(uploadingFiles).some(k => k.startsWith('assets-'))}
+                data-testid="button-upload-asset"
+              >
+                <Upload className="h-4 w-4 mr-2" />
+                {Object.keys(uploadingFiles).some(k => k.startsWith('assets-')) ? 'Uploading...' : 'Upload Asset'}
+              </Button>
+            </label>
+            <Button
+              variant="outline"
+              onClick={handleAssetAdd}
+              className="w-full"
+              data-testid="button-add-asset"
+            >
+              <Plus className="h-4 w-4 mr-2" />
+              Add Asset (Manual)
+            </Button>
+          </div>
         </TabsContent>
       </Tabs>
 
