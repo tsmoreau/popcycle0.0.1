@@ -21,7 +21,8 @@ import {
   ChevronDown,
   UserCog,
   Monitor,
-  HeartHandshake,
+  Handshake,
+  Zap,
   UserStar,
   CircleDollarSign,
 } from 'lucide-react'
@@ -58,8 +59,8 @@ export default function PortalLayout({
 
   const sidebarItems = [
     { id: 'admin', label: 'Admin', icon: Settings, color: 'text-pop-black', activeColor: 'text-pop-black', activeBg: 'bg-pop-black/10', activeBorder: 'border-pop-black/20', href: '/portal/admin' },
-    { id: 'operations', label: 'Operations', icon: Monitor, color: 'text-pop-green', activeColor: 'text-pop-green', activeBg: 'bg-pop-green/10', activeBorder: 'border-pop-green/20', href: '/portal/operations' },
-    { id: 'crm', label: 'CRM', icon: HeartHandshake, color: 'text-pop-blue', activeColor: 'text-pop-blue', activeBg: 'bg-pop-blue/10', activeBorder: 'border-pop-blue/20', href: '/portal/crm' },
+    { id: 'operations', label: 'Operations', icon: Zap, color: 'text-pop-green', activeColor: 'text-pop-green', activeBg: 'bg-pop-green/10', activeBorder: 'border-pop-green/20', href: '/portal/operations' },
+    { id: 'crm', label: 'CRM', icon: Handshake, color: 'text-pop-blue', activeColor: 'text-pop-blue', activeBg: 'bg-pop-blue/10', activeBorder: 'border-pop-blue/20', href: '/portal/crm' },
     { id: 'partner', label: 'Partner', icon: User, color: 'text-pop-red', activeColor: 'text-pop-red', activeBg: 'bg-pop-red/10', activeBorder: 'border-pop-red/20', href: '/portal/partner' },
     { id: 'financial', label: 'Finance', icon: DollarSign, color: 'text-orange-600', activeColor: 'text-orange-600', activeBg: 'bg-orange-600/10', activeBorder: 'border-orange-600/20', href: '/portal/financial' },
   ]

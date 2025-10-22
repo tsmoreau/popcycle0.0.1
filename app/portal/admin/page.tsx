@@ -747,6 +747,79 @@ export default function AdminPage() {
         </AccordionItem>
       </Accordion>
 
+
+      {/* Product Configuration - Accordion */}
+      <Accordion 
+        type="single" 
+        collapsible 
+        className="w-full"
+        onValueChange={(value) => setShowProductConfiguration(value === 'product-configuration')}
+      >
+        <AccordionItem value="product-configuration" className="border rounded-lg px-4">
+          <AccordionTrigger className="hover:no-underline">
+            {!showProductConfiguration && (
+              <div className="flex items-center gap-3 ">
+                <Package className="h-5 w-5 text-pop-green" />
+                <div className="text-left">
+                  <h3 className="text-lg font-semibold text-pop-black">Product Configuration</h3>
+                  <p className="text-sm text-gray-600 font-medium">Manage product catalog and assembly guides</p>
+                </div>
+              </div>
+            )}
+          </AccordionTrigger>
+          <AccordionContent>
+
+            <div className="pt-2 pb-4">
+
+              <div className="mt-2">
+                {loadingProducts ? (
+                  <div className="flex items-center justify-center p-8">
+                    <div className="text-sm text-gray-600">Loading products...</div>
+                  </div>
+                ) : (
+                  <div>
+                    {showProductConfiguration && (
+                      <div className="flex items-center gap-3 -mb-16 ml-6">
+                        <Package className="h-5 w-5 text-pop-green" />
+                        <div className="text-left">
+                          <h3 className="text-lg font-semibold text-pop-black">Product Configuration</h3>
+                          <p className="text-sm text-gray-600 font-medium">Manage product catalog and assembly guides</p>
+                        </div>
+                      </div>
+                    )}
+                    <DataTable
+                      title=""
+                      description=""
+                      data={products}
+                      columns={productColumns}
+                      editableFields={productEditableFields}
+                      onSave={handleProductSave}
+                      onAdd={handleProductSave}
+                      onDelete={handleProductDelete}
+                      renderEditModal={renderProductEditModal}
+                      enableColumnSelection={true}
+                      enableFiltering={true}
+                      availableColumns={productColumns}
+                      defaultVisibleColumns={['name', 'category', 'productType',]}
+                    />
+                  </div>
+                )}
+              </div>
+              <div className="mt-4 space-y-2">
+
+                <Button variant="outline" className="w-full" onClick={fetchProducts}>
+                  {loadingProducts ? 'Refreshing...' : 'Refresh Products'}
+                </Button>
+                <Button variant="outline" className="w-full">Import Products from CSV</Button>
+                <Button variant="outline" className="w-full">Export Product Catalog</Button>
+              </div>
+            </div>
+          </AccordionContent>
+        </AccordionItem>
+      </Accordion>
+
+      
+
       {/* System Administration Section */}
       {/* Production Stations Dropdown */}
       <div className="w-full border rounded-lg">
@@ -831,76 +904,6 @@ export default function AdminPage() {
           </div>
         )}
       </div>
-
-      {/* Product Configuration - Accordion */}
-      <Accordion 
-        type="single" 
-        collapsible 
-        className="w-full"
-        onValueChange={(value) => setShowProductConfiguration(value === 'product-configuration')}
-      >
-        <AccordionItem value="product-configuration" className="border rounded-lg px-4">
-          <AccordionTrigger className="hover:no-underline">
-            {!showProductConfiguration && (
-              <div className="flex items-center gap-3 ">
-                <Package className="h-5 w-5 text-pop-green" />
-                <div className="text-left">
-                  <h3 className="text-lg font-semibold text-pop-black">Product Configuration</h3>
-                  <p className="text-sm text-gray-600 font-medium">Manage product catalog and assembly guides</p>
-                </div>
-              </div>
-            )}
-          </AccordionTrigger>
-          <AccordionContent>
-            
-            <div className="pt-2 pb-4">
-              
-              <div className="mt-2">
-                {loadingProducts ? (
-                  <div className="flex items-center justify-center p-8">
-                    <div className="text-sm text-gray-600">Loading products...</div>
-                  </div>
-                ) : (
-                  <div>
-                    {showProductConfiguration && (
-                      <div className="flex items-center gap-3 -mb-16 ml-6">
-                        <Package className="h-5 w-5 text-pop-green" />
-                        <div className="text-left">
-                          <h3 className="text-lg font-semibold text-pop-black">Product Configuration</h3>
-                          <p className="text-sm text-gray-600 font-medium">Manage product catalog and assembly guides</p>
-                        </div>
-                      </div>
-                    )}
-                    <DataTable
-                      title=""
-                      description=""
-                      data={products}
-                      columns={productColumns}
-                      editableFields={productEditableFields}
-                      onSave={handleProductSave}
-                      onAdd={handleProductSave}
-                      onDelete={handleProductDelete}
-                      renderEditModal={renderProductEditModal}
-                      enableColumnSelection={true}
-                      enableFiltering={true}
-                      availableColumns={productColumns}
-                      defaultVisibleColumns={['name', 'category', 'productType',]}
-                    />
-                  </div>
-                )}
-              </div>
-              <div className="mt-4 space-y-2">
-                
-                <Button variant="outline" className="w-full" onClick={fetchProducts}>
-                  {loadingProducts ? 'Refreshing...' : 'Refresh Products'}
-                </Button>
-                <Button variant="outline" className="w-full">Import Products from CSV</Button>
-                <Button variant="outline" className="w-full">Export Product Catalog</Button>
-              </div>
-            </div>
-          </AccordionContent>
-        </AccordionItem>
-      </Accordion>
 
       {/* External Integrations - Accordion */}
       <Accordion type="single" collapsible className="w-full">
