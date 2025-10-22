@@ -69,9 +69,8 @@ export interface Org {
     };
   };
 
-  venue?: {
-    partnershipTier: "foundation" | "integrated" | "premium";
-    retainerAmount: number;
+  client?: {
+    partnershipTier: "limited" | "retainer";
     contractStartDate: Date;
     contractEndDate: Date;
     chosenPartnerOrgId?: ObjectId;
@@ -82,7 +81,7 @@ export interface Org {
     };
   };
 
-  retailer?: {
+  wholesaler?: {
     buyerContactName?: string;
     buyerContactEmail?: string;
     buyerContactPhone?: string;
