@@ -28,27 +28,40 @@ export async function POST(request: NextRequest) {
     await client.connect()
     const db = client.db('PopCycle')
     
+    // Normalize activity dates
+    const normalizedActivities = (body.activities || []).map((activity: any) => ({
+      ...activity,
+      date: activity.date ? new Date(activity.date) : new Date(),
+      nextActionDate: activity.nextActionDate ? new Date(activity.nextActionDate) : undefined
+    }))
+    
     const newOrganization = {
       _id: new ObjectId(),
       name: body.name,
       slug: body.slug || body.name.toLowerCase().replace(/\s+/g, ''),
-      type: body.type,
+      orgType: body.orgType || 'community_partner',
       description: body.description,
-      logoUrl: body.logoUrl || '',
-      contactInfo: {
+      contactInfo: body.contactInfo || {
         email: body.email || '',
         phone: body.phone || '',
         address: body.address || '',
         website: body.website || ''
       },
-      branding: {
+      branding: body.branding || {
         primaryColor: body.primaryColor || '',
         secondaryColor: body.secondaryColor || '',
+        logoUrl: body.logoUrl || '',
         logoS3Key: body.logoS3Key || '',
         customDomain: body.customDomain || '',
         trackingPageMessage: body.trackingPageMessage || ''
       },
-      events: [],
+      status: body.status || 'prospect',
+      internalNotes: body.internalNotes || '',
+      activities: normalizedActivities,
+      lastContactDate: body.lastContactDate ? new Date(body.lastContactDate) : null,
+      nextActionDate: body.nextActionDate ? new Date(body.nextActionDate) : null,
+      assignedTo: body.assignedTo || '',
+      eventIds: body.eventIds || [],
       createdAt: new Date(),
       updatedAt: new Date()
     }
@@ -79,6 +92,24 @@ export async function PUT(request: NextRequest) {
     const db = client.db('PopCycle')
     
     const { _id, ...updateData } = body
+    
+    // Convert date strings to Date objects
+    if (updateData.lastContactDate) {
+      updateData.lastContactDate = new Date(updateData.lastContactDate)
+    }
+    if (updateData.nextActionDate) {
+      updateData.nextActionDate = new Date(updateData.nextActionDate)
+    }
+    
+    // Convert activity dates to Date objects
+    if (updateData.activities && Array.isArray(updateData.activities)) {
+      updateData.activities = updateData.activities.map((activity: any) => ({
+        ...activity,
+        date: activity.date ? new Date(activity.date) : new Date(),
+        nextActionDate: activity.nextActionDate ? new Date(activity.nextActionDate) : undefined
+      }))
+    }
+    
     updateData.updatedAt = new Date()
     
     const result = await db.collection('orgs').updateOne(

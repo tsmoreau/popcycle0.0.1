@@ -7,6 +7,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../..
 import { Badge } from '../../components/ui/badge'
 import { DataTable, Column, EditableField } from '../../components/ui/data-table'
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '../../components/ui/accordion'
+import { OrganizationEditModal } from '../../components/OrganizationEditModal'
 
 interface Activity {
   id: string
@@ -296,6 +297,10 @@ export default function CRMPage() {
     }
   }
 
+  const renderOrganizationEditModal = (props: any) => {
+    return <OrganizationEditModal {...props} />
+  }
+
   return (
     <div className="space-y-6">
       <div>
@@ -394,6 +399,7 @@ export default function CRMPage() {
           onSave={handleOrganizationSave}
           onAdd={handleOrganizationSave}
           onDelete={handleOrganizationDelete}
+          renderEditModal={renderOrganizationEditModal}
           enableColumnSelection={true}
           enableFiltering={true}
           availableColumns={organizationColumns}
