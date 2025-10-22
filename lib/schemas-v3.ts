@@ -69,8 +69,18 @@ export interface Org {
     };
   };
 
-  client?: {
-    partnershipTier: "limited" | "retainer";
+  limitedClient?: {
+    contractStartDate: Date;
+    contractEndDate: Date;
+    chosenPartnerOrgId?: ObjectId;
+    integrateOwnWaste?: boolean;
+    monthlyDeliveryCap?: number;
+    productPreferences?: {
+      exclusionList?: string[];
+    };
+  };
+
+  retainerClient?: {
     contractStartDate: Date;
     contractEndDate: Date;
     chosenPartnerOrgId?: ObjectId;
