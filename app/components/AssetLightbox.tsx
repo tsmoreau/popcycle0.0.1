@@ -69,19 +69,20 @@ export function AssetLightbox({
 
   return (
     <div 
-      className="fixed inset-0 z-50 flex items-center justify-center bg-black/90"
+      className="fixed inset-0 z-[60] flex items-center justify-center bg-black"
       onClick={onClose}
+      
       data-testid="lightbox-backdrop"
     >
       <div 
-        className="relative w-full h-full flex items-center justify-center p-8"
+        className="relative w-full h-full flex items-center justify-center p-8 bg-transparent"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Close button */}
         <Button
           variant="ghost"
           size="icon"
-          className="absolute top-4 right-4 text-white hover:bg-white/20 z-10"
+          className="absolute top-4 right-4 text-white hover:bg-white/20 z-[70]"
           onClick={onClose}
           data-testid="button-close-lightbox"
         >
@@ -93,7 +94,7 @@ export function AssetLightbox({
           <Button
             variant="ghost"
             size="icon"
-            className="absolute left-4 top-1/2 -translate-y-1/2 text-white hover:bg-white/20 z-10"
+            className="absolute left-4 top-1/2 -translate-y-1/2 text-white hover:bg-white/20 z-[70]"
             onClick={handlePrev}
             data-testid="button-prev-asset"
           >
@@ -105,7 +106,7 @@ export function AssetLightbox({
           <Button
             variant="ghost"
             size="icon"
-            className="absolute right-4 top-1/2 -translate-y-1/2 text-white hover:bg-white/20 z-10"
+            className="absolute right-4 top-1/2 -translate-y-1/2 text-white hover:bg-white/20 z-[70]"
             onClick={handleNext}
             data-testid="button-next-asset"
           >
@@ -114,12 +115,12 @@ export function AssetLightbox({
         )}
 
         {/* Asset display */}
-        <div className="max-w-[90vw] max-h-[90vh] flex items-center justify-center">
+        <div className="max-w-[90vw] max-h-[90vh] flex items-center justify-center z-[65]">
           {(type === 'image' || type === 'svg') && (
             <img
               src={currentAsset}
               alt={`Asset ${currentIndex + 1} of ${assets.length}`}
-              className="max-w-full max-h-full object-contain"
+              className="w-[80vw] h-[80vh] object-contain"
               data-testid="lightbox-image"
             />
           )}
@@ -146,7 +147,7 @@ export function AssetLightbox({
         </div>
 
         {/* Counter */}
-        <div className="absolute bottom-4 left-1/2 -translate-x-1/2 text-white text-sm bg-black/50 px-4 py-2 rounded">
+        <div className="absolute bottom-4 left-1/2 -translate-x-1/2 text-white text-sm bg-black/50 px-4 py-2 rounded z-[65]">
           {currentIndex + 1} / {assets.length}
         </div>
       </div>
