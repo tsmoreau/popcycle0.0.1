@@ -12,6 +12,7 @@ import {
   Save, X, Plus, Trash2, Upload, File, Image as ImageIcon,
   FileText, Edit2
 } from "lucide-react"
+import { AssetLightbox } from "./AssetLightbox"
 
 interface Product {
   _id: string
@@ -25,6 +26,8 @@ interface Product {
     instructionsPdfs?: string[]
     photos?: string[]
   }
+  _signedUrls?: Record<string, string>
+  _photoUrls?: string[]
   assets?: Array<{
     id: string
     type: 'image' | 'video' | 'document' | 'model'
@@ -124,6 +127,29 @@ export function ProductEditModal({
   }
 
   const [uploadingFiles, setUploadingFiles] = useState<Record<string, boolean>>({})
+
+  // Lightbox state
+  const [lightbox, setLightbox] = useState({
+    isOpen: false,
+    assets: [] as string[],
+    currentIndex: 0
+  })
+
+  const openLightbox = (assets: string[], startIndex: number) => {
+    setLightbox({
+      isOpen: true,
+      assets,
+      currentIndex: startIndex
+    })
+  }
+
+  const closeLightbox = () => {
+    setLightbox(prev => ({ ...prev, isOpen: false }))
+  }
+
+  const navigateLightbox = (index: number) => {
+    setLightbox(prev => ({ ...prev, currentIndex: index }))
+  }
 
   const handleFileUpload = async (
     file: File,
@@ -379,20 +405,42 @@ export function ProductEditModal({
               CNC Vectors
             </Label>
             <div className="space-y-2">
-              {formData.designFiles.cncVectors.map((file: string, index: number) => (
-                <div key={index} className="flex items-center gap-2 p-2 border rounded bg-gray-50">
-                  <File className="h-4 w-4 text-gray-500" />
-                  <span className="flex-1 text-sm truncate">{file.split('/').pop()}</span>
-                  <Button
-                    size="sm"
-                    variant="ghost"
-                    onClick={() => handleDesignFileRemove('cncVectors', index)}
-                    data-testid={`button-delete-cnc-${index}`}
-                  >
-                    <Trash2 className="h-4 w-4" />
-                  </Button>
-                </div>
-              ))}
+              {formData.designFiles.cncVectors.map((file: string, index: number) => {
+                const signedUrl = item?._signedUrls?.[file]
+                return (
+                  <div key={index} className="flex items-center gap-2 p-2 border rounded bg-gray-50">
+                    {signedUrl ? (
+                      <img 
+                        src={signedUrl} 
+                        alt={file.split('/').pop()} 
+                        className="h-12 w-12 object-contain border rounded cursor-pointer hover:opacity-80 transition-opacity"
+                        onClick={() => {
+                          const urls = formData.designFiles.cncVectors
+                            .map((f: string) => item?._signedUrls?.[f])
+                            .filter((url: string | undefined): url is string => !!url)
+                          if (urls.length === 0) return
+                          const actualIndex = urls.indexOf(signedUrl)
+                          if (actualIndex !== -1) {
+                            openLightbox(urls, actualIndex)
+                          }
+                        }}
+                        data-testid={`thumbnail-cnc-${index}`}
+                      />
+                    ) : (
+                      <File className="h-12 w-12 text-gray-500" />
+                    )}
+                    <span className="flex-1 text-sm truncate">{file.split('/').pop()}</span>
+                    <Button
+                      size="sm"
+                      variant="ghost"
+                      onClick={() => handleDesignFileRemove('cncVectors', index)}
+                      data-testid={`button-delete-cnc-${index}`}
+                    >
+                      <Trash2 className="h-4 w-4" />
+                    </Button>
+                  </div>
+                )
+              })}
               <label className="block">
                 <input
                   type="file"
@@ -429,20 +477,42 @@ export function ProductEditModal({
               Laser Vectors
             </Label>
             <div className="space-y-2">
-              {formData.designFiles.laserVectors.map((file: string, index: number) => (
-                <div key={index} className="flex items-center gap-2 p-2 border rounded bg-gray-50">
-                  <File className="h-4 w-4 text-gray-500" />
-                  <span className="flex-1 text-sm truncate">{file.split('/').pop()}</span>
-                  <Button
-                    size="sm"
-                    variant="ghost"
-                    onClick={() => handleDesignFileRemove('laserVectors', index)}
-                    data-testid={`button-delete-laser-${index}`}
-                  >
-                    <Trash2 className="h-4 w-4" />
-                  </Button>
-                </div>
-              ))}
+              {formData.designFiles.laserVectors.map((file: string, index: number) => {
+                const signedUrl = item?._signedUrls?.[file]
+                return (
+                  <div key={index} className="flex items-center gap-2 p-2 border rounded bg-gray-50">
+                    {signedUrl ? (
+                      <img 
+                        src={signedUrl} 
+                        alt={file.split('/').pop()} 
+                        className="h-12 w-12 object-contain border rounded cursor-pointer hover:opacity-80 transition-opacity"
+                        onClick={() => {
+                          const urls = formData.designFiles.laserVectors
+                            .map((f: string) => item?._signedUrls?.[f])
+                            .filter((url: string | undefined): url is string => !!url)
+                          if (urls.length === 0) return
+                          const actualIndex = urls.indexOf(signedUrl)
+                          if (actualIndex !== -1) {
+                            openLightbox(urls, actualIndex)
+                          }
+                        }}
+                        data-testid={`thumbnail-laser-${index}`}
+                      />
+                    ) : (
+                      <File className="h-12 w-12 text-gray-500" />
+                    )}
+                    <span className="flex-1 text-sm truncate">{file.split('/').pop()}</span>
+                    <Button
+                      size="sm"
+                      variant="ghost"
+                      onClick={() => handleDesignFileRemove('laserVectors', index)}
+                      data-testid={`button-delete-laser-${index}`}
+                    >
+                      <Trash2 className="h-4 w-4" />
+                    </Button>
+                  </div>
+                )
+              })}
               <label className="block">
                 <input
                   type="file"
@@ -715,6 +785,14 @@ export function ProductEditModal({
           </Button>
         )}
       </div>
+
+      <AssetLightbox
+        isOpen={lightbox.isOpen}
+        onClose={closeLightbox}
+        assets={lightbox.assets}
+        currentIndex={lightbox.currentIndex}
+        onNavigate={navigateLightbox}
+      />
     </div>
   )
 }
