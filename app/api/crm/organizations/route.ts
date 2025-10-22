@@ -62,6 +62,27 @@ export async function POST(request: NextRequest) {
       nextActionDate: body.nextActionDate ? new Date(body.nextActionDate) : null,
       assignedTo: body.assignedTo || '',
       eventIds: body.eventIds || [],
+      ...(body.communityPartner && { communityPartner: body.communityPartner }),
+      ...(body.limitedClient && { 
+        limitedClient: {
+          ...body.limitedClient,
+          contractStartDate: body.limitedClient.contractStartDate ? new Date(body.limitedClient.contractStartDate) : undefined,
+          contractEndDate: body.limitedClient.contractEndDate ? new Date(body.limitedClient.contractEndDate) : undefined
+        }
+      }),
+      ...(body.retainerClient && { 
+        retainerClient: {
+          ...body.retainerClient,
+          contractStartDate: body.retainerClient.contractStartDate ? new Date(body.retainerClient.contractStartDate) : undefined,
+          contractEndDate: body.retainerClient.contractEndDate ? new Date(body.retainerClient.contractEndDate) : undefined
+        }
+      }),
+      ...(body.wholesaler && { 
+        wholesaler: {
+          ...body.wholesaler,
+          exclusivityExpirationDate: body.wholesaler.exclusivityExpirationDate ? new Date(body.wholesaler.exclusivityExpirationDate) : undefined
+        }
+      }),
       createdAt: new Date(),
       updatedAt: new Date()
     }
@@ -108,6 +129,29 @@ export async function PUT(request: NextRequest) {
         date: activity.date ? new Date(activity.date) : new Date(),
         nextActionDate: activity.nextActionDate ? new Date(activity.nextActionDate) : undefined
       }))
+    }
+    
+    // Convert type-specific date fields
+    if (updateData.limitedClient) {
+      if (updateData.limitedClient.contractStartDate) {
+        updateData.limitedClient.contractStartDate = new Date(updateData.limitedClient.contractStartDate)
+      }
+      if (updateData.limitedClient.contractEndDate) {
+        updateData.limitedClient.contractEndDate = new Date(updateData.limitedClient.contractEndDate)
+      }
+    }
+    
+    if (updateData.retainerClient) {
+      if (updateData.retainerClient.contractStartDate) {
+        updateData.retainerClient.contractStartDate = new Date(updateData.retainerClient.contractStartDate)
+      }
+      if (updateData.retainerClient.contractEndDate) {
+        updateData.retainerClient.contractEndDate = new Date(updateData.retainerClient.contractEndDate)
+      }
+    }
+    
+    if (updateData.wholesaler?.exclusivityExpirationDate) {
+      updateData.wholesaler.exclusivityExpirationDate = new Date(updateData.wholesaler.exclusivityExpirationDate)
     }
     
     updateData.updatedAt = new Date()
