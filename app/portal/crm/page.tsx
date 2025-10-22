@@ -183,7 +183,28 @@ export default function CRMPage() {
     {
       key: 'nextActionDate',
       header: 'Next Action',
-      render: (org) => org.nextActionDate ? new Date(org.nextActionDate).toLocaleDateString() : '-'
+      render: (org) => {
+        if (!org.activities || org.activities.length === 0) return '-'
+        
+        const now = new Date()
+        const nextActionDates = org.activities
+          .map(a => a.nextActionDate)
+          .filter((date): date is Date => date != null)
+          .map(date => new Date(date))
+        
+        if (nextActionDates.length === 0) return '-'
+        
+        // Separate future and past dates
+        const futureDates = nextActionDates.filter(d => d >= now)
+        const pastDates = nextActionDates.filter(d => d < now)
+        
+        // Show nearest future date, or most recent past date if no future dates
+        const targetDate = futureDates.length > 0
+          ? futureDates.reduce((nearest, current) => current < nearest ? current : nearest)
+          : pastDates.reduce((latest, current) => current > latest ? current : latest)
+        
+        return targetDate.toLocaleDateString()
+      }
     },
     { key: 'slug', header: 'Slug' },
     { 
