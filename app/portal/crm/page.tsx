@@ -321,7 +321,12 @@ export default function CRMPage() {
           columns={organizationColumns}
           editableFields={organizationEditableFields}
           onSave={handleOrganizationSave}
+          onAdd={handleOrganizationSave}
           onDelete={handleOrganizationDelete}
+          enableColumnSelection={true}
+          enableFiltering={true}
+          availableColumns={organizationColumns}
+          defaultVisibleColumns={['name', 'orgType', 'contactInfo', 'createdAt']}
         />
       )}
 
