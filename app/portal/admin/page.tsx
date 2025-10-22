@@ -856,35 +856,37 @@ export default function AdminPage() {
             <div className="pt-2 pb-4">
               
               <div className="mt-2">
-                
                 {loadingProducts ? (
                   <div className="flex items-center justify-center p-8">
                     <div className="text-sm text-gray-600">Loading products...</div>
                   </div>
                 ) : (
-                  
-       <div> <div className="flex items-center gap-3 -mb-16 ml-6">
-           <Package className="h-5 w-5 text-pop-green" />
-           <div className="text-left">
-             <h3 className="text-lg font-semibold text-pop-black">Product Configuration</h3>
-             <p className="text-sm text-gray-600 font-medium">Manage product catalog and assembly guides</p>
-           </div>
-         </div>
- <DataTable
-                    title=""
-                    description=""
-                    data={products}
-                    columns={productColumns}
-                    editableFields={productEditableFields}
-                    onSave={handleProductSave}
-                    onAdd={handleProductSave}
-                    onDelete={handleProductDelete}
-                    renderEditModal={renderProductEditModal}
-                    enableColumnSelection={true}
-                    enableFiltering={true}
-                    availableColumns={productColumns}
-                    defaultVisibleColumns={['name', 'category', 'productType',]}
-                  /></div>
+                  <div>
+                    {showProductConfiguration && (
+                      <div className="flex items-center gap-3 -mb-16 ml-6">
+                        <Package className="h-5 w-5 text-pop-green" />
+                        <div className="text-left">
+                          <h3 className="text-lg font-semibold text-pop-black">Product Configuration</h3>
+                          <p className="text-sm text-gray-600 font-medium">Manage product catalog and assembly guides</p>
+                        </div>
+                      </div>
+                    )}
+                    <DataTable
+                      title=""
+                      description=""
+                      data={products}
+                      columns={productColumns}
+                      editableFields={productEditableFields}
+                      onSave={handleProductSave}
+                      onAdd={handleProductSave}
+                      onDelete={handleProductDelete}
+                      renderEditModal={renderProductEditModal}
+                      enableColumnSelection={true}
+                      enableFiltering={true}
+                      availableColumns={productColumns}
+                      defaultVisibleColumns={['name', 'category', 'productType',]}
+                    />
+                  </div>
                 )}
               </div>
               <div className="mt-4 space-y-2">
