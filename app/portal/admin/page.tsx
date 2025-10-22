@@ -841,18 +841,16 @@ export default function AdminPage() {
       >
         <AccordionItem value="product-configuration" className="border rounded-lg px-4">
           <AccordionTrigger className="hover:no-underline">
-            {loadingProducts ? (
-        <div className="flex items-center gap-3 -mb-16 ml-6">
-           <Package className="h-5 w-5 text-pop-green" />
-           <div className="text-left">
-             <h3 className="text-lg font-semibold text-pop-black">Product Configuration</h3>
-             <p className="text-sm text-gray-600 font-medium">Manage product catalog and assembly guides</p>
-           </div>
-         </div>
-            ) : ( <div className="hidden">
-                   TEST2
-                   </div>)}
-            </AccordionTrigger>
+            {!showProductConfiguration && (
+              <div className="flex items-center gap-3 -mb-16 ml-6">
+                <Package className="h-5 w-5 text-pop-green" />
+                <div className="text-left">
+                  <h3 className="text-lg font-semibold text-pop-black">Product Configuration</h3>
+                  <p className="text-sm text-gray-600 font-medium">Manage product catalog and assembly guides</p>
+                </div>
+              </div>
+            )}
+          </AccordionTrigger>
           <AccordionContent>
             
             <div className="pt-2 pb-4">
