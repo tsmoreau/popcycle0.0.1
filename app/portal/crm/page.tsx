@@ -8,6 +8,18 @@ import { Badge } from '../../components/ui/badge'
 import { DataTable, Column, EditableField } from '../../components/ui/data-table'
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '../../components/ui/accordion'
 
+interface Activity {
+  id: string
+  type: 'email' | 'call' | 'meeting' | 'note' | 'task'
+  date: Date
+  subject: string
+  notes: string
+  outcome?: string
+  nextAction?: string
+  nextActionDate?: Date
+  userId?: string
+}
+
 interface Organization {
   _id: string
   name: string
@@ -74,6 +86,12 @@ interface Organization {
     featuredPartnerOrgId?: string
   }
   eventIds: string[]
+  status?: 'prospect' | 'contacted' | 'in_talks' | 'proposal_sent' | 'negotiation' | 'active_partner' | 'onboarding' | 'closed_lost'
+  internalNotes?: string
+  activities?: Activity[]
+  lastContactDate?: Date
+  nextActionDate?: Date
+  assignedTo?: string
   createdAt: Date
   updatedAt: Date
 }
@@ -132,6 +150,40 @@ export default function CRMPage() {
         </Badge>
       )
     },
+    {
+      key: 'status',
+      header: 'Pipeline Status',
+      render: (org) => {
+        if (!org.status) return <Badge variant="outline">Not Set</Badge>
+        const statusConfig: Record<string, { label: string; className: string }> = {
+          prospect: { label: 'Prospect', className: 'bg-gray-500 text-white' },
+          contacted: { label: 'Contacted', className: 'bg-blue-500 text-white' },
+          in_talks: { label: 'In Talks', className: 'bg-purple-500 text-white' },
+          proposal_sent: { label: 'Proposal Sent', className: 'bg-yellow-600 text-white' },
+          negotiation: { label: 'Negotiation', className: 'bg-orange-500 text-white' },
+          active_partner: { label: 'Active Partner', className: 'bg-pop-green text-white' },
+          onboarding: { label: 'Onboarding', className: 'bg-pop-blue text-white' },
+          closed_lost: { label: 'Closed Lost', className: 'bg-red-500 text-white' }
+        }
+        const config = statusConfig[org.status] || { label: org.status, className: 'bg-gray-500 text-white' }
+        return <Badge className={config.className}>{config.label}</Badge>
+      }
+    },
+    {
+      key: 'assignedTo',
+      header: 'Assigned To',
+      render: (org) => org.assignedTo || '-'
+    },
+    {
+      key: 'lastContactDate',
+      header: 'Last Contact',
+      render: (org) => org.lastContactDate ? new Date(org.lastContactDate).toLocaleDateString() : '-'
+    },
+    {
+      key: 'nextActionDate',
+      header: 'Next Action',
+      render: (org) => org.nextActionDate ? new Date(org.nextActionDate).toLocaleDateString() : '-'
+    },
     { key: 'slug', header: 'Slug' },
     { 
       key: 'createdAt', 
@@ -184,7 +236,26 @@ export default function CRMPage() {
         { key: 'customDomain', label: 'Custom Domain', type: 'text', placeholder: 'track.organization.com' },
         { key: 'trackingPageMessage', label: 'Tracking Page Message', type: 'textarea', placeholder: 'Welcome message for tracking page' }
       ]
-    }
+    },
+    {
+      key: 'status',
+      label: 'Pipeline Status',
+      type: 'select',
+      options: [
+        { value: 'prospect', label: 'Prospect' },
+        { value: 'contacted', label: 'Contacted' },
+        { value: 'in_talks', label: 'In Talks' },
+        { value: 'proposal_sent', label: 'Proposal Sent' },
+        { value: 'negotiation', label: 'Negotiation' },
+        { value: 'active_partner', label: 'Active Partner' },
+        { value: 'onboarding', label: 'Onboarding' },
+        { value: 'closed_lost', label: 'Closed Lost' }
+      ]
+    },
+    { key: 'assignedTo', label: 'Assigned To', type: 'text', placeholder: 'Team member name' },
+    { key: 'internalNotes', label: 'Internal Notes', type: 'textarea', placeholder: 'Private notes about this organization...' },
+    { key: 'lastContactDate', label: 'Last Contact Date', type: 'text', placeholder: 'YYYY-MM-DD' },
+    { key: 'nextActionDate', label: 'Next Action Date', type: 'text', placeholder: 'YYYY-MM-DD' }
   ]
 
   const handleOrganizationSave = async (organization: Organization) => {
@@ -326,7 +397,7 @@ export default function CRMPage() {
           enableColumnSelection={true}
           enableFiltering={true}
           availableColumns={organizationColumns}
-          defaultVisibleColumns={['name', 'orgType', 'contactInfo', 'createdAt']}
+          defaultVisibleColumns={['name', 'orgType', 'status', 'assignedTo', 'nextActionDate', 'lastContactDate']}
         />
       )}
 
