@@ -297,8 +297,30 @@ export default function CRMPage() {
     }
   }
 
-  const renderOrganizationEditModal = (props: any) => {
-    return <OrganizationEditModal {...props} />
+  const renderOrganizationEditModal = (props: {
+    item: Organization | null
+    isAdding: boolean
+    onSave: (orgData: any) => Promise<void>
+    onCancel: () => void
+    onDelete?: () => Promise<void>
+    isSaving: boolean
+  }) => {
+    const deleteHandler = !props.isAdding && props.item?._id ? async () => {
+      await handleOrganizationDelete(props.item!)
+      props.onCancel()
+    } : undefined
+    
+    return <OrganizationEditModal 
+      item={props.item}
+      isAdding={props.isAdding}
+      isSaving={props.isSaving}
+      onSave={async (orgData: any) => {
+        await handleOrganizationSave(orgData)
+        props.onCancel()
+      }}
+      onCancel={props.onCancel}
+      onDelete={deleteHandler}
+    />
   }
 
   return (
