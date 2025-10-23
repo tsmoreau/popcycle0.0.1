@@ -6,7 +6,7 @@ export default function Home() {
   return (
     <div className="min-h-screen font-jost">
       {/* Hero Section */}
-      <section className="relative py-40 lg:py-48 px-6 bg-black font-jost overflow-hidden h-[75vh] flex items-center">
+      <section className="relative py-40 lg:py-48 px-6 bg-black font-jost overflow-hidden h-[70vh] flex items-center">
         {/* Background Video */}
         <video
           autoPlay
@@ -23,12 +23,12 @@ export default function Home() {
         
         {/* Content */}
         <div className="max-w-5xl mx-auto text-center relative z-20">
-          <span className="text-5xl lg:text-7xl mb-10 tracking-tight leading-tight text-white">
-            connecting <span className="text-pop-green">systemic</span> and <span className="text-pop-red">aesthetic</span> dimensions of <span className="text-pop-blue">recycled</span> materials
+          <span className="text-4xl lg:text-6xl mb-10 tracking-tight leading-tight text-white font-light">
+            connecting <span className="text-pop-blue">systemic</span> and <span className="text-pop-red">aesthetic</span> dimensions of <span className="text-pop-green">recycled</span> materials
            
           </span>
           
-          <p className="text-lg lg:text-xl max-w-3xl mx-auto mb-14 leading-relaxed text-white/90">
+          <p className="text-lg lg:text-xl max-w-3xl mx-auto mb-14 leading-relaxed text-white/90 hidden">
             we transform plastic waste into custom-branded products with complete traceability. 
             every item tells a story of sustainability, from bins and back again.
           </p>
@@ -37,7 +37,7 @@ export default function Home() {
           
 
             <Link href="/about#faq">
-              <Button variant="outline" size="lg" className="border-2 border-white text-white hover:bg-white hover:text-black systematic-caps text-base px-10 py-6 transition-all">
+              <Button variant="outline" size="lg" className="mt-6 border-2 border-white text-black hover:bg-white  systematic-caps text-base px-12 py-5 transition-all">
                 Learn More
               </Button>
             </Link>
@@ -46,9 +46,9 @@ export default function Home() {
       </section>
 
       {/* Featured Products Grid */}
-      <section className="py-16 lg:py-20 px-6 bg-white">
+      <section className="py-12 lg:py-16 px-6 bg-white">
         <div className="max-w-7xl mx-auto">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 lg:gap-6">
             {/* Product Card 1 */}
             <Link href="/about" className="group">
               <div className="relative aspect-[4/3] bg-gray-100 overflow-hidden">

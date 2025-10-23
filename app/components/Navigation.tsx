@@ -141,7 +141,7 @@ export default function Navigation() {
               onMouseLeave={() => setAboutOpen(false)}
             >
               <button
-                className={`text-lg  hover:text-pop-green transition-colors flex items-center space-x-1 py-2 ${
+                className={`text-lg font-light hover:text-pop-green transition-colors flex items-center space-x-1 py-2 ${
                   pathname?.startsWith("/about") ? "nav-link-active" : ""
                 }`}
               >

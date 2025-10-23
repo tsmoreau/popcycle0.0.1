@@ -54,7 +54,7 @@ export async function POST(
       await db.collection('products').updateOne(
         { _id: new ObjectId(productId) },
         { 
-          $push: { assets: assetObject },
+          $push: { assets: assetObject } as any,
           $set: { updatedAt: new Date() }
         }
       );
@@ -137,7 +137,7 @@ export async function DELETE(
       await db.collection('products').updateOne(
         { _id: new ObjectId(productId) },
         { 
-          $pull: { assets: { id: assetId } },
+          $pull: { assets: { id: assetId } } as any,
           $set: { updatedAt: new Date() }
         }
       );
