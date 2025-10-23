@@ -1,17 +1,6 @@
 import Link from "next/link";
 import { Button } from "./components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "./components/ui/card";
-import { Badge } from "./components/ui/badge";
-import { PopArtContainer, QRCodeElement } from "./components/PopArtElements";
-import { ArrowRight, Recycle, Factory, Zap, Users, Eye, RotateCcw, Target, Scan } from "lucide-react";
-
-// Mock data for MVP
-const impactMetrics = {
-  totalPieces: 3247,
-  totalWeight: 127.8,
-  totalCarbonOffset: 342.1,
-  companiesPartnered: 12
-};
+import { ArrowRight, Recycle, Factory, Eye, RotateCcw, Target, Scan } from "lucide-react";
 
 export default function Home() {
   return (
@@ -56,211 +45,144 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Bold Hook Statement */}
-      <section className="py-28 lg:py-32 px-6 bg-gray-900">
-        <div className="max-w-5xl mx-auto text-center">
-          <h2 className="text-4xl lg:text-6xl  mb-10 text-white leading-tight">
-            WE TRACK EVERYTHING<br />
-            <span className="text-pop-green">EXCEPT WHAT MATTERS.</span>
-          </h2>
-          <p className="text-xl lg:text-2xl text-white/80 mb-8 leading-relaxed max-w-4xl mx-auto">
-            Amazon can tell you where your package is at 2:47 AM. But where's your plastic bottle right now?
-          </p>
-          <div className="text-lg text-pop-green font-medium">
-            True sustainability isn't just about what you buy, it's about what you waste.
+      {/* Featured Products Grid */}
+      <section className="py-16 lg:py-20 px-6 bg-white">
+        <div className="max-w-7xl mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12">
+            {/* Product Card 1 */}
+            <Link href="/about" className="group">
+              <div className="relative aspect-[4/3] bg-gray-100 overflow-hidden">
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <Recycle className="w-24 h-24 text-gray-300" />
+                </div>
+                <div className="absolute bottom-0 left-0 right-0 p-6 bg-gradient-to-t from-black/60 to-transparent">
+                  <h3 className="text-white text-2xl mb-2">Coasters</h3>
+                  <p className="text-white/80 text-sm">From your waste stream</p>
+                </div>
+              </div>
+            </Link>
+
+            {/* Product Card 2 */}
+            <Link href="/about" className="group">
+              <div className="relative aspect-[4/3] bg-gray-100 overflow-hidden">
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <Target className="w-24 h-24 text-gray-300" />
+                </div>
+                <div className="absolute bottom-0 left-0 right-0 p-6 bg-gradient-to-t from-black/60 to-transparent">
+                  <h3 className="text-white text-2xl mb-2">Custom Products</h3>
+                  <p className="text-white/80 text-sm">Designed for your brand</p>
+                </div>
+              </div>
+            </Link>
           </div>
         </div>
       </section>
 
-      {/* Impact Metrics */}
-      <section className="py-20 lg:py-24 bg-pop-green text-white font-jost">
-        <div className="max-w-6xl mx-auto px-6">
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-12">
-            <div className="text-center">
-              <div className="text-4xl lg:text-5xl font-bold text-white mb-3">
-                {impactMetrics.totalPieces.toLocaleString()}
+      {/* Category Showcase */}
+      <section className="py-0 bg-white">
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-12">
+            {/* Category 1 */}
+            <Link href="/about" className="group">
+              <div className="relative aspect-square bg-gray-50 overflow-hidden mb-4">
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <Factory className="w-20 h-20 text-gray-300" />
+                </div>
               </div>
-              <div className="systematic-caps text-sm tracking-wider opacity-90">Stories Tracked</div>
-            </div>
-            
-            <div className="text-center">
-              <div className="text-4xl lg:text-5xl font-bold text-white mb-3">
-                {impactMetrics.totalWeight}kg
+              <h3 className="text-lg font-medium mb-1">Collection</h3>
+              <p className="text-sm text-gray-600">Traceable waste streams</p>
+            </Link>
+
+            {/* Category 2 */}
+            <Link href="/about" className="group">
+              <div className="relative aspect-square bg-gray-50 overflow-hidden mb-4">
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <RotateCcw className="w-20 h-20 text-gray-300" />
+                </div>
               </div>
-              <div className="systematic-caps text-sm tracking-wider opacity-90">Materials Transformed</div>
-            </div>
-            
-            <div className="text-center">
-              <div className="text-4xl lg:text-5xl font-bold text-white mb-3">
-                {impactMetrics.totalCarbonOffset}kg
+              <h3 className="text-lg font-medium mb-1">Processing</h3>
+              <p className="text-sm text-gray-600">Verified transformation</p>
+            </Link>
+
+            {/* Category 3 */}
+            <Link href="/about" className="group">
+              <div className="relative aspect-square bg-gray-50 overflow-hidden mb-4">
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <Scan className="w-20 h-20 text-gray-300" />
+                </div>
               </div>
-              <div className="systematic-caps text-sm tracking-wider opacity-90">CO₂ Impact</div>
-            </div>
-            
-            <div className="text-center">
-              <div className="text-4xl lg:text-5xl font-bold text-white mb-3">
-                {impactMetrics.companiesPartnered}
-              </div>
-              <div className="systematic-caps text-sm tracking-wider opacity-90">Storytellers</div>
-            </div>
+              <h3 className="text-lg font-medium mb-1">Tracking</h3>
+              <p className="text-sm text-gray-600">Complete transparency</p>
+            </Link>
           </div>
         </div>
       </section>
 
-      {/* The PopCycle Way */}
-      <section className="py-28 lg:py-32 px-6 bg-gray-50">
-        <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-24">
-            <h2 className="text-4xl lg:text-5xl font-bold mb-8 leading-tight">
-              PROVE YOUR SUSTAINABILITY.<br />
-              <span className="text-pop-blue">DON'T JUST PROMISE IT.</span>
-            </h2>
-            <p className="text-lg lg:text-xl text-gray-700 max-w-3xl mx-auto leading-relaxed">
-              Stock your spaces with custom products made from your own waste stream. 
-              Every piece comes with verifiable impact data and branded tracking portals.
-            </p>
-          </div>
-          
-          <div className="space-y-20">
-            <div className="relative">
-              <div className="grid grid-cols-1 lg:grid-cols-3 gap-0 border border-gray-200 divide-x divide-y divide-gray-200 bg-white">
-                <div className="bg-white p-10 relative">
-                  <div className="absolute -top-4 -left-4 w-12 h-12 bg-pop-green text-white flex items-center justify-center font-bold text-lg">
-                    01
-                  </div>
-                  <div className="text-center pt-4">
-                    <div className="w-16 h-16 bg-pop-green/10 flex items-center justify-center mx-auto mb-6">
-                      <Recycle className="w-8 h-8 text-pop-green" />
-                    </div>
-                    <h3 className="text-xl helvetica-bold mb-4 systematic-caps text-pop-green">COLLECT & TRACK</h3>
-                    <p className="leading-relaxed text-gray-600">
-                      Your waste becomes a traceable resource. Each bin gets a unique QR code that follows 
-                      your specific plastic through the entire circular journey back to you.
-                    </p>
-                  </div>
-                </div>
-
-                <div className="bg-white p-10 relative">
-                  <div className="absolute -top-4 -left-4 w-12 h-12 bg-pop-blue text-white flex items-center justify-center font-bold text-lg">
-                    02
-                  </div>
-                  <div className="text-center pt-4">
-                    <div className="w-16 h-16 bg-pop-blue/10 flex items-center justify-center mx-auto mb-6">
-                      <Factory className="w-8 h-8 text-pop-blue" />
-                    </div>
-                    <h3 className="text-xl helvetica-bold mb-4 systematic-caps text-pop-blue">TRANSFORM & TRACE</h3>
-                    <p className="leading-relaxed text-gray-600">
-                      Your plastic stays traceable through minimal processing. Each transformation step 
-                      is logged and verified, maintaining complete chain of custody from your waste bin.
-                    </p>
-                  </div>
-                </div>
-
-                <div className="bg-white p-10 relative">
-                  <div className="absolute -top-4 -left-4 w-12 h-12 bg-pop-red text-white flex items-center justify-center font-bold text-lg">
-                    03
-                  </div>
-                  <div className="text-center pt-4">
-                    <div className="w-16 h-16 bg-pop-red/10 flex items-center justify-center mx-auto mb-6">
-                      <Target className="w-8 h-8 text-pop-red" />
-                    </div>
-                    <h3 className="text-xl helvetica-bold mb-4 systematic-caps text-pop-red">DELIVER & VERIFY</h3>
-                    <p className="leading-relaxed text-gray-600">
-                      Your waste returns as custom products with complete provenance data. 
-                      Scan the QR code to see the verified journey from your bin to your hands.
-                    </p>
-                  </div>
-                </div>
+      {/* Editorial Section */}
+      <section className="py-24 lg:py-32 px-6 bg-gray-50 mt-16">
+        <div className="max-w-5xl mx-auto">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            {/* Image Placeholder */}
+            <div className="relative aspect-[3/4] bg-gray-200 overflow-hidden">
+              <div className="absolute inset-0 flex items-center justify-center">
+                <Eye className="w-32 h-32 text-gray-300" />
               </div>
+            </div>
+
+            {/* Content */}
+            <div>
+              <h2 className="text-4xl lg:text-5xl mb-6 leading-tight">
+                True <span className="text-pop-green">Circularity</span>
+              </h2>
+              <p className="text-lg text-gray-700 mb-8 leading-relaxed">
+                Every product tells a story. From collection to creation, 
+                we track each step of your waste's transformation into 
+                custom-branded products.
+              </p>
+              <Link href="/about">
+                <Button variant="outline" size="lg" className="border-2 border-gray-900 text-gray-900 hover:bg-gray-900 hover:text-white">
+                  Learn More
+                </Button>
+              </Link>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Why It Matters */}
-      <section className="py-28 lg:py-32 px-6 bg-white">
-        <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-24">
-            <h2 className="text-4xl lg:text-5xl helvetica-bold mb-8 text-gray-900 leading-tight">
-              THE TRACKING <span className="text-pop-red">GAP</span>
-            </h2>
-            <p className="text-lg lg:text-xl text-gray-700 max-w-3xl mx-auto leading-relaxed">
-              Supply chains have tracking perfected. Waste streams don't. 
-              Organizations need verifiable circularity, not just good intentions.
-            </p>
-          </div>
-          
-          <div className="space-y-20">
-            <div className="relative">
-              <div className="grid grid-cols-1 lg:grid-cols-3 gap-0 border border-gray-200 divide-x divide-y divide-gray-200 bg-white">
-                <div className="bg-white p-10 relative">
-                  <div className="absolute -top-4 -left-4 w-12 h-12 bg-pop-red text-white flex items-center justify-center font-bold text-lg">
-                    ✗
-                  </div>
-                  <div className="text-center pt-4">
-                    <div className="w-16 h-16 bg-pop-red/10 flex items-center justify-center mx-auto mb-6">
-                      <Eye className="w-8 h-8 text-pop-red" />
-                    </div>
-                    <h3 className="text-xl helvetica-bold mb-4 systematic-caps text-pop-red">TRADITIONAL WASTE</h3>
-                    <p className="leading-relaxed text-gray-600">
-                      Zero tracking after disposal. Your plastic disappears into generic processing. 
-                      No proof of impact for sustainability reporting.
-                    </p>
+      {/* Product Highlights Grid */}
+      <section className="py-16 lg:py-20 px-6 bg-white">
+        <div className="max-w-7xl mx-auto">
+          <h2 className="text-3xl lg:text-4xl mb-12 text-center">Featured Products</h2>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 lg:gap-8">
+            {[1, 2, 3, 4].map((item) => (
+              <Link key={item} href="/about" className="group">
+                <div className="relative aspect-square bg-gray-50 mb-3 overflow-hidden">
+                  <div className="absolute inset-0 flex items-center justify-center">
+                    <Recycle className="w-12 h-12 text-gray-300" />
                   </div>
                 </div>
-
-                <div className="bg-white p-10 relative">
-                  <div className="absolute -top-4 -left-4 w-12 h-12 bg-pop-green text-white flex items-center justify-center font-bold text-lg">
-                    ✓
-                  </div>
-                  <div className="text-center pt-4">
-                    <div className="w-16 h-16 bg-pop-green/10 flex items-center justify-center mx-auto mb-6">
-                      <RotateCcw className="w-8 h-8 text-pop-green" />
-                    </div>
-                    <h3 className="text-xl helvetica-bold mb-4 systematic-caps text-pop-green">POPCYCLE TRACKING</h3>
-                    <p className="leading-relaxed text-gray-600">
-                      Complete transparency from your bin to your custom product. Every step tracked and verified. 
-                      Direct proof of your organization's circular impact.
-                    </p>
-                  </div>
-                </div>
-
-                <div className="bg-white p-10 relative">
-                  <div className="absolute -top-4 -left-4 w-12 h-12 bg-pop-blue text-white flex items-center justify-center font-bold text-lg">
-                    ∞
-                  </div>
-                  <div className="text-center pt-4">
-                    <div className="w-16 h-16 bg-pop-blue/10 flex items-center justify-center mx-auto mb-6">
-                      <Target className="w-8 h-8 text-pop-blue" />
-                    </div>
-                    <h3 className="text-xl helvetica-bold mb-4 systematic-caps text-pop-blue">THE RESULT</h3>
-                    <p className="leading-relaxed text-gray-600">
-                      100% material accountability. Verifiable sustainability data. 
-                      Custom products that prove your circular economy commitment.
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>
+                <h4 className="text-sm font-medium mb-1">Product {item}</h4>
+                <p className="text-xs text-gray-600">Recycled materials</p>
+              </Link>
+            ))}
           </div>
         </div>
       </section>
 
       {/* CTA Section */}
-      <section className="py-28 lg:py-32 px-6 bg-gray-900">
-        <div className="max-w-4xl mx-auto text-center">
-          <h2 className="text-4xl lg:text-5xl helvetica-bold mb-8 text-white leading-tight">
-            READY TO PROVE<br />
-            YOUR IMPACT?
+      <section className="py-24 lg:py-28 px-6 bg-white border-t border-gray-200">
+        <div className="max-w-3xl mx-auto text-center">
+          <h2 className="text-3xl lg:text-4xl mb-6 leading-tight">
+            Start Your Circular Journey
           </h2>
           
-          <p className="text-lg lg:text-xl mb-12 text-white/80 leading-relaxed max-w-2xl mx-auto">
-            Join organizations already turning sustainability promises into verifiable circular data.
+          <p className="text-lg mb-10 text-gray-600 leading-relaxed max-w-2xl mx-auto">
+            Transform your waste into traceable, branded products.
           </p>
           
           <Link href="/about#contact">
-            <Button size="lg" className="bg-pop-green text-white hover:bg-opacity-90 systematic-caps text-base px-12 py-6  transition-all ">
-              PROVE YOUR SUSTAINABILITY
+            <Button size="lg" className="bg-gray-900 text-white hover:bg-gray-800 text-base px-12 py-6 transition-all">
+              Get Started
               <ArrowRight className="ml-2 w-5 h-5" />
             </Button>
           </Link>
