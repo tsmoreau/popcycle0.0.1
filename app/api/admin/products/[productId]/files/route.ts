@@ -73,7 +73,7 @@ export async function POST(
       await db.collection('products').updateOne(
         { _id: new ObjectId(productId) },
         { 
-          $push: { [updateField]: filePath },
+          $push: { [updateField]: filePath } as any,
           $set: { updatedAt: new Date() }
         }
       );
@@ -148,7 +148,7 @@ export async function DELETE(
       await db.collection('products').updateOne(
         { _id: new ObjectId(productId) },
         { 
-          $pull: { [updateField]: filePath },
+          $pull: { [updateField]: filePath } as any,
           $set: { updatedAt: new Date() }
         }
       );
