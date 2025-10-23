@@ -5,7 +5,7 @@ import { useParams } from "next/navigation";
 import Link from "next/link";
 import { Button } from "../../../components/ui/button";
 import { LoadingSquare } from "../../../components/ui/loading-square";
-import { ArrowLeft, ChevronLeft, ChevronRight, Package } from "lucide-react";
+import { ArrowLeft, ChevronLeft, ChevronRight, Package, Image as ImageIcon } from "lucide-react";
 
 interface Product {
   _id: string;
@@ -228,7 +228,7 @@ export default function ProductDetail() {
         </div>
 
         {/* Price & Actions */}
-        <div className="border-t border-gray-100 pt-12 mb-16">
+        <div className="border-t border-gray-100 pt-12">
           <div className="flex items-baseline gap-3 mb-8">
             <span className="text-4xl font-light" data-testid="text-price">
               ${product.price.toFixed(2)}
@@ -263,42 +263,110 @@ export default function ProductDetail() {
             </Button>
           </div>
         </div>
+      </section>
 
-        {/* Product Details */}
-        <div className="border-t border-gray-100 pt-12">
-          <h2 className="text-2xl font-light mb-8">Details</h2>
-          
-          <dl className="space-y-6 text-base">
-            <div className="flex border-b border-gray-50 pb-4">
-              <dt className="w-1/3 text-gray-500 font-light">Material</dt>
-              <dd className="w-2/3 text-gray-900 font-light">100% recycled plastic</dd>
+      {/* Full-Width Lifestyle Image */}
+      <section className="relative h-[80vh] bg-gray-100">
+        <div className="w-full h-full flex items-center justify-center">
+          <div className="text-center">
+            <ImageIcon className="w-32 h-32 text-gray-300 mx-auto mb-4" />
+            <p className="text-gray-400 text-sm">Lifestyle Image</p>
+          </div>
+        </div>
+      </section>
+
+      {/* Detail Images Grid */}
+      <section className="max-w-screen-2xl mx-auto px-6 lg:px-12 py-20 lg:py-32">
+        <h2 className="text-3xl font-light mb-12 text-center">Details</h2>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
+          {[1, 2, 3].map((i) => (
+            <div key={i} className="aspect-square bg-gray-100 flex items-center justify-center">
+              <div className="text-center">
+                <ImageIcon className="w-20 h-20 text-gray-300 mx-auto mb-2" />
+                <p className="text-gray-400 text-xs">Detail {i}</p>
+              </div>
             </div>
-            <div className="flex border-b border-gray-50 pb-4">
-              <dt className="w-1/3 text-gray-500 font-light">Category</dt>
-              <dd className="w-2/3 text-gray-900 font-light">{categoryLabels[product.category]}</dd>
-            </div>
-            <div className="flex border-b border-gray-50 pb-4">
-              <dt className="w-1/3 text-gray-500 font-light">Type</dt>
-              <dd className="w-2/3 text-gray-900 font-light">{productTypeLabels[product.productType]}</dd>
-            </div>
-            <div className="flex border-b border-gray-50 pb-4">
-              <dt className="w-1/3 text-gray-500 font-light">Traceability</dt>
-              <dd className="w-2/3 text-gray-900 font-light">Complete source-to-product tracking</dd>
-            </div>
-            <div className="flex border-b border-gray-50 pb-4">
-              <dt className="w-1/3 text-gray-500 font-light">Customization</dt>
-              <dd className="w-2/3 text-gray-900 font-light">Custom branding available</dd>
-            </div>
-            <div className="flex pb-4">
-              <dt className="w-1/3 text-gray-500 font-light">Shipping</dt>
-              <dd className="w-2/3 text-gray-900 font-light">2-3 business days</dd>
-            </div>
-          </dl>
+          ))}
+        </div>
+      </section>
+
+      {/* Materials & Colors */}
+      <section className="bg-gray-50 py-20 lg:py-32">
+        <div className="max-w-screen-xl mx-auto px-6 lg:px-12">
+          <h2 className="text-3xl font-light mb-12 text-center">Materials & Colors</h2>
+          <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-6 gap-6 lg:gap-8">
+            {[1, 2, 3, 4, 5, 6].map((i) => (
+              <div key={i} className="flex flex-col items-center gap-3">
+                <div className="w-24 h-24 rounded-full bg-gray-200 border-2 border-gray-300"></div>
+                <p className="text-xs text-gray-500">Color {i}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Full-Width Environmental Shot */}
+      <section className="relative h-[80vh] bg-gray-100">
+        <div className="w-full h-full flex items-center justify-center">
+          <div className="text-center">
+            <ImageIcon className="w-32 h-32 text-gray-300 mx-auto mb-4" />
+            <p className="text-gray-400 text-sm">Environmental Image</p>
+          </div>
+        </div>
+      </section>
+
+      {/* Technical Specifications */}
+      <section className="max-w-3xl mx-auto px-6 lg:px-12 py-20 lg:py-32">
+        <h2 className="text-3xl font-light mb-12">Specifications</h2>
+        
+        <dl className="space-y-6 text-base">
+          <div className="flex border-b border-gray-50 pb-4">
+            <dt className="w-1/3 text-gray-500 font-light">Material</dt>
+            <dd className="w-2/3 text-gray-900 font-light">100% recycled plastic</dd>
+          </div>
+          <div className="flex border-b border-gray-50 pb-4">
+            <dt className="w-1/3 text-gray-500 font-light">Category</dt>
+            <dd className="w-2/3 text-gray-900 font-light">{categoryLabels[product.category]}</dd>
+          </div>
+          <div className="flex border-b border-gray-50 pb-4">
+            <dt className="w-1/3 text-gray-500 font-light">Type</dt>
+            <dd className="w-2/3 text-gray-900 font-light">{productTypeLabels[product.productType]}</dd>
+          </div>
+          <div className="flex border-b border-gray-50 pb-4">
+            <dt className="w-1/3 text-gray-500 font-light">Traceability</dt>
+            <dd className="w-2/3 text-gray-900 font-light">Complete source-to-product tracking</dd>
+          </div>
+          <div className="flex border-b border-gray-50 pb-4">
+            <dt className="w-1/3 text-gray-500 font-light">Customization</dt>
+            <dd className="w-2/3 text-gray-900 font-light">Custom branding available</dd>
+          </div>
+          <div className="flex pb-4">
+            <dt className="w-1/3 text-gray-500 font-light">Shipping</dt>
+            <dd className="w-2/3 text-gray-900 font-light">2-3 business days</dd>
+          </div>
+        </dl>
+      </section>
+
+      {/* Related Products */}
+      <section className="bg-gray-50 py-20 lg:py-32">
+        <div className="max-w-screen-2xl mx-auto px-6 lg:px-12">
+          <h2 className="text-3xl font-light mb-12">You may also like</h2>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 lg:gap-8">
+            {[1, 2, 3, 4].map((i) => (
+              <Link key={i} href="/shop" className="group">
+                <div className="aspect-square bg-gray-100 mb-4 overflow-hidden flex items-center justify-center">
+                  <Package className="w-20 h-20 text-gray-300" />
+                </div>
+                <h3 className="text-base font-light mb-1">Related Product {i}</h3>
+                <p className="text-sm text-gray-500 font-light">From $XX.XX</p>
+              </Link>
+            ))}
+          </div>
         </div>
       </section>
 
       {/* Spacer for breathing room */}
-      <div className="h-32"></div>
+      <div className="h-20"></div>
     </div>
   );
 }
