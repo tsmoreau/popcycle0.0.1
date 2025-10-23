@@ -18,6 +18,7 @@ interface Product {
   _id: string
   name: string
   description: string
+  slug?: string
   category: 'workshop' | 'studio_edition' | 'client_edition'
   productType: 'coasters' | 'keychains' | 'bookmarks' | 'magnets' | 'earrings' | 'lighting' | 'cutting_boards'
   designFiles?: {
@@ -65,6 +66,7 @@ export function ProductEditModal({
     _id: '',
     name: '',
     description: '',
+    slug: '',
     category: 'workshop',
     productType: 'coasters',
     price: 0,
@@ -80,12 +82,23 @@ export function ProductEditModal({
     assets: []
   })
 
+  // Function to generate slug from name
+  const generateSlug = (name: string): string => {
+    return name
+      .toLowerCase()
+      .trim()
+      .replace(/[^\w\s-]/g, '') // Remove special characters
+      .replace(/\s+/g, '-') // Replace spaces with hyphens
+      .replace(/-+/g, '-') // Replace multiple hyphens with single hyphen
+  }
+
   useEffect(() => {
     if (item) {
       setFormData({
         _id: item._id || '',
         name: item.name || '',
         description: item.description || '',
+        slug: item.slug || generateSlug(item.name || ''),
         category: item.category || 'workshop',
         productType: item.productType || 'coasters',
         price: item.price || 0,
@@ -105,6 +118,7 @@ export function ProductEditModal({
         _id: '',
         name: '',
         description: '',
+        slug: '',
         category: 'workshop',
         productType: 'coasters',
         price: 0,
@@ -123,7 +137,16 @@ export function ProductEditModal({
   }, [item])
 
   const handleFieldChange = (field: string, value: any) => {
-    setFormData((prev: any) => ({ ...prev, [field]: value }))
+    setFormData((prev: any) => {
+      const updates: any = { [field]: value }
+      
+      // Auto-generate slug when name changes (only if slug hasn't been manually set)
+      if (field === 'name' && (!prev.slug || prev.slug === generateSlug(prev.name))) {
+        updates.slug = generateSlug(value)
+      }
+      
+      return { ...prev, ...updates }
+    })
   }
 
   const [uploadingFiles, setUploadingFiles] = useState<Record<string, boolean>>({})
@@ -374,6 +397,18 @@ export function ProductEditModal({
               placeholder="Describe the product"
               rows={3}
             />
+          </div>
+          <div>
+            <Label>URL Slug *</Label>
+            <Input
+              value={formData.slug}
+              onChange={(e) => handleFieldChange('slug', e.target.value)}
+              placeholder="product-url-slug"
+              data-testid="input-slug"
+            />
+            <p className="text-xs text-gray-500 mt-1">
+              Auto-generated from product name. Edit to customize the URL.
+            </p>
           </div>
           <div className="grid grid-cols-2 gap-4">
             <div>
