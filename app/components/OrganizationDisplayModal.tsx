@@ -314,13 +314,17 @@ export default function OrganizationDisplayModal({ item, onClose }: Organization
 
           <Separator />
 
-          {/* Type-Specific Details */}
-          {item.orgType === 'community_partner' && item.communityPartner && (
-            <div>
-              <h3 className="text-lg font-semibold mb-3 flex items-center gap-2">
-                <Building2 className="h-5 w-5 text-pop-green" />
-                Community Partner Details
-              </h3>
+          {/* Type-Specific Details - Show ALL populated type sections for historical record */}
+          {item.communityPartner && (
+            <>
+              <div>
+                <h3 className="text-lg font-semibold mb-3 flex items-center gap-2">
+                  <Building2 className="h-5 w-5 text-pop-green" />
+                  Community Partner Details
+                  {item.orgType !== 'community_partner' && (
+                    <Badge variant="secondary" className="ml-2 text-xs">Historical</Badge>
+                  )}
+                </h3>
               <div className="space-y-3">
                 <div>
                   <div className="text-sm font-medium text-gray-500">Mission</div>
@@ -377,50 +381,103 @@ export default function OrganizationDisplayModal({ item, onClose }: Organization
                   </div>
                 )}
               </div>
-            </div>
+              </div>
+              <Separator />
+            </>
           )}
 
-          {(item.orgType === 'limited_client' || item.orgType === 'retainer_client') && (
-            <div>
-              <h3 className="text-lg font-semibold mb-3 flex items-center gap-2">
-                <Package className="h-5 w-5 text-pop-blue" />
-                {item.orgType === 'limited_client' ? 'Limited' : 'Retainer'} Client Details
-              </h3>
-              <div className="grid grid-cols-2 gap-4">
-                <div>
-                  <div className="text-sm font-medium text-gray-500">Contract Start</div>
-                  <div className="text-gray-700">
-                    {new Date((item.limitedClient || item.retainerClient)!.contractStartDate).toLocaleDateString()}
-                  </div>
-                </div>
-                <div>
-                  <div className="text-sm font-medium text-gray-500">Contract End</div>
-                  <div className="text-gray-700">
-                    {new Date((item.limitedClient || item.retainerClient)!.contractEndDate).toLocaleDateString()}
-                  </div>
-                </div>
-                {(item.limitedClient || item.retainerClient)?.monthlyDeliveryCap && (
+          {item.limitedClient && (
+            <>
+              <div>
+                <h3 className="text-lg font-semibold mb-3 flex items-center gap-2">
+                  <Package className="h-5 w-5 text-pop-blue" />
+                  Limited Client Details
+                  {item.orgType !== 'limited_client' && (
+                    <Badge variant="secondary" className="ml-2 text-xs">Historical</Badge>
+                  )}
+                </h3>
+                <div className="grid grid-cols-2 gap-4">
                   <div>
-                    <div className="text-sm font-medium text-gray-500">Monthly Delivery Cap</div>
-                    <div className="text-gray-700">{(item.limitedClient || item.retainerClient)?.monthlyDeliveryCap}</div>
+                    <div className="text-sm font-medium text-gray-500">Contract Start</div>
+                    <div className="text-gray-700">
+                      {new Date(item.limitedClient.contractStartDate).toLocaleDateString()}
+                    </div>
                   </div>
-                )}
-                <div>
-                  <div className="text-sm font-medium text-gray-500">Integrate Own Waste</div>
-                  <div className="text-gray-700">
-                    {(item.limitedClient || item.retainerClient)?.integrateOwnWaste ? 'Yes' : 'No'}
+                  <div>
+                    <div className="text-sm font-medium text-gray-500">Contract End</div>
+                    <div className="text-gray-700">
+                      {new Date(item.limitedClient.contractEndDate).toLocaleDateString()}
+                    </div>
+                  </div>
+                  {item.limitedClient.monthlyDeliveryCap && (
+                    <div>
+                      <div className="text-sm font-medium text-gray-500">Monthly Delivery Cap</div>
+                      <div className="text-gray-700">{item.limitedClient.monthlyDeliveryCap}</div>
+                    </div>
+                  )}
+                  <div>
+                    <div className="text-sm font-medium text-gray-500">Integrate Own Waste</div>
+                    <div className="text-gray-700">
+                      {item.limitedClient.integrateOwnWaste ? 'Yes' : 'No'}
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
+              <Separator />
+            </>
           )}
 
-          {item.orgType === 'wholesaler' && item.wholesaler && (
-            <div>
-              <h3 className="text-lg font-semibold mb-3 flex items-center gap-2">
-                <TrendingUp className="h-5 w-5 text-purple-600" />
-                Wholesaler Details
-              </h3>
+          {item.retainerClient && (
+            <>
+              <div>
+                <h3 className="text-lg font-semibold mb-3 flex items-center gap-2">
+                  <Package className="h-5 w-5 text-pop-blue" />
+                  Retainer Client Details
+                  {item.orgType !== 'retainer_client' && (
+                    <Badge variant="secondary" className="ml-2 text-xs">Historical</Badge>
+                  )}
+                </h3>
+                <div className="grid grid-cols-2 gap-4">
+                  <div>
+                    <div className="text-sm font-medium text-gray-500">Contract Start</div>
+                    <div className="text-gray-700">
+                      {new Date(item.retainerClient.contractStartDate).toLocaleDateString()}
+                    </div>
+                  </div>
+                  <div>
+                    <div className="text-sm font-medium text-gray-500">Contract End</div>
+                    <div className="text-gray-700">
+                      {new Date(item.retainerClient.contractEndDate).toLocaleDateString()}
+                    </div>
+                  </div>
+                  {item.retainerClient.monthlyDeliveryCap && (
+                    <div>
+                      <div className="text-sm font-medium text-gray-500">Monthly Delivery Cap</div>
+                      <div className="text-gray-700">{item.retainerClient.monthlyDeliveryCap}</div>
+                    </div>
+                  )}
+                  <div>
+                    <div className="text-sm font-medium text-gray-500">Integrate Own Waste</div>
+                    <div className="text-gray-700">
+                      {item.retainerClient.integrateOwnWaste ? 'Yes' : 'No'}
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <Separator />
+            </>
+          )}
+
+          {item.wholesaler && (
+            <>
+              <div>
+                <h3 className="text-lg font-semibold mb-3 flex items-center gap-2">
+                  <TrendingUp className="h-5 w-5 text-purple-600" />
+                  Wholesaler Details
+                  {item.orgType !== 'wholesaler' && (
+                    <Badge variant="secondary" className="ml-2 text-xs">Historical</Badge>
+                  )}
+                </h3>
               <div className="space-y-3">
                 <div className="grid grid-cols-2 gap-4">
                   {item.wholesaler.buyerContactName && (
@@ -467,12 +524,13 @@ export default function OrganizationDisplayModal({ item, onClose }: Organization
                   )}
                 </div>
               </div>
-            </div>
+              </div>
+              <Separator />
+            </>
           )}
 
           {(item.branding.primaryColor || item.branding.trackingPageMessage) && (
             <>
-              <Separator />
               <div>
                 <h3 className="text-lg font-semibold mb-3 flex items-center gap-2">
                   <Palette className="h-5 w-5 text-purple-600" />
