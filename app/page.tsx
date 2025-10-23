@@ -17,14 +17,29 @@ export default function Home() {
   return (
     <div className="min-h-screen font-jost">
       {/* Hero Section */}
-      <section className="py-40 lg:py-48 px-6 bg-white font-jost">
-        <div className="max-w-5xl mx-auto text-center">
-          <span className="text-5xl lg:text-7xl mb-10 tracking-tight leading-tight">
+      <section className="relative py-40 lg:py-48 px-6 bg-black font-jost overflow-hidden min-h-screen flex items-center">
+        {/* Background Video */}
+        <video
+          autoPlay
+          loop
+          muted
+          playsInline
+          className="absolute inset-0 w-full h-full object-cover z-0"
+        >
+          <source src="https://storage.googleapis.com/popcycle01/Solar_System_Coaster_Video_Generation.mp4" type="video/mp4" />
+        </video>
+        
+        {/* Dark Overlay */}
+        <div className="absolute inset-0 bg-black/40 z-10"></div>
+        
+        {/* Content */}
+        <div className="max-w-5xl mx-auto text-center relative z-20">
+          <span className="text-5xl lg:text-7xl mb-10 tracking-tight leading-tight text-white">
             connecting <span className="text-pop-green">systemic</span> and <span className="text-pop-red">aesthetic</span> dimensions of <span className="text-pop-blue">recycled</span> materials
            
           </span>
           
-          <p className="text-lg lg:text-xl max-w-3xl mx-auto mb-14 leading-relaxed text-gray-700">
+          <p className="text-lg lg:text-xl max-w-3xl mx-auto mb-14 leading-relaxed text-white/90">
             we transform plastic waste into custom-branded products with complete traceability. 
             every item tells a story of sustainability, from bins and back again.
           </p>
@@ -33,7 +48,7 @@ export default function Home() {
           
 
             <Link href="/about#faq">
-              <Button variant="outline" size="lg" className="border border-gray-300 text-gray-900 hover:bg-gray-900 hover:text-white systematic-caps text-base px-10 py-6 transition-all">
+              <Button variant="outline" size="lg" className="border-2 border-white text-white hover:bg-white hover:text-black systematic-caps text-base px-10 py-6 transition-all">
                 Learn More
               </Button>
             </Link>
