@@ -77,6 +77,13 @@ PopCycle is built as a unified Next.js PWA with MongoDB, managing all core opera
   - **activity** (planned): Historical event logging across all system domains
 - **Activity Scope**: Captures authentication events, operations workflow, admin actions, QR code scans, user interactions, and system changes with cross-referenced metadata for comprehensive audit trails
 
+### CRM Modal UI (January 2025)
+- **Display Modal with Quick Edit**: OrganizationDisplayModal includes Settings icon button in hero section (upper right) for seamless transition to edit mode
+- **DataTable Modal Management**: Enhanced DataTable renderModal callback signature includes onEdit parameter enabling parent-child edit handoff
+- **React Key-Based Remounting**: DialogContent uses dynamic keys ('edit' vs 'view') to force React remount when switching between display and edit modes
+- **State Consistency**: Edit transitions properly set editingItem, isEditing, and clear isAdding state across both desktop table and mobile card views
+- **Historical Type Data Display**: Display modal shows ALL populated type-specific sections (communityPartner, limitedClient, retainerClient, wholesaler) with "Historical" badges for non-current orgType, supporting seamless type transitions and audit trail visibility
+
 ## External Dependencies
 
 - **Database**: MongoDB
