@@ -103,6 +103,14 @@ export interface Org {
     featuredPartnerOrgId?: ObjectId;
   };
 
+  // CRM pipeline tracking
+  status?: "n_a" | "prospect" | "contacted" | "in_talks" | "proposal_sent" | "negotiation" | "active_partner" | "active_client" | "active_wholesaler" | "onboarding" | "closed_lost";
+  internalNotes?: string;
+  activities?: any[]; // Activity timeline entries
+  lastContactDate?: Date;
+  nextActionDate?: Date;
+  assignedTo?: string;
+
   eventIds: string[]; // References to Event collection
   createdAt: Date;
   updatedAt: Date;

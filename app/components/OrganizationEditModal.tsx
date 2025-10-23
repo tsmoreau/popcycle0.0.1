@@ -245,6 +245,8 @@ export function OrganizationEditModal({
                 <option value="proposal_sent">Proposal Sent</option>
                 <option value="negotiation">Negotiation</option>
                 <option value="active_partner">Active Partner</option>
+                <option value="active_client">Active Client</option>
+                <option value="active_wholesaler">Active Wholesaler</option>
                 <option value="onboarding">Onboarding</option>
                 <option value="closed_lost">Closed Lost</option>
               </select>

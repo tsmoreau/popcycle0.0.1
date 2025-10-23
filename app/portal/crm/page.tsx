@@ -8,6 +8,7 @@ import { Badge } from '../../components/ui/badge'
 import { DataTable, Column, EditableField } from '../../components/ui/data-table'
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '../../components/ui/accordion'
 import { OrganizationEditModal } from '../../components/OrganizationEditModal'
+import OrganizationDisplayModal from '../../components/OrganizationDisplayModal'
 
 interface Activity {
   id: string
@@ -87,7 +88,7 @@ interface Organization {
     featuredPartnerOrgId?: string
   }
   eventIds: string[]
-  status?: 'prospect' | 'contacted' | 'in_talks' | 'proposal_sent' | 'negotiation' | 'active_partner' | 'onboarding' | 'closed_lost' | 'n_a'
+  status?: 'prospect' | 'contacted' | 'in_talks' | 'proposal_sent' | 'negotiation' | 'active_partner' | 'active_client' | 'active_wholesaler' | 'onboarding' | 'closed_lost' | 'n_a'
   internalNotes?: string
   activities?: Activity[]
   lastContactDate?: Date
@@ -166,6 +167,8 @@ export default function CRMPage() {
           proposal_sent: { label: 'Proposal Sent', className: 'bg-yellow-600 text-white' },
           negotiation: { label: 'Negotiation', className: 'bg-orange-500 text-white' },
           active_partner: { label: 'Active Partner', className: 'bg-pop-green text-white' },
+          active_client: { label: 'Active Client', className: 'bg-green-600 text-white' },
+          active_wholesaler: { label: 'Active Wholesaler', className: 'bg-green-700 text-white' },
           onboarding: { label: 'Onboarding', className: 'bg-pop-blue text-white' },
           closed_lost: { label: 'Closed Lost', className: 'bg-red-500 text-white' }
         }
@@ -437,22 +440,30 @@ export default function CRMPage() {
           </CardContent>
         </Card>
       ) : (
-        <DataTable
-          title="Organization Management"
-          description="Sales pipeline, partner relationships, and contract management"
-          icon={<Building2 className="h-5 w-5 text-pop-green" />}
-          data={organizations}
-          columns={organizationColumns}
-          editableFields={organizationEditableFields}
-          onSave={handleOrganizationSave}
-          onAdd={handleOrganizationSave}
-          onDelete={handleOrganizationDelete}
-          renderEditModal={renderOrganizationEditModal}
-          enableColumnSelection={true}
-          enableFiltering={true}
-          availableColumns={organizationColumns}
-          defaultVisibleColumns={['name', 'orgType', 'status', 'assignedTo', 'nextActionDate', 'lastContactDate']}
-        />
+        <>
+          <DataTable
+            title="Organization Management"
+            description="Sales pipeline, partner relationships, and contract management"
+            icon={<Building2 className="h-5 w-5 text-pop-green" />}
+            data={organizations}
+            columns={organizationColumns}
+            editableFields={organizationEditableFields}
+            onSave={handleOrganizationSave}
+            onAdd={handleOrganizationSave}
+            onDelete={handleOrganizationDelete}
+            renderEditModal={renderOrganizationEditModal}
+            renderModal={(org) => (
+              <OrganizationDisplayModal 
+                item={org} 
+                onClose={() => {}} 
+              />
+            )}
+            enableColumnSelection={true}
+            enableFiltering={true}
+            availableColumns={organizationColumns}
+            defaultVisibleColumns={['name', 'orgType', 'status', 'assignedTo', 'nextActionDate', 'lastContactDate']}
+          />
+        </>
       )}
 
       {/* Sales & Partnership Management Section */}
