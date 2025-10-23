@@ -34,7 +34,7 @@ interface Organization {
     address?: string
     website?: string
   }
-  status?: 'prospect' | 'contacted' | 'in_talks' | 'proposal_sent' | 'negotiation' | 'active_partner' | 'onboarding' | 'closed_lost' | 'n_a'
+  status?: 'prospect' | 'contacted' | 'in_talks' | 'proposal_sent' | 'negotiation' | 'active_partner' | 'active_client' | 'active_wholesaler' | 'onboarding' | 'closed_lost' | 'n_a'
   internalNotes?: string
   activities?: Activity[]
   lastContactDate?: Date
