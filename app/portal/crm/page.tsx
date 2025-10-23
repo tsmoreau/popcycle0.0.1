@@ -452,10 +452,11 @@ export default function CRMPage() {
             onAdd={handleOrganizationSave}
             onDelete={handleOrganizationDelete}
             renderEditModal={renderOrganizationEditModal}
-            renderModal={(org) => (
+            renderModal={(org, onEdit) => (
               <OrganizationDisplayModal 
                 item={org} 
-                onClose={() => {}} 
+                onClose={() => {}}
+                onEdit={onEdit}
               />
             )}
             enableColumnSelection={true}

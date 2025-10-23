@@ -22,7 +22,8 @@ import {
   Activity as ActivityIcon,
   Instagram,
   Facebook,
-  Twitter
+  Twitter,
+  Settings
 } from 'lucide-react'
 
 interface Organization {
@@ -92,9 +93,10 @@ interface Organization {
 interface OrganizationDisplayModalProps {
   item: Organization | null
   onClose: () => void
+  onEdit?: () => void
 }
 
-export default function OrganizationDisplayModal({ item, onClose }: OrganizationDisplayModalProps) {
+export default function OrganizationDisplayModal({ item, onClose, onEdit }: OrganizationDisplayModalProps) {
   if (!item) return null
 
   const isPipelineFocused = item.status && !['n_a', 'active_partner', 'active_client', 'active_wholesaler'].includes(item.status)
@@ -157,6 +159,15 @@ export default function OrganizationDisplayModal({ item, onClose }: Organization
                   )}
                 </div>
               </div>
+              {onEdit && (
+                <button
+                  onClick={onEdit}
+                  className="p-2 hover:bg-white/10 rounded-lg transition-colors"
+                  data-testid="button-edit-organization"
+                >
+                  <Settings className="h-6 w-6 text-white" />
+                </button>
+              )}
             </DialogTitle>
           </DialogHeader>
 

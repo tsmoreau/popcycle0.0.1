@@ -60,7 +60,7 @@ export interface DataTableProps<T> {
   sortDirection?: SortDirection
   onSort?: (field: string, direction: SortDirection) => void
   // Custom modal renderers
-  renderModal?: (item: T) => React.ReactNode
+  renderModal?: (item: T, onEdit: () => void) => React.ReactNode
   renderEditModal?: (props: {
     item: T | null
     isAdding: boolean
@@ -748,10 +748,10 @@ export function DataTable<T extends Record<string, any>>({
                         <DialogTrigger asChild>
                           {RowContent}
                         </DialogTrigger>
-                        <DialogContent className="max-w-5xl max-h-[85vh] overflow-y-auto">
+                        <DialogContent key={isEditing && editingItem === item ? 'edit' : 'view'} className="max-w-5xl max-h-[85vh] overflow-y-auto">
                           {isEditing && editingItem === item ? 
                             renderEditModal(editingItem) : 
-                            renderModal ? renderModal(item) : renderViewModal(item)
+                            renderModal ? renderModal(item, () => { setEditingItem(item); setIsEditing(true); setIsAdding(false); }) : renderViewModal(item)
                           }
                         </DialogContent>
                       </Dialog>
@@ -815,10 +815,10 @@ export function DataTable<T extends Record<string, any>>({
                     <DialogTrigger asChild>
                       {CardContent}
                     </DialogTrigger>
-                    <DialogContent className="max-w-5xl max-h-[85vh] overflow-y-auto">
+                    <DialogContent key={isEditing && editingItem === item ? 'edit' : 'view'} className="max-w-5xl max-h-[85vh] overflow-y-auto">
                       {isEditing && editingItem === item ? 
                         renderEditModal(editingItem) : 
-                        renderModal ? renderModal(item) : renderViewModal(item)
+                        renderModal ? renderModal(item, () => { setEditingItem(item); setIsEditing(true); setIsAdding(false); }) : renderViewModal(item)
                       }
                     </DialogContent>
                   </Dialog>
