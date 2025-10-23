@@ -4,16 +4,8 @@ import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import Link from "next/link";
 import { Button } from "../../../components/ui/button";
-import { Badge } from "../../../components/ui/badge";
 import { LoadingSquare } from "../../../components/ui/loading-square";
-import {
-  ArrowLeft,
-  Check,
-  Package,
-  Truck,
-  Star,
-  ShoppingCart,
-} from "lucide-react";
+import { ArrowLeft, ChevronLeft, ChevronRight, Package } from "lucide-react";
 
 interface Product {
   _id: string;
@@ -99,7 +91,7 @@ export default function ProductDetail() {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
+      <div className="min-h-screen flex items-center justify-center bg-white">
         <LoadingSquare size="lg" />
       </div>
     );
@@ -107,11 +99,11 @@ export default function ProductDetail() {
 
   if (error || !product) {
     return (
-      <div className="min-h-screen flex flex-col items-center justify-center px-6">
-        <h1 className="text-2xl font-medium mb-4">Product Not Found</h1>
-        <p className="text-gray-600 mb-8">{error || "This product doesn't exist"}</p>
+      <div className="min-h-screen flex flex-col items-center justify-center px-6 bg-white">
+        <h1 className="text-2xl font-light mb-4">Product Not Found</h1>
+        <p className="text-gray-500 mb-12">{error || "This product doesn't exist"}</p>
         <Link href="/shop">
-          <Button>
+          <Button variant="outline" size="lg">
             <ArrowLeft className="h-4 w-4 mr-2" />
             Back to Shop
           </Button>
@@ -129,190 +121,184 @@ export default function ProductDetail() {
       .map((a) => a.url) || []),
   ];
 
+  const nextImage = () => {
+    setSelectedImage((prev) => (prev + 1) % images.length);
+  };
+
+  const prevImage = () => {
+    setSelectedImage((prev) => (prev - 1 + images.length) % images.length);
+  };
+
   return (
     <div className="min-h-screen bg-white">
-      {/* Breadcrumb */}
-      <div className="border-b">
-        <div className="max-w-7xl mx-auto px-6 py-4">
+      {/* Minimal Top Navigation */}
+      <div className="fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-sm border-b border-gray-100">
+        <div className="max-w-screen-2xl mx-auto px-6 lg:px-12 py-4">
           <Link
             href="/shop"
-            className="text-sm text-gray-600 hover:text-gray-900 flex items-center gap-2"
+            className="text-sm text-gray-500 hover:text-gray-900 flex items-center gap-2 transition-colors"
             data-testid="link-back-shop"
           >
-            <ArrowLeft className="h-4 w-4" />
+            <ArrowLeft className="h-3.5 w-3.5" />
             Back to Shop
           </Link>
         </div>
       </div>
 
-      {/* Product Detail */}
-      <div className="max-w-7xl mx-auto px-6 py-12 lg:py-16">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16">
-          {/* Image Gallery */}
-          <div>
-            {/* Main Image */}
-            <div className="aspect-square bg-gray-50 mb-4 overflow-hidden">
-              {images.length > 0 ? (
-                <img
-                  src={images[selectedImage]}
-                  alt={product.name}
-                  className="w-full h-full object-cover"
-                  data-testid="img-product-main"
-                />
-              ) : (
-                <div className="w-full h-full flex items-center justify-center">
-                  <Package className="w-24 h-24 text-gray-300" />
-                </div>
-              )}
-            </div>
-
-            {/* Thumbnail Grid */}
+      {/* Hero Image Section */}
+      <section className="relative mt-16 h-[75vh] bg-gray-50">
+        {images.length > 0 ? (
+          <>
+            <img
+              src={images[selectedImage]}
+              alt={product.name}
+              className="w-full h-full object-cover"
+              data-testid="img-product-main"
+            />
+            
+            {/* Image Navigation */}
             {images.length > 1 && (
-              <div className="grid grid-cols-4 gap-4">
-                {images.map((image, index) => (
-                  <button
-                    key={index}
-                    onClick={() => setSelectedImage(index)}
-                    className={`aspect-square bg-gray-50 overflow-hidden border-2 transition-all ${
-                      selectedImage === index
-                        ? "border-gray-900"
-                        : "border-transparent hover:border-gray-300"
-                    }`}
-                    data-testid={`button-thumbnail-${index}`}
-                  >
-                    <img
-                      src={image}
-                      alt={`${product.name} thumbnail ${index + 1}`}
-                      className="w-full h-full object-cover"
-                    />
-                  </button>
-                ))}
-              </div>
-            )}
-          </div>
+              <>
+                {/* Arrow Navigation */}
+                <button
+                  onClick={prevImage}
+                  className="absolute left-6 top-1/2 -translate-y-1/2 bg-white/90 hover:bg-white p-3 rounded-full transition-all"
+                  data-testid="button-prev-image"
+                  aria-label="Previous image"
+                >
+                  <ChevronLeft className="h-5 w-5 text-gray-900" />
+                </button>
+                <button
+                  onClick={nextImage}
+                  className="absolute right-6 top-1/2 -translate-y-1/2 bg-white/90 hover:bg-white p-3 rounded-full transition-all"
+                  data-testid="button-next-image"
+                  aria-label="Next image"
+                >
+                  <ChevronRight className="h-5 w-5 text-gray-900" />
+                </button>
 
-          {/* Product Info */}
-          <div>
-            {/* Category Badge */}
-            <Badge
-              variant="outline"
-              className="mb-4"
-              data-testid="badge-category"
-            >
-              {categoryLabels[product.category]}
-            </Badge>
-
-            {/* Product Name */}
-            <h1 className="text-4xl lg:text-5xl font-light mb-4" data-testid="text-product-name">
-              {product.name}
-            </h1>
-
-            {/* Product Type */}
-            <p className="text-lg text-gray-600 mb-6" data-testid="text-product-type">
-              {productTypeLabels[product.productType]}
-            </p>
-
-            {/* Rating */}
-            {product.reviewCount > 0 && (
-              <div className="flex items-center gap-2 mb-6">
-                <div className="flex items-center gap-1">
-                  {[...Array(5)].map((_, i) => (
-                    <Star
-                      key={i}
-                      className={`h-4 w-4 ${
-                        i < Math.floor(product.rating)
-                          ? "fill-yellow-400 text-yellow-400"
-                          : "text-gray-300"
+                {/* Dot Indicators */}
+                <div className="absolute bottom-8 left-0 right-0 flex justify-center gap-2">
+                  {images.map((_, index) => (
+                    <button
+                      key={index}
+                      onClick={() => setSelectedImage(index)}
+                      className={`transition-all ${
+                        selectedImage === index
+                          ? "w-8 h-2 bg-white rounded-full"
+                          : "w-2 h-2 bg-white/50 hover:bg-white/75 rounded-full"
                       }`}
+                      data-testid={`button-dot-${index}`}
+                      aria-label={`View image ${index + 1}`}
                     />
                   ))}
                 </div>
-                <span className="text-sm text-gray-600">
-                  ({product.reviewCount} reviews)
-                </span>
-              </div>
+              </>
             )}
+          </>
+        ) : (
+          <div className="w-full h-full flex items-center justify-center">
+            <Package className="w-32 h-32 text-gray-200" />
+          </div>
+        )}
+      </section>
 
-            {/* Description */}
-            <p className="text-gray-700 mb-8 leading-relaxed" data-testid="text-description">
-              {product.description}
-            </p>
+      {/* Product Information - Single Column Editorial Layout */}
+      <section className="max-w-3xl mx-auto px-6 lg:px-12 py-20 lg:py-32">
+        {/* Category */}
+        <p className="text-xs uppercase tracking-wider text-gray-400 mb-6" data-testid="badge-category">
+          {categoryLabels[product.category]}
+        </p>
 
-            {/* Price */}
-            <div className="mb-8">
-              <span className="text-3xl font-light" data-testid="text-price">
-                ${product.price.toFixed(2)}
+        {/* Product Name */}
+        <h1 className="text-5xl lg:text-6xl font-light mb-6 leading-tight" data-testid="text-product-name">
+          {product.name}
+        </h1>
+
+        {/* Product Type */}
+        <p className="text-xl text-gray-500 mb-12 font-light" data-testid="text-product-type">
+          {productTypeLabels[product.productType]}
+        </p>
+
+        {/* Description */}
+        <div className="prose prose-lg max-w-none mb-16">
+          <p className="text-gray-700 leading-relaxed font-light text-lg" data-testid="text-description">
+            {product.description}
+          </p>
+        </div>
+
+        {/* Price & Actions */}
+        <div className="border-t border-gray-100 pt-12 mb-16">
+          <div className="flex items-baseline gap-3 mb-8">
+            <span className="text-4xl font-light" data-testid="text-price">
+              ${product.price.toFixed(2)}
+            </span>
+            {product.inStock ? (
+              <span className="text-sm text-gray-500" data-testid="status-in-stock">
+                In stock
               </span>
-            </div>
+            ) : (
+              <span className="text-sm text-red-500" data-testid="status-out-of-stock">
+                Out of stock
+              </span>
+            )}
+          </div>
 
-            {/* Stock Status */}
-            <div className="mb-8">
-              {product.inStock ? (
-                <div className="flex items-center gap-2 text-green-600" data-testid="status-in-stock">
-                  <Check className="h-5 w-5" />
-                  <span>In Stock</span>
-                </div>
-              ) : (
-                <div className="flex items-center gap-2 text-red-600" data-testid="status-out-of-stock">
-                  <span>Out of Stock</span>
-                </div>
-              )}
-            </div>
-
-            {/* CTA Buttons */}
-            <div className="space-y-4 mb-12">
-              <Button
-                size="lg"
-                className="w-full"
-                disabled={!product.inStock}
-                data-testid="button-add-to-cart"
-              >
-                <ShoppingCart className="h-5 w-5 mr-2" />
-                Add to Cart
-              </Button>
-              <Button
-                size="lg"
-                variant="outline"
-                className="w-full"
-                data-testid="button-contact"
-              >
-                Contact for Custom Order
-              </Button>
-            </div>
-
-            {/* Features */}
-            <div className="border-t pt-8">
-              <h3 className="text-lg font-medium mb-4">Product Features</h3>
-              <ul className="space-y-3">
-                <li className="flex items-start gap-3">
-                  <Check className="h-5 w-5 text-green-600 mt-0.5 flex-shrink-0" />
-                  <span className="text-gray-700">
-                    Made from 100% recycled plastic
-                  </span>
-                </li>
-                <li className="flex items-start gap-3">
-                  <Check className="h-5 w-5 text-green-600 mt-0.5 flex-shrink-0" />
-                  <span className="text-gray-700">
-                    Fully traceable from source to product
-                  </span>
-                </li>
-                <li className="flex items-start gap-3">
-                  <Check className="h-5 w-5 text-green-600 mt-0.5 flex-shrink-0" />
-                  <span className="text-gray-700">
-                    Custom branding available
-                  </span>
-                </li>
-                <li className="flex items-start gap-3">
-                  <Truck className="h-5 w-5 text-gray-600 mt-0.5 flex-shrink-0" />
-                  <span className="text-gray-700">
-                    Ships within 2-3 business days
-                  </span>
-                </li>
-              </ul>
-            </div>
+          <div className="flex flex-col sm:flex-row gap-4">
+            <Button
+              size="lg"
+              className="flex-1 h-14 text-base font-light"
+              disabled={!product.inStock}
+              data-testid="button-add-to-cart"
+            >
+              Add to basket
+            </Button>
+            <Button
+              size="lg"
+              variant="outline"
+              className="flex-1 h-14 text-base font-light border-gray-300"
+              data-testid="button-contact"
+            >
+              Request quote
+            </Button>
           </div>
         </div>
-      </div>
+
+        {/* Product Details */}
+        <div className="border-t border-gray-100 pt-12">
+          <h2 className="text-2xl font-light mb-8">Details</h2>
+          
+          <dl className="space-y-6 text-base">
+            <div className="flex border-b border-gray-50 pb-4">
+              <dt className="w-1/3 text-gray-500 font-light">Material</dt>
+              <dd className="w-2/3 text-gray-900 font-light">100% recycled plastic</dd>
+            </div>
+            <div className="flex border-b border-gray-50 pb-4">
+              <dt className="w-1/3 text-gray-500 font-light">Category</dt>
+              <dd className="w-2/3 text-gray-900 font-light">{categoryLabels[product.category]}</dd>
+            </div>
+            <div className="flex border-b border-gray-50 pb-4">
+              <dt className="w-1/3 text-gray-500 font-light">Type</dt>
+              <dd className="w-2/3 text-gray-900 font-light">{productTypeLabels[product.productType]}</dd>
+            </div>
+            <div className="flex border-b border-gray-50 pb-4">
+              <dt className="w-1/3 text-gray-500 font-light">Traceability</dt>
+              <dd className="w-2/3 text-gray-900 font-light">Complete source-to-product tracking</dd>
+            </div>
+            <div className="flex border-b border-gray-50 pb-4">
+              <dt className="w-1/3 text-gray-500 font-light">Customization</dt>
+              <dd className="w-2/3 text-gray-900 font-light">Custom branding available</dd>
+            </div>
+            <div className="flex pb-4">
+              <dt className="w-1/3 text-gray-500 font-light">Shipping</dt>
+              <dd className="w-2/3 text-gray-900 font-light">2-3 business days</dd>
+            </div>
+          </dl>
+        </div>
+      </section>
+
+      {/* Spacer for breathing room */}
+      <div className="h-32"></div>
     </div>
   );
 }
