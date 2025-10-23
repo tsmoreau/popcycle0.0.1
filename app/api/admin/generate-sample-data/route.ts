@@ -131,7 +131,7 @@ export async function POST() {
         communityPartner: {
           mission: 'Inspire and educate young minds through interactive science exhibits',
           storyContent: 'Discovery Cube has been a leader in STEM education for over 30 years, serving hundreds of thousands of students annually.',
-          organizationType: 'nonprofit',
+          communityPartnerType: 'nonprofit',
           socialMedia: {
             instagram: '@discoverycube',
             facebook: 'discoverycube',
@@ -174,7 +174,7 @@ export async function POST() {
         communityPartner: {
           mission: 'Preserve and celebrate the history and culture of Mexicans and Mexican Americans',
           storyContent: 'LA Plaza serves as a cultural hub bringing together art, history, and community in downtown Los Angeles.',
-          organizationType: 'nonprofit',
+          communityPartnerType: 'nonprofit',
           socialMedia: {
             instagram: '@laplazaLA',
             facebook: 'laplazaLA'

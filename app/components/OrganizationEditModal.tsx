@@ -371,10 +371,10 @@ export function OrganizationEditModal({
                 />
               </div>
               <div>
-                <Label>Organization Type</Label>
+                <Label>Community Partner Type</Label>
                 <Input
-                  value={formData.communityPartner?.organizationType || ''}
-                  onChange={(e) => handleNestedChange('communityPartner', 'organizationType', e.target.value)}
+                  value={formData.communityPartner?.communityPartnerType || ''}
+                  onChange={(e) => handleNestedChange('communityPartner', 'communityPartnerType', e.target.value)}
                   placeholder="e.g., nonprofit, cafe, restaurant"
                 />
               </div>

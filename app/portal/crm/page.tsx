@@ -44,7 +44,7 @@ interface Organization {
   communityPartner?: {
     mission: string
     storyContent: string
-    organizationType: string
+    communityPartnerType: string
     socialMedia?: {
       instagram?: string
       facebook?: string

@@ -48,7 +48,7 @@ export interface Org {
   communityPartner?: {
     mission: string;
     storyContent: string;
-    organizationType: string; // "nonprofit", "cafe", "restaurant", "community_kitchen"
+    communityPartnerType: string; // "nonprofit", "cafe", "restaurant", "community_kitchen"
     socialMedia?: {
       instagram?: string;
       facebook?: string;
