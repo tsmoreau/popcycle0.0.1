@@ -773,7 +773,7 @@ export function ProductEditModal({
                   {/* Category Badge */}
                   {asset.category && (
                     <div className="absolute top-2 left-2">
-                      <Badge variant="secondary" className="text-xs">
+                      <Badge variant="secondary" className="bg-white text-xs">
                         {asset.category === 'hero' && 'Hero'}
                         {asset.category === 'product_info' && 'Product Info'}
                         {asset.category === 'lifestyle' && 'Lifestyle'}

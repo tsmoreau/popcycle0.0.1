@@ -220,7 +220,7 @@ export default function Navigation() {
 
             {/* Unified Dropdown */}
             {iconDropdownOpen && (
-              <div className="absolute right-0 top-full pt-2">
+              <div className="z-50 absolute right-0 top-full pt-2">
                 <div className="w-80 bg-white border border-gray-200 shadow-lg p-6">
                   {iconDropdownOpen === 'search' && (
                     <div>
