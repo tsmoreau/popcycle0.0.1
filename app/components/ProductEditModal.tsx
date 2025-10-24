@@ -938,10 +938,15 @@ export function ProductEditModal({
               <input
                 type="file"
                 accept="image/*,video/*,.pdf,.doc,.docx,.obj,.stl,.fbx,.gltf"
+                multiple
                 className="hidden"
-                onChange={(e) => {
-                  const file = e.target.files?.[0]
-                  if (file) handleFileUpload(file, 'assets')
+                onChange={async (e) => {
+                  const files = Array.from(e.target.files || [])
+                  if (files.length > 0) {
+                    for (const file of files) {
+                      await handleFileUpload(file, 'assets')
+                    }
+                  }
                   e.target.value = ''
                 }}
                 data-testid="input-upload-asset"
@@ -957,7 +962,7 @@ export function ProductEditModal({
                 data-testid="button-upload-asset"
               >
                 <Upload className="h-4 w-4 mr-2" />
-                {Object.keys(uploadingFiles).some(k => k.startsWith('assets-')) ? 'Uploading...' : 'Upload Asset'}
+                {Object.keys(uploadingFiles).some(k => k.startsWith('assets-')) ? 'Uploading...' : 'Upload Assets'}
               </Button>
             </label>
             <Button
