@@ -775,10 +775,10 @@ export function ProductEditModal({
                     <div className="absolute top-2 left-2">
                       <Badge variant="secondary" className="text-xs">
                         {asset.category === 'hero' && 'Hero'}
-                        {asset.category === 'product_info' && 'Info'}
+                        {asset.category === 'product_info' && 'Product Info'}
                         {asset.category === 'lifestyle' && 'Lifestyle'}
                         {asset.category === 'detail' && 'Detail'}
-                        {asset.category === 'shop_listing' && 'Shop'}
+                        {asset.category === 'shop_listing' && 'Shop Listing'}
                       </Badge>
                     </div>
                   )}
