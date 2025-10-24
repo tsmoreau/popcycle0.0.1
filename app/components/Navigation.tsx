@@ -97,7 +97,7 @@ export default function Navigation() {
   ];
 
   return (
-    <nav className="font-jost font-light sticky top-0 z-50 bg-white border-b border-gray-200">
+    <nav className="font-jost font-light  z-50 bg-white border-b border-gray-200">
       <div className="max-w-full mx-auto pt-2">
         <div className=" relative flex  justify-between h-16 lg:h-20">
           {/* Mobile menu button - moved to left */}

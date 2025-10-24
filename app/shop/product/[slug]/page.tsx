@@ -150,8 +150,8 @@ export default function ProductDetail() {
   };
 
   return (
-    <div className=" bg-white">
-      {/* Minimal Top Navigation */}
+    <div className="font-jost  bg-white">
+     
      
       {/* Hero Image Section - Single Static Image */}
       <section className="relative h-[70vh] bg-gray-50">
@@ -170,8 +170,8 @@ export default function ProductDetail() {
       </section>
 
       {/* Product Information - Single Column Editorial Layout */}
-      <div className="w-auto h-auto mb-6">
-      <div className="mt-8 lg:mt-0  justify-items-center lg:flex lg:justify-center mx-auto items-center">
+      <div className="w-auto h-auto mt-6 mb-6">
+      <div className="mt-8 lg:mt-0  w-full justify-end justify-items-end lg:flex lg:justify-center mx-auto items-end">
       <div className="bg-gray-50 lg:w-1/2 w-5/6 self-center h-96 mr-4 flex items-center justify-center overflow-hidden">
         {productInfoImage ? (
           <img
@@ -184,33 +184,36 @@ export default function ProductDetail() {
           <ImageIcon className="w-20 h-20 text-gray-300" />
         )}
       </div>
-      <div className=" max-w-3xl px-6 lg:px-12 py-6 lg:py-12">
+      <div className="ml-4  max-w-xl pl-6 lg:pl-12 py-6 lg:py-12">
+      
+
+        {/* Product Name */}
+        <h1 className="text-3xl tracking-tight lg:text-5xl font-normal mb-3 text-gray-800 leading-tight" data-testid="text-product-name">
+          {product.name}
+        </h1>
+<div className="flex">
         {/* Category */}
-        <p className="text-xs uppercase tracking-wider text-gray-400 mb-6" data-testid="badge-category">
+        <p className="text-xl text-gray-500 mb-6 font-medium" data-testid="badge-category">
           {categoryLabels[product.category]}
         </p>
 
-        {/* Product Name */}
-        <h1 className="text-5xl lg:text-6xl font-light mb-6 leading-tight" data-testid="text-product-name">
-          {product.name}
-        </h1>
-
         {/* Product Type */}
-        <p className="text-xl text-gray-500 mb-12 font-light" data-testid="text-product-type">
+        <p className="hidden px-1 text-xl text-gray-500 mb-6 font-light" data-testid="text-product-type">
           {productTypeLabels[product.productType]}
         </p>
+  </div>
 
         {/* Description */}
-        <div className="prose prose-lg max-w-none mb-16">
-          <p className="text-gray-700 leading-relaxed font-light text-lg" data-testid="text-description">
+        <div className="prose prose-lg max-w-none">
+          <p className="bg-white text-gray-700 leading-relaxed font-[300] text-xl leading-7" data-testid="text-description">
             {product.description}
           </p>
         </div>
 
         {/* Price & Actions */}
-        <div className="border-t border-gray-100 pt-12">
-          <div className="flex items-baseline gap-3 mb-8">
-            <span className="text-4xl font-light" data-testid="text-price">
+        <div className=" border-gray-100 pt-8">
+          <div className="flex items-baseline gap-3 mb-2">
+            <span className="text-3xl text-gray-800 font-normal tracking-tight" data-testid="text-price">
               ${product.price.toFixed(2)}
             </span>
             {product.inStock ? (
@@ -227,7 +230,7 @@ export default function ProductDetail() {
           <div className="flex flex-col sm:flex-row gap-4">
             <Button
               size="lg"
-              className="flex-1 h-14 text-base font-light"
+              className="text-white hover:bg-white hover:text-pop-green bg-pop-green systematic-caps w-xl px-20 h-14 text-base font-light"
               disabled={!product.inStock}
               data-testid="button-add-to-cart"
             >
@@ -236,7 +239,7 @@ export default function ProductDetail() {
             <Button
               size="lg"
               variant="outline"
-              className="flex-1 h-14 text-base font-light border-gray-300"
+              className="hidden flex-1 h-14 text-base font-light border-gray-300"
               data-testid="button-contact"
             >
               Request quote
@@ -249,7 +252,7 @@ export default function ProductDetail() {
         </div>
 
       {/* Lifestyle Image Carousel */}
-      <section className="relative w-full h-[80vh] flex mx-auto justify-center mb-6">
+      <section className="hidden relative w-full h-[80vh] flex mx-auto justify-center mb-6 mt-12">
         <div className="relative w-5/6 h-full bg-gray-50">
           {carouselImages.length > 0 ? (
             <>
