@@ -138,6 +138,11 @@ export async function generateSignedUrls(filePaths: string[], expiresInMinutes: 
 }
 
 export function getPublicUrl(filePath: string): string {
+  // If already a full URL, return as-is
+  if (filePath.startsWith('https://') || filePath.startsWith('http://')) {
+    return filePath;
+  }
+  
   const bucketName = getBucketName();
   return `https://storage.googleapis.com/${bucketName}/${filePath}`;
 }
