@@ -38,6 +38,7 @@ interface Product {
     description?: string
     isPrimary?: boolean
     order?: number
+    category?: 'hero' | 'product_info' | 'lifestyle' | 'detail' | 'shop_listing'
   }>
   price: number
   inStock: boolean
@@ -769,6 +770,25 @@ export function ProductEditModal({
                     <option value="model">3D Model</option>
                   </select>
                 </div>
+              </div>
+
+              <div>
+                <Label className="text-xs">Image Category</Label>
+                <select
+                  value={asset.category || ''}
+                  onChange={(e) => handleAssetChange(index, 'category', e.target.value || undefined)}
+                  className="border rounded px-2 py-1 w-full h-8 text-sm"
+                >
+                  <option value="">No category</option>
+                  <option value="hero">Hero</option>
+                  <option value="product_info">Product Info</option>
+                  <option value="lifestyle">Lifestyle</option>
+                  <option value="detail">Detail</option>
+                  <option value="shop_listing">Shop Listing</option>
+                </select>
+                <p className="text-xs text-gray-500 mt-1">
+                  Used to organize images on product pages
+                </p>
               </div>
 
               <div>

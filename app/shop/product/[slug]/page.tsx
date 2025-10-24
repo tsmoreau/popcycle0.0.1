@@ -37,6 +37,7 @@ interface Product {
     description?: string;
     isPrimary?: boolean;
     order?: number;
+    category?: "hero" | "product_info" | "lifestyle" | "detail" | "shop_listing";
   }>;
   price: number;
   inStock: boolean;
@@ -112,8 +113,16 @@ export default function ProductDetail() {
     );
   }
 
-  // Get images from both photoUrls and assets
-  const images: string[] = [
+  // Helper function to get images by category
+  const getImagesByCategory = (category: "hero" | "product_info" | "lifestyle" | "detail" | "shop_listing") => {
+    return product.assets
+      ?.filter((a) => a.type === "image" && a.category === category)
+      .sort((a, b) => (a.order || 0) - (b.order || 0))
+      .map((a) => a.url) || [];
+  };
+
+  // Get all images (for fallback and uncategorized)
+  const allImages: string[] = [
     ...(product._photoUrls || []),
     ...(product.assets
       ?.filter((a) => a.type === "image")
@@ -121,12 +130,23 @@ export default function ProductDetail() {
       .map((a) => a.url) || []),
   ];
 
+  // Get categorized images with fallbacks
+  const heroImage = getImagesByCategory("hero")[0] || allImages[0];
+  const productInfoImage = getImagesByCategory("product_info")[0];
+  const lifestyleImages = getImagesByCategory("lifestyle");
+  const detailImages = getImagesByCategory("detail");
+
+  // If no lifestyle images categorized, use all images for carousel
+  const carouselImages = lifestyleImages.length > 0 ? lifestyleImages : allImages;
+
   const nextImage = () => {
-    setSelectedImage((prev) => (prev + 1) % images.length);
+    if (carouselImages.length === 0) return;
+    setSelectedImage((prev) => (prev + 1) % carouselImages.length);
   };
 
   const prevImage = () => {
-    setSelectedImage((prev) => (prev - 1 + images.length) % images.length);
+    if (carouselImages.length === 0) return;
+    setSelectedImage((prev) => (prev - 1 + carouselImages.length) % carouselImages.length);
   };
 
   return (
@@ -135,9 +155,9 @@ export default function ProductDetail() {
      
       {/* Hero Image Section - Single Static Image */}
       <section className="relative h-[70vh] bg-gray-50">
-        {images.length > 0 ? (
+        {heroImage ? (
           <img
-            src={images[0]}
+            src={heroImage}
             alt={product.name}
             className="w-full h-full object-cover"
             data-testid="img-product-hero"
@@ -152,7 +172,18 @@ export default function ProductDetail() {
       {/* Product Information - Single Column Editorial Layout */}
       <div className="w-auto h-auto mb-6">
       <div className="mt-8 lg:mt-0  justify-items-center lg:flex lg:justify-center mx-auto items-center">
-      <div className="bg-gray-50 lg:w-1/2 w-5/6 self-center h-96 mr-4"></div>
+      <div className="bg-gray-50 lg:w-1/2 w-5/6 self-center h-96 mr-4 flex items-center justify-center overflow-hidden">
+        {productInfoImage ? (
+          <img
+            src={productInfoImage}
+            alt={`${product.name} - Product Info`}
+            className="w-full h-full object-cover"
+            data-testid="img-product-info"
+          />
+        ) : (
+          <ImageIcon className="w-20 h-20 text-gray-300" />
+        )}
+      </div>
       <div className=" max-w-3xl px-6 lg:px-12 py-6 lg:py-12">
         {/* Category */}
         <p className="text-xs uppercase tracking-wider text-gray-400 mb-6" data-testid="badge-category">
@@ -220,17 +251,17 @@ export default function ProductDetail() {
       {/* Lifestyle Image Carousel */}
       <section className="relative w-full h-[80vh] flex mx-auto justify-center mb-6">
         <div className="relative w-5/6 h-full bg-gray-50">
-          {images.length > 0 ? (
+          {carouselImages.length > 0 ? (
             <>
               <img
-                src={images[selectedImage]}
+                src={carouselImages[selectedImage]}
                 alt={`${product.name} - Image ${selectedImage + 1}`}
                 className="w-full h-full object-cover"
                 data-testid="img-lifestyle-main"
               />
               
               {/* Carousel Navigation */}
-              {images.length > 1 && (
+              {carouselImages.length > 1 && (
                 <>
                   {/* Arrow Navigation */}
                   <button
@@ -252,7 +283,7 @@ export default function ProductDetail() {
 
                   {/* Dot Indicators */}
                   <div className="absolute bottom-8 left-0 right-0 flex justify-center gap-2">
-                    {images.map((_, index) => (
+                    {carouselImages.map((_, index) => (
                       <button
                         key={index}
                         onClick={() => setSelectedImage(index)}
@@ -326,14 +357,27 @@ export default function ProductDetail() {
       <section className="max-w-screen-2xl mx-auto px-6 lg:px-12 py-20 lg:py-32">
         <h2 className="text-3xl font-light mb-12 text-center">Details</h2>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
-          {[1, 2, 3].map((i) => (
-            <div key={i} className="aspect-square bg-gray-100 flex items-center justify-center">
-              <div className="text-center">
-                <ImageIcon className="w-20 h-20 text-gray-300 mx-auto mb-2" />
-                <p className="text-gray-400 text-xs">Detail {i}</p>
+          {detailImages.length > 0 ? (
+            detailImages.map((image, i) => (
+              <div key={i} className="aspect-square bg-gray-100 overflow-hidden">
+                <img
+                  src={image}
+                  alt={`${product.name} - Detail ${i + 1}`}
+                  className="w-full h-full object-cover"
+                  data-testid={`img-detail-${i}`}
+                />
               </div>
-            </div>
-          ))}
+            ))
+          ) : (
+            [1, 2, 3].map((i) => (
+              <div key={i} className="aspect-square bg-gray-100 flex items-center justify-center">
+                <div className="text-center">
+                  <ImageIcon className="w-20 h-20 text-gray-300 mx-auto mb-2" />
+                  <p className="text-gray-400 text-xs">Detail {i}</p>
+                </div>
+              </div>
+            ))
+          )}
         </div>
       </section>
 

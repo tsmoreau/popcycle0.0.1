@@ -245,6 +245,7 @@ export interface Product {
     description?: string;
     isPrimary?: boolean;
     order?: number;
+    category?: "hero" | "product_info" | "lifestyle" | "detail" | "shop_listing";
   }>;
 
   price: number;
