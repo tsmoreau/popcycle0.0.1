@@ -769,13 +769,6 @@ export function ProductEditModal({
                   
                   {/* Type and Category Badges */}
                   <div className="absolute top-2 left-2 flex gap-1">
-                    {/* Type Badge */}
-                    <Badge variant="secondary" className="bg-white text-xs">
-                      {asset.type === 'image' && 'Image'}
-                      {asset.type === 'video' && 'Video'}
-                      {asset.type === 'document' && 'Document'}
-                      {asset.type === '3d_model' && '3D Model'}
-                    </Badge>
                     
                     {/* Category Badge */}
                     {asset.category && (
@@ -787,6 +780,16 @@ export function ProductEditModal({
                         {asset.category === 'shop_listing' && 'Shop Listing'}
                       </Badge>
                     )}
+                    </div> <div className="absolute top-2 right-2 flex gap-1">
+                    
+                    {/* Type Badge */}
+                    <Badge variant="secondary" className="bg-white text-xs">
+                      {asset.type === 'image' && 'Image'}
+                      {asset.type === 'video' && 'Video'}
+                      {asset.type === 'document' && 'Document'}
+                      {asset.type === '3d_model' && '3D Model'}
+                    </Badge>
+
                   </div>
                   
                   {/* Primary Star */}
