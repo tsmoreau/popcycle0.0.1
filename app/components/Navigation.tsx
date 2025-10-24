@@ -224,10 +224,10 @@ export default function Navigation() {
                 <div className="w-80 bg-white border border-gray-200 shadow-lg p-6">
                   {iconDropdownOpen === 'search' && (
                     <div>
-                      <h3 className="font-jost text-lg font-semibold mb-4 text-pop-black">Search</h3>
+                      <h3 className="font-jost text-lg font-semibold mb-4 text-pop-black border-b pb-2">Track Lifecycle</h3>
                       <input
                         type="text"
-                        placeholder="Search..."
+                        placeholder="Enter object code..."
                         className="w-full px-4 py-2 border border-gray-300 rounded-md font-jost focus:outline-none focus:border-pop-green"
                       />
                     </div>
@@ -235,14 +235,14 @@ export default function Navigation() {
 
                   {iconDropdownOpen === 'user' && (
                     <div>
-                      <h3 className="font-jost text-lg font-semibold mb-4 text-pop-black">Account</h3>
+                      <h3 className="font-jost text-lg font-semibold mb-4 text-pop-black border-b pb-2">Account</h3>
                      <AuthButton />
                     </div>
                   )}
 
                   {iconDropdownOpen === 'cart' && (
                     <div>
-                      <h3 className="font-jost text-lg font-semibold mb-4 text-pop-black">Shopping Cart</h3>
+                      <h3 className="font-jost text-lg font-semibold mb-4 text-pop-black border-b pb-2">Shopping Cart</h3>
                       <button className="w-full px-6 py-2 bg-pop-red text-white font-jost rounded-md hover:bg-opacity-90 transition-colors">
                         View Products
                       </button>

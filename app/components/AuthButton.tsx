@@ -35,18 +35,18 @@ function AuthButtonContent() {
       (session?.user?.permissions && session.user.permissions.length > 0);
 
     return (
-      <div className="-mt-2 border-pop-green ">
-        <div className="text-xs systematic-caps text-pop-gray pb-3 border-gray-200">
+      <div className="mt-1 -mb-0 border-pop-green ">
+        <div className="text-xs systematic-caps text-pop-gray pb-0 border-gray-200">
           {session.user?.email}
         </div>
-        <div className=" flex mx-auto py-1 border-t text-xs  systematic-caps border-b border-gray-200">
+        <div className=" flex mx-auto py-1 text-xs text-pop-gray/50 systematic-caps  border-gray-200">
         <div>  {session.user?.userType === 'super_admin' ? 'Super Admin' : 'Maker'}</div>
         </div>
         
         {/* Profile Link */}
         <a
           href="/profile"
-          className="flex items-center px-3 py-2 text-sm text-gray-700 hover:bg-pop-green hover:text-white "
+          className="flex items-center px-2 py-2 mt-3 text-sm text-gray-700 hover:bg-pop-green hover:text-white "
         >
           <User className="w-4 h-4 mr-3" />
           Profile
@@ -56,10 +56,10 @@ function AuthButtonContent() {
         {hasPortalAccess && (
           <a
             href="/portal"
-            className="flex items-center px-3 py-2 text-sm text-gray-700 hover:bg-pop-green hover:text-white "
+            className="flex items-center px-2 py-2 text-sm text-gray-700 hover:bg-pop-blue hover:text-white "
           >
             <Settings className="w-4 h-4 mr-3" />
-            Portal Dashboard
+            Portal
           </a>
         )}
         
@@ -68,7 +68,7 @@ function AuthButtonContent() {
           onClick={() => {
             signOut({ callbackUrl: '/' })
           }}
-          className="flex items-center px-3 py-2 text-sm text-gray-700 hover:bg-pop-green hover:text-white "
+          className="flex w-full items-center px-2 py-2 text-sm text-gray-700 hover:bg-pop-red hover:text-white "
         >
           <LogOut className="w-4 h-4 mr-3" />
           Sign Out

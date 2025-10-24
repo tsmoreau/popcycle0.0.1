@@ -768,11 +768,11 @@ export function ProductEditModal({
                   )}
                   
                   {/* Type and Category Badges */}
-                  <div className="absolute top-2 left-2 flex gap-1">
+                  <div className="absolute top-2 left-2 flex gap-0">
                     
                     {/* Category Badge */}
                     {asset.category && (
-                      <Badge variant="secondary" className="bg-white text-xs">
+                      <Badge variant="secondary" className="bg-white/50 text-xs">
                         {asset.category === 'hero' && 'Hero'}
                         {asset.category === 'product_info' && 'Product Info'}
                         {asset.category === 'lifestyle' && 'Lifestyle'}
@@ -780,10 +780,10 @@ export function ProductEditModal({
                         {asset.category === 'shop_listing' && 'Shop Listing'}
                       </Badge>
                     )}
-                    </div> <div className="absolute top-2 right-2 flex gap-1">
+                    </div> <div className="absolute top-2 right-2 flex gap-0">
                     
                     {/* Type Badge */}
-                    <Badge variant="secondary" className="bg-white text-xs">
+                    <Badge variant="secondary" className="bg-white/50 text-xs">
                       {asset.type === 'image' && 'Image'}
                       {asset.type === 'video' && 'Video'}
                       {asset.type === 'document' && 'Document'}
