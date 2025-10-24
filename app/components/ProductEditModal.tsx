@@ -10,15 +10,8 @@ import { Badge } from "./ui/badge"
 import { DialogHeader, DialogTitle, DialogDescription } from "./ui/dialog"
 import { 
   Save, X, Plus, Trash2, Upload, File, Image as ImageIcon,
-  FileText, Edit2, MoreVertical, Star
+  FileText, Edit2, Star
 } from "lucide-react"
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-  DropdownMenuSeparator,
-} from "./ui/dropdown-menu"
 import { AssetLightbox } from "./AssetLightbox"
 
 interface Product {
@@ -158,6 +151,7 @@ export function ProductEditModal({
   }
 
   const [uploadingFiles, setUploadingFiles] = useState<Record<string, boolean>>({})
+  const [selectedAssetIndex, setSelectedAssetIndex] = useState<number | null>(null)
 
   // Lightbox state
   const [lightbox, setLightbox] = useState({
@@ -743,8 +737,15 @@ export function ProductEditModal({
         <TabsContent value="assets" className="space-y-4 max-h-96 overflow-y-auto">
           <div className="grid grid-cols-3 gap-3 mb-4">
             {formData.assets.map((asset: any, index: number) => (
-              <div key={asset.id} className="relative group">
-                <div className="aspect-square border rounded overflow-hidden bg-gray-50 relative">
+              <div 
+                key={asset.id} 
+                className={`relative cursor-pointer border-2 rounded overflow-hidden transition-all ${
+                  selectedAssetIndex === index ? 'border-pop-green ring-2 ring-pop-green/20' : 'border-transparent hover:border-gray-300'
+                }`}
+                onClick={() => setSelectedAssetIndex(index)}
+                data-testid={`thumbnail-asset-${index}`}
+              >
+                <div className="aspect-square bg-gray-50 relative">
                   {asset.type === 'image' && asset.url ? (
                     <img
                       src={asset.url}
@@ -753,19 +754,19 @@ export function ProductEditModal({
                       data-testid={`img-asset-${index}`}
                     />
                   ) : asset.type === 'video' ? (
-                    <div className="w-full h-full flex items-center justify-center">
+                    <div className="w-full h-full flex flex-col items-center justify-center">
                       <FileText className="w-12 h-12 text-gray-400" />
-                      <span className="absolute bottom-2 text-xs text-gray-500">Video</span>
+                      <span className="mt-2 text-xs text-gray-500">Video</span>
                     </div>
                   ) : asset.type === 'document' ? (
-                    <div className="w-full h-full flex items-center justify-center">
+                    <div className="w-full h-full flex flex-col items-center justify-center">
                       <FileText className="w-12 h-12 text-gray-400" />
-                      <span className="absolute bottom-2 text-xs text-gray-500">Document</span>
+                      <span className="mt-2 text-xs text-gray-500">Document</span>
                     </div>
                   ) : (
-                    <div className="w-full h-full flex items-center justify-center">
+                    <div className="w-full h-full flex flex-col items-center justify-center">
                       <File className="w-12 h-12 text-gray-400" />
-                      <span className="absolute bottom-2 text-xs text-gray-500">3D Model</span>
+                      <span className="mt-2 text-xs text-gray-500">3D Model</span>
                     </div>
                   )}
                   
@@ -788,139 +789,140 @@ export function ProductEditModal({
                       <Star className="w-4 h-4 fill-yellow-400 text-yellow-400" />
                     </div>
                   )}
-                  
-                  {/* Dropdown Menu */}
-                  <div className="absolute bottom-2 right-2">
-                    <DropdownMenu>
-                      <DropdownMenuTrigger asChild>
-                        <Button
-                          size="sm"
-                          variant="secondary"
-                          className="h-7 w-7 p-0 opacity-0 group-hover:opacity-100 transition-opacity"
-                          data-testid={`button-edit-asset-${index}`}
-                        >
-                          <MoreVertical className="h-4 w-4" />
-                        </Button>
-                      </DropdownMenuTrigger>
-                      <DropdownMenuContent align="end" className="w-80 max-h-96 overflow-y-auto">
-                        <div className="p-3 space-y-3">
-                          <div>
-                            <Label className="text-xs">Asset ID</Label>
-                            <Input
-                              value={asset.id}
-                              onChange={(e) => handleAssetChange(index, 'id', e.target.value)}
-                              className="h-8 text-sm mt-1"
-                            />
-                          </div>
-                          
-                          <div>
-                            <Label className="text-xs">Type</Label>
-                            <select
-                              value={asset.type}
-                              onChange={(e) => handleAssetChange(index, 'type', e.target.value)}
-                              className="border rounded px-2 py-1 w-full h-8 text-sm mt-1"
-                            >
-                              <option value="image">Image</option>
-                              <option value="video">Video</option>
-                              <option value="document">Document</option>
-                              <option value="model">3D Model</option>
-                            </select>
-                          </div>
-                          
-                          <div>
-                            <Label className="text-xs">Category</Label>
-                            <select
-                              value={asset.category || ''}
-                              onChange={(e) => handleAssetChange(index, 'category', e.target.value || undefined)}
-                              className="border rounded px-2 py-1 w-full h-8 text-sm mt-1"
-                            >
-                              <option value="">No category</option>
-                              <option value="hero">Hero</option>
-                              <option value="product_info">Product Info</option>
-                              <option value="lifestyle">Lifestyle</option>
-                              <option value="detail">Detail</option>
-                              <option value="shop_listing">Shop Listing</option>
-                            </select>
-                          </div>
-                          
-                          <div>
-                            <Label className="text-xs">URL</Label>
-                            <Input
-                              value={asset.url}
-                              onChange={(e) => handleAssetChange(index, 'url', e.target.value)}
-                              placeholder="https://..."
-                              className="h-8 text-sm mt-1"
-                            />
-                          </div>
-                          
-                          <div>
-                            <Label className="text-xs">Thumbnail URL</Label>
-                            <Input
-                              value={asset.thumbnail || ''}
-                              onChange={(e) => handleAssetChange(index, 'thumbnail', e.target.value)}
-                              placeholder="https://..."
-                              className="h-8 text-sm mt-1"
-                            />
-                          </div>
-                          
-                          <div>
-                            <Label className="text-xs">Alt Text</Label>
-                            <Input
-                              value={asset.alt || ''}
-                              onChange={(e) => handleAssetChange(index, 'alt', e.target.value)}
-                              className="h-8 text-sm mt-1"
-                            />
-                          </div>
-                          
-                          <div>
-                            <Label className="text-xs">Description</Label>
-                            <Textarea
-                              value={asset.description || ''}
-                              onChange={(e) => handleAssetChange(index, 'description', e.target.value)}
-                              rows={2}
-                              className="text-sm mt-1"
-                            />
-                          </div>
-                          
-                          <div className="flex items-center gap-2">
-                            <input
-                              type="checkbox"
-                              checked={asset.isPrimary || false}
-                              onChange={(e) => handleAssetChange(index, 'isPrimary', e.target.checked)}
-                              className="h-4 w-4"
-                              id={`asset-primary-${index}`}
-                            />
-                            <Label htmlFor={`asset-primary-${index}`} className="text-xs">Primary Asset</Label>
-                          </div>
-                          
-                          <div>
-                            <Label className="text-xs">Display Order</Label>
-                            <Input
-                              type="number"
-                              value={asset.order || 0}
-                              onChange={(e) => handleAssetChange(index, 'order', parseInt(e.target.value) || 0)}
-                              className="h-8 text-sm mt-1"
-                            />
-                          </div>
-                        </div>
-                        
-                        <DropdownMenuSeparator />
-                        
-                        <DropdownMenuItem
-                          onClick={() => handleAssetFileRemove(index)}
-                          className="text-red-600 focus:text-red-600"
-                          data-testid={`button-delete-asset-${index}`}
-                        >
-                          <Trash2 className="h-4 w-4 mr-2" />
-                          Delete Asset
-                        </DropdownMenuItem>
-                      </DropdownMenuContent>
-                    </DropdownMenu>
-                  </div>
                 </div>
               </div>
             ))}
           </div>
+
+          {/* Selected Asset Editor */}
+          {selectedAssetIndex !== null && formData.assets[selectedAssetIndex] && (
+            <div className="p-4 border rounded bg-gray-50 space-y-3">
+              <div className="flex items-center justify-between mb-2">
+                <h4 className="font-medium text-sm">Editing Asset {selectedAssetIndex + 1}</h4>
+                <div className="flex gap-2">
+                  <Button
+                    size="sm"
+                    variant="ghost"
+                    onClick={() => setSelectedAssetIndex(null)}
+                  >
+                    <X className="h-4 w-4" />
+                  </Button>
+                  <Button
+                    size="sm"
+                    variant="destructive"
+                    onClick={() => {
+                      handleAssetFileRemove(selectedAssetIndex)
+                      setSelectedAssetIndex(null)
+                    }}
+                    data-testid={`button-delete-asset-${selectedAssetIndex}`}
+                  >
+                    <Trash2 className="h-4 w-4" />
+                  </Button>
+                </div>
+              </div>
+
+              <div className="grid grid-cols-2 gap-3">
+                <div>
+                  <Label className="text-xs">Asset ID</Label>
+                  <Input
+                    value={formData.assets[selectedAssetIndex].id}
+                    onChange={(e) => handleAssetChange(selectedAssetIndex, 'id', e.target.value)}
+                    className="h-8 text-sm mt-1"
+                  />
+                </div>
+                <div>
+                  <Label className="text-xs">Type</Label>
+                  <select
+                    value={formData.assets[selectedAssetIndex].type}
+                    onChange={(e) => handleAssetChange(selectedAssetIndex, 'type', e.target.value)}
+                    className="border rounded px-2 py-1 w-full h-8 text-sm mt-1"
+                  >
+                    <option value="image">Image</option>
+                    <option value="video">Video</option>
+                    <option value="document">Document</option>
+                    <option value="model">3D Model</option>
+                  </select>
+                </div>
+              </div>
+
+              <div>
+                <Label className="text-xs">Category</Label>
+                <select
+                  value={formData.assets[selectedAssetIndex].category || ''}
+                  onChange={(e) => handleAssetChange(selectedAssetIndex, 'category', e.target.value || undefined)}
+                  className="border rounded px-2 py-1 w-full h-8 text-sm mt-1"
+                >
+                  <option value="">No category</option>
+                  <option value="hero">Hero</option>
+                  <option value="product_info">Product Info</option>
+                  <option value="lifestyle">Lifestyle</option>
+                  <option value="detail">Detail</option>
+                  <option value="shop_listing">Shop Listing</option>
+                </select>
+              </div>
+
+              <div>
+                <Label className="text-xs">URL</Label>
+                <Input
+                  value={formData.assets[selectedAssetIndex].url}
+                  onChange={(e) => handleAssetChange(selectedAssetIndex, 'url', e.target.value)}
+                  placeholder="https://..."
+                  className="h-8 text-sm mt-1"
+                />
+              </div>
+
+              <div>
+                <Label className="text-xs">Thumbnail URL</Label>
+                <Input
+                  value={formData.assets[selectedAssetIndex].thumbnail || ''}
+                  onChange={(e) => handleAssetChange(selectedAssetIndex, 'thumbnail', e.target.value)}
+                  placeholder="https://..."
+                  className="h-8 text-sm mt-1"
+                />
+              </div>
+
+              <div>
+                <Label className="text-xs">Alt Text</Label>
+                <Input
+                  value={formData.assets[selectedAssetIndex].alt || ''}
+                  onChange={(e) => handleAssetChange(selectedAssetIndex, 'alt', e.target.value)}
+                  className="h-8 text-sm mt-1"
+                />
+              </div>
+
+              <div>
+                <Label className="text-xs">Description</Label>
+                <Textarea
+                  value={formData.assets[selectedAssetIndex].description || ''}
+                  onChange={(e) => handleAssetChange(selectedAssetIndex, 'description', e.target.value)}
+                  rows={2}
+                  className="text-sm mt-1"
+                />
+              </div>
+
+              <div className="grid grid-cols-2 gap-3">
+                <div className="flex items-center gap-2">
+                  <input
+                    type="checkbox"
+                    checked={formData.assets[selectedAssetIndex].isPrimary || false}
+                    onChange={(e) => handleAssetChange(selectedAssetIndex, 'isPrimary', e.target.checked)}
+                    className="h-4 w-4"
+                    id={`asset-primary-${selectedAssetIndex}`}
+                  />
+                  <Label htmlFor={`asset-primary-${selectedAssetIndex}`} className="text-xs">Primary Asset</Label>
+                </div>
+                <div>
+                  <Label className="text-xs">Display Order</Label>
+                  <Input
+                    type="number"
+                    value={formData.assets[selectedAssetIndex].order || 0}
+                    onChange={(e) => handleAssetChange(selectedAssetIndex, 'order', parseInt(e.target.value) || 0)}
+                    className="h-8 text-sm mt-1"
+                  />
+                </div>
+              </div>
+            </div>
+          )}
 
           <div className="grid grid-cols-2 gap-2">
             <label className="block">
