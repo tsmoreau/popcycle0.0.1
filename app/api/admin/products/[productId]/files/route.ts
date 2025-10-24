@@ -119,8 +119,16 @@ export async function DELETE(
       return NextResponse.json({ error: 'Invalid category' }, { status: 400 });
     }
     
+    console.log('[DELETE] Deleting file:', { filePath, category, assetId, productId });
+    
     // Delete from GCS
-    await deleteFile(filePath);
+    try {
+      await deleteFile(filePath);
+      console.log('[DELETE] File deleted from GCS successfully');
+    } catch (gcsError) {
+      console.error('[DELETE] GCS deletion failed:', gcsError);
+      // Continue with DB cleanup even if GCS delete fails
+    }
     
     // Remove from MongoDB product record
     const db = await getDatabase();

@@ -104,11 +104,20 @@ export async function uploadFile(options: UploadFileOptions): Promise<string> {
 }
 
 export async function deleteFile(filePath: string): Promise<void> {
+  console.log('[GCS] Attempting to delete file:', filePath);
   const storage = getGCSClient();
   const bucket = storage.bucket(getBucketName());
+  const bucketName = getBucketName();
+  console.log('[GCS] Bucket name:', bucketName);
   const file = bucket.file(filePath);
   
-  await file.delete();
+  try {
+    await file.delete();
+    console.log('[GCS] Successfully deleted file:', filePath);
+  } catch (error) {
+    console.error('[GCS] Error deleting file:', filePath, error);
+    throw error;
+  }
 }
 
 export async function generateSignedUrl(filePath: string, expiresInMinutes: number = 60): Promise<string> {
