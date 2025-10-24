@@ -754,25 +754,31 @@ export function ProductEditModal({
                       data-testid={`img-asset-${index}`}
                     />
                   ) : asset.type === 'video' ? (
-                    <div className="w-full h-full flex flex-col items-center justify-center">
+                    <div className="w-full h-full flex items-center justify-center">
                       <FileText className="w-12 h-12 text-gray-400" />
-                      <Badge variant="secondary" className="text-xs mt-2">Video</Badge>
                     </div>
                   ) : asset.type === 'document' ? (
-                    <div className="w-full h-full flex flex-col items-center justify-center">
+                    <div className="w-full h-full flex items-center justify-center">
                       <FileText className="w-12 h-12 text-gray-400" />
-                      <Badge variant="secondary" className="text-xs mt-2">Document</Badge>
                     </div>
                   ) : (
-                    <div className="w-full h-full flex flex-col items-center justify-center">
+                    <div className="w-full h-full flex items-center justify-center">
                       <File className="w-12 h-12 text-gray-400" />
-                      <Badge variant="secondary" className="text-xs mt-2">3D Model</Badge>
                     </div>
                   )}
                   
-                  {/* Category Badge */}
-                  {asset.category && (
-                    <div className="absolute top-2 left-2">
+                  {/* Type and Category Badges */}
+                  <div className="absolute top-2 left-2 flex gap-1">
+                    {/* Type Badge */}
+                    <Badge variant="secondary" className="bg-white text-xs">
+                      {asset.type === 'image' && 'Image'}
+                      {asset.type === 'video' && 'Video'}
+                      {asset.type === 'document' && 'Document'}
+                      {asset.type === '3d_model' && '3D Model'}
+                    </Badge>
+                    
+                    {/* Category Badge */}
+                    {asset.category && (
                       <Badge variant="secondary" className="bg-white text-xs">
                         {asset.category === 'hero' && 'Hero'}
                         {asset.category === 'product_info' && 'Product Info'}
@@ -780,8 +786,8 @@ export function ProductEditModal({
                         {asset.category === 'detail' && 'Detail'}
                         {asset.category === 'shop_listing' && 'Shop Listing'}
                       </Badge>
-                    </div>
-                  )}
+                    )}
+                  </div>
                   
                   {/* Primary Star */}
                   {asset.isPrimary && (
