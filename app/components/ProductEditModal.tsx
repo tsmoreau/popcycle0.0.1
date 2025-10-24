@@ -756,17 +756,17 @@ export function ProductEditModal({
                   ) : asset.type === 'video' ? (
                     <div className="w-full h-full flex flex-col items-center justify-center">
                       <FileText className="w-12 h-12 text-gray-400" />
-                      <span className="mt-2 text-xs text-gray-500">Video</span>
+                      <Badge variant="secondary" className="text-xs mt-2">Video</Badge>
                     </div>
                   ) : asset.type === 'document' ? (
                     <div className="w-full h-full flex flex-col items-center justify-center">
                       <FileText className="w-12 h-12 text-gray-400" />
-                      <span className="mt-2 text-xs text-gray-500">Document</span>
+                      <Badge variant="secondary" className="text-xs mt-2">Document</Badge>
                     </div>
                   ) : (
                     <div className="w-full h-full flex flex-col items-center justify-center">
                       <File className="w-12 h-12 text-gray-400" />
-                      <span className="mt-2 text-xs text-gray-500">3D Model</span>
+                      <Badge variant="secondary" className="text-xs mt-2">3D Model</Badge>
                     </div>
                   )}
                   
