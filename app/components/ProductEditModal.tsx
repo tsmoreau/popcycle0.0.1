@@ -742,7 +742,7 @@ export function ProductEditModal({
                 className={`relative cursor-pointer border-2 rounded overflow-hidden transition-all ${
                   selectedAssetIndex === index ? 'border-pop-green ring-2 ring-pop-green/20' : 'border-transparent hover:border-gray-300'
                 }`}
-                onClick={() => setSelectedAssetIndex(index)}
+                onClick={() => setSelectedAssetIndex(selectedAssetIndex === index ? null : index)}
                 data-testid={`thumbnail-asset-${index}`}
               >
                 <div className="aspect-square bg-gray-50 relative">
