@@ -133,57 +133,15 @@ export default function ProductDetail() {
     <div className=" bg-white">
       {/* Minimal Top Navigation */}
      
-      {/* Hero Image Section */}
+      {/* Hero Image Section - Single Static Image */}
       <section className="relative h-[70vh] bg-gray-50">
         {images.length > 0 ? (
-          <>
-            <img
-              src={images[selectedImage]}
-              alt={product.name}
-              className="w-full h-full object-cover"
-              data-testid="img-product-main"
-            />
-            
-            {/* Image Navigation */}
-            {images.length > 1 && (
-              <>
-                {/* Arrow Navigation */}
-                <button
-                  onClick={prevImage}
-                  className="absolute left-6 top-1/2 -translate-y-1/2 bg-white/90 hover:bg-white p-3 rounded-full transition-all"
-                  data-testid="button-prev-image"
-                  aria-label="Previous image"
-                >
-                  <ChevronLeft className="h-5 w-5 text-gray-900" />
-                </button>
-                <button
-                  onClick={nextImage}
-                  className="absolute right-6 top-1/2 -translate-y-1/2 bg-white/90 hover:bg-white p-3 rounded-full transition-all"
-                  data-testid="button-next-image"
-                  aria-label="Next image"
-                >
-                  <ChevronRight className="h-5 w-5 text-gray-900" />
-                </button>
-
-                {/* Dot Indicators */}
-                <div className="absolute bottom-8 left-0 right-0 flex justify-center gap-2">
-                  {images.map((_, index) => (
-                    <button
-                      key={index}
-                      onClick={() => setSelectedImage(index)}
-                      className={`transition-all ${
-                        selectedImage === index
-                          ? "w-8 h-2 bg-white rounded-full"
-                          : "w-2 h-2 bg-white/50 hover:bg-white/75 rounded-full"
-                      }`}
-                      data-testid={`button-dot-${index}`}
-                      aria-label={`View image ${index + 1}`}
-                    />
-                  ))}
-                </div>
-              </>
-            )}
-          </>
+          <img
+            src={images[0]}
+            alt={product.name}
+            className="w-full h-full object-cover"
+            data-testid="img-product-hero"
+          />
         ) : (
           <div className="w-full h-full flex items-center justify-center">
             <Package className="w-32 h-32 text-gray-200" />
@@ -259,14 +217,66 @@ export default function ProductDetail() {
        
         </div>
 
-      {/* Full-Width Lifestyle Image */}
-     
+      {/* Lifestyle Image Carousel */}
       <section className="relative w-full h-[80vh] flex mx-auto justify-center mb-6">
-        <div className="w-5/6 h-full flex items-center justify-center border-4 ">
-          <div className="text-center">
-            <ImageIcon className="w-32 h-32 text-gray-300 mx-auto mb-4" />
-            <p className="text-gray-400 text-sm">Lifestyle Image</p>
-          </div>
+        <div className="relative w-5/6 h-full bg-gray-50">
+          {images.length > 0 ? (
+            <>
+              <img
+                src={images[selectedImage]}
+                alt={`${product.name} - Image ${selectedImage + 1}`}
+                className="w-full h-full object-cover"
+                data-testid="img-lifestyle-main"
+              />
+              
+              {/* Carousel Navigation */}
+              {images.length > 1 && (
+                <>
+                  {/* Arrow Navigation */}
+                  <button
+                    onClick={prevImage}
+                    className="absolute left-6 top-1/2 -translate-y-1/2 bg-white/90 hover:bg-white p-3 rounded-full transition-all"
+                    data-testid="button-prev-image"
+                    aria-label="Previous image"
+                  >
+                    <ChevronLeft className="h-5 w-5 text-gray-900" />
+                  </button>
+                  <button
+                    onClick={nextImage}
+                    className="absolute right-6 top-1/2 -translate-y-1/2 bg-white/90 hover:bg-white p-3 rounded-full transition-all"
+                    data-testid="button-next-image"
+                    aria-label="Next image"
+                  >
+                    <ChevronRight className="h-5 w-5 text-gray-900" />
+                  </button>
+
+                  {/* Dot Indicators */}
+                  <div className="absolute bottom-8 left-0 right-0 flex justify-center gap-2">
+                    {images.map((_, index) => (
+                      <button
+                        key={index}
+                        onClick={() => setSelectedImage(index)}
+                        className={`transition-all ${
+                          selectedImage === index
+                            ? "w-8 h-2 bg-white rounded-full"
+                            : "w-2 h-2 bg-white/50 hover:bg-white/75 rounded-full"
+                        }`}
+                        data-testid={`button-dot-${index}`}
+                        aria-label={`View image ${index + 1}`}
+                      />
+                    ))}
+                  </div>
+                </>
+              )}
+            </>
+          ) : (
+            <div className="w-full h-full flex items-center justify-center">
+              <div className="text-center">
+                <ImageIcon className="w-32 h-32 text-gray-300 mx-auto mb-4" />
+                <p className="text-gray-400 text-sm">Lifestyle Images</p>
+              </div>
+            </div>
+          )}
         </div>
       </section>
       
