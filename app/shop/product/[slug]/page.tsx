@@ -130,23 +130,11 @@ export default function ProductDetail() {
   };
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className=" bg-white">
       {/* Minimal Top Navigation */}
-      <div className="fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-sm border-b border-gray-100">
-        <div className="max-w-screen-2xl mx-auto px-6 lg:px-12 py-4">
-          <Link
-            href="/shop"
-            className="text-sm text-gray-500 hover:text-gray-900 flex items-center gap-2 transition-colors"
-            data-testid="link-back-shop"
-          >
-            <ArrowLeft className="h-3.5 w-3.5" />
-            Back to Shop
-          </Link>
-        </div>
-      </div>
-
+     
       {/* Hero Image Section */}
-      <section className="relative mt-16 h-[75vh] bg-gray-50">
+      <section className="relative h-[70vh] bg-gray-50">
         {images.length > 0 ? (
           <>
             <img
@@ -204,7 +192,10 @@ export default function ProductDetail() {
       </section>
 
       {/* Product Information - Single Column Editorial Layout */}
-      <section className="max-w-3xl mx-auto px-6 lg:px-12 py-20 lg:py-32">
+      <div className="w-auto h-auto mb-6">
+      <div className="mt-8 lg:mt-0  justify-items-center lg:flex lg:justify-center mx-auto items-center">
+      <div className="bg-gray-50 lg:w-1/2 w-5/6 self-center h-96 mr-4"></div>
+      <div className=" max-w-3xl px-6 lg:px-12 py-6 lg:py-12">
         {/* Category */}
         <p className="text-xs uppercase tracking-wider text-gray-400 mb-6" data-testid="badge-category">
           {categoryLabels[product.category]}
@@ -263,17 +254,63 @@ export default function ProductDetail() {
             </Button>
           </div>
         </div>
-      </section>
+      </div>
+        </div>
+       
+        </div>
 
       {/* Full-Width Lifestyle Image */}
-      <section className="relative h-[80vh] bg-gray-100">
-        <div className="w-full h-full flex items-center justify-center">
+     
+      <section className="relative w-full h-[80vh] flex mx-auto justify-center mb-6">
+        <div className="w-5/6 h-full flex items-center justify-center border-4 ">
           <div className="text-center">
             <ImageIcon className="w-32 h-32 text-gray-300 mx-auto mb-4" />
             <p className="text-gray-400 text-sm">Lifestyle Image</p>
           </div>
         </div>
       </section>
+      
+    
+    
+      {/* Narrative & Technical Specifications */}
+     <div className="lg:flex justify-center">
+       <section className=" max-w-3/4  px-6 lg:px-12 py-20 lg:py-32">
+         <h2 className="text-3xl font-light mb-12">Specifications</h2>
+
+         <dl className="space-y-6 text-base">
+           <div className="flex border-b border-gray-50 pb-4">
+             <dt className="w-1/3 text-gray-500 font-light">Material</dt>
+             <dd className="w-2/3 text-gray-900 font-light">100% recycled plastic</dd>
+           </div>
+           <div className="flex border-b border-gray-50 pb-4">
+             <dt className="w-1/3 text-gray-500 font-light">Category</dt>
+             <dd className="w-2/3 text-gray-900 font-light">{categoryLabels[product.category]}</dd>
+           </div>
+           <div className="flex border-b border-gray-50 pb-4">
+             <dt className="w-1/3 text-gray-500 font-light">Type</dt>
+             <dd className="w-2/3 text-gray-900 font-light">{productTypeLabels[product.productType]}</dd>
+           </div>
+           <div className="flex border-b border-gray-50 pb-4">
+             <dt className="w-1/3 text-gray-500 font-light">Traceability</dt>
+             <dd className="w-2/3 text-gray-900 font-light">Complete source-to-product tracking</dd>
+           </div>
+           <div className="flex border-b border-gray-50 pb-4">
+             <dt className="w-1/3 text-gray-500 font-light">Customization</dt>
+             <dd className="w-2/3 text-gray-900 font-light">Custom branding available</dd>
+           </div>
+           <div className="flex pb-4">
+             <dt className="w-1/3 text-gray-500 font-light">Shipping</dt>
+             <dd className="w-2/3 text-gray-900 font-light">2-3 business days</dd>
+           </div>
+         </dl>
+       </section>
+       <section className="text-gray-900 px-6 lg:px-12 py-20 lg:py-32">
+         <h2 className="text-3xl font-light mb-12">Narrative</h2>
+<div className="font-light">The HP/MP Coasters are designed to </div>
+        </section>
+   
+       </div>
+
 
       {/* Detail Images Grid */}
       <section className="max-w-screen-2xl mx-auto px-6 lg:px-12 py-20 lg:py-32">
@@ -290,62 +327,6 @@ export default function ProductDetail() {
         </div>
       </section>
 
-      {/* Materials & Colors */}
-      <section className="bg-gray-50 py-20 lg:py-32">
-        <div className="max-w-screen-xl mx-auto px-6 lg:px-12">
-          <h2 className="text-3xl font-light mb-12 text-center">Materials & Colors</h2>
-          <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-6 gap-6 lg:gap-8">
-            {[1, 2, 3, 4, 5, 6].map((i) => (
-              <div key={i} className="flex flex-col items-center gap-3">
-                <div className="w-24 h-24 rounded-full bg-gray-200 border-2 border-gray-300"></div>
-                <p className="text-xs text-gray-500">Color {i}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Full-Width Environmental Shot */}
-      <section className="relative h-[80vh] bg-gray-100">
-        <div className="w-full h-full flex items-center justify-center">
-          <div className="text-center">
-            <ImageIcon className="w-32 h-32 text-gray-300 mx-auto mb-4" />
-            <p className="text-gray-400 text-sm">Environmental Image</p>
-          </div>
-        </div>
-      </section>
-
-      {/* Technical Specifications */}
-      <section className="max-w-3xl mx-auto px-6 lg:px-12 py-20 lg:py-32">
-        <h2 className="text-3xl font-light mb-12">Specifications</h2>
-        
-        <dl className="space-y-6 text-base">
-          <div className="flex border-b border-gray-50 pb-4">
-            <dt className="w-1/3 text-gray-500 font-light">Material</dt>
-            <dd className="w-2/3 text-gray-900 font-light">100% recycled plastic</dd>
-          </div>
-          <div className="flex border-b border-gray-50 pb-4">
-            <dt className="w-1/3 text-gray-500 font-light">Category</dt>
-            <dd className="w-2/3 text-gray-900 font-light">{categoryLabels[product.category]}</dd>
-          </div>
-          <div className="flex border-b border-gray-50 pb-4">
-            <dt className="w-1/3 text-gray-500 font-light">Type</dt>
-            <dd className="w-2/3 text-gray-900 font-light">{productTypeLabels[product.productType]}</dd>
-          </div>
-          <div className="flex border-b border-gray-50 pb-4">
-            <dt className="w-1/3 text-gray-500 font-light">Traceability</dt>
-            <dd className="w-2/3 text-gray-900 font-light">Complete source-to-product tracking</dd>
-          </div>
-          <div className="flex border-b border-gray-50 pb-4">
-            <dt className="w-1/3 text-gray-500 font-light">Customization</dt>
-            <dd className="w-2/3 text-gray-900 font-light">Custom branding available</dd>
-          </div>
-          <div className="flex pb-4">
-            <dt className="w-1/3 text-gray-500 font-light">Shipping</dt>
-            <dd className="w-2/3 text-gray-900 font-light">2-3 business days</dd>
-          </div>
-        </dl>
-      </section>
 
       {/* Related Products */}
       <section className="bg-gray-50 py-20 lg:py-32">
@@ -365,8 +346,6 @@ export default function ProductDetail() {
         </div>
       </section>
 
-      {/* Spacer for breathing room */}
-      <div className="h-20"></div>
     </div>
   );
 }

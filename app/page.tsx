@@ -37,7 +37,7 @@ export default function Home() {
           
 
             <Link href="/about#faq">
-              <Button variant="outline" size="lg" className="mt-6 border-2 border-white text-black hover:bg-white  systematic-caps text-base px-12 py-5 transition-all">
+              <Button variant="outline" size="lg" className="hidden mt-6 border-2 border-white text-black hover:bg-white  systematic-caps text-base px-12 py-5 transition-all">
                 Learn More
               </Button>
             </Link>
@@ -46,38 +46,83 @@ export default function Home() {
       </section>
 
       {/* Featured Products Grid */}
-      <section className="py-12 lg:py-16 px-6 bg-white">
-        <div className="max-w-7xl mx-auto">
+      <section className="pt-12 pb-4 lg:pt-16 px-6 bg-white">
+        <div className="max-w-8xl mx-4 mx-auto">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 lg:gap-6">
             {/* Product Card 1 */}
             <Link href="/about" className="group">
-              <div className="relative aspect-[4/3] bg-gray-100 overflow-hidden">
+              <div className="relative aspect-[5/3] bg-gray-100 overflow-hidden">
                 <div className="absolute inset-0 flex items-center justify-center">
                   <Recycle className="w-24 h-24 text-gray-300" />
                 </div>
-                <div className="absolute bottom-0 left-0 right-0 p-6 bg-gradient-to-t from-black/60 to-transparent">
-                  <h3 className="text-white text-2xl mb-2">Coasters</h3>
-                  <p className="text-white/80 text-sm">From your waste stream</p>
+                <div className="absolute bottom-0 left-0 right-0 p-6 ">
+                  
                 </div>
               </div>
+              <div className="w-auto h-auto justify-items-center my-2">
+             
+                <h3 className="text-black mt-2 font-light text-xl ">Studio Editions</h3>
+                <p className="text-gray-500 -mt-1 text-base">One of a kind limited run designs.</p>
+                </div>
             </Link>
 
             {/* Product Card 2 */}
-            <Link href="/about" className="group">
-              <div className="relative aspect-[4/3] bg-gray-100 overflow-hidden">
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <Target className="w-24 h-24 text-gray-300" />
-                </div>
-                <div className="absolute bottom-0 left-0 right-0 p-6 bg-gradient-to-t from-black/60 to-transparent">
-                  <h3 className="text-white text-2xl mb-2">Custom Products</h3>
-                  <p className="text-white/80 text-sm">Designed for your brand</p>
-                </div>
+          <Link href="/about" className="group">
+            <div className="relative aspect-[5/3] bg-gray-100 overflow-hidden">
+              <div className="absolute inset-0 flex items-center justify-center">
+                <Recycle className="w-24 h-24 text-gray-300" />
               </div>
-            </Link>
-          </div>
+              <div className="absolute bottom-0 left-0 right-0 p-6 ">
+
+              </div>
+            </div>
+            <div className="w-auto h-auto justify-items-center my-2">
+              <h3 className="text-black mt-2 font-light text-xl ">Custom Collections</h3>
+              <p className="text-gray-500 -mt-1 text-base">Exclusive designs and products</p>
+              </div>
+          </Link>
+  </div>
         </div>
       </section>
+      
+      {/* Featured Products Grid */}
+      <section className=" pb-4 px-6 bg-white">
+        <div className="max-w-8xl mx-4 mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 lg:gap-6">
+            {/* Product Card 1 */}
+            <Link href="/about" className="group">
+              <div className="relative aspect-[5/3] bg-gray-100 overflow-hidden">
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <Recycle className="w-24 h-24 text-gray-300" />
+                </div>
+                <div className="absolute bottom-0 left-0 right-0 p-6 ">
 
+                </div>
+              </div>
+              <div className="w-auto h-auto justify-items-center my-2">
+              <h3 className="text-black mt-2 font-light text-xl ">Coasters</h3>
+              <p className="text-gray-500 -mt-1 text-base">From your waste stream</p>
+                </div>
+            </Link>
+
+            {/* Product Card 2 */}
+          <Link href="/about" className="group">
+            <div className="relative aspect-[5/3] bg-gray-100 overflow-hidden">
+              <div className="absolute inset-0 flex items-center justify-center">
+                <Recycle className="w-24 h-24 text-gray-300" />
+              </div>
+              <div className="absolute bottom-0 left-0 right-0 p-6 ">
+
+              </div>
+            </div>
+            <div className="w-auto h-auto justify-items-center my-2">
+            <h3 className="text-black mt-2 font-light text-xl ">Coasters</h3>
+            <p className="text-gray-500 -mt-1 text-base">From your waste stream</p>
+              </div>
+          </Link>
+      </div>
+        </div>
+      </section>
       {/* Category Showcase */}
       <section className="py-0 bg-white">
         <div className="max-w-7xl mx-auto px-6">
@@ -170,7 +215,7 @@ export default function Home() {
       </section>
 
       {/* CTA Section */}
-      <section className="py-24 lg:py-28 px-6 bg-white border-t border-gray-200">
+      <section className="hidden py-24 lg:py-28 px-6 bg-white border-t border-gray-200">
         <div className="max-w-3xl mx-auto text-center">
           <h2 className="text-3xl lg:text-4xl mb-6 leading-tight">
             Start Your Circular Journey
