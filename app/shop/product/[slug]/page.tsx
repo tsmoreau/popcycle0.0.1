@@ -181,7 +181,7 @@ export default function ProductDetail() {
      
      
       {/* Hero Section - Image or Video */}
-      <section className="relative h-[70vh] bg-gray-50">
+      <section className="relative h-[50vh] lg:h-[70vh] bg-gray-50">
         {heroAsset ? (
           heroAsset.type === 'video' ? (
             <video
@@ -290,7 +290,7 @@ export default function ProductDetail() {
         </div>
 
       {/* Lifestyle Image Carousel */}
-      <section className="relative w-full h-[80vh] flex mx-auto justify-center mb-6 mt-12">
+      <section className="relative w-full h-[60vh] lg:h-[80vh] flex mx-auto justify-center mb-6 mt-12">
         <div className="relative w-full h-full bg-gray-50">
           {carouselImages.length > 0 ? (
             <>
