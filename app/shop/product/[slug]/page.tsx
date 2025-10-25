@@ -207,12 +207,12 @@ export default function ProductDetail() {
       
 
         {/* Product Name */}
-        <h1 className="text-3xl tracking-tight lg:text-5xl font-light mb-1.5 text-gray-700 leading-tight" data-testid="text-product-name">
+        <h1 className="text-3xl tracking-tight lg:text-5xl font-light mb-1.5 text-gray-700 leading-tight mb-6" data-testid="text-product-name">
           {product.name}
         </h1>
 <div className="flex">
         {/* Category */}
-        <p className="text-xl text-gray-500 mb-6 font-normal" data-testid="badge-category">
+        <p className="hidden text-xl text-gray-500 mb-6 font-normal" data-testid="badge-category">
           {categoryLabels[product.category]}
         </p>
 
