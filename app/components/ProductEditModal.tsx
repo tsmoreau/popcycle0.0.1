@@ -40,6 +40,25 @@ interface Product {
     order?: number
     category?: 'hero' | 'product_info' | 'lifestyle' | 'detail' | 'shop_listing'
   }>
+  specs?: {
+    dimensions?: string
+    weight?: string
+    materials?: string
+    colors?: string[]
+    finish?: string
+    assembly?: string
+    care?: string
+    [key: string]: any
+  }
+  narrative?: string
+  editions?: Array<{
+    name: string
+    description?: string
+    quantity?: number
+    year?: number
+    price?: number
+    available?: boolean
+  }>
   price: number
   inStock: boolean
   rating: number
@@ -80,7 +99,10 @@ export function ProductEditModal({
       instructionsPdfs: [],
       photos: []
     },
-    assets: []
+    assets: [],
+    specs: {},
+    narrative: '',
+    editions: []
   })
 
   // Function to generate slug from name
@@ -112,7 +134,10 @@ export function ProductEditModal({
           instructionsPdfs: item.designFiles?.instructionsPdfs || [],
           photos: item.designFiles?.photos || []
         },
-        assets: item.assets || []
+        assets: item.assets || [],
+        specs: item.specs || {},
+        narrative: item.narrative || '',
+        editions: item.editions || []
       })
     } else {
       setFormData({
@@ -132,7 +157,10 @@ export function ProductEditModal({
           instructionsPdfs: [],
           photos: []
         },
-        assets: []
+        assets: [],
+        specs: {},
+        narrative: '',
+        editions: []
       })
     }
   }, [item])
@@ -372,8 +400,9 @@ export function ProductEditModal({
       </DialogHeader>
 
       <Tabs defaultValue="basic" className="w-full">
-        <TabsList className="grid w-full grid-cols-3">
+        <TabsList className="grid w-full grid-cols-4">
           <TabsTrigger value="basic">Basic Info</TabsTrigger>
+          <TabsTrigger value="editorial">Editorial</TabsTrigger>
           <TabsTrigger value="design">Design Files</TabsTrigger>
           <TabsTrigger value="assets">Assets</TabsTrigger>
         </TabsList>
@@ -483,6 +512,219 @@ export function ProductEditModal({
                 className="bg-gray-50 cursor-not-allowed"
               />
             </div>
+          </div>
+        </TabsContent>
+
+        <TabsContent value="editorial" className="space-y-6 bg-stone-100">
+          <div>
+            <Label>Narrative</Label>
+            <Textarea
+              value={formData.narrative}
+              onChange={(e) => handleFieldChange('narrative', e.target.value)}
+              placeholder="Rich editorial text about design story, context, and use..."
+              rows={6}
+            />
+            <p className="text-xs text-gray-500 mt-1">
+              Tell the story behind this product - its inspiration, design philosophy, and intended use.
+            </p>
+          </div>
+
+          <div className="space-y-3">
+            <Label>Specifications</Label>
+            <div className="grid grid-cols-2 gap-3">
+              <div>
+                <Label className="text-xs text-gray-600">Dimensions</Label>
+                <Input
+                  value={formData.specs?.dimensions || ''}
+                  onChange={(e) => setFormData((prev: any) => ({
+                    ...prev,
+                    specs: { ...prev.specs, dimensions: e.target.value }
+                  }))}
+                  placeholder="e.g., 10 × 10 × 2 cm"
+                />
+              </div>
+              <div>
+                <Label className="text-xs text-gray-600">Weight</Label>
+                <Input
+                  value={formData.specs?.weight || ''}
+                  onChange={(e) => setFormData((prev: any) => ({
+                    ...prev,
+                    specs: { ...prev.specs, weight: e.target.value }
+                  }))}
+                  placeholder="e.g., 150g"
+                />
+              </div>
+              <div>
+                <Label className="text-xs text-gray-600">Materials</Label>
+                <Input
+                  value={formData.specs?.materials || ''}
+                  onChange={(e) => setFormData((prev: any) => ({
+                    ...prev,
+                    specs: { ...prev.specs, materials: e.target.value }
+                  }))}
+                  placeholder="e.g., Recycled HDPE"
+                />
+              </div>
+              <div>
+                <Label className="text-xs text-gray-600">Finish</Label>
+                <Input
+                  value={formData.specs?.finish || ''}
+                  onChange={(e) => setFormData((prev: any) => ({
+                    ...prev,
+                    specs: { ...prev.specs, finish: e.target.value }
+                  }))}
+                  placeholder="e.g., Matte, Polished"
+                />
+              </div>
+              <div className="col-span-2">
+                <Label className="text-xs text-gray-600">Assembly</Label>
+                <Input
+                  value={formData.specs?.assembly || ''}
+                  onChange={(e) => setFormData((prev: any) => ({
+                    ...prev,
+                    specs: { ...prev.specs, assembly: e.target.value }
+                  }))}
+                  placeholder="e.g., No assembly required"
+                />
+              </div>
+              <div className="col-span-2">
+                <Label className="text-xs text-gray-600">Care Instructions</Label>
+                <Input
+                  value={formData.specs?.care || ''}
+                  onChange={(e) => setFormData((prev: any) => ({
+                    ...prev,
+                    specs: { ...prev.specs, care: e.target.value }
+                  }))}
+                  placeholder="e.g., Wipe clean with damp cloth"
+                />
+              </div>
+            </div>
+          </div>
+
+          <div className="space-y-3">
+            <div className="flex items-center justify-between">
+              <Label>Editions</Label>
+              <Button
+                size="sm"
+                variant="outline"
+                onClick={() => {
+                  const newEdition = {
+                    name: '',
+                    description: '',
+                    quantity: 0,
+                    year: new Date().getFullYear(),
+                    price: 0,
+                    available: true
+                  }
+                  setFormData((prev: any) => ({
+                    ...prev,
+                    editions: [...(prev.editions || []), newEdition]
+                  }))
+                }}
+              >
+                <Plus className="h-4 w-4 mr-1" />
+                Add Edition
+              </Button>
+            </div>
+            {formData.editions && formData.editions.length > 0 && (
+              <div className="space-y-3">
+                {formData.editions.map((edition: any, index: number) => (
+                  <div key={index} className="p-3 border rounded bg-white space-y-2">
+                    <div className="flex items-center justify-between mb-2">
+                      <Label className="text-sm font-semibold">Edition {index + 1}</Label>
+                      <Button
+                        size="sm"
+                        variant="ghost"
+                        onClick={() => {
+                          setFormData((prev: any) => ({
+                            ...prev,
+                            editions: prev.editions.filter((_: any, i: number) => i !== index)
+                          }))
+                        }}
+                      >
+                        <Trash2 className="h-4 w-4" />
+                      </Button>
+                    </div>
+                    <div className="grid grid-cols-2 gap-2">
+                      <div className="col-span-2">
+                        <Label className="text-xs text-gray-600">Edition Name</Label>
+                        <Input
+                          value={edition.name}
+                          onChange={(e) => {
+                            const newEditions = [...formData.editions]
+                            newEditions[index] = { ...newEditions[index], name: e.target.value }
+                            setFormData((prev: any) => ({ ...prev, editions: newEditions }))
+                          }}
+                          placeholder="e.g., Limited Edition 2024"
+                        />
+                      </div>
+                      <div className="col-span-2">
+                        <Label className="text-xs text-gray-600">Description</Label>
+                        <Input
+                          value={edition.description || ''}
+                          onChange={(e) => {
+                            const newEditions = [...formData.editions]
+                            newEditions[index] = { ...newEditions[index], description: e.target.value }
+                            setFormData((prev: any) => ({ ...prev, editions: newEditions }))
+                          }}
+                          placeholder="Edition details"
+                        />
+                      </div>
+                      <div>
+                        <Label className="text-xs text-gray-600">Quantity</Label>
+                        <Input
+                          type="number"
+                          value={edition.quantity || 0}
+                          onChange={(e) => {
+                            const newEditions = [...formData.editions]
+                            newEditions[index] = { ...newEditions[index], quantity: parseInt(e.target.value) || 0 }
+                            setFormData((prev: any) => ({ ...prev, editions: newEditions }))
+                          }}
+                        />
+                      </div>
+                      <div>
+                        <Label className="text-xs text-gray-600">Year</Label>
+                        <Input
+                          type="number"
+                          value={edition.year || new Date().getFullYear()}
+                          onChange={(e) => {
+                            const newEditions = [...formData.editions]
+                            newEditions[index] = { ...newEditions[index], year: parseInt(e.target.value) || new Date().getFullYear() }
+                            setFormData((prev: any) => ({ ...prev, editions: newEditions }))
+                          }}
+                        />
+                      </div>
+                      <div>
+                        <Label className="text-xs text-gray-600">Price ($)</Label>
+                        <Input
+                          type="number"
+                          step="0.01"
+                          value={edition.price || 0}
+                          onChange={(e) => {
+                            const newEditions = [...formData.editions]
+                            newEditions[index] = { ...newEditions[index], price: parseFloat(e.target.value) || 0 }
+                            setFormData((prev: any) => ({ ...prev, editions: newEditions }))
+                          }}
+                        />
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <Label className="text-xs text-gray-600">Available</Label>
+                        <input
+                          type="checkbox"
+                          checked={edition.available ?? true}
+                          onChange={(e) => {
+                            const newEditions = [...formData.editions]
+                            newEditions[index] = { ...newEditions[index], available: e.target.checked }
+                            setFormData((prev: any) => ({ ...prev, editions: newEditions }))
+                          }}
+                          className="h-4 w-4"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
           </div>
         </TabsContent>
 

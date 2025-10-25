@@ -248,6 +248,27 @@ export interface Product {
     category?: "hero" | "product_info" | "lifestyle" | "detail" | "shop_listing";
   }>;
 
+  // Editorial content fields
+  specs?: {
+    dimensions?: string;
+    weight?: string;
+    materials?: string;
+    colors?: string[];
+    finish?: string;
+    assembly?: string;
+    care?: string;
+    [key: string]: any;
+  };
+  narrative?: string; // Rich editorial text about design story, context, use
+  editions?: Array<{
+    name: string;
+    description?: string;
+    quantity?: number;
+    year?: number;
+    price?: number;
+    available?: boolean;
+  }>;
+
   price: number;
   inStock: boolean;
   rating: number;

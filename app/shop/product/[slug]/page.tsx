@@ -39,6 +39,25 @@ interface Product {
     order?: number;
     category?: "hero" | "product_info" | "lifestyle" | "detail" | "shop_listing";
   }>;
+  specs?: {
+    dimensions?: string;
+    weight?: string;
+    materials?: string;
+    colors?: string[];
+    finish?: string;
+    assembly?: string;
+    care?: string;
+    [key: string]: any;
+  };
+  narrative?: string;
+  editions?: Array<{
+    name: string;
+    description?: string;
+    quantity?: number;
+    year?: number;
+    price?: number;
+    available?: boolean;
+  }>;
   price: number;
   inStock: boolean;
   rating: number;
@@ -321,10 +340,42 @@ export default function ProductDetail() {
           <h2 className="text-3xl font-light mb-12">Specifications</h2>
 
           <dl className="space-y-3 text-base">
-            <div className="flex border-b border-gray-50 pb-2">
-              <dt className="w-1/3 text-gray-500 font-light">Material</dt>
-              <dd className="w-2/3 text-gray-900 font-light">100% recycled plastic</dd>
-            </div>
+            {product.specs?.dimensions && (
+              <div className="flex border-b border-gray-50 pb-2">
+                <dt className="w-1/3 text-gray-500 font-light">Dimensions</dt>
+                <dd className="w-2/3 text-gray-900 font-light">{product.specs.dimensions}</dd>
+              </div>
+            )}
+            {product.specs?.weight && (
+              <div className="flex border-b border-gray-50 pb-2">
+                <dt className="w-1/3 text-gray-500 font-light">Weight</dt>
+                <dd className="w-2/3 text-gray-900 font-light">{product.specs.weight}</dd>
+              </div>
+            )}
+            {product.specs?.materials && (
+              <div className="flex border-b border-gray-50 pb-2">
+                <dt className="w-1/3 text-gray-500 font-light">Materials</dt>
+                <dd className="w-2/3 text-gray-900 font-light">{product.specs.materials}</dd>
+              </div>
+            )}
+            {product.specs?.finish && (
+              <div className="flex border-b border-gray-50 pb-2">
+                <dt className="w-1/3 text-gray-500 font-light">Finish</dt>
+                <dd className="w-2/3 text-gray-900 font-light">{product.specs.finish}</dd>
+              </div>
+            )}
+            {product.specs?.assembly && (
+              <div className="flex border-b border-gray-50 pb-2">
+                <dt className="w-1/3 text-gray-500 font-light">Assembly</dt>
+                <dd className="w-2/3 text-gray-900 font-light">{product.specs.assembly}</dd>
+              </div>
+            )}
+            {product.specs?.care && (
+              <div className="flex border-b border-gray-50 pb-2">
+                <dt className="w-1/3 text-gray-500 font-light">Care</dt>
+                <dd className="w-2/3 text-gray-900 font-light">{product.specs.care}</dd>
+              </div>
+            )}
             <div className="flex border-b border-gray-50 pb-2">
               <dt className="w-1/3 text-gray-500 font-light">Category</dt>
               <dd className="w-2/3 text-gray-900 font-light">{categoryLabels[product.category]}</dd>
@@ -333,33 +384,60 @@ export default function ProductDetail() {
               <dt className="w-1/3 text-gray-500 font-light">Type</dt>
               <dd className="w-2/3 text-gray-900 font-light">{productTypeLabels[product.productType]}</dd>
             </div>
-            <div className="flex border-b border-gray-50 pb-2">
-              <dt className="w-1/3 text-gray-500 font-light">Traceability</dt>
-              <dd className="w-2/3 text-gray-900 font-light">Complete source-to-product tracking</dd>
-            </div>
-            <div className="flex border-b border-gray-50 pb-2">
-              <dt className="w-1/3 text-gray-500 font-light">Customization</dt>
-              <dd className="w-2/3 text-gray-900 font-light">Custom branding available</dd>
-            </div>
-            <div className="flex pb-4">
-              <dt className="w-1/3 text-gray-500 font-light">Shipping</dt>
-              <dd className="w-2/3 text-gray-900 font-light">2-3 business days</dd>
-            </div>
           </dl>
         </div>
 
               <div className="w-1/3  text-gray-900 px-6">
                 <h2 className="text-3xl font-light mb-12">Narrative</h2>
-       <div className="font-light">
-
-         Every gamer recognizes the panic of a draining health bar. These potion bottle coasters capture that exact moment—swirled colors bleeding through translucent material like liquid catching light through glass.
-         The material's natural inconsistency becomes the design feature. Colors bleed and swirl the way actual liquid settles in a bottle, creating that organic, slightly magical quality. No two are identical.
-         Available as singles or in sets of four showing different fill levels—full to nearly empty—because we all know that feeling of limping back to camp on a sliver of HP.
-
+       <div className="font-light leading-relaxed whitespace-pre-line">
+         {product.narrative || product.description}
        </div>
                </div>
      
        </div>
+
+      {/* Editions Section */}
+      {product.editions && product.editions.length > 0 && (
+        <section className="max-w-screen-2xl mx-auto px-6 lg:px-12 py-12">
+          <h2 className="text-3xl font-light mb-8">Editions</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {product.editions.map((edition, index) => (
+              <div key={index} className="border border-gray-200 p-6 bg-white">
+                <h3 className="text-xl font-light mb-2">{edition.name}</h3>
+                {edition.description && (
+                  <p className="text-sm text-gray-600 mb-4 font-light">{edition.description}</p>
+                )}
+                <div className="space-y-2 text-sm">
+                  {edition.year && (
+                    <div className="flex justify-between">
+                      <span className="text-gray-500">Year</span>
+                      <span className="text-gray-900">{edition.year}</span>
+                    </div>
+                  )}
+                  {edition.quantity && (
+                    <div className="flex justify-between">
+                      <span className="text-gray-500">Edition Size</span>
+                      <span className="text-gray-900">{edition.quantity}</span>
+                    </div>
+                  )}
+                  {edition.price && (
+                    <div className="flex justify-between">
+                      <span className="text-gray-500">Price</span>
+                      <span className="text-gray-900 font-medium">${edition.price.toFixed(2)}</span>
+                    </div>
+                  )}
+                  <div className="flex justify-between pt-2 border-t border-gray-100">
+                    <span className="text-gray-500">Availability</span>
+                    <span className={edition.available ? "text-green-600" : "text-red-600"}>
+                      {edition.available ? "Available" : "Sold Out"}
+                    </span>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
+      )}
 
 
       {/* Detail Images Grid */}
