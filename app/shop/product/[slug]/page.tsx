@@ -170,9 +170,9 @@ export default function ProductDetail() {
       </section>
 
       {/* Product Information - Single Column Editorial Layout */}
-      <div className="w-auto h-auto mt-6 mb-8">
-      <div className="mt-8 lg:mt-0  w-full justify-end justify-items-end lg:flex lg:justify-center mx-auto items-end">
-      <div className="bg-gray-50 lg:w-1/2 w-5/6 self-center h-96 mr-4 flex items-center justify-center overflow-hidden">
+      <div className="w-full px-12 flex mx-auto justify-center h-auto my-8">
+     
+      <div className="bg-gray-50 w-2/3 self-center h-[60vh] flex items-center justify-center overflow-hidden">
         {productInfoImage ? (
           <img
             src={productInfoImage}
@@ -184,11 +184,11 @@ export default function ProductDetail() {
           <ImageIcon className="w-20 h-20 text-gray-300" />
         )}
       </div>
-      <div className="ml-4  max-w-lg pl-6 lg:pl-12 py-6 lg:py-16">
+      <div className="  w-1/3 lg:pl-12 py-6 lg:py-16">
       
 
         {/* Product Name */}
-        <h1 className="text-3xl tracking-tight lg:text-5xl font-light mb-1.5 text-gray-800 leading-tight" data-testid="text-product-name">
+        <h1 className="text-3xl tracking-tight lg:text-5xl font-light mb-1.5 text-gray-700 leading-tight" data-testid="text-product-name">
           {product.name}
         </h1>
 <div className="flex">
@@ -234,7 +234,7 @@ export default function ProductDetail() {
               disabled={!product.inStock}
               data-testid="button-add-to-cart"
             >
-              Add to basket
+              Add
             </Button>
             <Button
               size="lg"
@@ -247,13 +247,12 @@ export default function ProductDetail() {
           </div>
         </div>
       </div>
-        </div>
        
         </div>
 
       {/* Lifestyle Image Carousel */}
-      <section className=" relative w-full h-[80vh] flex mx-auto justify-center mb-6 mt-12">
-        <div className="relative w-5/6 h-full bg-gray-50">
+      <section className="relative w-full h-[80vh] flex mx-auto justify-center mb-6 mt-12">
+        <div className="relative w-full h-full bg-gray-50">
           {carouselImages.length > 0 ? (
             <>
               <img
@@ -318,6 +317,36 @@ export default function ProductDetail() {
     
       {/* Narrative & Technical Specifications */}
      <div className="lg:flex justify-center  px-6 lg:px-12 py-8 lg:py-16">
+       <div className=" w-1/3 px-6 ">
+          <h2 className="text-3xl font-light mb-12">Specifications</h2>
+
+          <dl className="space-y-3 text-base">
+            <div className="flex border-b border-gray-50 pb-2">
+              <dt className="w-1/3 text-gray-500 font-light">Material</dt>
+              <dd className="w-2/3 text-gray-900 font-light">100% recycled plastic</dd>
+            </div>
+            <div className="flex border-b border-gray-50 pb-2">
+              <dt className="w-1/3 text-gray-500 font-light">Category</dt>
+              <dd className="w-2/3 text-gray-900 font-light">{categoryLabels[product.category]}</dd>
+            </div>
+            <div className="flex border-b border-gray-50 pb-2">
+              <dt className="w-1/3 text-gray-500 font-light">Type</dt>
+              <dd className="w-2/3 text-gray-900 font-light">{productTypeLabels[product.productType]}</dd>
+            </div>
+            <div className="flex border-b border-gray-50 pb-2">
+              <dt className="w-1/3 text-gray-500 font-light">Traceability</dt>
+              <dd className="w-2/3 text-gray-900 font-light">Complete source-to-product tracking</dd>
+            </div>
+            <div className="flex border-b border-gray-50 pb-2">
+              <dt className="w-1/3 text-gray-500 font-light">Customization</dt>
+              <dd className="w-2/3 text-gray-900 font-light">Custom branding available</dd>
+            </div>
+            <div className="flex pb-4">
+              <dt className="w-1/3 text-gray-500 font-light">Shipping</dt>
+              <dd className="w-2/3 text-gray-900 font-light">2-3 business days</dd>
+            </div>
+          </dl>
+        </div>
 
               <div className="w-1/3  text-gray-900 px-6">
                 <h2 className="text-3xl font-light mb-12">Narrative</h2>
@@ -329,43 +358,13 @@ export default function ProductDetail() {
 
        </div>
                </div>
-       <div className=" w-1/3 px-6 ">
-         <h2 className="text-3xl font-light mb-12">Specifications</h2>
-
-         <dl className="space-y-6 text-base">
-           <div className="flex border-b border-gray-50 pb-2">
-             <dt className="w-1/3 text-gray-500 font-light">Material</dt>
-             <dd className="w-2/3 text-gray-900 font-light">100% recycled plastic</dd>
-           </div>
-           <div className="flex border-b border-gray-50 pb-2">
-             <dt className="w-1/3 text-gray-500 font-light">Category</dt>
-             <dd className="w-2/3 text-gray-900 font-light">{categoryLabels[product.category]}</dd>
-           </div>
-           <div className="flex border-b border-gray-50 pb-2">
-             <dt className="w-1/3 text-gray-500 font-light">Type</dt>
-             <dd className="w-2/3 text-gray-900 font-light">{productTypeLabels[product.productType]}</dd>
-           </div>
-           <div className="flex border-b border-gray-50 pb-2">
-             <dt className="w-1/3 text-gray-500 font-light">Traceability</dt>
-             <dd className="w-2/3 text-gray-900 font-light">Complete source-to-product tracking</dd>
-           </div>
-           <div className="flex border-b border-gray-50 pb-2">
-             <dt className="w-1/3 text-gray-500 font-light">Customization</dt>
-             <dd className="w-2/3 text-gray-900 font-light">Custom branding available</dd>
-           </div>
-           <div className="flex pb-4">
-             <dt className="w-1/3 text-gray-500 font-light">Shipping</dt>
-             <dd className="w-2/3 text-gray-900 font-light">2-3 business days</dd>
-           </div>
-         </dl>
-       </div>
-   
+     
        </div>
 
 
       {/* Detail Images Grid */}
       <section className="max-w-screen-2xl mx-auto px-6 pt-12">
-        <h2 className="text-3xl font-light mb-12 text-center">Details</h2>
+        <h2 className="hidden text-3xl font-light mb-12 text-center">Details</h2>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
           {detailImages.length > 0 ? (
             detailImages.map((image, i) => (
@@ -391,9 +390,15 @@ export default function ProductDetail() {
         </div>
       </section>
 
+       {/* Object Text */}
+      <section className="max-w-screen-2xl mx-auto px-6 mt-16 mb-48 ">
+        <h2 className="text-xl text-gray-400 font-light  text-center">PopCycle Studio Object 001</h2>
+    
+      </section>
+
 
       {/* Related Products */}
-      <section className="bg-gray-50 pt-24 lg:pt-48 pb-20">
+      <section className="bg-stone-50 pt-12 lg:pt-16 pb-20 ">
         <div className="max-w-screen-2xl mx-auto px-6 lg:px-12">
           <h2 className="text-3xl font-light mb-12">You may also like</h2>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6 lg:gap-8">
