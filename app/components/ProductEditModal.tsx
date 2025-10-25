@@ -52,7 +52,7 @@ interface Product {
   }
   narrative?: string
   editions?: Array<{
-    name: string
+    editionNumber: number
     description?: string
     quantity?: number
     year?: number
@@ -609,7 +609,7 @@ export function ProductEditModal({
                 variant="outline"
                 onClick={() => {
                   const newEdition = {
-                    name: '',
+                    editionNumber: (formData.editions?.length || 0) + 1,
                     description: '',
                     quantity: 0,
                     year: new Date().getFullYear(),
@@ -646,16 +646,17 @@ export function ProductEditModal({
                       </Button>
                     </div>
                     <div className="grid grid-cols-2 gap-2">
-                      <div className="col-span-2">
-                        <Label className="text-xs text-gray-600">Edition Name</Label>
+                      <div>
+                        <Label className="text-xs text-gray-600">Edition Number</Label>
                         <Input
-                          value={edition.name}
+                          type="number"
+                          value={edition.editionNumber}
                           onChange={(e) => {
                             const newEditions = [...formData.editions]
-                            newEditions[index] = { ...newEditions[index], name: e.target.value }
+                            newEditions[index] = { ...newEditions[index], editionNumber: parseInt(e.target.value) || 1 }
                             setFormData((prev: any) => ({ ...prev, editions: newEditions }))
                           }}
-                          placeholder="e.g., Limited Edition 2024"
+                          placeholder="1"
                         />
                       </div>
                       <div className="col-span-2">

@@ -166,6 +166,7 @@ export interface Blank {
   _id: string; // QR code string (e.g., "K1234567")
   batchIds: string[]; // Can be from multiple batches if blended
   productId?: ObjectId;
+  editionNumber?: number; // Tracks which edition this blank is allocated to
   orderId?: ObjectId;
   userId?: ObjectId;
   status: "blank" | "assembled" | "delivered";
@@ -261,7 +262,7 @@ export interface Product {
   };
   narrative?: string; // Rich editorial text about design story, context, use
   editions?: Array<{
-    name: string;
+    editionNumber: number;
     description?: string;
     quantity?: number;
     year?: number;

@@ -51,7 +51,8 @@ interface Product {
   };
   narrative?: string;
   editions?: Array<{
-    name: string;
+    editionNumber?: number;
+    name?: string; // Legacy field for backward compatibility
     description?: string;
     quantity?: number;
     year?: number;
@@ -422,7 +423,7 @@ export default function ProductDetail() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {product.editions.map((edition, index) => (
               <div key={index} className="border border-gray-200 p-6 bg-white">
-                <h3 className="text-xl font-light mb-2">{edition.name}</h3>
+                <h3 className="text-xl font-light mb-2">Edition {edition.editionNumber || index + 1}</h3>
                 {edition.description && (
                   <p className="text-sm text-gray-600 mb-4 font-light">{edition.description}</p>
                 )}
