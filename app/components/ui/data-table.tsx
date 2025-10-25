@@ -748,7 +748,7 @@ export function DataTable<T extends Record<string, any>>({
                         <DialogTrigger asChild>
                           {RowContent}
                         </DialogTrigger>
-                        <DialogContent key={isEditing && editingItem === item ? 'edit' : 'view'} className="max-w-5xl max-h-[85vh] overflow-y-auto">
+                        <DialogContent key={isEditing && editingItem === item ? 'edit' : 'view'} className="max-w-6xl max-h-[90vh] overflow-y-auto">
                           {isEditing && editingItem === item ? 
                             renderEditModal(editingItem) : 
                             renderModal ? renderModal(item, () => { setEditingItem(item); setIsEditing(true); setIsAdding(false); }) : renderViewModal(item)
@@ -833,7 +833,7 @@ export function DataTable<T extends Record<string, any>>({
       
       {/* Add Entry Dialog */}
       {editableFields && onAdd && (
-        <Dialog open={isAdding && isEditing}>
+      <Dialog open={isAdding}>
           <DialogContent className="max-w-5xl max-h-[85vh] overflow-y-auto">
             {renderEditModal({} as T)}
           </DialogContent>

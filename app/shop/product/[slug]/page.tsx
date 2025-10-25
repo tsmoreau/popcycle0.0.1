@@ -170,7 +170,7 @@ export default function ProductDetail() {
       </section>
 
       {/* Product Information - Single Column Editorial Layout */}
-      <div className="w-auto h-auto mt-6 mb-6">
+      <div className="w-auto h-auto mt-6 mb-8">
       <div className="mt-8 lg:mt-0  w-full justify-end justify-items-end lg:flex lg:justify-center mx-auto items-end">
       <div className="bg-gray-50 lg:w-1/2 w-5/6 self-center h-96 mr-4 flex items-center justify-center overflow-hidden">
         {productInfoImage ? (
@@ -184,16 +184,16 @@ export default function ProductDetail() {
           <ImageIcon className="w-20 h-20 text-gray-300" />
         )}
       </div>
-      <div className="ml-4  max-w-xl pl-6 lg:pl-12 py-6 lg:py-12">
+      <div className="ml-4  max-w-lg pl-6 lg:pl-12 py-6 lg:py-16">
       
 
         {/* Product Name */}
-        <h1 className="text-3xl tracking-tight lg:text-5xl font-normal mb-3 text-gray-800 leading-tight" data-testid="text-product-name">
+        <h1 className="text-3xl tracking-tight lg:text-5xl font-light mb-1.5 text-gray-800 leading-tight" data-testid="text-product-name">
           {product.name}
         </h1>
 <div className="flex">
         {/* Category */}
-        <p className="text-xl text-gray-500 mb-6 font-medium" data-testid="badge-category">
+        <p className="text-xl text-gray-500 mb-6 font-normal" data-testid="badge-category">
           {categoryLabels[product.category]}
         </p>
 
@@ -205,7 +205,7 @@ export default function ProductDetail() {
 
         {/* Description */}
         <div className="prose prose-lg max-w-none">
-          <p className="bg-white text-gray-700 leading-relaxed font-[300] text-xl leading-7" data-testid="text-description">
+          <p className="bg-white text-gray-700 leading-relaxed font-[300] text-xl leading-6.5" data-testid="text-description">
             {product.description}
           </p>
         </div>
@@ -230,7 +230,7 @@ export default function ProductDetail() {
           <div className="flex flex-col sm:flex-row gap-4">
             <Button
               size="lg"
-              className="text-white hover:bg-white hover:text-pop-green bg-pop-green systematic-caps w-xl px-20 h-14 text-base font-light"
+              className="text-white hover:bg-white hover:text-pop-green bg-pop-green systematic-caps w-xl px-12 px-6 text-base font-light"
               disabled={!product.inStock}
               data-testid="button-add-to-cart"
             >
@@ -252,7 +252,7 @@ export default function ProductDetail() {
         </div>
 
       {/* Lifestyle Image Carousel */}
-      <section className="hidden relative w-full h-[80vh] flex mx-auto justify-center mb-6 mt-12">
+      <section className=" relative w-full h-[80vh] flex mx-auto justify-center mb-6 mt-12">
         <div className="relative w-5/6 h-full bg-gray-50">
           {carouselImages.length > 0 ? (
             <>
@@ -317,28 +317,39 @@ export default function ProductDetail() {
     
     
       {/* Narrative & Technical Specifications */}
-     <div className="lg:flex justify-center">
-       <section className=" max-w-3/4  px-6 lg:px-12 py-20 lg:py-32">
+     <div className="lg:flex justify-center  px-6 lg:px-12 py-8 lg:py-16">
+
+              <div className="w-1/3  text-gray-900 px-6">
+                <h2 className="text-3xl font-light mb-12">Narrative</h2>
+       <div className="font-light">
+
+         Every gamer recognizes the panic of a draining health bar. These potion bottle coasters capture that exact moment—swirled colors bleeding through translucent material like liquid catching light through glass.
+         The material's natural inconsistency becomes the design feature. Colors bleed and swirl the way actual liquid settles in a bottle, creating that organic, slightly magical quality. No two are identical.
+         Available as singles or in sets of four showing different fill levels—full to nearly empty—because we all know that feeling of limping back to camp on a sliver of HP.
+
+       </div>
+               </div>
+       <div className=" w-1/3 px-6 ">
          <h2 className="text-3xl font-light mb-12">Specifications</h2>
 
          <dl className="space-y-6 text-base">
-           <div className="flex border-b border-gray-50 pb-4">
+           <div className="flex border-b border-gray-50 pb-2">
              <dt className="w-1/3 text-gray-500 font-light">Material</dt>
              <dd className="w-2/3 text-gray-900 font-light">100% recycled plastic</dd>
            </div>
-           <div className="flex border-b border-gray-50 pb-4">
+           <div className="flex border-b border-gray-50 pb-2">
              <dt className="w-1/3 text-gray-500 font-light">Category</dt>
              <dd className="w-2/3 text-gray-900 font-light">{categoryLabels[product.category]}</dd>
            </div>
-           <div className="flex border-b border-gray-50 pb-4">
+           <div className="flex border-b border-gray-50 pb-2">
              <dt className="w-1/3 text-gray-500 font-light">Type</dt>
              <dd className="w-2/3 text-gray-900 font-light">{productTypeLabels[product.productType]}</dd>
            </div>
-           <div className="flex border-b border-gray-50 pb-4">
+           <div className="flex border-b border-gray-50 pb-2">
              <dt className="w-1/3 text-gray-500 font-light">Traceability</dt>
              <dd className="w-2/3 text-gray-900 font-light">Complete source-to-product tracking</dd>
            </div>
-           <div className="flex border-b border-gray-50 pb-4">
+           <div className="flex border-b border-gray-50 pb-2">
              <dt className="w-1/3 text-gray-500 font-light">Customization</dt>
              <dd className="w-2/3 text-gray-900 font-light">Custom branding available</dd>
            </div>
@@ -347,17 +358,13 @@ export default function ProductDetail() {
              <dd className="w-2/3 text-gray-900 font-light">2-3 business days</dd>
            </div>
          </dl>
-       </section>
-       <section className="text-gray-900 px-6 lg:px-12 py-20 lg:py-32">
-         <h2 className="text-3xl font-light mb-12">Narrative</h2>
-<div className="font-light">The HP/MP Coasters are designed to </div>
-        </section>
+       </div>
    
        </div>
 
 
       {/* Detail Images Grid */}
-      <section className="max-w-screen-2xl mx-auto px-6 lg:px-12 py-20 lg:py-32">
+      <section className="max-w-screen-2xl mx-auto px-6 pt-12">
         <h2 className="text-3xl font-light mb-12 text-center">Details</h2>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
           {detailImages.length > 0 ? (
@@ -386,7 +393,7 @@ export default function ProductDetail() {
 
 
       {/* Related Products */}
-      <section className="bg-gray-50 py-20 lg:py-32">
+      <section className="bg-gray-50 pt-24 lg:pt-48 pb-20">
         <div className="max-w-screen-2xl mx-auto px-6 lg:px-12">
           <h2 className="text-3xl font-light mb-12">You may also like</h2>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6 lg:gap-8">

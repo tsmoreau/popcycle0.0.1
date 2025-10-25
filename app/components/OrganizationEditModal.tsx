@@ -193,7 +193,7 @@ export function OrganizationEditModal({
           </TabsTrigger>
         </TabsList>
 
-        <TabsContent value="details" className="space-y-4 mt-4">
+        <TabsContent value="details" className="bg-stone-100 space-y-4 mt-0">
           <div className="grid grid-cols-2 gap-4">
             <div>
               <Label>Organization Name *</Label>
@@ -541,7 +541,7 @@ export function OrganizationEditModal({
           )}
         </TabsContent>
 
-        <TabsContent value="activities" className="mt-4">
+        <TabsContent value="activities" className="bg-stone-100 mt-0">
           <ActivityTimeline
             activities={formData.activities || []}
             onAddActivity={handleAddActivity}

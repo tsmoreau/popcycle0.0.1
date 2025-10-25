@@ -360,7 +360,7 @@ export function ProductEditModal({
   return (
     <div className="space-y-4">
       <DialogHeader>
-        <DialogTitle className="flex items-center gap-2">
+        <DialogTitle className="">
           {isAdding ? <Plus className="h-5 w-5" /> : <Edit2 className="h-5 w-5" />}
           {isAdding ? 'Add New Product' : `Edit Product: ${item?.name || 'Product'}`}
         </DialogTitle>
@@ -378,7 +378,7 @@ export function ProductEditModal({
           <TabsTrigger value="assets">Assets</TabsTrigger>
         </TabsList>
 
-        <TabsContent value="basic" className="space-y-4 max-h-96 overflow-y-auto">
+        <TabsContent value="basic" className="space-y-4  bg-stone-100">
           <div>
             <Label>Product ID</Label>
             <Input value={formData._id || 'Auto-generated'} disabled />
@@ -486,7 +486,7 @@ export function ProductEditModal({
           </div>
         </TabsContent>
 
-        <TabsContent value="design" className="space-y-6 max-h-96 overflow-y-auto">
+        <TabsContent value="design" className="space-y-6  bg-stone-100">
           <div>
             <Label className="flex items-center gap-2 mb-2">
               <File className="h-4 w-4" />
@@ -734,7 +734,7 @@ export function ProductEditModal({
           </div>
         </TabsContent>
 
-        <TabsContent value="assets" className="space-y-4 max-h-96 overflow-y-auto">
+        <TabsContent value="assets" className="space-y-4  bg-stone-100">
           <div className="grid grid-cols-3 gap-3 mb-4">
             {formData.assets.map((asset: any, index: number) => (
               <div 

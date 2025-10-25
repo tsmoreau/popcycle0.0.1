@@ -12,7 +12,7 @@ export default function Footer() {
     return null;
   }
   return (
-    <footer className="bg-stone-200 text-black py-16 ">
+    <footer className="bg-stone-200 text-black py-16 pt-24">
       <div className="max-w-7xl mx-auto px-6">
         <div className=" lg:flex mx-auto justify-center gap-x-16">
           {/* Logo & Description */}
