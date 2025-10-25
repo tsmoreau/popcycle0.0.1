@@ -84,6 +84,14 @@ PopCycle is built as a unified Next.js PWA with MongoDB, managing all core opera
 - **State Consistency**: Edit transitions properly set editingItem, isEditing, and clear isAdding state across both desktop table and mobile card views
 - **Historical Type Data Display**: Display modal shows ALL populated type-specific sections (communityPartner, limitedClient, retainerClient, wholesaler) with "Historical" badges for non-current orgType, supporting seamless type transitions and audit trail visibility
 
+### Product Edition Schema Migration (January 2025)
+- **Edition Numbering**: Product editions now use numeric `editionNumber` field instead of string `name` field for simplified inventory tracking
+- **Blank Inventory Allocation**: Blank schema includes optional `editionNumber` field enabling edition-specific inventory management and yield calculations
+- **Backward Compatibility**: Product detail page includes runtime fallback (`editionNumber || index + 1`) to handle legacy products with name-based editions
+- **Manufacturing Workflow**: Enables tracking of studio edition production with clear inventory queries: `{productId, editionNumber, orderId: null, status: "blank"}` returns available inventory for specific editions
+- **Auto-Incrementing**: ProductEditModal automatically assigns sequential edition numbers when creating new editions
+- **Migration Path**: New products use numeric editions; existing products display correctly via fallback until database migration
+
 ## External Dependencies
 
 - **Database**: MongoDB
