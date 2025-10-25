@@ -209,9 +209,9 @@ export default function ProductDetail() {
       </section>
 
       {/* Product Information - Single Column Editorial Layout */}
-      <div className="w-full px-12 flex mx-auto justify-center h-auto my-8">
+      <div className="w-full px-6 lg:px-12 flex flex-col lg:flex-row mx-auto justify-center h-auto my-8">
      
-      <div className="bg-gray-50 w-2/3 self-center h-[60vh] flex items-center justify-center overflow-hidden">
+      <div className="bg-gray-50 w-full lg:w-2/3 self-center h-[50vh] lg:h-[60vh] flex items-center justify-center overflow-hidden">
         {productInfoImage ? (
           <img
             src={productInfoImage}
@@ -223,7 +223,7 @@ export default function ProductDetail() {
           <ImageIcon className="w-20 h-20 text-gray-300" />
         )}
       </div>
-      <div className="  w-1/3 lg:pl-12 py-6 lg:py-16">
+      <div className="w-full lg:w-1/3 lg:pl-12 py-6 lg:py-16 px-6 lg:px-0">
       
 
         {/* Product Name */}
@@ -355,9 +355,9 @@ export default function ProductDetail() {
     
     
       {/* Narrative & Technical Specifications */}
-     <div className="lg:flex justify-center  px-6 lg:px-12 py-8 lg:py-16">
-       <div className=" w-1/3 px-6 ">
-          <h2 className="text-3xl font-light mb-12">Specifications</h2>
+     <div className="flex flex-col lg:flex-row justify-center px-6 lg:px-12 py-8 lg:py-16">
+       <div className="w-full lg:w-1/3 px-0 lg:px-6 mb-12 lg:mb-0">
+          <h2 className="text-3xl font-light mb-8 lg:mb-12">Specifications</h2>
 
           <dl className="space-y-3 text-base">
             {product.specs?.dimensions && (
@@ -407,8 +407,8 @@ export default function ProductDetail() {
           </dl>
         </div>
 
-              <div className="w-1/3  text-gray-900 px-6">
-                <h2 className="text-3xl font-light mb-12">Narrative</h2>
+              <div className="w-full lg:w-1/3 text-gray-900 px-0 lg:px-6">
+                <h2 className="text-3xl font-light mb-8 lg:mb-12">Narrative</h2>
        <div className="font-light leading-relaxed whitespace-pre-line">
          {product.narrative || product.description}
        </div>
