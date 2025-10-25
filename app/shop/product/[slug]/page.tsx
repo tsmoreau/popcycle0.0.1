@@ -132,6 +132,13 @@ export default function ProductDetail() {
     );
   }
 
+  // Helper function to get assets by category
+  const getAssetsByCategory = (category: "hero" | "product_info" | "lifestyle" | "detail" | "shop_listing") => {
+    return product.assets
+      ?.filter((a) => a.category === category)
+      .sort((a, b) => (a.order || 0) - (b.order || 0)) || [];
+  };
+
   // Helper function to get images by category
   const getImagesByCategory = (category: "hero" | "product_info" | "lifestyle" | "detail" | "shop_listing") => {
     return product.assets
@@ -149,8 +156,8 @@ export default function ProductDetail() {
       .map((a) => a.url) || []),
   ];
 
-  // Get categorized images with fallbacks
-  const heroImage = getImagesByCategory("hero")[0] || allImages[0];
+  // Get categorized assets with fallbacks
+  const heroAsset = getAssetsByCategory("hero")[0] || (allImages[0] ? { type: 'image', url: allImages[0] } : null);
   const productInfoImage = getImagesByCategory("product_info")[0];
   const lifestyleImages = getImagesByCategory("lifestyle");
   const detailImages = getImagesByCategory("detail");
@@ -172,15 +179,27 @@ export default function ProductDetail() {
     <div className="font-jost  bg-white">
      
      
-      {/* Hero Image Section - Single Static Image */}
+      {/* Hero Section - Image or Video */}
       <section className="relative h-[70vh] bg-gray-50">
-        {heroImage ? (
-          <img
-            src={heroImage}
-            alt={product.name}
-            className="w-full h-full object-cover"
-            data-testid="img-product-hero"
-          />
+        {heroAsset ? (
+          heroAsset.type === 'video' ? (
+            <video
+              src={heroAsset.url}
+              autoPlay
+              loop
+              muted
+              playsInline
+              className="w-full h-full object-cover"
+              data-testid="video-product-hero"
+            />
+          ) : (
+            <img
+              src={heroAsset.url}
+              alt={product.name}
+              className="w-full h-full object-cover"
+              data-testid="img-product-hero"
+            />
+          )
         ) : (
           <div className="w-full h-full flex items-center justify-center">
             <Package className="w-32 h-32 text-gray-200" />
