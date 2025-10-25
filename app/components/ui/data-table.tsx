@@ -729,8 +729,13 @@ export function DataTable<T extends Record<string, any>>({
               <TableBody>
                 {sortedData.map((item, index) => {
                   const hasModal = renderModal || editableFields
-                  const RowContent = (
-                    <TableRow className={hasModal ? "cursor-pointer bg-white" : ""}>
+                  
+                  return (
+                    <TableRow 
+                      key={index}
+                      className={hasModal ? "cursor-pointer bg-white hover:bg-gray-50" : ""}
+                      onClick={hasModal ? () => { setEditingItem(item); setIsAdding(false); } : undefined}
+                    >
                       {visibleColumns.map((column) => (
                         <TableCell
                           key={String(column.key)}
@@ -741,24 +746,6 @@ export function DataTable<T extends Record<string, any>>({
                       ))}
                     </TableRow>
                   )
-
-                  if (hasModal) {
-                    return (
-                      <Dialog key={index} open={isEditing && editingItem === item ? true : undefined}>
-                        <DialogTrigger asChild>
-                          {RowContent}
-                        </DialogTrigger>
-                        <DialogContent key={isEditing && editingItem === item ? 'edit' : 'view'} className="max-w-6xl max-h-[90vh] overflow-y-auto">
-                          {isEditing && editingItem === item ? 
-                            renderEditModal(editingItem) : 
-                            renderModal ? renderModal(item, () => { setEditingItem(item); setIsEditing(true); setIsAdding(false); }) : renderViewModal(item)
-                          }
-                        </DialogContent>
-                      </Dialog>
-                    )
-                  }
-
-                  return <div key={index}>{RowContent}</div>
                 })}
               </TableBody>
             </Table>
@@ -792,8 +779,13 @@ export function DataTable<T extends Record<string, any>>({
           <div className="space-y-3 overflow-auto" style={{ maxHeight: 'calc(100vh - 300px)' }}>
             {sortedData.map((item, index) => {
               const hasModal = renderModal || editableFields
-              const CardContent = (
-                <div className={`p-4 border rounded-lg bg-white ${hasModal ? "cursor-pointer hover:bg-gray-50" : ""}`}>
+              
+              return (
+                <div 
+                  key={index}
+                  className={`p-4 border rounded-lg bg-white ${hasModal ? "cursor-pointer hover:bg-gray-50" : ""}`}
+                  onClick={hasModal ? () => { setEditingItem(item); setIsAdding(false); } : undefined}
+                >
                   <div className="space-y-2">
                     {visibleColumns.map((column, colIndex) => (
                       <div key={String(column.key)} className={`flex justify-between items-start ${colIndex === 0 ? "mb-3" : ""}`}>
@@ -808,37 +800,39 @@ export function DataTable<T extends Record<string, any>>({
                   </div>
                 </div>
               )
-
-              if (hasModal) {
-                return (
-                  <Dialog key={index} open={isEditing && editingItem === item ? true : undefined}>
-                    <DialogTrigger asChild>
-                      {CardContent}
-                    </DialogTrigger>
-                    <DialogContent key={isEditing && editingItem === item ? 'edit' : 'view'} className="max-w-5xl max-h-[85vh] overflow-y-auto">
-                      {isEditing && editingItem === item ? 
-                        renderEditModal(editingItem) : 
-                        renderModal ? renderModal(item, () => { setEditingItem(item); setIsEditing(true); setIsAdding(false); }) : renderViewModal(item)
-                      }
-                    </DialogContent>
-                  </Dialog>
-                )
-              }
-
-              return <div key={index}>{CardContent}</div>
             })}
           </div>
         </div>
       </CardContent>
       
-      {/* Add Entry Dialog */}
-      {editableFields && onAdd && (
-      <Dialog open={isAdding}>
-          <DialogContent className="max-w-5xl max-h-[85vh] overflow-y-auto">
-            {renderEditModal({} as T)}
-          </DialogContent>
-        </Dialog>
-      )}
+      {/* Unified Modal Dialog */}
+      <Dialog 
+        open={editingItem !== null || isAdding} 
+        onOpenChange={(open) => {
+          if (!open) {
+            setEditingItem(null)
+            setIsEditing(false)
+            setIsAdding(false)
+            setEditFormData({})
+          }
+        }}
+      >
+        <DialogContent 
+          key={isEditing ? 'edit' : isAdding ? 'add' : 'view'} 
+          className="max-w-6xl max-h-[90vh] overflow-y-auto"
+        >
+          {isAdding || (isEditing && editingItem) ? (
+            renderEditModal(editingItem || {} as T)
+          ) : editingItem ? (
+            renderModal ? 
+              renderModal(editingItem, () => { 
+                setIsEditing(true)
+                setIsAdding(false)
+              }) : 
+              renderViewModal(editingItem)
+          ) : null}
+        </DialogContent>
+      </Dialog>
     </Card>
   )
 }
