@@ -417,7 +417,7 @@ export default function ProductDetail() {
 
       {/* Editions Section */}
       {product.editions && product.editions.length > 0 && (
-        <section className="max-w-screen-2xl mx-auto px-6 lg:px-12 py-12">
+        <section className="hidden max-w-screen-2xl mx-auto px-6 lg:px-12 py-12">
           <h2 className="text-3xl font-light mb-8">Editions</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {product.editions.map((edition, index) => (
@@ -488,7 +488,7 @@ export default function ProductDetail() {
       </section>
 
        {/* Object Text */}
-      <section className="max-w-screen-2xl mx-auto px-6 mt-16 mb-48 ">
+      <section className="max-w-screen-2xl mx-auto px-6 mt-16 mb-16 ">
         <h2 className="text-xl text-gray-400 font-light  text-center">PopCycle Studio Object 001</h2>
     
       </section>
