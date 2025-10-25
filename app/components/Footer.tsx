@@ -14,10 +14,10 @@ export default function Footer() {
   return (
     <footer className="bg-stone-200 text-black py-16 pt-24">
       <div className="max-w-7xl mx-auto px-6">
-        <div className=" lg:flex mx-auto justify-center gap-x-16">
+        <div className="lg:flex mx-auto justify-center gap-x-16">
           {/* Logo & Description */}
-          <div className="md:col-span-2 mb-8 w-auto md:mb-0">
-            <Link href="/" className=" self-end pb-2 flex items-center space-x-2 group lg:mx-0 mx-auto">
+          <div className="md:col-span-2 mb-8 w-auto md:mb-0 text-center lg:text-left">
+            <Link href="/" className="self-end pb-2 flex items-center space-x-2 group mx-auto lg:mx-0 justify-center lg:justify-start">
               <div className="w-10 h-10 bg-pop-green flex items-center justify-center transition-all group-hover:bg-opacity-90 mt-1">
                 <span className="text-white font-bold helvetica-bold text-lg">P</span>
               </div>
@@ -34,7 +34,7 @@ export default function Footer() {
           </div>
 
           {/* Resources */}
-          <div className="mb-2 md:mb-0">
+          <div className="mb-8 md:mb-0 text-center lg:text-left">
             <h3 className="systematic-caps text-xs font-semibold mb-4 text-gray-800 tracking-wider">
               Resources
             </h3>
@@ -61,7 +61,7 @@ export default function Footer() {
           </div>
 
           {/* Connect */}
-          <div className="mb-2 md:mb-0">
+          <div className="mb-8 md:mb-0 text-center lg:text-left">
             <h3 className="systematic-caps text-xs font-semibold mb-4 text-gray-800 tracking-wider">
               Connect
             </h3>
@@ -82,7 +82,7 @@ export default function Footer() {
           </div>
 
           {/* Social Media */}
-          <div className="mb-2 md:mb-0">
+          <div className="mb-8 md:mb-0 text-center lg:text-left">
             <h3 className="systematic-caps text-xs font-semibold mb-4 text-gray-800 tracking-wider">
               Social Media
             </h3>
