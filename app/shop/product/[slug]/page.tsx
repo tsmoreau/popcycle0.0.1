@@ -181,7 +181,7 @@ export default function ProductDetail() {
      
      
       {/* Hero Section - Image or Video */}
-      <section className="relative h-[50vh] lg:h-[70vh] bg-gray-50">
+      <section className="relative h-[40vh] lg:h-[60vh] bg-gray-50">
         {heroAsset ? (
           heroAsset.type === 'video' ? (
             <video

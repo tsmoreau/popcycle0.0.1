@@ -4,8 +4,9 @@ import { getPublicUrl } from '../../../../../lib/gcs'
 
 export async function GET(
   request: NextRequest,
-  { params }: { params: { slug: string } }
+  { params }: { params: Promise<{ slug: string }> }
 ) {
+  const { slug } = await params
   const client = new MongoClient(process.env.MONGODB_URI!)
   
   try {
@@ -13,7 +14,7 @@ export async function GET(
     const db = client.db('PopCycle')
     
     // Find product by slug
-    const product = await db.collection('products').findOne({ slug: params.slug })
+    const product = await db.collection('products').findOne({ slug })
     
     if (!product) {
       return NextResponse.json({ error: 'Product not found' }, { status: 404 })
