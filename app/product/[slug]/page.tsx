@@ -3,8 +3,8 @@
 import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import Link from "next/link";
-import { Button } from "../../../components/ui/button";
-import { LoadingSquare } from "../../../components/ui/loading-square";
+import { Button } from "../../components/ui/button";
+import { LoadingSquare } from "../../components/ui/loading-square";
 import { ArrowLeft, ChevronLeft, ChevronRight, Package, Image as ImageIcon } from "lucide-react";
 
 interface Product {
