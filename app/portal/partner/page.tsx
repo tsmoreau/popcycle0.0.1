@@ -106,13 +106,11 @@ export default function PartnerPage() {
     const fetchProducts = async () => {
       try {
         setLoadingProducts(true)
-        const response = await fetch('/api/admin/products')
+        const response = await fetch(`/api/admin/products?orgId=${selectedOrgId}`)
         const data = await response.json()
         
         if (response.ok && Array.isArray(data)) {
-          // Filter products by selectedOrgId
-          const filteredProducts = data.filter((p: Product) => String(p.org) === String(selectedOrgId))
-          setProducts(filteredProducts)
+          setProducts(data)
         } else {
           console.error('Error fetching products:', data.error || 'Invalid response')
           setProducts([])
@@ -135,13 +133,11 @@ export default function PartnerPage() {
     const fetchBins = async () => {
       try {
         setLoadingBins(true)
-        const response = await fetch('/api/operations/bins')
+        const response = await fetch(`/api/operations/bins?orgId=${selectedOrgId}`)
         const data = await response.json()
         
         if (response.ok && Array.isArray(data)) {
-          // Filter bins by selectedOrgId
-          const filteredBins = data.filter((b: Bin) => String(b.orgId) === String(selectedOrgId))
-          setBins(filteredBins)
+          setBins(data)
         } else {
           console.error('Error fetching bins:', data.error || 'Invalid response')
           setBins([])

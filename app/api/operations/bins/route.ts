@@ -3,10 +3,17 @@ import { ObjectId } from 'mongodb'
 import { getDatabase } from '../../../../lib/mongodb'
 import { Bin } from '../../../../lib/schemas-v3'
 
-export async function GET() {
+export async function GET(request: NextRequest) {
   try {
+    const { searchParams } = new URL(request.url)
+    const orgIdParam = searchParams.get('orgId')
+    
     const db = await getDatabase()
-    const bins = await db.collection<Bin>('bins').find({}).toArray()
+    
+    // Build query - filter by orgId if provided, otherwise return all
+    const query = orgIdParam ? { orgId: new ObjectId(orgIdParam) } : {}
+    
+    const bins = await db.collection<Bin>('bins').find(query).toArray()
     return NextResponse.json(bins)
   } catch (error) {
     console.error('Error fetching bins:', error)

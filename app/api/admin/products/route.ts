@@ -9,14 +9,21 @@ if (!MONGODB_URI) {
 }
 
 // GET - Fetch all products
-export async function GET() {
+export async function GET(request: Request) {
   const client = new MongoClient(MONGODB_URI);
   
   try {
     await client.connect();
     const db = client.db('PopCycle');
     
-    const products = await db.collection('products').find({}).toArray();
+    // Extract orgId query parameter if provided
+    const url = new URL(request.url);
+    const orgIdParam = url.searchParams.get('orgId');
+    
+    // Build query - filter by org if provided, otherwise return all
+    const query = orgIdParam ? { org: new ObjectId(orgIdParam) } : {};
+    
+    const products = await db.collection('products').find(query).toArray();
     
     // Generate signed URLs for private files
     const productsWithUrls = await Promise.all(
