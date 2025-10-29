@@ -274,11 +274,13 @@ export default function Navigation() {
             // 1. DATA STRUCTURE
             // We define the sections that will be used.
             const companySection = {
-              title: "Company",
+              title: "",
               items: [
                 { href: "/about#team", label: "Team" },
                 { href: "/about#story", label: "Story" },
                 { href: "/about#process", label: "Process" },
+                { href: "/about#contact", label: "Contact" },
+                { href: "/about#faq", label: "FAQ" },
               ],
             };
             const connectSection = {
@@ -293,7 +295,7 @@ export default function Navigation() {
             const aboutColumns = [
               [ // Column 1
                 companySection,
-                connectSection,
+                
               ],
            
             ];
@@ -322,7 +324,7 @@ export default function Navigation() {
                         {/* Inner loop renders the stacked sections inside each column */}
                         {column.map((section, secIndex) => (
                           <div key={secIndex} className="mb-8">
-                            <Link href={section.items?.[0]?.href || '#'} className="block systematic-caps text-sm font-normal text-gray-400 mb-4 hover:text-pop-green transition-colors cursor-pointer ">
+                            <Link href={section.items?.[0]?.href || '#'} className="hidden block systematic-caps text-sm font-normal text-gray-400 mb-4 hover:text-pop-green transition-colors cursor-pointer ">
                               {section.title}
                             </Link>
                             <div className="space-y-2">
