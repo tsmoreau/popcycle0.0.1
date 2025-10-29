@@ -296,8 +296,9 @@ export default function CRMPage() {
 
   const handleOrganizationSave = async (organization: Organization) => {
     try {
+      const isNew = !organization._id
       const response = await fetch('/api/crm/organizations', {
-        method: 'PUT',
+        method: isNew ? 'POST' : 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(organization)
       })
