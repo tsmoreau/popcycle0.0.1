@@ -216,6 +216,7 @@ export interface Product {
   name: string;
   description: string;
   slug: string; // URL-friendly identifier for product routes
+  org: ObjectId;
 
   // Business model classification
   category: "workshop" | "studio_edition" | "client_edition";
