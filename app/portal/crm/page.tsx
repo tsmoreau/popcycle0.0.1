@@ -158,7 +158,16 @@ export default function CRMPage() {
            org.orgType === 'limited_client' ? 'Limited Client' :
            org.orgType === 'retainer_client' ? 'Retainer Client' : 'Wholesaler'}
         </Badge>
-      )
+      ),
+      filterValue: (org: Organization) => {
+        const typeLabels: Record<string, string> = {
+          'community_partner': 'Community Partner',
+          'limited_client': 'Limited Client',
+          'retainer_client': 'Retainer Client',
+          'wholesaler': 'Wholesaler'
+        }
+        return typeLabels[org.orgType] || org.orgType
+      }
     },
     {
       key: 'status',

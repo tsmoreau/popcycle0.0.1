@@ -30,6 +30,7 @@ export interface Column<T> {
   header: string
   sortable?: boolean
   render?: (item: T) => React.ReactNode
+  filterValue?: (item: T) => string
 }
 
 export interface EditableField<T> {
@@ -131,7 +132,10 @@ export function DataTable<T extends Record<string, any>>({
     return Object.entries(columnFilters).every(([columnKey, filterValue]) => {
       if (!filterValue) return true // No filter applied
       
-      const itemValue = item[columnKey]
+      // Find the column definition to check for custom filterValue function
+      const column = allColumns.find(col => String(col.key) === columnKey)
+      const itemValue = column?.filterValue ? column.filterValue(item) : item[columnKey]
+      
       if (itemValue == null) return false
       
       // Handle different filter types
