@@ -23,9 +23,12 @@ export interface Org {
   _id: ObjectId;
   name: string;
   slug: string;
-  orgType: "community_partner" | "limited_client" | "retainer_client" | "wholesaler";
+  orgType:
+    | "community_partner"
+    | "limited_client"
+    | "retainer_client"
+    | "wholesaler";
   description: string;
-  
 
   // Universal contact information (supports multiple contacts)
   contactInfo: Array<{
@@ -37,7 +40,8 @@ export interface Org {
   }>;
 
   users: ObjectId[]; // References to User collection
-  
+  products: ObjectId[]; // References to Product collection
+
   // Universal branding
   branding: {
     primaryColor?: string;
@@ -108,7 +112,18 @@ export interface Org {
   };
 
   // CRM pipeline tracking
-  status?: "n_a" | "prospect" | "contacted" | "in_talks" | "proposal_sent" | "negotiation" | "active_partner" | "active_client" | "active_wholesaler" | "onboarding" | "closed_lost";
+  status?:
+    | "n_a"
+    | "prospect"
+    | "contacted"
+    | "in_talks"
+    | "proposal_sent"
+    | "negotiation"
+    | "active_partner"
+    | "active_client"
+    | "active_wholesaler"
+    | "onboarding"
+    | "closed_lost";
   internalNotes?: string;
   activities?: any[]; // Activity timeline entries
   lastContactDate?: Date;
@@ -251,7 +266,12 @@ export interface Product {
     description?: string;
     isPrimary?: boolean;
     order?: number;
-    category?: "hero" | "product_info" | "lifestyle" | "detail" | "shop_listing";
+    category?:
+      | "hero"
+      | "product_info"
+      | "lifestyle"
+      | "detail"
+      | "shop_listing";
   }>;
 
   // Editorial content fields
