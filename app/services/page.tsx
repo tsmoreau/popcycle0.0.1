@@ -1,249 +1,134 @@
-import { Card, CardContent, CardHeader, CardTitle } from "../components/ui/card";
 import { Button } from "../components/ui/button";
-import { Badge } from "../components/ui/badge";
-import { PopArtContainer } from "../components/PopArtElements";
-import { Recycle, Factory, Package, Wrench, ArrowRight } from "lucide-react";
+import { ArrowRight, Palette, Sparkles, Users, Box, Droplet } from "lucide-react";
 import Link from "next/link";
 
 export default function Services() {
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen bg-white font-jost">
       {/* Hero Section */}
+      <section className="relative py-40 lg:py-48 px-6 bg-black overflow-hidden flex items-center">
+        <div className="absolute inset-0 bg-gradient-to-b from-black/50 to-black/80 z-10"></div>
+        
+        <div className="max-w-5xl mx-auto text-center relative z-20">
+          <h1 className="text-4xl lg:text-6xl mb-8 tracking-tight leading-tight text-white font-light">
+            Services
+          </h1>
+          <p className="text-lg lg:text-xl max-w-3xl mx-auto leading-relaxed text-white/90 font-light">
+            Complete circular manufacturing solutions from waste collection through custom product creation and delivery.
+          </p>
+        </div>
+      </section>
 
-      <div className="font-jost relative h-[40vh] lg:h-[60vh] bg-gray-50 items-center justify-center text-center flex">
-        <div className="flex-col flex mx-auto">
-        <h1 className="text-6xl font-light mb-6 text-pop-black">Services</h1>
-        <p className="text-xl text-pop-black max-w-3xl mx-auto mb-8 font-extralight">
-           Complete circular manufacturing solutions from waste collection through custom product creation and delivery.
-        </p>
-          </div>
-      </div>
-
-      <div className="pb-20 pt-10">
-        <div className="max-w-6xl mx-auto px-4">
-
-        {/* Community Partnerships Section */}
-        <section className="mb-20 scroll-mt-24" id="community-partnerships">
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
+      {/* Studio Retainer Section */}
+      <section className="pt-16 pb-12 lg:pt-20 lg:pb-16 px-6 bg-white">
+        <div className="max-w-7xl mx-auto">
+          <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-start">
             <div>
-              <h2 className="text-4xl helvetica-bold mb-6">
-                <span className="text-pop-green">COMMUNITY PARTNERSHIPS</span>
-              </h2>
-              <p className="text-lg mb-6 text-pop-gray">
-                Building circular economy networks through community makerspaces, schools, and local organizations. Every partnership creates new pathways for plastic transformation and education.
+              <h2 className="text-3xl lg:text-4xl font-light mb-6 lg:mb-8">Studio Retainer</h2>
+              <p className="text-base lg:text-lg text-gray-700 leading-relaxed font-light mb-6">
+                Ongoing partnership model for organizations seeking continuous creative output and material transformation. 
+                We become an extension of your team, delivering regular collections and custom pieces throughout the year.
               </p>
-              <ul className="space-y-3 mb-8">
-                <li className="flex items-center">
-                  <div className="w-3 h-3 bg-pop-green mr-3"></div>
-                  <span className="systematic-caps text-sm">Makerspace integration programs</span>
-                </li>
-                <li className="flex items-center">
-                  <div className="w-3 h-3 bg-pop-green mr-3"></div>
-                  <span className="systematic-caps text-sm">Community collection points</span>
-                </li>
-                <li className="flex items-center">
-                  <div className="w-3 h-3 bg-pop-green mr-3"></div>
-                  <span className="systematic-caps text-sm">Local educator training</span>
-                </li>
-                <li className="flex items-center">
-                  <div className="w-3 h-3 bg-pop-green mr-3"></div>
-                  <span className="systematic-caps text-sm">Impact measurement tools</span>
-                </li>
-              </ul>
-              <Link href="/about#contact">
-                <Button className="bg-pop-green text-pop-black hover:bg-pop-black hover:text-white systematic-caps">
-                  Join Community Network
-                  <ArrowRight className="ml-2 w-4 h-4" />
-                </Button>
-              </Link>
-            </div>
-            <PopArtContainer color="green" shadow>
-              <Card className="border border-gray-200">
-                <CardContent className="p-8">
-                  <Recycle className="w-16 h-16 text-pop-green mb-6" />
-                  <div className="grid grid-cols-2 gap-4">
-                    <div>
-                      <div className="text-2xl helvetica-bold text-pop-green">75+</div>
-                      <div className="systematic-caps text-xs text-pop-gray">Partner locations</div>
-                    </div>
-                    <div>
-                      <div className="text-2xl helvetica-bold text-pop-green">2.4k</div>
-                      <div className="systematic-caps text-xs text-pop-gray">Students reached</div>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-            </PopArtContainer>
-          </div>
-        </section>
-
-        {/* Corporate ESG & Events Section */}
-        <section className="mb-20 scroll-mt-24" id="corporate-esg-events">
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
-            <div>
-              <h2 className="text-4xl helvetica-bold mb-6">
-                <span className="text-pop-blue">CORPORATE ESG & EVENTS</span>
-              </h2>
-              <p className="text-lg mb-6 text-pop-gray">
-                Transform corporate sustainability goals into tangible impact through team-building maker workshops and measurable ESG outcomes with complete QR tracking.
-              </p>
-              <ul className="space-y-3 mb-8">
-                <li className="flex items-center">
-                  <div className="w-3 h-3 bg-pop-blue mr-3"></div>
-                  <span className="systematic-caps text-sm">Team maker workshops</span>
-                </li>
-                <li className="flex items-center">
-                  <div className="w-3 h-3 bg-pop-blue mr-3"></div>
-                  <span className="systematic-caps text-sm">ESG impact reporting</span>
-                </li>
-                <li className="flex items-center">
-                  <div className="w-3 h-3 bg-pop-blue mr-3"></div>
-                  <span className="systematic-caps text-sm">Employee engagement programs</span>
-                </li>
-                <li className="flex items-center">
-                  <div className="w-3 h-3 bg-pop-blue mr-3"></div>
-                  <span className="systematic-caps text-sm">Sustainability storytelling</span>
-                </li>
-              </ul>
-              <Link href="/about#contact">
-                <Button className="bg-pop-blue text-white hover:bg-pop-black hover:text-white systematic-caps">
-                  Request ESG Consultation
-                  <ArrowRight className="ml-2 w-4 h-4" />
-                </Button>
-              </Link>
-            </div>
-            <PopArtContainer color="blue" shadow>
-              <Card className="border border-gray-200">
-                <CardContent className="p-8">
-                  <Factory className="w-16 h-16 text-pop-blue mb-6" />
-                  <div className="space-y-4">
-                    <div className="flex justify-between">
-                      <span className="systematic-caps text-sm">ESG Reporting</span>
-                      <span className="text-pop-blue helvetica-bold">100%</span>
-                    </div>
-                    <div className="flex justify-between">
-                      <span className="systematic-caps text-sm">Team Events</span>
-                      <span className="text-pop-blue helvetica-bold">45+</span>
-                    </div>
-                    <div className="flex justify-between">
-                      <span className="systematic-caps text-sm">Carbon Offset</span>
-                      <span className="text-pop-blue helvetica-bold">2.1t</span>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-            </PopArtContainer>
-          </div>
-        </section>
-
-        {/* Educational Kits & Workshops Section */}
-        <section className="mb-20 scroll-mt-24" id="educational-kits-workshops">
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
-            <div>
-              <h2 className="text-4xl helvetica-bold mb-6">
-                <span className="text-pop-red">EDUCATIONAL KITS & WORKSHOPS</span>
-              </h2>
-              <p className="text-lg mb-6 text-pop-gray">
-                Complete maker education experiences using products made from tracked plastic waste. Every kit tells the story of circular manufacturing through hands-on learning.
-              </p>
-              <div className="grid grid-cols-2 gap-4 mb-8">
-                <div>
-                  <Badge className="bg-pop-red text-white mb-2">Robotics Kits</Badge>
-                  <p className="text-sm text-pop-gray">Build rovers from plastic waste</p>
-                </div>
-                <div>
-                  <Badge className="bg-pop-red text-white mb-2">Maker Workshops</Badge>
-                  <p className="text-sm text-pop-gray">Hands-on circular economy education</p>
-                </div>
-                <div>
-                  <Badge className="bg-pop-red text-white mb-2">Assembly Sets</Badge>
-                  <p className="text-sm text-pop-gray">STEM construction challenges</p>
-                </div>
-                <div>
-                  <Badge className="bg-pop-red text-white mb-2">QR Tracking</Badge>
-                  <p className="text-sm text-pop-gray">Complete waste-to-product stories</p>
+              <div className="space-y-4">
+                <div className="border-l-2 border-pop-blue pl-4">
+                  <h3 className="text-lg lg:text-xl font-medium mb-2">Seasonal Collections</h3>
+                  <p className="text-sm lg:text-base text-gray-600 leading-relaxed font-light">
+                    Quarterly releases of limited-edition products made from tracked plastic waste streams. 
+                    Each collection tells a unique story through design and provenance.
+                  </p>
                 </div>
               </div>
-              <Link href="/products">
-                <Button className="bg-pop-red text-white hover:bg-pop-black hover:text-white systematic-caps">
-                  View Educational Kits
-                  <ArrowRight className="ml-2 w-4 h-4" />
-                </Button>
-              </Link>
             </div>
-            <PopArtContainer color="red" shadow>
-              <Card className="border border-gray-200">
-                <CardContent className="p-8">
-                  <Package className="w-16 h-16 text-pop-red mb-6" />
-                  <div className="space-y-3">
-                    <div className="systematic-caps text-xs text-pop-gray mb-2">Monthly kit production</div>
-                    <div className="text-3xl helvetica-bold text-pop-red">850</div>
-                    <div className="systematic-caps text-xs text-pop-gray">Educational kits delivered</div>
-                  </div>
-                </CardContent>
-              </Card>
-            </PopArtContainer>
-          </div>
-        </section>
-
-        {/* Custom Products Section */}
-        <section className="scroll-mt-24" id="custom-products">
-          <div className="text-center mb-12">
-            <h2 className="text-4xl helvetica-bold mb-6">
-              <span className="text-pop-black">CUSTOM PRODUCTS</span>
-            </h2>
-            <p className="text-lg text-pop-gray max-w-3xl mx-auto mb-8">
-              Design custom educational products from your plastic waste. Complete QR tracking from your office to your classroom.
-            </p>
-          </div>
-          
-          <div className="grid md:grid-cols-3 gap-0 border border-gray-200 divide-x divide-y divide-gray-200 bg-white">
-            <div className="text-center p-8">
-              <Wrench className="w-12 h-12 text-pop-green mx-auto mb-4" />
-              <h3 className="systematic-caps text-lg mb-2 font-bold">Design Consultation</h3>
-              <p className="text-sm text-pop-gray">Custom product development tailored to your educational needs</p>
-            </div>
-            
-            <div className="text-center p-8">
-              <Factory className="w-12 h-12 text-pop-blue mx-auto mb-4" />
-              <h3 className="systematic-caps text-lg mb-2 font-bold">Prototyping</h3>
-              <p className="text-sm text-pop-gray">Rapid prototyping and testing before full production runs</p>
-            </div>
-            
-            <div className="text-center p-8">
-              <Package className="w-12 h-12 text-pop-red mx-auto mb-4" />
-              <h3 className="systematic-caps text-lg mb-2 font-bold">Production</h3>
-              <p className="text-sm text-pop-gray">Scalable manufacturing with complete QR provenance tracking</p>
+            <div className="aspect-[4/3] bg-gray-100 flex items-center justify-center">
+              <Palette className="w-24 h-24 text-gray-300" />
             </div>
           </div>
-          
-          <div className="text-center mt-12">
-            <Link href="/about#contact">
-              <Button size="lg" className="bg-pop-black text-white hover:bg-pop-green hover:text-pop-black systematic-caps text-lg px-8 py-4">
-                Start Custom Project
-                <ArrowRight className="ml-2 w-5 h-5" />
-              </Button>
-            </Link>
-          </div>
-        </section>
         </div>
-      </div>
+      </section>
+
+      {/* Limited Commission Section */}
+      <section className="pt-12 pb-12 lg:pt-16 lg:pb-16 px-6 bg-gray-50">
+        <div className="max-w-7xl mx-auto">
+          <h2 className="text-3xl lg:text-4xl font-light mb-12 lg:mb-16">Limited Commission</h2>
+          
+          <div className="grid lg:grid-cols-2 gap-8 lg:gap-12">
+            {/* Custom Collection */}
+            <div className="bg-white p-8">
+              <Sparkles className="w-12 h-12 text-pop-blue mb-6" />
+              <h3 className="text-xl lg:text-2xl font-medium mb-4">Custom Collection</h3>
+              <p className="text-base text-gray-600 leading-relaxed font-light">
+                Bespoke product lines designed specifically for your brand or organization. 
+                From concept to delivery, we work with your plastic waste streams to create 
+                unique pieces that reflect your values and story.
+              </p>
+            </div>
+
+            {/* Installations */}
+            <div className="bg-white p-8">
+              <Box className="w-12 h-12 text-pop-blue mb-6" />
+              <h3 className="text-xl lg:text-2xl font-medium mb-4">Installations</h3>
+              <p className="text-base text-gray-600 leading-relaxed font-light">
+                Large-scale sculptural works and environmental installations created from 
+                recycled materials. Perfect for exhibitions, events, and permanent displays 
+                that make powerful statements about sustainability.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Community Partners Section */}
+      <section className="pt-12 pb-12 lg:pt-16 lg:pb-16 px-6 bg-white">
+        <div className="max-w-7xl mx-auto">
+          <h2 className="text-3xl lg:text-4xl font-light mb-12 lg:mb-16">Community Partners</h2>
+          
+          <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-start">
+            <div>
+              <div className="space-y-6">
+                <div className="border-l-2 border-pop-green pl-4">
+                  <h3 className="text-lg lg:text-xl font-medium mb-2">Consignment Collections</h3>
+                  <p className="text-sm lg:text-base text-gray-600 leading-relaxed font-light">
+                    Partner makerspaces and educational institutions can offer PopCycle products 
+                    through consignment arrangements, creating new revenue streams while promoting 
+                    circular economy principles.
+                  </p>
+                </div>
+                
+                <div className="border-l-2 border-pop-green pl-4">
+                  <h3 className="text-lg lg:text-xl font-medium mb-2">Material Sourcing</h3>
+                  <p className="text-sm lg:text-base text-gray-600 leading-relaxed font-light">
+                    Community collection programs that transform local plastic waste into educational 
+                    resources. We provide training, tracking systems, and support for grassroots 
+                    circular economy initiatives.
+                  </p>
+                </div>
+              </div>
+            </div>
+            
+            <div className="aspect-[4/3] bg-gray-100 flex items-center justify-center">
+              <Users className="w-24 h-24 text-gray-300" />
+            </div>
+          </div>
+        </div>
+      </section>
 
       {/* Footer CTA Section */}
-      <section className="py-20 px-4 bg-pop-black">
-        <div className="max-w-4xl mx-auto text-center">
-          <h2 className="text-4xl lg:text-6xl helvetica-bold mb-8 text-white">
-            TRANSFORM YOUR<br />
-            PLASTIC IMPACT
+      <section className="relative py-32 lg:py-40 px-6 bg-white overflow-hidden flex items-center">
+        <div className="max-w-4xl mx-auto text-center relative z-20">
+          <h2 className="text-3xl lg:text-5xl font-light mb-6 lg:mb-8 text-black">
+            Start Your Project
           </h2>
-          
-          <p className="text-xl mb-12 text-white leading-relaxed">
-            Partner with us to create trackable educational products from your corporate waste.
+
+          <p className="text-lg lg:text-xl mb-10 lg:mb-12 text-black/80 leading-relaxed font-light">
+            Partner with us to transform plastic waste into meaningful products and collections.
           </p>
-          
+
           <Link href="/about#contact">
-            <Button size="lg" className="bg-pop-green text-pop-black hover:bg-white hover:text-pop-black systematic-caps text-lg px-12 py-4">
-              GET STARTED
+            <Button
+              size="lg"
+              className="bg-white text-black hover:bg-gray-100 text-base px-8 py-6 h-auto font-normal border border-gray-200"
+            >
+              Get in Touch
               <ArrowRight className="ml-2 w-5 h-5" />
             </Button>
           </Link>
