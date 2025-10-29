@@ -34,6 +34,7 @@ interface Product {
     description?: string;
     isPrimary?: boolean;
     order?: number;
+    category?: "hero" | "product_info" | "lifestyle" | "detail" | "shop_listing";
   }[];
   price: number;
   inStock: boolean;
@@ -56,6 +57,25 @@ const categories = [
   "Studio Edition",
   "Client Edition",
 ];
+
+// Helper function to get the shop listing image for a product
+function getShopListingImage(product: Product): string | null {
+  // First, try to find an asset with category "shop_listing"
+  const shopListingAsset = product.assets?.find(
+    (asset) => asset.type === 'image' && asset.category === 'shop_listing'
+  );
+  
+  if (shopListingAsset) {
+    return shopListingAsset.url;
+  }
+  
+  // Fall back to designFiles.photos
+  if (product.designFiles.photos && product.designFiles.photos.length > 0) {
+    return product.designFiles.photos[0];
+  }
+  
+  return null;
+}
 
 export default function Shop() {
   const [products, setProducts] = useState<Product[]>([]);
@@ -173,16 +193,19 @@ export default function Shop() {
           </div>
         ) : (
           <div className="grid md:grid-cols-2 lg:grid-cols-3">
-            {filteredProducts.map((product) => (
+            {filteredProducts.map((product) => {
+              const shopImage = getShopListingImage(product);
+              
+              return (
               <div 
                 key={product._id} 
                 className="bg-white border border-gray-200 p-8 -ml-[1px] -mt-[1px]"
                 data-testid={`card-product-${product._id}`}
               >
                 <div className="w-full h-64 mb-4 flex items-center justify-center overflow-hidden bg-gray-50">
-                  {product.designFiles.photos && product.designFiles.photos.length > 0 ? (
+                  {shopImage ? (
                     <img 
-                      src={product.designFiles.photos[0]} 
+                      src={shopImage} 
                       alt={product.name}
                       className="w-full h-full object-contain"
                       data-testid={`img-product-${product._id}`}
@@ -213,7 +236,8 @@ export default function Shop() {
                   </p>
                 </div>
               </div>
-            ))}
+              );
+            })}
           </div>
         )}
       </div>
