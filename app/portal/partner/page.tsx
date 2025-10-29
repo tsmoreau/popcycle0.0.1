@@ -289,7 +289,7 @@ export default function PartnerPage() {
             <div className="flex items-center gap-3">
               <FileText className="h-5 w-5 text-pop-blue" />
               <div className="text-left">
-                <h3 className="text-lg font-semibold text-pop-black">Partner Documentation</h3>
+                <h3 className="text-lg font-semibold text-pop-black">{selectedOrg?.name || 'Partner'} Documentation</h3>
                 <p className="text-sm text-gray-600 font-normal">Essential documents and agreements</p>
               </div>
             </div>
@@ -385,7 +385,7 @@ export default function PartnerPage() {
             <div className="flex items-center gap-3">
               <Package className="h-5 w-5 text-pop-green" />
               <div className="text-left">
-                <h3 className="text-lg font-semibold text-pop-black">Partner Products</h3>
+                <h3 className="text-lg font-semibold text-pop-black">{selectedOrg?.name || 'Partner'} Products</h3>
                 <p className="text-sm text-gray-600 font-normal">
                   {loadingProducts ? 'Loading products...' : `${products.length} product${products.length !== 1 ? 's' : ''} made from your waste`}
                 </p>
