@@ -413,12 +413,10 @@ export default function Navigation() {
             const productColumns = [
               [ // Column 1
                 coastersSection,
-                boardsSection,
                 clocksSection,
-               
+                 lightingSection,
               ],
               [ // Column 2
-                 lightingSection,
                 makeYourOwnSection,
               ],
             ];
@@ -499,8 +497,8 @@ export default function Navigation() {
             const studioRetainerSection = {
               title: "Studio Retainer",
               items: [
-                { href: "/services#custom-products", label: "Seasonal Collections" },
-                { href: "/services#custom-products", label: "Everyday Objects" },
+                { href: "/services#custom-products", label: "Ongoing Collection" },
+             
               ],
             };
             const limitedCommissionSection = {
@@ -514,8 +512,8 @@ export default function Navigation() {
             const communityPartnersSection = {
               title: "Community Partners",
               items: [
-                { href: "/services#workshops-events", label: "Real Material Reuse" },
-                { href: "/services#workshops-events", label: "Consignment" },
+                { href: "/services#workshops-events", label: "Material Sourcing" },
+                { href: "/services#workshops-events", label: "Consignment Collection" },
               ],
             };
 
@@ -532,8 +530,10 @@ export default function Navigation() {
             // The data for the image cards on the right.
             const servicesCardData = [
                 { caption: "Studio Process", color: "bg-pop-blue" },
-                { caption: "Material Sourcing", color: "bg-pop-blue" },
-                { caption: "Universal Provenance", color: "bg-pop-blue" },
+              { caption: "Custom Collections", color: "bg-pop-blue" },
+                { caption: "Universal Provenance", color: "bg-pop-blue"},
+
+
             ];
 
             return (
