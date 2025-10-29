@@ -6,8 +6,9 @@ import { Input } from "./ui/input"
 import { Textarea } from "./ui/textarea"
 import { Label } from "./ui/label"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "./ui/tabs"
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "./ui/accordion"
 import { DialogHeader, DialogTitle } from "./ui/dialog"
-import { Save, X, Trash2, Building2, Activity as ActivityIcon } from "lucide-react"
+import { Save, X, Trash2, Building2, Activity as ActivityIcon, Plus, UserPlus, Users } from "lucide-react"
 import ActivityTimeline from "./ActivityTimeline"
 
 interface Activity {
@@ -22,18 +23,22 @@ interface Activity {
   userId?: string
 }
 
+interface Contact {
+  name?: string
+  role?: string
+  email?: string
+  phone?: string
+  isPrimary?: boolean
+}
+
 interface Organization {
   _id: string
   name: string
   slug: string
   orgType: 'community_partner' | 'limited_client' | 'retainer_client' | 'wholesaler'
   description: string
-  contactInfo?: {
-    email?: string
-    phone?: string
-    address?: string
-    website?: string
-  }
+  contactInfo?: Contact[]
+  users?: string[]
   status?: 'prospect' | 'contacted' | 'in_talks' | 'proposal_sent' | 'negotiation' | 'active_partner' | 'active_client' | 'active_wholesaler' | 'onboarding' | 'closed_lost' | 'n_a'
   internalNotes?: string
   activities?: Activity[]
@@ -63,18 +68,17 @@ export function OrganizationEditModal({
   onDelete,
   isSaving
 }: OrganizationEditModalProps) {
+  const [allUsers, setAllUsers] = useState<any[]>([])
+  const [loadingUsers, setLoadingUsers] = useState(true)
+
   const [formData, setFormData] = useState<any>({
     _id: '',
     name: '',
     slug: '',
     orgType: 'community_partner',
     description: '',
-    contactInfo: {
-      email: '',
-      phone: '',
-      website: '',
-      address: ''
-    },
+    contactInfo: [],
+    users: [],
     status: 'prospect',
     internalNotes: '',
     activities: [],
@@ -91,7 +95,8 @@ export function OrganizationEditModal({
     if (item) {
       setFormData({
         ...item,
-        contactInfo: item.contactInfo || { email: '', phone: '', website: '', address: '' },
+        contactInfo: item.contactInfo || [],
+        users: item.users ? item.users.map(String) : [],
         activities: item.activities || [],
         status: item.status || 'prospect',
         internalNotes: item.internalNotes || '',
@@ -110,12 +115,8 @@ export function OrganizationEditModal({
         slug: '',
         orgType: 'community_partner',
         description: '',
-        contactInfo: {
-          email: '',
-          phone: '',
-          website: '',
-          address: ''
-        },
+        contactInfo: [],
+        users: [],
         status: 'prospect',
         internalNotes: '',
         activities: [],
@@ -129,6 +130,31 @@ export function OrganizationEditModal({
       })
     }
   }, [item])
+
+  // Fetch all users for the System Users section
+  useEffect(() => {
+    const fetchUsers = async () => {
+      try {
+        setLoadingUsers(true)
+        const response = await fetch('/api/admin/users')
+        const data = await response.json()
+        
+        if (response.ok && Array.isArray(data)) {
+          setAllUsers(data)
+        } else {
+          console.error('Error fetching users:', data.error || 'Invalid response')
+          setAllUsers([])
+        }
+      } catch (error) {
+        console.error('Error fetching users:', error)
+        setAllUsers([])
+      } finally {
+        setLoadingUsers(false)
+      }
+    }
+
+    fetchUsers()
+  }, [])
 
   const handleChange = (field: string, value: any) => {
     setFormData((prev: any) => ({ ...prev, [field]: value }))
@@ -172,6 +198,38 @@ export function OrganizationEditModal({
     setFormData((prev: any) => ({
       ...prev,
       lastContactDate: date
+    }))
+  }
+
+  const handleAddContact = () => {
+    setFormData((prev: any) => ({
+      ...prev,
+      contactInfo: [...(prev.contactInfo || []), { name: '', role: '', email: '', phone: '', isPrimary: false }]
+    }))
+  }
+
+  const handleUpdateContact = (index: number, field: keyof Contact, value: any) => {
+    setFormData((prev: any) => ({
+      ...prev,
+      contactInfo: prev.contactInfo.map((contact: Contact, i: number) =>
+        i === index ? { ...contact, [field]: value } : contact
+      )
+    }))
+  }
+
+  const handleRemoveContact = (index: number) => {
+    setFormData((prev: any) => ({
+      ...prev,
+      contactInfo: prev.contactInfo.filter((_: Contact, i: number) => i !== index)
+    }))
+  }
+
+  const handleToggleUser = (userId: string) => {
+    setFormData((prev: any) => ({
+      ...prev,
+      users: prev.users.includes(userId)
+        ? prev.users.filter((id: string) => id !== userId)
+        : [...prev.users, userId]
     }))
   }
 
@@ -264,59 +322,150 @@ export function OrganizationEditModal({
             />
           </div>
 
-          <div className="grid grid-cols-2 gap-4">
-            <div>
-              <Label>Contact Email</Label>
-              <Input
-                type="email"
-                value={formData.contactInfo?.email || ''}
-                onChange={(e) => handleNestedChange('contactInfo', 'email', e.target.value)}
-                placeholder="contact@organization.com"
-                data-testid="input-org-email"
-              />
-            </div>
-            <div>
-              <Label>Contact Phone</Label>
-              <Input
-                value={formData.contactInfo?.phone || ''}
-                onChange={(e) => handleNestedChange('contactInfo', 'phone', e.target.value)}
-                placeholder="(555) 123-4567"
-                data-testid="input-org-phone"
-              />
-            </div>
-          </div>
-
-          <div className="grid grid-cols-2 gap-4">
-            <div>
-              <Label>Website</Label>
-              <Input
-                value={formData.contactInfo?.website || ''}
-                onChange={(e) => handleNestedChange('contactInfo', 'website', e.target.value)}
-                placeholder="https://organization.com"
-                data-testid="input-org-website"
-              />
-            </div>
-            <div>
-              <Label>Assigned To</Label>
-              <Input
-                value={formData.assignedTo || ''}
-                onChange={(e) => handleChange('assignedTo', e.target.value)}
-                placeholder="Team member name"
-                data-testid="input-org-assigned-to"
-              />
-            </div>
-          </div>
-
           <div>
-            <Label>Address</Label>
-            <Textarea
-              value={formData.contactInfo?.address || ''}
-              onChange={(e) => handleNestedChange('contactInfo', 'address', e.target.value)}
-              placeholder="Full address"
-              rows={2}
-              data-testid="textarea-org-address"
+            <Label>Assigned To</Label>
+            <Input
+              value={formData.assignedTo || ''}
+              onChange={(e) => handleChange('assignedTo', e.target.value)}
+              placeholder="Team member name"
+              data-testid="input-org-assigned-to"
             />
           </div>
+
+          {/* Contacts Accordion */}
+          <Accordion type="single" collapsible className="border rounded-md">
+            <AccordionItem value="contacts">
+              <AccordionTrigger className="px-4">
+                <div className="flex items-center gap-2">
+                  <UserPlus className="h-4 w-4" />
+                  <span>Contacts ({formData.contactInfo?.length || 0})</span>
+                </div>
+              </AccordionTrigger>
+              <AccordionContent className="px-4 pb-4">
+                <div className="space-y-4">
+                  {formData.contactInfo?.map((contact: Contact, index: number) => (
+                    <div key={index} className="border rounded-md p-4 space-y-3 bg-white">
+                      <div className="flex justify-between items-start">
+                        <h4 className="font-medium text-sm">Contact {index + 1}</h4>
+                        <Button
+                          type="button"
+                          variant="destructive"
+                          size="sm"
+                          onClick={() => handleRemoveContact(index)}
+                          data-testid={`button-remove-contact-${index}`}
+                        >
+                          <X className="h-3 w-3" />
+                        </Button>
+                      </div>
+                      <div className="grid grid-cols-2 gap-3">
+                        <div>
+                          <Label className="text-xs">Name</Label>
+                          <Input
+                            value={contact.name || ''}
+                            onChange={(e) => handleUpdateContact(index, 'name', e.target.value)}
+                            placeholder="Contact name"
+                            data-testid={`input-contact-name-${index}`}
+                          />
+                        </div>
+                        <div>
+                          <Label className="text-xs">Role</Label>
+                          <Input
+                            value={contact.role || ''}
+                            onChange={(e) => handleUpdateContact(index, 'role', e.target.value)}
+                            placeholder="e.g., Director, Manager"
+                            data-testid={`input-contact-role-${index}`}
+                          />
+                        </div>
+                      </div>
+                      <div className="grid grid-cols-2 gap-3">
+                        <div>
+                          <Label className="text-xs">Email</Label>
+                          <Input
+                            type="email"
+                            value={contact.email || ''}
+                            onChange={(e) => handleUpdateContact(index, 'email', e.target.value)}
+                            placeholder="contact@organization.com"
+                            data-testid={`input-contact-email-${index}`}
+                          />
+                        </div>
+                        <div>
+                          <Label className="text-xs">Phone</Label>
+                          <Input
+                            value={contact.phone || ''}
+                            onChange={(e) => handleUpdateContact(index, 'phone', e.target.value)}
+                            placeholder="(555) 123-4567"
+                            data-testid={`input-contact-phone-${index}`}
+                          />
+                        </div>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <input
+                          type="checkbox"
+                          checked={contact.isPrimary || false}
+                          onChange={(e) => handleUpdateContact(index, 'isPrimary', e.target.checked)}
+                          className="h-4 w-4"
+                          data-testid={`checkbox-contact-primary-${index}`}
+                        />
+                        <Label className="text-xs">Primary Contact</Label>
+                      </div>
+                    </div>
+                  ))}
+                  <Button
+                    type="button"
+                    variant="outline"
+                    onClick={handleAddContact}
+                    className="w-full"
+                    data-testid="button-add-contact"
+                  >
+                    <Plus className="h-4 w-4 mr-2" />
+                    Add Contact
+                  </Button>
+                </div>
+              </AccordionContent>
+            </AccordionItem>
+          </Accordion>
+
+          {/* System Users Accordion */}
+          <Accordion type="single" collapsible className="border rounded-md">
+            <AccordionItem value="users">
+              <AccordionTrigger className="px-4">
+                <div className="flex items-center gap-2">
+                  <Users className="h-4 w-4" />
+                  <span>System Users ({formData.users?.length || 0})</span>
+                </div>
+              </AccordionTrigger>
+              <AccordionContent className="px-4 pb-4">
+                <div className="space-y-2">
+                  <p className="text-sm text-gray-600 mb-3">
+                    Link system user accounts to this organization
+                  </p>
+                  {loadingUsers ? (
+                    <p className="text-sm text-gray-500">Loading users...</p>
+                  ) : allUsers.length === 0 ? (
+                    <p className="text-sm text-gray-500">No users available</p>
+                  ) : (
+                    <div className="space-y-2 max-h-64 overflow-y-auto">
+                      {allUsers.map((user: any) => (
+                        <div key={user._id} className="flex items-center gap-2 p-2 hover:bg-gray-50 rounded">
+                          <input
+                            type="checkbox"
+                            checked={formData.users?.includes(String(user._id)) || false}
+                            onChange={() => handleToggleUser(String(user._id))}
+                            className="h-4 w-4"
+                            data-testid={`checkbox-user-${user._id}`}
+                          />
+                          <div className="flex-1">
+                            <p className="text-sm font-medium">{user.name}</p>
+                            <p className="text-xs text-gray-500">{user.email}</p>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              </AccordionContent>
+            </AccordionItem>
+          </Accordion>
 
           <div>
             <Label>Internal Notes</Label>
