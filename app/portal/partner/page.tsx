@@ -1,18 +1,171 @@
 'use client'
 
-import { Package, TrendingUp, Recycle, QrCode } from 'lucide-react'
+import { useState, useEffect } from 'react'
+import { useSession } from 'next-auth/react'
+import { Package, TrendingUp, Recycle, QrCode, FileText, Building2 } from 'lucide-react'
 import { Button } from '../../components/ui/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../../components/ui/card'
 import { Badge } from '../../components/ui/badge'
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '../../components/ui/accordion'
+import { DataTable, Column } from '../../components/ui/data-table'
+import { Product } from '../../../lib/schemas-v3'
+
+interface Organization {
+  _id: string
+  name: string
+  slug: string
+  orgType: string
+}
 
 export default function PartnerPage() {
+  const { data: session } = useSession()
+  const [organizations, setOrganizations] = useState<Organization[]>([])
+  const [selectedOrgId, setSelectedOrgId] = useState<string | null>(null)
+  const [loadingOrgs, setLoadingOrgs] = useState(true)
+  const [products, setProducts] = useState<Product[]>([])
+  const [loadingProducts, setLoadingProducts] = useState(false)
+
+  // Fetch organizations on mount
+  useEffect(() => {
+    const fetchOrganizations = async () => {
+      try {
+        setLoadingOrgs(true)
+        const response = await fetch('/api/crm/organizations')
+        const data = await response.json()
+        
+        if (response.ok && Array.isArray(data)) {
+          setOrganizations(data)
+        } else {
+          console.error('Error fetching organizations:', data.error || 'Invalid response')
+          setOrganizations([])
+        }
+      } catch (error) {
+        console.error('Error fetching organizations:', error)
+        setOrganizations([])
+      } finally {
+        setLoadingOrgs(false)
+      }
+    }
+
+    fetchOrganizations()
+  }, [])
+
+  // Auto-set selectedOrgId based on user role
+  useEffect(() => {
+    if (!session?.user) return
+
+    const userRole = (session.user as any).role
+    const userOrgId = (session.user as any).orgId
+
+    // If user is NOT super_admin and has an orgId, auto-select it
+    if (userRole !== 'super_admin' && userOrgId) {
+      setSelectedOrgId(userOrgId)
+    }
+    // If super_admin and orgs are loaded, default to first org (only if null, not empty string)
+    else if (userRole === 'super_admin' && organizations.length > 0 && selectedOrgId === null) {
+      setSelectedOrgId(organizations[0]._id)
+    }
+  }, [session, organizations, selectedOrgId])
+
+  // Fetch products filtered by selectedOrgId
+  useEffect(() => {
+    if (!selectedOrgId) return
+
+    const fetchProducts = async () => {
+      try {
+        setLoadingProducts(true)
+        const response = await fetch('/api/admin/products')
+        const data = await response.json()
+        
+        if (response.ok && Array.isArray(data)) {
+          // Filter products by selectedOrgId
+          const filteredProducts = data.filter((p: Product) => String(p.org) === String(selectedOrgId))
+          setProducts(filteredProducts)
+        } else {
+          console.error('Error fetching products:', data.error || 'Invalid response')
+          setProducts([])
+        }
+      } catch (error) {
+        console.error('Error fetching products:', error)
+        setProducts([])
+      } finally {
+        setLoadingProducts(false)
+      }
+    }
+
+    fetchProducts()
+  }, [selectedOrgId])
+
+  const productColumns: Column<Product>[] = [
+    { key: '_id', header: 'Product ID' },
+    { key: 'name', header: 'Name' },
+    { key: 'category', header: 'Category' },
+    { 
+      key: 'productType', 
+      header: 'Type',
+      render: (product) => product.productType || 'Standard'
+    },
+    { 
+      key: 'price', 
+      header: 'Price',
+      render: (product) => `$${product.price?.toFixed(2) || '0.00'}`
+    },
+    { 
+      key: 'editions', 
+      header: 'Editions',
+      render: (product) => Array.isArray(product.editions) ? product.editions.length : 0
+    },
+    { 
+      key: 'rating', 
+      header: 'Rating',
+      render: (product) => `${product.rating || 0}/5`
+    },
+    { 
+      key: 'inStock', 
+      header: 'Stock',
+      render: (product) => (
+        <Badge variant={product.inStock ? 'default' : 'outline'}>
+          {product.inStock ? 'In Stock' : 'Out of Stock'}
+        </Badge>
+      )
+    }
+  ]
+
+  const isSuperAdmin = (session?.user as any)?.role === 'super_admin'
+  const selectedOrg = organizations.find(org => org._id === selectedOrgId)
+
   return (
     <div className="space-y-6">
-      <div>
-        <h2 className="text-3xl font-bold text-pop-black">Partner Dashboard</h2>
-        <p className="text-gray-600 mt-2">Your circular economy impact and bin management</p>
+      {/* Header with Org Selector */}
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+        <div>
+          <h2 className="text-3xl font-bold text-pop-black">Partner Dashboard</h2>
+          <p className="text-gray-600 mt-2">
+            {selectedOrg ? `${selectedOrg.name} - Circular economy impact and bin management` : 'Your circular economy impact and bin management'}
+          </p>
+        </div>
+        
+        {/* Org Selector - Only visible for super_admin */}
+        {isSuperAdmin && (
+          <div className="flex items-center gap-2">
+            <Building2 className="h-4 w-4 text-gray-500" />
+            <select
+              value={selectedOrgId || ''}
+              onChange={(e) => setSelectedOrgId(e.target.value)}
+              className="border rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-pop-blue"
+              data-testid="select-org-filter"
+            >
+              {organizations.map((org) => (
+                <option key={org._id} value={org._id}>
+                  {org.name}
+                </option>
+              ))}
+            </select>
+          </div>
+        )}
       </div>
 
+      {/* Metrics Cards - TODO: Filter by selectedOrgId when API supports org-specific metrics */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
@@ -59,6 +212,7 @@ export default function PartnerPage() {
         </Card>
       </div>
 
+      {/* Bin Network and Activity - TODO: Filter by selectedOrgId when API supports org-specific data */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <Card>
           <CardHeader>
@@ -128,91 +282,146 @@ export default function PartnerPage() {
         </Card>
       </div>
 
-      <Card>
-        <CardHeader>
-          <CardTitle>Partner Documentation</CardTitle>
-          <CardDescription>Essential documents and agreements</CardDescription>
-        </CardHeader>
-        <CardContent className="space-y-4">
-          <div className="space-y-3">
-            <div className="flex items-center justify-between py-3 px-4 border border-gray-200 rounded-lg hover:bg-gray-50 cursor-pointer">
-              <div className="flex items-center space-x-3">
-                <div className="w-3 h-3 bg-green-500 rounded-full"></div>
-                <div>
-                  <h4 className="font-medium text-sm">Partnership Agreement</h4>
-                  <p className="text-xs text-gray-500">Signed Jan 15, 2024 • 2.4 MB PDF</p>
-                </div>
-              </div>
-              <div className="flex items-center space-x-2">
-                <Badge className="bg-green-100 text-green-700 text-xs">Active</Badge>
-                <Button variant="ghost" size="sm" className="text-xs px-2">Download</Button>
+      {/* Partner Documentation - Wrapped in Accordion */}
+      <Accordion type="single" collapsible className="w-full">
+        <AccordionItem value="partner-docs" className="border rounded-lg px-4">
+          <AccordionTrigger className="hover:no-underline">
+            <div className="flex items-center gap-3">
+              <FileText className="h-5 w-5 text-pop-blue" />
+              <div className="text-left">
+                <h3 className="text-lg font-semibold text-pop-black">Partner Documentation</h3>
+                <p className="text-sm text-gray-600 font-normal">Essential documents and agreements</p>
               </div>
             </div>
-            
-            <div className="flex items-center justify-between py-3 px-4 border border-gray-200 rounded-lg hover:bg-gray-50 cursor-pointer">
-              <div className="flex items-center space-x-3">
-                <div className="w-3 h-3 bg-blue-500 rounded-full"></div>
-                <div>
-                  <h4 className="font-medium text-sm">Initial Waste Assessment</h4>
-                  <p className="text-xs text-gray-500">Completed Dec 10, 2023 • 1.8 MB PDF</p>
+          </AccordionTrigger>
+          <AccordionContent>
+            <div className="space-y-4 pt-2 pb-4">
+              <div className="space-y-3">
+                <div className="flex items-center justify-between py-3 px-4 border border-gray-200 rounded-lg hover:bg-gray-50 cursor-pointer">
+                  <div className="flex items-center space-x-3">
+                    <div className="w-3 h-3 bg-green-500 rounded-full"></div>
+                    <div>
+                      <h4 className="font-medium text-sm">Partnership Agreement</h4>
+                      <p className="text-xs text-gray-500">Signed Jan 15, 2024 • 2.4 MB PDF</p>
+                    </div>
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    <Badge className="bg-green-100 text-green-700 text-xs">Active</Badge>
+                    <Button variant="ghost" size="sm" className="text-xs px-2">Download</Button>
+                  </div>
+                </div>
+                
+                <div className="flex items-center justify-between py-3 px-4 border border-gray-200 rounded-lg hover:bg-gray-50 cursor-pointer">
+                  <div className="flex items-center space-x-3">
+                    <div className="w-3 h-3 bg-blue-500 rounded-full"></div>
+                    <div>
+                      <h4 className="font-medium text-sm">Initial Waste Assessment</h4>
+                      <p className="text-xs text-gray-500">Completed Dec 10, 2023 • 1.8 MB PDF</p>
+                    </div>
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    <Badge variant="secondary" className="text-xs">Complete</Badge>
+                    <Button variant="ghost" size="sm" className="text-xs px-2">Download</Button>
+                  </div>
+                </div>
+                
+                <div className="flex items-center justify-between py-3 px-4 border border-gray-200 rounded-lg hover:bg-gray-50 cursor-pointer">
+                  <div className="flex items-center space-x-3">
+                    <div className="w-3 h-3 bg-orange-500 rounded-full"></div>
+                    <div>
+                      <h4 className="font-medium text-sm">Service Level Agreement</h4>
+                      <p className="text-xs text-gray-500">Updated Mar 8, 2024 • 1.2 MB PDF</p>
+                    </div>
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    <Badge className="bg-orange-100 text-orange-700 text-xs">Current</Badge>
+                    <Button variant="ghost" size="sm" className="text-xs px-2">Download</Button>
+                  </div>
+                </div>
+                
+                <div className="flex items-center justify-between py-3 px-4 border border-gray-200 rounded-lg hover:bg-gray-50 cursor-pointer">
+                  <div className="flex items-center space-x-3">
+                    <div className="w-3 h-3 bg-purple-500 rounded-full"></div>
+                    <div>
+                      <h4 className="font-medium text-sm">Compliance Certification</h4>
+                      <p className="text-xs text-gray-500">Issued Nov 20, 2023 • 950 KB PDF</p>
+                    </div>
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    <Badge className="bg-green-100 text-green-700 text-xs">Valid</Badge>
+                    <Button variant="ghost" size="sm" className="text-xs px-2">Download</Button>
+                  </div>
+                </div>
+                
+                <div className="flex items-center justify-between py-3 px-4 border border-dashed border-gray-300 rounded-lg hover:bg-gray-50 cursor-pointer">
+                  <div className="flex items-center space-x-3">
+                    <div className="w-3 h-3 bg-gray-300 rounded-full"></div>
+                    <div>
+                      <h4 className="font-medium text-sm text-gray-500">Insurance Certificate</h4>
+                      <p className="text-xs text-gray-400">Pending upload</p>
+                    </div>
+                  </div>
+                  <Button variant="outline" size="sm" className="text-xs px-3">Upload</Button>
                 </div>
               </div>
-              <div className="flex items-center space-x-2">
-                <Badge variant="secondary" className="text-xs">Complete</Badge>
-                <Button variant="ghost" size="sm" className="text-xs px-2">Download</Button>
+              
+              <div className="flex gap-2 pt-2 border-t">
+                <Button variant="outline" className="flex-1 text-sm">
+                  Download All
+                </Button>
+                <Button className="flex-1 bg-pop-blue hover:bg-pop-blue/90 text-sm">
+                  Request Document
+                </Button>
               </div>
             </div>
-            
-            <div className="flex items-center justify-between py-3 px-4 border border-gray-200 rounded-lg hover:bg-gray-50 cursor-pointer">
-              <div className="flex items-center space-x-3">
-                <div className="w-3 h-3 bg-orange-500 rounded-full"></div>
-                <div>
-                  <h4 className="font-medium text-sm">Service Level Agreement</h4>
-                  <p className="text-xs text-gray-500">Updated Mar 8, 2024 • 1.2 MB PDF</p>
+          </AccordionContent>
+        </AccordionItem>
+      </Accordion>
+
+      {/* Products - Filtered by selectedOrgId */}
+      <Accordion type="single" collapsible className="w-full">
+        <AccordionItem value="products" className="border rounded-lg px-4">
+          <AccordionTrigger className="hover:no-underline">
+            <div className="flex items-center gap-3">
+              <Package className="h-5 w-5 text-pop-green" />
+              <div className="text-left">
+                <h3 className="text-lg font-semibold text-pop-black">Partner Products</h3>
+                <p className="text-sm text-gray-600 font-normal">
+                  {loadingProducts ? 'Loading products...' : `${products.length} product${products.length !== 1 ? 's' : ''} made from your waste`}
+                </p>
+              </div>
+            </div>
+          </AccordionTrigger>
+          <AccordionContent>
+            <div className="pt-2 pb-4">
+              {loadingProducts ? (
+                <div className="flex items-center justify-center p-8">
+                  <div className="text-sm text-gray-600">Loading products...</div>
                 </div>
-              </div>
-              <div className="flex items-center space-x-2">
-                <Badge className="bg-orange-100 text-orange-700 text-xs">Current</Badge>
-                <Button variant="ghost" size="sm" className="text-xs px-2">Download</Button>
-              </div>
-            </div>
-            
-            <div className="flex items-center justify-between py-3 px-4 border border-gray-200 rounded-lg hover:bg-gray-50 cursor-pointer">
-              <div className="flex items-center space-x-3">
-                <div className="w-3 h-3 bg-purple-500 rounded-full"></div>
-                <div>
-                  <h4 className="font-medium text-sm">Compliance Certification</h4>
-                  <p className="text-xs text-gray-500">Issued Nov 20, 2023 • 950 KB PDF</p>
+              ) : !selectedOrgId ? (
+                <div className="flex items-center justify-center p-8">
+                  <div className="text-sm text-gray-600">Select an organization to view products</div>
                 </div>
-              </div>
-              <div className="flex items-center space-x-2">
-                <Badge className="bg-green-100 text-green-700 text-xs">Valid</Badge>
-                <Button variant="ghost" size="sm" className="text-xs px-2">Download</Button>
-              </div>
-            </div>
-            
-            <div className="flex items-center justify-between py-3 px-4 border border-dashed border-gray-300 rounded-lg hover:bg-gray-50 cursor-pointer">
-              <div className="flex items-center space-x-3">
-                <div className="w-3 h-3 bg-gray-300 rounded-full"></div>
-                <div>
-                  <h4 className="font-medium text-sm text-gray-500">Insurance Certificate</h4>
-                  <p className="text-xs text-gray-400">Pending upload</p>
+              ) : products.length === 0 ? (
+                <div className="flex items-center justify-center p-8">
+                  <div className="text-sm text-gray-600">No products found for this organization</div>
                 </div>
-              </div>
-              <Button variant="outline" size="sm" className="text-xs px-3">Upload</Button>
+              ) : (
+                <DataTable
+                  title=""
+                  description=""
+                  data={products}
+                  columns={productColumns}
+                  enableColumnSelection={true}
+                  enableFiltering={true}
+                  availableColumns={productColumns}
+                  defaultVisibleColumns={['name', 'category', 'productType', 'price', 'editions', 'rating', 'inStock']}
+                />
+              )}
             </div>
-          </div>
-          
-          <div className="flex gap-2 pt-2 border-t">
-            <Button variant="outline" className="flex-1 text-sm">
-              Download All
-            </Button>
-            <Button className="flex-1 bg-pop-blue hover:bg-pop-blue/90 text-sm">
-              Request Document
-            </Button>
-          </div>
-        </CardContent>
-      </Card>
+          </AccordionContent>
+        </AccordionItem>
+      </Accordion>
     </div>
   )
 }
