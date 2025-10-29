@@ -345,8 +345,8 @@ export default function PartnerPage() {
       {/* Metrics Cards */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
         <Card data-testid="card-partner-type">
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Organization category</CardTitle>
+          <CardHeader className="flex flex-row items-center justify-start space-y-0 pb-2">
+            <CardTitle className="text-sm font-medium"></CardTitle>
             <Building2 className="h-4 w-4 text-pop-green" />
           </CardHeader>
           <CardContent>
@@ -362,8 +362,8 @@ export default function PartnerPage() {
         </Card>
 
         <Card data-testid="card-last-collection">
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Most recent pickup</CardTitle>
+          <CardHeader className="flex flex-row items-center justify-start space-y-0 pb-2">
+            <CardTitle className="text-sm font-medium"></CardTitle>
             <Calendar className="h-4 w-4 text-pop-blue" />
           </CardHeader>
           <CardContent>
@@ -373,8 +373,8 @@ export default function PartnerPage() {
         </Card>
 
         <Card data-testid="card-next-collection">
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Scheduled pickup</CardTitle>
+          <CardHeader className="flex flex-row items-center justify-start space-y-0 pb-2">
+            <CardTitle className="text-sm font-medium"></CardTitle>
             <Calendar className="h-4 w-4 text-pop-red" />
           </CardHeader>
           <CardContent>
@@ -384,8 +384,8 @@ export default function PartnerPage() {
         </Card>
 
         <Card data-testid="card-total-waste">
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Since partnership began</CardTitle>
+          <CardHeader className="flex flex-row items-center justify-start space-y-0 pb-2">
+            <CardTitle className="text-sm font-medium"></CardTitle>
             <Scale className="h-4 w-4 text-pop-green" />
           </CardHeader>
           <CardContent>
