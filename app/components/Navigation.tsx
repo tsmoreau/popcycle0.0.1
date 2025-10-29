@@ -508,14 +508,14 @@ export default function Navigation() {
               items: [
                 { href: "/services#collection-services", label: "Custom Collection" },
                 { href: "/services#workshops-events", label: "Installations" },
-                { href: "/services#workshops-events", label: "Workshops" },
-                { href: "/services#workshops-events", label: "Donations" },
+               
               ],
             };
             const communityPartnersSection = {
               title: "Community Partners",
               items: [
-                
+                { href: "/services#workshops-events", label: "Real Material Reuse" },
+                { href: "/services#workshops-events", label: "Consignment" },
               ],
             };
 
