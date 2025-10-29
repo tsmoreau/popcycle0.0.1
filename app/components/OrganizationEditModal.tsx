@@ -93,9 +93,27 @@ export function OrganizationEditModal({
 
   useEffect(() => {
     if (item) {
+      // Convert old contactInfo object format to new array format
+      let contactInfoArray: Contact[] = []
+      if (item.contactInfo) {
+        if (Array.isArray(item.contactInfo)) {
+          contactInfoArray = item.contactInfo
+        } else {
+          // Legacy format: convert object to array with single contact
+          const legacy = item.contactInfo as any
+          if (legacy.email || legacy.phone || legacy.website || legacy.address) {
+            contactInfoArray = [{
+              email: legacy.email,
+              phone: legacy.phone,
+              isPrimary: true
+            }]
+          }
+        }
+      }
+
       setFormData({
         ...item,
-        contactInfo: item.contactInfo || [],
+        contactInfo: contactInfoArray,
         users: item.users ? item.users.map(String) : [],
         activities: item.activities || [],
         status: item.status || 'prospect',
