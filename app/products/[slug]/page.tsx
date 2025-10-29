@@ -206,6 +206,7 @@ export default function ProductDetail() {
             <Package className="w-32 h-32 text-gray-200" />
           </div>
         )}
+        
       </section>
 
       {/* Product Information - Single Column Editorial Layout */}
