@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import { useSession } from 'next-auth/react'
-import { Package, TrendingUp, Recycle, QrCode, FileText, Building2, Trash2, Palette } from 'lucide-react'
+import { Package, TrendingUp, Recycle, QrCode, FileText, Building2, Trash2, Palette, Calendar, Scale } from 'lucide-react'
 import { Button } from '../../components/ui/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../../components/ui/card'
 import { Badge } from '../../components/ui/badge'
@@ -342,49 +342,55 @@ export default function PartnerPage() {
         )}
       </div>
 
-      {/* Metrics Cards - TODO: Filter by selectedOrgId when API supports org-specific metrics */}
+      {/* Metrics Cards */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-        <Card>
+        <Card data-testid="card-partner-type">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Your Bins</CardTitle>
-            <Package className="h-4 w-4 text-pop-green" />
+            <CardTitle className="text-sm font-medium">Partner Type</CardTitle>
+            <Building2 className="h-4 w-4 text-pop-green" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">8</div>
-            <p className="text-xs text-gray-600">3 ready for pickup</p>
+            <div className="text-2xl font-bold" data-testid="text-partner-type">
+              {selectedOrg?.orgType 
+                ? selectedOrg.orgType.split('_').map(word => 
+                    word.charAt(0).toUpperCase() + word.slice(1)
+                  ).join(' ')
+                : '—'}
+            </div>
+            <p className="text-xs text-gray-600">Organization category</p>
           </CardContent>
         </Card>
 
-        <Card>
+        <Card data-testid="card-last-collection">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Plastic Collected</CardTitle>
-            <Recycle className="h-4 w-4 text-pop-blue" />
+            <CardTitle className="text-sm font-medium">Last Collection</CardTitle>
+            <Calendar className="h-4 w-4 text-pop-blue" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">847 lbs</div>
-            <p className="text-xs text-gray-600">This quarter</p>
+            <div className="text-2xl font-bold" data-testid="text-last-collection">Oct 22, 2025</div>
+            <p className="text-xs text-gray-600">Most recent pickup</p>
           </CardContent>
         </Card>
 
-        <Card>
+        <Card data-testid="card-next-collection">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Products Created</CardTitle>
-            <QrCode className="h-4 w-4 text-pop-red" />
+            <CardTitle className="text-sm font-medium">Next Collection</CardTitle>
+            <Calendar className="h-4 w-4 text-pop-red" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">156</div>
-            <p className="text-xs text-gray-600">From your waste</p>
+            <div className="text-2xl font-bold" data-testid="text-next-collection">Nov 5, 2025</div>
+            <p className="text-xs text-gray-600">Scheduled pickup</p>
           </CardContent>
         </Card>
 
-        <Card>
+        <Card data-testid="card-total-waste">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Impact Score</CardTitle>
-            <TrendingUp className="h-4 w-4 text-pop-green" />
+            <CardTitle className="text-sm font-medium">Total Diverted Waste</CardTitle>
+            <Scale className="h-4 w-4 text-pop-green" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">92%</div>
-            <p className="text-xs text-gray-600">Circular efficiency</p>
+            <div className="text-2xl font-bold" data-testid="text-total-waste">2,847 lbs</div>
+            <p className="text-xs text-gray-600">Since partnership began</p>
           </CardContent>
         </Card>
       </div>
