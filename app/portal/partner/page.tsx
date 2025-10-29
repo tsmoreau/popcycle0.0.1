@@ -54,15 +54,15 @@ export default function PartnerPage() {
   useEffect(() => {
     if (!session?.user) return
 
-    const userRole = (session.user as any).role
+    const userType = (session.user as any).userType
     const userOrgId = (session.user as any).orgId
 
     // If user is NOT super_admin and has an orgId, auto-select it
-    if (userRole !== 'super_admin' && userOrgId) {
+    if (userType !== 'super_admin' && userOrgId) {
       setSelectedOrgId(userOrgId)
     }
     // If super_admin and orgs are loaded, default to first org (only if null, not empty string)
-    else if (userRole === 'super_admin' && organizations.length > 0 && selectedOrgId === null) {
+    else if (userType === 'super_admin' && organizations.length > 0 && selectedOrgId === null) {
       setSelectedOrgId(organizations[0]._id)
     }
   }, [session, organizations, selectedOrgId])
@@ -131,7 +131,7 @@ export default function PartnerPage() {
     }
   ]
 
-  const isSuperAdmin = (session?.user as any)?.role === 'super_admin'
+  const isSuperAdmin = (session?.user as any)?.userType === 'super_admin'
   const selectedOrg = organizations.find(org => org._id === selectedOrgId)
 
   return (
