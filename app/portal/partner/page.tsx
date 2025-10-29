@@ -2,13 +2,13 @@
 
 import { useState, useEffect } from 'react'
 import { useSession } from 'next-auth/react'
-import { Package, TrendingUp, Recycle, QrCode, FileText, Building2 } from 'lucide-react'
+import { Package, TrendingUp, Recycle, QrCode, FileText, Building2, Trash2 } from 'lucide-react'
 import { Button } from '../../components/ui/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../../components/ui/card'
 import { Badge } from '../../components/ui/badge'
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '../../components/ui/accordion'
 import { DataTable, Column } from '../../components/ui/data-table'
-import { Product } from '../../../lib/schemas-v3'
+import { Product, Bin } from '../../../lib/schemas-v3'
 
 interface Organization {
   _id: string
@@ -24,6 +24,8 @@ export default function PartnerPage() {
   const [loadingOrgs, setLoadingOrgs] = useState(true)
   const [products, setProducts] = useState<Product[]>([])
   const [loadingProducts, setLoadingProducts] = useState(false)
+  const [bins, setBins] = useState<Bin[]>([])
+  const [loadingBins, setLoadingBins] = useState(false)
 
   // Fetch organizations on mount
   useEffect(() => {
@@ -95,6 +97,81 @@ export default function PartnerPage() {
 
     fetchProducts()
   }, [selectedOrgId])
+
+  // Fetch bins filtered by selectedOrgId
+  useEffect(() => {
+    if (!selectedOrgId) return
+
+    const fetchBins = async () => {
+      try {
+        setLoadingBins(true)
+        const response = await fetch('/api/operations/bins')
+        const data = await response.json()
+        
+        if (response.ok && Array.isArray(data)) {
+          // Filter bins by selectedOrgId
+          const filteredBins = data.filter((b: Bin) => String(b.orgId) === String(selectedOrgId))
+          setBins(filteredBins)
+        } else {
+          console.error('Error fetching bins:', data.error || 'Invalid response')
+          setBins([])
+        }
+      } catch (error) {
+        console.error('Error fetching bins:', error)
+        setBins([])
+      } finally {
+        setLoadingBins(false)
+      }
+    }
+
+    fetchBins()
+  }, [selectedOrgId])
+
+  const binColumns: Column<Bin>[] = [
+    { key: '_id', header: 'Bin ID' },
+    { key: 'name', header: 'Name' },
+    { key: 'location', header: 'Location' },
+    { 
+      key: 'type', 
+      header: 'Type',
+      render: (bin) => (
+        <Badge variant={bin.type === 'permanent' ? 'default' : 'outline'}>
+          {bin.type === 'permanent' ? 'Permanent' : 'Temporary'}
+        </Badge>
+      )
+    },
+    { 
+      key: 'status', 
+      header: 'Status',
+      render: (bin) => {
+        const statusMap = {
+          'bin_on_vehicle': { label: 'On Vehicle', variant: 'default' as const },
+          'bin_on_site': { label: 'On Site', variant: 'outline' as const },
+          'ready_for_processing': { label: 'Ready for Processing', variant: 'secondary' as const }
+        }
+        const statusInfo = statusMap[bin.status] || { label: bin.status, variant: 'outline' as const }
+        return (
+          <Badge variant={statusInfo.variant}>
+            {statusInfo.label}
+          </Badge>
+        )
+      }
+    },
+    { 
+      key: 'capacity', 
+      header: 'Capacity',
+      render: (bin) => bin.capacity ? `${bin.capacity} lbs` : 'N/A'
+    },
+    { 
+      key: 'isActive', 
+      header: 'Active',
+      render: (bin) => (
+        <Badge variant={bin.isActive ? 'default' : 'outline'}>
+          {bin.isActive ? 'Active' : 'Inactive'}
+        </Badge>
+      )
+    }
+  ]
 
   const productColumns: Column<Product>[] = [
     { key: '_id', header: 'Product ID' },
@@ -373,6 +450,51 @@ export default function PartnerPage() {
                   Request Document
                 </Button>
               </div>
+            </div>
+          </AccordionContent>
+        </AccordionItem>
+      </Accordion>
+
+      {/* Bins - Filtered by selectedOrgId */}
+      <Accordion type="single" collapsible className="w-full">
+        <AccordionItem value="bins" className="border rounded-lg px-4">
+          <AccordionTrigger className="hover:no-underline">
+            <div className="flex items-center gap-3">
+              <Trash2 className="h-5 w-5 text-pop-red" />
+              <div className="text-left">
+                <h3 className="text-lg font-semibold text-pop-black">{selectedOrg?.name || 'Partner'} Bins</h3>
+                <p className="text-sm text-gray-600 font-normal">
+                  {loadingBins ? 'Loading bins...' : `${bins.length} collection bin${bins.length !== 1 ? 's' : ''} at partner locations`}
+                </p>
+              </div>
+            </div>
+          </AccordionTrigger>
+          <AccordionContent>
+            <div className="pt-2 pb-4">
+              {loadingBins ? (
+                <div className="flex items-center justify-center p-8">
+                  <div className="text-sm text-gray-600">Loading bins...</div>
+                </div>
+              ) : !selectedOrgId ? (
+                <div className="flex items-center justify-center p-8">
+                  <div className="text-sm text-gray-600">Select an organization to view bins</div>
+                </div>
+              ) : bins.length === 0 ? (
+                <div className="flex items-center justify-center p-8">
+                  <div className="text-sm text-gray-600">No bins found for this organization</div>
+                </div>
+              ) : (
+                <DataTable
+                  title=""
+                  description=""
+                  data={bins}
+                  columns={binColumns}
+                  enableColumnSelection={true}
+                  enableFiltering={true}
+                  availableColumns={binColumns}
+                  defaultVisibleColumns={['_id', 'name', 'location', 'type', 'status', 'capacity', 'isActive']}
+                />
+              )}
             </div>
           </AccordionContent>
         </AccordionItem>
