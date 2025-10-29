@@ -2,19 +2,36 @@
 
 import { useState, useEffect } from 'react'
 import { useSession } from 'next-auth/react'
-import { Package, TrendingUp, Recycle, QrCode, FileText, Building2, Trash2 } from 'lucide-react'
+import { Package, TrendingUp, Recycle, QrCode, FileText, Building2, Trash2, Palette } from 'lucide-react'
 import { Button } from '../../components/ui/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../../components/ui/card'
 import { Badge } from '../../components/ui/badge'
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '../../components/ui/accordion'
 import { DataTable, Column } from '../../components/ui/data-table'
 import { Product, Bin } from '../../../lib/schemas-v3'
+import { Input } from '../../components/ui/input'
+import { Textarea } from '../../components/ui/textarea'
+import { Label } from '../../components/ui/label'
 
 interface Organization {
   _id: string
   name: string
   slug: string
   orgType: string
+  description?: string
+  branding?: {
+    primaryColor?: string
+    secondaryColor?: string
+    logoUrl?: string
+    logoS3Key?: string
+    customDomain?: string
+    trackingPageMessage?: string
+  }
+  communityPartner?: {
+    mission: string
+    storyContent: string
+    communityPartnerType: string
+  }
 }
 
 export default function PartnerPage() {
@@ -26,6 +43,19 @@ export default function PartnerPage() {
   const [loadingProducts, setLoadingProducts] = useState(false)
   const [bins, setBins] = useState<Bin[]>([])
   const [loadingBins, setLoadingBins] = useState(false)
+  const [savingBrand, setSavingBrand] = useState(false)
+  
+  // Brand editing state
+  const [brandForm, setBrandForm] = useState({
+    description: '',
+    primaryColor: '',
+    secondaryColor: '',
+    logoUrl: '',
+    customDomain: '',
+    trackingPageMessage: '',
+    mission: '',
+    storyContent: ''
+  })
 
   // Fetch organizations on mount
   useEffect(() => {
@@ -127,6 +157,76 @@ export default function PartnerPage() {
     fetchBins()
   }, [selectedOrgId])
 
+  // Populate brand form when selectedOrgId changes
+  useEffect(() => {
+    const org = organizations.find(o => o._id === selectedOrgId)
+    if (!org) return
+
+    setBrandForm({
+      description: org.description || '',
+      primaryColor: org.branding?.primaryColor || '',
+      secondaryColor: org.branding?.secondaryColor || '',
+      logoUrl: org.branding?.logoUrl || '',
+      customDomain: org.branding?.customDomain || '',
+      trackingPageMessage: org.branding?.trackingPageMessage || '',
+      mission: org.communityPartner?.mission || '',
+      storyContent: org.communityPartner?.storyContent || ''
+    })
+  }, [selectedOrgId, organizations])
+
+  const handleBrandSave = async () => {
+    if (!selectedOrgId) return
+
+    try {
+      setSavingBrand(true)
+      
+      // Build update payload
+      const updatePayload: any = {
+        description: brandForm.description,
+        branding: {
+          primaryColor: brandForm.primaryColor,
+          secondaryColor: brandForm.secondaryColor,
+          logoUrl: brandForm.logoUrl,
+          customDomain: brandForm.customDomain,
+          trackingPageMessage: brandForm.trackingPageMessage
+        }
+      }
+
+      // Add community partner fields if org is community_partner
+      if (selectedOrg?.orgType === 'community_partner') {
+        updatePayload.communityPartner = {
+          ...(selectedOrg.communityPartner || {}),
+          mission: brandForm.mission,
+          storyContent: brandForm.storyContent
+        }
+      }
+
+      const response = await fetch(`/api/crm/organizations/${selectedOrgId}`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(updatePayload)
+      })
+
+      if (!response.ok) {
+        throw new Error('Failed to update organization branding')
+      }
+
+      // Refresh organizations list
+      const orgsResponse = await fetch('/api/crm/organizations')
+      const orgsData = await orgsResponse.json()
+      if (orgsResponse.ok && Array.isArray(orgsData)) {
+        setOrganizations(orgsData)
+      }
+
+      alert('Brand settings updated successfully')
+    } catch (error) {
+      console.error('Error updating brand:', error)
+      alert('Failed to update brand settings')
+    } finally {
+      setSavingBrand(false)
+    }
+  }
+
   const binColumns: Column<Bin>[] = [
     { key: '_id', header: 'Bin ID' },
     { key: 'name', header: 'Name' },
@@ -173,6 +273,9 @@ export default function PartnerPage() {
     }
   ]
 
+  const isSuperAdmin = (session?.user as any)?.userType === 'super_admin'
+  const selectedOrg = organizations.find(org => org._id === selectedOrgId)
+
   const productColumns: Column<Product>[] = [
     { key: '_id', header: 'Product ID' },
     { key: 'name', header: 'Name' },
@@ -208,18 +311,15 @@ export default function PartnerPage() {
     }
   ]
 
-  const isSuperAdmin = (session?.user as any)?.userType === 'super_admin'
-  const selectedOrg = organizations.find(org => org._id === selectedOrgId)
-
   return (
     <div className="space-y-6">
       {/* Header with Org Selector */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
-          <h2 className="text-3xl font-bold text-pop-black">Partner Dashboard</h2>
-          <p className="text-gray-600 mt-2">
-            {selectedOrg ? `${selectedOrg.name} - Circular economy impact and bin management` : 'Your circular economy impact and bin management'}
-          </p>
+          <h2 className="text-3xl font-bold text-pop-black">
+            {selectedOrg ? `${selectedOrg.name} ` : 'Partner'}
+            Dashboard</h2>
+          
         </div>
         
         {/* Org Selector - Only visible for super_admin */}
@@ -290,7 +390,7 @@ export default function PartnerPage() {
       </div>
 
       {/* Bin Network and Activity - TODO: Filter by selectedOrgId when API supports org-specific data */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      <div className="hidden grid grid-cols-1 lg:grid-cols-2 gap-6">
         <Card>
           <CardHeader>
             <CardTitle>Your Bin Network</CardTitle>
@@ -366,7 +466,7 @@ export default function PartnerPage() {
             <div className="flex items-center gap-3">
               <FileText className="h-5 w-5 text-pop-blue" />
               <div className="text-left">
-                <h3 className="text-lg font-semibold text-pop-black">{selectedOrg?.name || 'Partner'} Documentation</h3>
+                <h3 className="text-lg font-semibold text-pop-black">{selectedOrg?.name || 'Partner'} Documents</h3>
                 <p className="text-sm text-gray-600 font-normal">Essential documents and agreements</p>
               </div>
             </div>
@@ -455,6 +555,153 @@ export default function PartnerPage() {
         </AccordionItem>
       </Accordion>
 
+      {/* Brand Settings */}
+      <Accordion type="single" collapsible className="w-full">
+        <AccordionItem value="brand" className="border rounded-lg px-4">
+          <AccordionTrigger className="hover:no-underline">
+            <div className="flex items-center gap-3">
+              <Palette className="h-5 w-5 text-pop-green" />
+              <div className="text-left">
+                <h3 className="text-lg font-semibold text-pop-black">{selectedOrg?.name || 'Partner'} Brand</h3>
+                <p className="text-sm text-gray-600 font-normal">Edit branding and description</p>
+              </div>
+            </div>
+          </AccordionTrigger>
+          <AccordionContent>
+            <div className="space-y-6 pt-2 pb-4">
+              <div className="space-y-4">
+                {/* Description */}
+                <div className="space-y-2">
+                  <Label htmlFor="description">Description</Label>
+                  <Textarea
+                    id="description"
+                    placeholder="Enter organization description..."
+                    value={brandForm.description}
+                    onChange={(e) => setBrandForm({ ...brandForm, description: e.target.value })}
+                    rows={3}
+                    data-testid="input-brand-description"
+                  />
+                </div>
+
+                {/* Branding Colors */}
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div className="space-y-2">
+                    <Label htmlFor="primaryColor">Primary Color</Label>
+                    <Input
+                      id="primaryColor"
+                      type="text"
+                      placeholder="#000000"
+                      value={brandForm.primaryColor}
+                      onChange={(e) => setBrandForm({ ...brandForm, primaryColor: e.target.value })}
+                      data-testid="input-brand-primarycolor"
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="secondaryColor">Secondary Color</Label>
+                    <Input
+                      id="secondaryColor"
+                      type="text"
+                      placeholder="#000000"
+                      value={brandForm.secondaryColor}
+                      onChange={(e) => setBrandForm({ ...brandForm, secondaryColor: e.target.value })}
+                      data-testid="input-brand-secondarycolor"
+                    />
+                  </div>
+                </div>
+
+                {/* Logo URL */}
+                <div className="space-y-2">
+                  <Label htmlFor="logoUrl">Logo URL</Label>
+                  <Input
+                    id="logoUrl"
+                    type="text"
+                    placeholder="https://example.com/logo.png"
+                    value={brandForm.logoUrl}
+                    onChange={(e) => setBrandForm({ ...brandForm, logoUrl: e.target.value })}
+                    data-testid="input-brand-logourl"
+                  />
+                </div>
+
+                {/* Custom Domain */}
+                <div className="space-y-2">
+                  <Label htmlFor="customDomain">Custom Domain</Label>
+                  <Input
+                    id="customDomain"
+                    type="text"
+                    placeholder="track.yourcompany.com"
+                    value={brandForm.customDomain}
+                    onChange={(e) => setBrandForm({ ...brandForm, customDomain: e.target.value })}
+                    data-testid="input-brand-customdomain"
+                  />
+                </div>
+
+                {/* Tracking Page Message */}
+                <div className="space-y-2">
+                  <Label htmlFor="trackingPageMessage">Tracking Page Message</Label>
+                  <Textarea
+                    id="trackingPageMessage"
+                    placeholder="Custom message for tracking page..."
+                    value={brandForm.trackingPageMessage}
+                    onChange={(e) => setBrandForm({ ...brandForm, trackingPageMessage: e.target.value })}
+                    rows={2}
+                    data-testid="input-brand-trackingmessage"
+                  />
+                </div>
+
+                {/* Community Partner Fields */}
+                {selectedOrg?.orgType === 'community_partner' && (
+                  <>
+                    <div className="border-t pt-4">
+                      <h4 className="font-semibold text-sm mb-4 text-pop-black">Community Partner Information</h4>
+                      
+                      <div className="space-y-4">
+                        {/* Mission */}
+                        <div className="space-y-2">
+                          <Label htmlFor="mission">Mission</Label>
+                          <Textarea
+                            id="mission"
+                            placeholder="Enter mission statement..."
+                            value={brandForm.mission}
+                            onChange={(e) => setBrandForm({ ...brandForm, mission: e.target.value })}
+                            rows={3}
+                            data-testid="input-brand-mission"
+                          />
+                        </div>
+
+                        {/* Story Content */}
+                        <div className="space-y-2">
+                          <Label htmlFor="storyContent">Story Content</Label>
+                          <Textarea
+                            id="storyContent"
+                            placeholder="Enter your story..."
+                            value={brandForm.storyContent}
+                            onChange={(e) => setBrandForm({ ...brandForm, storyContent: e.target.value })}
+                            rows={4}
+                            data-testid="input-brand-storycontent"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  </>
+                )}
+              </div>
+
+              {/* Save Button */}
+              <div className="flex gap-2 pt-2 border-t">
+                <Button 
+                  onClick={handleBrandSave}
+                  disabled={savingBrand}
+                  className="bg-pop-green hover:bg-pop-green/90"
+                  data-testid="button-save-brand"
+                >
+                  {savingBrand ? 'Saving...' : 'Save Brand Settings'}
+                </Button>
+              </div>
+            </div>
+          </AccordionContent>
+        </AccordionItem>
+      </Accordion>
+
       {/* Bins - Filtered by selectedOrgId */}
       <Accordion type="single" collapsible className="w-full">
         <AccordionItem value="bins" className="border rounded-lg px-4">
@@ -464,7 +711,7 @@ export default function PartnerPage() {
               <div className="text-left">
                 <h3 className="text-lg font-semibold text-pop-black">{selectedOrg?.name || 'Partner'} Bins</h3>
                 <p className="text-sm text-gray-600 font-normal">
-                  {loadingBins ? 'Loading bins...' : `${bins.length} collection bin${bins.length !== 1 ? 's' : ''} at partner locations`}
+                  {loadingBins ? 'Loading bins...' : `${bins.length} collection bin${bins.length !== 1 ? 's' : ''} at your location(s)`}
                 </p>
               </div>
             </div>
@@ -509,7 +756,7 @@ export default function PartnerPage() {
               <div className="text-left">
                 <h3 className="text-lg font-semibold text-pop-black">{selectedOrg?.name || 'Partner'} Products</h3>
                 <p className="text-sm text-gray-600 font-normal">
-                  {loadingProducts ? 'Loading products...' : `${products.length} product${products.length !== 1 ? 's' : ''} made from your waste`}
+                  {loadingProducts ? 'Loading products...' : `${products.length} product${products.length !== 1 ? 's' : ''} made for you`}
                 </p>
               </div>
             </div>
