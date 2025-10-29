@@ -346,7 +346,7 @@ export default function PartnerPage() {
       <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
         <Card data-testid="card-partner-type">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Partner Type</CardTitle>
+            <CardTitle className="text-sm font-medium">Organization category</CardTitle>
             <Building2 className="h-4 w-4 text-pop-green" />
           </CardHeader>
           <CardContent>
@@ -357,40 +357,40 @@ export default function PartnerPage() {
                   ).join(' ')
                 : '—'}
             </div>
-            <p className="text-xs text-gray-600">Organization category</p>
+            <p className="text-xs text-gray-600">Org Type</p>
           </CardContent>
         </Card>
 
         <Card data-testid="card-last-collection">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Last Collection</CardTitle>
+            <CardTitle className="text-sm font-medium">Most recent pickup</CardTitle>
             <Calendar className="h-4 w-4 text-pop-blue" />
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold" data-testid="text-last-collection">Oct 22, 2025</div>
-            <p className="text-xs text-gray-600">Most recent pickup</p>
+            <p className="text-xs text-gray-600">Last Collection</p>
           </CardContent>
         </Card>
 
         <Card data-testid="card-next-collection">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Next Collection</CardTitle>
+            <CardTitle className="text-sm font-medium">Scheduled pickup</CardTitle>
             <Calendar className="h-4 w-4 text-pop-red" />
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold" data-testid="text-next-collection">Nov 5, 2025</div>
-            <p className="text-xs text-gray-600">Scheduled pickup</p>
+            <p className="text-xs text-gray-600">Next Collection</p>
           </CardContent>
         </Card>
 
         <Card data-testid="card-total-waste">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Total Diverted Waste</CardTitle>
+            <CardTitle className="text-sm font-medium">Since partnership began</CardTitle>
             <Scale className="h-4 w-4 text-pop-green" />
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold" data-testid="text-total-waste">2,847 lbs</div>
-            <p className="text-xs text-gray-600">Since partnership began</p>
+            <p className="text-xs text-gray-600">Total Diverted Waste</p>
           </CardContent>
         </Card>
       </div>
