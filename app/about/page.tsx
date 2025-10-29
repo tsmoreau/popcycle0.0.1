@@ -26,21 +26,14 @@ export default function About() {
   return (
     <div className="min-h-screen bg-white">
       {/* Hero Section with Large Image */}
-      <section className="relative h-[70vh] bg-gray-100">
-        <div className="absolute inset-0 flex items-center justify-center">
-          <ImageIcon className="w-32 h-32 text-gray-300" />
-        </div>
-        <div className="absolute bottom-0 left-0 right-0 p-12 bg-gradient-to-t from-black/60 to-transparent">
-          <div className="max-w-7xl mx-auto">
-            <h1 className="text-5xl lg:text-7xl font-light mb-4 text-white">
-              About PopCycle
-            </h1>
-            <p className="text-xl text-white/90 max-w-2xl font-light">
-              Transforming plastic waste into products that teach through making.
-            </p>
+      <div className="font-jost relative h-[40vh] lg:h-[60vh] bg-gray-50 items-center justify-center text-center flex">
+        <div className="flex-col flex mx-auto">
+        <h1 className="text-6xl font-light mb-6 text-pop-black">About</h1>
+        <p className="text-xl text-pop-black max-w-2xl mx-auto mb-8 font-extralight">
+           PopCycle is an LA Based Design Studio that transforms tracked plastic waste streams into custom products that delight. We believe that each item we engage with can be anchor for story, learning, connection, and impact.
+        </p>
           </div>
-        </div>
-      </section>
+      </div>
 
       {/* Introduction */}
       <section className="max-w-7xl mx-auto px-6 lg:px-12 py-20 lg:py-32">

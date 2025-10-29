@@ -121,17 +121,17 @@ export default function Shop() {
     : products.filter(product => categoryMap[product.category] === selectedCategory);
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="font-jost min-h-screen bg-white">
       {/* Hero Section */}
-      <div className="relative h-[40vh] lg:h-[60vh] bg-gray-50 items-center">
-        <div className="items-center max-w-7xl justify-center mx-auto px-6 text-center">
-          <h1 className="text-6xl helvetica-bold mb-6 text-pop-black">SHOP</h1>
-          <p className="text-xl text-pop-black max-w-3xl mx-auto mb-8">
-            Toys, games, models, and more, custom-cut from traceable, 100%
-            recycled waste plastic. Choose your design and a sheet blank and
-            we'll send you a unique piece of sustainability.
-          </p>
-        </div>
+      <div className="font-jost relative h-[40vh] lg:h-[60vh] bg-gray-50 items-center justify-center text-center flex">
+        <div className="flex-col flex mx-auto">
+        <h1 className="text-6xl font-light mb-6 text-pop-black">Products</h1>
+        <p className="text-xl text-pop-black max-w-3xl mx-auto mb-8 font-extralight">
+          Toys, games, models, and more, custom-cut from traceable, 100%
+          recycled waste plastic. Choose your design and a sheet blank and
+          we'll send you a unique piece of sustainability.
+        </p>
+          </div>
       </div>
 
       {/* Categories Filter */}

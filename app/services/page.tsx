@@ -9,16 +9,14 @@ export default function Services() {
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
-      <div className="bg-white py-0 pt-32">
-        <div className="max-w-7xl mx-auto px-6 text-center">
-          <h1 className="text-6xl helvetica-bold mb-6 text-pop-black">
-            SERVICES
-          </h1>
-          <p className="text-xl text-pop-gray max-w-3xl mx-auto mb-8">
-            Complete circular manufacturing solutions from waste collection through educational product delivery.
-          </p>
-         
-        </div>
+
+      <div className="font-jost relative h-[40vh] lg:h-[60vh] bg-gray-50 items-center justify-center text-center flex">
+        <div className="flex-col flex mx-auto">
+        <h1 className="text-6xl font-light mb-6 text-pop-black">Services</h1>
+        <p className="text-xl text-pop-black max-w-3xl mx-auto mb-8 font-extralight">
+           Complete circular manufacturing solutions from waste collection through custom product creation and delivery.
+        </p>
+          </div>
       </div>
 
       <div className="pb-20 pt-10">
