@@ -389,6 +389,96 @@ export default function PartnerPage() {
         </Card>
       </div>
 
+      {/* Bins - Filtered by selectedOrgId */}
+      <Accordion type="single" collapsible className="w-full">
+        <AccordionItem value="bins" className="border rounded-lg px-4">
+          <AccordionTrigger className="hover:no-underline">
+            <div className="flex items-center gap-3">
+              <Trash2 className="h-5 w-5 text-pop-red" />
+              <div className="text-left">
+                <h3 className="text-lg font-semibold text-pop-black">{selectedOrg?.name || 'Partner'} Bins</h3>
+                <p className="text-sm text-gray-600 font-normal">
+                  {loadingBins ? 'Loading bins...' : `${bins.length} collection bin${bins.length !== 1 ? 's' : ''} at your location(s)`}
+                </p>
+              </div>
+            </div>
+          </AccordionTrigger>
+          <AccordionContent>
+            <div className="pt-2 pb-4">
+              {loadingBins ? (
+                <div className="flex items-center justify-center p-8">
+                  <div className="text-sm text-gray-600">Loading bins...</div>
+                </div>
+              ) : !selectedOrgId ? (
+                <div className="flex items-center justify-center p-8">
+                  <div className="text-sm text-gray-600">Select an organization to view bins</div>
+                </div>
+              ) : bins.length === 0 ? (
+                <div className="flex items-center justify-center p-8">
+                  <div className="text-sm text-gray-600">No bins found for this organization</div>
+                </div>
+              ) : (
+                <DataTable
+                  title=""
+                  description=""
+                  data={bins}
+                  columns={binColumns}
+                  enableColumnSelection={true}
+                  enableFiltering={true}
+                  availableColumns={binColumns}
+                  defaultVisibleColumns={['_id', 'name', 'location', 'type', 'status', 'capacity', 'isActive']}
+                />
+              )}
+            </div>
+          </AccordionContent>
+        </AccordionItem>
+      </Accordion>
+
+      {/* Products - Filtered by selectedOrgId */}
+      <Accordion type="single" collapsible className="w-full">
+        <AccordionItem value="products" className="border rounded-lg px-4">
+          <AccordionTrigger className="hover:no-underline">
+            <div className="flex items-center gap-3">
+              <Package className="h-5 w-5 text-pop-green" />
+              <div className="text-left">
+                <h3 className="text-lg font-semibold text-pop-black">{selectedOrg?.name || 'Partner'} Products</h3>
+                <p className="text-sm text-gray-600 font-normal">
+                  {loadingProducts ? 'Loading products...' : `${products.length} product${products.length !== 1 ? 's' : ''} made for you`}
+                </p>
+              </div>
+            </div>
+          </AccordionTrigger>
+          <AccordionContent>
+            <div className="pt-2 pb-4">
+              {loadingProducts ? (
+                <div className="flex items-center justify-center p-8">
+                  <div className="text-sm text-gray-600">Loading products...</div>
+                </div>
+              ) : !selectedOrgId ? (
+                <div className="flex items-center justify-center p-8">
+                  <div className="text-sm text-gray-600">Select an organization to view products</div>
+                </div>
+              ) : products.length === 0 ? (
+                <div className="flex items-center justify-center p-8">
+                  <div className="text-sm text-gray-600">No products found for this organization</div>
+                </div>
+              ) : (
+                <DataTable
+                  title=""
+                  description=""
+                  data={products}
+                  columns={productColumns}
+                  enableColumnSelection={true}
+                  enableFiltering={true}
+                  availableColumns={productColumns}
+                  defaultVisibleColumns={['name', 'category', 'productType', 'price', 'editions', 'rating', 'inStock']}
+                />
+              )}
+            </div>
+          </AccordionContent>
+        </AccordionItem>
+      </Accordion>
+
       {/* Bin Network and Activity - TODO: Filter by selectedOrgId when API supports org-specific data */}
       <div className="hidden grid grid-cols-1 lg:grid-cols-2 gap-6">
         <Card>
@@ -702,95 +792,7 @@ export default function PartnerPage() {
         </AccordionItem>
       </Accordion>
 
-      {/* Bins - Filtered by selectedOrgId */}
-      <Accordion type="single" collapsible className="w-full">
-        <AccordionItem value="bins" className="border rounded-lg px-4">
-          <AccordionTrigger className="hover:no-underline">
-            <div className="flex items-center gap-3">
-              <Trash2 className="h-5 w-5 text-pop-red" />
-              <div className="text-left">
-                <h3 className="text-lg font-semibold text-pop-black">{selectedOrg?.name || 'Partner'} Bins</h3>
-                <p className="text-sm text-gray-600 font-normal">
-                  {loadingBins ? 'Loading bins...' : `${bins.length} collection bin${bins.length !== 1 ? 's' : ''} at your location(s)`}
-                </p>
-              </div>
-            </div>
-          </AccordionTrigger>
-          <AccordionContent>
-            <div className="pt-2 pb-4">
-              {loadingBins ? (
-                <div className="flex items-center justify-center p-8">
-                  <div className="text-sm text-gray-600">Loading bins...</div>
-                </div>
-              ) : !selectedOrgId ? (
-                <div className="flex items-center justify-center p-8">
-                  <div className="text-sm text-gray-600">Select an organization to view bins</div>
-                </div>
-              ) : bins.length === 0 ? (
-                <div className="flex items-center justify-center p-8">
-                  <div className="text-sm text-gray-600">No bins found for this organization</div>
-                </div>
-              ) : (
-                <DataTable
-                  title=""
-                  description=""
-                  data={bins}
-                  columns={binColumns}
-                  enableColumnSelection={true}
-                  enableFiltering={true}
-                  availableColumns={binColumns}
-                  defaultVisibleColumns={['_id', 'name', 'location', 'type', 'status', 'capacity', 'isActive']}
-                />
-              )}
-            </div>
-          </AccordionContent>
-        </AccordionItem>
-      </Accordion>
-
-      {/* Products - Filtered by selectedOrgId */}
-      <Accordion type="single" collapsible className="w-full">
-        <AccordionItem value="products" className="border rounded-lg px-4">
-          <AccordionTrigger className="hover:no-underline">
-            <div className="flex items-center gap-3">
-              <Package className="h-5 w-5 text-pop-green" />
-              <div className="text-left">
-                <h3 className="text-lg font-semibold text-pop-black">{selectedOrg?.name || 'Partner'} Products</h3>
-                <p className="text-sm text-gray-600 font-normal">
-                  {loadingProducts ? 'Loading products...' : `${products.length} product${products.length !== 1 ? 's' : ''} made for you`}
-                </p>
-              </div>
-            </div>
-          </AccordionTrigger>
-          <AccordionContent>
-            <div className="pt-2 pb-4">
-              {loadingProducts ? (
-                <div className="flex items-center justify-center p-8">
-                  <div className="text-sm text-gray-600">Loading products...</div>
-                </div>
-              ) : !selectedOrgId ? (
-                <div className="flex items-center justify-center p-8">
-                  <div className="text-sm text-gray-600">Select an organization to view products</div>
-                </div>
-              ) : products.length === 0 ? (
-                <div className="flex items-center justify-center p-8">
-                  <div className="text-sm text-gray-600">No products found for this organization</div>
-                </div>
-              ) : (
-                <DataTable
-                  title=""
-                  description=""
-                  data={products}
-                  columns={productColumns}
-                  enableColumnSelection={true}
-                  enableFiltering={true}
-                  availableColumns={productColumns}
-                  defaultVisibleColumns={['name', 'category', 'productType', 'price', 'editions', 'rating', 'inStock']}
-                />
-              )}
-            </div>
-          </AccordionContent>
-        </AccordionItem>
-      </Accordion>
+     
     </div>
   )
 }
