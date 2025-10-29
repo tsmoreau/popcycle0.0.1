@@ -78,6 +78,7 @@ interface Product {
   _id: string
   name: string
   description: string
+  org?: string
   category: 'workshop' | 'studio_edition' | 'client_edition'
   productType: 'coasters' | 'keychains' | 'bookmarks' | 'magnets' | 'earrings' | 'lighting' | 'cutting_boards'
   designFiles?: {
@@ -120,17 +121,20 @@ export default function AdminPage() {
   const [loadingProducts, setLoadingProducts] = useState(false)
   const [users, setUsers] = useState<User[]>([])
   const [loadingUsers, setLoadingUsers] = useState(false)
+  const [organizations, setOrganizations] = useState<any[]>([])
+  const [loadingOrganizations, setLoadingOrganizations] = useState(false)
   
   // Session management state
   const [sessionStats, setSessionStats] = useState<SessionStats | null>(null)
   const [onlineUsers, setOnlineUsers] = useState<OnlineUser[]>([])
   const [loadingSessions, setLoadingSessions] = useState(true)
 
-  // Fetch MongoDB status, GCS status, products, users, and sessions on component mount
+  // Fetch MongoDB status, GCS status, products, users, organizations, and sessions on component mount
   useEffect(() => {
     fetchMongoStatus()
     fetchGcsStatus()
     fetchUsers()
+    fetchOrganizations()
     fetchSessionData()
   }, [])
 
@@ -171,6 +175,26 @@ export default function AdminPage() {
       setProducts([])
     } finally {
       setLoadingProducts(false)
+    }
+  }
+
+  const fetchOrganizations = async () => {
+    try {
+      setLoadingOrganizations(true)
+      const response = await fetch('/api/crm/organizations')
+      const data = await response.json()
+      
+      if (response.ok && Array.isArray(data)) {
+        setOrganizations(data)
+      } else {
+        console.error('Error fetching organizations:', data.error || 'Invalid response')
+        setOrganizations([])
+      }
+    } catch (error) {
+      console.error('Error fetching organizations:', error)
+      setOrganizations([])
+    } finally {
+      setLoadingOrganizations(false)
     }
   }
 
@@ -471,6 +495,19 @@ export default function AdminPage() {
   const productColumns: Column<Product>[] = [
     { key: '_id', header: 'Product ID' },
     { key: 'name', header: 'Name' },
+    {
+      key: 'org',
+      header: 'Organization',
+      render: (product) => {
+        if (!product.org) return <span className="text-gray-400">—</span>
+        const org = organizations.find((o: any) => String(o._id) === String(product.org))
+        return org ? (
+          <span className="text-sm">{org.name}</span>
+        ) : (
+          <span className="text-gray-400 text-sm">Unknown</span>
+        )
+      }
+    },
     {
       key: 'category',
       header: 'Category',
