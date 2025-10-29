@@ -123,10 +123,10 @@ export default function ProductDetail() {
       <div className="min-h-screen flex flex-col items-center justify-center px-6 bg-white">
         <h1 className="text-2xl font-light mb-4">Product Not Found</h1>
         <p className="text-gray-500 mb-12">{error || "This product doesn't exist"}</p>
-        <Link href="/shop">
+        <Link href="/product">
           <Button variant="outline" size="lg">
             <ArrowLeft className="h-4 w-4 mr-2" />
-            Back to Shop
+            Back to Products
           </Button>
         </Link>
       </div>
@@ -501,7 +501,7 @@ export default function ProductDetail() {
           <h2 className="text-3xl font-light mb-12">You may also like</h2>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6 lg:gap-8">
             {[1, 2, 3, 4].map((i) => (
-              <Link key={i} href="/shop" className="group">
+              <Link key={i} href="/product" className="group">
                 <div className="aspect-square bg-gray-100 mb-4 overflow-hidden flex items-center justify-center">
                   <Package className="w-20 h-20 text-gray-300" />
                 </div>

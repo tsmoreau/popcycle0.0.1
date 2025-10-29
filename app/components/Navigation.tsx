@@ -73,16 +73,16 @@ export default function Navigation() {
   ];
 
   const productsItems = [
-    { href: "/shop#limited-coasters", label: "Coasters" },
-    { href: "/shop#limited-boards", label: "Cutting Boards" },
-    { href: "/shop#limited-clocks", label: "Clocks" },
-    { href: "/shop#limited-lighting", label: "Lighting" },
-    { href: "/shop#custom-coasters", label: "Custom Coasters" },
-    { href: "/shop#custom-keychains", label: "Keychains" },
-    { href: "/shop#custom-magnets", label: "Magnets" },
-    { href: "/shop#custom-bookmarks", label: "Bookmarks" },
-    { href: "/shop#custom-combs", label: "Combs" },
-    { href: "/shop#all", label: "Browse All" },
+    { href: "/product#limited-coasters", label: "Coasters" },
+    { href: "/product#limited-boards", label: "Cutting Boards" },
+    { href: "/product#limited-clocks", label: "Clocks" },
+    { href: "/product#limited-lighting", label: "Lighting" },
+    { href: "/product#custom-coasters", label: "Custom Coasters" },
+    { href: "/product#custom-keychains", label: "Keychains" },
+    { href: "/product#custom-magnets", label: "Magnets" },
+    { href: "/product#custom-bookmarks", label: "Bookmarks" },
+    { href: "/product#custom-combs", label: "Combs" },
+    { href: "/product#all", label: "Browse All" },
   ];
 
   const servicesItems = [
@@ -374,37 +374,37 @@ export default function Navigation() {
             const coastersSection = {
               title: "Coasters",
               items: [
-                { href: "/shop#all", label: "Themed Sets" },
+                { href: "/product#all", label: "Themed Sets" },
               ],
             };
             const boardsSection = {
               title: "Cutting Boards",
               items: [
-                { href: "/shop#all", label: "Abstracts" },
-                { href: "/shop#all", label: "Still Lifes" },
+                { href: "/product#all", label: "Abstracts" },
+                { href: "/product#all", label: "Still Lifes" },
               ],
             };
             const clocksSection = {
               title: "Clocks",
               items: [
-                { href: "/shop#all", label: "Desk Clocks" },
-                { href: "/shop#all", label: "Wall Clocks" },
+                { href: "/product#all", label: "Desk Clocks" },
+                { href: "/product#all", label: "Wall Clocks" },
               ],
             };
             const lightingSection = {
               title: "Lighting",
               items: [
-                { href: "/shop#all", label: "Designer Lights" },
+                { href: "/product#all", label: "Designer Lights" },
               ],
             };
             const makeYourOwnSection = {
               title: "Make-Your-Own",
               items: [
-                { href: "/shop#custom-coasters", label: "Coasters" },
-                { href: "/shop#custom-keychains", label: "Keychains" },
-                { href: "/shop#custom-magnets", label: "Magnets" },
-                { href: "/shop#custom-bookmarks", label: "Bookmarks" },
-                { href: "/shop#custom-combs", label: "More" },
+                { href: "/product#custom-coasters", label: "Coasters" },
+                { href: "/product#custom-keychains", label: "Keychains" },
+                { href: "/product#custom-magnets", label: "Magnets" },
+                { href: "/product#custom-bookmarks", label: "Bookmarks" },
+                { href: "/product#custom-combs", label: "More" },
               ],
             };
 

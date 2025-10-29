@@ -166,7 +166,7 @@ export default function Services() {
                   <p className="text-sm text-pop-gray">Complete waste-to-product stories</p>
                 </div>
               </div>
-              <Link href="/shop">
+              <Link href="/product">
                 <Button className="bg-pop-red text-white hover:bg-pop-black hover:text-white systematic-caps">
                   View Educational Kits
                   <ArrowRight className="ml-2 w-4 h-4" />
