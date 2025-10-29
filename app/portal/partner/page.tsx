@@ -549,101 +549,6 @@ export default function PartnerPage() {
         </Card>
       </div>
 
-      {/* Partner Documentation - Wrapped in Accordion */}
-      <Accordion type="single" collapsible className="w-full">
-        <AccordionItem value="partner-docs" className="border rounded-lg px-4">
-          <AccordionTrigger className="hover:no-underline">
-            <div className="flex items-center gap-3">
-              <FileText className="h-5 w-5 text-pop-blue" />
-              <div className="text-left">
-                <h3 className="text-lg font-semibold text-pop-black">{selectedOrg?.name || 'Partner'} Documents</h3>
-                <p className="text-sm text-gray-600 font-normal">Essential documents and agreements</p>
-              </div>
-            </div>
-          </AccordionTrigger>
-          <AccordionContent>
-            <div className="space-y-4 pt-2 pb-4">
-              <div className="space-y-3">
-                <div className="flex items-center justify-between py-3 px-4 border border-gray-200 rounded-lg hover:bg-gray-50 cursor-pointer">
-                  <div className="flex items-center space-x-3">
-                    <div className="w-3 h-3 bg-green-500 rounded-full"></div>
-                    <div>
-                      <h4 className="font-medium text-sm">Partnership Agreement</h4>
-                      <p className="text-xs text-gray-500">Signed Jan 15, 2024 • 2.4 MB PDF</p>
-                    </div>
-                  </div>
-                  <div className="flex items-center space-x-2">
-                    <Badge className="bg-green-100 text-green-700 text-xs">Active</Badge>
-                    <Button variant="ghost" size="sm" className="text-xs px-2">Download</Button>
-                  </div>
-                </div>
-                
-                <div className="flex items-center justify-between py-3 px-4 border border-gray-200 rounded-lg hover:bg-gray-50 cursor-pointer">
-                  <div className="flex items-center space-x-3">
-                    <div className="w-3 h-3 bg-blue-500 rounded-full"></div>
-                    <div>
-                      <h4 className="font-medium text-sm">Initial Waste Assessment</h4>
-                      <p className="text-xs text-gray-500">Completed Dec 10, 2023 • 1.8 MB PDF</p>
-                    </div>
-                  </div>
-                  <div className="flex items-center space-x-2">
-                    <Badge variant="secondary" className="text-xs">Complete</Badge>
-                    <Button variant="ghost" size="sm" className="text-xs px-2">Download</Button>
-                  </div>
-                </div>
-                
-                <div className="flex items-center justify-between py-3 px-4 border border-gray-200 rounded-lg hover:bg-gray-50 cursor-pointer">
-                  <div className="flex items-center space-x-3">
-                    <div className="w-3 h-3 bg-orange-500 rounded-full"></div>
-                    <div>
-                      <h4 className="font-medium text-sm">Service Level Agreement</h4>
-                      <p className="text-xs text-gray-500">Updated Mar 8, 2024 • 1.2 MB PDF</p>
-                    </div>
-                  </div>
-                  <div className="flex items-center space-x-2">
-                    <Badge className="bg-orange-100 text-orange-700 text-xs">Current</Badge>
-                    <Button variant="ghost" size="sm" className="text-xs px-2">Download</Button>
-                  </div>
-                </div>
-                
-                <div className="flex items-center justify-between py-3 px-4 border border-gray-200 rounded-lg hover:bg-gray-50 cursor-pointer">
-                  <div className="flex items-center space-x-3">
-                    <div className="w-3 h-3 bg-purple-500 rounded-full"></div>
-                    <div>
-                      <h4 className="font-medium text-sm">Compliance Certification</h4>
-                      <p className="text-xs text-gray-500">Issued Nov 20, 2023 • 950 KB PDF</p>
-                    </div>
-                  </div>
-                  <div className="flex items-center space-x-2">
-                    <Badge className="bg-green-100 text-green-700 text-xs">Valid</Badge>
-                    <Button variant="ghost" size="sm" className="text-xs px-2">Download</Button>
-                  </div>
-                </div>
-                
-                <div className="flex items-center justify-between py-3 px-4 border border-dashed border-gray-300 rounded-lg hover:bg-gray-50 cursor-pointer">
-                  <div className="flex items-center space-x-3">
-                    <div className="w-3 h-3 bg-gray-300 rounded-full"></div>
-                    <div>
-                      <h4 className="font-medium text-sm text-gray-500">Insurance Certificate</h4>
-                      <p className="text-xs text-gray-400">Pending upload</p>
-                    </div>
-                  </div>
-                  <Button variant="outline" size="sm" className="text-xs px-3">Upload</Button>
-                </div>
-              </div>
-              
-              <div className="flex gap-2 pt-2 border-t">
-                <Button variant="outline" className="flex-1 text-sm">
-                  Download All
-                </Button>
-                <Button className="flex-1 bg-pop-blue hover:bg-pop-blue/90 text-sm">
-                  Request Document
-                </Button>
-              </div>
-            </div>
-          </AccordionContent>
-        </AccordionItem>
-      </Accordion>
 
       {/* Brand Settings */}
       <Accordion type="single" collapsible className="w-full">
@@ -743,7 +648,7 @@ export default function PartnerPage() {
                   <>
                     <div className="border-t pt-4">
                       <h4 className="font-semibold text-sm mb-4 text-pop-black">Community Partner Information</h4>
-                      
+
                       <div className="space-y-4">
                         {/* Mission */}
                         <div className="space-y-2">
@@ -785,6 +690,103 @@ export default function PartnerPage() {
                   data-testid="button-save-brand"
                 >
                   {savingBrand ? 'Saving...' : 'Save Brand Settings'}
+                </Button>
+              </div>
+            </div>
+          </AccordionContent>
+        </AccordionItem>
+      </Accordion>
+
+
+      {/* Partner Documentation - Wrapped in Accordion */}
+      <Accordion type="single" collapsible className="w-full">
+        <AccordionItem value="partner-docs" className="border rounded-lg px-4">
+          <AccordionTrigger className="hover:no-underline">
+            <div className="flex items-center gap-3">
+              <FileText className="h-5 w-5 text-pop-blue" />
+              <div className="text-left">
+                <h3 className="text-lg font-semibold text-pop-black">{selectedOrg?.name || 'Partner'} Documents</h3>
+                <p className="text-sm text-gray-600 font-normal">Essential documents and agreements</p>
+              </div>
+            </div>
+          </AccordionTrigger>
+          <AccordionContent>
+            <div className="space-y-4 pt-2 pb-4">
+              <div className="space-y-3">
+                <div className="flex items-center justify-between py-3 px-4 border border-gray-200 rounded-lg hover:bg-gray-50 cursor-pointer">
+                  <div className="flex items-center space-x-3">
+                    <div className="w-3 h-3 bg-green-500 rounded-full"></div>
+                    <div>
+                      <h4 className="font-medium text-sm">Partnership Agreement</h4>
+                      <p className="text-xs text-gray-500">Signed Jan 15, 2024 • 2.4 MB PDF</p>
+                    </div>
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    <Badge className="bg-green-100 text-green-700 text-xs">Active</Badge>
+                    <Button variant="ghost" size="sm" className="text-xs px-2">Download</Button>
+                  </div>
+                </div>
+                
+                <div className="flex items-center justify-between py-3 px-4 border border-gray-200 rounded-lg hover:bg-gray-50 cursor-pointer">
+                  <div className="flex items-center space-x-3">
+                    <div className="w-3 h-3 bg-blue-500 rounded-full"></div>
+                    <div>
+                      <h4 className="font-medium text-sm">Initial Waste Assessment</h4>
+                      <p className="text-xs text-gray-500">Completed Dec 10, 2023 • 1.8 MB PDF</p>
+                    </div>
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    <Badge variant="secondary" className="text-xs">Complete</Badge>
+                    <Button variant="ghost" size="sm" className="text-xs px-2">Download</Button>
+                  </div>
+                </div>
+                
+                <div className="flex items-center justify-between py-3 px-4 border border-gray-200 rounded-lg hover:bg-gray-50 cursor-pointer">
+                  <div className="flex items-center space-x-3">
+                    <div className="w-3 h-3 bg-orange-500 rounded-full"></div>
+                    <div>
+                      <h4 className="font-medium text-sm">Service Level Agreement</h4>
+                      <p className="text-xs text-gray-500">Updated Mar 8, 2024 • 1.2 MB PDF</p>
+                    </div>
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    <Badge className="bg-orange-100 text-orange-700 text-xs">Current</Badge>
+                    <Button variant="ghost" size="sm" className="text-xs px-2">Download</Button>
+                  </div>
+                </div>
+                
+                <div className="flex items-center justify-between py-3 px-4 border border-gray-200 rounded-lg hover:bg-gray-50 cursor-pointer">
+                  <div className="flex items-center space-x-3">
+                    <div className="w-3 h-3 bg-purple-500 rounded-full"></div>
+                    <div>
+                      <h4 className="font-medium text-sm">Compliance Certification</h4>
+                      <p className="text-xs text-gray-500">Issued Nov 20, 2023 • 950 KB PDF</p>
+                    </div>
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    <Badge className="bg-green-100 text-green-700 text-xs">Valid</Badge>
+                    <Button variant="ghost" size="sm" className="text-xs px-2">Download</Button>
+                  </div>
+                </div>
+                
+                <div className="flex items-center justify-between py-3 px-4 border border-dashed border-gray-300 rounded-lg hover:bg-gray-50 cursor-pointer">
+                  <div className="flex items-center space-x-3">
+                    <div className="w-3 h-3 bg-gray-300 rounded-full"></div>
+                    <div>
+                      <h4 className="font-medium text-sm text-gray-500">Insurance Certificate</h4>
+                      <p className="text-xs text-gray-400">Pending upload</p>
+                    </div>
+                  </div>
+                  <Button variant="outline" size="sm" className="text-xs px-3">Upload</Button>
+                </div>
+              </div>
+              
+              <div className="flex gap-2 pt-2 border-t">
+                <Button variant="outline" className="flex-1 text-sm">
+                  Download All
+                </Button>
+                <Button className="flex-1 bg-pop-blue hover:bg-pop-blue/90 text-sm">
+                  Request Document
                 </Button>
               </div>
             </div>
