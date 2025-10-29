@@ -123,8 +123,8 @@ export default function Shop() {
   return (
     <div className="min-h-screen bg-white">
       {/* Hero Section */}
-      <div className="bg-white py-0 pt-32">
-        <div className="max-w-7xl mx-auto px-6 text-center">
+      <div className="relative h-[40vh] lg:h-[60vh] bg-gray-50 items-center">
+        <div className="items-center max-w-7xl justify-center mx-auto px-6 text-center">
           <h1 className="text-6xl helvetica-bold mb-6 text-pop-black">SHOP</h1>
           <p className="text-xl text-pop-black max-w-3xl mx-auto mb-8">
             Toys, games, models, and more, custom-cut from traceable, 100%
