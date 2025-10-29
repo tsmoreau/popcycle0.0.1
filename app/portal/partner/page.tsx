@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import { useSession } from 'next-auth/react'
-import { Package, TrendingUp, Recycle, QrCode, FileText, Building2, Trash2, Palette, Calendar, Scale } from 'lucide-react'
+import { Package, ShoppingCart, Barcode, TrendingUp, Recycle, QrCode, FileText, Building2, Trash2, Palette, Calendar, Scale } from 'lucide-react'
 import { Button } from '../../components/ui/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../../components/ui/card'
 import { Badge } from '../../components/ui/badge'
@@ -13,12 +13,21 @@ import { Input } from '../../components/ui/input'
 import { Textarea } from '../../components/ui/textarea'
 import { Label } from '../../components/ui/label'
 
+interface Contact {
+  name?: string
+  role?: string
+  email?: string
+  phone?: string
+  isPrimary?: boolean
+}
+
 interface Organization {
   _id: string
   name: string
   slug: string
   orgType: string
   description?: string
+  contactInfo?: Contact[]
   branding?: {
     primaryColor?: string
     secondaryColor?: string
@@ -657,7 +666,7 @@ export default function PartnerPage() {
         <AccordionItem value="orders" className="border rounded-lg px-4">
           <AccordionTrigger className="hover:no-underline">
             <div className="flex items-center gap-3">
-              <FileText className="h-5 w-5 text-pop-blue" />
+              <ShoppingCart className="h-5 w-5 text-pop-blue" />
               <div className="text-left">
                 <h3 className="text-lg font-semibold text-pop-black">{selectedOrg?.name || 'Partner'} Orders</h3>
                 <p className="text-sm text-gray-600 font-normal">

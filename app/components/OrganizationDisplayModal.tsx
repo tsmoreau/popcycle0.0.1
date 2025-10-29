@@ -26,18 +26,21 @@ import {
   Settings
 } from 'lucide-react'
 
+interface Contact {
+  name?: string
+  role?: string
+  email?: string
+  phone?: string
+  isPrimary?: boolean
+}
+
 interface Organization {
   _id: string
   name: string
   slug: string
   orgType: 'community_partner' | 'limited_client' | 'retainer_client' | 'wholesaler'
   description: string
-  contactInfo: {
-    email?: string
-    phone?: string
-    address?: string
-    website?: string
-  }
+  contactInfo: Contact[]
   branding: {
     primaryColor?: string
     secondaryColor?: string
@@ -286,39 +289,45 @@ export default function OrganizationDisplayModal({ item, onClose, onEdit }: Orga
           {/* Contact Details */}
           <div>
             <h3 className="text-lg font-semibold mb-3 flex items-center gap-2">
-              <Mail className="h-5 w-5 text-pop-green" />
+              <User className="h-5 w-5 text-pop-green" />
               Contact Information
             </h3>
-            <div className="grid grid-cols-2 gap-4">
-              {item.contactInfo.email && (
-                <div className="flex items-center gap-2">
-                  <Mail className="h-4 w-4 text-gray-500" />
-                  <a href={`mailto:${item.contactInfo.email}`} className="text-blue-600 hover:underline">
-                    {item.contactInfo.email}
-                  </a>
-                </div>
-              )}
-              {item.contactInfo.phone && (
-                <div className="flex items-center gap-2">
-                  <Phone className="h-4 w-4 text-gray-500" />
-                  <a href={`tel:${item.contactInfo.phone}`} className="text-blue-600 hover:underline">
-                    {item.contactInfo.phone}
-                  </a>
-                </div>
-              )}
-              {item.contactInfo.website && (
-                <div className="flex items-center gap-2">
-                  <Globe className="h-4 w-4 text-gray-500" />
-                  <a href={item.contactInfo.website} target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline truncate">
-                    {item.contactInfo.website}
-                  </a>
-                </div>
-              )}
-              {item.contactInfo.address && (
-                <div className="flex items-start gap-2 col-span-2">
-                  <MapPin className="h-4 w-4 text-gray-500 mt-1" />
-                  <span className="text-gray-700">{item.contactInfo.address}</span>
-                </div>
+            <div className="space-y-4">
+              {item.contactInfo && item.contactInfo.length > 0 ? (
+                item.contactInfo.map((contact, index) => (
+                  <div key={index} className="border rounded-lg p-4">
+                    {contact.isPrimary && (
+                      <Badge className="mb-2 bg-pop-green text-white">Primary Contact</Badge>
+                    )}
+                    <div className="space-y-2">
+                      {contact.name && (
+                        <div className="flex items-center gap-2">
+                          <User className="h-4 w-4 text-gray-500" />
+                          <span className="font-medium">{contact.name}</span>
+                          {contact.role && <span className="text-gray-500">- {contact.role}</span>}
+                        </div>
+                      )}
+                      {contact.email && (
+                        <div className="flex items-center gap-2">
+                          <Mail className="h-4 w-4 text-gray-500" />
+                          <a href={`mailto:${contact.email}`} className="text-blue-600 hover:underline">
+                            {contact.email}
+                          </a>
+                        </div>
+                      )}
+                      {contact.phone && (
+                        <div className="flex items-center gap-2">
+                          <Phone className="h-4 w-4 text-gray-500" />
+                          <a href={`tel:${contact.phone}`} className="text-blue-600 hover:underline">
+                            {contact.phone}
+                          </a>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                ))
+              ) : (
+                <p className="text-gray-500">No contact information available</p>
               )}
             </div>
           </div>

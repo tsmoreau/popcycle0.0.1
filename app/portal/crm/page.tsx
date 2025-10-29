@@ -10,6 +10,14 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '..
 import { OrganizationEditModal } from '../../components/OrganizationEditModal'
 import OrganizationDisplayModal from '../../components/OrganizationDisplayModal'
 
+interface Contact {
+  name?: string
+  role?: string
+  email?: string
+  phone?: string
+  isPrimary?: boolean
+}
+
 interface Activity {
   id: string
   type: 'email' | 'call' | 'meeting' | 'note' | 'task'
@@ -28,12 +36,7 @@ interface Organization {
   slug: string
   orgType: 'community_partner' | 'limited_client' | 'retainer_client' | 'wholesaler'
   description: string
-  contactInfo: {
-    email?: string
-    phone?: string
-    address?: string
-    website?: string
-  }
+  contactInfo: Contact[]
   branding: {
     primaryColor?: string
     secondaryColor?: string
@@ -136,7 +139,10 @@ export default function CRMPage() {
     { 
       key: 'contactInfo', 
       header: 'Primary Contact',
-      render: (org) => org.contactInfo.email || 'No contact info'
+      render: (org) => {
+        const primaryContact = org.contactInfo?.find(c => c.isPrimary) || org.contactInfo?.[0]
+        return primaryContact?.email || primaryContact?.name || 'No contact info'
+      }
     },
     {
       key: 'orgType',
