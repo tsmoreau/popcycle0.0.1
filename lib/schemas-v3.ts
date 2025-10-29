@@ -25,15 +25,19 @@ export interface Org {
   slug: string;
   orgType: "community_partner" | "limited_client" | "retainer_client" | "wholesaler";
   description: string;
+  
 
-  // Universal contact information
-  contactInfo: {
+  // Universal contact information (supports multiple contacts)
+  contactInfo: Array<{
+    name?: string;
+    role?: string;
     email?: string;
     phone?: string;
-    address?: string;
-    website?: string;
-  };
+    isPrimary?: boolean;
+  }>;
 
+  users: ObjectId[]; // References to User collection
+  
   // Universal branding
   branding: {
     primaryColor?: string;
