@@ -501,7 +501,7 @@ export default function ProductDetail() {
           <h2 className="text-3xl font-light mb-12">You may also like</h2>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6 lg:gap-8">
             {[1, 2, 3, 4].map((i) => (
-              <Link key={i} href="/product" className="group">
+              <Link key={i} href="/products" className="group">
                 <div className="aspect-square bg-gray-100 mb-4 overflow-hidden flex items-center justify-center">
                   <Package className="w-20 h-20 text-gray-300" />
                 </div>

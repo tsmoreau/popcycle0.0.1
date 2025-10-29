@@ -374,37 +374,37 @@ export default function Navigation() {
             const coastersSection = {
               title: "Coasters",
               items: [
-                { href: "/product#all", label: "Themed Sets" },
+                { href: "/products#all", label: "Themed Sets" },
               ],
             };
             const boardsSection = {
               title: "Cutting Boards",
               items: [
-                { href: "/product#all", label: "Abstracts" },
-                { href: "/product#all", label: "Still Lifes" },
+                { href: "/products#all", label: "Abstracts" },
+                { href: "/products#all", label: "Still Lifes" },
               ],
             };
             const clocksSection = {
               title: "Clocks",
               items: [
-                { href: "/product#all", label: "Desk Clocks" },
-                { href: "/product#all", label: "Wall Clocks" },
+                { href: "/products#all", label: "Desk Clocks" },
+                { href: "/products#all", label: "Wall Clocks" },
               ],
             };
             const lightingSection = {
               title: "Lighting",
               items: [
-                { href: "/product#all", label: "Designer Lights" },
+                { href: "/products#all", label: "Designer Lights" },
               ],
             };
             const makeYourOwnSection = {
               title: "Make-Your-Own",
               items: [
-                { href: "/product#custom-coasters", label: "Coasters" },
-                { href: "/product#custom-keychains", label: "Keychains" },
-                { href: "/product#custom-magnets", label: "Magnets" },
-                { href: "/product#custom-bookmarks", label: "Bookmarks" },
-                { href: "/product#custom-combs", label: "More" },
+                { href: "/products#custom-coasters", label: "Coasters" },
+                { href: "/products#custom-keychains", label: "Keychains" },
+                { href: "/products#custom-magnets", label: "Magnets" },
+                { href: "/products#custom-bookmarks", label: "Bookmarks" },
+                { href: "/products#custom-combs", label: "More" },
               ],
             };
 

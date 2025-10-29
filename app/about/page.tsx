@@ -315,7 +315,7 @@ export default function About() {
             Transform your organization's impact through traceable plastic transformation.
           </p>
 
-          <Link href="/product">
+          <Link href="/products">
             <Button
               size="lg"
               className="bg-white text-black hover:bg-gray-100 text-base px-8 py-6 h-auto font-normal"

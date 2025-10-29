@@ -259,7 +259,7 @@ export default function Track() {
             wonder.
           </p>
 
-          <Link href="/product">
+          <Link href="/products">
             <Button
               size="lg"
               className="bg-pop-green text-pop-black hover:bg-white hover:text-pop-black systematic-caps text-lg px-12 py-4"
