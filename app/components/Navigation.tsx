@@ -443,7 +443,7 @@ export default function Navigation() {
                   <div className="flex gap-8 h-full">
                     {/* Outer loop creates the columns */}
                     {productColumns.map((column, colIndex) => (
-                      <div key={colIndex} className="w-[180px] flex-shrink-0">
+                      <div key={colIndex} className="w-[160px] flex-shrink-0">
                         {/* Inner loop renders the stacked sections inside each column */}
                         {column.map((section, secIndex) => (
                           <div key={secIndex} className="mb-8">
@@ -468,7 +468,7 @@ export default function Navigation() {
                   </div>
 
                   {/* Container for the image cards */}
-                 <div className="relative overflow-hidden"> 
+                 <div className="ml-8 relative overflow-hidden"> 
                    <div className="relative  flex gap-6 w-full overflow-x-auto"><div className="w-min aboslute right-0 overflow-x-a flex gap-4">
 
                  {cardData.map((card, cardIndex) => (
@@ -499,7 +499,7 @@ export default function Navigation() {
             const studioRetainerSection = {
               title: "Studio Retainer",
               items: [
-                { href: "/services#custom-products", label: "Ongoing Collection" },
+                { href: "/services#custom-products", label: "Seasonal Collections" },
              
               ],
             };
@@ -514,8 +514,9 @@ export default function Navigation() {
             const communityPartnersSection = {
               title: "Community Partners",
               items: [
+              
+                { href: "/services#workshops-events", label: "Consignment Collections" },
                 { href: "/services#workshops-events", label: "Material Sourcing" },
-                { href: "/services#workshops-events", label: "Consignment Collection" },
               ],
             };
 
@@ -551,7 +552,7 @@ export default function Navigation() {
                   <div className="flex gap-8 h-full">
                     {/* Outer loop creates the columns */}
                     {servicesColumns.map((column, colIndex) => (
-                      <div key={colIndex} className="w-[180px] flex-shrink-0">
+                      <div key={colIndex} className="w-[200px] flex-shrink-0">
                         {/* Inner loop renders the stacked sections inside each column */}
                         {column.map((section, secIndex) => (
                           <div key={secIndex} className="mb-8">
@@ -576,7 +577,7 @@ export default function Navigation() {
                   </div>
 
                   {/* Container for the image cards */}
-                 <div className="relative overflow-hidden"> 
+                 <div className="ml-16 relative overflow-hidden"> 
                    <div className="relative  flex gap-6 w-full overflow-x-auto"><div className="w-min aboslute right-0 overflow-x-a flex gap-4">
 
                  {servicesCardData.map((card, cardIndex) => (

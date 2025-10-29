@@ -12,9 +12,9 @@ export default function Footer() {
     return null;
   }
   return (
-    <footer className="bg-stone-200 text-black py-16 pt-24">
-      <div className="max-w-7xl mx-auto px-6">
-        <div className="lg:flex mx-auto justify-center gap-x-16">
+    <footer className="bg-gray-50 text-black py-16 pt-24">
+      <div className="max-w-9/10 mx-auto px-6">
+        <div className="lg:flex mx-auto justify-center gap-x-24">
           {/* Logo & Description */}
           <div className="md:col-span-2 mb-8 w-auto md:mb-0 text-center lg:text-left">
             <Link href="/" className="self-end pb-2 flex items-center space-x-2 group mx-auto lg:mx-0 justify-center lg:justify-start">

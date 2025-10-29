@@ -13,7 +13,8 @@ import {
   Factory,
   RotateCcw,
   Wrench,
-  Package
+  Package,
+  Recycle
 } from "lucide-react";
 
 export default function About() {
@@ -26,22 +27,22 @@ export default function About() {
   return (
     <div className="min-h-screen bg-white font-jost">
       {/* Hero Section */}
-      <section className="relative py-40 lg:py-48 px-6 bg-black overflow-hidden flex items-center">
-        <div className="absolute inset-0 bg-gradient-to-b from-black/50 to-black/80 z-10"></div>
+      <section className="relative py-40 lg:py-48 px-6 bg-gray-50 overflow-hidden flex items-center">
+       
         
         <div className="max-w-5xl mx-auto text-center relative z-20">
-          <h1 className="text-4xl lg:text-6xl mb-8 tracking-tight leading-tight text-white font-light">
+          <h1 className="text-4xl lg:text-6xl mb-8 tracking-tight leading-tight text-black font-light">
             About PopCycle
           </h1>
-          <p className="text-lg lg:text-xl max-w-3xl mx-auto leading-relaxed text-white/90 font-light">
+          <p className="text-lg lg:text-xl max-w-3xl mx-auto leading-relaxed text-black font-light">
             PopCycle is an LA Based Design Studio that transforms tracked plastic waste streams into custom products that delight. We believe that each item we engage with can be anchor for story, learning, connection, and impact.
           </p>
         </div>
       </section>
 
       {/* Introduction */}
-      <section className="pt-16 pb-12 lg:pt-20 lg:pb-16 px-6 bg-white">
-        <div className="max-w-7xl mx-auto">
+      <section className="pt-36 bg-white">
+        <div className="w-[65vw] mx-auto">
           <p className="text-2xl lg:text-3xl font-light leading-relaxed text-gray-700">
             We transform plastic waste into products that teach through making.
             Every item is 100% recycled, digitally tracked from collection to
@@ -52,26 +53,26 @@ export default function About() {
       </section>
 
       {/* Team Section - Editorial Grid */}
-      <section className="pt-12 pb-12 lg:pt-16 lg:pb-16 px-6 bg-white">
+      <section className="my-36 w-[75vw] bg-white flex mx-auto">
         <div className="max-w-7xl mx-auto">
           <h2 className="text-3xl lg:text-4xl font-light mb-12 lg:mb-16">Team</h2>
           
           <div className="grid md:grid-cols-3 gap-8 lg:gap-12">
           {/* Terrence Stasse */}
           <div>
-            <div className="aspect-[3/4] bg-gray-100 mb-6 flex items-center justify-center">
+            <div className="aspect-[4/5] bg-gray-100 mb-6 flex items-center justify-center">
               <Users className="w-20 h-20 text-gray-300" />
             </div>
             <h3 className="text-xl font-medium mb-1">Terrence Stasse</h3>
             <p className="text-base text-gray-500 mb-4">Founder & Creative Lead</p>
             <p className="text-base text-gray-600 leading-relaxed font-light">
-              Builder, artist, and teacher. Leads product development, systems design, and hands-on R&D.
+              Builder, artist, and teacher. Leads product development, systems design, and R&D.
             </p>
           </div>
 
           {/* Oxana Ermolova */}
           <div>
-            <div className="aspect-[3/4] bg-gray-100 mb-6 flex items-center justify-center">
+            <div className="aspect-[4/5] bg-gray-100 mb-6 flex items-center justify-center">
               <Target className="w-20 h-20 text-gray-300" />
             </div>
             <h3 className="text-xl font-medium mb-1">Oxana Ermolova</h3>
@@ -83,120 +84,129 @@ export default function About() {
 
           {/* Argo */}
           <div>
-            <div className="aspect-[3/4] bg-gray-100 mb-6 flex items-center justify-center">
+            <div className="aspect-[4/5] bg-gray-100 mb-6 flex items-center justify-center">
               <Cog className="w-20 h-20 text-gray-300" />
             </div>
             <h3 className="text-xl font-medium mb-1">Argo</h3>
             <p className="text-base text-gray-500 mb-4">Human Relations Lead</p>
             <p className="text-base text-gray-600 leading-relaxed font-light">
-              In charge of distractions, snacks, and walks. Enthusiastically leads the studio greeting committee.
+              Head of distractions, snacks, and walks. Enthusiastically leads the studio greeting committee.
             </p>
           </div>
           </div>
         </div>
       </section>
 
-      {/* Story Section - Editorial Two Column */}
-      <section className="pt-12 pb-12 lg:pt-16 lg:pb-16 px-6 bg-gray-50">
-        <div className="max-w-7xl mx-auto">
-          <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
-            <div className="aspect-[4/3] bg-gray-200 flex items-center justify-center">
-              <ImageIcon className="w-24 h-24 text-gray-400" />
-            </div>
-            <div>
-              <h2 className="text-3xl lg:text-4xl font-light mb-6 lg:mb-8">Story</h2>
-              <div className="space-y-4 text-base lg:text-lg text-gray-600 leading-relaxed font-light">
-                <p>
-                  PopCycle emerged from the intersection of waste crisis and
-                  educational opportunity. Every corporate plastic cup, every
-                  discarded container represents both environmental challenge
-                  and creative potential.
-                </p>
-                <p>
-                  Our systematic approach transforms abstract sustainability
-                  concepts into tangible maker education experiences. Through
-                  QR code tracking, we create complete provenance stories that
-                  connect waste sources to final educational products.
-                </p>
-                <p>
-                  This isn't just recycling—it's reimagining how materials
-                  flow through educational ecosystems, creating value at every
-                  transformation point.
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+    
 
       {/* Process Section - Large Visual Grid */}
-      <section className="pt-12 pb-12 lg:pt-16 lg:pb-16 px-6 bg-white">
-        <div className="max-w-7xl mx-auto">
-          <h2 className="text-3xl lg:text-4xl font-light mb-12 lg:mb-16">Process</h2>
+      <div className="relative py-36 w-[75vw] text-center flex flex-col mx-auto">
+         <h2 className=" text-3xl lg:text-4xl font-light">Process</h2>
+        <section className="pt-12 pb-4 lg:pt-16 bg-white">
+            <div className="max-w-8xl mx-4 mx-auto">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 lg:gap-6">
+                {/* Product Card 1 */}
+                <Link href="/about" className="group">
+                  <div className="relative aspect-[5/3] bg-gray-100 overflow-hidden">
+                    <div className="absolute inset-0 flex items-center justify-center">
+                      <Recycle className="w-24 h-24 text-gray-300" />
+                    </div>
+                    <div className="absolute bottom-0 left-0 right-0 p-6 ">
+
+                    </div>
+                  </div>
+                  <div className="w-auto h-auto justify-items-center my-2">
+
+                    <h3 className="text-black mt-2 font-light text-xl ">Studio Editions</h3>
+                    <p className="text-gray-500 -mt-1 text-base">One of a kind limited run designs.</p>
+                    </div>
+                </Link>
+
+                {/* Product Card 2 */}
+              <Link href="/about" className="group">
+                <div className="relative aspect-[5/3] bg-gray-100 overflow-hidden">
+                  <div className="absolute inset-0 flex items-center justify-center">
+                    <Recycle className="w-24 h-24 text-gray-300" />
+                  </div>
+                  <div className="absolute bottom-0 left-0 right-0 p-6 ">
+
+                  </div>
+                </div>
+                <div className="w-auto h-auto justify-items-center my-2">
+                  <h3 className="text-black mt-2 font-light text-xl ">Custom Collections</h3>
+                  <p className="text-gray-500 -mt-1 text-base">Exclusive designs and products</p>
+                  </div>
+              </Link>
+      </div>
+            </div>
+          </section>        
+          <section className=" pb-4 bg-white">
+            <div className="max-w-8xl mx-4 mx-auto">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 lg:gap-6">
+                {/* Product Card 1 */}
+                <Link href="/about" className="group">
+                  <div className="relative aspect-[5/3] bg-gray-100 overflow-hidden">
+                    <div className="absolute inset-0 flex items-center justify-center">
+                      <Recycle className="w-24 h-24 text-gray-300" />
+                    </div>
+                    <div className="absolute bottom-0 left-0 right-0 p-6 ">
+
+                    </div>
+                  </div>
+                  <div className="w-auto h-auto justify-items-center my-2">
+                  <h3 className="text-black mt-2 font-light text-xl ">Coasters</h3>
+                  <p className="text-gray-500 -mt-1 text-base">From your waste stream</p>
+                    </div>
+                </Link>
+
+                {/* Product Card 2 */}
+              <Link href="/about" className="group">
+                <div className="relative aspect-[5/3] bg-gray-100 overflow-hidden">
+                  <div className="absolute inset-0 flex items-center justify-center">
+                    <Recycle className="w-24 h-24 text-gray-300" />
+                  </div>
+                  <div className="absolute bottom-0 left-0 right-0 p-6 ">
+
+                  </div>
+                </div>
+                <div className="w-auto h-auto justify-items-center my-2">
+                <h3 className="text-black mt-2 font-light text-xl ">Coasters</h3>
+                <p className="text-gray-500 -mt-1 text-base">From your waste stream</p>
+                  </div>
+              </Link>
+          </div>
+            </div>
+          </section>
+       
+        <section className="  pb-4 bg-white">
+          <div className="w-[45vw] l mx-4 mx-auto ">
+            <div className="grid grid-cols-1 gap-4 lg:gap-6">
+              {/* Product Card 1 */}
+              <Link href="/about" className="group">
+                <div className="relative aspect-[5/3] bg-gray-100 overflow-hidden">
+                  <div className="absolute inset-0 flex items-center justify-center">
+                    <Recycle className="w-24 h-24 text-gray-300" />
+                  </div>
+                  <div className="absolute bottom-0 left-0 right-0 p-6 ">
+
+                  </div>
+                </div>
+                <div className="w-auto h-auto justify-items-center my-2">
+                <h3 className="text-black mt-2 font-light text-xl ">Coasters</h3>
+                <p className="text-gray-500 -mt-1 text-base">From your waste stream</p>
+                  </div>
+              </Link>
+
           
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">
-          {/* Collection */}
-          <div>
-            <div className="aspect-square bg-gray-100 mb-6 flex items-center justify-center">
-              <Factory className="w-20 h-20 text-gray-300" />
-            </div>
-            <div className="flex items-baseline gap-3 mb-2">
-              <span className="text-2xl lg:text-3xl font-light text-gray-300">01</span>
-              <h3 className="text-lg lg:text-xl font-medium">Collection</h3>
-            </div>
-            <p className="text-sm lg:text-base text-gray-600 leading-relaxed font-light">
-              Partner companies separate plastic waste for circular transformation
-            </p>
-          </div>
-
-          {/* Processing */}
-          <div>
-            <div className="aspect-square bg-gray-100 mb-6 flex items-center justify-center">
-              <RotateCcw className="w-20 h-20 text-gray-300" />
-            </div>
-            <div className="flex items-baseline gap-3 mb-2">
-              <span className="text-2xl lg:text-3xl font-light text-gray-300">02</span>
-              <h3 className="text-lg lg:text-xl font-medium">Processing</h3>
-            </div>
-            <p className="text-sm lg:text-base text-gray-600 leading-relaxed font-light">
-              Clean, sort, and prepare materials for manufacturing transformation
-            </p>
-          </div>
-
-          {/* Manufacturing */}
-          <div>
-            <div className="aspect-square bg-gray-100 mb-6 flex items-center justify-center">
-              <Wrench className="w-20 h-20 text-gray-300" />
-            </div>
-            <div className="flex items-baseline gap-3 mb-2">
-              <span className="text-2xl lg:text-3xl font-light text-gray-300">03</span>
-              <h3 className="text-lg lg:text-xl font-medium">Manufacturing</h3>
-            </div>
-            <p className="text-sm lg:text-base text-gray-600 leading-relaxed font-light">
-              Transform processed plastic into educational tools and components
-            </p>
-          </div>
-
-          {/* Distribution */}
-          <div>
-            <div className="aspect-square bg-gray-100 mb-6 flex items-center justify-center">
-              <Package className="w-20 h-20 text-gray-300" />
-            </div>
-            <div className="flex items-baseline gap-3 mb-2">
-              <span className="text-2xl lg:text-3xl font-light text-gray-300">04</span>
-              <h3 className="text-lg lg:text-xl font-medium">Distribution</h3>
-            </div>
-            <p className="text-sm lg:text-base text-gray-600 leading-relaxed font-light">
-              Deliver QR-coded products to educational institutions and makerspaces
-            </p>
-          </div>
-          </div>
         </div>
-      </section>
+          </div>
+        </section>
+
+      </div>
 
       {/* FAQ Section - Minimal */}
-      <section className="pt-12 pb-12 lg:pt-16 lg:pb-16 px-6 bg-gray-50">
-        <div className="max-w-4xl mx-auto">
+      <section className="py-36 pt-36 bg-gray-50">
+        <div className="w-[65vw] mx-auto text-center">
           <h2 className="text-3xl lg:text-4xl font-light mb-12 lg:mb-16">
             Frequently Asked Questions
           </h2>
@@ -306,13 +316,13 @@ export default function About() {
       </section>
 
       {/* Footer CTA Section */}
-      <section className="relative py-32 lg:py-40 px-6 bg-black overflow-hidden flex items-center">
+      <section className="relative py-32 lg:py-40 mt-12 px-6 bg-white overflow-hidden flex items-center">
         <div className="max-w-4xl mx-auto text-center relative z-20">
-          <h2 className="text-3xl lg:text-5xl font-light mb-6 lg:mb-8 text-white">
-            Join the Circular Revolution
+          <h2 className="text-3xl lg:text-5xl font-light mb-6 lg:mb-8 text-black">
+            Contact Us
           </h2>
 
-          <p className="text-lg lg:text-xl mb-10 lg:mb-12 text-white/80 leading-relaxed font-light">
+          <p className="text-lg lg:text-xl mb-10 lg:mb-12 text-black/80 leading-relaxed font-light">
             Transform your organization's impact through traceable plastic transformation.
           </p>
 
@@ -321,7 +331,7 @@ export default function About() {
               size="lg"
               className="bg-white text-black hover:bg-gray-100 text-base px-8 py-6 h-auto font-normal"
             >
-              Explore Products
+              Submit Inquiry
               <ArrowRight className="ml-2 w-5 h-5" />
             </Button>
           </Link>
