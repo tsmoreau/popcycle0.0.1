@@ -19,6 +19,7 @@ interface Product {
   name: string
   description: string
   slug?: string
+  org?: string
   category: 'workshop' | 'studio_edition' | 'client_edition'
   productType: 'coasters' | 'keychains' | 'bookmarks' | 'magnets' | 'earrings' | 'lighting' | 'cutting_boards'
   designFiles?: {
@@ -82,11 +83,15 @@ export function ProductEditModal({
   onDelete,
   isSaving
 }: ProductEditModalProps) {
+  const [orgs, setOrgs] = useState<any[]>([])
+  const [loadingOrgs, setLoadingOrgs] = useState(true)
+
   const [formData, setFormData] = useState<any>({
     _id: '',
     name: '',
     description: '',
     slug: '',
+    org: '',
     category: 'workshop',
     productType: 'coasters',
     price: 0,
@@ -122,6 +127,7 @@ export function ProductEditModal({
         name: item.name || '',
         description: item.description || '',
         slug: item.slug || generateSlug(item.name || ''),
+        org: item.org ? String(item.org) : '',
         category: item.category || 'workshop',
         productType: item.productType || 'coasters',
         price: item.price || 0,
@@ -145,6 +151,7 @@ export function ProductEditModal({
         name: '',
         description: '',
         slug: '',
+        org: '',
         category: 'workshop',
         productType: 'coasters',
         price: 0,
@@ -164,6 +171,31 @@ export function ProductEditModal({
       })
     }
   }, [item])
+
+  // Fetch organizations on mount
+  useEffect(() => {
+    const fetchOrganizations = async () => {
+      try {
+        setLoadingOrgs(true)
+        const response = await fetch('/api/crm/organizations')
+        const data = await response.json()
+        
+        if (response.ok && Array.isArray(data)) {
+          setOrgs(data)
+        } else {
+          console.error('Error fetching organizations:', data.error || 'Invalid response')
+          setOrgs([])
+        }
+      } catch (error) {
+        console.error('Error fetching organizations:', error)
+        setOrgs([])
+      } finally {
+        setLoadingOrgs(false)
+      }
+    }
+
+    fetchOrganizations()
+  }, [])
 
   const handleFieldChange = (field: string, value: any) => {
     setFormData((prev: any) => {
@@ -439,6 +471,25 @@ export function ProductEditModal({
             />
             <p className="text-xs text-gray-500 mt-1">
               Auto-generated from product name. Edit to customize the URL.
+            </p>
+          </div>
+          <div>
+            <Label>Organization</Label>
+            <select
+              value={formData.org}
+              onChange={(e) => handleFieldChange('org', e.target.value)}
+              className="border rounded px-3 py-2 w-full"
+              data-testid="select-org"
+            >
+              <option value="">None</option>
+              {orgs.map((org: any) => (
+                <option key={org._id} value={String(org._id)}>
+                  {org.name}
+                </option>
+              ))}
+            </select>
+            <p className="text-xs text-gray-500 mt-1">
+              Tag this product with an organization partner.
             </p>
           </div>
           <div className="grid grid-cols-2 gap-4">
