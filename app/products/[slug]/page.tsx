@@ -462,7 +462,7 @@ export default function ProductDetail() {
 
       {/* Detail Images Grid */}
       <section className="max-w-screen-2xl mx-auto px-6 pt-12">
-        <h2 className="hidden text-3xl font-light mb-12 text-center">Details</h2>
+        <h2 className=" text-3xl font-light mb-12 text-center">Details</h2>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
           {detailImages.length > 0 ? (
             detailImages.map((image, i) => (
@@ -489,7 +489,7 @@ export default function ProductDetail() {
       </section>
 
        {/* Object Text */}
-      <section className="max-w-screen-2xl mx-auto px-6 mt-16 mb-16 ">
+      <section className="hidden max-w-screen-2xl mx-auto px-6 mt-16 mb-16 ">
         <h2 className="text-xl text-gray-400 font-light  text-center">PopCycle Studio Object 001</h2>
     
       </section>
