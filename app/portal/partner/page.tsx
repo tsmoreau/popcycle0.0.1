@@ -7,8 +7,8 @@ import { Button } from '../../components/ui/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../../components/ui/card'
 import { Badge } from '../../components/ui/badge'
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '../../components/ui/accordion'
-import { DataTable, Column } from '../../components/ui/data-table'
-import { Product, Bin } from '../../../lib/schemas-v3'
+import { DataTable, Column, EditableField } from '../../components/ui/data-table'
+import { Product, Bin, Order } from '../../../lib/schemas-v3'
 import { Input } from '../../components/ui/input'
 import { Textarea } from '../../components/ui/textarea'
 import { Label } from '../../components/ui/label'
@@ -43,6 +43,8 @@ export default function PartnerPage() {
   const [loadingProducts, setLoadingProducts] = useState(false)
   const [bins, setBins] = useState<Bin[]>([])
   const [loadingBins, setLoadingBins] = useState(false)
+  const [orders, setOrders] = useState<Order[]>([])
+  const [loadingOrders, setLoadingOrders] = useState(false)
   const [savingBrand, setSavingBrand] = useState(false)
   
   // Brand editing state
@@ -151,6 +153,33 @@ export default function PartnerPage() {
     }
 
     fetchBins()
+  }, [selectedOrgId])
+
+  // Fetch orders filtered by selectedOrgId
+  useEffect(() => {
+    if (!selectedOrgId) return
+
+    const fetchOrders = async () => {
+      try {
+        setLoadingOrders(true)
+        const response = await fetch(`/api/operations/orders?orgId=${selectedOrgId}`)
+        const data = await response.json()
+        
+        if (response.ok && Array.isArray(data)) {
+          setOrders(data)
+        } else {
+          console.error('Error fetching orders:', data.error || 'Invalid response')
+          setOrders([])
+        }
+      } catch (error) {
+        console.error('Error fetching orders:', error)
+        setOrders([])
+      } finally {
+        setLoadingOrders(false)
+      }
+    }
+
+    fetchOrders()
   }, [selectedOrgId])
 
   // Populate brand form when selectedOrgId changes
@@ -306,6 +335,148 @@ export default function PartnerPage() {
       )
     }
   ]
+
+  const orderColumns: Column<Order>[] = [
+    { key: 'orderNumber', header: 'Order #' },
+    { 
+      key: 'type', 
+      header: 'Type',
+      render: (order) => {
+        const typeMap: Record<string, string> = {
+          'collection_service': 'Collection',
+          'product_delivery': 'Product',
+          'educational_workshop': 'Workshop',
+          'consulting': 'Consulting',
+          'd2c_customer': 'D2C Customer'
+        }
+        return typeMap[order.type] || order.type
+      }
+    },
+    { 
+      key: 'status', 
+      header: 'Status',
+      render: (order) => {
+        const statusMap = {
+          'pending': { label: 'Pending', variant: 'outline' as const },
+          'in_progress': { label: 'In Progress', variant: 'default' as const },
+          'completed': { label: 'Completed', variant: 'secondary' as const },
+          'invoiced': { label: 'Invoiced', variant: 'default' as const },
+          'cancelled': { label: 'Cancelled', variant: 'destructive' as const }
+        }
+        const statusInfo = statusMap[order.status] || { label: order.status, variant: 'outline' as const }
+        return (
+          <Badge variant={statusInfo.variant}>
+            {statusInfo.label}
+          </Badge>
+        )
+      }
+    },
+    { 
+      key: 'total', 
+      header: 'Total',
+      render: (order) => `$${order.total?.toFixed(2) || '0.00'}`
+    },
+    { 
+      key: 'orderDate', 
+      header: 'Order Date',
+      render: (order) => order.orderDate ? new Date(order.orderDate).toLocaleDateString() : 'N/A'
+    },
+    { 
+      key: 'expectedCompletionDate', 
+      header: 'Expected Completion',
+      render: (order) => order.expectedCompletionDate ? new Date(order.expectedCompletionDate).toLocaleDateString() : 'N/A'
+    }
+  ]
+
+  const orderEditableFields: EditableField<Order>[] = [
+    { key: 'orderNumber', label: 'Order Number', type: 'text', required: true },
+    { 
+      key: 'type', 
+      label: 'Type', 
+      type: 'select', 
+      required: true,
+      options: [
+        { value: 'collection_service', label: 'Collection Service' },
+        { value: 'product_delivery', label: 'Product Delivery' },
+        { value: 'educational_workshop', label: 'Educational Workshop' },
+        { value: 'consulting', label: 'Consulting' },
+        { value: 'd2c_customer', label: 'D2C Customer' }
+      ]
+    },
+    { 
+      key: 'status', 
+      label: 'Status', 
+      type: 'select', 
+      required: true,
+      options: [
+        { value: 'pending', label: 'Pending' },
+        { value: 'in_progress', label: 'In Progress' },
+        { value: 'completed', label: 'Completed' },
+        { value: 'invoiced', label: 'Invoiced' },
+        { value: 'cancelled', label: 'Cancelled' }
+      ]
+    },
+    { key: 'serviceDescription', label: 'Service Description', type: 'textarea', required: true },
+    { key: 'subtotal', label: 'Subtotal', type: 'number', required: true },
+    { key: 'tax', label: 'Tax', type: 'number' },
+    { key: 'total', label: 'Total', type: 'number', required: true },
+    { key: 'orderDate', label: 'Order Date (YYYY-MM-DD)', type: 'text', required: true },
+    { key: 'expectedCompletionDate', label: 'Expected Completion Date (YYYY-MM-DD)', type: 'text' }
+  ]
+
+  const handleAddOrder = async (orderData: any) => {
+    if (!selectedOrgId) return
+
+    try {
+      // Validate and format dates
+      const orderDate = orderData.orderDate || new Date().toISOString().split('T')[0]
+      const expectedCompletionDate = orderData.expectedCompletionDate || null
+
+      // Validate date format (YYYY-MM-DD)
+      const dateRegex = /^\d{4}-\d{2}-\d{2}$/
+      if (!dateRegex.test(orderDate)) {
+        alert('Please enter Order Date in YYYY-MM-DD format')
+        return
+      }
+      if (expectedCompletionDate && !dateRegex.test(expectedCompletionDate)) {
+        alert('Please enter Expected Completion Date in YYYY-MM-DD format')
+        return
+      }
+
+      // Add orgId to the order data
+      const newOrder = {
+        ...orderData,
+        orgId: selectedOrgId,
+        orderDate,
+        expectedCompletionDate,
+        lineItems: [],
+        createdAt: new Date(),
+        updatedAt: new Date()
+      }
+
+      const response = await fetch('/api/operations/orders', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(newOrder)
+      })
+
+      if (!response.ok) {
+        throw new Error('Failed to create order')
+      }
+
+      // Refresh orders list
+      const ordersResponse = await fetch(`/api/operations/orders?orgId=${selectedOrgId}`)
+      const ordersData = await ordersResponse.json()
+      if (ordersResponse.ok && Array.isArray(ordersData)) {
+        setOrders(ordersData)
+      }
+
+      alert('Order created successfully')
+    } catch (error) {
+      console.error('Error creating order:', error)
+      alert('Failed to create order')
+    }
+  }
 
   return (
     <div className="space-y-6">
@@ -474,6 +645,49 @@ export default function PartnerPage() {
                   enableFiltering={true}
                   availableColumns={productColumns}
                   defaultVisibleColumns={['name', 'category', 'productType', 'price', 'editions', 'rating', 'inStock']}
+                />
+              )}
+            </div>
+          </AccordionContent>
+        </AccordionItem>
+      </Accordion>
+
+      {/* Orders - Filtered by selectedOrgId */}
+      <Accordion type="single" collapsible className="w-full">
+        <AccordionItem value="orders" className="border rounded-lg px-4">
+          <AccordionTrigger className="hover:no-underline">
+            <div className="flex items-center gap-3">
+              <FileText className="h-5 w-5 text-pop-blue" />
+              <div className="text-left">
+                <h3 className="text-lg font-semibold text-pop-black">{selectedOrg?.name || 'Partner'} Orders</h3>
+                <p className="text-sm text-gray-600 font-normal">
+                  {loadingOrders ? 'Loading orders...' : `${orders.length} order${orders.length !== 1 ? 's' : ''} for invoicing`}
+                </p>
+              </div>
+            </div>
+          </AccordionTrigger>
+          <AccordionContent>
+            <div className="pt-2 pb-4">
+              {loadingOrders ? (
+                <div className="flex items-center justify-center p-8">
+                  <div className="text-sm text-gray-600">Loading orders...</div>
+                </div>
+              ) : !selectedOrgId ? (
+                <div className="flex items-center justify-center p-8">
+                  <div className="text-sm text-gray-600">Select an organization to view orders</div>
+                </div>
+              ) : (
+                <DataTable
+                  title=""
+                  description=""
+                  data={orders}
+                  columns={orderColumns}
+                  enableColumnSelection={true}
+                  enableFiltering={true}
+                  availableColumns={orderColumns}
+                  defaultVisibleColumns={['orderNumber', 'type', 'status', 'total', 'orderDate', 'expectedCompletionDate']}
+                  editableFields={orderEditableFields}
+                  onAdd={handleAddOrder}
                 />
               )}
             </div>
