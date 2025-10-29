@@ -21,7 +21,8 @@ export async function GET(request: Request) {
     const orgIdParam = url.searchParams.get('orgId');
     
     // Build query - filter by org if provided, otherwise return all
-    const query = orgIdParam ? { org: new ObjectId(orgIdParam) } : {};
+    // Note: org is stored as string in DB, not ObjectId
+    const query = orgIdParam ? { org: orgIdParam } : {};
     
     const products = await db.collection('products').find(query).toArray();
     
