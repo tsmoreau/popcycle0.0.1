@@ -98,10 +98,97 @@ export default function Navigation() {
 
   return (
     <nav className="font-jost font-light  z-50 bg-white border-b border-gray-200">
-      <div className="relative max-w-full mx-auto h-auto pt-2">
-        <div className="absolute top-1/2 -mt-2 right-5  ">
+      <div className="max-w-full mx-auto pt-2">
+        <div className=" relative flex  justify-between h-16 lg:h-20">
+          {/* Mobile menu button - moved to left */}
+          <div className="lg:hidden self-center ml-4">
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              className="hover:bg-pop-green hover:text-white"
+            >
+              {mobileMenuOpen ? (
+                <X className="w-4 h-4" />
+              ) : (
+                <Menu className="w-4 h-4" />
+              )}
+            </Button>
+          </div>
+
+          <div className="flex mb-1">
+          {/* Logo */}
+          <Link href="/" className="pl-2 lg:pl-12 pl-0 self-end pb-2 flex items-center space-x-2 group lg:mx-0 mx-auto">
+            <div className="w-12 h-12 bg-pop-green flex items-center justify-center transition-all group-hover:bg-opacity-90 mt-1">
+              <span className="text-white font-bold helvetica-bold text-xl">P</span>
+            </div>
+            <div className="flex-col flex mt-2">
+            <span className="text-4xl  tracking-tighter font-base text-gray-900">
+              PopCycle
+            </span>
+            <span className="hidden mt-0.0 ml-1 tracking-[2.2em] text-[8px] font-bold text-gray-900">
+              STUDIO
+            </span>
+              </div>
+          </Link>
+
+
+          {/* Absolutely centered navigation links */}
+          <div className="  hidden self-end lg:flex items-end space-x-10 ml-8">
+            {/* About Dropdown */}
+            <div
+              onMouseEnter={() => setAboutOpen(true)}
+              onMouseLeave={() => setAboutOpen(false)}
+            >
+              <button
+                className={`text-lg  hover:text-pop-green transition-colors flex items-center space-x-1 py-2 ${
+                  pathname?.startsWith("/about") ? "nav-link-active" : ""
+                }`}
+              >
+                <span>About</span>
+              </button>
+            </div>
+
+            {/* Products Dropdown */}
+            <div
+              onMouseEnter={() => setProductsOpen(true)}
+              onMouseLeave={() => setProductsOpen(false)}
+            >
+              <button
+                className={`text-lg hover:text-pop-green transition-colors flex items-center space-x-1 py-2 ${
+                  pathname === "/shop" ? "nav-link-active" : ""
+                }`}
+              >
+                <span>Products</span>
+              </button>
+            </div>
+            
+            {/* Services Dropdown */}
+            <div
+              onMouseEnter={() => setServicesOpen(true)}
+              onMouseLeave={() => setServicesOpen(false)}
+            >
+              <button
+                className={`text-lg hover:text-pop-green transition-colors flex items-center space-x-1 py-2 ${
+                  pathname === "/services" ? "nav-link-active" : ""
+                }`}
+              >
+                <span>Services</span>
+              </button>
+            </div>
+
+            {/* Shop */}
+
+
+            {/* Track */}
+
+          </div>
+            </div>
+
+
+          {/* Right-aligned User Menu / Auth Button / Cart */}
           <div 
-            className="flex items-center space-x-3 self-end relative"
+            className="hidden lg:flex items-center space-x-4 self-end mb-4 mr-16 relative"
             onMouseLeave={() => setIconDropdownOpen(null)}
           >
             {/* Search Icon */}
@@ -110,22 +197,22 @@ export default function Navigation() {
               className="hover:opacity-80 transition-opacity"
               data-testid="button-search"
             >
-              <Search className="w-5 h-5 text-gray-400" />
+              <Search className="w-6 h-6 text-gray-700" />
             </button>
 
             {/* User Icon */}
             <button
               onMouseEnter={() => setIconDropdownOpen('user')}
-              className="hidden lg:flex w-5 h-5 hover:opacity-80 transition-opacity"
+              className="hover:opacity-80 transition-opacity"
               data-testid="button-user"
             >
-              <User className="w-5 h-5 text-gray-400" />
+              <User className="w-6 h-6 text-gray-700" />
             </button>
 
             {/* Shopping Cart */}
             <button
               onMouseEnter={() => setIconDropdownOpen('cart')}
-              className="hidden hover:opacity-80 transition-opacity"
+              className="hover:opacity-80 transition-opacity"
               data-testid="button-cart"
             >
               <ShoppingCart className="w-6 h-6 text-gray-700" />
@@ -133,7 +220,7 @@ export default function Navigation() {
 
             {/* Unified Dropdown */}
             {iconDropdownOpen && (
-              <div className="z-50 absolute right-0 top-full pt-2 mt-2">
+              <div className="z-50 absolute right-0 top-full pt-2">
                 <div className="w-80 bg-white border border-gray-200 shadow-lg p-6">
                   {iconDropdownOpen === 'search' && (
                     <div>
@@ -165,54 +252,6 @@ export default function Navigation() {
               </div>
             )}
           </div>
-            </div>
-        <div className=" flex align-bottom items-end justify-between h-16 lg:h-16">
-         
-          
-          {/* Mobile menu button - moved to left */}
-          <div className="lg:hidden self-center ml-2">
-            <Button
-              variant="ghost"
-              size="sm"
-              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="hover:bg-pop-green hover:text-white"
-            >
-              {mobileMenuOpen ? (
-                <X className="w-4 h-4" />
-              ) : (
-                <Menu className="w-4 h-4" />
-              )}
-            </Button>
-          </div>
-
-          <div className="flex justify-center w-full mb-1 ">
-          {/* Logo */}
-          <Link href="/" className=" pl-0 self-end pb-2 flex items-center space-x-2 group  mx-auto">
-            <div className="w-12 h-12 bg-pop-green flex items-center justify-center transition-all group-hover:bg-opacity-90 mt-1">
-              <span className="text-white font-bold helvetica-bold text-xl">P</span>
-            </div>
-            <div className="flex-col flex mt-2">
-            <span className="text-4xl  tracking-tighter font-base text-gray-900">
-              PopCycle
-            </span>
-            <span className="hidden mt-0.0 ml-1 tracking-[2.2em] text-[8px] font-bold text-gray-900">
-              STUDIO
-            </span>
-              </div>
-          </Link>
-
-
-          {/* Absolutely centered navigation links */}
-        
-            </div>
-          
-        
-
-
-
-
-
-          
 
           {/* Mobile icons - search and cart */}
           <div className="lg:hidden flex items-center space-x-2 self-center mr-4">
@@ -220,10 +259,10 @@ export default function Navigation() {
               className="hover:opacity-80 transition-opacity"
               data-testid="button-search-mobile"
             >
-              <Search className="hidden w-5 h-5 text-gray-700" />
+              <Search className="w-5 h-5 text-gray-700" />
             </button>
             <button
-              className="hidden hover hover:opacity-80 transition-opacity"
+              className="hover:opacity-80 transition-opacity"
               data-testid="button-cart-mobile"
             >
               <ShoppingCart className="w-5 h-5 text-gray-700" />
@@ -568,7 +607,7 @@ export default function Navigation() {
       {/* Mobile Menu */}
       {mobileMenuOpen && (
         <div className="lg:hidden font-jost font-light bg-white border-t border-gray-200">
-          <div className="hidden px-4 py-6 space-y-4">
+          <div className="px-4 py-6 space-y-4">
             {/* About Mobile Accordion Section */}
             <div className="space-y-2">
               <button
@@ -650,73 +689,71 @@ export default function Navigation() {
               )}
             </div>
 
-            
-          </div>
+            {/* Mobile User Section */}
+            <div className="pt-4 border-t border-gray-200 space-y-3">
 
-          {/* Mobile User Section */}
-          <div className="px-4 py-6  border-t border-gray-200 space-y-3">
+              {session ? (
+                <>
+                  {/* User Profile Header */}
+                  <div className="flex items-center justify-between">
 
-            {session ? (
-              <>
-                {/* User Profile Header */}
-                <div className="flex items-center justify-between">
+                    <div className="flex items-center space-x-3">
 
-                  <div className="flex items-center space-x-3">
+                      <div className="w-10 h-10 bg-pop-green rounded-full flex items-center justify-center shadow-md">
 
-                    <div className="w-10 h-10 bg-pop-green rounded-full flex items-center justify-center shadow-md">
-
-                      <User className="w-5 h-5 text-white" /> 
-                    </div>
-                    <div>
-                      <div className="font-jost text-sm font-bold text-pop-black">
-                        {session.user?.name?.split(" ")[0] || "User"}
+                        <User className="w-5 h-5 text-white" /> 
                       </div>
-                      <div className="font-jost text-xs font-medium text-pop-green mt-1">
-                        {session.user?.userType === "super_admin"
-                          ? "Super Admin"
-                          : "Maker"}
+                      <div>
+                        <div className="font-jost text-sm font-bold text-pop-black">
+                          {session.user?.name?.split(" ")[0] || "User"}
+                        </div>
+                        <div className="font-jost text-xs font-medium text-pop-green mt-1">
+                          {session.user?.userType === "super_admin"
+                            ? "Super Admin"
+                            : "Maker"}
+                        </div>
                       </div>
                     </div>
                   </div>
-                </div>
 
-                {/* User Menu Items */}
-                <div className="space-y-2">
-                  <Link
-                    href="/profile"
-                    onClick={() => setMobileMenuOpen(false)}
-                    className="w-full flex items-center px-4 py-2 font-jost text-sm rounded-md hover:bg-pop-green hover:text-white transition-colors"
-                  >
-                    <User className="w-4 h-4 mr-3" />
-                    Profile
-                  </Link>
-                  {hasPortalAccess && (
+                  {/* User Menu Items */}
+                  <div className="space-y-2">
                     <Link
-                      href="/portal"
+                      href="/profile"
                       onClick={() => setMobileMenuOpen(false)}
-                      className="w-full flex items-center px-4 py-2 font-jost text-sm rounded-md hover:bg-pop-blue hover:text-white transition-colors"
+                      className="w-full flex items-center px-4 py-2 font-jost text-sm rounded-md hover:bg-pop-green hover:text-white transition-colors"
                     >
-                      <Settings className="w-4 h-4 mr-3" />
-                      Portal
+                      <User className="w-4 h-4 mr-3" />
+                      Profile
                     </Link>
-                  )}
-                  <button
-                    onClick={() => {
-                      signOut();
-                      setMobileMenuOpen(false);
-                    }}
-                    className="w-full flex items-center px-4 py-2 font-jost text-sm rounded-md hover:bg-pop-red hover:text-white transition-colors text-left"
-                  >
-                    <LogOut className="w-4 h-4 mr-3" />
-                    Sign Out
-                  </button>
+                    {hasPortalAccess && (
+                      <Link
+                        href="/portal"
+                        onClick={() => setMobileMenuOpen(false)}
+                        className="w-full flex items-center px-4 py-2 font-jost text-sm rounded-md hover:bg-pop-blue hover:text-white transition-colors"
+                      >
+                        <Settings className="w-4 h-4 mr-3" />
+                        Portal
+                      </Link>
+                    )}
+                    <button
+                      onClick={() => {
+                        signOut();
+                        setMobileMenuOpen(false);
+                      }}
+                      className="w-full flex items-center px-4 py-2 font-jost text-sm rounded-md hover:bg-pop-red hover:text-white transition-colors text-left"
+                    >
+                      <LogOut className="w-4 h-4 mr-3" />
+                      Sign Out
+                    </button>
+                  </div>
+                </>
+              ) : (
+                <div className="space-y-2 flex items-center">
+                  <AuthButton /> Login  or Sign Up
                 </div>
-              </>
-            ) : (
-              <div className="space-y-2 flex items-center">
-                <AuthButton />
-              </div>
-            )}
+              )}
+            </div>
           </div>
         </div>
       )}
