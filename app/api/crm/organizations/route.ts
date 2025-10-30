@@ -67,6 +67,10 @@ export async function POST(request: NextRequest) {
       updatedAt: new Date()
     }
 
+    // Add users array (convert to ObjectIds)
+    const userIds = (body.users || []).map((id: string) => new ObjectId(id))
+    newOrganization.users = userIds
+
     // Add only the type-specific object matching current orgType
     const orgType = body.orgType || 'community_partner'
     if (orgType === 'community_partner' && body.communityPartner) {
@@ -92,6 +96,14 @@ export async function POST(request: NextRequest) {
     
     const result = await db.collection('orgs').insertOne(newOrganization)
     
+    // Bidirectional sync: Update all tagged users to set their orgId
+    if (userIds.length > 0) {
+      await db.collection('users').updateMany(
+        { _id: { $in: userIds } },
+        { $set: { orgId: newOrganization._id } }
+      )
+    }
+    
     await client.close()
     
     return NextResponse.json({ 
@@ -114,6 +126,14 @@ export async function PUT(request: NextRequest) {
     const client = new MongoClient(process.env.MONGODB_URI!)
     await client.connect()
     const db = client.db('PopCycle')
+    
+    // Fetch existing org to get old users list for bidirectional sync
+    const existingOrg = await db.collection('orgs').findOne({ _id: new ObjectId(body._id) })
+    // Normalize old user IDs to ObjectIds (handles legacy string IDs)
+    const oldUserIds = (existingOrg?.users || [])
+      .filter((id: any) => id != null)
+      .map((id: any) => id instanceof ObjectId ? id : new ObjectId(id))
+    const newUserIds = (body.users || []).map((id: string) => new ObjectId(id))
     
     const { _id, communityPartner, limitedClient, retainerClient, wholesaler, ...baseUpdateData } = body
     
@@ -138,6 +158,9 @@ export async function PUT(request: NextRequest) {
 
     // Build the $set object with base fields
     const setObject: any = { ...baseUpdateData }
+    
+    // Add users array (convert to ObjectIds)
+    setObject.users = newUserIds
 
     // Add only the type-specific object matching current orgType
     const orgType = body.orgType
@@ -166,6 +189,32 @@ export async function PUT(request: NextRequest) {
       { _id: new ObjectId(_id) },
       { $set: setObject }
     )
+    
+    // Bidirectional sync: Update user orgId fields
+    // Find users that were added (in new but not in old)
+    const addedUserIds = newUserIds.filter((newId: ObjectId) => 
+      !oldUserIds.some((oldId: ObjectId) => oldId.equals(newId))
+    )
+    // Find users that were removed (in old but not in new)
+    const removedUserIds = oldUserIds.filter((oldId: ObjectId) => 
+      !newUserIds.some((newId: ObjectId) => newId.equals(oldId))
+    )
+    
+    // Set orgId for newly added users
+    if (addedUserIds.length > 0) {
+      await db.collection('users').updateMany(
+        { _id: { $in: addedUserIds } },
+        { $set: { orgId: new ObjectId(_id) } }
+      )
+    }
+    
+    // Clear orgId for removed users
+    if (removedUserIds.length > 0) {
+      await db.collection('users').updateMany(
+        { _id: { $in: removedUserIds } },
+        { $set: { orgId: null } }
+      )
+    }
     
     await client.close()
     
