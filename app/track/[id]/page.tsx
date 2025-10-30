@@ -10,10 +10,7 @@ import {
   CardTitle,
 } from "../../components/ui/card";
 import { Badge } from "../../components/ui/badge";
-import {
-  PopArtContainer,
-  QRCodeElement,
-} from "../../components/PopArtElements";
+import { QRCodeElement } from "../../components/PopArtElements";
 import { LoadingSquare } from "../../components/ui/loading-square";
 import {
   Building,
@@ -160,21 +157,19 @@ export default function TrackItem() {
 
   if (error || !data) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
-        <PopArtContainer color="red" shadow>
-          <Card className="border border-gray-200">
-            <CardContent className="p-8 text-center">
-              <h2 className="text-3xl helvetica-bold mb-4">Item Not Found</h2>
-              <p className="text-pop-gray mb-6">
-                Item code "{id}" is not in our system.
-              </p>
-              <p className="text-sm text-pop-gray">
-                Try one of our sample item codes: ABC123, DEF456, GHI789,
-                JKL012, MNO345, PQR678, STU901
-              </p>
-            </CardContent>
-          </Card>
-        </PopArtContainer>
+      <div className="min-h-screen flex items-center justify-center font-jost">
+        <Card className="border border-gray-300 max-w-md">
+          <CardContent className="p-8 text-center">
+            <h2 className="text-3xl mb-4 font-light">Item Not Found</h2>
+            <p className="text-gray-600 mb-6 font-light">
+              Item code "{id}" is not in our system.
+            </p>
+            <p className="text-sm text-gray-500 font-light">
+              Try one of our sample item codes: ABC123, DEF456, GHI789,
+              JKL012, MNO345, PQR678, STU901
+            </p>
+          </CardContent>
+        </Card>
       </div>
     );
   }
@@ -256,95 +251,95 @@ export default function TrackItem() {
     switch (status) {
       case "collected":
         return (
-          <Badge className="bg-gray-500 text-white">
+          <Badge className="bg-gray-500 text-white font-light">
             <Package className="h-3 w-3 mr-1" />
             Collected
           </Badge>
         );
       case "rough_wash":
         return (
-          <Badge className="bg-pop-blue text-white">
+          <Badge className="bg-gray-600 text-white font-light">
             <Droplets className="h-3 w-3 mr-1" />
             Rough Wash
           </Badge>
         );
       case "sort":
         return (
-          <Badge className="bg-pop-green text-white">
+          <Badge className="bg-gray-700 text-white font-light">
             <Scissors className="h-3 w-3 mr-1" />
             Sort
           </Badge>
         );
       case "first_dry":
         return (
-          <Badge className="bg-yellow-500 text-white">
+          <Badge className="bg-gray-500 text-white font-light">
             <Wind className="h-3 w-3 mr-1" />
             First Dry
           </Badge>
         );
       case "shred":
         return (
-          <Badge className="bg-orange-500 text-white">
+          <Badge className="bg-gray-600 text-white font-light">
             <ShredIcon className="h-3 w-3 mr-1" />
             Shred
           </Badge>
         );
       case "fine_wash":
         return (
-          <Badge className="bg-blue-600 text-white">
+          <Badge className="bg-gray-700 text-white font-light">
             <Droplets className="h-3 w-3 mr-1" />
             Fine Wash
           </Badge>
         );
       case "second_dry":
         return (
-          <Badge className="bg-yellow-600 text-white">
+          <Badge className="bg-gray-600 text-white font-light">
             <Wind className="h-3 w-3 mr-1" />
             Second Dry
           </Badge>
         );
       case "press":
         return (
-          <Badge className="bg-purple-500 text-white">
+          <Badge className="bg-gray-700 text-white font-light">
             <Archive className="h-3 w-3 mr-1" />
             Press
           </Badge>
         );
       case "weigh_photo":
         return (
-          <Badge className="bg-indigo-500 text-white">
+          <Badge className="bg-gray-600 text-white font-light">
             <Scale className="h-3 w-3 mr-1" />
             Weigh & Photo
           </Badge>
         );
       case "laser_marking":
         return (
-          <Badge className="bg-pop-red text-white">
+          <Badge className="bg-gray-700 text-white font-light">
             <Zap className="h-3 w-3 mr-1" />
             Laser Marking
           </Badge>
         );
       case "inventory_creation":
         return (
-          <Badge className="bg-pop-black text-white">
+          <Badge className="bg-black text-white font-light">
             <Settings className="h-3 w-3 mr-1" />
             Inventory Creation
           </Badge>
         );
       default:
-        return <Badge variant="outline">{status}</Badge>;
+        return <Badge variant="outline" className="font-light">{status}</Badge>;
     }
   };
 
   return (
-    <div className="min-h-screen py-20">
-      <div className="max-w-4xl mx-auto px-4">
+    <div className="min-h-screen py-20 font-jost bg-white">
+      <div className="max-w-2xl mx-auto px-4">
         {/* ========== HERO SECTION ========== */}
-        <div className="text-center mb-12">
-          <h1 className="text-4xl lg:text-6xl helvetica-bold mb-6 tracking-tight">
-            <span className="text-pop-green"></span> {data.id}
+        <div className="text-center mb-8">
+          <h1 className="text-3xl lg:text-4xl mb-4 tracking-tight font-light">
+            {data.id}
           </h1>
-          <p className="text-lg text-pop-gray">
+          <p className="text-sm text-gray-600 font-light max-w-xl mx-auto">
             {isUncollected
               ? `Active collection bin at ${data.organization?.name || "Unknown Origin"}`
               : isSourceOnly
@@ -357,34 +352,32 @@ export default function TrackItem() {
 
         {/* QR Code Display */}
         <div className="flex justify-center mb-12">
-          <PopArtContainer color="green" shadow>
-            <div className="p-8 bg-white border border-gray-200">
-              <QRCodeElement qrCode={data.id} size="lg" />
-            </div>
-          </PopArtContainer>
+          <div className="p-8 bg-white border border-gray-300">
+            <QRCodeElement qrCode={data.id} size="lg" />
+          </div>
         </div>
 
         {/* ========== TIMELINE SECTION ========== */}
-        <div className="mb-8 lg:mb-12">
-          <div className="flex gap-2 lg:gap-4 justify-center max-w-3xl mx-auto">
+        <div className="mb-12">
+          <div className="flex gap-2 lg:gap-3 justify-center max-w-xl mx-auto">
             {/* Bins: Show only Collection step */}
             {data.id.startsWith("B") && (
-              <div className="text-center flex-1 max-w-[200px]">
-                <div className={`w-20 h-20 mx-auto mb-3 border border-gray-200 flex items-center justify-center  ${
+              <div className="text-center flex-1">
+                <div className={`w-16 h-16 mx-auto mb-3 border border-gray-300 flex items-center justify-center ${
                   data.collectionDate || data.lastCollectionDate || data.id.startsWith("B") 
-                    ? "bg-pop-green" 
-                    : "bg-gray-200"
+                    ? "bg-black" 
+                    : "bg-white"
                 }`}>
-                  <Package className={`w-10 h-10 ${
+                  <Package className={`w-8 h-8 ${
                     data.collectionDate || data.lastCollectionDate || data.id.startsWith("B") 
-                      ? "text-pop-black" 
+                      ? "text-white" 
                       : "text-gray-400"
                   }`} strokeWidth={1.5} />
                 </div>
-                <h3 className="systematic-caps text-sm mb-1 font-semibold">
+                <h3 className="text-xs mb-1 font-light">
                   Collection
                 </h3>
-                <p className="text-xs text-pop-gray">
+                <p className="text-xs text-gray-500 font-light">
                   {data.id.startsWith("B") 
                     ? "Active bin" 
                     : data.collectionDate 
@@ -401,50 +394,50 @@ export default function TrackItem() {
             {data.id.startsWith("T") && (
               <>
                 {/* Step 1: COLLECTION */}
-                <div className="text-center flex-1 max-w-[140px]">
-                  <div className={`w-20 h-20 mx-auto mb-3 border border-gray-200 flex items-center justify-center  ${
+                <div className="text-center flex-1">
+                  <div className={`w-16 h-16 mx-auto mb-3 border border-gray-300 flex items-center justify-center ${
                     data.collectionDate || data.lastCollectionDate || data.id.startsWith("B") 
-                      ? "bg-pop-green" 
-                      : "bg-gray-200"
+                      ? "bg-black" 
+                      : "bg-white"
                   }`}>
-                    <Package className={`w-10 h-10 ${
+                    <Package className={`w-8 h-8 ${
                       data.collectionDate || data.lastCollectionDate || data.id.startsWith("B") 
-                        ? "text-pop-black" 
+                        ? "text-white" 
                         : "text-gray-400"
                     }`} strokeWidth={1.5} />
                   </div>
-                  <h3 className="systematic-caps text-sm mb-1 font-semibold">
+                  <h3 className="text-xs mb-1 font-light">
                     Collection
                   </h3>
-                  <p className="text-xs text-pop-gray">
+                  <p className="text-xs text-gray-500 font-light">
                     {data.collectionDate ? formatDate(data.collectionDate) : "Complete"}
                   </p>
                 </div>
 
                 {/* Connection Line */}
-                <div className="flex items-center justify-center pt-10">
-                  <div className={`w-6 h-0.5 ${
-                    isProcessed ? "bg-pop-blue" : "bg-gray-300"
+                <div className="flex items-center justify-center pt-8">
+                  <div className={`w-4 h-0.5 ${
+                    isProcessed ? "bg-black" : "bg-gray-300"
                   }`}></div>
                 </div>
 
                 {/* Step 2: PROCESSING */}
-                <div className="text-center flex-1 max-w-[140px]">
-                  <div className={`w-20 h-20 mx-auto mb-3 border border-gray-200 flex items-center justify-center  ${
+                <div className="text-center flex-1">
+                  <div className={`w-16 h-16 mx-auto mb-3 border border-gray-300 flex items-center justify-center ${
                     isProcessed 
-                      ? "bg-pop-blue" 
-                      : "bg-gray-200"
+                      ? "bg-black" 
+                      : "bg-white"
                   }`}>
-                    <Settings className={`w-10 h-10 ${
+                    <Settings className={`w-8 h-8 ${
                       isProcessed 
-                        ? "text-pop-black" 
+                        ? "text-white" 
                         : "text-gray-400"
                     }`} strokeWidth={1.5} />
                   </div>
-                  <h3 className="systematic-caps text-sm mb-1 font-semibold">
+                  <h3 className="text-xs mb-1 font-light">
                     {data.status === "inventory_creation" ? "Processed" : "Processing"}
                   </h3>
-                  <p className="text-xs text-pop-gray">
+                  <p className="text-xs text-gray-500 font-light">
                     {data.status === "inventory_creation" ? "Complete" : "In progress"}
                   </p>
                 </div>
@@ -455,58 +448,58 @@ export default function TrackItem() {
             {data.id.startsWith("K") && (
               <>
                 {/* Step 1: PROCESSING */}
-                <div className="text-center flex-1 max-w-[140px]">
-                  <div className={`w-20 h-20 mx-auto mb-3 border border-gray-200 flex items-center justify-center  ${
+                <div className="text-center flex-1">
+                  <div className={`w-16 h-16 mx-auto mb-3 border border-gray-300 flex items-center justify-center ${
                     isProcessed 
-                      ? "bg-pop-blue" 
-                      : "bg-gray-200"
+                      ? "bg-black" 
+                      : "bg-white"
                   }`}>
-                    <Settings className={`w-10 h-10 ${
+                    <Settings className={`w-8 h-8 ${
                       isProcessed 
-                        ? "text-pop-black" 
+                        ? "text-white" 
                         : "text-gray-400"
                     }`} strokeWidth={1.5} />
                   </div>
-                  <h3 className="systematic-caps text-sm mb-1 font-semibold">
+                  <h3 className="text-xs mb-1 font-light">
                     {data.status === "inventory_creation" ? "Processed" : "Processing"}
                   </h3>
-                  <p className="text-xs text-pop-gray">
+                  <p className="text-xs text-gray-500 font-light">
                     Complete
                   </p>
                 </div>
 
                 {/* Connection Line */}
-                <div className="flex items-center justify-center pt-10">
-                  <div className={`w-6 h-0.5 ${
-                    data.productId ? "bg-pop-red" : "bg-gray-300"
+                <div className="flex items-center justify-center pt-8">
+                  <div className={`w-4 h-0.5 ${
+                    data.productId ? "bg-black" : "bg-gray-300"
                   }`}></div>
                 </div>
 
                 {/* Step 2: PURCHASED/DONATED */}
-                <div className="text-center flex-1 max-w-[140px]">
-                  <div className={`w-20 h-20 mx-auto mb-3 border border-gray-200 flex items-center justify-center  ${
+                <div className="text-center flex-1">
+                  <div className={`w-16 h-16 mx-auto mb-3 border border-gray-300 flex items-center justify-center ${
                     data.productId 
-                      ? "bg-pop-red" 
-                      : "bg-gray-200"
+                      ? "bg-black" 
+                      : "bg-white"
                   }`}>
                     {isCharity ? (
-                      <HeartHandshake className={`w-10 h-10 ${
+                      <HeartHandshake className={`w-8 h-8 ${
                         data.productId 
-                          ? "text-pop-black" 
+                          ? "text-white" 
                           : "text-gray-400"
                       }`} strokeWidth={1.5} />
                     ) : (
-                      <CheckCircle className={`w-10 h-10 ${
+                      <CheckCircle className={`w-8 h-8 ${
                         data.productId 
-                          ? "text-pop-black" 
+                          ? "text-white" 
                           : "text-gray-400"
                       }`} strokeWidth={1.5} />
                     )}
                   </div>
-                  <h3 className="systematic-caps text-sm mb-1 font-semibold">
+                  <h3 className="text-xs mb-1 font-light">
                     {isCharity ? "Donated" : "Purchased"}
                   </h3>
-                  <p className="text-xs text-pop-gray">
+                  <p className="text-xs text-gray-500 font-light">
                     {data.productId 
                       ? data.deliveredDate || data.deliveryDate
                         ? formatDate(data.deliveredDate || data.deliveryDate)
@@ -520,29 +513,29 @@ export default function TrackItem() {
                 {data.productId && (
                   <>
                     {/* Connection Line */}
-                    <div className="flex items-center justify-center pt-10">
-                      <div className={`w-6 h-0.5 ${
-                        data.userId ? "bg-pop-red" : "bg-gray-300"
+                    <div className="flex items-center justify-center pt-8">
+                      <div className={`w-4 h-0.5 ${
+                        data.userId ? "bg-black" : "bg-gray-300"
                       }`}></div>
                     </div>
 
                     {/* Step 3: ASSEMBLED */}
-                    <div className="text-center flex-1 max-w-[140px]">
-                      <div className={`w-20 h-20 mx-auto mb-3 border border-gray-200 flex items-center justify-center  ${
+                    <div className="text-center flex-1">
+                      <div className={`w-16 h-16 mx-auto mb-3 border border-gray-300 flex items-center justify-center ${
                         data.userId 
-                          ? "bg-pop-red" 
-                          : "bg-gray-200"
+                          ? "bg-black" 
+                          : "bg-white"
                       }`}>
-                        <User className={`w-10 h-10 ${
+                        <User className={`w-8 h-8 ${
                           data.userId 
-                            ? "text-pop-black" 
+                            ? "text-white" 
                             : "text-gray-400"
                         }`} strokeWidth={1.5} />
                       </div>
-                      <h3 className="systematic-caps text-sm mb-1 font-semibold">
+                      <h3 className="text-xs mb-1 font-light">
                         Assembled
                       </h3>
-                      <p className="text-xs text-pop-gray">
+                      <p className="text-xs text-gray-500 font-light">
                         {data.userId 
                           ? data.makerDetails?.assemblyDate 
                             ? formatDate(data.makerDetails.assemblyDate)
@@ -559,475 +552,463 @@ export default function TrackItem() {
         </div>
 
         {/* ========== SOURCE DETAILS ========== */}
-        <div className="flex flex-col gap-8 mb-12 max-w-2xl mx-auto">
+        <div className="flex flex-col gap-6 mb-12">
           {/* Source Details Card */}
-          <PopArtContainer color="green" shadow>
-            <Card className="border border-gray-200">
-              <CardHeader>
-                <CardTitle className="systematic-caps flex items-center justify-center">
-                  <Building className="w-5 h-5 mr-2" />
-                  {data.id.startsWith("B")
-                    ? "Bin Details"
-                    : data.id.startsWith("T")
-                      ? "Batch Details"
-                      : "Source Details"}
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                {/* ID Hierarchy Display */}
-                <div className="space-y-3 pb-4 border-b border-pop-gray">
-                  <div className="flex justify-between">
-                    <span className="systematic-caps text-sm">
-                      {data.id.startsWith("B")
-                        ? "Bin ID"
-                        : data.id.startsWith("T")
-                          ? "Batch ID"
-                          : data.id.startsWith("K")
-                            ? "Blank ID"
-                            : "Main ID"}
-                    </span>
-                    <span className="font-mono">{data.id}</span>
-                  </div>
-                  {(data.binIds || relatedItems.sourceBin) && (
-                    <div className="flex justify-between">
-                      <span className="systematic-caps text-sm">Bin IDs</span>
-                      <div className="space-y-1 text-right">
-                        {data.binIds ? (
-                          // Show multiple bin IDs from the array
-                          data.binIds.map((binId: string) => (
-                            <Link
-                              key={binId}
-                              href={`/track/${binId}`}
-                              className="block font-mono text-pop-green hover:text-pop-black hover:underline"
-                            >
-                              {binId}
-                            </Link>
-                          ))
-                        ) : (
-                          // Fallback to source bin
-                          relatedItems.sourceBin && (
-                            <Link
-                              href={`/track/${relatedItems.sourceBin.id}`}
-                              className="block font-mono text-pop-green hover:text-pop-black hover:underline"
-                            >
-                              {relatedItems.sourceBin.id}
-                            </Link>
-                          )
-                        )}
-                      </div>
-                    </div>
-                  )}
-                  {data.batchId && (
-                    <div className="flex justify-between">
-                      <span className="systematic-caps text-sm">Batch ID</span>
-                      <Link
-                        href={`/track/${data.batchId}`}
-                        className="font-mono text-pop-blue hover:text-pop-black hover:underline"
-                      >
-                        {data.batchId}
-                      </Link>
-                    </div>
-                  )}
+          <Card className="border border-gray-300">
+            <CardHeader className="pb-3">
+              <CardTitle className="text-sm font-light flex items-center justify-center">
+                <Building className="w-4 h-4 mr-2" />
+                {data.id.startsWith("B")
+                  ? "Bin Details"
+                  : data.id.startsWith("T")
+                    ? "Batch Details"
+                    : "Source Details"}
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-3 text-sm">
+              {/* ID Hierarchy Display */}
+              <div className="space-y-3 pb-3 border-b border-gray-200">
+                <div className="flex justify-between font-light">
+                  <span className="text-gray-600">
+                    {data.id.startsWith("B")
+                      ? "Bin ID"
+                      : data.id.startsWith("T")
+                        ? "Batch ID"
+                        : data.id.startsWith("K")
+                          ? "Blank ID"
+                          : "Main ID"}
+                  </span>
+                  <span className="font-mono">{data.id}</span>
                 </div>
+                {(data.binIds || relatedItems.sourceBin) && (
+                  <div className="flex justify-between font-light">
+                    <span className="text-gray-600">Bin IDs</span>
+                    <div className="space-y-1 text-right">
+                      {data.binIds ? (
+                        // Show multiple bin IDs from the array
+                        data.binIds.map((binId: string) => (
+                          <Link
+                            key={binId}
+                            href={`/track/${binId}`}
+                            className="block font-mono text-black hover:text-gray-600 hover:underline"
+                          >
+                            {binId}
+                          </Link>
+                        ))
+                      ) : (
+                        // Fallback to source bin
+                        relatedItems.sourceBin && (
+                          <Link
+                            href={`/track/${relatedItems.sourceBin.id}`}
+                            className="block font-mono text-black hover:text-gray-600 hover:underline"
+                          >
+                            {relatedItems.sourceBin.id}
+                          </Link>
+                        )
+                      )}
+                    </div>
+                  </div>
+                )}
+                {data.batchId && (
+                  <div className="flex justify-between font-light">
+                    <span className="text-gray-600">Batch ID</span>
+                    <Link
+                      href={`/track/${data.batchId}`}
+                      className="font-mono text-black hover:text-gray-600 hover:underline"
+                    >
+                      {data.batchId}
+                    </Link>
+                  </div>
+                )}
+              </div>
+              <div className="flex justify-between font-light">
+                <span className="text-gray-600">Origin</span>
+                <span>{data.organization?.name || "Unknown Origin"}</span>
+              </div>
+              {data.location && (
+                <div className="flex justify-between items-center font-light">
+                  <span className="text-gray-600">Location</span>
+                  <span className="flex items-center">
+                    <MapPin className="w-4 h-4 mr-1" />
+                    {data.location}
+                  </span>
+                </div>
+              )}
+              {data.materialType && (
+                <div className="flex justify-between font-light">
+                  <span className="text-gray-600">Material</span>
+                  <Badge className="bg-gray-200 text-black font-light">
+                    {data.materialType}
+                  </Badge>
+                </div>
+              )}
+              {data.id.startsWith("T") && data.status && (
                 <div className="flex justify-between">
-                  <span className="systematic-caps text-sm">Origin</span>
-                  <span>{data.organization?.name || "Unknown Origin"}</span>
+                  <span className="text-gray-600 font-light">Status</span>
+                  {getProcessingStatusBadge(data.status)}
                 </div>
-                {data.location && (
-                  <div className="flex justify-between items-center">
-                    <span className="systematic-caps text-sm">Location</span>
-                    <span className="flex items-center">
-                      <MapPin className="w-4 h-4 mr-1" />
-                      {data.location}
+              )}
+              {data.weight && !data.id.startsWith("B") && (
+                <div className="flex justify-between items-center font-light">
+                  <span className="text-gray-600">Weight</span>
+                  <span className="flex items-center">
+                    <Weight className="w-4 h-4 mr-1" />
+                    {data.weight}kg
+                  </span>
+                </div>
+              )}
+              {data.collectionDate && (
+                <div className="flex justify-between items-center font-light">
+                  <span className="text-gray-600">
+                    {data.id.startsWith("T") ? "Batched Date" : "Last Collected"}
+                  </span>
+                  <span className="flex items-center">
+                    <Calendar className="w-4 h-4 mr-1" />
+                    {formatDate(data.collectionDate)}
+                  </span>
+                </div>
+              )}
+              {data.nextCollectionDate && (
+                <div className="flex justify-between items-center font-light">
+                  <span className="text-gray-600">
+                    Next Collection
+                  </span>
+                  <span className="flex items-center">
+                    <Calendar className="w-4 h-4 mr-1" />
+                    {formatDate(data.nextCollectionDate)}
+                  </span>
+                </div>
+              )}
+              {data.id.startsWith("B") && data.binStatus && (
+                <div className="flex justify-between items-center font-light">
+                  <span className="text-gray-600">Status</span>
+                  <Badge className="bg-gray-200 text-black font-light">
+                    {getBinStatusLabel(data.binStatus)}
+                  </Badge>
+                </div>
+              )}
+              {data.processedDate && (
+                <div className="flex justify-between items-center font-light">
+                  <span className="text-gray-600">Processed</span>
+                  <span className="flex items-center">
+                    <Calendar className="w-4 h-4 mr-1" />
+                    {formatDate(data.processedDate)}
+                  </span>
+                </div>
+              )}
+              {data.event && data.event.trim() && (
+                <div className="flex justify-between font-light">
+                  <span className="text-gray-600">Event</span>
+                  <span>{data.event}</span>
+                </div>
+              )}
+              {data.adoptedBy && data.id.startsWith("B") && (
+                <div className="flex justify-between font-light">
+                  <span className="text-gray-600">Adopted By</span>
+                  <span>{data.adoptedBy}</span>
+                </div>
+              )}
+              {data.message && (
+                <div className="border-t border-gray-200 pt-3">
+                  <span className="text-gray-500 block mb-2 font-light text-xs">
+                    Message
+                  </span>
+                  <p className="text-sm italic font-light">{data.message}</p>
+                </div>
+              )}
+              {isUncollected && (
+                <div className="border-t pt-3 text-center border-gray-200">
+                  <div className="flex items-center justify-center text-sm text-gray-600 font-light">
+                    <Package className="w-4 h-4 mr-1" strokeWidth={1.5} />
+                    <span>
+                      Ready for Collection
                     </span>
                   </div>
-                )}
-                {data.materialType && (
-                  <div className="flex justify-between">
-                    <span className="systematic-caps text-sm">Material</span>
-                    <Badge className="bg-pop-green text-pop-black">
-                      {data.materialType}
-                    </Badge>
-                  </div>
-                )}
-                {data.id.startsWith("T") && data.status && (
-                  <div className="flex justify-between">
-                    <span className="systematic-caps text-sm">Status</span>
-                    {getProcessingStatusBadge(data.status)}
-                  </div>
-                )}
-                {data.weight && !data.id.startsWith("B") && (
-                  <div className="flex justify-between items-center">
-                    <span className="systematic-caps text-sm">Weight</span>
-                    <span className="flex items-center">
-                      <Weight className="w-4 h-4 mr-1" />
-                      {data.weight}kg
+                </div>
+              )}
+              {isSourceOnly && !isUncollected && isProcessed && (
+                <div className="border-t pt-3 text-center border-gray-200">
+                  <div className="flex items-center justify-center text-sm text-gray-600 font-light">
+                    <Calendar className="w-4 h-4 mr-1" />
+                    <span>
+                      Ready for Purchase
                     </span>
                   </div>
-                )}
-                {data.collectionDate && (
-                  <div className="flex justify-between items-center">
-                    <span className="systematic-caps text-sm">
-                      {data.id.startsWith("T") ? "Batched Date" : "Last Collected"}
-                    </span>
-                    <span className="flex items-center">
-                      <Calendar className="w-4 h-4 mr-1" />
-                      {formatDate(data.collectionDate)}
-                    </span>
-                  </div>
-                )}
-                {data.nextCollectionDate && (
-                  <div className="flex justify-between items-center">
-                    <span className="systematic-caps text-sm">
-                      Next Collection
-                    </span>
-                    <span className="flex items-center">
-                      <Calendar className="w-4 h-4 mr-1" />
-                      {formatDate(data.nextCollectionDate)}
-                    </span>
-                  </div>
-                )}
-                {data.id.startsWith("B") && data.binStatus && (
-                  <div className="flex justify-between items-center">
-                    <span className="systematic-caps text-sm">Status</span>
-                    <Badge className="bg-pop-green text-pop-black">
-                      {getBinStatusLabel(data.binStatus)}
-                    </Badge>
-                  </div>
-                )}
-                {data.processedDate && (
-                  <div className="flex justify-between items-center">
-                    <span className="systematic-caps text-sm">Processed</span>
-                    <span className="flex items-center">
-                      <Calendar className="w-4 h-4 mr-1" />
-                      {formatDate(data.processedDate)}
-                    </span>
-                  </div>
-                )}
-                {data.event && data.event.trim() && (
-                  <div className="flex justify-between">
-                    <span className="systematic-caps text-sm">Event</span>
-                    <span>{data.event}</span>
-                  </div>
-                )}
-                {data.adoptedBy && data.id.startsWith("B") && (
-                  <div className="flex justify-between">
-                    <span className="systematic-caps text-sm">Adopted By</span>
-                    <span>{data.adoptedBy}</span>
-                  </div>
-                )}
-                {data.message && (
-                  <div className="border-t border-pop-gray pt-4">
-                    <span className="systematic-caps text-sm text-pop-gray block mb-2">
-                      Message
-                    </span>
-                    <p className="text-sm italic">{data.message}</p>
-                  </div>
-                )}
-                {isUncollected && (
-                  <div className="border-t pt-4 text-center border-pop-gray">
-                    <div className="flex items-center justify-center text-sm text-pop-gray">
-                      <Package className="w-4 h-4 mr-1" strokeWidth={1.5} />
-                      <span className="systematic-caps">
-                        Ready for Collection
-                      </span>
-                    </div>
-                  </div>
-                )}
-                {isSourceOnly && !isUncollected && isProcessed && (
-                  <div className="border-t pt-4 text-center border-pop-blue">
-                    <div className="flex items-center justify-center text-sm text-pop-blue">
-                      <Calendar className="w-4 h-4 mr-1" />
-                      <span className="systematic-caps">
-                        Ready for Purchase
-                      </span>
-                    </div>
-                  </div>
-                )}
-              </CardContent>
-            </Card>
-          </PopArtContainer>
+                </div>
+              )}
+            </CardContent>
+          </Card>
 
           {/* ========== PRODUCT DETAILS ========== */}
           {!isSourceOnly && (
             <>
-              <PopArtContainer color={isCharity ? "red" : "blue"} shadow>
-                <Card className="border border-gray-200">
-                  <CardHeader>
-                    <CardTitle className="systematic-caps flex items-center">
-                      <Package className="w-5 h-5 mr-2" />
-                      Product Details
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent className="space-y-4">
-                    <div className="flex justify-between">
-                      <span className="systematic-caps text-sm">
-                        Product Type
-                      </span>
-                      <span>{getProductTypeLabel(data.productType)}</span>
-                    </div>
+              <Card className="border border-gray-300">
+                <CardHeader className="pb-3">
+                  <CardTitle className="text-sm font-light flex items-center">
+                    <Package className="w-4 h-4 mr-2" />
+                    Product Details
+                  </CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-3 text-sm">
+                  <div className="flex justify-between font-light">
+                    <span className="text-gray-600">
+                      Product Type
+                    </span>
+                    <span>{getProductTypeLabel(data.productType)}</span>
+                  </div>
 
-                    {!isCharity && (
-                      <div className="flex justify-between items-center">
-                        <span className="systematic-caps text-sm">
-                          Purchased
+                  {!isCharity && (
+                    <div className="flex justify-between items-center font-light">
+                      <span className="text-gray-600">
+                        Purchased
+                      </span>
+                      <span className="flex items-center">
+                        <Calendar className="w-4 h-4 mr-1" />
+                        {formatDate(data.transactionDate)}
+                      </span>
+                    </div>
+                  )}
+
+                  {isCharity && data.donatingEntity && (
+                    <div className="flex justify-between font-light">
+                      <span className="text-gray-600">Donor</span>
+                      <span>{data.donatingEntity}</span>
+                    </div>
+                  )}
+
+                  {isCharity && (
+                    <div className="flex justify-between items-center font-light">
+                      <span className="text-gray-600">Donated</span>
+                      <span>{data.destination}</span>
+                    </div>
+                  )}
+
+                  <div className="flex justify-between items-center font-light">
+                    <span className="text-gray-600">Delivered</span>
+                    <span className="flex items-center">
+                      <Calendar className="w-4 h-4 mr-1" />
+                      {formatDate(data.deliveredDate)}
+                    </span>
+                  </div>
+
+                  {data.event && (
+                    <div className="flex justify-between font-light">
+                      <span className="text-gray-600">Event</span>
+                      <span>{data.event}</span>
+                    </div>
+                  )}
+
+                  {isCharity && data.message && (
+                    <div className="border-t border-gray-200 pt-3">
+                      <span className="text-gray-500 block mb-2 font-light text-xs">
+                        Message
+                      </span>
+                      <p className="text-sm italic font-light">{data.message}</p>
+                    </div>
+                  )}
+                </CardContent>
+              </Card>
+
+              {/* ========== MAKER DETAILS ========== */}
+              <Card className="border border-gray-300">
+                <CardHeader className="pb-3">
+                  <CardTitle className="text-sm font-light flex items-center">
+                    <User className="w-4 h-4 mr-2" />
+                    Maker Details
+                  </CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-3 text-sm">
+                  {data.makerDetails ? (
+                    // Registered State - Show completed maker details
+                    <>
+                      <div className="flex justify-between font-light">
+                        <span className="text-gray-600">Maker</span>
+                        <span className="font-medium">
+                          {data.makerDetails.name}
+                        </span>
+                      </div>
+                      <div className="flex justify-between items-center font-light">
+                        <span className="text-gray-600">
+                          Location
+                        </span>
+                        <span className="flex items-center">
+                          <MapPin className="w-4 h-4 mr-1" />
+                          {data.makerDetails.location}
+                        </span>
+                      </div>
+                      <div className="flex justify-between items-center font-light">
+                        <span className="text-gray-600">
+                          Assembled
                         </span>
                         <span className="flex items-center">
                           <Calendar className="w-4 h-4 mr-1" />
-                          {formatDate(data.transactionDate)}
+                          {formatDate(data.makerDetails.assemblyDate)}
                         </span>
                       </div>
-                    )}
-
-                    {isCharity && data.donatingEntity && (
-                      <div className="flex justify-between">
-                        <span className="systematic-caps text-sm">Donor</span>
-                        <span>{data.donatingEntity}</span>
+                      {data.makerDetails.story && (
+                        <div className="border-t border-gray-200 pt-3">
+                          <span className="text-gray-500 block mb-2 font-light text-xs">
+                            Maker Story
+                          </span>
+                          <p className="text-sm italic leading-relaxed font-light">
+                            {data.makerDetails.story}
+                          </p>
+                        </div>
+                      )}
+                      <div className="border-t border-gray-200 pt-3 flex items-center justify-center">
+                        <div className="flex items-center text-black text-sm font-light">
+                          <Heart className="w-4 h-4 mr-1 fill-current" />
+                          <span>
+                            Maker Journey Complete
+                          </span>
+                        </div>
                       </div>
-                    )}
-
-                    {isCharity && (
-                      <div className="flex justify-between items-center">
-                        <span className="systematic-caps text-sm">Donated</span>
-                        <span>{data.destination}</span>
+                    </>
+                  ) : (
+                    // Unregistered State - Show CTA
+                    <div className="text-center py-8">
+                      <div className="w-16 h-16 mx-auto mb-4 border-2 border-dashed border-gray-300 flex items-center justify-center">
+                        <Plus className="w-8 h-8 text-gray-400" />
                       </div>
-                    )}
-
-                    <div className="flex justify-between items-center">
-                      <span className="systematic-caps text-sm">Delivered</span>
-                      <span className="flex items-center">
-                        <Calendar className="w-4 h-4 mr-1" />
-                        {formatDate(data.deliveredDate)}
-                      </span>
+                      <h3 className="text-base mb-2 font-light">
+                        Complete Your Maker Journey
+                      </h3>
+                      <p className="text-sm text-gray-600 mb-6 leading-relaxed font-light">
+                        {isCharity
+                          ? `Did you assemble this item${data.destination ? ` at ${data.destination}` : ""}? Share your story and connect this donation to its educational impact.`
+                          : "Did you assemble this item? Share your story and become part of the circular economy narrative."}
+                      </p>
+                      <button className="w-full bg-black text-white font-light py-3 px-6 border border-gray-300 hover:bg-gray-800 transition-colors text-sm">
+                        Register as Maker
+                      </button>
+                      <p className="text-xs text-gray-500 mt-3 font-light">
+                        Email verification required
+                      </p>
                     </div>
-
-                    {data.event && (
-                      <div className="flex justify-between">
-                        <span className="systematic-caps text-sm">Event</span>
-                        <span>{data.event}</span>
-                      </div>
-                    )}
-
-                    {isCharity && data.message && (
-                      <div className="border-t border-pop-gray pt-4">
-                        <span className="systematic-caps text-sm text-pop-gray block mb-2">
-                          Message
-                        </span>
-                        <p className="text-sm italic">{data.message}</p>
-                      </div>
-                    )}
-                  </CardContent>
-                </Card>
-              </PopArtContainer>
-
-              {/* ========== MAKER DETAILS ========== */}
-              <PopArtContainer color="red" shadow>
-                <Card className="border border-gray-200">
-                  <CardHeader>
-                    <CardTitle className="systematic-caps flex items-center">
-                      <User className="w-5 h-5 mr-2" />
-                      Maker Details
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent className="space-y-4">
-                    {data.makerDetails ? (
-                      // Registered State - Show completed maker details
-                      <>
-                        <div className="flex justify-between">
-                          <span className="systematic-caps text-sm">Maker</span>
-                          <span className="font-semibold">
-                            {data.makerDetails.name}
-                          </span>
-                        </div>
-                        <div className="flex justify-between items-center">
-                          <span className="systematic-caps text-sm">
-                            Location
-                          </span>
-                          <span className="flex items-center">
-                            <MapPin className="w-4 h-4 mr-1" />
-                            {data.makerDetails.location}
-                          </span>
-                        </div>
-                        <div className="flex justify-between items-center">
-                          <span className="systematic-caps text-sm">
-                            Assembled
-                          </span>
-                          <span className="flex items-center">
-                            <Calendar className="w-4 h-4 mr-1" />
-                            {formatDate(data.makerDetails.assemblyDate)}
-                          </span>
-                        </div>
-                        {data.makerDetails.story && (
-                          <div className="border-t border-pop-gray pt-4">
-                            <span className="systematic-caps text-sm text-pop-gray block mb-2">
-                              Maker Story
-                            </span>
-                            <p className="text-sm italic leading-relaxed">
-                              {data.makerDetails.story}
-                            </p>
-                          </div>
-                        )}
-                        <div className="border-t border-pop-gray pt-4 flex items-center justify-center">
-                          <div className="flex items-center text-pop-red text-sm">
-                            <Heart className="w-4 h-4 mr-1 fill-current" />
-                            <span className="systematic-caps">
-                              Maker Journey Complete
-                            </span>
-                          </div>
-                        </div>
-                      </>
-                    ) : (
-                      // Unregistered State - Show CTA
-                      <div className="text-center py-8">
-                        <div className="w-16 h-16 mx-auto mb-4 border-2 border-dashed border-pop-gray  flex items-center justify-center">
-                          <Plus className="w-8 h-8 text-pop-gray" />
-                        </div>
-                        <h3 className="text-lg helvetica-bold mb-2">
-                          Complete Your Maker Journey
-                        </h3>
-                        <p className="text-sm text-pop-gray mb-6 leading-relaxed">
-                          {isCharity
-                            ? `Did you assemble this item${data.destination ? ` at ${data.destination}` : ""}? Share your story and connect this donation to its educational impact.`
-                            : "Did you assemble this item? Share your story and become part of the circular economy narrative."}
-                        </p>
-                        <button className="w-full bg-pop-red text-white font-semibold py-3 px-6 border border-gray-300 hover:bg-pop-black transition-colors systematic-caps">
-                          Register as Maker
-                        </button>
-                        <p className="text-xs text-pop-gray mt-3">
-                          Email verification required
-                        </p>
-                      </div>
-                    )}
-                  </CardContent>
-                </Card>
-              </PopArtContainer>
+                  )}
+                </CardContent>
+              </Card>
             </>
           )}
         </div>
 
         {/* Impact Metrics - Commented out for now */}
         {false && !isSourceOnly && impactMetrics && (
-          <PopArtContainer color="red" shadow>
-            <Card className="border border-gray-200">
-              <CardHeader>
-                <CardTitle className="systematic-caps flex items-center justify-center text-2xl">
-                  <Leaf className="w-6 h-6 mr-2" />
-                  Environmental Impact
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="grid md:grid-cols-2 gap-8 text-center">
-                  <div>
-                    <div className="text-4xl helvetica-bold text-pop-red mb-2">
-                      {impactMetrics?.carbonSaved}kg
-                    </div>
-                    <div className="systematic-caps text-sm text-pop-gray">
-                      CO₂ Offset Generated
-                    </div>
-                    <p className="text-xs text-pop-gray mt-2">
-                      Equivalent to removing a car from the road for 2.3 days
-                    </p>
+          <Card className="border border-gray-300 mb-12">
+            <CardHeader>
+              <CardTitle className="flex items-center justify-center text-xl font-light">
+                <Leaf className="w-5 h-5 mr-2" />
+                Environmental Impact
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="grid md:grid-cols-2 gap-8 text-center">
+                <div>
+                  <div className="text-4xl mb-2 font-light">
+                    {impactMetrics?.carbonSaved}kg
                   </div>
-                  <div>
-                    <div className="text-4xl helvetica-bold text-pop-red mb-2">
-                      {impactMetrics?.wasteReduced}kg
-                    </div>
-                    <div className="systematic-caps text-sm text-pop-gray">
-                      Plastic Waste Diverted
-                    </div>
-                    <p className="text-xs text-pop-gray mt-2">
-                      Prevented from entering landfills or ocean systems
-                    </p>
+                  <div className="text-sm text-gray-600 font-light">
+                    CO₂ Offset Generated
                   </div>
+                  <p className="text-xs text-gray-500 mt-2 font-light">
+                    Equivalent to removing a car from the road for 2.3 days
+                  </p>
                 </div>
-              </CardContent>
-            </Card>
-          </PopArtContainer>
+                <div>
+                  <div className="text-4xl mb-2 font-light">
+                    {impactMetrics?.wasteReduced}kg
+                  </div>
+                  <div className="text-sm text-gray-600 font-light">
+                    Plastic Waste Diverted
+                  </div>
+                  <p className="text-xs text-gray-500 mt-2 font-light">
+                    Prevented from entering landfills or ocean systems
+                  </p>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
         )}
 
         {/* ========== CONNECTED ITEMS - Produced Items (for Batches) ========== */}
         {data.id.startsWith("T") && relatedItems.blanks.length > 0 && (
-          <div className="max-w-2xl mx-auto">
-            <PopArtContainer color="red" shadow>
-              <Card className="border border-gray-200">
-                <CardHeader>
-                  <CardTitle className="systematic-caps flex items-center justify-center text-2xl">
-                    <Package className="w-6 h-6 mr-2" />
-                    Produced Items
-                  </CardTitle>
-                </CardHeader>
-                <CardContent className="py-6">
-                  <div className="space-y-3">
-                    {relatedItems.blanks.map((blank: BlankItem, index: number) => (
-                      <Link
-                        key={blank.id}
-                        href={`/track/${blank.id}`}
-                        className="block"
-                      >
-                        <div className="flex justify-between items-center p-3 border border-pop-gray rounded hover:border-pop-red hover:bg-pop-red hover:bg-opacity-5 transition-colors cursor-pointer">
-                          <div>
-                            <div className="systematic-caps text-sm font-semibold text-pop-red hover:text-pop-black">
-                              {blank.id}
-                            </div>
-                            <div className="text-xs text-pop-gray">
-                              {blank.productId
-                                ? "Assembled"
-                                : "Available for Assembly"}{" "}
-                              • {blank.status}
-                            </div>
+          <div className="mb-12">
+            <Card className="border border-gray-300">
+              <CardHeader className="pb-3">
+                <CardTitle className="text-sm font-light flex items-center justify-center">
+                  <Package className="w-4 h-4 mr-2" />
+                  Produced Items
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="py-3">
+                <div className="space-y-2">
+                  {relatedItems.blanks.map((blank: BlankItem, index: number) => (
+                    <Link
+                      key={blank.id}
+                      href={`/track/${blank.id}`}
+                      className="block"
+                    >
+                      <div className="flex justify-between items-center p-3 border border-gray-200 hover:border-gray-400 hover:bg-gray-50 transition-colors cursor-pointer">
+                        <div>
+                          <div className="text-sm font-mono font-light">
+                            {blank.id}
                           </div>
-                          <div className="text-xs text-pop-gray">
-                            Blank Item
+                          <div className="text-xs text-gray-500 font-light">
+                            {blank.productId
+                              ? "Assembled"
+                              : "Available for Assembly"}{" "}
+                            • {blank.status}
                           </div>
                         </div>
-                      </Link>
-                    ))}
-                  </div>
-                </CardContent>
-              </Card>
-            </PopArtContainer>
+                        <div className="text-xs text-gray-500 font-light">
+                          Blank Item
+                        </div>
+                      </div>
+                    </Link>
+                  ))}
+                </div>
+              </CardContent>
+            </Card>
           </div>
         )}
 
         {/* ========== CONNECTED ITEMS - Batches from Bin (for Bins) ========== */}
         {data.id.startsWith("B") && relatedItems.batches.length > 0 && (
-          <div className="max-w-2xl mx-auto">
-            <PopArtContainer color="green" shadow>
-              <Card className="border border-gray-200">
-                <CardHeader>
-                  <CardTitle className="systematic-caps flex items-center justify-center text-2xl">
-                    <Package className="w-6 h-6 mr-2" />
-                    Batches from this Bin
-                  </CardTitle>
-                </CardHeader>
-                <CardContent className="py-6">
-                  <div className="space-y-3">
-                    {relatedItems.batches.map((batch: BatchItem, index: number) => (
-                      <Link
-                        key={batch.id}
-                        href={`/track/${batch.id}`}
-                        className="block"
-                      >
-                        <div className="flex justify-between items-center p-3 border border-pop-gray rounded hover:border-pop-green hover:bg-pop-green hover:bg-opacity-5 transition-colors cursor-pointer">
-                          <div>
-                            <div className="systematic-caps text-sm font-semibold text-pop-green hover:text-pop-black">
-                              {batch.id}
-                            </div>
-                            <div className="text-xs text-pop-gray">
-                              {batch.weight}kg • {batch.materialType} •{" "}
-                              {getBatchStatusLabel(batch.status)}
-                            </div>
+          <div className="mb-12">
+            <Card className="border border-gray-300">
+              <CardHeader className="pb-3">
+                <CardTitle className="text-sm font-light flex items-center justify-center">
+                  <Package className="w-4 h-4 mr-2" />
+                  Batches from this Bin
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="py-3">
+                <div className="space-y-2">
+                  {relatedItems.batches.map((batch: BatchItem, index: number) => (
+                    <Link
+                      key={batch.id}
+                      href={`/track/${batch.id}`}
+                      className="block"
+                    >
+                      <div className="flex justify-between items-center p-3 border border-gray-200 hover:border-gray-400 hover:bg-gray-50 transition-colors cursor-pointer">
+                        <div>
+                          <div className="text-sm font-mono font-light">
+                            {batch.id}
                           </div>
-                          <div className="text-xs text-pop-gray">
-                            {formatDate(batch.collectionDate)}
+                          <div className="text-xs text-gray-500 font-light">
+                            {batch.weight}kg • {batch.materialType} •{" "}
+                            {getBatchStatusLabel(batch.status)}
                           </div>
                         </div>
-                      </Link>
-                    ))}
-                  </div>
-                </CardContent>
-              </Card>
-            </PopArtContainer>
+                        <div className="text-xs text-gray-500 font-light">
+                          {formatDate(batch.collectionDate)}
+                        </div>
+                      </div>
+                    </Link>
+                  ))}
+                </div>
+              </CardContent>
+            </Card>
           </div>
         )}
       </div>
