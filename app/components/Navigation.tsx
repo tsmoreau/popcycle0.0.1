@@ -73,16 +73,16 @@ export default function Navigation() {
   ];
 
   const productsItems = [
-    { href: "/product#limited-coasters", label: "Coasters" },
-    { href: "/product#limited-boards", label: "Cutting Boards" },
-    { href: "/product#limited-clocks", label: "Clocks" },
-    { href: "/product#limited-lighting", label: "Lighting" },
-    { href: "/product#custom-coasters", label: "Custom Coasters" },
-    { href: "/product#custom-keychains", label: "Keychains" },
-    { href: "/product#custom-magnets", label: "Magnets" },
-    { href: "/product#custom-bookmarks", label: "Bookmarks" },
-    { href: "/product#custom-combs", label: "Combs" },
-    { href: "/product#all", label: "Browse All" },
+    { href: "/shop#limited-coasters", label: "Coasters" },
+    { href: "/shop#limited-boards", label: "Cutting Boards" },
+    { href: "/shop#limited-clocks", label: "Clocks" },
+    { href: "/shop#limited-lighting", label: "Lighting" },
+    { href: "/shop#custom-coasters", label: "Custom Coasters" },
+    { href: "/shop#custom-keychains", label: "Keychains" },
+    { href: "/shop#custom-magnets", label: "Magnets" },
+    { href: "/shop#custom-bookmarks", label: "Bookmarks" },
+    { href: "/shop#custom-combs", label: "Combs" },
+    { href: "/shop#all", label: "Browse All" },
   ];
 
   const servicesItems = [
@@ -118,7 +118,7 @@ export default function Navigation() {
 
           <div className="flex mb-1">
           {/* Logo */}
-          <Link href="/" className="pl-2 lg:pl-12 pl-0 self-end pb-2 flex items-center space-x-2 group lg:mx-0 mx-auto">
+          <Link href="/" className="-ml-5 lg:ml-0 lg:pl-12 pl-0 self-end pb-2 flex items-center space-x-2 group lg:mx-0 mx-auto">
             <div className="w-12 h-12 bg-pop-green flex items-center justify-center transition-all group-hover:bg-opacity-90 mt-1">
               <span className="text-white font-bold helvetica-bold text-xl">P</span>
             </div>
@@ -134,7 +134,7 @@ export default function Navigation() {
 
 
           {/* Absolutely centered navigation links */}
-          <div className="  hidden self-end lg:flex items-end space-x-10 ml-8">
+          <div className="  hidden self-end lg:flex items-end space-x-4 ml-8">
             {/* About Dropdown */}
             <div
               onMouseEnter={() => setAboutOpen(true)}
@@ -155,7 +155,7 @@ export default function Navigation() {
               onMouseLeave={() => setProductsOpen(false)}
             >
               <button
-                className={`text-lg hover:text-pop-green transition-colors flex items-center space-x-1 py-2 ${
+                className={`hidden text-lg hover:text-pop-green transition-colors flex items-center space-x-1 py-2 ${
                   pathname === "/shop" ? "nav-link-active" : ""
                 }`}
               >
@@ -212,7 +212,7 @@ export default function Navigation() {
             {/* Shopping Cart */}
             <button
               onMouseEnter={() => setIconDropdownOpen('cart')}
-              className="hover:opacity-80 transition-opacity"
+              className="hidden hover:opacity-80 transition-opacity"
               data-testid="button-cart"
             >
               <ShoppingCart className="w-6 h-6 text-gray-700" />
@@ -256,13 +256,13 @@ export default function Navigation() {
           {/* Mobile icons - search and cart */}
           <div className="lg:hidden flex items-center space-x-2 self-center mr-4">
             <button
-              className="hover:opacity-80 transition-opacity"
+              className="hidden hover:opacity-80 transition-opacity"
               data-testid="button-search-mobile"
             >
               <Search className="w-5 h-5 text-gray-700" />
             </button>
             <button
-              className="hover:opacity-80 transition-opacity"
+              className="hidden hover:opacity-80 transition-opacity"
               data-testid="button-cart-mobile"
             >
               <ShoppingCart className="w-5 h-5 text-gray-700" />
@@ -274,11 +274,11 @@ export default function Navigation() {
             // 1. DATA STRUCTURE
             // We define the sections that will be used.
             const companySection = {
-              title: "",
+              title: "Studio",
               items: [
                 { href: "/about#team", label: "Team" },
-                { href: "/about#story", label: "Story" },
                 { href: "/about#process", label: "Process" },
+
                 { href: "/about#contact", label: "Contact" },
                 { href: "/about#faq", label: "FAQ" },
               ],
@@ -295,7 +295,6 @@ export default function Navigation() {
             const aboutColumns = [
               [ // Column 1
                 companySection,
-                
               ],
            
             ];
@@ -324,7 +323,7 @@ export default function Navigation() {
                         {/* Inner loop renders the stacked sections inside each column */}
                         {column.map((section, secIndex) => (
                           <div key={secIndex} className="mb-8">
-                            <Link href={section.items?.[0]?.href || '#'} className="hidden block systematic-caps text-sm font-normal text-gray-400 mb-4 hover:text-pop-green transition-colors cursor-pointer ">
+                            <Link href={section.items?.[0]?.href || '#'} className="block systematic-caps text-sm font-normal text-gray-400 mb-4 hover:text-pop-green transition-colors cursor-pointer ">
                               {section.title}
                             </Link>
                             <div className="space-y-2">
@@ -376,37 +375,37 @@ export default function Navigation() {
             const coastersSection = {
               title: "Coasters",
               items: [
-                { href: "/products#all", label: "Themed Sets" },
+                { href: "/shop#all", label: "Themed Sets" },
               ],
             };
             const boardsSection = {
               title: "Cutting Boards",
               items: [
-                { href: "/products#all", label: "Abstracts" },
-                { href: "/products#all", label: "Still Lifes" },
+                { href: "/shop#all", label: "Abstracts" },
+                { href: "/shop#all", label: "Still Lifes" },
               ],
             };
             const clocksSection = {
               title: "Clocks",
               items: [
-                { href: "/products#all", label: "Desk Clocks" },
-                { href: "/products#all", label: "Wall Clocks" },
+                { href: "/shop#all", label: "Desk Clocks" },
+                { href: "/shop#all", label: "Wall Clocks" },
               ],
             };
             const lightingSection = {
               title: "Lighting",
               items: [
-                { href: "/products#all", label: "Designer Lights" },
+                { href: "/shop#all", label: "Designer Lights" },
               ],
             };
             const makeYourOwnSection = {
               title: "Make-Your-Own",
               items: [
-                { href: "/products#custom-coasters", label: "Coasters" },
-                { href: "/products#custom-keychains", label: "Keychains" },
-                { href: "/products#custom-magnets", label: "Magnets" },
-                { href: "/products#custom-bookmarks", label: "Bookmarks" },
-                { href: "/products#custom-combs", label: "More" },
+                { href: "/shop#custom-coasters", label: "Coasters" },
+                { href: "/shop#custom-keychains", label: "Keychains" },
+                { href: "/shop#custom-magnets", label: "Magnets" },
+                { href: "/shop#custom-bookmarks", label: "Bookmarks" },
+                { href: "/shop#custom-combs", label: "More" },
               ],
             };
 
@@ -415,10 +414,12 @@ export default function Navigation() {
             const productColumns = [
               [ // Column 1
                 coastersSection,
+                boardsSection,
                 clocksSection,
-                 lightingSection,
+               
               ],
               [ // Column 2
+                 lightingSection,
                 makeYourOwnSection,
               ],
             ];
@@ -432,7 +433,7 @@ export default function Navigation() {
 
             return (
               <div 
-                className="absolute left-0 right-0 top-full z-50 bg-white border-t border-gray-200 shadow-lg "
+                className="hidden absolute left-0 right-0 top-full z-50 bg-white border-t border-gray-200 shadow-lg "
                 onMouseEnter={() => setProductsOpen(true)}
                 onMouseLeave={() => setProductsOpen(false)}
               >
@@ -443,7 +444,7 @@ export default function Navigation() {
                   <div className="flex gap-8 h-full">
                     {/* Outer loop creates the columns */}
                     {productColumns.map((column, colIndex) => (
-                      <div key={colIndex} className="w-[160px] flex-shrink-0">
+                      <div key={colIndex} className="w-[180px] flex-shrink-0">
                         {/* Inner loop renders the stacked sections inside each column */}
                         {column.map((section, secIndex) => (
                           <div key={secIndex} className="mb-8">
@@ -468,7 +469,7 @@ export default function Navigation() {
                   </div>
 
                   {/* Container for the image cards */}
-                 <div className="ml-8 relative overflow-hidden"> 
+                 <div className="relative overflow-hidden"> 
                    <div className="relative  flex gap-6 w-full overflow-x-auto"><div className="w-min aboslute right-0 overflow-x-a flex gap-4">
 
                  {cardData.map((card, cardIndex) => (
@@ -499,7 +500,7 @@ export default function Navigation() {
             const studioRetainerSection = {
               title: "Studio Retainer",
               items: [
-                { href: "/services#custom-products", label: "Seasonal Collections" },
+                { href: "/services#custom-products", label: "Ongoing Collection" },
              
               ],
             };
@@ -514,17 +515,15 @@ export default function Navigation() {
             const communityPartnersSection = {
               title: "Community Partners",
               items: [
-              
-                { href: "/services#workshops-events", label: "Consignment Collections" },
+                 { href: "/services#workshops-events", label: "Custom Products" },
                 { href: "/services#workshops-events", label: "Material Sourcing" },
+               
               ],
             };
 
             // This nested array defines the columns. Each inner array is a column.
             const servicesColumns = [
               [ // Column 1
-                 limitedCommissionSection,
-                studioRetainerSection,
                  communityPartnersSection,
               ],
             
@@ -533,10 +532,9 @@ export default function Navigation() {
             // The data for the image cards on the right.
             const servicesCardData = [
                 { caption: "Studio Process", color: "bg-pop-blue" },
-              { caption: "Custom Collections", color: "bg-pop-blue" },
                 { caption: "Universal Provenance", color: "bg-pop-blue"},
 
-
+              { caption: "Custom Collections", color: "bg-pop-blue" },
             ];
 
             return (
@@ -552,7 +550,7 @@ export default function Navigation() {
                   <div className="flex gap-8 h-full">
                     {/* Outer loop creates the columns */}
                     {servicesColumns.map((column, colIndex) => (
-                      <div key={colIndex} className="w-[200px] flex-shrink-0">
+                      <div key={colIndex} className="w-[190px] flex-shrink-0">
                         {/* Inner loop renders the stacked sections inside each column */}
                         {column.map((section, secIndex) => (
                           <div key={secIndex} className="mb-8">
@@ -577,7 +575,7 @@ export default function Navigation() {
                   </div>
 
                   {/* Container for the image cards */}
-                 <div className="ml-16 relative overflow-hidden"> 
+                 <div className="ml-6 relative overflow-hidden"> 
                    <div className="relative  flex gap-6 w-full overflow-x-auto"><div className="w-min aboslute right-0 overflow-x-a flex gap-4">
 
                  {servicesCardData.map((card, cardIndex) => (

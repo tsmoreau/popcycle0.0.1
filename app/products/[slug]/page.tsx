@@ -210,9 +210,9 @@ export default function ProductDetail() {
       </section>
 
       {/* Product Information - Single Column Editorial Layout */}
-      <div className="w-full px-6 lg:px-12 flex flex-col lg:flex-row mx-auto justify-center h-auto my-8">
+      <div className="w-full px-6 lg:px-12 flex flex-col lg:flex-row mx-auto justify-center h-auto my-6 mb-16 ">
      
-      <div className="bg-gray-50 w-full lg:w-2/3 self-center h-[50vh] lg:h-[60vh] flex items-center justify-center overflow-hidden">
+      <div className="bg-gray-50 w-full lg:w-3/5 self-center h-[50vh] lg:h-[60vh] flex items-center justify-center overflow-hidden">
         {productInfoImage ? (
           <img
             src={productInfoImage}
@@ -224,21 +224,21 @@ export default function ProductDetail() {
           <ImageIcon className="w-20 h-20 text-gray-300" />
         )}
       </div>
-      <div className="w-full lg:w-1/3 lg:pl-12 py-6 lg:py-16 px-6 lg:px-0">
+      <div className="w-full lg:w-2/5 lg:pl-12 py-6 lg:py-16 px-8 lg:px-4">
       
 
         {/* Product Name */}
-        <h1 className="text-3xl tracking-tight lg:text-5xl font-light mb-1.5 text-gray-700 leading-tight mb-6" data-testid="text-product-name">
+        <h1 className="text-3xl tracking-tight lg:text-5xl font-light mb-1.5 text-gray-700 leading-tight mb-1" data-testid="text-product-name">
           {product.name}
         </h1>
 <div className="flex">
         {/* Category */}
-        <p className="hidden text-xl text-gray-500 mb-6 font-normal" data-testid="badge-category">
+        <p className=" text-xl text-gray-500 mb-6 font-normal" data-testid="badge-category">
           {categoryLabels[product.category]}
         </p>
 
         {/* Product Type */}
-        <p className="hidden px-1 text-xl text-gray-500 mb-6 font-light" data-testid="text-product-type">
+        <p className=" px-1 text-xl text-gray-500 mb-6 font-normal" data-testid="text-product-type">
           {productTypeLabels[product.productType]}
         </p>
   </div>
@@ -291,7 +291,7 @@ export default function ProductDetail() {
         </div>
 
       {/* Lifestyle Image Carousel */}
-      <section className="relative w-full h-[60vh] lg:h-[80vh] flex mx-auto justify-center mb-6 mt-12">
+      <section className="relative w-full h-[60vh] lg:h-[80vh] flex mx-auto justify-center mb-6  mt-12">
         <div className="relative w-full h-full bg-gray-50">
           {carouselImages.length > 0 ? (
             <>
@@ -462,7 +462,7 @@ export default function ProductDetail() {
 
 
       {/* Detail Images Grid */}
-      <section className="max-w-screen-2xl mx-auto px-6 pt-12">
+      <section className="max-w-screen-2xl mx-auto px-6 pt-24 pb-24">
         <h2 className=" text-3xl font-light mb-12 text-center">Details</h2>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
           {detailImages.length > 0 ? (

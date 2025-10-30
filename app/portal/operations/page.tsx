@@ -168,20 +168,21 @@ export default function OperationsPage() {
             <TabsList className="relative z-10 p-0 bg-transparent h-auto gap-0 flex-nowrap overflow-visible">
               <TabsTrigger value="collections" className="folder-tab-white relative z-[4] text-xs sm:text-sm px-3 sm:px-4 py-2 sm:py-2">
                 <Package className="w-4 h-4 mr-2 text-pop-green" />
-                Collections
+                Bins
               </TabsTrigger>
               <TabsTrigger value="processing" className="folder-tab-white relative z-[3] -ml-6 sm:ml-0 text-xs sm:text-sm px-3 sm:px-4 py-2 sm:py-2">
                 <Settings className="w-4 h-4 mr-2 text-pop-green" />
-                Processing
-              </TabsTrigger>
-              <TabsTrigger value="fulfillment" className="folder-tab-white relative z-[2] -ml-6 sm:ml-0 text-xs sm:text-sm px-3 sm:px-4 py-2 sm:py-2">
-                <Truck className="w-4 h-4 mr-2 text-pop-green" />
-                Fulfillment
+                Batches
               </TabsTrigger>
               <TabsTrigger value="inventory" className="folder-tab-white relative z-[1] -ml-6 sm:ml-0 text-xs sm:text-sm px-3 sm:px-4 py-2 sm:py-2">
                 <BarChart3 className="w-4 h-4 mr-2 text-pop-green" />
-                Inventory
+                Blanks
               </TabsTrigger>
+              <TabsTrigger value="fulfillment" className="folder-tab-white relative z-[2] -ml-6 sm:ml-0 text-xs sm:text-sm px-3 sm:px-4 py-2 sm:py-2">
+                <Truck className="w-4 h-4 mr-2 text-pop-green" />
+                Orders
+              </TabsTrigger>
+             
               <Button
                 size="sm"
                 onClick={() => setIsLogisticsFullscreen(true)}
@@ -195,7 +196,7 @@ export default function OperationsPage() {
         </div>
 
         {/* Collections Tab */}
-        <TabsContent value="collections" className="space-y-6">
+        <TabsContent value="collections" className="space-y-6 bg-stone-100">
           <CollectionsTab
             bins={bins}
             loadingBins={loadingBins}
@@ -814,20 +815,21 @@ export default function OperationsPage() {
                   <TabsList className="relative z-10 p-0 bg-transparent h-auto gap-0 flex-nowrap overflow-visible">
                     <TabsTrigger value="collections" className="folder-tab-white relative z-[4] text-sm px-6 py-3">
                       <Package className="w-4 h-4 mr-2 text-pop-green" />
-                      Collections
+                      Bins
                     </TabsTrigger>
                     <TabsTrigger value="processing" className="folder-tab-white relative z-[3] -ml-6 text-sm px-6 py-3">
                       <Settings className="w-4 h-4 mr-2 text-pop-green" />
-                      Processing
-                    </TabsTrigger>
-                    <TabsTrigger value="fulfillment" className="folder-tab-white relative z-[2] -ml-6 text-sm px-6 py-3">
-                      <Truck className="w-4 h-4 mr-2 text-pop-green" />
-                      Fulfillment
+                      Batches
                     </TabsTrigger>
                     <TabsTrigger value="inventory" className="folder-tab-white relative z-[1] -ml-6 text-sm px-6 py-3">
                       <BarChart3 className="w-4 h-4 mr-2 text-pop-green" />
-                      Inventory
+                      Blanks
                     </TabsTrigger>
+                    <TabsTrigger value="fulfillment" className="folder-tab-white relative z-[2] -ml-6 text-sm px-6 py-3">
+                      <Truck className="w-4 h-4 mr-2 text-pop-green" />
+                      Orders
+                    </TabsTrigger>
+                   
                   </TabsList>
                   <Button
                     variant="outline"
