@@ -1,15 +1,9 @@
 "use client";
 
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-} from "../components/ui/card";
 import { Button } from "../components/ui/button";
 import { Input } from "../components/ui/input";
-import { PopArtContainer, QRCodeElement } from "../components/PopArtElements";
-import { Search, QrCode, ArrowRight, ChevronDown } from "lucide-react";
+import { QRCodeElement } from "../components/PopArtElements";
+import { ChevronDown } from "lucide-react";
 import Link from "next/link";
 import { useState, useEffect, useRef } from "react";
 import { LoadingSquare } from "../components/ui/loading-square";
@@ -122,37 +116,56 @@ export default function Track() {
   };
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen bg-white font-jost">
       {/* Hero Section */}
-      <div className="bg-white py-0 pt-32">
-        <div className="max-w-7xl mx-auto px-6 text-center">
-          <h1 className="text-6xl helvetica-bold mb-6 text-pop-black">
-            TRACK
+      <section className="relative py-40 lg:py-48 px-6 bg-gray-50">
+        <div className="max-w-5xl mx-auto text-center">
+          <h1 className="text-5xl lg:text-7xl mb-8 tracking-tight leading-tight text-black font-light">
+            Track
           </h1>
-          <p className="text-xl text-pop-gray max-w-3xl mx-auto mb-6">
-            Enter an item code to see that item's PopCycle journey. Track our plastic from waste bin to collected batch to pressed blank to finished product.
+          <p className="text-lg lg:text-xl max-w-3xl mx-auto leading-relaxed text-black/90 font-light mb-12">
+            Enter an item code to see its complete journey from waste collection to finished product.
           </p>
+
+          {/* Search Bar */}
+          <div className="max-w-2xl mx-auto flex gap-4">
+            <Input
+              placeholder="Enter item code (e.g. B1234567)"
+              className="flex-1 h-14 text-base bg-white border-gray-300 font-light"
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              onKeyPress={(e) => e.key === 'Enter' && handleSearch()}
+              data-testid="input-search"
+            />
+            <Button
+              className="bg-black text-white hover:bg-gray-800 font-light px-8 h-14"
+              onClick={handleSearch}
+              data-testid="button-search"
+            >
+              Track Item
+            </Button>
+          </div>
         </div>
-      </div>
+      </section>
 
-
-      {/* Categories Filter */}
-      <div className="max-w-7xl mx-auto px-6 py-8">
-        <div className="flex items-center justify-between ">
-          <div className="flex items-center">
-          <div className="flex items-center gap-4">
-            <span className="text-sm text-pop-gray">Filter items:</span>
+      {/* Filter and Grid Section */}
+      <div className="max-w-7xl mx-auto px-6 py-16">
+        {/* Filter Bar */}
+        <div className="flex items-center justify-between mb-12 pb-6 border-b border-gray-200">
+          <div className="flex items-center gap-6">
+            <span className="text-sm text-gray-500 font-light">Filter by type</span>
             <div className="relative" ref={filterRef}>
               <button
                 onClick={() => setFilterOpen(!filterOpen)}
-                className="border border-gray-200 bg-white pl-4 pr-5 py-2 text-sm systematic-caps cursor-pointer hover:bg-gray-50 transition-colors flex items-center whitespace-nowrap"
+                className="border border-gray-300 bg-white px-6 py-2 text-sm font-light cursor-pointer hover:bg-gray-50 transition-colors flex items-center gap-2"
+                data-testid="button-filter"
               >
                 {selectedFilter}
-                <ChevronDown className="ml-2 w-4 h-4 text-pop-black" />
+                <ChevronDown className="w-4 h-4 text-gray-400" />
               </button>
               
               {filterOpen && (
-                <div className="absolute top-full left-0 min-w-full bg-white border border-gray-200 mt-2 overflow-hidden z-10">
+                <div className="absolute top-full left-0 min-w-full bg-white border border-gray-300 mt-1 z-10 shadow-sm">
                   {[
                     "ALL",
                     "ACTIVE BINS",
@@ -167,7 +180,8 @@ export default function Track() {
                         setSelectedFilter(category);
                         setFilterOpen(false);
                       }}
-                      className="block w-full text-left px-5 py-3 systematic-caps text-sm hover:bg-pop-green hover:text-white transition-colors whitespace-nowrap"
+                      className="block w-full text-left px-6 py-3 text-sm font-light hover:bg-gray-50 transition-colors"
+                      data-testid={`filter-${category.toLowerCase().replace(/\s+/g, '-')}`}
                     >
                       {category}
                     </button>
@@ -176,100 +190,39 @@ export default function Track() {
               )}
             </div>
           </div>
-
-            
-  </div>
-        
-            {/* QR Code Search */}
-
-
-          <div className=" flex space-x-4 mr-24">
-
-
-
-                          <Input
-                            placeholder="Enter item code (e.g. B1234567)"
-                            className="flex w-3xl max-w-full h-10  text-lg text-gray-300"
-                            value={searchTerm}
-                            onChange={(e) => setSearchTerm(e.target.value)}
-                            onKeyPress={(e) => e.key === 'Enter' && handleSearch()}
-                          />
-
-                        <Button
-                          size="lg"
-                          className="bg-pop-green text-white hover:bg-pop-black hover:text-white systematic-caps h-10 px-4"
-                          onClick={handleSearch}
-                        >
-                          Track Item
-                        </Button>
-                      </div>
-
-
-
-         
           
-          <div className="text-sm text-pop-gray">
+          <div className="text-sm text-gray-500 font-light">
             {getFilteredCodes().length} {getFilteredCodes().length === 1 ? 'item' : 'items'}
           </div>
         </div>
-      </div>
 
-      {/* QR Codes */}
-      <div className="max-w-7xl mx-auto px-6 pb-16">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
-              {loading ? (
-                <div className="col-span-full flex justify-center items-center py-16">
-                  <LoadingSquare color="green" text="Loading Items..." />
+        {/* QR Codes Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-px bg-gray-200">
+          {loading ? (
+            <div className="col-span-full flex justify-center items-center py-20 bg-white">
+              <LoadingSquare color="green" text="Loading Items..." />
+            </div>
+          ) : (
+            getFilteredCodes().map((code) => (
+              <Link key={code.id} href={`/track/${code.id}`}>
+                <div className="bg-white p-12 hover:bg-gray-50 transition-colors cursor-pointer aspect-square flex flex-col justify-center items-center text-center">
+                  <QRCodeElement
+                    qrCode={code.id}
+                    size="md"
+                    className="mx-auto mb-6"
+                  />
+                  <div className="text-base font-light text-black mb-1">
+                    {code.id}
+                  </div>
+                  <div className="text-xs text-gray-500 font-light">
+                    {code.type}
+                  </div>
                 </div>
-              ) : (
-                getFilteredCodes().map((code, index) => {
-                return (
-                  <Link key={code.id} href={`/track/${code.id}`}>
-                    <div className="bg-white border border-gray-200 p-8 hover:bg-gray-50 transition-colors cursor-pointer aspect-square flex flex-col justify-center items-center text-center -ml-[1px] -mt-[1px]">
-                      <QRCodeElement
-                        qrCode={code.id}
-                        size="md"
-                        className="mx-auto mb-4"
-                      />
-                      <div className="systematic-caps text-lg helvetica-bold">
-                        {code.id}
-                      </div>
-                      <div className="text-xs text-pop-gray mt-1">
-                        {code.type.toUpperCase()} • Click to track
-                      </div>
-                    </div>
-                  </Link>
-                );
-                })
-              )}
+              </Link>
+            ))
+          )}
         </div>
       </div>
-
-      {/* Footer CTA Section */}
-      <section className="py-20 px-4 bg-pop-black">
-        <div className="max-w-4xl mx-auto text-center">
-          <h2 className="text-4xl lg:text-6xl helvetica-bold mb-8 text-white">
-            HOW DOES THIS
-            <br />
-            ALL WORK?
-          </h2>
-
-          <p className="text-xl mb-12 text-white leading-relaxed">
-            Every unique code represents a complete transformation from waste to
-            wonder.
-          </p>
-
-          <Link href="/products">
-            <Button
-              size="lg"
-              className="bg-pop-green text-pop-black hover:bg-white hover:text-pop-black systematic-caps text-lg px-12 py-4"
-            >
-              LEARN MORE ABOUT THE PROCESS
-              <ArrowRight className="ml-2 w-5 h-5" />
-            </Button>
-          </Link>
-        </div>
-      </section>
     </div>
   );
 }
