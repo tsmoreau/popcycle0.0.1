@@ -669,8 +669,8 @@ export default function TrackItem() {
               {data.weight && !data.id.startsWith("B") && (
                 <div className="flex justify-between items-center font-light">
                   <span className="text-gray-600">Weight</span>
-                  <span className="flex items-center">
-                    <Weight className="font-mono w-4 h-4 mr-1" />
+                  <span className="font-mono flex items-center">
+                    <Weight className=" w-4 h-4 mr-1" />
                     {data.weight}kg
                   </span>
                 </div>
