@@ -337,6 +337,10 @@ export default function TrackItem() {
         {/* ========== HEADER BOX ========== */}
         <Card className="border border-gray-300 mb-6">
           <CardContent className="p-8 space-y-6">
+            <CardTitle className="bg-pop-blue w-full text-sm font-light flex items-center text-center">
+              <Package className="w-4 h-4 mr-2" />
+              Bin Details
+            </CardTitle>
             {/* ID */}
             <div className="text-center pb-3 border-b border-gray-200">
               <h1 className="text-2xl lg:text-3xl tracking-tight font-light">
