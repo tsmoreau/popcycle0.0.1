@@ -334,32 +334,32 @@ export default function TrackItem() {
   return (
     <div className="min-h-screen py-20 font-jost bg-white">
       <div className="max-w-2xl mx-auto px-4">
-        {/* ========== HERO SECTION ========== */}
-        <div className="text-center mb-8">
-          <h1 className="text-3xl lg:text-4xl mb-4 tracking-tight font-light">
-            {data.id}
-          </h1>
-          <p className="text-sm text-gray-600 font-light max-w-xl mx-auto">
-            {isUncollected
-              ? `Active collection bin at ${data.organization?.name || "Unknown Origin"}`
-              : isSourceOnly
-                ? isProcessed
-                  ? `Processed plastic from ${data.organization?.name || "Unknown Origin"}`
-                  : `Fresh plastic collection from ${data.organization?.name || "Unknown Origin"}`
-                : `Complete transformation journey from ${data.organization?.name || "Unknown Origin"}`}
-          </p>
-        </div>
+        {/* ========== HEADER BOX ========== */}
+        <Card className="border border-gray-300 mb-6">
+          <CardContent className="p-8 space-y-6">
+            {/* ID and Description */}
+            <div className="text-center">
+              <h1 className="text-2xl lg:text-3xl mb-3 tracking-tight font-light">
+                {data.id}
+              </h1>
+              <p className="text-sm text-gray-600 font-light">
+                {isUncollected
+                  ? `Active collection bin at ${data.organization?.name || "Unknown Origin"}`
+                  : isSourceOnly
+                    ? isProcessed
+                      ? `Processed plastic from ${data.organization?.name || "Unknown Origin"}`
+                      : `Fresh plastic collection from ${data.organization?.name || "Unknown Origin"}`
+                    : `Complete transformation journey from ${data.organization?.name || "Unknown Origin"}`}
+              </p>
+            </div>
 
-        {/* QR Code Display */}
-        <div className="flex justify-center mb-12">
-          <div className="p-8 bg-white border border-gray-300">
-            <QRCodeElement qrCode={data.id} size="lg" />
-          </div>
-        </div>
+            {/* QR Code */}
+            <div className="flex justify-center py-4 border-y border-gray-200">
+              <QRCodeElement qrCode={data.id} size="lg" />
+            </div>
 
-        {/* ========== TIMELINE SECTION ========== */}
-        <div className="mb-12">
-          <div className="flex gap-2 lg:gap-3 justify-center max-w-xl mx-auto">
+            {/* Timeline */}
+            <div className="flex gap-2 lg:gap-3 justify-center">
             {/* Bins: Show only Collection step */}
             {data.id.startsWith("B") && (
               <div className="text-center flex-1">
@@ -548,8 +548,9 @@ export default function TrackItem() {
                 )}
               </>
             )}
-          </div>
-        </div>
+            </div>
+          </CardContent>
+        </Card>
 
         {/* ========== SOURCE DETAILS ========== */}
         <div className="flex flex-col gap-6 mb-12">
