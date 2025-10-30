@@ -3,10 +3,29 @@ import { MongoClient, ObjectId } from 'mongodb'
 
 export async function GET(request: NextRequest) {
   try {
+    const { searchParams } = new URL(request.url)
+    const orgId = searchParams.get('id')
+    
     const client = new MongoClient(process.env.MONGODB_URI!)
     await client.connect()
     const db = client.db('PopCycle')
     
+    // If id is provided, fetch single organization
+    if (orgId) {
+      const organization = await db.collection('orgs').findOne({ _id: new ObjectId(orgId) })
+      await client.close()
+      
+      if (!organization) {
+        return NextResponse.json(
+          { error: 'Organization not found' },
+          { status: 404 }
+        )
+      }
+      
+      return NextResponse.json(organization)
+    }
+    
+    // Otherwise fetch all organizations
     const organizations = await db.collection('orgs').find({}).toArray()
     
     await client.close()
