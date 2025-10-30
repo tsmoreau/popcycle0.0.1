@@ -337,12 +337,17 @@ export default function TrackItem() {
         {/* ========== HEADER BOX ========== */}
         <Card className="border border-gray-300 mb-6">
           <CardContent className="p-8 space-y-6">
-            {/* ID and Description */}
-            <div className="text-center">
-              <h1 className="text-2xl lg:text-3xl mb-3 tracking-tight font-light">
+            {/* ID */}
+            <div className="text-center pb-3 border-b border-gray-200">
+              <h1 className="text-2xl lg:text-3xl tracking-tight font-light">
                 {data.id}
               </h1>
-              <p className="text-sm text-gray-600 font-light">
+            </div>
+
+            {/* Description */}
+            <div className="flex justify-between text-sm font-light">
+              <span className="text-gray-600">Description</span>
+              <span className="text-right max-w-md">
                 {isUncollected
                   ? `Active collection bin at ${data.organization?.name || "Unknown Origin"}`
                   : isSourceOnly
@@ -350,7 +355,7 @@ export default function TrackItem() {
                       ? `Processed plastic from ${data.organization?.name || "Unknown Origin"}`
                       : `Fresh plastic collection from ${data.organization?.name || "Unknown Origin"}`
                     : `Complete transformation journey from ${data.organization?.name || "Unknown Origin"}`}
-              </p>
+              </span>
             </div>
 
             {/* QR Code */}
