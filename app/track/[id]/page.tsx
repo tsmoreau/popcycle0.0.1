@@ -333,80 +333,51 @@ export default function TrackItem() {
 
   return (
     <div className="min-h-screen py-20 font-jost bg-white">
-      <div className="max-w-2xl mx-auto px-4">
+      <div className="max-w-2xl mx-auto border border-gray-300">
         {/* ========== HEADER BOX ========== */}
-        <Card className="border border-gray-300 mb-6">
-          <CardContent className="p-8 space-y-6">
-            <CardTitle className="bg-pop-blue w-full text-sm font-light flex items-center text-center">
-              <Package className="w-4 h-4 mr-2" />
-              Bin Details
-            </CardTitle>
-            {/* ID */}
-            <div className="text-center pb-3 border-b border-gray-200">
-              <h1 className="text-2xl lg:text-3xl tracking-tight font-light">
-                {data.id}
-              </h1>
-            </div>
 
-            {/* Description */}
-            <div className="flex justify-between text-sm font-light">
-              <span className="text-gray-600">Description</span>
-              <span className="text-right max-w-md">
-                {isUncollected
-                  ? `Active collection bin at ${data.organization?.name || "Unknown Origin"}`
-                  : isSourceOnly
-                    ? isProcessed
-                      ? `Processed plastic from ${data.organization?.name || "Unknown Origin"}`
-                      : `Fresh plastic collection from ${data.organization?.name || "Unknown Origin"}`
-                    : `Complete transformation journey from ${data.organization?.name || "Unknown Origin"}`}
-              </span>
-            </div>
-
-            {/* QR Code */}
-            <div className="flex justify-center py-4 border-y border-gray-200">
-              <QRCodeElement qrCode={data.id} size="lg" />
-            </div>
-
-            {/* Timeline */}
-            <div className="flex gap-2 lg:gap-3 justify-center">
-            {/* Bins: Show only Collection step */}
-            {data.id.startsWith("B") && (
-              <div className="text-center flex-1">
-                <div className={`w-16 h-16 mx-auto mb-3 border border-gray-300 flex items-center justify-center ${
-                  data.collectionDate || data.lastCollectionDate || data.id.startsWith("B") 
-                    ? "bg-black" 
-                    : "bg-white"
-                }`}>
-                  <Package className={`w-8 h-8 ${
-                    data.collectionDate || data.lastCollectionDate || data.id.startsWith("B") 
-                      ? "text-white" 
-                      : "text-gray-400"
-                  }`} strokeWidth={1.5} />
-                </div>
-                <h3 className="text-xs mb-1 font-light">
-                  Collection
-                </h3>
-                <p className="text-xs text-gray-500 font-light">
-                  {data.id.startsWith("B") 
-                    ? "Active bin" 
-                    : data.collectionDate 
-                      ? formatDate(data.collectionDate)
-                      : data.lastCollectionDate
-                        ? formatDate(data.lastCollectionDate)
-                        : "Pending"
-                  }
-                </p>
+        <div className="flex flex-col gap-6 ">
+         
+          <Card className=" border-0">
+            <CardHeader className="pb-3">
+              <CardTitle className="text-sm font-light flex flex-col items-center justify-center">
+                <Link href="/" className=" pl-0 self-end flex items-center space-x-2 group pb-2 mx-auto">
+                  <div className="w-10 h-10 bg-gray-300 flex items-center justify-center">
+                    <span className="text-white font-base helvetica-bold text-lg">P</span>
+                  </div>
+                  <div className="flex-col flex mt-2">
+                  <span className="text-3xl font-extralight tracking-tighter font-base text-gray-900">
+                    PopCycle
+                  </span>
+                  <span className="hidden mt-0.0 ml-1 tracking-[2.2em] text-[8px] font-bold text-gray-900">
+                    STUDIO
+                  </span>
+                    </div>
+                </Link>
+                {data.id.startsWith("B")
+                  ? " Bin Receipt"
+                  : data.id.startsWith("T")
+                    ? " Batch Receipt"
+                   : data.id.startsWith("K")
+                       ? " Blank Receipt"
+                : "Receipt"}
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-3 text-sm">
+              <div className="w-full aspect-3/2 bg-gray-50"></div>
+              
+              {/* QR Code */}
+              <div className="hidden flex justify-center py-4 ">
+                <QRCodeElement qrCode={data.id} size="lg" />
               </div>
-            )}
-
-            {/* Batches: Show Collection and Processing steps */}
-            {data.id.startsWith("T") && (
-              <>
-                {/* Step 1: COLLECTION */}
+              {/* Timeline */}
+              <div className="hidden flex gap-2 lg:gap-3 justify-center">
+              {/* Bins: Show only Collection step */}
+              {data.id.startsWith("B") && (
                 <div className="text-center flex-1">
                   <div className={`w-16 h-16 mx-auto mb-3 border border-gray-300 flex items-center justify-center ${
                     data.collectionDate || data.lastCollectionDate || data.id.startsWith("B") 
-                      ? "bg-black" 
+                      ? "bg-gray-400" 
                       : "bg-white"
                   }`}>
                     <Package className={`w-8 h-8 ${
@@ -419,155 +390,192 @@ export default function TrackItem() {
                     Collection
                   </h3>
                   <p className="text-xs text-gray-500 font-light">
-                    {data.collectionDate ? formatDate(data.collectionDate) : "Complete"}
-                  </p>
-                </div>
-
-                {/* Connection Line */}
-                <div className="flex items-center justify-center pt-8">
-                  <div className={`w-4 h-0.5 ${
-                    isProcessed ? "bg-black" : "bg-gray-300"
-                  }`}></div>
-                </div>
-
-                {/* Step 2: PROCESSING */}
-                <div className="text-center flex-1">
-                  <div className={`w-16 h-16 mx-auto mb-3 border border-gray-300 flex items-center justify-center ${
-                    isProcessed 
-                      ? "bg-black" 
-                      : "bg-white"
-                  }`}>
-                    <Settings className={`w-8 h-8 ${
-                      isProcessed 
-                        ? "text-white" 
-                        : "text-gray-400"
-                    }`} strokeWidth={1.5} />
-                  </div>
-                  <h3 className="text-xs mb-1 font-light">
-                    {data.status === "inventory_creation" ? "Processed" : "Processing"}
-                  </h3>
-                  <p className="text-xs text-gray-500 font-light">
-                    {data.status === "inventory_creation" ? "Complete" : "In progress"}
-                  </p>
-                </div>
-              </>
-            )}
-
-            {/* Blanks: Show Processing, Purchased/Donated, and optionally Assembled */}
-            {data.id.startsWith("K") && (
-              <>
-                {/* Step 1: PROCESSING */}
-                <div className="text-center flex-1">
-                  <div className={`w-16 h-16 mx-auto mb-3 border border-gray-300 flex items-center justify-center ${
-                    isProcessed 
-                      ? "bg-black" 
-                      : "bg-white"
-                  }`}>
-                    <Settings className={`w-8 h-8 ${
-                      isProcessed 
-                        ? "text-white" 
-                        : "text-gray-400"
-                    }`} strokeWidth={1.5} />
-                  </div>
-                  <h3 className="text-xs mb-1 font-light">
-                    {data.status === "inventory_creation" ? "Processed" : "Processing"}
-                  </h3>
-                  <p className="text-xs text-gray-500 font-light">
-                    Complete
-                  </p>
-                </div>
-
-                {/* Connection Line */}
-                <div className="flex items-center justify-center pt-8">
-                  <div className={`w-4 h-0.5 ${
-                    data.productId ? "bg-black" : "bg-gray-300"
-                  }`}></div>
-                </div>
-
-                {/* Step 2: PURCHASED/DONATED */}
-                <div className="text-center flex-1">
-                  <div className={`w-16 h-16 mx-auto mb-3 border border-gray-300 flex items-center justify-center ${
-                    data.productId 
-                      ? "bg-black" 
-                      : "bg-white"
-                  }`}>
-                    {isCharity ? (
-                      <HeartHandshake className={`w-8 h-8 ${
-                        data.productId 
-                          ? "text-white" 
-                          : "text-gray-400"
-                      }`} strokeWidth={1.5} />
-                    ) : (
-                      <CheckCircle className={`w-8 h-8 ${
-                        data.productId 
-                          ? "text-white" 
-                          : "text-gray-400"
-                      }`} strokeWidth={1.5} />
-                    )}
-                  </div>
-                  <h3 className="text-xs mb-1 font-light">
-                    {isCharity ? "Donated" : "Purchased"}
-                  </h3>
-                  <p className="text-xs text-gray-500 font-light">
-                    {data.productId 
-                      ? data.deliveredDate || data.deliveryDate
-                        ? formatDate(data.deliveredDate || data.deliveryDate)
-                        : "Complete"
-                      : "Available"
+                    {data.id.startsWith("B") 
+                      ? "Active bin" 
+                      : data.collectionDate 
+                        ? formatDate(data.collectionDate)
+                        : data.lastCollectionDate
+                          ? formatDate(data.lastCollectionDate)
+                          : "Pending"
                     }
                   </p>
                 </div>
+              )}
 
-                {/* Show Assembly step only if blank has productId (has been purchased) */}
-                {data.productId && (
-                  <>
-                    {/* Connection Line */}
-                    <div className="flex items-center justify-center pt-8">
-                      <div className={`w-4 h-0.5 ${
-                        data.userId ? "bg-black" : "bg-gray-300"
-                      }`}></div>
+              {/* Batches: Show Collection and Processing steps */}
+              {data.id.startsWith("T") && (
+                <>
+                  {/* Step 1: COLLECTION */}
+                  <div className="text-center flex-1">
+                    <div className={`w-16 h-16 mx-auto mb-3 border border-gray-300 flex items-center justify-center ${
+                      data.collectionDate || data.lastCollectionDate || data.id.startsWith("B") 
+                        ? "bg-gray-400" 
+                        : "bg-white"
+                    }`}>
+                      <Package className={`w-8 h-8 ${
+                        data.collectionDate || data.lastCollectionDate || data.id.startsWith("B") 
+                          ? "text-white" 
+                          : "text-gray-400"
+                      }`} strokeWidth={1.5} />
                     </div>
+                    <h3 className="text-xs mb-1 font-light">
+                      Collection
+                    </h3>
+                    <p className="text-xs text-gray-500 font-light">
+                      {data.collectionDate ? formatDate(data.collectionDate) : "Complete"}
+                    </p>
+                  </div>
 
-                    {/* Step 3: ASSEMBLED */}
-                    <div className="text-center flex-1">
-                      <div className={`w-16 h-16 mx-auto mb-3 border border-gray-300 flex items-center justify-center ${
-                        data.userId 
-                          ? "bg-black" 
-                          : "bg-white"
-                      }`}>
-                        <User className={`w-8 h-8 ${
-                          data.userId 
+                  {/* Connection Line */}
+                  <div className="flex items-center justify-center pt-8">
+                    <div className={`w-4 h-0.5 ${
+                      isProcessed ? "bg-black" : "bg-gray-300"
+                    }`}></div>
+                  </div>
+
+                  {/* Step 2: PROCESSING */}
+                  <div className="text-center flex-1">
+                    <div className={`w-16 h-16 mx-auto mb-3 border border-gray-300 flex items-center justify-center ${
+                      isProcessed 
+                        ? "bg-black" 
+                        : "bg-white"
+                    }`}>
+                      <Settings className={`w-8 h-8 ${
+                        isProcessed 
+                          ? "text-white" 
+                          : "text-gray-400"
+                      }`} strokeWidth={1.5} />
+                    </div>
+                    <h3 className="text-xs mb-1 font-light">
+                      {data.status === "inventory_creation" ? "Processed" : "Processing"}
+                    </h3>
+                    <p className="text-xs text-gray-500 font-light">
+                      {data.status === "inventory_creation" ? "Complete" : "In progress"}
+                    </p>
+                  </div>
+                </>
+              )}
+
+              {/* Blanks: Show Processing, Purchased/Donated, and optionally Assembled */}
+              {data.id.startsWith("K") && (
+                <>
+                  {/* Step 1: PROCESSING */}
+                  <div className="text-center flex-1">
+                    <div className={`w-16 h-16 mx-auto mb-3 border border-gray-300 flex items-center justify-center ${
+                      isProcessed 
+                        ? "bg-gray-400" 
+                        : "bg-white"
+                    }`}>
+                      <Settings className={`w-8 h-8 ${
+                        isProcessed 
+                          ? "text-white" 
+                          : "text-gray-400"
+                      }`} strokeWidth={1.5} />
+                    </div>
+                    <h3 className="text-xs mb-1 font-light">
+                      {data.status === "inventory_creation" ? "Processed" : "Processing"}
+                    </h3>
+                    <p className="text-xs text-gray-500 font-light">
+                      Complete
+                    </p>
+                  </div>
+
+                  {/* Connection Line */}
+                  <div className="flex items-center justify-center pt-8">
+                    <div className={`w-4 h-0.5 ${
+                      data.productId ? "bg-black" : "bg-gray-300"
+                    }`}></div>
+                  </div>
+
+                  {/* Step 2: PURCHASED/DONATED */}
+                  <div className="text-center flex-1">
+                    <div className={`w-16 h-16 mx-auto mb-3 border border-gray-300 flex items-center justify-center ${
+                      data.productId 
+                        ? "bg-black" 
+                        : "bg-white"
+                    }`}>
+                      {isCharity ? (
+                        <HeartHandshake className={`w-8 h-8 ${
+                          data.productId 
                             ? "text-white" 
                             : "text-gray-400"
                         }`} strokeWidth={1.5} />
-                      </div>
-                      <h3 className="text-xs mb-1 font-light">
-                        Assembled
-                      </h3>
-                      <p className="text-xs text-gray-500 font-light">
-                        {data.userId 
-                          ? data.makerDetails?.assemblyDate 
-                            ? formatDate(data.makerDetails.assemblyDate)
-                            : "Complete"
-                          : "Awaiting maker"
-                        }
-                      </p>
+                      ) : (
+                        <CheckCircle className={`w-8 h-8 ${
+                          data.productId 
+                            ? "text-white" 
+                            : "text-gray-400"
+                        }`} strokeWidth={1.5} />
+                      )}
                     </div>
-                  </>
-                )}
-              </>
-            )}
-            </div>
-          </CardContent>
-        </Card>
+                    <h3 className="text-xs mb-1 font-light">
+                      {isCharity ? "Donated" : "Purchased"}
+                    </h3>
+                    <p className="text-xs text-gray-500 font-light">
+                      {data.productId 
+                        ? data.deliveredDate || data.deliveryDate
+                          ? formatDate(data.deliveredDate || data.deliveryDate)
+                          : "Complete"
+                        : "Available"
+                      }
+                    </p>
+                  </div>
 
+                  {/* Show Assembly step only if blank has productId (has been purchased) */}
+                  {data.productId && (
+                    <>
+                      {/* Connection Line */}
+                      <div className="flex items-center justify-center pt-8">
+                        <div className={`w-4 h-0.5 ${
+                          data.userId ? "bg-black" : "bg-gray-300"
+                        }`}></div>
+                      </div>
+
+                      {/* Step 3: ASSEMBLED */}
+                      <div className="text-center flex-1">
+                        <div className={`w-16 h-16 mx-auto mb-3 border border-gray-300 flex items-center justify-center ${
+                          data.userId 
+                            ? "bg-black" 
+                            : "bg-white"
+                        }`}>
+                          <User className={`w-8 h-8 ${
+                            data.userId 
+                              ? "text-white" 
+                              : "text-gray-400"
+                          }`} strokeWidth={1.5} />
+                        </div>
+                        <h3 className="text-xs mb-1 font-light">
+                          Assembled
+                        </h3>
+                        <p className="text-xs text-gray-500 font-light">
+                          {data.userId 
+                            ? data.makerDetails?.assemblyDate 
+                              ? formatDate(data.makerDetails.assemblyDate)
+                              : "Complete"
+                            : "Awaiting maker"
+                          }
+                        </p>
+                      </div>
+                    </>
+                  )}
+                </>
+              )}
+              </div>
+            </CardContent>
+            
+          </Card>
+
+        </div>
+
+        
+      
         {/* ========== SOURCE DETAILS ========== */}
-        <div className="flex flex-col gap-6 mb-12">
+        <div className="flex flex-col gap-6 ">
           {/* Source Details Card */}
-          <Card className="border border-gray-300">
+          <Card className="border-0 border-white">
             <CardHeader className="pb-3">
-              <CardTitle className="text-sm font-light flex items-center justify-center">
-                <Building className="w-4 h-4 mr-2" />
+              <CardTitle className="text-sm font-light flex items-center justify-start border-b border-gray-200 pb-3">
+                <Building className=" w-4 h-4 mr-2" />
                 {data.id.startsWith("B")
                   ? "Bin Details"
                   : data.id.startsWith("T")
@@ -577,7 +585,7 @@ export default function TrackItem() {
             </CardHeader>
             <CardContent className="space-y-3 text-sm">
               {/* ID Hierarchy Display */}
-              <div className="space-y-3 pb-3 border-b border-gray-200">
+              <div className="space-y-3 ">
                 <div className="flex justify-between font-light">
                   <span className="text-gray-600">
                     {data.id.startsWith("B")
@@ -633,12 +641,12 @@ export default function TrackItem() {
               </div>
               <div className="flex justify-between font-light">
                 <span className="text-gray-600">Origin</span>
-                <span>{data.organization?.name || "Unknown Origin"}</span>
+                <span className="font-mono">{data.organization?.name || "Unknown Origin"}</span>
               </div>
               {data.location && (
                 <div className="flex justify-between items-center font-light">
                   <span className="text-gray-600">Location</span>
-                  <span className="flex items-center">
+                  <span className="font-mono flex items-center">
                     <MapPin className="w-4 h-4 mr-1" />
                     {data.location}
                   </span>
@@ -647,7 +655,7 @@ export default function TrackItem() {
               {data.materialType && (
                 <div className="flex justify-between font-light">
                   <span className="text-gray-600">Material</span>
-                  <Badge className="bg-gray-200 text-black font-light">
+                  <Badge className="font-mono bg-gray-200 text-black font-light">
                     {data.materialType}
                   </Badge>
                 </div>
@@ -662,7 +670,7 @@ export default function TrackItem() {
                 <div className="flex justify-between items-center font-light">
                   <span className="text-gray-600">Weight</span>
                   <span className="flex items-center">
-                    <Weight className="w-4 h-4 mr-1" />
+                    <Weight className="font-mono w-4 h-4 mr-1" />
                     {data.weight}kg
                   </span>
                 </div>
@@ -672,7 +680,7 @@ export default function TrackItem() {
                   <span className="text-gray-600">
                     {data.id.startsWith("T") ? "Batched Date" : "Last Collected"}
                   </span>
-                  <span className="flex items-center">
+                  <span className="font-mono flex items-center">
                     <Calendar className="w-4 h-4 mr-1" />
                     {formatDate(data.collectionDate)}
                   </span>
@@ -683,7 +691,7 @@ export default function TrackItem() {
                   <span className="text-gray-600">
                     Next Collection
                   </span>
-                  <span className="flex items-center">
+                  <span className="font-mono font-extralight flex items-center">
                     <Calendar className="w-4 h-4 mr-1" />
                     {formatDate(data.nextCollectionDate)}
                   </span>
@@ -720,10 +728,10 @@ export default function TrackItem() {
               )}
               {data.message && (
                 <div className="border-t border-gray-200 pt-3">
-                  <span className="text-gray-500 block mb-2 font-light text-xs">
-                    Message
+                  <span className="text-gray-600 block mb-2 font-light">
+                    Venue Message:
                   </span>
-                  <p className="text-sm italic font-light">{data.message}</p>
+                  <div className="my-12  w-[80]"><p className="text-sm text-center italic font-light">{data.message}</p></div>
                 </div>
               )}
               {isUncollected && (
@@ -904,7 +912,7 @@ export default function TrackItem() {
 
         {/* Impact Metrics - Commented out for now */}
         {false && !isSourceOnly && impactMetrics && (
-          <Card className="border border-gray-300 mb-12">
+          <Card className="border-0 ">
             <CardHeader>
               <CardTitle className="flex items-center justify-center text-xl font-light">
                 <Leaf className="w-5 h-5 mr-2" />
@@ -943,7 +951,7 @@ export default function TrackItem() {
         {/* ========== CONNECTED ITEMS - Produced Items (for Batches) ========== */}
         {data.id.startsWith("T") && relatedItems.blanks.length > 0 && (
           <div className="mb-12">
-            <Card className="border border-gray-300">
+            <Card className="border-0 border-white">
               <CardHeader className="pb-3">
                 <CardTitle className="text-sm font-light flex items-center justify-center">
                   <Package className="w-4 h-4 mr-2" />
@@ -958,7 +966,7 @@ export default function TrackItem() {
                       href={`/track/${blank.id}`}
                       className="block"
                     >
-                      <div className="flex justify-between items-center p-3 border border-gray-200 hover:border-gray-400 hover:bg-gray-50 transition-colors cursor-pointer">
+                      <div className="flex justify-between items-center p-3 border-0 hover:border-gray-400 hover:bg-gray-50 transition-colors cursor-pointer">
                         <div>
                           <div className="text-sm font-mono font-light">
                             {blank.id}
@@ -985,11 +993,12 @@ export default function TrackItem() {
         {/* ========== CONNECTED ITEMS - Batches from Bin (for Bins) ========== */}
         {data.id.startsWith("B") && relatedItems.batches.length > 0 && (
           <div className="mb-12">
-            <Card className="border border-gray-300">
-              <CardHeader className="pb-3">
-                <CardTitle className="text-sm font-light flex items-center justify-center">
+            <Card className="border-0">
+              <CardHeader className="pb-0">
+                <CardTitle className="text-sm font-light flex items-center justify-start pb-4 border-b"><div className="flex ">
                   <Package className="w-4 h-4 mr-2" />
                   Batches from this Bin
+                  </div>
                 </CardTitle>
               </CardHeader>
               <CardContent className="py-3">
@@ -1000,7 +1009,7 @@ export default function TrackItem() {
                       href={`/track/${batch.id}`}
                       className="block"
                     >
-                      <div className="flex justify-between items-center p-3 border border-gray-200 hover:border-gray-400 hover:bg-gray-50 transition-colors cursor-pointer">
+                      <div className="flex justify-between items-center p-3 border-0 hover:border-gray-400 hover:bg-gray-50 transition-colors cursor-pointer">
                         <div>
                           <div className="text-sm font-mono font-light">
                             {batch.id}
