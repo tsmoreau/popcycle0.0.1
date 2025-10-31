@@ -156,7 +156,7 @@ export const orderEditableFields: EditableField<Order>[] = [
 // COMPLETE Blank editing configuration - ALL database fields
 export const blankEditableFields: EditableField<Blank>[] = [
   { key: '_id', label: 'Blank ID', type: 'readonly' },
-  { key: 'batchId', label: 'Batch ID', type: 'text', required: true, placeholder: 'Source batch ID' },
+  { key: 'batchIds', label: 'Batch IDs', type: 'multi-select', required: true, placeholder: 'Select source batches' },
   { key: 'productId', label: 'Product ID', type: 'text', placeholder: 'Associated product reference' },
   { key: 'userId', label: 'User ID', type: 'text', placeholder: 'Assigned user reference' },
   { 

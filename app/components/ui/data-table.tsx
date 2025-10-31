@@ -36,7 +36,7 @@ export interface Column<T> {
 export interface EditableField<T> {
   key: keyof T | string
   label: string
-  type: 'text' | 'textarea' | 'select' | 'number' | 'email' | 'nested' | 'readonly'
+  type: 'text' | 'textarea' | 'select' | 'multi-select' | 'number' | 'email' | 'nested' | 'readonly'
   options?: { value: string; label: string }[]
   nested?: EditableField<any>[]
   required?: boolean
@@ -366,6 +366,24 @@ export function DataTable<T extends Record<string, any>>({
             className={`border rounded px-3 py-2 w-full ${field.className || ''}`}
           >
             <option value="">Select...</option>
+            {field.options?.map(option => (
+              <option key={option.value} value={option.value}>
+                {option.label}
+              </option>
+            ))}
+          </select>
+        )
+      case 'multi-select':
+        return (
+          <select
+            multiple
+            value={Array.isArray(value) ? value : []}
+            onChange={(e) => {
+              const selectedOptions = Array.from(e.target.selectedOptions, option => option.value);
+              onChange(selectedOptions);
+            }}
+            className={`border rounded px-3 py-2 w-full min-h-[120px] ${field.className || ''}`}
+          >
             {field.options?.map(option => (
               <option key={option.value} value={option.value}>
                 {option.label}
