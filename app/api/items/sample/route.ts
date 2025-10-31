@@ -26,10 +26,21 @@ interface BlankItem {
   productId?: string;
 }
 
+interface ItemItem {
+  id: string;
+  blankIds?: string[];
+  batchIds?: string[];
+  productId: string;
+  userId?: string;
+  status: string;
+  serialNumber?: string;
+}
+
 interface AllItemsResponse {
   bins: BinItem[];
   batches: BatchItem[];
   blanks: BlankItem[];
+  items: ItemItem[];
 }
 
 export async function GET(request: Request) {
@@ -38,6 +49,7 @@ export async function GET(request: Request) {
     const type = url.searchParams.get('type');
     const binId = url.searchParams.get('binId');
     const batchId = url.searchParams.get('batchId');
+    const blankId = url.searchParams.get('blankId');
 
     const uri = process.env.MONGODB_URI;
     if (!uri) {
@@ -48,7 +60,7 @@ export async function GET(request: Request) {
     await client.connect();
     const db = client.db('PopCycle');
 
-    let items: BinItem[] | BatchItem[] | BlankItem[] | AllItemsResponse;
+    let items: BinItem[] | BatchItem[] | BlankItem[] | ItemItem[] | AllItemsResponse;
 
     if (type === 'bins') {
       const binDocs = await db.collection('bins').find({}).limit(20).toArray();
@@ -79,12 +91,25 @@ export async function GET(request: Request) {
         status: blank.status,
         productId: blank.productId
       }));
+    } else if (type === 'items') {
+      const query = blankId ? { blankIds: blankId } : {};
+      const itemDocs = await db.collection('items').find(query).limit(20).toArray();
+      items = itemDocs.map((item: any): ItemItem => ({
+        id: item._id.toString(),
+        blankIds: item.blankIds || [],
+        batchIds: item.batchIds || [],
+        productId: item.productId,
+        userId: item.userId,
+        status: item.status,
+        serialNumber: item.serialNumber
+      }));
     } else {
       // Return all types
-      const [binDocs, batchDocs, blankDocs] = await Promise.all([
+      const [binDocs, batchDocs, blankDocs, itemDocs] = await Promise.all([
         db.collection('bins').find({}).limit(10).toArray(),
         db.collection('batches').find({}).limit(10).toArray(),
-        db.collection('blanks').find({}).limit(10).toArray()
+        db.collection('blanks').find({}).limit(10).toArray(),
+        db.collection('items').find({}).limit(10).toArray()
       ]);
 
       items = {
@@ -104,6 +129,15 @@ export async function GET(request: Request) {
           batchIds: blank.batchIds || [], 
           userId: blank.userId, 
           status: blank.status 
+        })),
+        items: itemDocs.map((item: any): ItemItem => ({
+          id: item._id.toString(),
+          blankIds: item.blankIds || [],
+          batchIds: item.batchIds || [],
+          productId: item.productId,
+          userId: item.userId,
+          status: item.status,
+          serialNumber: item.serialNumber
         }))
       };
     }

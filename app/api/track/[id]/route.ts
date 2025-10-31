@@ -1,10 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { ObjectId } from 'mongodb';
 import { getDatabase } from '../../../../lib/mongodb';
-import { Bin, Batch, Blank } from '../../../../lib/schemas-v3';
+import { Bin, Batch, Blank, Item } from '../../../../lib/schemas-v3';
 
 // Function to determine collection type from QR code
-function getCollectionType(qrCode: string): 'bin' | 'batch' | 'blank' | null {
+function getCollectionType(qrCode: string): 'bin' | 'batch' | 'blank' | 'item' | null {
   if (qrCode.length < 1) return null;
   
   // Extract type from the first character (e.g., "B1234567" -> "B")
@@ -14,6 +14,7 @@ function getCollectionType(qrCode: string): 'bin' | 'batch' | 'blank' | null {
     case 'B': return 'bin';
     case 'T': return 'batch';
     case 'K': return 'blank';
+    case 'I': return 'item';
     default: return null;
   }
 }
@@ -34,7 +35,7 @@ export async function GET(
       return NextResponse.json({ error: 'Invalid QR code format' }, { status: 400 });
     }
     
-    let record: Bin | Batch | Blank | null = null;
+    let record: Bin | Batch | Blank | Item | null = null;
     let org: any = null;
     
     if (collectionType === 'bin') {
@@ -194,6 +195,110 @@ export async function GET(
         impactMetrics: {
           carbonSaved: blankRecord.weight * 3.5, // Higher impact for finished items
           wasteReduced: blankRecord.weight
+        }
+      });
+      
+    } else if (collectionType === 'item') {
+      // Look up item record using string ID (QR code)
+      record = await db.collection('items').findOne({ _id: id } as any) as Item | null;
+      
+      if (!record) {
+        return NextResponse.json({ error: 'Item not found' }, { status: 404 });
+      }
+      
+      const itemRecord = record as Item;
+      
+      // Get product details
+      let productDetails = null;
+      if (itemRecord.productId) {
+        productDetails = await db.collection('products').findOne({ _id: new ObjectId(itemRecord.productId) });
+      }
+      
+      // Get user/maker details if assigned
+      let userDetails = null;
+      if (itemRecord.userId) {
+        userDetails = await db.collection('users').findOne({ _id: new ObjectId(itemRecord.userId) });
+      }
+      
+      // Get organization from the product or trace back through blanks/batches
+      if (productDetails?.org) {
+        try {
+          org = await db.collection('orgs').findOne({ _id: new ObjectId(productDetails.org) });
+        } catch (error) {
+          org = await db.collection('orgs').findOne({ _id: productDetails.org });
+        }
+      } else {
+        // Trace back through blanks or batches to find org
+        if (itemRecord.blankIds && itemRecord.blankIds.length > 0) {
+          const blank = await db.collection('blanks').findOne({ _id: itemRecord.blankIds[0] } as any) as Blank | null;
+          if (blank?.batchIds && blank.batchIds.length > 0) {
+            const batch = await db.collection('batches').findOne({ _id: blank.batchIds[0] } as any) as Batch | null;
+            if (batch?.binIds && batch.binIds.length > 0) {
+              const bin = await db.collection('bins').findOne({ _id: batch.binIds[0] } as any) as Bin | null;
+              if (bin) {
+                org = await db.collection('orgs').findOne({ _id: new ObjectId(bin.orgId) });
+              }
+            }
+          }
+        } else if (itemRecord.batchIds && itemRecord.batchIds.length > 0) {
+          const batch = await db.collection('batches').findOne({ _id: itemRecord.batchIds[0] } as any) as Batch | null;
+          if (batch?.binIds && batch.binIds.length > 0) {
+            const bin = await db.collection('bins').findOne({ _id: batch.binIds[0] } as any) as Bin | null;
+            if (bin) {
+              org = await db.collection('orgs').findOne({ _id: new ObjectId(bin.orgId) });
+            }
+          }
+        }
+      }
+      
+      return NextResponse.json({
+        id: itemRecord._id,
+        type: 'item',
+        blankIds: itemRecord.blankIds || [],
+        batchIds: itemRecord.batchIds || [],
+        productId: itemRecord.productId,
+        userId: itemRecord.userId,
+        orderId: itemRecord.orderId,
+        editionNumber: itemRecord.editionNumber,
+        status: itemRecord.status,
+        weight: itemRecord.weight,
+        photoUrl: itemRecord.photoUrl,
+        thumbnailUrl: itemRecord.thumbnailUrl,
+        serialNumber: itemRecord.serialNumber,
+        assemblyDate: itemRecord.assemblyDate,
+        qualityCheckDate: itemRecord.qualityCheckDate,
+        shipDate: itemRecord.shipDate,
+        deliveryDate: itemRecord.deliveryDate,
+        recipientName: itemRecord.recipientName,
+        recipientEmail: itemRecord.recipientEmail,
+        shippingAddress: itemRecord.shippingAddress,
+        trackingNumber: itemRecord.trackingNumber,
+        productDetails: productDetails ? {
+          name: productDetails.name,
+          description: productDetails.description,
+          productType: productDetails.productType,
+          category: productDetails.category,
+          price: productDetails.price,
+          assets: productDetails.assets,
+          specs: productDetails.specs
+        } : null,
+        makerDetails: userDetails ? {
+          name: userDetails.name,
+          location: userDetails.location || 'Unknown',
+          assemblyDate: itemRecord.assemblyDate?.toISOString() || null,
+          story: `Assembled by ${userDetails.name}`,
+          verifiedEmail: userDetails.email
+        } : null,
+        organization: org ? {
+          name: org.name,
+          type: org.orgType,
+          description: org.description,
+          branding: org.branding
+        } : null,
+        message: org?.branding?.trackingPageMessage || 'This finished product represents the complete transformation of waste into a useful item.',
+        impactMetrics: {
+          carbonSaved: itemRecord.weight * 4.0, // Highest impact for completed items
+          wasteReduced: itemRecord.weight
         }
       });
     }

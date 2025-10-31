@@ -73,6 +73,7 @@ export default function TrackItem() {
   const [relatedItems, setRelatedItems] = useState<any>({
     batches: [],
     blanks: [],
+    items: [],
     sourceBin: null
   });
   const [loading, setLoading] = useState(true);
@@ -131,6 +132,18 @@ export default function TrackItem() {
             }
           } catch (relatedErr) {
             console.log("Could not fetch related items for batch:", relatedErr);
+          }
+        }
+
+        if (apiData.type === "blank") {
+          try {
+            const itemResponse = await fetch(`/api/items/sample?type=items&blankId=${apiData.id}`);
+            if (itemResponse.ok) {
+              const itemData = await itemResponse.json();
+              related.items = itemData.items || [];
+            }
+          } catch (itemErr) {
+            console.log("Could not fetch items for blank:", itemErr);
           }
         }
 
@@ -242,6 +255,23 @@ export default function TrackItem() {
         return "Laser Marking";
       case "inventory_creation":
         return "Inventory Creation";
+      default:
+        return status;
+    }
+  };
+
+  const getItemStatusLabel = (status: string) => {
+    switch (status) {
+      case "assembled":
+        return "Assembled";
+      case "quality_checked":
+        return "Quality Checked";
+      case "packaged":
+        return "Packaged";
+      case "shipped":
+        return "Shipped";
+      case "delivered":
+        return "Delivered";
       default:
         return status;
     }

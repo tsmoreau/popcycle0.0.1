@@ -205,6 +205,36 @@ export interface Blank {
   updatedAt: Date;
 }
 
+// Item - Finished products (can be assembled from blanks OR directly from batches)
+export interface Item {
+  _id: string; // QR code string (e.g., "I1234567")
+  blankIds?: string[]; // Items made from blanks (standard flow)
+  batchIds?: string[]; // Items made directly from batches (alternative flow)
+  productId: ObjectId; // Reference to Product design
+  userId?: ObjectId; // Maker/assembler
+  orderId?: ObjectId; // Associated order if part of bulk order
+  editionNumber?: number; // Which edition this item belongs to
+  status: "assembled" | "quality_checked" | "packaged" | "shipped" | "delivered";
+  weight: number;
+  photoUrl?: string;
+  thumbnailUrl?: string;
+  serialNumber?: string; // Unique serial within product line
+  
+  assemblyDate?: Date;
+  qualityCheckDate?: Date;
+  shipDate?: Date;
+  deliveryDate?: Date;
+  
+  // Customer/recipient info (if direct-to-consumer)
+  recipientName?: string;
+  recipientEmail?: string;
+  shippingAddress?: string;
+  trackingNumber?: string;
+  
+  createdAt: Date;
+  updatedAt: Date;
+}
+
 // User - People who interact with the system in various roles
 export interface User {
   _id: ObjectId;
