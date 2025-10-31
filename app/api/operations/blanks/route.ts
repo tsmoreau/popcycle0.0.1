@@ -14,6 +14,30 @@ export async function GET() {
   }
 }
 
+export async function POST(request: NextRequest) {
+  try {
+    const blank: Blank = await request.json()
+    const db = await getDatabase()
+    
+    // Generate proper _id if not provided or empty
+    const _id = blank._id && blank._id.trim() !== '' ? blank._id : `K${Math.random().toString(36).substring(2, 9).toUpperCase()}`
+    
+    const newBlank = {
+      ...blank,
+      _id,
+      createdAt: new Date(),
+      updatedAt: new Date()
+    }
+    
+    await db.collection<Blank>('blanks').insertOne(newBlank as any)
+    
+    return NextResponse.json({ success: true })
+  } catch (error) {
+    console.error('Error adding blank:', error)
+    return NextResponse.json({ error: 'Failed to add blank' }, { status: 500 })
+  }
+}
+
 export async function PUT(request: NextRequest) {
   try {
     const blank: Blank = await request.json()

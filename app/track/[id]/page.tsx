@@ -49,7 +49,7 @@ interface MakerDetails {
 
 interface BlankItem {
   id: string;
-  batchId: string;
+  batchIds: string[];
   status: string;
   weight: number;
   materialType: string;
@@ -629,15 +629,20 @@ export default function TrackItem() {
                     </div>
                   </div>
                 )}
-                {data.batchId && (
+                {data.batchIds && data.batchIds.length > 0 && (
                   <div className="flex justify-between font-light">
-                    <span className="text-gray-600">Batch ID</span>
-                    <Link
-                      href={`/track/${data.batchId}`}
-                      className="font-mono text-black hover:text-gray-600 hover:underline"
-                    >
-                      {data.batchId}
-                    </Link>
+                    <span className="text-gray-600">Batch IDs</span>
+                    <div className="space-y-1 text-right">
+                      {data.batchIds.map((batchId: string) => (
+                        <Link
+                          key={batchId}
+                          href={`/track/${batchId}`}
+                          className="block font-mono text-black hover:text-gray-600 hover:underline"
+                        >
+                          {batchId}
+                        </Link>
+                      ))}
+                    </div>
                   </div>
                 )}
               </div>

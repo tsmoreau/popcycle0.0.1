@@ -121,6 +121,20 @@ export default function OperationsPage() {
     handleBlankDelete,
   } = useOperationsData();
 
+  // Create dynamic blankEditableFields with batch options
+  const dynamicBlankEditableFields = blankEditableFields.map(field => {
+    if (field.key === 'batchIds') {
+      return {
+        ...field,
+        options: batches.map(batch => ({
+          value: batch._id,
+          label: `${batch._id} (${batch.weight}kg ${batch.materialType})`
+        }))
+      };
+    }
+    return field;
+  });
+
   // Shared sorting state for data tables
   const [collectionsSortField, setCollectionsSortField] = useState<string>("");
   const [collectionsSortDirection, setCollectionsSortDirection] = useState<"asc" | "desc">("asc");
@@ -241,7 +255,7 @@ export default function OperationsPage() {
             loadingBlanks={loadingBlanks}
             allBlankColumns={allBlankColumns}
             defaultBlankColumns={defaultBlankColumns}
-            blankEditableFields={blankEditableFields}
+            blankEditableFields={dynamicBlankEditableFields}
             handleBlankSave={handleBlankSave}
             handleBlankAdd={handleBlankAdd}
             handleBlankDelete={handleBlankDelete}
@@ -909,7 +923,7 @@ export default function OperationsPage() {
                     loadingBlanks={loadingBlanks}
                     allBlankColumns={allBlankColumns}
                     defaultBlankColumns={defaultBlankColumns}
-                    blankEditableFields={blankEditableFields}
+                    blankEditableFields={dynamicBlankEditableFields}
                     handleBlankSave={handleBlankSave}
                     handleBlankAdd={handleBlankAdd}
                     handleBlankDelete={handleBlankDelete}
