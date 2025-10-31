@@ -332,8 +332,8 @@ export default function TrackItem() {
   };
 
   return (
-    <div className="min-h-screen py-20 font-jost bg-white">
-      <div className="max-w-2xl mx-auto border border-gray-300">
+    <div className="min-h-screen py-20 flex mx-auto justify-center font-jost bg-white">
+      <div className="max-w-2xl mx-auto border border-gray-300 mx-8">
         {/* ========== HEADER BOX ========== */}
 
         <div className="flex flex-col gap-6 ">
@@ -354,13 +354,15 @@ export default function TrackItem() {
                   </span>
                     </div>
                 </Link>
+                <div className="font-jost">********************************************</div>
                 {data.id.startsWith("B")
                   ? " Bin Receipt"
                   : data.id.startsWith("T")
                     ? " Batch Receipt"
                    : data.id.startsWith("K")
-                       ? " Blank Receipt"
+                       ? " Pressed Sheet Receipt"
                 : "Receipt"}
+                 <div className="font-jost mt-1">********************************************</div>
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-3 text-sm">
@@ -574,12 +576,12 @@ export default function TrackItem() {
           {/* Source Details Card */}
           <Card className="border-0 border-white">
             <CardHeader className="pb-3">
-              <CardTitle className="text-sm font-light flex items-center justify-start border-b border-gray-200 pb-3">
-                <Building className=" w-4 h-4 mr-2" />
+              <CardTitle className="text-sm font-light flex items-center justify-start border-b border-gray-200 pb-3 text-gray-600">
+                <Building className="hidden w-4 h-4 mr-2" />
                 {data.id.startsWith("B")
-                  ? "Bin Details"
+                  ? "Bin Details:"
                   : data.id.startsWith("T")
-                    ? "Batch Details"
+                    ? "Batch Details:"
                     : "Source Details"}
               </CardTitle>
             </CardHeader>
@@ -729,9 +731,9 @@ export default function TrackItem() {
               {data.message && (
                 <div className="border-t border-gray-200 pt-3">
                   <span className="text-gray-600 block mb-2 font-light">
-                    Venue Message:
+                    Org Message:
                   </span>
-                  <div className="my-12  w-[80]"><p className="text-sm text-center italic font-light">{data.message}</p></div>
+                  <div className="my-12 text-center justify-center w-full flex mx-auto"><div className="text-sm text-center italic w-3/4 font-light">{data.message}</div></div>
                 </div>
               )}
               {isUncollected && (
@@ -992,12 +994,12 @@ export default function TrackItem() {
 
         {/* ========== CONNECTED ITEMS - Batches from Bin (for Bins) ========== */}
         {data.id.startsWith("B") && relatedItems.batches.length > 0 && (
-          <div className="mb-12">
+          <div className="mb-12 -mt-12">
             <Card className="border-0">
               <CardHeader className="pb-0">
-                <CardTitle className="text-sm font-light flex items-center justify-start pb-4 border-b"><div className="flex ">
-                  <Package className="w-4 h-4 mr-2" />
-                  Batches from this Bin
+                <CardTitle className="text-sm font-light flex items-center justify-start pb-2 border-b text-gray-600"><div className="flex ">
+                  <Package className="hidden w-4 h-4 mr-2" />
+                  Batches from this Bin:
                   </div>
                 </CardTitle>
               </CardHeader>
@@ -1011,22 +1013,27 @@ export default function TrackItem() {
                     >
                       <div className="flex justify-between items-center p-3 border-0 hover:border-gray-400 hover:bg-gray-50 transition-colors cursor-pointer">
                         <div>
-                          <div className="text-sm font-mono font-light">
-                            {batch.id}
+                        
+
+                          <div className="text-xs text-gray-600 font-light">
+                            {formatDate(batch.collectionDate)}
                           </div>
-                          <div className="text-xs text-gray-500 font-light">
+                          <div className="text-xs text-gray-\600 font-light">
                             {batch.weight}kg • {batch.materialType} •{" "}
                             {getBatchStatusLabel(batch.status)}
                           </div>
                         </div>
-                        <div className="text-xs text-gray-500 font-light">
-                          {formatDate(batch.collectionDate)}
+
+                        <div className="text-sm font-mono font-light">
+                          {batch.id}
                         </div>
                       </div>
                     </Link>
                   ))}
                 </div>
               </CardContent>
+            
+               <div className="mt-8 text-sm font-light items-center justify-center flex w-full text-cnter font-jost mt-1">*************************************</div>
             </Card>
           </div>
         )}
