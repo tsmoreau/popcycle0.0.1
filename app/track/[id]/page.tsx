@@ -332,21 +332,21 @@ export default function TrackItem() {
   };
 
   return (
-    <div className="min-h-screen py-20 flex mx-auto justify-center font-jost bg-white">
-      <div className="max-w-2xl mx-auto border border-gray-300 mx-8">
+    <div className="min-h-screen max-w-[35vw] py-20 flex mx-auto justify-center font-jost bg-white">
+      <div className="w-full mx-auto border border-gray-300 mx-8">
         {/* ========== HEADER BOX ========== */}
 
         <div className="flex flex-col gap-6 ">
          
           <Card className=" border-0">
             <CardHeader className="pb-3">
-              <CardTitle className="text-sm font-light flex flex-col items-center justify-center">
+              <CardTitle className="text-sm font-light flex flex-col items-center justify-center font-mono">
                 <Link href="/" className=" pl-0 self-end flex items-center space-x-2 group pb-2 mx-auto">
                   <div className="w-10 h-10 bg-gray-300 flex items-center justify-center">
                     <span className="text-white font-base helvetica-bold text-lg">P</span>
                   </div>
                   <div className="flex-col flex mt-2">
-                  <span className="text-3xl font-extralight tracking-tighter font-base text-gray-900">
+                  <span className="text-3xl font-extralight tracking-tighter font-base font-jost text-gray-900">
                     PopCycle
                   </span>
                   <span className="hidden mt-0.0 ml-1 tracking-[2.2em] text-[8px] font-bold text-gray-900">
@@ -356,11 +356,11 @@ export default function TrackItem() {
                 </Link>
                 <div className="font-jost">********************************************</div>
                 {data.id.startsWith("B")
-                  ? " Bin Receipt"
+                  ? "Bin Receipt"
                   : data.id.startsWith("T")
-                    ? " Batch Receipt"
+                    ? "Batch Receipt"
                    : data.id.startsWith("K")
-                       ? " Pressed Sheet Receipt"
+                       ? "Pressed Sheet Receipt"
                 : "Receipt"}
                  <div className="font-jost mt-1">********************************************</div>
               </CardTitle>
