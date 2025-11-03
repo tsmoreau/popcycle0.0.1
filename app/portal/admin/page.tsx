@@ -117,6 +117,7 @@ export default function AdminPage() {
   const [gcsStatus, setGcsStatus] = useState<GCSStatus | null>(null)
   const [loadingGcs, setLoadingGcs] = useState(true)
   const [generatingData, setGeneratingData] = useState(false)
+  const [generatingDataV2, setGeneratingDataV2] = useState(false)
   const [products, setProducts] = useState<Product[]>([])
   const [loadingProducts, setLoadingProducts] = useState(false)
   const [users, setUsers] = useState<User[]>([])
@@ -307,6 +308,27 @@ export default function AdminPage() {
       alert(`Error generating sample data: ${error}`)
     } finally {
       setGeneratingData(false)
+    }
+  }
+
+  const generateSampleDataV2 = async () => {
+    try {
+      setGeneratingDataV2(true)
+      const response = await fetch('/api/admin/generate-sample-data-v2', {
+        method: 'POST'
+      })
+      const data = await response.json()
+      
+      if (data.success) {
+        alert(`Sample data V2 generated successfully!\n\nHDPE Test Data:\n- ${data.stats.bins} Bins (all scenarios)\n- ${data.stats.batches} Batches (single/multi-bin)\n- ${data.stats.blanks} Blanks (various statuses/editions)\n- ${data.stats.items} Items (from blanks/batches with serials)\n- ${data.stats.events} Events`)
+        await fetchMongoStatus()
+      } else {
+        alert(`Failed to generate sample data V2: ${data.error}`)
+      }
+    } catch (error) {
+      alert(`Error generating sample data V2: ${error}`)
+    } finally {
+      setGeneratingDataV2(false)
     }
   }
 
@@ -1094,6 +1116,14 @@ export default function AdminPage() {
                   disabled={generatingData}
                 >
                   {generatingData ? 'Generating...' : 'Initialize Sample Data'}
+                </Button>
+                <Button 
+                  variant="outline" 
+                  className="w-full"
+                  onClick={generateSampleDataV2}
+                  disabled={generatingDataV2}
+                >
+                  {generatingDataV2 ? 'Generating...' : 'Initialize Sample Data V2 (HDPE Test Data)'}
                 </Button>
                 <Button variant="outline" className="w-full">View Collection Stats</Button>
                 <Button variant="outline" className="w-full text-pop-red">Reset Development Data</Button>
