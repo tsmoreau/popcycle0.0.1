@@ -500,10 +500,18 @@ export default function TrackItem() {
               )}
               {data.message && (
                 <div className="border-t border-gray-200 pt-3">
-                  <span className="text-gray-600 block mb-2 font-light">
-                    Org Message:
-                  </span>
-                  <div className="my-12 text-center justify-center w-full flex mx-auto"><div className="text-sm text-center italic w-3/4 font-light">"{data.message}"</div></div>
+                  <Accordion type="single" collapsible className="border-0">
+                    <AccordionItem value="org-message" className="border-0">
+                      <AccordionTrigger className="text-sm text-gray-600 font-light hover:no-underline py-2">
+                        Organization Message
+                      </AccordionTrigger>
+                      <AccordionContent className="pt-2 pb-0">
+                        <div className="text-sm italic font-light text-gray-700">
+                          "{data.message}"
+                        </div>
+                      </AccordionContent>
+                    </AccordionItem>
+                  </Accordion>
                 </div>
               )}
             
@@ -526,10 +534,18 @@ export default function TrackItem() {
                 </div>
                 {data.message && (
                   <div className="border-t border-gray-200 pt-3">
-                    <span className="text-gray-600 block mb-2 font-light">
-                      Event Message:
-                    </span>
-                    <div className="my-12 text-center justify-center w-full flex mx-auto"><div className="text-sm text-center italic w-3/4 font-light">"{data.message}"</div></div>
+                    <Accordion type="single" collapsible className="border-0">
+                      <AccordionItem value="event-message" className="border-0">
+                        <AccordionTrigger className="text-sm text-gray-600 font-light hover:no-underline py-2">
+                          Event Message
+                        </AccordionTrigger>
+                        <AccordionContent className="pt-2 pb-0">
+                          <div className="text-sm italic font-light text-gray-700">
+                            "{data.message}"
+                          </div>
+                        </AccordionContent>
+                      </AccordionItem>
+                    </Accordion>
                   </div>
                 )}
               </CardContent>
