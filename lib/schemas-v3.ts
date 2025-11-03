@@ -184,7 +184,6 @@ export interface Batch {
 export interface Blank {
   _id: string; // QR code string (e.g., "K1234567")
   batchIds: string[]; // Can be from multiple batches if blended
-  productId?: ObjectId;
   editionNumber?: number; // Tracks which edition this blank is allocated to
   orderId?: ObjectId;
   userId?: ObjectId;
