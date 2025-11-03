@@ -59,7 +59,11 @@ export async function GET(
       if ((record as Bin).eventId) {
         const eventDoc = await db.collection('events').findOne({ eventId: (record as Bin).eventId } as any);
         if (eventDoc) {
-          eventInfo = { name: eventDoc.name };
+          eventInfo = { 
+            name: eventDoc.name,
+            description: eventDoc.description,
+            scheduledDate: eventDoc.scheduledDate
+          };
         }
       }
       
@@ -86,6 +90,8 @@ export async function GET(
         nextCollectionDate: binRecord.nextCollectionDate,
         eventId: binRecord.eventId,
         event: eventInfo ? eventInfo.name : null,
+        eventDescription: eventInfo?.description || null,
+        eventScheduledDate: eventInfo?.scheduledDate || null,
         organization: org ? {
           name: org.name,
           type: org.orgType,
