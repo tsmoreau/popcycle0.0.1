@@ -23,7 +23,6 @@ interface BlankItem {
   batchIds: string[];
   userId: string;
   status: string;
-  productId?: string;
 }
 
 interface ItemItem {
@@ -88,11 +87,15 @@ export async function GET(request: Request) {
         id: blank._id.toString(), 
         batchIds: blank.batchIds || [], 
         userId: blank.userId, 
-        status: blank.status,
-        productId: blank.productId
+        status: blank.status
       }));
     } else if (type === 'items') {
-      const query = blankId ? { blankIds: blankId } : {};
+      let query: any = {};
+      if (blankId) {
+        query.blankIds = blankId;
+      } else if (batchId) {
+        query.batchIds = batchId;
+      }
       const itemDocs = await db.collection('items').find(query).limit(20).toArray();
       items = itemDocs.map((item: any): ItemItem => ({
         id: item._id.toString(),
