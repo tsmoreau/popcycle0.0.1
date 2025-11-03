@@ -540,16 +540,20 @@ export default function TrackItem() {
                         <span className="text-gray-600">Event Name</span>
                         <span className="font-mono">{data.event}</span>
                       </div>
-                      {data.message && (
+                      {data.eventScheduledDate && (
+                        <div className="flex justify-between font-light">
+                          <span className="text-gray-600">Scheduled Date</span>
+                          <span className="font-mono">{formatDate(data.eventScheduledDate)}</span>
+                        </div>
+                      )}
+                      {data.eventDescription && (
                         <div className="border-t border-gray-200 pt-3">
                           <div className="text-gray-600 block mb-2 font-light text-sm">
                             Event Description:
                           </div>
-                          <div className="w-full flex justify-center">
-                          <div className="w-2/3 text-center text-sm italic font-light text-gray-700">
-                            "{data.message}"
+                          <div className="text-sm font-light text-gray-700">
+                            {data.eventDescription}
                           </div>
-                            </div>
                         </div>
                       )}
                     </div>
