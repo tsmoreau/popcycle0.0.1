@@ -515,7 +515,7 @@ export default function TrackItem() {
 
           {data.orgMessage && (
             <div className="-mt-1 border-gray-200">
-              <div className="text-sm text-gray-600 font-light hover:no-underline py-2">
+              <div className="text-sm text-gray-600 font-light hover:no-underline py-2 italic ">
                 Message from {data.organization?.name || "Unknown Origin"}:
               </div>
               <div className="py-4 w-full flex justify-center">
