@@ -513,14 +513,14 @@ export default function TrackItem() {
         <div className="flex flex-col pt-2  px-6"> 
 
 
-          {data.message && (
+          {data.orgMessage && (
             <div className="-mt-1 border-gray-200">
               <div className="text-sm text-gray-600 font-light hover:no-underline py-2">
                 Message from {data.organization?.name || "Unknown Origin"}:
               </div>
               <div className="py-4 w-full flex justify-center">
               <div className="w-2/3 text-center text-sm italic font-light text-gray-700">
-                "{data.message}"
+                "{data.orgMessage}"
               </div>
                 </div>
             </div>

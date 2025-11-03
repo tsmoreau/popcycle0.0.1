@@ -98,6 +98,8 @@ export async function GET(
           description: org.description,
           branding: org.branding
         } : null,
+        binMessage: binRecord.message || null,
+        orgMessage: org?.branding?.trackingPageMessage || null,
         message: binRecord.message || org?.branding?.trackingPageMessage || 'This bin is part of our circular economy program.',
         producedBatches: producedBatches.map((batch: any) => ({
           id: batch._id,
