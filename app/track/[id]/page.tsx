@@ -147,6 +147,18 @@ export default function TrackItem() {
           }
         }
 
+        if (apiData.type === "batch") {
+          try {
+            const itemResponse = await fetch(`/api/items/sample?type=items&batchId=${apiData.id}`);
+            if (itemResponse.ok) {
+              const itemData = await itemResponse.json();
+              related.items = itemData.items || [];
+            }
+          } catch (itemErr) {
+            console.log("Could not fetch items for batch:", itemErr);
+          }
+        }
+
         setRelatedItems(related);
       } catch (err) {
         setError(err instanceof Error ? err.message : "Failed to fetch item");
@@ -554,12 +566,6 @@ export default function TrackItem() {
                   </span>
                 </div>
               )}
-              {data.event && data.event.trim() && (
-                <div className="flex justify-between font-light">
-                  <span className="text-gray-600">Event</span>
-                  <span className="font-mono">{data.event}</span>
-                </div>
-              )}
               {data.adoptedBy && data.id.startsWith("B") && (
                 <div className="flex justify-between font-light">
                   <span className="text-gray-600">Adopted By</span>
@@ -579,74 +585,81 @@ export default function TrackItem() {
             </CardContent>
           </Card>
 
-          
-        </div>
-
-        {/* ========== PRODUCT DETAILS ========== */}
-        {!isSourceOnly && (
-          <>
-            <Card className="border border-gray-300">
+          {/* ========== EVENT DETAILS ========== */}
+          {data.event && data.event.trim() && (
+            <Card className="border-0 border-white">
               <CardHeader className="pb-3">
-                <CardTitle className="text-sm font-light flex items-center">
-                  <Package className="w-4 h-4 mr-2" />
-                  Product Details
+                <CardTitle className="text-sm font-light flex items-center justify-start border-b border-gray-200 pb-3 text-gray-600">
+                  Event Details:
                 </CardTitle>
               </CardHeader>
               <CardContent className="space-y-3 text-sm">
                 <div className="flex justify-between font-light">
-                  <span className="text-gray-600">
-                    Product Type
-                  </span>
-                  <span>{getProductTypeLabel(data.productType)}</span>
+                  <span className="text-gray-600">Event</span>
+                  <span className="font-mono">{data.event}</span>
                 </div>
-
-                {!isCharity && (
-                  <div className="flex justify-between items-center font-light">
-                    <span className="text-gray-600">
-                      Purchased
-                    </span>
-                    <span className="flex items-center">
-                      <Calendar className="w-4 h-4 mr-1" />
-                      {formatDate(data.transactionDate)}
-                    </span>
-                  </div>
-                )}
-
-                {isCharity && data.donatingEntity && (
-                  <div className="flex justify-between font-light">
-                    <span className="text-gray-600">Donor</span>
-                    <span>{data.donatingEntity}</span>
-                  </div>
-                )}
-
-                {isCharity && (
-                  <div className="flex justify-between items-center font-light">
-                    <span className="text-gray-600">Donated</span>
-                    <span>{data.destination}</span>
-                  </div>
-                )}
-
-                <div className="flex justify-between items-center font-light">
-                  <span className="text-gray-600">Delivered</span>
-                  <span className="flex items-center">
-                    <Calendar className="w-4 h-4 mr-1" />
-                    {formatDate(data.deliveredDate)}
-                  </span>
-                </div>
-
-                {data.event && (
-                  <div className="flex justify-between font-light">
-                    <span className="text-gray-600">Event</span>
-                    <span>{data.event}</span>
-                  </div>
-                )}
-
-                {isCharity && data.message && (
+                {data.message && (
                   <div className="border-t border-gray-200 pt-3">
-                    <span className="text-gray-500 block mb-2 font-light text-xs">
-                      Message
+                    <span className="text-gray-600 block mb-2 font-light">
+                      Event Message:
                     </span>
-                    <p className="text-sm italic font-light">{data.message}</p>
+                    <div className="my-12 text-center justify-center w-full flex mx-auto"><div className="text-sm text-center italic w-3/4 font-light">"{data.message}"</div></div>
+                  </div>
+                )}
+              </CardContent>
+            </Card>
+          )}
+        </div>
+
+        {/* ========== PRODUCT DETAILS ========== */}
+        {data.type === 'item' && data.productDetails && (
+          <>
+            <Card className="border-0 border-white">
+              <CardHeader className="pb-3">
+                <CardTitle className="text-sm font-light flex items-center justify-start border-b border-gray-200 pb-3 text-gray-600">
+                  Product Details:
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-3 text-sm">
+                <div className="flex justify-between font-light">
+                  <span className="text-gray-600">Product Name</span>
+                  <span className="font-mono">{data.productDetails.name}</span>
+                </div>
+                <div className="flex justify-between font-light">
+                  <span className="text-gray-600">Product Type</span>
+                  <span className="font-mono">{data.productDetails.productType}</span>
+                </div>
+                <div className="flex justify-between font-light">
+                  <span className="text-gray-600">Category</span>
+                  <span className="font-mono">{data.productDetails.category}</span>
+                </div>
+                {data.editionNumber && (
+                  <div className="flex justify-between font-light">
+                    <span className="text-gray-600">Edition</span>
+                    <span className="font-mono">#{data.editionNumber}</span>
+                  </div>
+                )}
+                {data.serialNumber && (
+                  <div className="flex justify-between font-light">
+                    <span className="text-gray-600">Serial Number</span>
+                    <span className="font-mono">{data.serialNumber}</span>
+                  </div>
+                )}
+                {data.deliveryDate && (
+                  <div className="flex justify-between items-center font-light">
+                    <span className="text-gray-600">Delivered</span>
+                    <span className="flex items-center font-mono">
+                      <Calendar className="w-4 h-4 mr-1" />
+                      {formatDate(data.deliveryDate)}
+                    </span>
+                  </div>
+                )}
+                {data.productDetails.description && (
+                  <div className="border-t border-gray-200 pt-3">
+                    <span className="text-gray-600 block mb-2 font-light">
+                      Description:
+                    </span>
+                    <div className="my-4 text-sm font-light">{data.productDetails.description}</div>
                   </div>
                 )}
               </CardContent>
@@ -735,13 +748,13 @@ export default function TrackItem() {
         )}
 
       
-        {/* ========== CONNECTED ITEMS - Produced Items (for Batches) ========== */}
+        {/* ========== CONNECTED ITEMS - Produced Items ========== */}
+        {/* Blanks from Batches */}
         {data.id.startsWith("T") && relatedItems.blanks.length > 0 && (
           <div className="mb-12">
             <Card className="border-0 border-white">
               <CardHeader className="pb-3">
                 <CardTitle className="text-sm text-gray-600 font-light flex items-start justify-start border-b pb-2">
-                  
                   Produced Items:
                 </CardTitle>
               </CardHeader>
@@ -759,14 +772,50 @@ export default function TrackItem() {
                             {blank.id}
                           </div>
                           <div className="text-xs text-gray-500 font-light">
-                            {blank.productId
-                              ? "Assembled"
-                              : "Available for Assembly"}{" "}
-                            • {blank.status}
+                            {blank.status}
                           </div>
                         </div>
                         <div className="text-xs text-gray-500 font-light">
                           Blank Item
+                        </div>
+                      </div>
+                    </Link>
+                  ))}
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+        )}
+
+        {/* Items from Batches or Blanks */}
+        {(data.id.startsWith("T") || data.id.startsWith("K")) && relatedItems.items && relatedItems.items.length > 0 && (
+          <div className="mb-12">
+            <Card className="border-0 border-white">
+              <CardHeader className="pb-3">
+                <CardTitle className="text-sm text-gray-600 font-light flex items-start justify-start border-b pb-2">
+                  Finished Products:
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="py-3">
+                <div className="space-y-2">
+                  {relatedItems.items.map((item: any, index: number) => (
+                    <Link
+                      key={item.id}
+                      href={`/track/${item.id}`}
+                      className="block"
+                    >
+                      <div className="flex justify-between items-center p-3 border-0 hover:border-gray-400 hover:bg-gray-50 transition-colors cursor-pointer">
+                        <div>
+                          <div className="text-sm font-mono font-light">
+                            {item.id}
+                          </div>
+                          <div className="text-xs text-gray-500 font-light">
+                            {item.status}
+                            {item.serialNumber && ` • Serial: ${item.serialNumber}`}
+                          </div>
+                        </div>
+                        <div className="text-xs text-gray-500 font-light">
+                          Finished Item
                         </div>
                       </div>
                     </Link>
