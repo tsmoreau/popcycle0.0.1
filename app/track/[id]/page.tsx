@@ -521,35 +521,33 @@ export default function TrackItem() {
 
           {/* ========== EVENT DETAILS ========== */}
           {data.event && data.event.trim() && (
-            <Card className="border-0 border-white">
-              <CardHeader className="pb-3">
-                <CardTitle className="text-sm font-light flex items-center justify-start border-b border-gray-200 pb-3 text-gray-600">
-                  Event Details:
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-3 text-sm">
-                <div className="flex justify-between font-light">
-                  <span className="text-gray-600">Event</span>
-                  <span className="font-mono">{data.event}</span>
-                </div>
-                {data.message && (
-                  <div className="border-t border-gray-200 pt-3">
-                    <Accordion type="single" collapsible className="border-0">
-                      <AccordionItem value="event-message" className="border-0">
-                        <AccordionTrigger className="text-sm text-gray-600 font-light hover:no-underline py-2">
-                          Event Message
-                        </AccordionTrigger>
-                        <AccordionContent className="pt-2 pb-0">
+            <div className="mb-6">
+              <Accordion type="single" collapsible className="border-0">
+                <AccordionItem value="event-details" className="border-0">
+                  <AccordionTrigger className="text-sm text-gray-600 font-light hover:no-underline pb-3 border-b">
+                    Event Details
+                  </AccordionTrigger>
+                  <AccordionContent className="pt-3">
+                    <div className="space-y-3 text-sm">
+                      <div className="flex justify-between font-light">
+                        <span className="text-gray-600">Event</span>
+                        <span className="font-mono">{data.event}</span>
+                      </div>
+                      {data.message && (
+                        <div className="border-t border-gray-200 pt-3">
+                          <div className="text-gray-600 block mb-2 font-light text-sm">
+                            Event Message:
+                          </div>
                           <div className="text-sm italic font-light text-gray-700">
                             "{data.message}"
                           </div>
-                        </AccordionContent>
-                      </AccordionItem>
-                    </Accordion>
-                  </div>
-                )}
-              </CardContent>
-            </Card>
+                        </div>
+                      )}
+                    </div>
+                  </AccordionContent>
+                </AccordionItem>
+              </Accordion>
+            </div>
           )}
         </div>
 
@@ -696,7 +694,7 @@ export default function TrackItem() {
           <div className="mb-6">
             <Accordion type="single" collapsible className="border-0">
               <AccordionItem value="produced-blanks" className="border-0">
-                <AccordionTrigger className="text-sm text-gray-600 font-light hover:no-underline pb-2 border-b">
+                <AccordionTrigger className="text-sm text-gray-600 font-light hover:no-underline pb-3 border-b">
                   Produced Items ({data.producedBlanks.length})
                 </AccordionTrigger>
                 <AccordionContent className="pt-3">
@@ -734,7 +732,7 @@ export default function TrackItem() {
           <div className="mb-6">
             <Accordion type="single" collapsible className="border-0">
               <AccordionItem value="produced-items" className="border-0">
-                <AccordionTrigger className="text-sm text-gray-600 font-light hover:no-underline pb-2 border-b">
+                <AccordionTrigger className="text-sm text-gray-600 font-light hover:no-underline pb-3 border-b">
                   Finished Products ({data.producedItems.length})
                 </AccordionTrigger>
                 <AccordionContent className="pt-3">
@@ -773,7 +771,7 @@ export default function TrackItem() {
           <div className="mb-6">
             <Accordion type="single" collapsible className="border-0">
               <AccordionItem value="produced-batches" className="border-0">
-                <AccordionTrigger className="text-sm text-gray-600 font-light hover:no-underline pb-2 border-b">
+                <AccordionTrigger className="text-sm text-gray-600 font-light hover:no-underline pb-3 border-b">
                   Batches from this Bin ({data.producedBatches.length})
                 </AccordionTrigger>
                 <AccordionContent className="pt-3">
