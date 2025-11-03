@@ -362,18 +362,16 @@ export default function TrackItem() {
   };
 
   return (
-    <div className="min-h-screen lg:max-w-[35vw] py-20 flex mx-auto justify-center font-jost bg-white">
-      <div className="w-full mx-auto border border-gray-300 mr-6 ml-6">
-        {/* ========== HEADER INFO ========== */}
+    <div className="min-h-screen max-w-[35vw] py-20 flex mx-auto justify-center font-jost bg-white">
+      <div className="w-full mx-auto border border-gray-300 mx-8">
+        {/* ========== HEADER BOX ========== */}
 
         <div className="flex flex-col gap-6 ">
          
-          <div className="pt-8 border-0">
-
-            
-            <div className="pb-3">
-              <div className="text-sm font-light flex flex-col items-center justify-center font-mono">
-                <div className=" pl-0 self-end flex items-center space-x-2 group pb-2 mx-auto">
+          <Card className=" border-0">
+            <CardHeader className="pb-3">
+              <CardTitle className="text-sm font-light flex flex-col items-center justify-center font-mono">
+                <Link href="/" className=" pl-0 self-end flex items-center space-x-2 group pb-2 mx-auto">
                   <div className="w-10 h-10 bg-gray-300 flex items-center justify-center">
                     <span className="text-white font-base helvetica-bold text-lg">P</span>
                   </div>
@@ -381,9 +379,12 @@ export default function TrackItem() {
                   <span className="text-3xl font-extralight tracking-tighter font-base font-jost text-gray-900">
                     PopCycle
                   </span>
+                  <span className="hidden mt-0.0 ml-1 tracking-[2.2em] text-[8px] font-bold text-gray-900">
+                    STUDIO
+                  </span>
                     </div>
-                </div>
-                <div className="font-jost">********************************</div>
+                </Link>
+                <div className="font-jost">********************************************</div>
                 {data.id.startsWith("B")
                   ? "Bin Receipt"
                   : data.id.startsWith("T")
@@ -391,18 +392,214 @@ export default function TrackItem() {
                    : data.id.startsWith("K")
                        ? "Pressed Sheet Receipt"
                 : "Receipt"}
-                 <div className="font-jost mt-1">********************************</div>
-              </div>
-            </div>
-            <div className="space-y-3 text-sm">
+                 <div className="font-jost mt-1">********************************************</div>
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-3 text-sm">
               <div className="w-full aspect-3/2 bg-gray-50"></div>
+              
+              {/* QR Code */}
+              <div className="hidden flex justify-center py-4 ">
+                <QRCodeElement qrCode={data.id} size="lg" />
+              </div>
+              {/* Timeline */}
+              <div className="hidden flex gap-2 lg:gap-3 justify-center">
+              {/* Bins: Show only Collection step */}
+              {data.id.startsWith("B") && (
+                <div className="text-center flex-1">
+                  <div className={`w-16 h-16 mx-auto mb-3 border border-gray-300 flex items-center justify-center ${
+                    data.collectionDate || data.lastCollectionDate || data.id.startsWith("B") 
+                      ? "bg-gray-400" 
+                      : "bg-white"
+                  }`}>
+                    <Package className={`w-8 h-8 ${
+                      data.collectionDate || data.lastCollectionDate || data.id.startsWith("B") 
+                        ? "text-white" 
+                        : "text-gray-400"
+                    }`} strokeWidth={1.5} />
+                  </div>
+                  <h3 className="text-xs mb-1 font-light">
+                    Collection
+                  </h3>
+                  <p className="text-xs text-gray-500 font-light">
+                    {data.id.startsWith("B") 
+                      ? "Active bin" 
+                      : data.collectionDate 
+                        ? formatDate(data.collectionDate)
+                        : data.lastCollectionDate
+                          ? formatDate(data.lastCollectionDate)
+                          : "Pending"
+                    }
+                  </p>
+                </div>
+              )}
 
-            </div>
+              {/* Batches: Show Collection and Processing steps */}
+              {data.id.startsWith("T") && (
+                <>
+                  {/* Step 1: COLLECTION */}
+                  <div className="text-center flex-1">
+                    <div className={`w-16 h-16 mx-auto mb-3 border border-gray-300 flex items-center justify-center ${
+                      data.collectionDate || data.lastCollectionDate || data.id.startsWith("B") 
+                        ? "bg-gray-400" 
+                        : "bg-white"
+                    }`}>
+                      <Package className={`w-8 h-8 ${
+                        data.collectionDate || data.lastCollectionDate || data.id.startsWith("B") 
+                          ? "text-white" 
+                          : "text-gray-400"
+                      }`} strokeWidth={1.5} />
+                    </div>
+                    <h3 className="text-xs mb-1 font-light">
+                      Collection
+                    </h3>
+                    <p className="text-xs text-gray-500 font-light">
+                      {data.collectionDate ? formatDate(data.collectionDate) : "Complete"}
+                    </p>
+                  </div>
+
+                  {/* Connection Line */}
+                  <div className="flex items-center justify-center pt-8">
+                    <div className={`w-4 h-0.5 ${
+                      isProcessed ? "bg-black" : "bg-gray-300"
+                    }`}></div>
+                  </div>
+
+                  {/* Step 2: PROCESSING */}
+                  <div className="text-center flex-1">
+                    <div className={`w-16 h-16 mx-auto mb-3 border border-gray-300 flex items-center justify-center ${
+                      isProcessed 
+                        ? "bg-black" 
+                        : "bg-white"
+                    }`}>
+                      <Settings className={`w-8 h-8 ${
+                        isProcessed 
+                          ? "text-white" 
+                          : "text-gray-400"
+                      }`} strokeWidth={1.5} />
+                    </div>
+                    <h3 className="text-xs mb-1 font-light">
+                      {data.status === "inventory_creation" ? "Processed" : "Processing"}
+                    </h3>
+                    <p className="text-xs text-gray-500 font-light">
+                      {data.status === "inventory_creation" ? "Complete" : "In progress"}
+                    </p>
+                  </div>
+                </>
+              )}
+
+              {/* Blanks: Show Processing, Purchased/Donated, and optionally Assembled */}
+              {data.id.startsWith("K") && (
+                <>
+                  {/* Step 1: PROCESSING */}
+                  <div className="text-center flex-1">
+                    <div className={`w-16 h-16 mx-auto mb-3 border border-gray-300 flex items-center justify-center ${
+                      isProcessed 
+                        ? "bg-gray-400" 
+                        : "bg-white"
+                    }`}>
+                      <Settings className={`w-8 h-8 ${
+                        isProcessed 
+                          ? "text-white" 
+                          : "text-gray-400"
+                      }`} strokeWidth={1.5} />
+                    </div>
+                    <h3 className="text-xs mb-1 font-light">
+                      {data.status === "inventory_creation" ? "Processed" : "Processing"}
+                    </h3>
+                    <p className="text-xs text-gray-500 font-light">
+                      Complete
+                    </p>
+                  </div>
+
+                  {/* Connection Line */}
+                  <div className="flex items-center justify-center pt-8">
+                    <div className={`w-4 h-0.5 ${
+                      data.productId ? "bg-black" : "bg-gray-300"
+                    }`}></div>
+                  </div>
+
+                  {/* Step 2: PURCHASED/DONATED */}
+                  <div className="text-center flex-1">
+                    <div className={`w-16 h-16 mx-auto mb-3 border border-gray-300 flex items-center justify-center ${
+                      data.productId 
+                        ? "bg-black" 
+                        : "bg-white"
+                    }`}>
+                      {isCharity ? (
+                        <HeartHandshake className={`w-8 h-8 ${
+                          data.productId 
+                            ? "text-white" 
+                            : "text-gray-400"
+                        }`} strokeWidth={1.5} />
+                      ) : (
+                        <CheckCircle className={`w-8 h-8 ${
+                          data.productId 
+                            ? "text-white" 
+                            : "text-gray-400"
+                        }`} strokeWidth={1.5} />
+                      )}
+                    </div>
+                    <h3 className="text-xs mb-1 font-light">
+                      {isCharity ? "Donated" : "Purchased"}
+                    </h3>
+                    <p className="text-xs text-gray-500 font-light">
+                      {data.productId 
+                        ? data.deliveredDate || data.deliveryDate
+                          ? formatDate(data.deliveredDate || data.deliveryDate)
+                          : "Complete"
+                        : "Available"
+                      }
+                    </p>
+                  </div>
+
+                  {/* Show Assembly step only if blank has productId (has been purchased) */}
+                  {data.productId && (
+                    <>
+                      {/* Connection Line */}
+                      <div className="flex items-center justify-center pt-8">
+                        <div className={`w-4 h-0.5 ${
+                          data.userId ? "bg-black" : "bg-gray-300"
+                        }`}></div>
+                      </div>
+
+                      {/* Step 3: ASSEMBLED */}
+                      <div className="text-center flex-1">
+                        <div className={`w-16 h-16 mx-auto mb-3 border border-gray-300 flex items-center justify-center ${
+                          data.userId 
+                            ? "bg-black" 
+                            : "bg-white"
+                        }`}>
+                          <User className={`w-8 h-8 ${
+                            data.userId 
+                              ? "text-white" 
+                              : "text-gray-400"
+                          }`} strokeWidth={1.5} />
+                        </div>
+                        <h3 className="text-xs mb-1 font-light">
+                          Assembled
+                        </h3>
+                        <p className="text-xs text-gray-500 font-light">
+                          {data.userId 
+                            ? data.makerDetails?.assemblyDate 
+                              ? formatDate(data.makerDetails.assemblyDate)
+                              : "Complete"
+                            : "Awaiting maker"
+                          }
+                        </p>
+                      </div>
+                    </>
+                  )}
+                </>
+              )}
+              </div>
+            </CardContent>
             
-          </div>
+          </Card>
 
         </div>
 
+        
       
         {/* ========== SOURCE DETAILS ========== */}
         <div className="flex flex-col gap-6 ">
@@ -495,15 +692,15 @@ export default function TrackItem() {
               {data.materialType && (
                 <div className="flex justify-between font-light">
                   <span className="text-gray-600">Material</span>
-                  <div className="rounded-full px-2 border border-1 border-black font-mono text-black font-light">
+                  <Badge className="font-mono bg-gray-200 text-black font-light">
                     {data.materialType}
-                  </div>
+                  </Badge>
                 </div>
               )}
               {data.id.startsWith("T") && data.status && (
                 <div className="flex justify-between">
                   <span className="text-gray-600 font-light">Status</span>
-                  {data.status}
+                  {getProcessingStatusBadge(data.status)}
                 </div>
               )}
               {data.weight && !data.id.startsWith("B") && (
@@ -557,7 +754,7 @@ export default function TrackItem() {
               {data.event && data.event.trim() && (
                 <div className="flex justify-between font-light">
                   <span className="text-gray-600">Event</span>
-                  <span className="font-mono">{data.event}</span>
+                  <span>{data.event}</span>
                 </div>
               )}
               {data.adoptedBy && data.id.startsWith("B") && (
@@ -571,178 +768,231 @@ export default function TrackItem() {
                   <span className="text-gray-600 block mb-2 font-light">
                     Org Message:
                   </span>
-                  <div className="my-12 text-center justify-center w-full flex mx-auto"><div className="text-sm text-center italic w-3/4 font-light">"{data.message}"</div></div>
+                  <div className="my-12 text-center justify-center w-full flex mx-auto"><div className="text-sm text-center italic w-3/4 font-light">{data.message}</div></div>
                 </div>
               )}
-            
-             
+              {isUncollected && (
+                <div className="border-t pt-3 text-center border-gray-200">
+                  <div className="flex items-center justify-center text-sm text-gray-600 font-light">
+                    <Package className="w-4 h-4 mr-1" strokeWidth={1.5} />
+                    <span>
+                      Ready for Collection
+                    </span>
+                  </div>
+                </div>
+              )}
+              {isSourceOnly && !isUncollected && isProcessed && (
+                <div className="border-t pt-3 text-center border-gray-200">
+                  <div className="flex items-center justify-center text-sm text-gray-600 font-light">
+                    <Calendar className="w-4 h-4 mr-1" />
+                    <span>
+                      Ready for Purchase
+                    </span>
+                  </div>
+                </div>
+              )}
             </CardContent>
           </Card>
 
-          
-        </div>
-
-        {/* ========== PRODUCT DETAILS ========== */}
-        {!isSourceOnly && (
-          <>
-            <Card className="border border-gray-300">
-              <CardHeader className="pb-3">
-                <CardTitle className="text-sm font-light flex items-center">
-                  <Package className="w-4 h-4 mr-2" />
-                  Product Details
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-3 text-sm">
-                <div className="flex justify-between font-light">
-                  <span className="text-gray-600">
-                    Product Type
-                  </span>
-                  <span>{getProductTypeLabel(data.productType)}</span>
-                </div>
-
-                {!isCharity && (
-                  <div className="flex justify-between items-center font-light">
+          {/* ========== PRODUCT DETAILS ========== */}
+          {!isSourceOnly && (
+            <>
+              <Card className="border border-gray-300">
+                <CardHeader className="pb-3">
+                  <CardTitle className="text-sm font-light flex items-center">
+                    <Package className="w-4 h-4 mr-2" />
+                    Product Details
+                  </CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-3 text-sm">
+                  <div className="flex justify-between font-light">
                     <span className="text-gray-600">
-                      Purchased
+                      Product Type
                     </span>
-                    <span className="flex items-center">
-                      <Calendar className="w-4 h-4 mr-1" />
-                      {formatDate(data.transactionDate)}
-                    </span>
+                    <span>{getProductTypeLabel(data.productType)}</span>
                   </div>
-                )}
 
-                {isCharity && data.donatingEntity && (
-                  <div className="flex justify-between font-light">
-                    <span className="text-gray-600">Donor</span>
-                    <span>{data.donatingEntity}</span>
-                  </div>
-                )}
-
-                {isCharity && (
-                  <div className="flex justify-between items-center font-light">
-                    <span className="text-gray-600">Donated</span>
-                    <span>{data.destination}</span>
-                  </div>
-                )}
-
-                <div className="flex justify-between items-center font-light">
-                  <span className="text-gray-600">Delivered</span>
-                  <span className="flex items-center">
-                    <Calendar className="w-4 h-4 mr-1" />
-                    {formatDate(data.deliveredDate)}
-                  </span>
-                </div>
-
-                {data.event && (
-                  <div className="flex justify-between font-light">
-                    <span className="text-gray-600">Event</span>
-                    <span>{data.event}</span>
-                  </div>
-                )}
-
-                {isCharity && data.message && (
-                  <div className="border-t border-gray-200 pt-3">
-                    <span className="text-gray-500 block mb-2 font-light text-xs">
-                      Message
-                    </span>
-                    <p className="text-sm italic font-light">{data.message}</p>
-                  </div>
-                )}
-              </CardContent>
-            </Card>
-
-            {/* ========== MAKER DETAILS ========== */}
-            <Card className="border border-gray-300">
-              <CardHeader className="pb-3">
-                <CardTitle className="text-sm font-light flex items-center">
-                  <User className="w-4 h-4 mr-2" />
-                  Maker Details
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-3 text-sm">
-                {data.makerDetails ? (
-                  // Registered State - Show completed maker details
-                  <>
-                    <div className="flex justify-between font-light">
-                      <span className="text-gray-600">Maker</span>
-                      <span className="font-medium">
-                        {data.makerDetails.name}
-                      </span>
-                    </div>
+                  {!isCharity && (
                     <div className="flex justify-between items-center font-light">
                       <span className="text-gray-600">
-                        Location
-                      </span>
-                      <span className="flex items-center">
-                        <MapPin className="w-4 h-4 mr-1" />
-                        {data.makerDetails.location}
-                      </span>
-                    </div>
-                    <div className="flex justify-between items-center font-light">
-                      <span className="text-gray-600">
-                        Assembled
+                        Purchased
                       </span>
                       <span className="flex items-center">
                         <Calendar className="w-4 h-4 mr-1" />
-                        {formatDate(data.makerDetails.assemblyDate)}
+                        {formatDate(data.transactionDate)}
                       </span>
                     </div>
-                    {data.makerDetails.story && (
-                      <div className="border-t border-gray-200 pt-3">
-                        <span className="text-gray-500 block mb-2 font-light text-xs">
-                          Maker Story
-                        </span>
-                        <p className="text-sm italic leading-relaxed font-light">
-                          {data.makerDetails.story}
-                        </p>
-                      </div>
-                    )}
-                    <div className="border-t border-gray-200 pt-3 flex items-center justify-center">
-                      <div className="flex items-center text-black text-sm font-light">
-                        <Heart className="w-4 h-4 mr-1 fill-current" />
-                        <span>
-                          Maker Journey Complete
-                        </span>
-                      </div>
+                  )}
+
+                  {isCharity && data.donatingEntity && (
+                    <div className="flex justify-between font-light">
+                      <span className="text-gray-600">Donor</span>
+                      <span>{data.donatingEntity}</span>
                     </div>
-                  </>
-                ) : (
-                  // Unregistered State - Show CTA
-                  <div className="text-center py-8">
-                    <div className="w-16 h-16 mx-auto mb-4 border-2 border-dashed border-gray-300 flex items-center justify-center">
-                      <Plus className="w-8 h-8 text-gray-400" />
+                  )}
+
+                  {isCharity && (
+                    <div className="flex justify-between items-center font-light">
+                      <span className="text-gray-600">Donated</span>
+                      <span>{data.destination}</span>
                     </div>
-                    <h3 className="text-base mb-2 font-light">
-                      Complete Your Maker Journey
-                    </h3>
-                    <p className="text-sm text-gray-600 mb-6 leading-relaxed font-light">
-                      {isCharity
-                        ? `Did you assemble this item${data.destination ? ` at ${data.destination}` : ""}? Share your story and connect this donation to its educational impact.`
-                        : "Did you assemble this item? Share your story and become part of the circular economy narrative."}
-                    </p>
-                    <button className="w-full bg-black text-white font-light py-3 px-6 border border-gray-300 hover:bg-gray-800 transition-colors text-sm">
-                      Register as Maker
-                    </button>
-                    <p className="text-xs text-gray-500 mt-3 font-light">
-                      Email verification required
-                    </p>
+                  )}
+
+                  <div className="flex justify-between items-center font-light">
+                    <span className="text-gray-600">Delivered</span>
+                    <span className="flex items-center">
+                      <Calendar className="w-4 h-4 mr-1" />
+                      {formatDate(data.deliveredDate)}
+                    </span>
                   </div>
-                )}
-              </CardContent>
-            </Card>
-          </>
+
+                  {data.event && (
+                    <div className="flex justify-between font-light">
+                      <span className="text-gray-600">Event</span>
+                      <span>{data.event}</span>
+                    </div>
+                  )}
+
+                  {isCharity && data.message && (
+                    <div className="border-t border-gray-200 pt-3">
+                      <span className="text-gray-500 block mb-2 font-light text-xs">
+                        Message
+                      </span>
+                      <p className="text-sm italic font-light">{data.message}</p>
+                    </div>
+                  )}
+                </CardContent>
+              </Card>
+
+              {/* ========== MAKER DETAILS ========== */}
+              <Card className="border border-gray-300">
+                <CardHeader className="pb-3">
+                  <CardTitle className="text-sm font-light flex items-center">
+                    <User className="w-4 h-4 mr-2" />
+                    Maker Details
+                  </CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-3 text-sm">
+                  {data.makerDetails ? (
+                    // Registered State - Show completed maker details
+                    <>
+                      <div className="flex justify-between font-light">
+                        <span className="text-gray-600">Maker</span>
+                        <span className="font-medium">
+                          {data.makerDetails.name}
+                        </span>
+                      </div>
+                      <div className="flex justify-between items-center font-light">
+                        <span className="text-gray-600">
+                          Location
+                        </span>
+                        <span className="flex items-center">
+                          <MapPin className="w-4 h-4 mr-1" />
+                          {data.makerDetails.location}
+                        </span>
+                      </div>
+                      <div className="flex justify-between items-center font-light">
+                        <span className="text-gray-600">
+                          Assembled
+                        </span>
+                        <span className="flex items-center">
+                          <Calendar className="w-4 h-4 mr-1" />
+                          {formatDate(data.makerDetails.assemblyDate)}
+                        </span>
+                      </div>
+                      {data.makerDetails.story && (
+                        <div className="border-t border-gray-200 pt-3">
+                          <span className="text-gray-500 block mb-2 font-light text-xs">
+                            Maker Story
+                          </span>
+                          <p className="text-sm italic leading-relaxed font-light">
+                            {data.makerDetails.story}
+                          </p>
+                        </div>
+                      )}
+                      <div className="border-t border-gray-200 pt-3 flex items-center justify-center">
+                        <div className="flex items-center text-black text-sm font-light">
+                          <Heart className="w-4 h-4 mr-1 fill-current" />
+                          <span>
+                            Maker Journey Complete
+                          </span>
+                        </div>
+                      </div>
+                    </>
+                  ) : (
+                    // Unregistered State - Show CTA
+                    <div className="text-center py-8">
+                      <div className="w-16 h-16 mx-auto mb-4 border-2 border-dashed border-gray-300 flex items-center justify-center">
+                        <Plus className="w-8 h-8 text-gray-400" />
+                      </div>
+                      <h3 className="text-base mb-2 font-light">
+                        Complete Your Maker Journey
+                      </h3>
+                      <p className="text-sm text-gray-600 mb-6 leading-relaxed font-light">
+                        {isCharity
+                          ? `Did you assemble this item${data.destination ? ` at ${data.destination}` : ""}? Share your story and connect this donation to its educational impact.`
+                          : "Did you assemble this item? Share your story and become part of the circular economy narrative."}
+                      </p>
+                      <button className="w-full bg-black text-white font-light py-3 px-6 border border-gray-300 hover:bg-gray-800 transition-colors text-sm">
+                        Register as Maker
+                      </button>
+                      <p className="text-xs text-gray-500 mt-3 font-light">
+                        Email verification required
+                      </p>
+                    </div>
+                  )}
+                </CardContent>
+              </Card>
+            </>
+          )}
+        </div>
+
+        {/* Impact Metrics - Commented out for now */}
+        {false && !isSourceOnly && impactMetrics && (
+          <Card className="border-0 ">
+            <CardHeader>
+              <CardTitle className="flex items-center justify-center text-xl font-light">
+                <Leaf className="w-5 h-5 mr-2" />
+                Environmental Impact
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="grid md:grid-cols-2 gap-8 text-center">
+                <div>
+                  <div className="text-4xl mb-2 font-light">
+                    {impactMetrics?.carbonSaved}kg
+                  </div>
+                  <div className="text-sm text-gray-600 font-light">
+                    CO₂ Offset Generated
+                  </div>
+                  <p className="text-xs text-gray-500 mt-2 font-light">
+                    Equivalent to removing a car from the road for 2.3 days
+                  </p>
+                </div>
+                <div>
+                  <div className="text-4xl mb-2 font-light">
+                    {impactMetrics?.wasteReduced}kg
+                  </div>
+                  <div className="text-sm text-gray-600 font-light">
+                    Plastic Waste Diverted
+                  </div>
+                  <p className="text-xs text-gray-500 mt-2 font-light">
+                    Prevented from entering landfills or ocean systems
+                  </p>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
         )}
 
-      
         {/* ========== CONNECTED ITEMS - Produced Items (for Batches) ========== */}
         {data.id.startsWith("T") && relatedItems.blanks.length > 0 && (
           <div className="mb-12">
             <Card className="border-0 border-white">
               <CardHeader className="pb-3">
-                <CardTitle className="text-sm text-gray-600 font-light flex items-start justify-start border-b pb-2">
-                  
-                  Produced Items:
+                <CardTitle className="text-sm font-light flex items-center justify-center">
+                  <Package className="w-4 h-4 mr-2" />
+                  Produced Items
                 </CardTitle>
               </CardHeader>
               <CardContent className="py-3">
@@ -779,7 +1029,7 @@ export default function TrackItem() {
 
         {/* ========== CONNECTED ITEMS - Batches from Bin (for Bins) ========== */}
         {data.id.startsWith("B") && relatedItems.batches.length > 0 && (
-          <div className="-mt-12">
+          <div className="mb-12 -mt-12">
             <Card className="border-0">
               <CardHeader className="pb-0">
                 <CardTitle className="text-sm font-light flex items-center justify-start pb-2 border-b text-gray-600"><div className="flex ">
@@ -818,16 +1068,10 @@ export default function TrackItem() {
                 </div>
               </CardContent>
             
+               <div className="mt-8 text-sm font-light items-center justify-center flex w-full text-cnter font-jost mt-1">*************************************</div>
             </Card>
-
           </div>
         )}
-
-         {/* ========== FOOTER INFO ========== */}
-        
-         <div className="mb-12 mt-8 text-sm font-light items-center justify-center flex w-full text-cnter font-jost mt-1">***************************</div>
-
-        
       </div>
     </div>
   );
