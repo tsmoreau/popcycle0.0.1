@@ -70,12 +70,6 @@ interface BatchItem {
 export default function TrackItem() {
   const { id } = useParams();
   const [data, setData] = useState<any>(null);
-  const [relatedItems, setRelatedItems] = useState<any>({
-    batches: [],
-    blanks: [],
-    items: [],
-    sourceBin: null
-  });
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -99,67 +93,6 @@ export default function TrackItem() {
         }
         const apiData = await response.json();
         setData(apiData);
-
-        // Fetch related items based on type
-        const related = { batches: [], blanks: [], sourceBin: null };
-
-        if (apiData.type === "bin") {
-          try {
-            const batchResponse = await fetch(`/api/items/sample?type=batches&binId=${apiData.id}`);
-            if (batchResponse.ok) {
-              const batchData = await batchResponse.json();
-              related.batches = batchData.items || [];
-            }
-          } catch (batchErr) {
-            console.log("Could not fetch batches for bin:", batchErr);
-          }
-        }
-
-        if (apiData.type === "batch") {
-          try {
-            const blankResponse = await fetch(`/api/items/sample?type=blanks&batchId=${apiData.id}`);
-            if (blankResponse.ok) {
-              const blankData = await blankResponse.json();
-              related.blanks = blankData.items || [];
-            }
-
-            if (apiData.binIds && apiData.binIds.length > 0) {
-              const binResponse = await fetch(`/api/track/${apiData.binIds[0]}`);
-              if (binResponse.ok) {
-                const binData = await binResponse.json();
-                related.sourceBin = { ...binData, allBinIds: apiData.binIds };
-              }
-            }
-          } catch (relatedErr) {
-            console.log("Could not fetch related items for batch:", relatedErr);
-          }
-        }
-
-        if (apiData.type === "blank") {
-          try {
-            const itemResponse = await fetch(`/api/items/sample?type=items&blankId=${apiData.id}`);
-            if (itemResponse.ok) {
-              const itemData = await itemResponse.json();
-              related.items = itemData.items || [];
-            }
-          } catch (itemErr) {
-            console.log("Could not fetch items for blank:", itemErr);
-          }
-        }
-
-        if (apiData.type === "batch") {
-          try {
-            const itemResponse = await fetch(`/api/items/sample?type=items&batchId=${apiData.id}`);
-            if (itemResponse.ok) {
-              const itemData = await itemResponse.json();
-              related.items = itemData.items || [];
-            }
-          } catch (itemErr) {
-            console.log("Could not fetch items for batch:", itemErr);
-          }
-        }
-
-        setRelatedItems(related);
       } catch (err) {
         setError(err instanceof Error ? err.message : "Failed to fetch item");
       } finally {
@@ -445,32 +378,19 @@ export default function TrackItem() {
                   </span>
                   <span className="font-mono">{data.id}</span>
                 </div>
-                {(data.binIds || relatedItems.sourceBin) && (
+                {data.binIds && data.binIds.length > 0 && (
                   <div className="flex justify-between font-light">
                     <span className="text-gray-600">Bin IDs</span>
                     <div className="space-y-1 text-right">
-                      {data.binIds ? (
-                        // Show multiple bin IDs from the array
-                        data.binIds.map((binId: string) => (
-                          <Link
-                            key={binId}
-                            href={`/track/${binId}`}
-                            className="block font-mono text-black hover:text-gray-600 hover:underline"
-                          >
-                            {binId}
-                          </Link>
-                        ))
-                      ) : (
-                        // Fallback to source bin
-                        relatedItems.sourceBin && (
-                          <Link
-                            href={`/track/${relatedItems.sourceBin.id}`}
-                            className="block font-mono text-black hover:text-gray-600 hover:underline"
-                          >
-                            {relatedItems.sourceBin.id}
-                          </Link>
-                        )
-                      )}
+                      {data.binIds.map((binId: string) => (
+                        <Link
+                          key={binId}
+                          href={`/track/${binId}`}
+                          className="block font-mono text-black hover:text-gray-600 hover:underline"
+                        >
+                          {binId}
+                        </Link>
+                      ))}
                     </div>
                   </div>
                 )}
@@ -750,7 +670,7 @@ export default function TrackItem() {
       
         {/* ========== CONNECTED ITEMS - Produced Items ========== */}
         {/* Blanks from Batches */}
-        {data.id.startsWith("T") && relatedItems.blanks.length > 0 && (
+        {data.producedBlanks && data.producedBlanks.length > 0 && (
           <div className="mb-12">
             <Card className="border-0 border-white">
               <CardHeader className="pb-3">
@@ -760,7 +680,7 @@ export default function TrackItem() {
               </CardHeader>
               <CardContent className="py-3">
                 <div className="space-y-2">
-                  {relatedItems.blanks.map((blank: BlankItem, index: number) => (
+                  {data.producedBlanks.map((blank: any, index: number) => (
                     <Link
                       key={blank.id}
                       href={`/track/${blank.id}`}
@@ -772,7 +692,7 @@ export default function TrackItem() {
                             {blank.id}
                           </div>
                           <div className="text-xs text-gray-500 font-light">
-                            {blank.status}
+                            {blank.status} • {blank.weight}kg
                           </div>
                         </div>
                         <div className="text-xs text-gray-500 font-light">
@@ -787,8 +707,8 @@ export default function TrackItem() {
           </div>
         )}
 
-        {/* Items from Batches or Blanks */}
-        {(data.id.startsWith("T") || data.id.startsWith("K")) && relatedItems.items && relatedItems.items.length > 0 && (
+        {/* Finished Products from Batches or Blanks */}
+        {data.producedItems && data.producedItems.length > 0 && (
           <div className="mb-12">
             <Card className="border-0 border-white">
               <CardHeader className="pb-3">
@@ -798,7 +718,7 @@ export default function TrackItem() {
               </CardHeader>
               <CardContent className="py-3">
                 <div className="space-y-2">
-                  {relatedItems.items.map((item: any, index: number) => (
+                  {data.producedItems.map((item: any, index: number) => (
                     <Link
                       key={item.id}
                       href={`/track/${item.id}`}
@@ -827,7 +747,7 @@ export default function TrackItem() {
         )}
 
         {/* ========== CONNECTED ITEMS - Batches from Bin (for Bins) ========== */}
-        {data.id.startsWith("B") && relatedItems.batches.length > 0 && (
+        {data.producedBatches && data.producedBatches.length > 0 && (
           <div className="-mt-12">
             <Card className="border-0">
               <CardHeader className="pb-0">
@@ -839,7 +759,7 @@ export default function TrackItem() {
               </CardHeader>
               <CardContent className="py-3">
                 <div className="space-y-2">
-                  {relatedItems.batches.map((batch: BatchItem, index: number) => (
+                  {data.producedBatches.map((batch: any, index: number) => (
                     <Link
                       key={batch.id}
                       href={`/track/${batch.id}`}
@@ -847,8 +767,6 @@ export default function TrackItem() {
                     >
                       <div className="flex justify-between items-center p-3 border-0 hover:border-gray-400 hover:bg-gray-50 transition-colors cursor-pointer">
                         <div>
-                        
-
                           <div className="text-xs text-gray-600 font-light">
                             {formatDate(batch.collectionDate)}
                           </div>

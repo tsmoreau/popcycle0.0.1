@@ -64,6 +64,13 @@ export async function GET(
       }
       
       const binRecord = record as Bin;
+      
+      // Fetch batches produced from this bin
+      const producedBatches = await db.collection('batches')
+        .find({ binIds: binRecord._id })
+        .limit(50)
+        .toArray();
+      
       return NextResponse.json({
         id: binRecord._id,
         type: 'bin',
@@ -86,6 +93,13 @@ export async function GET(
           branding: org.branding
         } : null,
         message: binRecord.message || org?.branding?.trackingPageMessage || 'This bin is part of our circular economy program.',
+        producedBatches: producedBatches.map((batch: any) => ({
+          id: batch._id,
+          weight: batch.weight,
+          materialType: batch.materialType,
+          status: batch.status,
+          collectionDate: batch.collectionDate
+        })),
         impactMetrics: {
           carbonSaved: 0, // Bins don't have direct impact yet
           wasteReduced: 0
@@ -111,6 +125,19 @@ export async function GET(
       }
       
       const batchRecord = record as Batch;
+      
+      // Fetch blanks produced from this batch
+      const producedBlanks = await db.collection('blanks')
+        .find({ batchIds: batchRecord._id })
+        .limit(50)
+        .toArray();
+      
+      // Fetch items produced directly from this batch
+      const producedItems = await db.collection('items')
+        .find({ batchIds: batchRecord._id })
+        .limit(50)
+        .toArray();
+      
       return NextResponse.json({
         id: batchRecord._id,
         type: 'batch',
@@ -128,6 +155,16 @@ export async function GET(
           branding: org.branding
         } : null,
         message: org?.branding?.trackingPageMessage || 'This plastic has been collected and is being processed.',
+        producedBlanks: producedBlanks.map((blank: any) => ({
+          id: blank._id,
+          status: blank.status,
+          weight: blank.weight
+        })),
+        producedItems: producedItems.map((item: any) => ({
+          id: item._id,
+          status: item.status,
+          serialNumber: item.serialNumber
+        })),
         impactMetrics: {
           carbonSaved: batchRecord.weight * 2.3, // Rough calculation
           wasteReduced: batchRecord.weight
@@ -166,6 +203,12 @@ export async function GET(
         userDetails = await db.collection('users').findOne({ _id: new ObjectId(blankRecord.userId) });
       }
       
+      // Fetch items produced from this blank
+      const producedItems = await db.collection('items')
+        .find({ blankIds: blankRecord._id })
+        .limit(50)
+        .toArray();
+      
       return NextResponse.json({
         id: blankRecord._id,
         type: 'blank',
@@ -193,6 +236,11 @@ export async function GET(
           branding: org.branding
         } : null,
         message: org?.branding?.trackingPageMessage || 'This item represents the transformation of waste into useful products.',
+        producedItems: producedItems.map((item: any) => ({
+          id: item._id,
+          status: item.status,
+          serialNumber: item.serialNumber
+        })),
         impactMetrics: {
           carbonSaved: blankRecord.weight * 3.5, // Higher impact for finished items
           wasteReduced: blankRecord.weight
