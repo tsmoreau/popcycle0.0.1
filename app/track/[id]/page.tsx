@@ -10,6 +10,12 @@ import {
   CardTitle,
 } from "../../components/ui/card";
 import { Badge } from "../../components/ui/badge";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "../../components/ui/accordion";
 import { QRCodeElement } from "../../components/PopArtElements";
 import { LoadingSquare } from "../../components/ui/loading-square";
 import {
@@ -671,122 +677,118 @@ export default function TrackItem() {
         {/* ========== CONNECTED ITEMS - Produced Items ========== */}
         {/* Blanks from Batches */}
         {data.producedBlanks && data.producedBlanks.length > 0 && (
-          <div className="mb-12">
-            <Card className="border-0 border-white">
-              <CardHeader className="pb-3">
-                <CardTitle className="text-sm text-gray-600 font-light flex items-start justify-start border-b pb-2">
-                  Produced Items:
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="py-3">
-                <div className="space-y-2">
-                  {data.producedBlanks.map((blank: any, index: number) => (
-                    <Link
-                      key={blank.id}
-                      href={`/track/${blank.id}`}
-                      className="block"
-                    >
-                      <div className="flex justify-between items-center p-3 border-0 hover:border-gray-400 hover:bg-gray-50 transition-colors cursor-pointer">
-                        <div>
-                          <div className="text-sm font-mono font-light">
-                            {blank.id}
+          <div className="mb-6">
+            <Accordion type="single" collapsible className="border-0">
+              <AccordionItem value="produced-blanks" className="border-0">
+                <AccordionTrigger className="text-sm text-gray-600 font-light hover:no-underline pb-2 border-b">
+                  Produced Items ({data.producedBlanks.length})
+                </AccordionTrigger>
+                <AccordionContent className="pt-3">
+                  <div className="space-y-2">
+                    {data.producedBlanks.map((blank: any, index: number) => (
+                      <Link
+                        key={blank.id}
+                        href={`/track/${blank.id}`}
+                        className="block"
+                      >
+                        <div className="flex justify-between items-center p-3 border-0 hover:border-gray-400 hover:bg-gray-50 transition-colors cursor-pointer">
+                          <div>
+                            <div className="text-sm font-mono font-light">
+                              {blank.id}
+                            </div>
+                            <div className="text-xs text-gray-500 font-light">
+                              {blank.status} • {blank.weight}kg
+                            </div>
                           </div>
                           <div className="text-xs text-gray-500 font-light">
-                            {blank.status} • {blank.weight}kg
+                            Blank Item
                           </div>
                         </div>
-                        <div className="text-xs text-gray-500 font-light">
-                          Blank Item
-                        </div>
-                      </div>
-                    </Link>
-                  ))}
-                </div>
-              </CardContent>
-            </Card>
+                      </Link>
+                    ))}
+                  </div>
+                </AccordionContent>
+              </AccordionItem>
+            </Accordion>
           </div>
         )}
 
         {/* Finished Products from Batches or Blanks */}
         {data.producedItems && data.producedItems.length > 0 && (
-          <div className="mb-12">
-            <Card className="border-0 border-white">
-              <CardHeader className="pb-3">
-                <CardTitle className="text-sm text-gray-600 font-light flex items-start justify-start border-b pb-2">
-                  Finished Products:
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="py-3">
-                <div className="space-y-2">
-                  {data.producedItems.map((item: any, index: number) => (
-                    <Link
-                      key={item.id}
-                      href={`/track/${item.id}`}
-                      className="block"
-                    >
-                      <div className="flex justify-between items-center p-3 border-0 hover:border-gray-400 hover:bg-gray-50 transition-colors cursor-pointer">
-                        <div>
-                          <div className="text-sm font-mono font-light">
-                            {item.id}
+          <div className="mb-6">
+            <Accordion type="single" collapsible className="border-0">
+              <AccordionItem value="produced-items" className="border-0">
+                <AccordionTrigger className="text-sm text-gray-600 font-light hover:no-underline pb-2 border-b">
+                  Finished Products ({data.producedItems.length})
+                </AccordionTrigger>
+                <AccordionContent className="pt-3">
+                  <div className="space-y-2">
+                    {data.producedItems.map((item: any, index: number) => (
+                      <Link
+                        key={item.id}
+                        href={`/track/${item.id}`}
+                        className="block"
+                      >
+                        <div className="flex justify-between items-center p-3 border-0 hover:border-gray-400 hover:bg-gray-50 transition-colors cursor-pointer">
+                          <div>
+                            <div className="text-sm font-mono font-light">
+                              {item.id}
+                            </div>
+                            <div className="text-xs text-gray-500 font-light">
+                              {item.status}
+                              {item.serialNumber && ` • Serial: ${item.serialNumber}`}
+                            </div>
                           </div>
                           <div className="text-xs text-gray-500 font-light">
-                            {item.status}
-                            {item.serialNumber && ` • Serial: ${item.serialNumber}`}
+                            Finished Item
                           </div>
                         </div>
-                        <div className="text-xs text-gray-500 font-light">
-                          Finished Item
-                        </div>
-                      </div>
-                    </Link>
-                  ))}
-                </div>
-              </CardContent>
-            </Card>
+                      </Link>
+                    ))}
+                  </div>
+                </AccordionContent>
+              </AccordionItem>
+            </Accordion>
           </div>
         )}
 
         {/* ========== CONNECTED ITEMS - Batches from Bin (for Bins) ========== */}
         {data.producedBatches && data.producedBatches.length > 0 && (
-          <div className="-mt-12">
-            <Card className="border-0">
-              <CardHeader className="pb-0">
-                <CardTitle className="text-sm font-light flex items-center justify-start pb-2 border-b text-gray-600"><div className="flex ">
-                  <Package className="hidden w-4 h-4 mr-2" />
-                  Batches from this Bin:
+          <div className="mb-6">
+            <Accordion type="single" collapsible className="border-0">
+              <AccordionItem value="produced-batches" className="border-0">
+                <AccordionTrigger className="text-sm text-gray-600 font-light hover:no-underline pb-2 border-b">
+                  Batches from this Bin ({data.producedBatches.length})
+                </AccordionTrigger>
+                <AccordionContent className="pt-3">
+                  <div className="space-y-2">
+                    {data.producedBatches.map((batch: any, index: number) => (
+                      <Link
+                        key={batch.id}
+                        href={`/track/${batch.id}`}
+                        className="block"
+                      >
+                        <div className="flex justify-between items-center p-3 border-0 hover:border-gray-400 hover:bg-gray-50 transition-colors cursor-pointer">
+                          <div>
+                            <div className="text-xs text-gray-600 font-light">
+                              {formatDate(batch.collectionDate)}
+                            </div>
+                            <div className="text-xs text-gray-600 font-light">
+                              {batch.weight}kg • {batch.materialType} •{" "}
+                              {getBatchStatusLabel(batch.status)}
+                            </div>
+                          </div>
+
+                          <div className="text-sm font-mono font-light">
+                            {batch.id}
+                          </div>
+                        </div>
+                      </Link>
+                    ))}
                   </div>
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="py-3">
-                <div className="space-y-2">
-                  {data.producedBatches.map((batch: any, index: number) => (
-                    <Link
-                      key={batch.id}
-                      href={`/track/${batch.id}`}
-                      className="block"
-                    >
-                      <div className="flex justify-between items-center p-3 border-0 hover:border-gray-400 hover:bg-gray-50 transition-colors cursor-pointer">
-                        <div>
-                          <div className="text-xs text-gray-600 font-light">
-                            {formatDate(batch.collectionDate)}
-                          </div>
-                          <div className="text-xs text-gray-\600 font-light">
-                            {batch.weight}kg • {batch.materialType} •{" "}
-                            {getBatchStatusLabel(batch.status)}
-                          </div>
-                        </div>
-
-                        <div className="text-sm font-mono font-light">
-                          {batch.id}
-                        </div>
-                      </div>
-                    </Link>
-                  ))}
-                </div>
-              </CardContent>
-            
-            </Card>
-
+                </AccordionContent>
+              </AccordionItem>
+            </Accordion>
           </div>
         )}
 
