@@ -505,7 +505,7 @@ export default function TrackItem() {
                       <AccordionTrigger className="text-sm text-gray-600 font-light hover:no-underline py-2">
                         Organization Message
                       </AccordionTrigger>
-                      <AccordionContent className="pt-2 pb-0">
+                      <AccordionContent className="px-0 pt-2 pb-0">
                         <div className="text-sm italic font-light text-gray-700">
                           "{data.message}"
                         </div>
@@ -527,7 +527,7 @@ export default function TrackItem() {
                   <AccordionTrigger className="text-sm text-gray-600 font-light hover:no-underline py-2">
                     Event Details
                   </AccordionTrigger>
-                  <AccordionContent className="pt-2 pb-0">
+                  <AccordionContent className="px-0 pt-2 pb-0">
                     <div className="space-y-3 text-sm">
                       <div className="flex justify-between font-light">
                         <span className="text-gray-600">Event</span>
@@ -697,7 +697,7 @@ export default function TrackItem() {
                 <AccordionTrigger className="text-sm text-gray-600 font-light hover:no-underline py-2">
                   Produced Items ({data.producedBlanks.length})
                 </AccordionTrigger>
-                <AccordionContent className="pt-2 pb-0">
+                <AccordionContent className="px-0 pt-2 pb-0">
                   <div className="space-y-2">
                     {data.producedBlanks.map((blank: any, index: number) => (
                       <Link
@@ -735,7 +735,7 @@ export default function TrackItem() {
                 <AccordionTrigger className="text-sm text-gray-600 font-light hover:no-underline py-2">
                   Finished Products ({data.producedItems.length})
                 </AccordionTrigger>
-                <AccordionContent className="pt-2 pb-0">
+                <AccordionContent className="px-0 pt-2 pb-0">
                   <div className="space-y-2">
                     {data.producedItems.map((item: any, index: number) => (
                       <Link
@@ -774,7 +774,7 @@ export default function TrackItem() {
                 <AccordionTrigger className="text-sm text-gray-600 font-light hover:no-underline py-2">
                   Batches from this Bin ({data.producedBatches.length})
                 </AccordionTrigger>
-                <AccordionContent className="pt-2 pb-0">
+                <AccordionContent className="px-0 pt-2 pb-0">
                   <div className="space-y-2">
                     {data.producedBatches.map((batch: any, index: number) => (
                       <Link
