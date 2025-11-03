@@ -48,16 +48,16 @@ export async function POST() {
       await db.collection(collName).deleteMany({});
     }
     
-    // Get org IDs for sample data
-    const popcycleOrg = existingOrgs.find(o => o.slug === 'popcycle');
-    const discoveryCubeOrg = existingOrgs.find(o => o.slug === 'discoverycube');
-    const laPlazaOrg = existingOrgs.find(o => o.slug === 'laplaza');
-    const aceHotelOrg = existingOrgs.find(o => o.slug === 'acehotel');
-    
-    if (!popcycleOrg || !discoveryCubeOrg || !laPlazaOrg || !aceHotelOrg) {
+    // Get any orgs - use whatever exists
+    if (existingOrgs.length < 4) {
       await client.close();
-      return NextResponse.json({ error: 'Required orgs not found' }, { status: 400 });
+      return NextResponse.json({ error: 'Need at least 4 organizations. Run main sample data first.' }, { status: 400 });
     }
+    
+    const org1 = existingOrgs[0];
+    const org2 = existingOrgs[1];
+    const org3 = existingOrgs[2];
+    const org4 = existingOrgs[3];
     
     // Get a user for maker assignments
     const makerUser = existingUsers[0];
@@ -66,7 +66,7 @@ export async function POST() {
     const events = [
       {
         _id: new ObjectId(),
-        orgId: discoveryCubeOrg._id,
+        orgId: org2._id,
         eventId: 'summer-camp-2025',
         name: 'Summer Science Camp 2025',
         type: 'recurring' as const,
@@ -80,7 +80,7 @@ export async function POST() {
       },
       {
         _id: new ObjectId(),
-        orgId: laPlazaOrg._id,
+        orgId: org3._id,
         eventId: 'cultural-workshop-2025',
         name: 'Cultural Workshop Series 2025',
         type: 'recurring' as const,
@@ -99,27 +99,27 @@ export async function POST() {
     // ========== COMPREHENSIVE BIN SCENARIOS ==========
     const bins: any[] = [];
     const binScenarios = [
-      // Discovery Cube bins
-      { orgId: discoveryCubeOrg._id, eventId: 'summer-camp-2025', canBeAdopted: true, adoptedBy: 'Education Team', message: 'This bin is proudly maintained by our Education Team!', status: 'bin_on_site' as const },
-      { orgId: discoveryCubeOrg._id, eventId: 'summer-camp-2025', canBeAdopted: true, adoptedBy: undefined, message: 'Thank you for participating in our summer camp event!', status: 'ready_for_processing' as const },
-      { orgId: discoveryCubeOrg._id, eventId: undefined, canBeAdopted: true, adoptedBy: undefined, message: undefined, status: 'bin_on_site' as const },
-      { orgId: discoveryCubeOrg._id, eventId: undefined, canBeAdopted: false, adoptedBy: undefined, message: 'Special collection bin for staff use only.', status: 'bin_on_vehicle' as const },
+      // Org 2 bins
+      { orgId: org2._id, eventId: 'summer-camp-2025', canBeAdopted: true, adoptedBy: 'Education Team', message: 'This bin is proudly maintained by our Education Team!', status: 'bin_on_site' as const },
+      { orgId: org2._id, eventId: 'summer-camp-2025', canBeAdopted: true, adoptedBy: undefined, message: 'Thank you for participating in our summer camp event!', status: 'ready_for_processing' as const },
+      { orgId: org2._id, eventId: undefined, canBeAdopted: true, adoptedBy: undefined, message: undefined, status: 'bin_on_site' as const },
+      { orgId: org2._id, eventId: undefined, canBeAdopted: false, adoptedBy: undefined, message: 'Special collection bin for staff use only.', status: 'bin_on_vehicle' as const },
       
-      // LA Plaza bins
-      { orgId: laPlazaOrg._id, eventId: 'cultural-workshop-2025', canBeAdopted: true, adoptedBy: 'Cultural Team', message: 'Maintained by our Cultural Team - celebrating sustainability!', status: 'ready_for_processing' as const },
-      { orgId: laPlazaOrg._id, eventId: 'cultural-workshop-2025', canBeAdopted: true, adoptedBy: undefined, message: undefined, status: 'bin_on_site' as const },
-      { orgId: laPlazaOrg._id, eventId: undefined, canBeAdopted: true, adoptedBy: undefined, message: undefined, status: 'bin_on_site' as const },
-      { orgId: laPlazaOrg._id, eventId: undefined, canBeAdopted: true, adoptedBy: 'Gallery Staff', message: undefined, status: 'ready_for_processing' as const },
+      // Org 3 bins
+      { orgId: org3._id, eventId: 'cultural-workshop-2025', canBeAdopted: true, adoptedBy: 'Cultural Team', message: 'Maintained by our Cultural Team - celebrating sustainability!', status: 'ready_for_processing' as const },
+      { orgId: org3._id, eventId: 'cultural-workshop-2025', canBeAdopted: true, adoptedBy: undefined, message: undefined, status: 'bin_on_site' as const },
+      { orgId: org3._id, eventId: undefined, canBeAdopted: true, adoptedBy: undefined, message: undefined, status: 'bin_on_site' as const },
+      { orgId: org3._id, eventId: undefined, canBeAdopted: true, adoptedBy: 'Gallery Staff', message: undefined, status: 'ready_for_processing' as const },
       
-      // Ace Hotel bins
-      { orgId: aceHotelOrg._id, eventId: undefined, canBeAdopted: false, adoptedBy: undefined, message: 'Thank you for supporting our zero-waste initiative!', status: 'bin_on_site' as const },
-      { orgId: aceHotelOrg._id, eventId: undefined, canBeAdopted: false, adoptedBy: undefined, message: undefined, status: 'ready_for_processing' as const },
-      { orgId: aceHotelOrg._id, eventId: undefined, canBeAdopted: true, adoptedBy: 'Housekeeping Team', message: undefined, status: 'bin_on_vehicle' as const },
+      // Org 4 bins
+      { orgId: org4._id, eventId: undefined, canBeAdopted: false, adoptedBy: undefined, message: 'Thank you for supporting our zero-waste initiative!', status: 'bin_on_site' as const },
+      { orgId: org4._id, eventId: undefined, canBeAdopted: false, adoptedBy: undefined, message: undefined, status: 'ready_for_processing' as const },
+      { orgId: org4._id, eventId: undefined, canBeAdopted: true, adoptedBy: 'Housekeeping Team', message: undefined, status: 'bin_on_vehicle' as const },
       
-      // PopCycle bins
-      { orgId: popcycleOrg._id, eventId: undefined, canBeAdopted: true, adoptedBy: undefined, message: undefined, status: 'bin_on_site' as const },
-      { orgId: popcycleOrg._id, eventId: undefined, canBeAdopted: true, adoptedBy: 'Studio Team', message: 'Studio production collection bin', status: 'ready_for_processing' as const },
-      { orgId: popcycleOrg._id, eventId: undefined, canBeAdopted: false, adoptedBy: undefined, message: undefined, status: 'bin_on_site' as const }
+      // Org 1 bins
+      { orgId: org1._id, eventId: undefined, canBeAdopted: true, adoptedBy: undefined, message: undefined, status: 'bin_on_site' as const },
+      { orgId: org1._id, eventId: undefined, canBeAdopted: true, adoptedBy: 'Studio Team', message: 'Studio production collection bin', status: 'ready_for_processing' as const },
+      { orgId: org1._id, eventId: undefined, canBeAdopted: false, adoptedBy: undefined, message: undefined, status: 'bin_on_site' as const }
     ];
     
     binScenarios.forEach((scenario, i) => {
