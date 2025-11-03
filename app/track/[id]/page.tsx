@@ -369,7 +369,8 @@ export default function TrackItem() {
                     : "Source Details"}
               </CardTitle>
             </CardHeader>
-            <CardContent className="space-y-3 text-sm">
+            
+            <div className="px-6 space-y-3 text-sm  ">
               {/* ID Hierarchy Display */}
               <div className="space-y-3 ">
                 <div className="flex justify-between font-light">
@@ -498,30 +499,36 @@ export default function TrackItem() {
                   <span>{data.adoptedBy}</span>
                 </div>
               )}
-              {data.message && (
-                <div className="border-t border-gray-200 pt-3">
-                  <Accordion type="single" collapsible className="border-0">
-                    <AccordionItem value="org-message" className="border-0">
-                      <AccordionTrigger className="text-sm text-gray-600 font-light hover:no-underline py-2">
-                        Organization Message
-                      </AccordionTrigger>
-                      <AccordionContent className="px-0 pt-2 pb-0">
-                        <div className="text-sm italic font-light text-gray-700">
-                          "{data.message}"
-                        </div>
-                      </AccordionContent>
-                    </AccordionItem>
-                  </Accordion>
-                </div>
-              )}
-            
-             
-            </CardContent>
+
+            </div>
           </Card>
 
-          {/* ========== EVENT DETAILS ========== */}
+        
+        </div>
+
+
+
+        {/* ========== ORG MESSAGE & EVENT DETAILS ========== */}
+
+        <div className="flex flex-col pt-2  px-6"> 
+
+
+          {data.message && (
+            <div className="-mt-1 border-gray-200">
+              <div className="text-sm text-gray-600 font-light hover:no-underline py-2">
+                Message from {data.organization?.name || "Unknown Origin"}:
+              </div>
+              <div className="py-4 w-full flex justify-center">
+              <div className="w-2/3 text-center text-sm italic font-light text-gray-700">
+                "{data.message}"
+              </div>
+                </div>
+            </div>
+          )}
+
+          
           {data.event && data.event.trim() && (
-            <div className="mb-6">
+            <div className="pt-6">
               <Accordion type="single" collapsible className="border-0">
                 <AccordionItem value="event-details" className="border-0">
                   <AccordionTrigger className="text-sm text-gray-600 font-light hover:no-underline py-2">
@@ -530,17 +537,19 @@ export default function TrackItem() {
                   <AccordionContent className="px-0 pt-2 pb-0">
                     <div className="space-y-3 text-sm">
                       <div className="flex justify-between font-light">
-                        <span className="text-gray-600">Event</span>
+                        <span className="text-gray-600">Event Name</span>
                         <span className="font-mono">{data.event}</span>
                       </div>
                       {data.message && (
                         <div className="border-t border-gray-200 pt-3">
                           <div className="text-gray-600 block mb-2 font-light text-sm">
-                            Event Message:
+                            Event Description:
                           </div>
-                          <div className="text-sm italic font-light text-gray-700">
+                          <div className="w-full flex justify-center">
+                          <div className="w-2/3 text-center text-sm italic font-light text-gray-700">
                             "{data.message}"
                           </div>
+                            </div>
                         </div>
                       )}
                     </div>
@@ -549,9 +558,13 @@ export default function TrackItem() {
               </Accordion>
             </div>
           )}
-        </div>
+          
+       
+          </div>
 
         {/* ========== PRODUCT DETAILS ========== */}
+
+         <div className="">
         {data.type === 'item' && data.productDetails && (
           <>
             <Card className="border-0 border-white">
@@ -686,9 +699,11 @@ export default function TrackItem() {
             </Card>
           </>
         )}
-
-      
+         </div>
+     
         {/* ========== CONNECTED ITEMS - Produced Items ========== */}
+
+        <div className="px-6">
         {/* Blanks from Batches */}
         {data.producedBlanks && data.producedBlanks.length > 0 && (
           <div className="mb-6">
@@ -805,6 +820,8 @@ export default function TrackItem() {
             </Accordion>
           </div>
         )}
+          </div>
+        
 
          {/* ========== FOOTER INFO ========== */}
         
