@@ -524,10 +524,10 @@ export default function TrackItem() {
             <div className="mb-6">
               <Accordion type="single" collapsible className="border-0">
                 <AccordionItem value="event-details" className="border-0">
-                  <AccordionTrigger className="text-sm text-gray-600 font-light hover:no-underline pb-3 border-b">
+                  <AccordionTrigger className="text-sm text-gray-600 font-light hover:no-underline py-2">
                     Event Details
                   </AccordionTrigger>
-                  <AccordionContent className="pt-3">
+                  <AccordionContent className="pt-2 pb-0">
                     <div className="space-y-3 text-sm">
                       <div className="flex justify-between font-light">
                         <span className="text-gray-600">Event</span>
@@ -694,10 +694,10 @@ export default function TrackItem() {
           <div className="mb-6">
             <Accordion type="single" collapsible className="border-0">
               <AccordionItem value="produced-blanks" className="border-0">
-                <AccordionTrigger className="text-sm text-gray-600 font-light hover:no-underline pb-3 border-b">
+                <AccordionTrigger className="text-sm text-gray-600 font-light hover:no-underline py-2">
                   Produced Items ({data.producedBlanks.length})
                 </AccordionTrigger>
-                <AccordionContent className="pt-3">
+                <AccordionContent className="pt-2 pb-0">
                   <div className="space-y-2">
                     {data.producedBlanks.map((blank: any, index: number) => (
                       <Link
@@ -732,10 +732,10 @@ export default function TrackItem() {
           <div className="mb-6">
             <Accordion type="single" collapsible className="border-0">
               <AccordionItem value="produced-items" className="border-0">
-                <AccordionTrigger className="text-sm text-gray-600 font-light hover:no-underline pb-3 border-b">
+                <AccordionTrigger className="text-sm text-gray-600 font-light hover:no-underline py-2">
                   Finished Products ({data.producedItems.length})
                 </AccordionTrigger>
-                <AccordionContent className="pt-3">
+                <AccordionContent className="pt-2 pb-0">
                   <div className="space-y-2">
                     {data.producedItems.map((item: any, index: number) => (
                       <Link
@@ -771,10 +771,10 @@ export default function TrackItem() {
           <div className="mb-6">
             <Accordion type="single" collapsible className="border-0">
               <AccordionItem value="produced-batches" className="border-0">
-                <AccordionTrigger className="text-sm text-gray-600 font-light hover:no-underline pb-3 border-b">
+                <AccordionTrigger className="text-sm text-gray-600 font-light hover:no-underline py-2">
                   Batches from this Bin ({data.producedBatches.length})
                 </AccordionTrigger>
-                <AccordionContent className="pt-3">
+                <AccordionContent className="pt-2 pb-0">
                   <div className="space-y-2">
                     {data.producedBatches.map((batch: any, index: number) => (
                       <Link
