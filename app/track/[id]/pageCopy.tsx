@@ -101,7 +101,7 @@ export default function TrackItem() {
         setData(apiData);
 
         // Fetch related items based on type
-        const related = { batches: [], blanks: [], sourceBin: null };
+        const related = { batches: [], blanks: [], items: [], sourceBin: null };
 
         if (apiData.type === "bin") {
           try {
