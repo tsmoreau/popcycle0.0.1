@@ -738,7 +738,15 @@ export default function TrackItem() {
               {data.collectionDate && (
                 <div className="flex justify-between items-center font-light">
                   <span className="text-gray-600">
-                    {idStartsWith("T") ? "Batched Date" : "Last Collected"}
+                    {idStartsWith("B") 
+                      ? "Last Collected" 
+                      : idStartsWith("T")
+                        ? "Batched Date"
+                        : idStartsWith("K")
+                          ? "Pressed Date"
+                          : idStartsWith("I")
+                            ? "Manufacture Date"
+                            : "Date"}
                   </span>
                   <span className="font-mono flex items-center">
                     <Calendar className="w-4 h-4 mr-1" />

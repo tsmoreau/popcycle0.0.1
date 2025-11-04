@@ -221,7 +221,6 @@ export async function GET(
         id: blankRecord._id,
         type: 'blank',
         batchIds: blankRecord.batchIds || [],
-        binIds: batch ? batch.binIds : [], // Include the bin IDs from the batch
         userId: blankRecord.userId,
         materialType: batch?.materialType,
         collectionDate: batch?.collectionDate,
