@@ -188,8 +188,14 @@ export default function Navigation() {
           <div className="flex justify-center w-full mb-1 ">
           {/* Logo */}
           <Link href="/" className=" pl-0 self-end pb-2 flex items-center space-x-2 group  mx-auto">
+            
             <div className="w-12 h-12 bg-pop-green flex items-center justify-center transition-all group-hover:bg-opacity-90 mt-1">
-              <span className="text-white font-bold helvetica-bold text-xl">P</span>
+              <img
+                src="https://storage.googleapis.com/popcycle01/sef.png"
+               
+                className="w-full h-full object-cover"
+                data-testid="img-product-info"
+              />
             </div>
             <div className="flex-col flex mt-2">
             <span className="text-4xl  tracking-tighter font-base text-gray-900">
