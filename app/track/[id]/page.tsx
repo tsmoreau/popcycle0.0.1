@@ -654,7 +654,7 @@ export default function TrackItem() {
             </Card>
 
             {/* ========== MAKER DETAILS ========== */}
-            <Card className="border border-gray-300">
+            <Card className="hidden border border-gray-300">
               <CardHeader className="pb-3">
                 <CardTitle className="text-sm font-light flex items-center">
                   <User className="w-4 h-4 mr-2" />
