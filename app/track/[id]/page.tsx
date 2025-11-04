@@ -90,6 +90,11 @@ export default function TrackItem() {
     });
   };
 
+  // Safe ID prefix checker - prevents crashes with non-string IDs
+  const idStartsWith = (prefix: string) => {
+    return typeof data?.id === 'string' && data.id.startsWith(prefix);
+  };
+
   useEffect(() => {
     const fetchItem = async () => {
       try {
@@ -364,13 +369,13 @@ export default function TrackItem() {
             <CardHeader className="pb-3">
               <CardTitle className="text-sm font-light flex items-center justify-start border-b border-gray-200 pb-3 text-gray-600">
                 <Building className="hidden w-4 h-4 mr-2" />
-                {data.id.startsWith("B")
+                {idStartsWith("B")
                   ? "Bin Details:"
-                  : data.id.startsWith("T")
+                  : idStartsWith("T")
                     ? "Batch Details:"
-                  : data.id.startsWith("K")
+                  : idStartsWith("K")
                   ? "Sheet Details:"
-                  : data.id.startsWith("I")
+                  : idStartsWith("I")
                   ? "Item Details:"
                     : "Source Details"}
               </CardTitle>
@@ -381,13 +386,13 @@ export default function TrackItem() {
               <div className="space-y-3 ">
                 <div className="flex justify-between font-light">
                   <span className="text-gray-600">
-                    {data.id.startsWith("B")
+                    {idStartsWith("B")
                       ? "Bin ID"
-                      : data.id.startsWith("T")
+                      : idStartsWith("T")
                         ? "Batch ID"
-                        : data.id.startsWith("K")
+                        : idStartsWith("K")
                           ? "Blank ID"
-                      : data.id.startsWith("I")
+                      : idStartsWith("I")
                       ? "Item ID"
                           : "Main ID"}
                   </span>
@@ -425,11 +430,29 @@ export default function TrackItem() {
                     </div>
                   </div>
                 )}
+                {data.blankIds && data.blankIds.length > 0 && (
+                  <div className="flex justify-between font-light">
+                    <span className="text-gray-600">Blank IDs</span>
+                    <div className="space-y-1 text-right">
+                      {data.blankIds.map((blankId: string) => (
+                        <Link
+                          key={blankId}
+                          href={`/track/${blankId}`}
+                          className="block font-mono text-black hover:text-gray-600 hover:underline"
+                        >
+                          {blankId}
+                        </Link>
+                      ))}
+                    </div>
+                  </div>
+                )}
               </div>
-              <div className="flex justify-between font-light">
-                <span className="text-gray-600">Origin</span>
-                <span className="font-mono">{data.organization?.name || "Unknown Origin"}</span>
-              </div>
+              {idStartsWith("B") && (
+                <div className="flex justify-between font-light">
+                  <span className="text-gray-600">Origin</span>
+                  <span className="font-mono">{data.organization?.name || "Unknown Origin"}</span>
+                </div>
+              )}
               {data.location && (
                 <div className="flex justify-between items-center font-light">
                   <span className="text-gray-600">Location</span>
@@ -447,13 +470,13 @@ export default function TrackItem() {
                   </div>
                 </div>
               )}
-              {data.id.startsWith("T") && data.status && (
+              {idStartsWith("T") && data.status && (
                 <div className="flex justify-between">
                   <span className="text-gray-600 font-light">Status</span>
                   {data.status}
                 </div>
               )}
-              {data.weight && !data.id.startsWith("B") && (
+              {data.weight && !idStartsWith("B") && (
                 <div className="flex justify-between items-center font-light">
                   <span className="text-gray-600">Weight</span>
                   <span className="font-mono flex items-center">
@@ -465,7 +488,7 @@ export default function TrackItem() {
               {data.collectionDate && (
                 <div className="flex justify-between items-center font-light">
                   <span className="text-gray-600">
-                    {data.id.startsWith("T") ? "Batched Date" : "Last Collected"}
+                    {idStartsWith("T") ? "Batched Date" : "Last Collected"}
                   </span>
                   <span className="font-mono flex items-center">
                     <Calendar className="w-4 h-4 mr-1" />
@@ -484,7 +507,7 @@ export default function TrackItem() {
                   </span>
                 </div>
               )}
-              {data.id.startsWith("B") && data.binStatus && (
+              {idStartsWith("B") && data.binStatus && (
                 <div className="flex justify-between items-center font-light">
                   <span className="text-gray-600">Status</span>
                   <Badge className="bg-gray-200 text-black font-light">
@@ -501,7 +524,7 @@ export default function TrackItem() {
                   </span>
                 </div>
               )}
-              {data.adoptedBy && data.id.startsWith("B") && (
+              {data.adoptedBy && idStartsWith("B") && (
                 <div className="flex justify-between font-light">
                   <span className="text-gray-600">Adopted By</span>
                   <span>{data.adoptedBy}</span>
