@@ -368,6 +368,10 @@ export default function TrackItem() {
                   ? "Bin Details:"
                   : data.id.startsWith("T")
                     ? "Batch Details:"
+                  : data.id.startsWith("K")
+                  ? "Sheet Details:"
+                  : data.id.startsWith("I")
+                  ? "Item Details:"
                     : "Source Details"}
               </CardTitle>
             </CardHeader>
@@ -383,6 +387,8 @@ export default function TrackItem() {
                         ? "Batch ID"
                         : data.id.startsWith("K")
                           ? "Blank ID"
+                      : data.id.startsWith("I")
+                      ? "Item ID"
                           : "Main ID"}
                   </span>
                   <span className="font-mono">{data.id}</span>
