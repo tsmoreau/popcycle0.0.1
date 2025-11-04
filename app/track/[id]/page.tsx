@@ -336,11 +336,13 @@ export default function TrackItem() {
                 </div>
                 <div className="font-jost">********************************</div>
                 {data.id.startsWith("B")
-                  ? "Bin Receipt"
+                  ? "Bin Materials Receipt"
                   : data.id.startsWith("T")
-                    ? "Batch Receipt"
+                    ? "Batch Materials Receipt"
                    : data.id.startsWith("K")
-                       ? "Pressed Sheet Receipt"
+                       ? "Pressed Blank Materials Receipt"
+                  : data.id.startsWith("I")
+                   ? "Item Materials Receipt"
                 : "Receipt"}
                  <div className="font-jost mt-1">********************************</div>
               </div>
