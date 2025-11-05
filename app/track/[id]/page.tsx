@@ -377,10 +377,14 @@ export default function TrackItem() {
         </div>
 
       
-        {/* ========== SOURCE DETAILS ========== */}
+        {/* ========================================
+            SOURCE DETAILS SECTION
+            Displays core identification and metadata
+            ======================================== */}
         <div className="flex flex-col gap-6 ">
-          {/* Source Details Card */}
           <Card className="border-0 border-white">
+            
+            {/* --- SECTION HEADER --- */}
             <CardHeader className="pb-3">
               <CardTitle className="text-sm font-light flex items-center justify-start border-b border-gray-200 pb-3 text-gray-600">
                 <Building className="hidden w-4 h-4 mr-2" />
@@ -396,9 +400,12 @@ export default function TrackItem() {
               </CardTitle>
             </CardHeader>
             
-            <div className="px-6 space-y-3 text-sm  ">
-              {/* ID Hierarchy Display */}
-              <div className="space-y-3 ">
+            <div className="px-6 space-y-3 text-sm">
+              
+              {/* ==================== ID HIERARCHY ==================== */}
+              <div className="space-y-3">
+                
+                {/* PRIMARY ID - Main identifier for this item (Bin/Batch/Blank/Item) */}
                 <div className="flex justify-between font-light">
                   <span className="text-gray-600">
                     {idStartsWith("B")
@@ -413,6 +420,8 @@ export default function TrackItem() {
                   </span>
                   <span className="font-mono">{data.id}</span>
                 </div>
+
+                {/* BIN IDs - Shows source bin(s) for batches (clickable links) */}
                 {data.binIds && data.binIds.length > 0 && (
                   <div className="flex justify-between font-light">
                     <span className="text-gray-600">Bin IDs</span>
@@ -429,6 +438,8 @@ export default function TrackItem() {
                     </div>
                   </div>
                 )}
+
+                {/* BATCH IDs - Shows source batch(es) for blanks (clickable links) */}
                 {data.batchIds && data.batchIds.length > 0 && (
                   <div className="flex justify-between font-light">
                     <span className="text-gray-600">Batch IDs</span>
@@ -445,6 +456,8 @@ export default function TrackItem() {
                     </div>
                   </div>
                 )}
+
+                {/* BLANK IDs - Shows source blank(s) for items (clickable links) */}
                 {data.blankIds && data.blankIds.length > 0 && (
                   <div className="flex justify-between font-light">
                     <span className="text-gray-600">Blank IDs</span>
@@ -462,6 +475,10 @@ export default function TrackItem() {
                   </div>
                 )}
               </div>
+
+              {/* ==================== ORIGIN INFORMATION ==================== */}
+              
+              {/* ORIGINS - Multi-origin display for Items (array of origin objects) */}
               {idStartsWith("I") && data.origins && data.origins.length > 0 && (
                 <div className="flex justify-between font-light">
                   <span className="text-gray-600">{data.origins.length === 1 ? "Origin" : "Origins"}</span>
@@ -474,12 +491,18 @@ export default function TrackItem() {
                   </div>
                 </div>
               )}
+
+              {/* ORIGIN - Single organization origin for Bins */}
               {idStartsWith("B") && (
                 <div className="flex justify-between font-light">
                   <span className="text-gray-600">Origin</span>
                   <span className="font-mono">{data.organization?.name || "Unknown Origin"}</span>
                 </div>
               )}
+
+              {/* ==================== PHYSICAL ATTRIBUTES ==================== */}
+              
+              {/* LOCATION - Physical location with map pin icon */}
               {data.location && (
                 <div className="flex justify-between items-center font-light">
                   <span className="text-gray-600">Location</span>
@@ -489,6 +512,8 @@ export default function TrackItem() {
                   </span>
                 </div>
               )}
+
+              {/* MATERIAL TYPE - Type of plastic/material (e.g., HDPE, PET) */}
               {data.materialType && (
                 <div className="flex justify-between font-light">
                   <span className="text-gray-600">Material</span>
@@ -497,12 +522,16 @@ export default function TrackItem() {
                   </div>
                 </div>
               )}
+
+              {/* STATUS - Processing status for Batches only */}
               {idStartsWith("T") && data.status && (
                 <div className="flex justify-between">
                   <span className="text-gray-600 font-light">Status</span>
                   {data.status}
                 </div>
               )}
+
+              {/* WEIGHT - Weight in kilograms (hidden for Bins) */}
               {data.weight && !idStartsWith("B") && (
                 <div className="flex justify-between items-center font-light">
                   <span className="text-gray-600">Weight</span>
@@ -512,6 +541,10 @@ export default function TrackItem() {
                   </span>
                 </div>
               )}
+
+              {/* ==================== DATE INFORMATION ==================== */}
+              
+              {/* PRIMARY DATE - Main date field (varies by item type) */}
               {getDateField() && (
                 <div className="flex justify-between items-center font-light">
                   <span className="text-gray-600">
@@ -531,17 +564,21 @@ export default function TrackItem() {
                   </span>
                 </div>
               )}
+
+              {/* NEXT COLLECTION DATE - Scheduled future collection for Bins */}
               {data.nextCollectionDate && (
                 <div className="flex justify-between items-center font-light">
-                  <span className="text-gray-600">
-                    Next Collection
-                  </span>
+                  <span className="text-gray-600">Next Collection</span>
                   <span className="font-mono font-extralight flex items-center">
                     <Calendar className="w-4 h-4 mr-1" />
                     {formatDate(data.nextCollectionDate)}
                   </span>
                 </div>
               )}
+
+              {/* ==================== STATUS INFORMATION ==================== */}
+              
+              {/* BIN STATUS - Current bin location/state (Bins only) */}
               {idStartsWith("B") && data.binStatus && (
                 <div className="flex justify-between items-center font-light">
                   <span className="text-gray-600">Status</span>
@@ -550,6 +587,8 @@ export default function TrackItem() {
                   </Badge>
                 </div>
               )}
+
+              {/* PROCESSED DATE - When item was processed into inventory */}
               {data.processedDate && (
                 <div className="flex justify-between items-center font-light">
                   <span className="text-gray-600">Processed</span>
@@ -559,6 +598,8 @@ export default function TrackItem() {
                   </span>
                 </div>
               )}
+
+              {/* ADOPTED BY - Organization/person who adopted this bin */}
               {data.adoptedBy && idStartsWith("B") && (
                 <div className="flex justify-between font-light">
                   <span className="text-gray-600">Adopted By</span>
@@ -568,8 +609,6 @@ export default function TrackItem() {
 
             </div>
           </Card>
-
-        
         </div>
 
 
