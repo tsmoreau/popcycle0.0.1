@@ -328,7 +328,7 @@ export default function TrackItem() {
 
   return (
     <div className="min-h-screen lg:max-w-[35vw] py-20 flex mx-auto justify-center font-jost bg-white">
-      <div className=" w-full mx-auto border drop-shadow-2xl bg-white border-gray-300 mr-6 ml-6">
+      <div className=" w-full mx-auto border drop-shadow-xl bg-white border-gray-300 mr-6 ml-6">
         {/* ========== HEADER INFO ========== */}
 
         <div className="flex flex-col gap-6 ">
@@ -340,7 +340,13 @@ export default function TrackItem() {
               <div className="text-sm font-light flex flex-col items-center justify-center font-mono">
                 <div className=" pl-0 self-end flex items-center space-x-2 group pb-2 mx-auto">
                   <div className="w-10 h-10 bg-gray-300 flex items-center justify-center">
-                    <span className="text-white font-base helvetica-bold text-lg">P</span>
+                       <img
+                        src="https://storage.googleapis.com/popcycle01/logo4.svg"
+
+                        className="w-full h-full object-cover"
+                        data-testid="img-product-info"
+                      />
+                   
                   </div>
                   <div className="flex-col flex mt-2">
                   <span className="text-3xl font-extralight tracking-tighter font-base font-jost text-gray-900">
@@ -350,11 +356,11 @@ export default function TrackItem() {
                 </div>
                 <div className="font-jost">********************************</div>
                 {data.id.startsWith("B")
-                  ? "Bin Materials Receipt"
+                  ? "Bin Receipt"
                   : data.id.startsWith("T")
-                    ? "Batch Materials Receipt"
+                    ? "Batch Receipt"
                    : data.id.startsWith("K")
-                       ? "Pressed Blank Materials Receipt"
+                       ? "Pressed Blank Receipt"
                   : data.id.startsWith("I")
                    ? "Item Materials Receipt"
                 : "Receipt"}

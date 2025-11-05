@@ -12,29 +12,83 @@ export default function Footer() {
     return null;
   }
   return (
-    <footer className="bg-gray-50 text-black py-16 pt-24">
-      <div className="max-w-9/10 mx-auto px-6">
-        <div className="lg:flex mx-auto justify-center gap-x-24">
+    <footer className="bg-gray-50 text-black py-16 pt-24 mt-16 ">
+      <div className="max-w-9/10  mx-auto px-6">
+        <div id="main" className="flex flex-col lg:flex-row mx-auto justify-center items-start text-center gap-x-16">
           {/* Logo & Description */}
-          <div className="md:col-span-2 mb-8 w-auto md:mb-0 text-center lg:text-left">
-            <Link href="/" className="self-end pb-2 flex items-center space-x-2 group mx-auto lg:mx-0 justify-center lg:justify-start">
-              <div className="w-10 h-10 bg-pop-green flex items-center justify-center transition-all group-hover:bg-opacity-90 mt-1">
-                <span className="text-white font-bold helvetica-bold text-lg">P</span>
-              </div>
+          <div className="w-auto  mb-8 w-auto md:mb-0 justify-center text-center">
+            <div className=" flex w-auto justify-center font-jost font-light pl-0 pb-2 space-x-2 ">
+
+             <img
+                  src="https://storage.googleapis.com/popcycle01/logo2.svg"
+
+                  className="w-12 h-12 object-cover"
+                  data-testid="img-product-info"
+                />
+              
               <div className="flex-col flex mt-2">
-              <span className="text-3xl font-light tracking-tighter font-base text-gray-900">
+              <span className="text-4xl  tracking-tighter font-base text-gray-900">
                 PopCycle
               </span>
               <span className="hidden mt-0.0 ml-1 tracking-[2.2em] text-[8px] font-bold text-gray-900">
                 STUDIO
               </span>
                 </div>
-            </Link>
+            </div>
             <p className="text-sm text-gray-500">© 2025 Insight Makers LLC.</p>
           </div>
 
+          {/* Main Nav */}
+          <div className="mb-8 md:mb-0 -mt-2 text-center ">
+            <h3 className="systematic-caps text-xs font-semibold mb-4 text-gray-800 tracking-wider">
+              
+            </h3>
+            <div className="space-y-2">
+              <Link
+                href="/track"
+                className="block text-sm text-gray-500 hover:text-white transition-colors"
+              >
+                About
+              </Link>
+              <Link
+                href="#"
+                className="block text-sm text-gray-500 hover:text-white transition-colors"
+              >
+                Products
+              </Link>
+              <Link
+                href="#"
+                className="block text-sm text-gray-500 hover:text-white transition-colors"
+              >
+                Services
+              </Link>
+              
+            </div>
+          </div>
+
+          <div className="mb-8 md:mb-0 -mt-2 text-center ">
+            <h3 className="systematic-caps text-xs font-semibold mb-4 text-gray-800 tracking-wider">
+
+            </h3>
+            <div className="space-y-2">
+    
+              <Link
+                href="#"
+                className="block text-sm text-gray-500 hover:text-white transition-colors"
+              >
+                Privacy Policy
+              </Link>
+              <Link
+                href="#"
+                className="block text-sm text-gray-500 hover:text-white transition-colors"
+              >
+                Terms of Use
+              </Link>
+            </div>
+          </div>
+
           {/* Resources */}
-          <div className="mb-8 md:mb-0 text-center lg:text-left">
+          <div className="hidden mb-8 md:mb-0 text-center lg:text-left">
             <h3 className="systematic-caps text-xs font-semibold mb-4 text-gray-800 tracking-wider">
               Resources
             </h3>
@@ -61,7 +115,7 @@ export default function Footer() {
           </div>
 
           {/* Connect */}
-          <div className="mb-8 md:mb-0 text-center lg:text-left">
+          <div className="hidden mb-8 md:mb-0 text-center lg:text-left">
             <h3 className="systematic-caps text-xs font-semibold mb-4 text-gray-800 tracking-wider">
               Connect
             </h3>
@@ -82,7 +136,7 @@ export default function Footer() {
           </div>
 
           {/* Social Media */}
-          <div className="mb-8 md:mb-0 text-center lg:text-left">
+          <div className=" hidden mb-8 md:mb-0 text-center lg:text-left">
             <h3 className="systematic-caps text-xs font-semibold mb-4 text-gray-800 tracking-wider">
               Social Media
             </h3>
