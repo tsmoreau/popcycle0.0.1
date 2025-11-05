@@ -95,6 +95,15 @@ export default function TrackItem() {
     return typeof data?.id === 'string' && data.id.startsWith(prefix);
   };
 
+  // Get the appropriate date field for each type
+  const getDateField = () => {
+    if (idStartsWith("B")) return data.collectionDate || data.lastCollectionDate;
+    if (idStartsWith("T")) return data.collectionDate;
+    if (idStartsWith("K")) return data.createdAt;
+    if (idStartsWith("I")) return data.assemblyDate;
+    return null;
+  };
+
   useEffect(() => {
     const fetchItem = async () => {
       try {
@@ -144,7 +153,7 @@ export default function TrackItem() {
   }
 
   // Derived logic using direct API data
-  const isUncollected = !data.collectionDate && !data.lastCollectionDate;
+  const isUncollected = idStartsWith("B") && !data.collectionDate && !data.lastCollectionDate;
   const isSourceOnly = !data.productId;
   const isProcessed = !!data.processedDate || data.status === "inventory_creation";
   const isCharity = !!data.donatingEntity;
@@ -485,7 +494,7 @@ export default function TrackItem() {
                   </span>
                 </div>
               )}
-              {data.collectionDate && (
+              {getDateField() && (
                 <div className="flex justify-between items-center font-light">
                   <span className="text-gray-600">
                     {idStartsWith("B") 
@@ -500,7 +509,7 @@ export default function TrackItem() {
                   </span>
                   <span className="font-mono flex items-center">
                     <Calendar className="w-4 h-4 mr-1" />
-                    {formatDate(data.collectionDate)}
+                    {formatDate(getDateField())}
                   </span>
                 </div>
               )}

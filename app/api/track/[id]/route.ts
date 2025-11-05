@@ -223,7 +223,7 @@ export async function GET(
         batchIds: blankRecord.batchIds || [],
         userId: blankRecord.userId,
         materialType: batch?.materialType,
-        collectionDate: batch?.collectionDate,
+        createdAt: blankRecord.createdAt,
         itemType: blankRecord.status,
         status: blankRecord.status,
         weight: blankRecord.weight,
