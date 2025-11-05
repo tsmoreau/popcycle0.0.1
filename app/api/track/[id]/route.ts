@@ -117,22 +117,36 @@ export async function GET(
     } else if (collectionType === 'batch') {
       // Look up batch record using string ID (QR code)
       record = await db.collection('batches').findOne({ _id: id } as any) as Batch | null;
-      if (record) {
-        // Get the first bin for organization lookup (batches can come from multiple bins)
-        const batchRecord = record as Batch;
-        if (batchRecord.binIds && batchRecord.binIds.length > 0) {
-          const bin = await db.collection('bins').findOne({ _id: batchRecord.binIds[0] } as any) as Bin | null;
-          if (bin) {
-            org = await db.collection('orgs').findOne({ _id: new ObjectId(bin.orgId) });
-          }
-        }
-      }
       
       if (!record) {
         return NextResponse.json({ error: 'Batch not found' }, { status: 404 });
       }
       
       const batchRecord = record as Batch;
+      
+      // Trace back through supply chain to collect bins
+      const binMap = new Map<string, any>();
+      let org = null;
+      
+      // Batch -> Bins -> Org
+      if (batchRecord.binIds && batchRecord.binIds.length > 0) {
+        const bins = await db.collection('bins')
+          .find({ _id: { $in: batchRecord.binIds } } as any)
+          .toArray() as Bin[];
+        
+        for (const bin of bins) {
+          binMap.set(bin._id, bin);
+          // Get org from first bin for organization lookup
+          if (!org && bin.orgId) {
+            try {
+              org = await db.collection('orgs').findOne({ _id: new ObjectId(bin.orgId) });
+            } catch (error) {
+              // Try looking up with string ID if ObjectId conversion fails
+              org = await db.collection('orgs').findOne({ _id: bin.orgId });
+            }
+          }
+        }
+      }
       
       // Fetch blanks produced from this batch
       const producedBlanks = await db.collection('blanks')
@@ -211,6 +225,11 @@ export async function GET(
         message: org?.branding?.trackingPageMessage || 'This plastic has been collected and is being processed.',
         producedBlanks: blanksWithProducts,
         producedItems: itemsWithProducts,
+        bins: Array.from(binMap.values()).map((bin: any) => ({
+          id: bin._id,
+          name: bin.name,
+          location: bin.location
+        })),
         impactMetrics: {
           carbonSaved: batchRecord.weight * 2.3, // Rough calculation
           wasteReduced: batchRecord.weight
@@ -220,31 +239,50 @@ export async function GET(
     } else if (collectionType === 'blank') {
       // Look up blank record using string ID (QR code)
       record = await db.collection('blanks').findOne({ _id: id } as any) as Blank | null;
-      let batch: Batch | null = null;
-      if (record) {
-        const blankRecord = record as Blank;
-        // batchIds is now an array, get the first batch for organization lookup
-        batch = blankRecord.batchIds && blankRecord.batchIds.length > 0
-          ? await db.collection('batches').findOne({ _id: blankRecord.batchIds[0] } as any) as Batch | null
-          : null;
-        if (batch) {
-          // Get the first bin for organization lookup (batches can come from multiple bins)
-          if (batch.binIds && batch.binIds.length > 0) {
-            const bin = await db.collection('bins').findOne({ _id: batch.binIds[0] } as any) as Bin | null;
-            if (bin) {
-              org = await db.collection('orgs').findOne({ _id: new ObjectId(bin.orgId) });
-            }
-          }
-        }
-      }
       
       if (!record) {
         return NextResponse.json({ error: 'Blank not found' }, { status: 404 });
       }
       
+      const blankRecord = record as Blank;
+      
+      // Trace back through supply chain to collect batches and bins
+      const batchMap = new Map<string, any>();
+      const binMap = new Map<string, any>();
+      let org = null;
+      
+      // Blank -> Batches -> Bins -> Org
+      if (blankRecord.batchIds && blankRecord.batchIds.length > 0) {
+        const batches = await db.collection('batches')
+          .find({ _id: { $in: blankRecord.batchIds } } as any)
+          .toArray() as Batch[];
+        
+        for (const batch of batches) {
+          batchMap.set(batch._id, batch);
+          
+          if (batch.binIds && batch.binIds.length > 0) {
+            const bins = await db.collection('bins')
+              .find({ _id: { $in: batch.binIds } } as any)
+              .toArray() as Bin[];
+            
+            for (const bin of bins) {
+              binMap.set(bin._id, bin);
+              // Get org from first bin for organization lookup
+              if (!org && bin.orgId) {
+                try {
+                  org = await db.collection('orgs').findOne({ _id: new ObjectId(bin.orgId) });
+                } catch (error) {
+                  // Try looking up with string ID if ObjectId conversion fails
+                  org = await db.collection('orgs').findOne({ _id: bin.orgId });
+                }
+              }
+            }
+          }
+        }
+      }
+      
       // Get user details if assigned
       let userDetails = null;
-      const blankRecord = record as Blank;
       if (blankRecord.userId) {
         userDetails = await db.collection('users').findOne({ _id: new ObjectId(blankRecord.userId) });
       }
@@ -278,12 +316,15 @@ export async function GET(
         })
       );
       
+      // Get material type from first batch
+      const firstBatch = Array.from(batchMap.values())[0];
+      
       return NextResponse.json({
         id: blankRecord._id,
         type: 'blank',
         batchIds: blankRecord.batchIds || [],
         userId: blankRecord.userId,
-        materialType: batch?.materialType,
+        materialType: firstBatch?.materialType,
         createdAt: blankRecord.createdAt,
         itemType: blankRecord.status,
         status: blankRecord.status,
@@ -305,6 +346,17 @@ export async function GET(
         } : null,
         message: org?.branding?.trackingPageMessage || 'This item represents the transformation of waste into useful products.',
         producedItems: itemsWithProducts,
+        batches: Array.from(batchMap.values()).map((batch: any) => ({
+          id: batch._id,
+          weight: batch.weight,
+          materialType: batch.materialType,
+          status: batch.status
+        })),
+        bins: Array.from(binMap.values()).map((bin: any) => ({
+          id: bin._id,
+          name: bin.name,
+          location: bin.location
+        })),
         impactMetrics: {
           carbonSaved: blankRecord.weight * 3.5, // Higher impact for finished items
           wasteReduced: blankRecord.weight
