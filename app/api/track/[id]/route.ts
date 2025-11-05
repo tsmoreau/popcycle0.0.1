@@ -146,6 +146,52 @@ export async function GET(
         .limit(50)
         .toArray();
       
+      // Fetch product details for blanks
+      const blanksWithProducts = await Promise.all(
+        producedBlanks.map(async (blank: any) => {
+          let productInfo = null;
+          if (blank.productId) {
+            const product = await db.collection('products').findOne({ _id: new ObjectId(blank.productId) });
+            if (product) {
+              productInfo = {
+                name: product.name,
+                category: product.category
+              };
+            }
+          }
+          return {
+            id: blank._id,
+            status: blank.status,
+            weight: blank.weight,
+            productName: productInfo?.name || null,
+            productCategory: productInfo?.category || null
+          };
+        })
+      );
+      
+      // Fetch product details for items
+      const itemsWithProducts = await Promise.all(
+        producedItems.map(async (item: any) => {
+          let productInfo = null;
+          if (item.productId) {
+            const product = await db.collection('products').findOne({ _id: new ObjectId(item.productId) });
+            if (product) {
+              productInfo = {
+                name: product.name,
+                category: product.category
+              };
+            }
+          }
+          return {
+            id: item._id,
+            status: item.status,
+            serialNumber: item.serialNumber,
+            productName: productInfo?.name || null,
+            productCategory: productInfo?.category || null
+          };
+        })
+      );
+      
       return NextResponse.json({
         id: batchRecord._id,
         type: 'batch',
@@ -163,16 +209,8 @@ export async function GET(
           branding: org.branding
         } : null,
         message: org?.branding?.trackingPageMessage || 'This plastic has been collected and is being processed.',
-        producedBlanks: producedBlanks.map((blank: any) => ({
-          id: blank._id,
-          status: blank.status,
-          weight: blank.weight
-        })),
-        producedItems: producedItems.map((item: any) => ({
-          id: item._id,
-          status: item.status,
-          serialNumber: item.serialNumber
-        })),
+        producedBlanks: blanksWithProducts,
+        producedItems: itemsWithProducts,
         impactMetrics: {
           carbonSaved: batchRecord.weight * 2.3, // Rough calculation
           wasteReduced: batchRecord.weight
@@ -217,6 +255,29 @@ export async function GET(
         .limit(50)
         .toArray();
       
+      // Fetch product details for items
+      const itemsWithProducts = await Promise.all(
+        producedItems.map(async (item: any) => {
+          let productInfo = null;
+          if (item.productId) {
+            const product = await db.collection('products').findOne({ _id: new ObjectId(item.productId) });
+            if (product) {
+              productInfo = {
+                name: product.name,
+                category: product.category
+              };
+            }
+          }
+          return {
+            id: item._id,
+            status: item.status,
+            serialNumber: item.serialNumber,
+            productName: productInfo?.name || null,
+            productCategory: productInfo?.category || null
+          };
+        })
+      );
+      
       return NextResponse.json({
         id: blankRecord._id,
         type: 'blank',
@@ -243,11 +304,7 @@ export async function GET(
           branding: org.branding
         } : null,
         message: org?.branding?.trackingPageMessage || 'This item represents the transformation of waste into useful products.',
-        producedItems: producedItems.map((item: any) => ({
-          id: item._id,
-          status: item.status,
-          serialNumber: item.serialNumber
-        })),
+        producedItems: itemsWithProducts,
         impactMetrics: {
           carbonSaved: blankRecord.weight * 3.5, // Higher impact for finished items
           wasteReduced: blankRecord.weight
