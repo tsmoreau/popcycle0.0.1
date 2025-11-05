@@ -876,7 +876,7 @@ export default function TrackItem() {
                 
                 {/* Accordion trigger with count */}
                 <AccordionTrigger className="text-sm text-gray-600 font-light hover:no-underline py-2">
-                  Produced Items ({data.producedBlanks.length})
+                  Produced Blanks ({data.producedBlanks.length})
                 </AccordionTrigger>
                 
                 <AccordionContent className="px-0 pt-2 pb-0">
