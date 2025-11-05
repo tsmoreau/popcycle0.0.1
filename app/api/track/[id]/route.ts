@@ -448,13 +448,15 @@ export async function GET(
       // Fetch all unique organizations
       const origins = [];
       if (orgIds.size > 0) {
-        const orgObjectIds = Array.from(orgIds).map(id => {
-          try {
-            return new ObjectId(id);
-          } catch {
-            return id;
-          }
-        });
+        const orgObjectIds: ObjectId[] = Array.from(orgIds)
+          .map(id => {
+            try {
+              return new ObjectId(id);
+            } catch {
+              return null;
+            }
+          })
+          .filter((id): id is ObjectId => id !== null);
         
         const orgs = await db.collection('orgs')
           .find({ _id: { $in: orgObjectIds } })
