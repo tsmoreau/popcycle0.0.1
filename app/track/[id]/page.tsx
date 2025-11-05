@@ -697,6 +697,98 @@ export default function TrackItem() {
           </div>
         )}
 
+        {/* SUPPLY CHAIN HISTORY ACCORDIONS - For Blanks only */}
+        {idStartsWith("K") && (
+          <div className="pb-4 border-b border-gray-200 mt-2 flex flex-col gap-y-1 mx-6">
+
+            {/* BATCHES HISTORY ACCORDION - Full batch details for blanks */}
+            {data.batches && data.batches.length > 0 && (
+              <div>
+                <Accordion type="single" collapsible className="border-0">
+                  <AccordionItem value="batches-history" className="border-0">
+                    <AccordionTrigger className="text-sm text-gray-600 font-light hover:no-underline py-1">
+                      Batches History ({data.batches.length})
+                    </AccordionTrigger>
+                    <AccordionContent className="px-0 pt-1 pb-0">
+                      <div className="space-y-1 text-right">
+                        {data.batches.map((batch: any) => (
+                          <Link
+                            key={batch.id}
+                            href={`/track/${batch.id}`}
+                            className="block font-mono text-black hover:text-gray-600 hover:underline"
+                          >
+                            {batch.id}
+                          </Link>
+                        ))}
+                      </div>
+                    </AccordionContent>
+                  </AccordionItem>
+                </Accordion>
+              </div>
+            )}
+
+            {/* BINS HISTORY ACCORDION - Full bin details for blanks */}
+            {data.bins && data.bins.length > 0 && (
+              <div>
+                <Accordion type="single" collapsible className="border-0">
+                  <AccordionItem value="bins-history" className="border-0">
+                    <AccordionTrigger className="text-sm text-gray-600 font-light hover:no-underline py-1">
+                      Bins History ({data.bins.length})
+                    </AccordionTrigger>
+                    <AccordionContent className="px-0 pt-1 pb-0">
+                      <div className="space-y-1 text-right">
+                        {data.bins.map((bin: any) => (
+                          <Link
+                            key={bin.id}
+                            href={`/track/${bin.id}`}
+                            className="block font-mono text-black hover:text-gray-600 hover:underline"
+                          >
+                            {bin.id}
+                          </Link>
+                        ))}
+                      </div>
+                    </AccordionContent>
+                  </AccordionItem>
+                </Accordion>
+              </div>
+            )}
+
+          </div>
+        )}
+
+        {/* SUPPLY CHAIN HISTORY ACCORDIONS - For Batches only */}
+        {idStartsWith("T") && (
+          <div className="pb-4 border-b border-gray-200 mt-2 flex flex-col gap-y-1 mx-6">
+
+            {/* BINS HISTORY ACCORDION - Full bin details for batches */}
+            {data.bins && data.bins.length > 0 && (
+              <div>
+                <Accordion type="single" collapsible className="border-0">
+                  <AccordionItem value="bins-history" className="border-0">
+                    <AccordionTrigger className="text-sm text-gray-600 font-light hover:no-underline py-1">
+                      Bins History ({data.bins.length})
+                    </AccordionTrigger>
+                    <AccordionContent className="px-0 pt-1 pb-0">
+                      <div className="space-y-1 text-right">
+                        {data.bins.map((bin: any) => (
+                          <Link
+                            key={bin.id}
+                            href={`/track/${bin.id}`}
+                            className="block font-mono text-black hover:text-gray-600 hover:underline"
+                          >
+                            {bin.id}
+                          </Link>
+                        ))}
+                      </div>
+                    </AccordionContent>
+                  </AccordionItem>
+                </Accordion>
+              </div>
+            )}
+
+          </div>
+        )}
+
         <div className="mb-6 mt-8 text-sm font-light items-center justify-center flex w-full text-cnter font-jost mt-1">*********************</div>
 
 
