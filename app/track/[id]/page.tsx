@@ -456,6 +456,18 @@ export default function TrackItem() {
                   </div>
                 )}
               </div>
+              {idStartsWith("I") && data.origins && data.origins.length > 0 && (
+                <div className="flex justify-between font-light">
+                  <span className="text-gray-600">{data.origins.length === 1 ? "Origin" : "Origins"}</span>
+                  <div className="space-y-1 text-right">
+                    {data.origins.map((origin: any) => (
+                      <div key={origin.id} className="font-mono text-black">
+                        {origin.name}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
               {idStartsWith("B") && (
                 <div className="flex justify-between font-light">
                   <span className="text-gray-600">Origin</span>
