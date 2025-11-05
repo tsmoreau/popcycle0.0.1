@@ -613,44 +613,60 @@ export default function TrackItem() {
 
 
 
-        {/* ========== ORG MESSAGE & EVENT DETAILS ========== */}
+        {/* ========================================
+            ORG MESSAGE & EVENT DETAILS SECTION
+            Optional messaging and event information
+            ======================================== */}
 
         <div className="flex flex-col pt-2  px-6"> 
 
-
+          {/* ORGANIZATION MESSAGE - Custom message from the source organization */}
           {data.orgMessage && (
             <div className="-mt-1 border-gray-200">
+              
+              {/* Message header showing organization name */}
               <div className="text-sm text-gray-600 font-light hover:no-underline py-2 italic ">
                 Message from {data.organization?.name || "Unknown Origin"}:
               </div>
+              
+              {/* Message content - displayed in italics, centered */}
               <div className="py-4 w-full flex justify-center">
-              <div className="w-2/3 text-center text-sm italic font-light text-gray-700">
-                "{data.orgMessage}"
-              </div>
+                <div className="w-2/3 text-center text-sm italic font-light text-gray-700">
+                  "{data.orgMessage}"
                 </div>
+              </div>
             </div>
           )}
 
-          
+          {/* EVENT DETAILS ACCORDION - Collection event information (if bin is associated with an event) */}
           {data.event && data.event.trim() && (
             <div className="pt-6">
               <Accordion type="single" collapsible className="border-0">
                 <AccordionItem value="event-details" className="border-0">
+                  
+                  {/* Accordion trigger */}
                   <AccordionTrigger className="text-sm text-gray-600 font-light hover:no-underline py-2">
                     Event Details
                   </AccordionTrigger>
+                  
                   <AccordionContent className="px-0 pt-2 pb-0">
                     <div className="space-y-3 text-sm">
+                      
+                      {/* EVENT NAME - Name of the collection event */}
                       <div className="flex justify-between font-light">
                         <span className="text-gray-600">Event Name</span>
                         <span className="font-mono">{data.event}</span>
                       </div>
+                      
+                      {/* EVENT SCHEDULED DATE - When the event is/was scheduled */}
                       {data.eventScheduledDate && (
                         <div className="flex justify-between font-light">
                           <span className="text-gray-600">Scheduled Date</span>
                           <span className="font-mono">{formatDate(data.eventScheduledDate)}</span>
                         </div>
                       )}
+                      
+                      {/* EVENT DESCRIPTION - Detailed description of the event */}
                       {data.eventDescription && (
                         <div className="border-t border-gray-200 pt-3">
                           <div className="text-gray-600 block mb-2 font-light text-sm">
@@ -668,10 +684,12 @@ export default function TrackItem() {
             </div>
           )}
           
-       
           </div>
 
-        {/* ========== PRODUCT DETAILS ========== */}
+        {/* ========================================
+            PRODUCT DETAILS SECTION
+            Shows for Items only - product information
+            ======================================== */}
 
          <div className="">
         {data.type === 'item' && data.productDetails && (
@@ -682,31 +700,44 @@ export default function TrackItem() {
                   Product Details:
                 </CardTitle>
               </CardHeader>
+              
               <CardContent className="space-y-3 text-sm">
+                
+                {/* PRODUCT NAME - Name of the finished product */}
                 <div className="flex justify-between font-light">
                   <span className="text-gray-600">Product Name</span>
                   <span className="font-mono">{data.productDetails.name}</span>
                 </div>
+                
+                {/* PRODUCT TYPE - Type of product (e.g., rover_chassis, assembly_toy) */}
                 <div className="flex justify-between font-light">
                   <span className="text-gray-600">Product Type</span>
                   <span className="font-mono">{data.productDetails.productType}</span>
                 </div>
+                
+                {/* CATEGORY - Product category classification */}
                 <div className="flex justify-between font-light">
                   <span className="text-gray-600">Category</span>
                   <span className="font-mono">{data.productDetails.category}</span>
                 </div>
+                
+                {/* EDITION NUMBER - Limited edition number (if applicable) */}
                 {data.editionNumber && (
                   <div className="flex justify-between font-light">
                     <span className="text-gray-600">Edition</span>
                     <span className="font-mono">#{data.editionNumber}</span>
                   </div>
                 )}
+                
+                {/* SERIAL NUMBER - Unique serial number for this item */}
                 {data.serialNumber && (
                   <div className="flex justify-between font-light">
                     <span className="text-gray-600">Serial Number</span>
                     <span className="font-mono">{data.serialNumber}</span>
                   </div>
                 )}
+                
+                {/* DELIVERY DATE - When the item was delivered to customer */}
                 {data.deliveryDate && (
                   <div className="flex justify-between items-center font-light">
                     <span className="text-gray-600">Delivered</span>
@@ -716,6 +747,8 @@ export default function TrackItem() {
                     </span>
                   </div>
                 )}
+                
+                {/* PRODUCT DESCRIPTION - Detailed description of the product */}
                 {data.productDetails.description && (
                   <div className="border-t border-gray-200 pt-3">
                     <span className="text-gray-600 block mb-2 font-light">
@@ -727,7 +760,10 @@ export default function TrackItem() {
               </CardContent>
             </Card>
 
-            {/* ========== MAKER DETAILS ========== */}
+            {/* ========================================
+                MAKER DETAILS SECTION (Hidden)
+                Person who assembled the item - includes CTA if not registered
+                ======================================== */}
             <Card className="hidden border border-gray-300">
               <CardHeader className="pb-3">
                 <CardTitle className="text-sm font-light flex items-center">
@@ -735,34 +771,38 @@ export default function TrackItem() {
                   Maker Details
                 </CardTitle>
               </CardHeader>
+              
               <CardContent className="space-y-3 text-sm">
                 {data.makerDetails ? (
-                  // Registered State - Show completed maker details
+                  // REGISTERED MAKER STATE - Shows when maker has registered
                   <>
+                    {/* MAKER NAME - Name of person who assembled the item */}
                     <div className="flex justify-between font-light">
                       <span className="text-gray-600">Maker</span>
                       <span className="font-medium">
                         {data.makerDetails.name}
                       </span>
                     </div>
+                    
+                    {/* MAKER LOCATION - Where the maker is located */}
                     <div className="flex justify-between items-center font-light">
-                      <span className="text-gray-600">
-                        Location
-                      </span>
+                      <span className="text-gray-600">Location</span>
                       <span className="flex items-center">
                         <MapPin className="w-4 h-4 mr-1" />
                         {data.makerDetails.location}
                       </span>
                     </div>
+                    
+                    {/* ASSEMBLY DATE - When the item was assembled by the maker */}
                     <div className="flex justify-between items-center font-light">
-                      <span className="text-gray-600">
-                        Assembled
-                      </span>
+                      <span className="text-gray-600">Assembled</span>
                       <span className="flex items-center">
                         <Calendar className="w-4 h-4 mr-1" />
                         {formatDate(data.makerDetails.assemblyDate)}
                       </span>
                     </div>
+                    
+                    {/* MAKER STORY - Personal story from the maker about assembling the item */}
                     {data.makerDetails.story && (
                       <div className="border-t border-gray-200 pt-3">
                         <span className="text-gray-500 block mb-2 font-light text-xs">
@@ -773,6 +813,8 @@ export default function TrackItem() {
                         </p>
                       </div>
                     )}
+                    
+                    {/* COMPLETION STATUS - Visual indicator that maker journey is complete */}
                     <div className="border-t border-gray-200 pt-3 flex items-center justify-center">
                       <div className="flex items-center text-black text-sm font-light">
                         <Heart className="w-4 h-4 mr-1 fill-current" />
@@ -783,22 +825,31 @@ export default function TrackItem() {
                     </div>
                   </>
                 ) : (
-                  // Unregistered State - Show CTA
+                  // UNREGISTERED STATE - CTA to register as maker
                   <div className="text-center py-8">
+                    {/* Icon placeholder */}
                     <div className="w-16 h-16 mx-auto mb-4 border-2 border-dashed border-gray-300 flex items-center justify-center">
                       <Plus className="w-8 h-8 text-gray-400" />
                     </div>
+                    
+                    {/* CTA heading */}
                     <h3 className="text-base mb-2 font-light">
                       Complete Your Maker Journey
                     </h3>
+                    
+                    {/* CTA description - varies based on charity status */}
                     <p className="text-sm text-gray-600 mb-6 leading-relaxed font-light">
                       {isCharity
                         ? `Did you assemble this item${data.destination ? ` at ${data.destination}` : ""}? Share your story and connect this donation to its educational impact.`
                         : "Did you assemble this item? Share your story and become part of the circular economy narrative."}
                     </p>
+                    
+                    {/* Register button */}
                     <button className="w-full bg-black text-white font-light py-3 px-6 border border-gray-300 hover:bg-gray-800 transition-colors text-sm">
                       Register as Maker
                     </button>
+                    
+                    {/* Email verification note */}
                     <p className="text-xs text-gray-500 mt-3 font-light">
                       Email verification required
                     </p>
@@ -810,17 +861,24 @@ export default function TrackItem() {
         )}
          </div>
      
-        {/* ========== CONNECTED ITEMS - Produced Items ========== */}
+        {/* ========================================
+            CONNECTED ITEMS SECTION
+            Shows downstream items produced from this item
+            ======================================== */}
 
         <div className="px-6">
-        {/* Blanks from Batches */}
+        
+        {/* PRODUCED BLANKS ACCORDION - Shows blank sheets created from this batch (for Batches) */}
         {data.producedBlanks && data.producedBlanks.length > 0 && (
           <div className="mb-6">
             <Accordion type="single" collapsible className="border-0">
               <AccordionItem value="produced-blanks" className="border-0">
+                
+                {/* Accordion trigger with count */}
                 <AccordionTrigger className="text-sm text-gray-600 font-light hover:no-underline py-2">
                   Produced Items ({data.producedBlanks.length})
                 </AccordionTrigger>
+                
                 <AccordionContent className="px-0 pt-2 pb-0">
                   <div className="space-y-2">
                     {data.producedBlanks.map((blank: any, index: number) => (
@@ -831,13 +889,18 @@ export default function TrackItem() {
                       >
                         <div className="flex justify-between items-center p-3 border-0 hover:border-gray-400 hover:bg-gray-50 transition-colors cursor-pointer">
                           <div>
+                            {/* BLANK ID - Identifier for the blank sheet */}
                             <div className="text-sm font-mono font-light">
                               {blank.id}
                             </div>
+                            
+                            {/* BLANK STATUS & WEIGHT - Processing status and weight */}
                             <div className="text-xs text-gray-500 font-light">
                               {blank.status} • {blank.weight}kg
                             </div>
                           </div>
+                          
+                          {/* Item type label */}
                           <div className="text-xs text-gray-500 font-light">
                             Blank Item
                           </div>
@@ -851,14 +914,17 @@ export default function TrackItem() {
           </div>
         )}
 
-        {/* Finished Products from Batches or Blanks */}
+        {/* PRODUCED ITEMS ACCORDION - Shows finished products from this batch/blank (for Batches or Blanks) */}
         {data.producedItems && data.producedItems.length > 0 && (
           <div className="mb-6">
             <Accordion type="single" collapsible className="border-0">
               <AccordionItem value="produced-items" className="border-0">
+                
+                {/* Accordion trigger with count */}
                 <AccordionTrigger className="text-sm text-gray-600 font-light hover:no-underline py-2">
                   Finished Products ({data.producedItems.length})
                 </AccordionTrigger>
+                
                 <AccordionContent className="px-0 pt-2 pb-0">
                   <div className="space-y-2">
                     {data.producedItems.map((item: any, index: number) => (
@@ -869,14 +935,19 @@ export default function TrackItem() {
                       >
                         <div className="flex justify-between items-center p-3 border-0 hover:border-gray-400 hover:bg-gray-50 transition-colors cursor-pointer">
                           <div>
+                            {/* ITEM ID - Identifier for the finished item */}
                             <div className="text-sm font-mono font-light">
                               {item.id}
                             </div>
+                            
+                            {/* ITEM STATUS & SERIAL - Processing status and optional serial number */}
                             <div className="text-xs text-gray-500 font-light">
                               {item.status}
                               {item.serialNumber && ` • Serial: ${item.serialNumber}`}
                             </div>
                           </div>
+                          
+                          {/* Item type label */}
                           <div className="text-xs text-gray-500 font-light">
                             Finished Item
                           </div>
@@ -890,14 +961,17 @@ export default function TrackItem() {
           </div>
         )}
 
-        {/* ========== CONNECTED ITEMS - Batches from Bin (for Bins) ========== */}
+        {/* PRODUCED BATCHES ACCORDION - Shows batches created from this bin (for Bins) */}
         {data.producedBatches && data.producedBatches.length > 0 && (
           <div className="mb-6">
             <Accordion type="single" collapsible className="border-0">
               <AccordionItem value="produced-batches" className="border-0">
+                
+                {/* Accordion trigger with count */}
                 <AccordionTrigger className="text-sm text-gray-600 font-light hover:no-underline py-2">
                   Batches from this Bin ({data.producedBatches.length})
                 </AccordionTrigger>
+                
                 <AccordionContent className="px-0 pt-2 pb-0">
                   <div className="space-y-2">
                     {data.producedBatches.map((batch: any, index: number) => (
@@ -908,15 +982,19 @@ export default function TrackItem() {
                       >
                         <div className="flex justify-between items-center p-3 border-0 hover:border-gray-400 hover:bg-gray-50 transition-colors cursor-pointer">
                           <div>
+                            {/* BATCH COLLECTION DATE - When this batch was collected */}
                             <div className="text-xs text-gray-600 font-light">
                               {formatDate(batch.collectionDate)}
                             </div>
+                            
+                            {/* BATCH WEIGHT, MATERIAL & STATUS - Physical attributes and processing status */}
                             <div className="text-xs text-gray-600 font-light">
                               {batch.weight}kg • {batch.materialType} •{" "}
                               {getBatchStatusLabel(batch.status)}
                             </div>
                           </div>
 
+                          {/* BATCH ID - Identifier for the batch */}
                           <div className="text-sm font-mono font-light">
                             {batch.id}
                           </div>
