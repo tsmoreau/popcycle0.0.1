@@ -40,7 +40,7 @@ export async function GET(
     
     if (collectionType === 'bin') {
       // Look up bin record using string ID (QR code)
-      record = await db.collection('bins').findOne({ _id: id } as any) as Bin | null;
+      record = await db.collection<Bin>('bins').findOne({ _id: id });
       if (record) {
         try {
           org = await db.collection('orgs').findOne({ _id: new ObjectId((record as Bin).orgId) });
@@ -57,7 +57,7 @@ export async function GET(
       // Find event information if bin has an eventId (v3: query events collection)
       let eventInfo = null;
       if ((record as Bin).eventId) {
-        const eventDoc = await db.collection('events').findOne({ eventId: (record as Bin).eventId } as any);
+        const eventDoc = await db.collection('events').findOne({ eventId: (record as Bin).eventId });
         if (eventDoc) {
           eventInfo = { 
             name: eventDoc.name,
@@ -70,7 +70,7 @@ export async function GET(
       const binRecord = record as Bin;
       
       // Fetch batches produced from this bin
-      const producedBatches = await db.collection('batches')
+      const producedBatches = await db.collection<Batch>('batches')
         .find({ binIds: binRecord._id })
         .limit(50)
         .toArray();
@@ -116,7 +116,7 @@ export async function GET(
       
     } else if (collectionType === 'batch') {
       // Look up batch record using string ID (QR code)
-      record = await db.collection('batches').findOne({ _id: id } as any) as Batch | null;
+      record = await db.collection<Batch>('batches').findOne({ _id: id });
       
       if (!record) {
         return NextResponse.json({ error: 'Batch not found' }, { status: 404 });
@@ -130,9 +130,9 @@ export async function GET(
       
       // Batch -> Bins -> Org
       if (batchRecord.binIds && batchRecord.binIds.length > 0) {
-        const bins = await db.collection('bins')
-          .find({ _id: { $in: batchRecord.binIds } } as any)
-          .toArray() as Bin[];
+        const bins = await db.collection<Bin>('bins')
+          .find({ _id: { $in: batchRecord.binIds } })
+          .toArray();
         
         for (const bin of bins) {
           binMap.set(bin._id, bin);
@@ -149,13 +149,13 @@ export async function GET(
       }
       
       // Fetch blanks produced from this batch
-      const producedBlanks = await db.collection('blanks')
+      const producedBlanks = await db.collection<Blank>('blanks')
         .find({ batchIds: batchRecord._id })
         .limit(50)
         .toArray();
       
       // Fetch items produced directly from this batch
-      const producedItems = await db.collection('items')
+      const producedItems = await db.collection<Item>('items')
         .find({ batchIds: batchRecord._id })
         .limit(50)
         .toArray();
@@ -238,7 +238,7 @@ export async function GET(
       
     } else if (collectionType === 'blank') {
       // Look up blank record using string ID (QR code)
-      record = await db.collection('blanks').findOne({ _id: id } as any) as Blank | null;
+      record = await db.collection<Blank>('blanks').findOne({ _id: id });
       
       if (!record) {
         return NextResponse.json({ error: 'Blank not found' }, { status: 404 });
@@ -253,17 +253,17 @@ export async function GET(
       
       // Blank -> Batches -> Bins -> Org
       if (blankRecord.batchIds && blankRecord.batchIds.length > 0) {
-        const batches = await db.collection('batches')
-          .find({ _id: { $in: blankRecord.batchIds } } as any)
-          .toArray() as Batch[];
+        const batches = await db.collection<Batch>('batches')
+          .find({ _id: { $in: blankRecord.batchIds } })
+          .toArray();
         
         for (const batch of batches) {
           batchMap.set(batch._id, batch);
           
           if (batch.binIds && batch.binIds.length > 0) {
-            const bins = await db.collection('bins')
-              .find({ _id: { $in: batch.binIds } } as any)
-              .toArray() as Bin[];
+            const bins = await db.collection<Bin>('bins')
+              .find({ _id: { $in: batch.binIds } })
+              .toArray();
             
             for (const bin of bins) {
               binMap.set(bin._id, bin);
@@ -288,7 +288,7 @@ export async function GET(
       }
       
       // Fetch items produced from this blank
-      const producedItems = await db.collection('items')
+      const producedItems = await db.collection<Item>('items')
         .find({ blankIds: blankRecord._id })
         .limit(50)
         .toArray();
@@ -365,7 +365,7 @@ export async function GET(
       
     } else if (collectionType === 'item') {
       // Look up item record using string ID (QR code)
-      record = await db.collection('items').findOne({ _id: id } as any) as Item | null;
+      record = await db.collection<Item>('items').findOne({ _id: id });
       
       if (!record) {
         return NextResponse.json({ error: 'Item not found' }, { status: 404 });
@@ -393,25 +393,25 @@ export async function GET(
       
       // Path 1: Item -> Blanks -> Batches -> Bins -> OrgIds
       if (itemRecord.blankIds && itemRecord.blankIds.length > 0) {
-        const blanks = await db.collection('blanks')
-          .find({ _id: { $in: itemRecord.blankIds } } as any)
-          .toArray() as Blank[];
+        const blanks = await db.collection<Blank>('blanks')
+          .find({ _id: { $in: itemRecord.blankIds } })
+          .toArray();
         
         for (const blank of blanks) {
           blankMap.set(blank._id, blank);
           
           if (blank.batchIds && blank.batchIds.length > 0) {
-            const batches = await db.collection('batches')
-              .find({ _id: { $in: blank.batchIds } } as any)
-              .toArray() as Batch[];
+            const batches = await db.collection<Batch>('batches')
+              .find({ _id: { $in: blank.batchIds } })
+              .toArray();
             
             for (const batch of batches) {
               batchMap.set(batch._id, batch);
               
               if (batch.binIds && batch.binIds.length > 0) {
-                const bins = await db.collection('bins')
-                  .find({ _id: { $in: batch.binIds } } as any)
-                  .toArray() as Bin[];
+                const bins = await db.collection<Bin>('bins')
+                  .find({ _id: { $in: batch.binIds } })
+                  .toArray();
                 
                 bins.forEach(bin => {
                   binMap.set(bin._id, bin);
@@ -425,17 +425,17 @@ export async function GET(
       
       // Path 2: Item -> Batches -> Bins -> OrgIds
       if (itemRecord.batchIds && itemRecord.batchIds.length > 0) {
-        const batches = await db.collection('batches')
-          .find({ _id: { $in: itemRecord.batchIds } } as any)
-          .toArray() as Batch[];
+        const batches = await db.collection<Batch>('batches')
+          .find({ _id: { $in: itemRecord.batchIds } })
+          .toArray();
         
         for (const batch of batches) {
           batchMap.set(batch._id, batch);
           
           if (batch.binIds && batch.binIds.length > 0) {
-            const bins = await db.collection('bins')
-              .find({ _id: { $in: batch.binIds } } as any)
-              .toArray() as Bin[];
+            const bins = await db.collection<Bin>('bins')
+              .find({ _id: { $in: batch.binIds } })
+              .toArray();
             
             bins.forEach(bin => {
               binMap.set(bin._id, bin);
@@ -457,7 +457,7 @@ export async function GET(
         });
         
         const orgs = await db.collection('orgs')
-          .find({ _id: { $in: orgObjectIds } } as any)
+          .find({ _id: { $in: orgObjectIds } })
           .toArray();
         
         origins.push(...orgs.map(o => ({
@@ -482,7 +482,7 @@ export async function GET(
         try {
           org = await db.collection('orgs').findOne({ _id: new ObjectId(firstOrgId) });
         } catch {
-          org = await db.collection('orgs').findOne({ _id: firstOrgId } as any);
+          org = await db.collection('orgs').findOne({ _id: firstOrgId });
         }
       }
       
