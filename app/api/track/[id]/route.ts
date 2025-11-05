@@ -45,8 +45,7 @@ export async function GET(
         try {
           org = await db.collection('orgs').findOne({ _id: new ObjectId((record as Bin).orgId) });
         } catch (error) {
-          // Try looking up with string ID if ObjectId conversion fails
-          org = await db.collection('orgs').findOne({ _id: (record as Bin).orgId });
+          org = null;
         }
       }
       
@@ -141,8 +140,7 @@ export async function GET(
             try {
               org = await db.collection('orgs').findOne({ _id: new ObjectId(bin.orgId) });
             } catch (error) {
-              // Try looking up with string ID if ObjectId conversion fails
-              org = await db.collection('orgs').findOne({ _id: bin.orgId });
+              org = null;
             }
           }
         }
@@ -272,8 +270,7 @@ export async function GET(
                 try {
                   org = await db.collection('orgs').findOne({ _id: new ObjectId(bin.orgId) });
                 } catch (error) {
-                  // Try looking up with string ID if ObjectId conversion fails
-                  org = await db.collection('orgs').findOne({ _id: bin.orgId });
+                  org = null;
                 }
               }
             }
@@ -476,7 +473,7 @@ export async function GET(
         try {
           org = await db.collection('orgs').findOne({ _id: new ObjectId(productDetails.org) });
         } catch (error) {
-          org = await db.collection('orgs').findOne({ _id: productDetails.org });
+          org = null;
         }
       } else if (origins.length > 0) {
         // Use first origin as the main org for backward compatibility
@@ -484,7 +481,7 @@ export async function GET(
         try {
           org = await db.collection('orgs').findOne({ _id: new ObjectId(firstOrgId) });
         } catch {
-          org = await db.collection('orgs').findOne({ _id: firstOrgId });
+          org = null;
         }
       }
       
