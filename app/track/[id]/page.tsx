@@ -328,7 +328,7 @@ export default function TrackItem() {
 
   return (
     <div className="min-h-screen lg:max-w-[35vw] py-20 flex mx-auto justify-center font-jost bg-white">
-      <div className="w-full mx-auto border border-gray-300 mr-6 ml-6">
+      <div className=" w-full mx-auto border drop-shadow-2xl bg-white border-gray-300 mr-6 ml-6">
         {/* ========== HEADER INFO ========== */}
 
         <div className="flex flex-col gap-6 ">

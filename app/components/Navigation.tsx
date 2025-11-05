@@ -191,7 +191,7 @@ export default function Navigation() {
             
             <div className="w-12 h-12 bg-pop-green flex items-center justify-center transition-all group-hover:bg-opacity-90 mt-1">
               <img
-                src="https://storage.googleapis.com/popcycle01/favicon.svg"
+                src="https://storage.googleapis.com/popcycle01/logo.svg"
                
                 className="w-full h-full object-cover"
                 data-testid="img-product-info"
