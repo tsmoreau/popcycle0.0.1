@@ -155,7 +155,7 @@ export async function GET(
             if (product) {
               productInfo = {
                 name: product.name,
-                category: product.category
+                productType: product.productType
               };
             }
           }
@@ -164,7 +164,7 @@ export async function GET(
             status: blank.status,
             weight: blank.weight,
             productName: productInfo?.name || null,
-            productCategory: productInfo?.category || null
+            productType: productInfo?.productType || null
           };
         })
       );
@@ -178,7 +178,7 @@ export async function GET(
             if (product) {
               productInfo = {
                 name: product.name,
-                category: product.category
+                productType: product.productType
               };
             }
           }
@@ -187,7 +187,7 @@ export async function GET(
             status: item.status,
             serialNumber: item.serialNumber,
             productName: productInfo?.name || null,
-            productCategory: productInfo?.category || null
+            productType: productInfo?.productType || null
           };
         })
       );
@@ -264,7 +264,7 @@ export async function GET(
             if (product) {
               productInfo = {
                 name: product.name,
-                category: product.category
+                productType: product.productType
               };
             }
           }
@@ -273,7 +273,7 @@ export async function GET(
             status: item.status,
             serialNumber: item.serialNumber,
             productName: productInfo?.name || null,
-            productCategory: productInfo?.category || null
+            productType: productInfo?.productType || null
           };
         })
       );
