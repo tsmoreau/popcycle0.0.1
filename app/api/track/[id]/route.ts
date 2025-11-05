@@ -333,8 +333,11 @@ export async function GET(
         userDetails = await db.collection('users').findOne({ _id: new ObjectId(itemRecord.userId) });
       }
       
-      // Trace back through all blanks and batches to collect ALL unique organizations
+      // Trace back through full supply chain to collect blanks, batches, bins, and organizations
       const orgIds = new Set<string>();
+      const blankMap = new Map<string, any>();
+      const batchMap = new Map<string, any>();
+      const binMap = new Map<string, any>();
       
       // Path 1: Item -> Blanks -> Batches -> Bins -> OrgIds
       if (itemRecord.blankIds && itemRecord.blankIds.length > 0) {
@@ -343,18 +346,23 @@ export async function GET(
           .toArray() as Blank[];
         
         for (const blank of blanks) {
+          blankMap.set(blank._id, blank);
+          
           if (blank.batchIds && blank.batchIds.length > 0) {
             const batches = await db.collection('batches')
               .find({ _id: { $in: blank.batchIds } } as any)
               .toArray() as Batch[];
             
             for (const batch of batches) {
+              batchMap.set(batch._id, batch);
+              
               if (batch.binIds && batch.binIds.length > 0) {
                 const bins = await db.collection('bins')
                   .find({ _id: { $in: batch.binIds } } as any)
                   .toArray() as Bin[];
                 
                 bins.forEach(bin => {
+                  binMap.set(bin._id, bin);
                   if (bin.orgId) orgIds.add(bin.orgId.toString());
                 });
               }
@@ -370,12 +378,15 @@ export async function GET(
           .toArray() as Batch[];
         
         for (const batch of batches) {
+          batchMap.set(batch._id, batch);
+          
           if (batch.binIds && batch.binIds.length > 0) {
             const bins = await db.collection('bins')
               .find({ _id: { $in: batch.binIds } } as any)
               .toArray() as Bin[];
             
             bins.forEach(bin => {
+              binMap.set(bin._id, bin);
               if (bin.orgId) orgIds.add(bin.orgId.toString());
             });
           }
@@ -468,6 +479,26 @@ export async function GET(
           branding: org.branding
         } : null,
         origins: origins.length > 0 ? origins : null,
+        blanks: Array.from(blankMap.values()).map((blank: any) => ({
+          id: blank._id,
+          weight: blank.weight,
+          status: blank.status,
+          materialType: blank.materialType,
+          createdAt: blank.createdAt
+        })),
+        batches: Array.from(batchMap.values()).map((batch: any) => ({
+          id: batch._id,
+          weight: batch.weight,
+          materialType: batch.materialType,
+          collectionDate: batch.collectionDate,
+          status: batch.status
+        })),
+        bins: Array.from(binMap.values()).map((bin: any) => ({
+          id: bin._id,
+          name: bin.name,
+          location: bin.location,
+          lastCollectionDate: bin.lastCollectionDate
+        })),
         message: org?.branding?.trackingPageMessage || 'This finished product represents the complete transformation of waste into a useful item.',
         impactMetrics: {
           carbonSaved: itemRecord.weight * 4.0, // Highest impact for completed items
