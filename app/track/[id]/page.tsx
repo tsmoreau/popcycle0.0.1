@@ -478,59 +478,100 @@ export default function TrackItem() {
 
               {/* ==================== SUPPLY CHAIN HISTORY ==================== */}
               
-              {/* BLANKS HISTORY - Full blank details for items (array of blank objects) */}
-              {idStartsWith("I") && data.blanks && data.blanks.length > 0 && (
-                <div className="flex justify-between font-light">
-                  <span className="text-gray-600">{data.blanks.length === 1 ? "Blank" : "Blanks"}</span>
-                  <div className="space-y-1 text-right">
-                    {data.blanks.map((blank: any) => (
-                      <Link
-                        key={blank.id}
-                        href={`/track/${blank.id}`}
-                        className="block font-mono text-black hover:text-gray-600 hover:underline"
-                      >
-                        {blank.id}
-                      </Link>
-                    ))}
-                  </div>
-                </div>
-              )}
-              
-              {/* BATCHES HISTORY - Full batch details for items (array of batch objects) */}
-              {idStartsWith("I") && data.batches && data.batches.length > 0 && (
-                <div className="flex justify-between font-light">
-                  <span className="text-gray-600">{data.batches.length === 1 ? "Batch" : "Batches"}</span>
-                  <div className="space-y-1 text-right">
-                    {data.batches.map((batch: any) => (
-                      <Link
-                        key={batch.id}
-                        href={`/track/${batch.id}`}
-                        className="block font-mono text-black hover:text-gray-600 hover:underline"
-                      >
-                        {batch.id}
-                      </Link>
-                    ))}
-                  </div>
-                </div>
-              )}
-              
-              {/* BINS HISTORY - Full bin details for items (array of bin objects) */}
-              {idStartsWith("I") && data.bins && data.bins.length > 0 && (
-                <div className="flex justify-between font-light">
-                  <span className="text-gray-600">{data.bins.length === 1 ? "Bin" : "Bins"}</span>
-                  <div className="space-y-1 text-right">
-                    {data.bins.map((bin: any) => (
-                      <Link
-                        key={bin.id}
-                        href={`/track/${bin.id}`}
-                        className="block font-mono text-black hover:text-gray-600 hover:underline"
-                      >
-                        {bin.id}
-                      </Link>
-                    ))}
-                  </div>
-                </div>
-              )}
+            </div>
+          </Card>
+        </div>
+
+        {/* SUPPLY CHAIN HISTORY ACCORDIONS - For Items only */}
+        {idStartsWith("I") && (
+          <div className="flex flex-col px-6">
+            
+            {/* BLANKS HISTORY ACCORDION - Full blank details for items */}
+            {data.blanks && data.blanks.length > 0 && (
+              <div className="pt-2">
+                <Accordion type="single" collapsible className="border-0">
+                  <AccordionItem value="blanks-history" className="border-0">
+                    <AccordionTrigger className="text-sm text-gray-600 font-light hover:no-underline py-2">
+                      Blanks History ({data.blanks.length})
+                    </AccordionTrigger>
+                    <AccordionContent className="px-0 pt-2 pb-0">
+                      <div className="space-y-1">
+                        {data.blanks.map((blank: any) => (
+                          <Link
+                            key={blank.id}
+                            href={`/track/${blank.id}`}
+                            className="block font-mono text-black hover:text-gray-600 hover:underline"
+                          >
+                            {blank.id}
+                          </Link>
+                        ))}
+                      </div>
+                    </AccordionContent>
+                  </AccordionItem>
+                </Accordion>
+              </div>
+            )}
+            
+            {/* BATCHES HISTORY ACCORDION - Full batch details for items */}
+            {data.batches && data.batches.length > 0 && (
+              <div className="pt-2">
+                <Accordion type="single" collapsible className="border-0">
+                  <AccordionItem value="batches-history" className="border-0">
+                    <AccordionTrigger className="text-sm text-gray-600 font-light hover:no-underline py-2">
+                      Batches History ({data.batches.length})
+                    </AccordionTrigger>
+                    <AccordionContent className="px-0 pt-2 pb-0">
+                      <div className="space-y-1">
+                        {data.batches.map((batch: any) => (
+                          <Link
+                            key={batch.id}
+                            href={`/track/${batch.id}`}
+                            className="block font-mono text-black hover:text-gray-600 hover:underline"
+                          >
+                            {batch.id}
+                          </Link>
+                        ))}
+                      </div>
+                    </AccordionContent>
+                  </AccordionItem>
+                </Accordion>
+              </div>
+            )}
+            
+            {/* BINS HISTORY ACCORDION - Full bin details for items */}
+            {data.bins && data.bins.length > 0 && (
+              <div className="pt-2">
+                <Accordion type="single" collapsible className="border-0">
+                  <AccordionItem value="bins-history" className="border-0">
+                    <AccordionTrigger className="text-sm text-gray-600 font-light hover:no-underline py-2">
+                      Bins History ({data.bins.length})
+                    </AccordionTrigger>
+                    <AccordionContent className="px-0 pt-2 pb-0">
+                      <div className="space-y-1">
+                        {data.bins.map((bin: any) => (
+                          <Link
+                            key={bin.id}
+                            href={`/track/${bin.id}`}
+                            className="block font-mono text-black hover:text-gray-600 hover:underline"
+                          >
+                            {bin.id}
+                          </Link>
+                        ))}
+                      </div>
+                    </AccordionContent>
+                  </AccordionItem>
+                </Accordion>
+              </div>
+            )}
+            
+          </div>
+        )}
+
+        <div className="flex flex-col gap-6 ">
+          <Card className="border-0 border-white">
+            
+            {/* --- Continuing source details --- */}
+            <div className="px-6 space-y-3 text-sm">
               
               {/* ORIGINS - Multi-origin display for Items (array of origin objects) */}
               {idStartsWith("I") && data.origins && data.origins.length > 0 && (
