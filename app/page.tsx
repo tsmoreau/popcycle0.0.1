@@ -6,7 +6,7 @@ export default function Home() {
   return (
     <div className="min-h-screen font-jost">
       {/* Hero Section */}
-      <section className="relative w-2/3 py-40 lg:py-48 px-6 bg-white font-jost overflow-hidden h-[70vh] flex items-center justify-center ">
+      <section className="relative py-40 lg:py-48 px-6 bg-black font-jost overflow-hidden h-[70vh] flex items-center">
         {/* Background Video */}
         <video
           autoPlay
@@ -45,87 +45,8 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Featured Products Grid */}
-      <section className="pt-12 pb-4 lg:pt-16 px-6 bg-white">
-        <div className="max-w-8xl mx-4 mx-auto">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 lg:gap-6">
-            {/* Product Card 1 */}
-            <Link href="/about" className="group">
-              <div className="relative aspect-[5/3] bg-gray-100 overflow-hidden">
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <Recycle className="w-24 h-24 text-gray-300" />
-                </div>
-                <div className="absolute bottom-0 left-0 right-0 p-6 ">
-                  
-                </div>
-              </div>
-              <div className="w-auto h-auto justify-items-center my-2">
-             
-                <h3 className="text-black mt-2 font-light text-xl ">Studio Editions</h3>
-                <p className="text-gray-500 -mt-1 text-base">One of a kind limited run designs.</p>
-                </div>
-            </Link>
-
-            {/* Product Card 2 */}
-          <Link href="/about" className="group">
-            <div className="relative aspect-[5/3] bg-gray-100 overflow-hidden">
-              <div className="absolute inset-0 flex items-center justify-center">
-                <Recycle className="w-24 h-24 text-gray-300" />
-              </div>
-              <div className="absolute bottom-0 left-0 right-0 p-6 ">
-
-              </div>
-            </div>
-            <div className="w-auto h-auto justify-items-center my-2">
-              <h3 className="text-black mt-2 font-light text-xl ">Custom Collections</h3>
-              <p className="text-gray-500 -mt-1 text-base">Exclusive designs and products</p>
-              </div>
-          </Link>
-  </div>
-        </div>
-      </section>
-      
-      {/* Featured Products Grid */}
-      <section className=" pb-4 px-6 bg-white">
-        <div className="max-w-8xl mx-4 mx-auto">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 lg:gap-6">
-            {/* Product Card 1 */}
-            <Link href="/about" className="group">
-              <div className="relative aspect-[5/3] bg-gray-100 overflow-hidden">
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <Recycle className="w-24 h-24 text-gray-300" />
-                </div>
-                <div className="absolute bottom-0 left-0 right-0 p-6 ">
-
-                </div>
-              </div>
-              <div className="w-auto h-auto justify-items-center my-2">
-              <h3 className="text-black mt-2 font-light text-xl ">Coasters</h3>
-              <p className="text-gray-500 -mt-1 text-base">From your waste stream</p>
-                </div>
-            </Link>
-
-            {/* Product Card 2 */}
-          <Link href="/about" className="group">
-            <div className="relative aspect-[5/3] bg-gray-100 overflow-hidden">
-              <div className="absolute inset-0 flex items-center justify-center">
-                <Recycle className="w-24 h-24 text-gray-300" />
-              </div>
-              <div className="absolute bottom-0 left-0 right-0 p-6 ">
-
-              </div>
-            </div>
-            <div className="w-auto h-auto justify-items-center my-2">
-            <h3 className="text-black mt-2 font-light text-xl ">Coasters</h3>
-            <p className="text-gray-500 -mt-1 text-base">From your waste stream</p>
-              </div>
-          </Link>
-      </div>
-        </div>
-      </section>
-     
       {/* Category Showcase */}
-      <section className="py-0 bg-white">
+      <section className="hidden py-0 bg-white">
         <div className="max-w-7xl mx-auto px-6">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-12">
             {/* Category 1 */}
@@ -165,11 +86,11 @@ export default function Home() {
       </section>
 
       {/* Editorial Section */}
-      <section className="py-24 lg:py-32 px-6 bg-gray-50 mt-16">
+      <section className="py-24 lg:py-32 px-6 bg-white">
         <div className="max-w-5xl mx-auto">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             {/* Image Placeholder */}
-            <div className="relative aspect-[3/4] bg-gray-200 overflow-hidden">
+            <div className="relative aspect-[4/5] bg-gray-200 overflow-hidden">
               <div className="absolute inset-0 flex items-center justify-center">
                 <Eye className="w-32 h-32 text-gray-300" />
               </div>
@@ -195,8 +116,151 @@ export default function Home() {
         </div>
       </section>
 
+      <section className="py-12 lg:py-16 px-6 bg-white">
+        <div className="max-w-5xl mx-auto">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            {/* Content */}
+            <div className="text-right">
+              <h2 className="text-4xl lg:text-5xl mb-6 leading-tight">
+                True <span className="text-pop-green">Circularity</span>
+              </h2>
+              <p className="text-lg text-gray-700 mb-8 leading-relaxed">
+                Every product tells a story. From collection to creation, 
+                we track each step of your waste's transformation into 
+                custom-branded products.
+              </p>
+              <Link href="/about">
+                <Button variant="outline" size="lg" className="border-2 border-gray-900 text-gray-900 hover:bg-gray-900 hover:text-white">
+                  Learn More
+                </Button>
+              </Link>
+            </div>
+            
+            {/* Image Placeholder */}
+            <div className="relative aspect-[4/5] bg-gray-200 overflow-hidden">
+              <div className="absolute inset-0 flex items-center justify-center">
+                <Eye className="w-32 h-32 text-gray-300" />
+              </div>
+            </div>
+
+            
+          </div>
+        </div>
+      </section>
+
+      <section className="hidden py-24 lg:py-32 px-6 bg-white -mb-16">
+        <div className="max-w-5xl mx-auto">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            {/* Image Placeholder */}
+            <div className="relative aspect-[4/5] bg-gray-200 overflow-hidden">
+              <div className="absolute inset-0 flex items-center justify-center">
+                <Eye className="w-32 h-32 text-gray-300" />
+              </div>
+            </div>
+
+            {/* Content */}
+            <div>
+              <h2 className="text-4xl lg:text-5xl mb-6 leading-tight">
+                True <span className="text-pop-green">Circularity</span>
+              </h2>
+              <p className="text-lg text-gray-700 mb-8 leading-relaxed">
+                Every product tells a story. From collection to creation, 
+                we track each step of your waste's transformation into 
+                custom-branded products.
+              </p>
+              <Link href="/about">
+                <Button variant="outline" size="lg" className="border-2 border-gray-900 text-gray-900 hover:bg-gray-900 hover:text-white">
+                  Learn More
+                </Button>
+              </Link>
+            </div>
+          </div>
+        </div>
+      </section>
+
+
+          {/* Featured Products Grid */}
+          <section className=" pt-12 pb-4 lg:pt-24 px-16 bg-white">
+            <div className="w-2/3 mx-4 mx-auto">
+              <div className="grid grid-cols-1 gap-4 lg:gap-6">
+                {/* Product Card 1 */}
+                <Link href="/about" className="group">
+                  <div className="relative aspect-[5/3] bg-gray-100 overflow-hidden">
+                    <div className="absolute inset-0 flex items-center justify-center">
+                      <Recycle className="w-24 h-24 text-gray-300" />
+                    </div>
+                    <div className="absolute bottom-0 left-0 right-0 p-6 ">
+
+                    </div>
+                  </div>
+                  <div className="w-auto h-auto justify-items-center my-2">
+
+                    <h3 className="text-black mt-2 font-light text-xl ">Studio Editions</h3>
+                    <p className="text-gray-500 -mt-1 text-base">One of a kind limited run designs.</p>
+                    </div>
+                </Link>
+
+                {/* Product Card 2 */}
+              <Link href="/about" className="group">
+                <div className="relative aspect-[5/3] bg-gray-100 overflow-hidden">
+                  <div className="absolute inset-0 flex items-center justify-center">
+                    <Recycle className="w-24 h-24 text-gray-300" />
+                  </div>
+                  <div className="absolute bottom-0 left-0 right-0 p-6 ">
+
+                  </div>
+                </div>
+                <div className="w-auto h-auto justify-items-center my-2">
+                  <h3 className="text-black mt-2 font-light text-xl ">Custom Collections</h3>
+                  <p className="text-gray-500 -mt-1 text-base">Exclusive designs and products</p>
+                  </div>
+              </Link>
+      </div>
+            </div>
+          </section>
+
+    
+          <section className=" pb-16 px-16 bg-white">
+            <div className="w-2/3 mx-4 mx-auto">
+              <div className="grid grid-cols-1  gap-4 lg:gap-6">
+                {/* Product Card 1 */}
+                <Link href="/about" className="group">
+                  <div className="relative aspect-[5/3] bg-gray-100 overflow-hidden">
+                    <div className="absolute inset-0 flex items-center justify-center">
+                      <Recycle className="w-24 h-24 text-gray-300" />
+                    </div>
+                    <div className="absolute bottom-0 left-0 right-0 p-6 ">
+
+                    </div>
+                  </div>
+                  <div className="w-auto h-auto justify-items-center my-2">
+                  <h3 className="text-black mt-2 font-light text-xl ">Community Partners</h3>
+                  <p className="text-gray-500 -mt-1 text-base">Products from your waste stream</p>
+                    </div>
+                </Link>
+
+                {/* Product Card 2 */}
+              <Link href="/about" className="hidden group">
+                <div className="relative aspect-[5/3] bg-gray-100 overflow-hidden">
+                  <div className="absolute inset-0 flex items-center justify-center">
+                    <Recycle className="w-24 h-24 text-gray-300" />
+                  </div>
+                  <div className="absolute bottom-0 left-0 right-0 p-6 ">
+
+                  </div>
+                </div>
+                <div className="w-auto h-auto justify-items-center my-2">
+                <h3 className="text-black mt-2 font-light text-xl ">Coasters</h3>
+                <p className="text-gray-500 -mt-1 text-base">From your waste stream</p>
+                  </div>
+              </Link>
+          </div>
+            </div>
+          </section>
+
+
       {/* Product Highlights Grid */}
-      <section className="py-16 lg:py-20 px-6 bg-white">
+      <section className="hidden py-16 lg:py-20 px-6 bg-white">
         <div className="max-w-7xl mx-auto">
           <h2 className="text-3xl lg:text-4xl mb-12 text-center">Featured Products</h2>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6 lg:gap-8">
@@ -216,18 +280,18 @@ export default function Home() {
       </section>
 
       {/* CTA Section */}
-      <section className="hidden py-24 lg:py-28 px-6 bg-white border-t border-gray-200">
+      <section className=" pt-32 pb-8  px-6 bg-white">
         <div className="max-w-3xl mx-auto text-center">
           <h2 className="text-3xl lg:text-4xl mb-6 leading-tight">
             Start Your Circular Journey
           </h2>
           
           <p className="text-lg mb-10 text-gray-600 leading-relaxed max-w-2xl mx-auto">
-            Transform your waste into traceable, branded products.
+            Transform waste into traceable, branded products.
           </p>
           
-          <Link href="/about#contact">
-            <Button size="lg" className="bg-gray-900 text-white hover:bg-gray-800 text-base px-12 py-6 transition-all">
+          <Link href="/services">
+            <Button size="lg" className="bg-pop-green text-white hover:bg-gray-800 text-base px-12 py-6 transition-all">
               Get Started
               <ArrowRight className="ml-2 w-5 h-5" />
             </Button>
