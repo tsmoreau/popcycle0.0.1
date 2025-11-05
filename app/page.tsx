@@ -6,7 +6,7 @@ export default function Home() {
   return (
     <div className="min-h-screen font-jost">
       {/* Hero Section */}
-      <section className="relative py-40 lg:py-48 px-6 bg-black font-jost overflow-hidden h-[70vh] flex items-center">
+      <section className="relative w-2/3 py-40 lg:py-48 px-6 bg-white font-jost overflow-hidden h-[70vh] flex items-center justify-center ">
         {/* Background Video */}
         <video
           autoPlay
