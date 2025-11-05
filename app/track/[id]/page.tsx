@@ -476,7 +476,61 @@ export default function TrackItem() {
                 )}
               </div>
 
-              {/* ==================== ORIGIN INFORMATION ==================== */}
+              {/* ==================== SUPPLY CHAIN HISTORY ==================== */}
+              
+              {/* BLANKS HISTORY - Full blank details for items (array of blank objects) */}
+              {idStartsWith("I") && data.blanks && data.blanks.length > 0 && (
+                <div className="flex justify-between font-light">
+                  <span className="text-gray-600">{data.blanks.length === 1 ? "Blank" : "Blanks"}</span>
+                  <div className="space-y-1 text-right">
+                    {data.blanks.map((blank: any) => (
+                      <Link
+                        key={blank.id}
+                        href={`/track/${blank.id}`}
+                        className="block font-mono text-black hover:text-gray-600 hover:underline"
+                      >
+                        {blank.id}
+                      </Link>
+                    ))}
+                  </div>
+                </div>
+              )}
+              
+              {/* BATCHES HISTORY - Full batch details for items (array of batch objects) */}
+              {idStartsWith("I") && data.batches && data.batches.length > 0 && (
+                <div className="flex justify-between font-light">
+                  <span className="text-gray-600">{data.batches.length === 1 ? "Batch" : "Batches"}</span>
+                  <div className="space-y-1 text-right">
+                    {data.batches.map((batch: any) => (
+                      <Link
+                        key={batch.id}
+                        href={`/track/${batch.id}`}
+                        className="block font-mono text-black hover:text-gray-600 hover:underline"
+                      >
+                        {batch.id}
+                      </Link>
+                    ))}
+                  </div>
+                </div>
+              )}
+              
+              {/* BINS HISTORY - Full bin details for items (array of bin objects) */}
+              {idStartsWith("I") && data.bins && data.bins.length > 0 && (
+                <div className="flex justify-between font-light">
+                  <span className="text-gray-600">{data.bins.length === 1 ? "Bin" : "Bins"}</span>
+                  <div className="space-y-1 text-right">
+                    {data.bins.map((bin: any) => (
+                      <Link
+                        key={bin.id}
+                        href={`/track/${bin.id}`}
+                        className="block font-mono text-black hover:text-gray-600 hover:underline"
+                      >
+                        {bin.id}
+                      </Link>
+                    ))}
+                  </div>
+                </div>
+              )}
               
               {/* ORIGINS - Multi-origin display for Items (array of origin objects) */}
               {idStartsWith("I") && data.origins && data.origins.length > 0 && (
