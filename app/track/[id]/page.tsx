@@ -488,14 +488,14 @@ export default function TrackItem() {
             
             {/* BLANKS HISTORY ACCORDION - Full blank details for items */}
             {data.blanks && data.blanks.length > 0 && (
-              <div className="pt-2">
+              <div>
                 <Accordion type="single" collapsible className="border-0">
                   <AccordionItem value="blanks-history" className="border-0">
-                    <AccordionTrigger className="text-sm text-gray-600 font-light hover:no-underline py-2">
+                    <AccordionTrigger className="text-sm text-gray-600 font-light hover:no-underline py-1">
                       Blanks History ({data.blanks.length})
                     </AccordionTrigger>
-                    <AccordionContent className="px-0 pt-2 pb-0">
-                      <div className="space-y-1">
+                    <AccordionContent className="px-0 pt-1 pb-0">
+                      <div className="space-y-1 text-right">
                         {data.blanks.map((blank: any) => (
                           <Link
                             key={blank.id}
@@ -514,14 +514,14 @@ export default function TrackItem() {
             
             {/* BATCHES HISTORY ACCORDION - Full batch details for items */}
             {data.batches && data.batches.length > 0 && (
-              <div className="pt-2">
+              <div>
                 <Accordion type="single" collapsible className="border-0">
                   <AccordionItem value="batches-history" className="border-0">
-                    <AccordionTrigger className="text-sm text-gray-600 font-light hover:no-underline py-2">
+                    <AccordionTrigger className="text-sm text-gray-600 font-light hover:no-underline py-1">
                       Batches History ({data.batches.length})
                     </AccordionTrigger>
-                    <AccordionContent className="px-0 pt-2 pb-0">
-                      <div className="space-y-1">
+                    <AccordionContent className="px-0 pt-1 pb-0">
+                      <div className="space-y-1 text-right">
                         {data.batches.map((batch: any) => (
                           <Link
                             key={batch.id}
@@ -540,14 +540,14 @@ export default function TrackItem() {
             
             {/* BINS HISTORY ACCORDION - Full bin details for items */}
             {data.bins && data.bins.length > 0 && (
-              <div className="pt-2">
+              <div>
                 <Accordion type="single" collapsible className="border-0">
                   <AccordionItem value="bins-history" className="border-0">
-                    <AccordionTrigger className="text-sm text-gray-600 font-light hover:no-underline py-2">
+                    <AccordionTrigger className="text-sm text-gray-600 font-light hover:no-underline py-1">
                       Bins History ({data.bins.length})
                     </AccordionTrigger>
-                    <AccordionContent className="px-0 pt-2 pb-0">
-                      <div className="space-y-1">
+                    <AccordionContent className="px-0 pt-1 pb-0">
+                      <div className="space-y-1 text-right">
                         {data.bins.map((bin: any) => (
                           <Link
                             key={bin.id}
