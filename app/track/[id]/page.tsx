@@ -894,15 +894,17 @@ export default function TrackItem() {
                               {blank.id}
                             </div>
                             
-                            {/* BLANK STATUS & WEIGHT - Processing status and weight */}
+                            {/* PRODUCT INFO - Category and product name */}
                             <div className="text-xs text-gray-500 font-light">
-                              {blank.status} • {blank.weight}kg
+                              {blank.productCategory && blank.productName
+                                ? `${blank.productCategory} • ${blank.productName}`
+                                : `${blank.weight}kg`}
                             </div>
                           </div>
                           
                           {/* Item type label */}
                           <div className="text-xs text-gray-500 font-light">
-                            Blank Item
+                            {blank.weight}kg
                           </div>
                         </div>
                       </Link>
@@ -940,17 +942,22 @@ export default function TrackItem() {
                               {item.id}
                             </div>
                             
-                            {/* ITEM STATUS & SERIAL - Processing status and optional serial number */}
+                            {/* PRODUCT INFO - Category and product name */}
                             <div className="text-xs text-gray-500 font-light">
-                              {item.status}
-                              {item.serialNumber && ` • Serial: ${item.serialNumber}`}
+                              {item.productCategory && item.productName
+                                ? `${item.productCategory} • ${item.productName}`
+                                : item.serialNumber
+                                  ? `Serial: ${item.serialNumber}`
+                                  : 'Finished Item'}
                             </div>
                           </div>
                           
-                          {/* Item type label */}
-                          <div className="text-xs text-gray-500 font-light">
-                            Finished Item
-                          </div>
+                          {/* Serial number if available */}
+                          {item.serialNumber && (
+                            <div className="text-xs text-gray-500 font-light">
+                              #{item.serialNumber}
+                            </div>
+                          )}
                         </div>
                       </Link>
                     ))}
