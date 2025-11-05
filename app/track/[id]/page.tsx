@@ -894,10 +894,10 @@ export default function TrackItem() {
                               {blank.id}
                             </div>
                             
-                            {/* PRODUCT INFO - Category and product name */}
+                            {/* PRODUCT INFO - Type and product name */}
                             <div className="text-xs text-gray-500 font-light">
-                              {blank.productCategory && blank.productName
-                                ? `${blank.productCategory} • ${blank.productName}`
+                              {blank.productType && blank.productName
+                                ? `${blank.productType} • ${blank.productName}`
                                 : `${blank.weight}kg`}
                             </div>
                           </div>
@@ -942,10 +942,10 @@ export default function TrackItem() {
                               {item.id}
                             </div>
                             
-                            {/* PRODUCT INFO - Category and product name */}
+                            {/* PRODUCT INFO - Type and product name */}
                             <div className="text-xs text-gray-500 font-light">
-                              {item.productCategory && item.productName
-                                ? `${item.productCategory} • ${item.productName}`
+                              {item.productType && item.productName
+                                ? `${item.productType} • ${item.productName}`
                                 : item.serialNumber
                                   ? `Serial: ${item.serialNumber}`
                                   : 'Finished Item'}
