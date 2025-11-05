@@ -117,58 +117,22 @@ export async function GET(
     } else if (collectionType === 'batch') {
       // Look up batch record using string ID (QR code)
       record = await db.collection('batches').findOne({ _id: id } as any) as Batch | null;
+      if (record) {
+        // Get the first bin for organization lookup (batches can come from multiple bins)
+        const batchRecord = record as Batch;
+        if (batchRecord.binIds && batchRecord.binIds.length > 0) {
+          const bin = await db.collection('bins').findOne({ _id: batchRecord.binIds[0] } as any) as Bin | null;
+          if (bin) {
+            org = await db.collection('orgs').findOne({ _id: new ObjectId(bin.orgId) });
+          }
+        }
+      }
       
       if (!record) {
         return NextResponse.json({ error: 'Batch not found' }, { status: 404 });
       }
       
       const batchRecord = record as Batch;
-      
-      // Collect all unique organizations from all bins in this batch
-      const orgIds = new Set<string>();
-      if (batchRecord.binIds && batchRecord.binIds.length > 0) {
-        const bins = await db.collection('bins')
-          .find({ _id: { $in: batchRecord.binIds } } as any)
-          .toArray() as Bin[];
-        
-        bins.forEach(bin => {
-          if (bin.orgId) orgIds.add(bin.orgId.toString());
-        });
-      }
-      
-      // Fetch all unique organizations
-      const origins = [];
-      if (orgIds.size > 0) {
-        const orgObjectIds = Array.from(orgIds).map(id => {
-          try {
-            return new ObjectId(id);
-          } catch {
-            return id;
-          }
-        });
-        
-        const orgs = await db.collection('orgs')
-          .find({ _id: { $in: orgObjectIds } } as any)
-          .toArray();
-        
-        origins.push(...orgs.map(o => ({
-          id: o._id.toString(),
-          name: o.name,
-          type: o.orgType,
-          description: o.description,
-          branding: o.branding
-        })));
-      }
-      
-      // Keep 'organization' for backward compatibility (first org)
-      if (origins.length > 0) {
-        const firstOrgId = Array.from(orgIds)[0];
-        try {
-          org = await db.collection('orgs').findOne({ _id: new ObjectId(firstOrgId) });
-        } catch {
-          org = await db.collection('orgs').findOne({ _id: firstOrgId } as any);
-        }
-      }
       
       // Fetch blanks produced from this batch
       const producedBlanks = await db.collection('blanks')
@@ -198,7 +162,6 @@ export async function GET(
           description: org.description,
           branding: org.branding
         } : null,
-        origins: origins.length > 0 ? origins : null,
         message: org?.branding?.trackingPageMessage || 'This plastic has been collected and is being processed.',
         producedBlanks: producedBlanks.map((blank: any) => ({
           id: blank._id,
@@ -219,76 +182,31 @@ export async function GET(
     } else if (collectionType === 'blank') {
       // Look up blank record using string ID (QR code)
       record = await db.collection('blanks').findOne({ _id: id } as any) as Blank | null;
+      let batch: Batch | null = null;
+      if (record) {
+        const blankRecord = record as Blank;
+        // batchIds is now an array, get the first batch for organization lookup
+        batch = blankRecord.batchIds && blankRecord.batchIds.length > 0
+          ? await db.collection('batches').findOne({ _id: blankRecord.batchIds[0] } as any) as Batch | null
+          : null;
+        if (batch) {
+          // Get the first bin for organization lookup (batches can come from multiple bins)
+          if (batch.binIds && batch.binIds.length > 0) {
+            const bin = await db.collection('bins').findOne({ _id: batch.binIds[0] } as any) as Bin | null;
+            if (bin) {
+              org = await db.collection('orgs').findOne({ _id: new ObjectId(bin.orgId) });
+            }
+          }
+        }
+      }
       
       if (!record) {
         return NextResponse.json({ error: 'Blank not found' }, { status: 404 });
       }
       
-      const blankRecord = record as Blank;
-      
-      // Collect all unique organizations from all batches -> bins
-      const orgIds = new Set<string>();
-      let batch: Batch | null = null; // Keep first batch for materialType
-      
-      if (blankRecord.batchIds && blankRecord.batchIds.length > 0) {
-        const batches = await db.collection('batches')
-          .find({ _id: { $in: blankRecord.batchIds } } as any)
-          .toArray() as Batch[];
-        
-        // Store first batch for materialType
-        if (batches.length > 0) {
-          batch = batches[0];
-        }
-        
-        for (const batchItem of batches) {
-          if (batchItem.binIds && batchItem.binIds.length > 0) {
-            const bins = await db.collection('bins')
-              .find({ _id: { $in: batchItem.binIds } } as any)
-              .toArray() as Bin[];
-            
-            bins.forEach(bin => {
-              if (bin.orgId) orgIds.add(bin.orgId.toString());
-            });
-          }
-        }
-      }
-      
-      // Fetch all unique organizations
-      const origins = [];
-      if (orgIds.size > 0) {
-        const orgObjectIds = Array.from(orgIds).map(id => {
-          try {
-            return new ObjectId(id);
-          } catch {
-            return id;
-          }
-        });
-        
-        const orgs = await db.collection('orgs')
-          .find({ _id: { $in: orgObjectIds } } as any)
-          .toArray();
-        
-        origins.push(...orgs.map(o => ({
-          id: o._id.toString(),
-          name: o.name,
-          type: o.orgType,
-          description: o.description,
-          branding: o.branding
-        })));
-      }
-      
-      // Keep 'organization' for backward compatibility (first org)
-      if (origins.length > 0) {
-        const firstOrgId = Array.from(orgIds)[0];
-        try {
-          org = await db.collection('orgs').findOne({ _id: new ObjectId(firstOrgId) });
-        } catch {
-          org = await db.collection('orgs').findOne({ _id: firstOrgId } as any);
-        }
-      }
-      
       // Get user details if assigned
       let userDetails = null;
+      const blankRecord = record as Blank;
       if (blankRecord.userId) {
         userDetails = await db.collection('users').findOne({ _id: new ObjectId(blankRecord.userId) });
       }
@@ -324,7 +242,6 @@ export async function GET(
           description: org.description,
           branding: org.branding
         } : null,
-        origins: origins.length > 0 ? origins : null,
         message: org?.branding?.trackingPageMessage || 'This item represents the transformation of waste into useful products.',
         producedItems: producedItems.map((item: any) => ({
           id: item._id,
