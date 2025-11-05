@@ -45,19 +45,19 @@ export default function Footer() {
             </h3>
             <div className="space-y-2">
               <Link
-                href="/track"
+                href="/about"
                 className="block text-sm text-gray-500 hover:text-white transition-colors"
               >
                 About
               </Link>
               <Link
-                href="#"
+                href="/products"
                 className="block text-sm text-gray-500 hover:text-white transition-colors"
               >
                 Products
               </Link>
               <Link
-                href="#"
+                href="/services"
                 className="block text-sm text-gray-500 hover:text-white transition-colors"
               >
                 Services
