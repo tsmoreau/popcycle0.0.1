@@ -369,6 +369,14 @@ export default function TrackItem() {
                 </div>
               )}
 
+              {/* EVENT - Single event display for Bins (flat field pattern) */}
+              {idStartsWith("B") && data.event && (
+                <div className="flex justify-between font-light">
+                  <span className="text-gray-600">Event</span>
+                  <span className="font-mono">{data.event}</span>
+                </div>
+              )}
+
               {/* ==================== PHYSICAL ATTRIBUTES ==================== */}
               
               {/* LOCATION - Physical location with map pin icon */}
@@ -685,19 +693,19 @@ export default function TrackItem() {
             </div>
           )}
 
-          {/* EVENT DETAILS ACCORDION - Collection event information (if bin is associated with an event) */}
-          {data.event && data.event.trim() && (
+          {/* EVENT DETAILS ACCORDION FOR BINS - Collection event information (flat field pattern) */}
+          {idStartsWith("B") && data.event && data.event.trim() && (
             <div className="pt-6">
               <Accordion type="single" collapsible className="border-0">
                 <AccordionItem value="event-details" className="border-0">
                   
                   {/* Accordion trigger */}
-                  <AccordionTrigger className="text-sm text-gray-600 font-light hover:no-underline py-2 ">
+                  <AccordionTrigger className="text-sm text-gray-600 font-light hover:no-underline py-2">
                     Event Details
                   </AccordionTrigger>
                   
-                  <AccordionContent className="px-0 pt-2 pb-0">
-                    <div className="space-y-3 text-sm  mb-4">
+                  <AccordionContent className="px-0 pt-1 pb-0">
+                    <div className="space-y-3 text-sm mb-4">
                       
                       {/* EVENT NAME - Name of the collection event */}
                       <div className="flex justify-between font-light">
@@ -715,7 +723,7 @@ export default function TrackItem() {
                       
                       {/* EVENT DESCRIPTION - Detailed description of the event */}
                       {data.eventDescription && (
-                        <div className=" pt-1">
+                        <div className="pt-1">
                           <div className="italic text-gray-600 block mb-2 font-light text-sm">
                             Event Description:
                           </div>
@@ -730,6 +738,56 @@ export default function TrackItem() {
                   </AccordionContent>
                 </AccordionItem>
               </Accordion>
+            </div>
+          )}
+
+          {/* EVENT DETAILS ACCORDIONS FOR BATCHES/BLANKS/ITEMS - Loop through events array */}
+          {!idStartsWith("B") && data.events && data.events.length > 0 && (
+            <div className="pt-6 space-y-4">
+              {data.events.map((event: any) => (
+                <Accordion key={event.eventId} type="single" collapsible className="border-0">
+                  <AccordionItem value={`event-${event.eventId}`} className="border-0">
+                    
+                    {/* Accordion trigger with event name */}
+                    <AccordionTrigger className="text-sm text-gray-600 font-light hover:no-underline py-2">
+                      Event Details: {event.name}
+                    </AccordionTrigger>
+                    
+                    <AccordionContent className="px-0 pt-1 pb-0">
+                      <div className="space-y-3 text-sm mb-4">
+                        
+                        {/* EVENT NAME - Name of the collection event */}
+                        <div className="flex justify-between font-light">
+                          <span className="text-gray-600">Event Name</span>
+                          <span className="font-mono">{event.name}</span>
+                        </div>
+                        
+                        {/* EVENT SCHEDULED DATE - When the event is/was scheduled */}
+                        {event.scheduledDate && (
+                          <div className="flex justify-between font-light">
+                            <span className="text-gray-600">Scheduled Date</span>
+                            <span className="font-mono">{formatDate(event.scheduledDate)}</span>
+                          </div>
+                        )}
+                        
+                        {/* EVENT DESCRIPTION - Detailed description of the event */}
+                        {event.description && (
+                          <div className="pt-1">
+                            <div className="italic text-gray-600 block mb-2 font-light text-sm">
+                              Event Description:
+                            </div>
+                            <div className="w-full flex justify-center mx-auto">
+                              <div className="italic w-2/3 py-6 text-sm text-center font-light text-gray-700">
+                                {event.description}
+                              </div>
+                            </div>
+                          </div>
+                        )}
+                      </div>
+                    </AccordionContent>
+                  </AccordionItem>
+                </Accordion>
+              ))}
             </div>
           )}
           
