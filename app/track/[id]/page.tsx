@@ -667,14 +667,14 @@ export default function TrackItem() {
 
         {/* EVENT DETAILS ACCORDIONS FOR BATCHES/BLANKS/ITEMS - Loop through events array */}
         {!idStartsWith("B") && data.events && data.events.length > 0 && (
-          <div className="pb-4 border-b border-gray-200 mt-2 flex flex-col gap-y-1 mx-6">
+          <div className="pb-4 border-b border-gray-200 mt-1 flex flex-col gap-y-1 mx-6">
             {data.events.map((event: any) => (
               <Accordion key={event.eventId} type="single" collapsible className="border-0">
                 <AccordionItem value={`event-${event.eventId}`} className="border-0">
                   
                   {/* Accordion trigger with event name */}
                   <AccordionTrigger className="text-sm text-gray-600 font-light hover:no-underline py-1">
-                    Event Details: {event.name}
+                    Event Details
                   </AccordionTrigger>
                   
                   <AccordionContent className="px-0 pt-1 pb-0">
@@ -697,11 +697,11 @@ export default function TrackItem() {
                       {/* EVENT DESCRIPTION - Detailed description of the event */}
                       {event.description && (
                         <div className="pt-1">
-                          <div className="italic text-gray-600 block mb-2 font-light text-sm">
+                          <div className=" text-gray-600 block mb-2 font-light text-sm">
                             Event Description:
                           </div>
                           <div className="w-full flex justify-center mx-auto">
-                            <div className="italic w-2/3 py-6 text-sm text-center font-light text-gray-700">
+                            <div className="italic w-2/3 pt-8 pb-2 text-sm text-center font-light text-gray-700">
                               {event.description}
                             </div>
                           </div>
@@ -1026,7 +1026,7 @@ export default function TrackItem() {
 
          {/* ========== FOOTER INFO ========== */}
         
-         <div className="mb-12 mt-8 text-sm font-light items-center justify-center flex w-full text-cnter font-jost mt-1">*****************</div>
+         <div className="mb-12 mt-6 text-sm font-light items-center justify-center flex w-full text-cnter font-jost mt-1">*****************</div>
 
         
       </div>
