@@ -692,12 +692,12 @@ export default function TrackItem() {
                 <AccordionItem value="event-details" className="border-0">
                   
                   {/* Accordion trigger */}
-                  <AccordionTrigger className="text-sm text-gray-600 font-light hover:no-underline py-2">
+                  <AccordionTrigger className="text-sm text-gray-600 font-light hover:no-underline py-2 ">
                     Event Details
                   </AccordionTrigger>
                   
                   <AccordionContent className="px-0 pt-2 pb-0">
-                    <div className="space-y-3 text-sm">
+                    <div className="space-y-3 text-sm  mb-4">
                       
                       {/* EVENT NAME - Name of the collection event */}
                       <div className="flex justify-between font-light">
@@ -715,13 +715,15 @@ export default function TrackItem() {
                       
                       {/* EVENT DESCRIPTION - Detailed description of the event */}
                       {data.eventDescription && (
-                        <div className="border-t border-gray-200 pt-3">
-                          <div className="text-gray-600 block mb-2 font-light text-sm">
+                        <div className=" pt-1">
+                          <div className="italic text-gray-600 block mb-2 font-light text-sm">
                             Event Description:
                           </div>
-                          <div className="text-sm font-light text-gray-700">
+                          <div className="w-full flex justify-center mx-auto">
+                          <div className="italic w-2/3 py-6 text-sm text-center font-light text-gray-700">
                             {data.eventDescription}
                           </div>
+                            </div>
                         </div>
                       )}
                     </div>
