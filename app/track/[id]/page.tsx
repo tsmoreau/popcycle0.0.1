@@ -152,15 +152,7 @@ export default function TrackItem() {
     );
   }
 
-  // Derived logic using direct API data
-  const isUncollected = idStartsWith("B") && !data.collectionDate && !data.lastCollectionDate;
-  const isSourceOnly = !data.productId;
-  const isProcessed = !!data.processedDate || data.status === "inventory_creation";
-  const isCharity = !!data.donatingEntity;
-  const isComplete = !!data.deliveredDate;
-  const hasMaker = !!data.makerDetails;
-
-  // Impact metrics calculation
+  // Impact metrics calculation (kept for potential future use)
   const impactMetrics = data.impactMetrics?.carbonSaved
     ? {
         carbonSaved: data.impactMetrics.carbonSaved,
@@ -239,90 +231,6 @@ export default function TrackItem() {
         return "Delivered";
       default:
         return status;
-    }
-  };
-
-  const getProcessingStatusBadge = (status: string) => {
-    switch (status) {
-      case "collected":
-        return (
-          <Badge className="bg-gray-500 text-white font-light">
-            <Package className="h-3 w-3 mr-1" />
-            Collected
-          </Badge>
-        );
-      case "rough_wash":
-        return (
-          <Badge className="bg-gray-600 text-white font-light">
-            <Droplets className="h-3 w-3 mr-1" />
-            Rough Wash
-          </Badge>
-        );
-      case "sort":
-        return (
-          <Badge className="bg-gray-700 text-white font-light">
-            <Scissors className="h-3 w-3 mr-1" />
-            Sort
-          </Badge>
-        );
-      case "first_dry":
-        return (
-          <Badge className="bg-gray-500 text-white font-light">
-            <Wind className="h-3 w-3 mr-1" />
-            First Dry
-          </Badge>
-        );
-      case "shred":
-        return (
-          <Badge className="bg-gray-600 text-white font-light">
-            <ShredIcon className="h-3 w-3 mr-1" />
-            Shred
-          </Badge>
-        );
-      case "fine_wash":
-        return (
-          <Badge className="bg-gray-700 text-white font-light">
-            <Droplets className="h-3 w-3 mr-1" />
-            Fine Wash
-          </Badge>
-        );
-      case "second_dry":
-        return (
-          <Badge className="bg-gray-600 text-white font-light">
-            <Wind className="h-3 w-3 mr-1" />
-            Second Dry
-          </Badge>
-        );
-      case "press":
-        return (
-          <Badge className="bg-gray-700 text-white font-light">
-            <Archive className="h-3 w-3 mr-1" />
-            Press
-          </Badge>
-        );
-      case "weigh_photo":
-        return (
-          <Badge className="bg-gray-600 text-white font-light">
-            <Scale className="h-3 w-3 mr-1" />
-            Weigh & Photo
-          </Badge>
-        );
-      case "laser_marking":
-        return (
-          <Badge className="bg-gray-700 text-white font-light">
-            <Zap className="h-3 w-3 mr-1" />
-            Laser Marking
-          </Badge>
-        );
-      case "inventory_creation":
-        return (
-          <Badge className="bg-black text-white font-light">
-            <Settings className="h-3 w-3 mr-1" />
-            Inventory Creation
-          </Badge>
-        );
-      default:
-        return <Badge variant="outline" className="font-light">{status}</Badge>;
     }
   };
 
@@ -409,60 +317,6 @@ export default function TrackItem() {
                   </span>
                   <span className="font-mono">{data.id}</span>
                 </div>
-
-                {/* BIN IDs - Shows source bin(s) for batches (clickable links) */}
-                {data.binIds && data.binIds.length > 0 && (
-                  <div className="hidden flex justify-between font-light">
-                    <span className="text-gray-600">Bin IDs</span>
-                    <div className="space-y-1 text-right">
-                      {data.binIds.map((binId: string) => (
-                        <Link
-                          key={binId}
-                          href={`/track/${binId}`}
-                          className="block font-mono text-black hover:text-gray-600 hover:underline"
-                        >
-                          {binId}
-                        </Link>
-                      ))}
-                    </div>
-                  </div>
-                )}
-
-                {/* BATCH IDs - Shows source batch(es) for blanks (clickable links) */}
-                {data.batchIds && data.batchIds.length > 0 && (
-                  <div className="hidden flex justify-between font-light">
-                    <span className="text-gray-600">Batch IDs</span>
-                    <div className="space-y-1 text-right">
-                      {data.batchIds.map((batchId: string) => (
-                        <Link
-                          key={batchId}
-                          href={`/track/${batchId}`}
-                          className="block font-mono text-black hover:text-gray-600 hover:underline"
-                        >
-                          {batchId}
-                        </Link>
-                      ))}
-                    </div>
-                  </div>
-                )}
-
-                {/* BLANK IDs - Shows source blank(s) for items (clickable links) */}
-                {data.blankIds && data.blankIds.length > 0 && (
-                  <div className="hidden flex justify-between font-light">
-                    <span className="text-gray-600">Blank IDs</span>
-                    <div className="space-y-1 text-right">
-                      {data.blankIds.map((blankId: string) => (
-                        <Link
-                          key={blankId}
-                          href={`/track/${blankId}`}
-                          className="block font-mono text-black hover:text-gray-600 hover:underline"
-                        >
-                          {blankId}
-                        </Link>
-                      ))}
-                    </div>
-                  </div>
-                )}
               </div>
 
               {/* ==================== SUPPLY CHAIN HISTORY ==================== */}
@@ -479,14 +333,28 @@ export default function TrackItem() {
             {/* --- Continuing source details --- */}
             <div className="px-6 space-y-3 text-sm">
               
-              {/* ORIGINS - Multi-origin display for Items (array of origin objects) */}
-              {idStartsWith("I") && data.origins && data.origins.length > 0 && (
+              {/* ORIGINS - Multi-origin display for Items/Batches/Blanks (array of origin objects) */}
+              {data.origins && data.origins.length > 0 && (
                 <div className="flex justify-between font-light">
                   <span className="text-gray-600">{data.origins.length === 1 ? "Origin" : "Origins"}</span>
                   <div className="space-y-2 text-right">
                     {data.origins.map((origin: any) => (
                       <div key={origin.id} className="font-mono text-black">
                         {origin.name}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {/* EVENTS - Multi-event display for Items/Batches/Blanks (array of event objects) */}
+              {data.events && data.events.length > 0 && (
+                <div className="flex justify-between font-light">
+                  <span className="text-gray-600">{data.events.length === 1 ? "Event" : "Events"}</span>
+                  <div className="space-y-2 text-right">
+                    {data.events.map((event: any) => (
+                      <div key={event.eventId} className="font-mono text-black">
+                        {event.name}
                       </div>
                     ))}
                   </div>
@@ -932,104 +800,6 @@ export default function TrackItem() {
                     <div className="w-full flex mx-auto justify-center">
                     <div className="text-center my-4 w-2/3 italic text-sm font-light">{data.productDetails.description}</div>
                       </div>
-                  </div>
-                )}
-              </CardContent>
-            </Card>
-
-            {/* ========================================
-                MAKER DETAILS SECTION (Hidden)
-                Person who assembled the item - includes CTA if not registered
-                ======================================== */}
-            <Card className="hidden border border-gray-300">
-              <CardHeader className="pb-3">
-                <CardTitle className="text-sm font-light flex items-center">
-                  <User className="w-4 h-4 mr-2" />
-                  Maker Details
-                </CardTitle>
-              </CardHeader>
-              
-              <CardContent className="space-y-3 text-sm">
-                {data.makerDetails ? (
-                  // REGISTERED MAKER STATE - Shows when maker has registered
-                  <>
-                    {/* MAKER NAME - Name of person who assembled the item */}
-                    <div className="flex justify-between font-light">
-                      <span className="text-gray-600">Maker</span>
-                      <span className="font-medium">
-                        {data.makerDetails.name}
-                      </span>
-                    </div>
-                    
-                    {/* MAKER LOCATION - Where the maker is located */}
-                    <div className="flex justify-between items-center font-light">
-                      <span className="text-gray-600">Location</span>
-                      <span className="flex items-center">
-                        <MapPin className="w-4 h-4 mr-1" />
-                        {data.makerDetails.location}
-                      </span>
-                    </div>
-                    
-                    {/* ASSEMBLY DATE - When the item was assembled by the maker */}
-                    <div className="flex justify-between items-center font-light">
-                      <span className="text-gray-600">Assembled</span>
-                      <span className="flex items-center">
-                        <Calendar className="w-4 h-4 mr-1" />
-                        {formatDate(data.makerDetails.assemblyDate)}
-                      </span>
-                    </div>
-                    
-                    {/* MAKER STORY - Personal story from the maker about assembling the item */}
-                    {data.makerDetails.story && (
-                      <div className="border-t border-gray-200 pt-3">
-                        <span className="text-gray-500 block mb-2 font-light text-xs">
-                          Maker Story
-                        </span>
-                        <p className="text-sm italic leading-relaxed font-light">
-                          {data.makerDetails.story}
-                        </p>
-                      </div>
-                    )}
-                    
-                    {/* COMPLETION STATUS - Visual indicator that maker journey is complete */}
-                    <div className="border-t border-gray-200 pt-3 flex items-center justify-center">
-                      <div className="flex items-center text-black text-sm font-light">
-                        <Heart className="w-4 h-4 mr-1 fill-current" />
-                        <span>
-                          Maker Journey Complete
-                        </span>
-                      </div>
-                    </div>
-                  </>
-                ) : (
-                  // UNREGISTERED STATE - CTA to register as maker
-                  <div className="text-center py-8">
-                    {/* Icon placeholder */}
-                    <div className="w-16 h-16 mx-auto mb-4 border-2 border-dashed border-gray-300 flex items-center justify-center">
-                      <Plus className="w-8 h-8 text-gray-400" />
-                    </div>
-                    
-                    {/* CTA heading */}
-                    <h3 className="text-base mb-2 font-light">
-                      Complete Your Maker Journey
-                    </h3>
-                    
-                    {/* CTA description - varies based on charity status */}
-                    <p className="text-sm text-gray-600 mb-6 leading-relaxed font-light">
-                      {isCharity
-                        ? `Did you assemble this item${data.destination ? ` at ${data.destination}` : ""}? Share your story and connect this donation to its educational impact.`
-                        : "Did you assemble this item? Share your story and become part of the circular economy narrative."}
-                    </p>
-                    
-                    {/* Register button */}
-                    <button className="w-full bg-black text-white font-light py-3 px-6 border border-gray-300 hover:bg-gray-800 transition-colors text-sm">
-                      Register as Maker
-                    </button>
-                    
-                    {/* Email verification note */}
-                    <p className="text-xs text-gray-500 mt-3 font-light">
-                      Email verification required
-                    </p>
                   </div>
                 )}
               </CardContent>

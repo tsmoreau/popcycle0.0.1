@@ -19,6 +19,194 @@ function getCollectionType(qrCode: string): 'bin' | 'batch' | 'blank' | 'item' |
   }
 }
 
+// Supply chain traversal result
+interface SupplyChainData {
+  binMap: Map<string, Bin>;
+  batchMap: Map<string, Batch>;
+  blankMap: Map<string, Blank>;
+  orgIds: Set<string>;
+  eventIds: Set<string>;
+}
+
+// Traverse supply chain upward from batch/blank/item to collect all related records
+async function traceSupplyChain(
+  db: any,
+  options: {
+    batchIds?: string[];
+    blankIds?: string[];
+    itemRecord?: Item;
+  }
+): Promise<SupplyChainData> {
+  const binMap = new Map<string, Bin>();
+  const batchMap = new Map<string, Batch>();
+  const blankMap = new Map<string, Blank>();
+  const orgIds = new Set<string>();
+  const eventIds = new Set<string>();
+
+  // Helper to collect bins and extract orgIds/eventIds
+  async function collectBinsFromBatchIds(batchIdsToProcess: string[]) {
+    if (!batchIdsToProcess || batchIdsToProcess.length === 0) return;
+    
+    const batches = await db.collection<Batch>('batches')
+      .find({ _id: { $in: batchIdsToProcess } })
+      .toArray();
+    
+    for (const batch of batches) {
+      batchMap.set(batch._id, batch);
+      
+      if (batch.binIds && batch.binIds.length > 0) {
+        const bins = await db.collection<Bin>('bins')
+          .find({ _id: { $in: batch.binIds } })
+          .toArray();
+        
+        for (const bin of bins) {
+          binMap.set(bin._id, bin);
+          if (bin.orgId) orgIds.add(bin.orgId.toString());
+          if (bin.eventId) eventIds.add(bin.eventId);
+        }
+      }
+    }
+  }
+
+  // Process from item (three paths: via blanks, direct batches, or direct bins)
+  if (options.itemRecord) {
+    // Path 1: Item -> Blanks -> Batches -> Bins
+    if (options.itemRecord.blankIds && options.itemRecord.blankIds.length > 0) {
+      const blanks = await db.collection<Blank>('blanks')
+        .find({ _id: { $in: options.itemRecord.blankIds } })
+        .toArray();
+      
+      const batchIdsFromBlanks: string[] = [];
+      for (const blank of blanks) {
+        blankMap.set(blank._id, blank);
+        if (blank.batchIds) {
+          batchIdsFromBlanks.push(...blank.batchIds);
+        }
+      }
+      
+      await collectBinsFromBatchIds(batchIdsFromBlanks);
+    }
+    
+    // Path 2: Item -> Batches -> Bins
+    if (options.itemRecord.batchIds && options.itemRecord.batchIds.length > 0) {
+      await collectBinsFromBatchIds(options.itemRecord.batchIds);
+    }
+    
+    // Path 3: Item -> Bins (direct bin references)
+    if (options.itemRecord.binIds && options.itemRecord.binIds.length > 0) {
+      const bins = await db.collection<Bin>('bins')
+        .find({ _id: { $in: options.itemRecord.binIds } })
+        .toArray();
+      
+      for (const bin of bins) {
+        binMap.set(bin._id, bin);
+        if (bin.orgId) orgIds.add(bin.orgId.toString());
+        if (bin.eventId) eventIds.add(bin.eventId);
+      }
+    }
+  }
+  
+  // Process from blank
+  if (options.blankIds && options.blankIds.length > 0) {
+    const blanks = await db.collection<Blank>('blanks')
+      .find({ _id: { $in: options.blankIds } })
+      .toArray();
+    
+    const batchIdsFromBlanks: string[] = [];
+    for (const blank of blanks) {
+      blankMap.set(blank._id, blank);
+      if (blank.batchIds) {
+        batchIdsFromBlanks.push(...blank.batchIds);
+      }
+    }
+    
+    await collectBinsFromBatchIds(batchIdsFromBlanks);
+  }
+  
+  // Process from batch
+  if (options.batchIds && options.batchIds.length > 0) {
+    await collectBinsFromBatchIds(options.batchIds);
+  }
+
+  return { binMap, batchMap, blankMap, orgIds, eventIds };
+}
+
+// Fetch and format organizations from collected orgIds
+async function fetchOrigins(db: any, orgIds: Set<string>) {
+  if (orgIds.size === 0) return [];
+  
+  const orgObjectIds: ObjectId[] = Array.from(orgIds)
+    .map(id => {
+      try {
+        return new ObjectId(id);
+      } catch {
+        return null;
+      }
+    })
+    .filter((id): id is ObjectId => id !== null);
+  
+  const orgs = await db.collection('orgs')
+    .find({ _id: { $in: orgObjectIds } })
+    .toArray();
+  
+  return orgs.map(o => ({
+    id: o._id.toString(),
+    name: o.name,
+    type: o.orgType,
+    description: o.description,
+    branding: o.branding
+  }));
+}
+
+// Fetch and format events from collected eventIds
+async function fetchEvents(db: any, eventIds: Set<string>) {
+  if (eventIds.size === 0) return [];
+  
+  const events = await db.collection('events')
+    .find({ eventId: { $in: Array.from(eventIds) } })
+    .toArray();
+  
+  return events.map(e => ({
+    eventId: e.eventId,
+    name: e.name,
+    description: e.description,
+    scheduledDate: e.scheduledDate,
+    type: e.type
+  }));
+}
+
+// Enrich items/blanks with product details
+async function enrichWithProducts<T extends { productId?: any }>(
+  db: any,
+  items: T[]
+): Promise<Array<T & { productName?: string; productType?: string }>> {
+  return Promise.all(
+    items.map(async (item) => {
+      let productInfo = null;
+      if (item.productId) {
+        try {
+          const product = await db.collection('products').findOne({ 
+            _id: new ObjectId(item.productId) 
+          });
+          if (product) {
+            productInfo = {
+              name: product.name,
+              productType: product.productType
+            };
+          }
+        } catch {
+          // Invalid ObjectId, skip product lookup
+        }
+      }
+      return {
+        ...item,
+        productName: productInfo?.name || undefined,
+        productType: productInfo?.productType || undefined
+      };
+    })
+  );
+}
+
 export async function GET(
   request: NextRequest,
   { params }: { params: Promise<{ id: string }> }
@@ -123,26 +311,22 @@ export async function GET(
       
       const batchRecord = record as Batch;
       
-      // Trace back through supply chain to collect bins
-      const binMap = new Map<string, any>();
-      let org = null;
+      // Trace supply chain and collect related data
+      const { binMap, orgIds, eventIds } = await traceSupplyChain(db, { 
+        batchIds: [batchRecord._id] 
+      });
       
-      // Batch -> Bins -> Org
-      if (batchRecord.binIds && batchRecord.binIds.length > 0) {
-        const bins = await db.collection<Bin>('bins')
-          .find({ _id: { $in: batchRecord.binIds } })
-          .toArray();
-        
-        for (const bin of bins) {
-          binMap.set(bin._id, bin);
-          // Get org from first bin for organization lookup
-          if (!org && bin.orgId) {
-            try {
-              org = await db.collection('orgs').findOne({ _id: new ObjectId(bin.orgId) });
-            } catch (error) {
-              org = null;
-            }
-          }
+      // Fetch origins and events
+      const origins = await fetchOrigins(db, orgIds);
+      const events = await fetchEvents(db, eventIds);
+      
+      // Get first org for backward compatibility
+      let org = null;
+      if (origins.length > 0) {
+        try {
+          org = await db.collection('orgs').findOne({ _id: new ObjectId(origins[0].id) });
+        } catch {
+          org = null;
         }
       }
       
@@ -158,51 +342,20 @@ export async function GET(
         .limit(50)
         .toArray();
       
-      // Fetch product details for blanks
-      const blanksWithProducts = await Promise.all(
-        producedBlanks.map(async (blank: any) => {
-          let productInfo = null;
-          if (blank.productId) {
-            const product = await db.collection('products').findOne({ _id: new ObjectId(blank.productId) });
-            if (product) {
-              productInfo = {
-                name: product.name,
-                productType: product.productType
-              };
-            }
-          }
-          return {
-            id: blank._id,
-            status: blank.status,
-            weight: blank.weight,
-            productName: productInfo?.name || null,
-            productType: productInfo?.productType || null
-          };
-        })
-      );
+      // Enrich with product details
+      const blanksWithProducts = await enrichWithProducts(db, producedBlanks.map(b => ({
+        id: b._id,
+        status: b.status,
+        weight: b.weight,
+        productId: b.productId
+      })));
       
-      // Fetch product details for items
-      const itemsWithProducts = await Promise.all(
-        producedItems.map(async (item: any) => {
-          let productInfo = null;
-          if (item.productId) {
-            const product = await db.collection('products').findOne({ _id: new ObjectId(item.productId) });
-            if (product) {
-              productInfo = {
-                name: product.name,
-                productType: product.productType
-              };
-            }
-          }
-          return {
-            id: item._id,
-            status: item.status,
-            serialNumber: item.serialNumber,
-            productName: productInfo?.name || null,
-            productType: productInfo?.productType || null
-          };
-        })
-      );
+      const itemsWithProducts = await enrichWithProducts(db, producedItems.map(i => ({
+        id: i._id,
+        status: i.status,
+        serialNumber: i.serialNumber,
+        productId: i.productId
+      })));
       
       return NextResponse.json({
         id: batchRecord._id,
@@ -220,6 +373,8 @@ export async function GET(
           description: org.description,
           branding: org.branding
         } : null,
+        origins: origins.length > 0 ? origins : null,
+        events: events.length > 0 ? events : null,
         message: org?.branding?.trackingPageMessage || 'This plastic has been collected and is being processed.',
         producedBlanks: blanksWithProducts,
         producedItems: itemsWithProducts,
@@ -244,37 +399,22 @@ export async function GET(
       
       const blankRecord = record as Blank;
       
-      // Trace back through supply chain to collect batches and bins
-      const batchMap = new Map<string, any>();
-      const binMap = new Map<string, any>();
-      let org = null;
+      // Trace supply chain and collect related data
+      const { binMap, batchMap, orgIds, eventIds } = await traceSupplyChain(db, {
+        blankIds: [blankRecord._id]
+      });
       
-      // Blank -> Batches -> Bins -> Org
-      if (blankRecord.batchIds && blankRecord.batchIds.length > 0) {
-        const batches = await db.collection<Batch>('batches')
-          .find({ _id: { $in: blankRecord.batchIds } })
-          .toArray();
-        
-        for (const batch of batches) {
-          batchMap.set(batch._id, batch);
-          
-          if (batch.binIds && batch.binIds.length > 0) {
-            const bins = await db.collection<Bin>('bins')
-              .find({ _id: { $in: batch.binIds } })
-              .toArray();
-            
-            for (const bin of bins) {
-              binMap.set(bin._id, bin);
-              // Get org from first bin for organization lookup
-              if (!org && bin.orgId) {
-                try {
-                  org = await db.collection('orgs').findOne({ _id: new ObjectId(bin.orgId) });
-                } catch (error) {
-                  org = null;
-                }
-              }
-            }
-          }
+      // Fetch origins and events
+      const origins = await fetchOrigins(db, orgIds);
+      const events = await fetchEvents(db, eventIds);
+      
+      // Get first org for backward compatibility
+      let org = null;
+      if (origins.length > 0) {
+        try {
+          org = await db.collection('orgs').findOne({ _id: new ObjectId(origins[0].id) });
+        } catch {
+          org = null;
         }
       }
       
@@ -290,28 +430,13 @@ export async function GET(
         .limit(50)
         .toArray();
       
-      // Fetch product details for items
-      const itemsWithProducts = await Promise.all(
-        producedItems.map(async (item: any) => {
-          let productInfo = null;
-          if (item.productId) {
-            const product = await db.collection('products').findOne({ _id: new ObjectId(item.productId) });
-            if (product) {
-              productInfo = {
-                name: product.name,
-                productType: product.productType
-              };
-            }
-          }
-          return {
-            id: item._id,
-            status: item.status,
-            serialNumber: item.serialNumber,
-            productName: productInfo?.name || null,
-            productType: productInfo?.productType || null
-          };
-        })
-      );
+      // Enrich with product details
+      const itemsWithProducts = await enrichWithProducts(db, producedItems.map(i => ({
+        id: i._id,
+        status: i.status,
+        serialNumber: i.serialNumber,
+        productId: i.productId
+      })));
       
       // Get material type from first batch
       const firstBatch = Array.from(batchMap.values())[0];
@@ -341,6 +466,8 @@ export async function GET(
           description: org.description,
           branding: org.branding
         } : null,
+        origins: origins.length > 0 ? origins : null,
+        events: events.length > 0 ? events : null,
         message: org?.branding?.trackingPageMessage || 'This item represents the transformation of waste into useful products.',
         producedItems: itemsWithProducts,
         batches: Array.from(batchMap.values()).map((batch: any) => ({
@@ -382,91 +509,14 @@ export async function GET(
         userDetails = await db.collection('users').findOne({ _id: new ObjectId(itemRecord.userId) });
       }
       
-      // Trace back through full supply chain to collect blanks, batches, bins, and organizations
-      const orgIds = new Set<string>();
-      const blankMap = new Map<string, any>();
-      const batchMap = new Map<string, any>();
-      const binMap = new Map<string, any>();
+      // Trace supply chain and collect related data
+      const { binMap, batchMap, blankMap, orgIds, eventIds } = await traceSupplyChain(db, {
+        itemRecord
+      });
       
-      // Path 1: Item -> Blanks -> Batches -> Bins -> OrgIds
-      if (itemRecord.blankIds && itemRecord.blankIds.length > 0) {
-        const blanks = await db.collection<Blank>('blanks')
-          .find({ _id: { $in: itemRecord.blankIds } })
-          .toArray();
-        
-        for (const blank of blanks) {
-          blankMap.set(blank._id, blank);
-          
-          if (blank.batchIds && blank.batchIds.length > 0) {
-            const batches = await db.collection<Batch>('batches')
-              .find({ _id: { $in: blank.batchIds } })
-              .toArray();
-            
-            for (const batch of batches) {
-              batchMap.set(batch._id, batch);
-              
-              if (batch.binIds && batch.binIds.length > 0) {
-                const bins = await db.collection<Bin>('bins')
-                  .find({ _id: { $in: batch.binIds } })
-                  .toArray();
-                
-                bins.forEach(bin => {
-                  binMap.set(bin._id, bin);
-                  if (bin.orgId) orgIds.add(bin.orgId.toString());
-                });
-              }
-            }
-          }
-        }
-      }
-      
-      // Path 2: Item -> Batches -> Bins -> OrgIds
-      if (itemRecord.batchIds && itemRecord.batchIds.length > 0) {
-        const batches = await db.collection<Batch>('batches')
-          .find({ _id: { $in: itemRecord.batchIds } })
-          .toArray();
-        
-        for (const batch of batches) {
-          batchMap.set(batch._id, batch);
-          
-          if (batch.binIds && batch.binIds.length > 0) {
-            const bins = await db.collection<Bin>('bins')
-              .find({ _id: { $in: batch.binIds } })
-              .toArray();
-            
-            bins.forEach(bin => {
-              binMap.set(bin._id, bin);
-              if (bin.orgId) orgIds.add(bin.orgId.toString());
-            });
-          }
-        }
-      }
-      
-      // Fetch all unique organizations
-      const origins = [];
-      if (orgIds.size > 0) {
-        const orgObjectIds: ObjectId[] = Array.from(orgIds)
-          .map(id => {
-            try {
-              return new ObjectId(id);
-            } catch {
-              return null;
-            }
-          })
-          .filter((id): id is ObjectId => id !== null);
-        
-        const orgs = await db.collection('orgs')
-          .find({ _id: { $in: orgObjectIds } })
-          .toArray();
-        
-        origins.push(...orgs.map(o => ({
-          id: o._id.toString(),
-          name: o.name,
-          type: o.orgType,
-          description: o.description,
-          branding: o.branding
-        })));
-      }
+      // Fetch origins and events
+      const origins = await fetchOrigins(db, orgIds);
+      const events = await fetchEvents(db, eventIds);
       
       // Keep 'organization' for backward compatibility (first org or product org)
       if (productDetails?.org) {
@@ -476,10 +526,8 @@ export async function GET(
           org = null;
         }
       } else if (origins.length > 0) {
-        // Use first origin as the main org for backward compatibility
-        const firstOrgId = Array.from(orgIds)[0];
         try {
-          org = await db.collection('orgs').findOne({ _id: new ObjectId(firstOrgId) });
+          org = await db.collection('orgs').findOne({ _id: new ObjectId(origins[0].id) });
         } catch {
           org = null;
         }
@@ -530,6 +578,7 @@ export async function GET(
           branding: org.branding
         } : null,
         origins: origins.length > 0 ? origins : null,
+        events: events.length > 0 ? events : null,
         blanks: Array.from(blankMap.values()).map((blank: any) => ({
           id: blank._id,
           weight: blank.weight,
