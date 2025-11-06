@@ -665,6 +665,56 @@ export default function TrackItem() {
           </div>
         )}
 
+        {/* EVENT DETAILS ACCORDIONS FOR BATCHES/BLANKS/ITEMS - Loop through events array */}
+        {!idStartsWith("B") && data.events && data.events.length > 0 && (
+          <div className="pb-4 border-b border-gray-200 mt-2 flex flex-col gap-y-1 mx-6">
+            {data.events.map((event: any) => (
+              <Accordion key={event.eventId} type="single" collapsible className="border-0">
+                <AccordionItem value={`event-${event.eventId}`} className="border-0">
+                  
+                  {/* Accordion trigger with event name */}
+                  <AccordionTrigger className="text-sm text-gray-600 font-light hover:no-underline py-1">
+                    Event Details: {event.name}
+                  </AccordionTrigger>
+                  
+                  <AccordionContent className="px-0 pt-1 pb-0">
+                    <div className="space-y-3 text-sm mb-4">
+                      
+                      {/* EVENT NAME - Name of the collection event */}
+                      <div className="flex justify-between font-light">
+                        <span className="text-gray-600">Event Name</span>
+                        <span className="font-mono">{event.name}</span>
+                      </div>
+                      
+                      {/* EVENT SCHEDULED DATE - When the event is/was scheduled */}
+                      {event.scheduledDate && (
+                        <div className="flex justify-between font-light">
+                          <span className="text-gray-600">Scheduled Date</span>
+                          <span className="font-mono">{formatDate(event.scheduledDate)}</span>
+                        </div>
+                      )}
+                      
+                      {/* EVENT DESCRIPTION - Detailed description of the event */}
+                      {event.description && (
+                        <div className="pt-1">
+                          <div className="italic text-gray-600 block mb-2 font-light text-sm">
+                            Event Description:
+                          </div>
+                          <div className="w-full flex justify-center mx-auto">
+                            <div className="italic w-2/3 py-6 text-sm text-center font-light text-gray-700">
+                              {event.description}
+                            </div>
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                  </AccordionContent>
+                </AccordionItem>
+              </Accordion>
+            ))}
+          </div>
+        )}
+
         <div className="mb-6 mt-8 text-sm font-light items-center justify-center flex w-full text-cnter font-jost mt-1">*********************</div>
 
 
@@ -738,56 +788,6 @@ export default function TrackItem() {
                   </AccordionContent>
                 </AccordionItem>
               </Accordion>
-            </div>
-          )}
-
-          {/* EVENT DETAILS ACCORDIONS FOR BATCHES/BLANKS/ITEMS - Loop through events array */}
-          {!idStartsWith("B") && data.events && data.events.length > 0 && (
-            <div className="pt-6 space-y-4">
-              {data.events.map((event: any) => (
-                <Accordion key={event.eventId} type="single" collapsible className="border-0">
-                  <AccordionItem value={`event-${event.eventId}`} className="border-0">
-                    
-                    {/* Accordion trigger with event name */}
-                    <AccordionTrigger className="text-sm text-gray-600 font-light hover:no-underline py-2">
-                      Event Details: {event.name}
-                    </AccordionTrigger>
-                    
-                    <AccordionContent className="px-0 pt-1 pb-0">
-                      <div className="space-y-3 text-sm mb-4">
-                        
-                        {/* EVENT NAME - Name of the collection event */}
-                        <div className="flex justify-between font-light">
-                          <span className="text-gray-600">Event Name</span>
-                          <span className="font-mono">{event.name}</span>
-                        </div>
-                        
-                        {/* EVENT SCHEDULED DATE - When the event is/was scheduled */}
-                        {event.scheduledDate && (
-                          <div className="flex justify-between font-light">
-                            <span className="text-gray-600">Scheduled Date</span>
-                            <span className="font-mono">{formatDate(event.scheduledDate)}</span>
-                          </div>
-                        )}
-                        
-                        {/* EVENT DESCRIPTION - Detailed description of the event */}
-                        {event.description && (
-                          <div className="pt-1">
-                            <div className="italic text-gray-600 block mb-2 font-light text-sm">
-                              Event Description:
-                            </div>
-                            <div className="w-full flex justify-center mx-auto">
-                              <div className="italic w-2/3 py-6 text-sm text-center font-light text-gray-700">
-                                {event.description}
-                              </div>
-                            </div>
-                          </div>
-                        )}
-                      </div>
-                    </AccordionContent>
-                  </AccordionItem>
-                </Accordion>
-              ))}
             </div>
           )}
           
