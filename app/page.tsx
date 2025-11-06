@@ -224,7 +224,7 @@ export default function Home() {
             <div className="w-2/3 mx-4 mx-auto">
               <div className="grid grid-cols-1  gap-4 lg:gap-6">
                 {/* Product Card 1 */}
-                <Link href="/about" className="group">
+                <Link href="/about" className="hidden group">
                   <div className="relative aspect-[5/3] bg-gray-100 overflow-hidden">
                     <div className="absolute inset-0 flex items-center justify-center">
                       <Recycle className="w-24 h-24 text-gray-300" />
