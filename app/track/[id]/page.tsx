@@ -490,7 +490,7 @@ export default function TrackItem() {
 
         {/* SUPPLY CHAIN HISTORY ACCORDIONS - For Items only */}
         {idStartsWith("I") && (
-          <div className="pb-4 border-b border-gray-200 mt-2 flex flex-col gap-y-1 mx-6">
+          <div className=" border-gray-200 mt-2 flex flex-col gap-y-1 mx-6">
 
             {/* BLANKS HISTORY ACCORDION - Full blank details for items */}
             {data.blanks && data.blanks.length > 0 && (
