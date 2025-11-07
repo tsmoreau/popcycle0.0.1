@@ -209,6 +209,7 @@ export interface Item {
   _id: string; // QR code string (e.g., "I1234567")
   blankIds?: string[]; // Items made from blanks (standard flow)
   batchIds?: string[]; // Items made directly from batches (alternative flow)
+  binIds?: string[]; // Items made directly from bins (direct collection flow)
   productId: ObjectId; // Reference to Product design
   userId?: ObjectId; // Maker/assembler
   orderId?: ObjectId; // Associated order if part of bulk order
