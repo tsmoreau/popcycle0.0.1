@@ -236,15 +236,15 @@ export default function TrackItem() {
 
   return (
     <div className="min-h-screen lg:max-w-[35vw] py-20 flex mx-auto justify-center font-jost bg-white">
-      <div className="w-full mx-auto bg-white border-[10px] border-black mr-6 ml-6">
+      <div className="w-full mx-auto bg-white border border-black mr-6 ml-6 p-2">
         
         {/* ========== MATERIAL FACTS HEADER ========== */}
-        <div className="border-b-[8px] border-black px-4 pt-4 pb-1">
+        <div className="border-b-[8px] border-black px-2 pt-2 pb-1">
           <h1 className="text-6xl font-black tracking-tighter leading-none">Material Facts</h1>
         </div>
 
         {/* ========== SERVING SIZE EQUIVALENT (Item Type) ========== */}
-        <div className="px-4 py-1.5 text-xs leading-tight">
+        <div className="px-2 py-1.5 text-xs leading-tight">
           <div>Item per tracking</div>
           <div className="font-black text-base">
             Item Type:{" "}
@@ -266,12 +266,12 @@ export default function TrackItem() {
         <div className="bg-black h-[10px]"></div>
 
         {/* ========== PRIMARY DETAILS (Calories Equivalent) ========== */}
-        <div className="px-4 py-1 border-b-[1px] border-black">
+        <div className="px-2 py-1 border-b-[1px] border-black">
           <div className="text-[10px] font-bold">Material identification</div>
         </div>
 
         {/* ========== MAIN ID (Big Calorie-style) ========== */}
-        <div className="px-4 py-1 flex justify-between items-end border-b-[6px] border-black">
+        <div className="px-2 py-1 flex justify-between items-end border-b-[6px] border-black">
           <div className="font-black text-2xl">
             {idStartsWith("B")
               ? "Bin ID"
@@ -293,7 +293,7 @@ export default function TrackItem() {
             NUTRIENT-STYLE DETAILS SECTION
             Displays core metadata
             ======================================== */}
-        <div className="px-4 py-1 text-xs">
+        <div className="px-2 py-1 text-xs">
           
           {/* ORIGINS - Multi-origin display for Items/Batches/Blanks */}
           {data.origins && data.origins.length > 0 && (
@@ -416,7 +416,7 @@ export default function TrackItem() {
 
         {/* SUPPLY CHAIN HISTORY ACCORDIONS - For Items only */}
         {idStartsWith("I") && (
-          <div className="px-4 py-1 text-xs border-b-[6px] border-black">
+          <div className="px-2 py-1 text-xs border-b-[6px] border-black">
 
             {/* BLANKS HISTORY ACCORDION */}
             {data.blanks && data.blanks.length > 0 && (
@@ -501,7 +501,7 @@ export default function TrackItem() {
 
         {/* SUPPLY CHAIN HISTORY ACCORDIONS - For Blanks only */}
         {idStartsWith("K") && (
-          <div className="px-4 py-1 text-xs border-b-[6px] border-black">
+          <div className="px-2 py-1 text-xs border-b-[6px] border-black">
 
             {/* BATCHES HISTORY ACCORDION */}
             {data.batches && data.batches.length > 0 && (
@@ -560,7 +560,7 @@ export default function TrackItem() {
 
         {/* SUPPLY CHAIN HISTORY ACCORDIONS - For Batches only */}
         {idStartsWith("T") && (
-          <div className="px-4 py-1 text-xs border-b-[6px] border-black">
+          <div className="px-2 py-1 text-xs border-b-[6px] border-black">
 
             {/* BINS HISTORY ACCORDION */}
             {data.bins && data.bins.length > 0 && (
@@ -593,7 +593,7 @@ export default function TrackItem() {
 
         {/* EVENT DETAILS ACCORDIONS FOR BATCHES/BLANKS/ITEMS */}
         {!idStartsWith("B") && data.events && data.events.length > 0 && (
-          <div className="px-4 py-1 text-xs border-b-[6px] border-black">
+          <div className="px-2 py-1 text-xs border-b-[6px] border-black">
             {data.events.map((event: any) => (
               <div key={event.eventId} className="border-b border-black py-0.5">
                 <Accordion type="single" collapsible className="border-0">
@@ -620,7 +620,7 @@ export default function TrackItem() {
 
         {/* ========== ORG MESSAGE SECTION ========== */}
         {data.orgMessage && (
-          <div className="px-4 py-2 text-xs border-b-[6px] border-black">
+          <div className="px-2 py-2 text-xs border-b-[6px] border-black">
             <div className="font-bold mb-1">Message from {data.organization?.name || "Unknown Origin"}:</div>
             <div className="italic text-[10px]">"{data.orgMessage}"</div>
           </div>
@@ -628,7 +628,7 @@ export default function TrackItem() {
 
         {/* EVENT DETAILS ACCORDION FOR BINS */}
         {idStartsWith("B") && data.event && data.event.trim() && (
-          <div className="px-4 py-1 text-xs border-b-[6px] border-black">
+          <div className="px-2 py-1 text-xs border-b-[6px] border-black">
             <div className="border-b border-black py-0.5">
               <Accordion type="single" collapsible className="border-0">
                 <AccordionItem value="event-details" className="border-0">
@@ -654,7 +654,7 @@ export default function TrackItem() {
 
         {/* ========== PRODUCT DETAILS SECTION ========== */}
         {data.type === 'item' && data.productDetails && (
-          <div className="px-4 py-1 text-xs border-b-[6px] border-black">
+          <div className="px-2 py-1 text-xs border-b-[6px] border-black">
             
             <div className="flex justify-between border-b border-black py-0.5">
               <span className="font-bold">Product Name</span>
@@ -702,7 +702,7 @@ export default function TrackItem() {
         )}
      
         {/* ========== CONNECTED ITEMS SECTION ========== */}
-        <div className="px-4 py-1 text-xs border-b-[6px] border-black">
+        <div className="px-2 py-1 text-xs border-b-[6px] border-black">
         
         {/* PRODUCED BLANKS ACCORDION */}
         {data.producedBlanks && data.producedBlanks.length > 0 && (
@@ -795,7 +795,7 @@ export default function TrackItem() {
         </div>
 
         {/* ========== FOOTER DISCLAIMER ========== */}
-        <div className="px-4 py-2 text-[8px] leading-tight">
+        <div className="px-2 py-2 text-[8px] leading-tight">
           <span className="font-bold">* Material Facts</span> provides complete transparency about the circular journey of recycled materials. The information displayed represents verified data from our tracking system. For questions about this item or our recycling process, visit popcycle.org
         </div>
         
