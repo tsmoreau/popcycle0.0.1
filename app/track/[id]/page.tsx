@@ -239,7 +239,7 @@ export default function TrackItem() {
       <div className="w-full mx-auto bg-white border border-black mr-6 ml-6 p-2">
         
         {/* ========== MATERIAL FACTS HEADER ========== */}
-        <div className="border-b-[8px] border-black px-2 pt-2 pb-1">
+        <div className="w-full flex justify-center mx-auto border-b-[8px] border-black px-2 pt-2 pb-1">
           <h1 className="text-6xl font-black tracking-tighter leading-none">Material Facts</h1>
         </div>
 
