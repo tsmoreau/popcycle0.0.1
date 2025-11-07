@@ -41,6 +41,10 @@ import {
   Camera,
   Zap,
   Settings,
+  Image,
+  RefreshCw,
+  ReceiptText,
+  Download,
 } from "lucide-react";
 
 interface MakerDetails {
@@ -235,26 +239,28 @@ export default function TrackItem() {
   };
 
   return (
-    <div className="lg:max-w-[35vw] py-20 flex mx-auto justify-center font-jost bg-white">
-      <div className="w-full mx-auto bg-white border border-black mr-6 ml-6 p-2">
+    <div className="flex flex-col justify-start items-center gap-y-2">
+    <div className="lg:-mt-12 items-top content-start scale-[0.9] md:scale-[0.8] lg:scale-[0.80] md:max-w-[55vw] lg:max-w-[35vw] max-w-[95vw]  py-4 flex mx-auto justify-center font-helvetica bg-white drop-shadow-2xl px-4 h-auto">
+      <div className="w-full mx-auto bg-white border border-black p-2">
         
         {/* ========== MATERIAL FACTS HEADER ========== */}
-        <div className="w-full flex justify-center mx-auto border-b-[8px] border-black px-2 pt-2 pb-1">
-          <h1 className="text-6xl font-black tracking-tighter leading-none">Material Facts</h1>
+        <div className="w-full flex justify-center mx-auto border-b-[8px] border-black px-2 pb-1">
+          
+          <h1 className="text-5xl lg:text-6xl font-black tracking-tight leading-none">Material Facts</h1>
         </div>
 
         {/* ========== SERVING SIZE EQUIVALENT (Item Type) ========== */}
         <div className="px-2 py-1.5 text-xs leading-tight">
-          <div>Item per tracking</div>
+          <div>Objects for tracking</div>
           <div className="font-black text-base">
-            Item Type:{" "}
+            Object Type:{" "}
             <span className="font-black">
               {data.id.startsWith("B")
-                ? "Collection Bin"
+                ? "Bin"
                 : data.id.startsWith("T")
-                  ? "Processing Batch"
+                  ? "Batch"
                   : data.id.startsWith("K")
-                    ? "Pressed Blank"
+                    ? "Blank"
                     : data.id.startsWith("I")
                       ? "Manufactured Item"
                       : "Unknown"}
@@ -283,7 +289,7 @@ export default function TrackItem() {
                     ? "Item ID"
                     : "Main ID"}
           </div>
-          <div className="font-black text-5xl leading-none">{data.id}</div>
+          <div className="font-black text-3xl lg:text-5xl leading-none">{data.id}</div>
         </div>
 
         {/* ========== MEDIUM DIVIDER BAR ========== */}
@@ -293,7 +299,7 @@ export default function TrackItem() {
             NUTRIENT-STYLE DETAILS SECTION
             Displays core metadata
             ======================================== */}
-        <div className="px-2 py-1 text-xs">
+        <div className="px-2 py-1 text-sm">
           
           {/* ORIGINS - Multi-origin display for Items/Batches/Blanks */}
           {data.origins && data.origins.length > 0 && (
@@ -367,7 +373,7 @@ export default function TrackItem() {
 
           {/* PRIMARY DATE */}
           {getDateField() && (
-            <div className="flex justify-between border-b border-black py-0.5">
+            <div className="flex justify-between border-black py-0.5">
               <span className="font-bold">
                 {idStartsWith("B") 
                   ? "Last Collected" 
@@ -385,7 +391,7 @@ export default function TrackItem() {
 
           {/* NEXT COLLECTION DATE */}
           {data.nextCollectionDate && (
-            <div className="flex justify-between border-b border-black py-0.5">
+            <div className="flex justify-between border-t border-black py-0.5">
               <span className="font-bold">Next Collection</span>
               <span className="font-bold">{formatDate(data.nextCollectionDate)}</span>
             </div>
@@ -422,14 +428,14 @@ export default function TrackItem() {
 
         {/* SUPPLY CHAIN HISTORY ACCORDIONS - For Items only */}
         {idStartsWith("I") && (
-          <div className="px-2 py-1 text-xs border-b-[6px] border-black">
+          <div className="px-2 py-1 text-sm border-b-[6px] border-black">
 
             {/* BLANKS HISTORY ACCORDION */}
             {data.blanks && data.blanks.length > 0 && (
               <div className="border-b border-black py-0.5">
                 <Accordion type="single" collapsible className="border-0">
                   <AccordionItem value="blanks-history" className="border-0">
-                    <AccordionTrigger className="text-xs font-bold hover:no-underline py-0 h-5">
+                    <AccordionTrigger className="text-sm font-bold hover:no-underline py-0 h-5">
                       Source Blanks ({data.blanks.length})
                     </AccordionTrigger>
                     <AccordionContent className="px-0 pt-1 pb-1">
@@ -438,9 +444,9 @@ export default function TrackItem() {
                           <Link
                             key={blank.id}
                             href={`/track/${blank.id}`}
-                            className="block text-xs hover:underline"
+                            className="block text-sm hover:underline"
                           >
-                            • {blank.id}
+                            {blank.id}
                           </Link>
                         ))}
                       </div>
@@ -455,7 +461,7 @@ export default function TrackItem() {
               <div className="border-b border-black py-0.5">
                 <Accordion type="single" collapsible className="border-0">
                   <AccordionItem value="batches-history" className="border-0">
-                    <AccordionTrigger className="text-xs font-bold hover:no-underline py-0 h-5">
+                    <AccordionTrigger className="text-sm font-bold hover:no-underline py-0 h-5">
                       Source Batches ({data.batches.length})
                     </AccordionTrigger>
                     <AccordionContent className="px-0 pt-1 pb-1">
@@ -464,9 +470,9 @@ export default function TrackItem() {
                           <Link
                             key={batch.id}
                             href={`/track/${batch.id}`}
-                            className="block text-xs hover:underline"
+                            className="block text-sm hover:underline"
                           >
-                            • {batch.id}
+                            {batch.id}
                           </Link>
                         ))}
                       </div>
@@ -478,10 +484,10 @@ export default function TrackItem() {
 
             {/* BINS HISTORY ACCORDION */}
             {data.bins && data.bins.length > 0 && (
-              <div className="border-b border-black py-0.5">
+              <div className=" border-black py-0.5">
                 <Accordion type="single" collapsible className="border-0">
                   <AccordionItem value="bins-history" className="border-0">
-                    <AccordionTrigger className="text-xs font-bold hover:no-underline py-0 h-5">
+                    <AccordionTrigger className="text-sm font-bold hover:no-underline py-0 h-5">
                       Source Bins ({data.bins.length})
                     </AccordionTrigger>
                     <AccordionContent className="px-0 pt-1 pb-1">
@@ -490,9 +496,9 @@ export default function TrackItem() {
                           <Link
                             key={bin.id}
                             href={`/track/${bin.id}`}
-                            className="block text-xs hover:underline"
+                            className="block text-sm hover:underline"
                           >
-                            • {bin.id}
+                            {bin.id}
                           </Link>
                         ))}
                       </div>
@@ -507,14 +513,14 @@ export default function TrackItem() {
 
         {/* SUPPLY CHAIN HISTORY ACCORDIONS - For Blanks only */}
         {idStartsWith("K") && (
-          <div className="px-2 py-1 text-xs border-b-[6px] border-black">
+          <div className="px-2 py-1 text-sm border-b-[6px] border-black">
 
             {/* BATCHES HISTORY ACCORDION */}
             {data.batches && data.batches.length > 0 && (
               <div className="border-b border-black py-0.5">
                 <Accordion type="single" collapsible className="border-0">
                   <AccordionItem value="batches-history" className="border-0">
-                    <AccordionTrigger className="text-xs font-bold hover:no-underline py-0 h-5">
+                    <AccordionTrigger className="text-sm font-bold hover:no-underline py-0 h-5">
                       Source Batches ({data.batches.length})
                     </AccordionTrigger>
                     <AccordionContent className="px-0 pt-1 pb-1">
@@ -523,9 +529,9 @@ export default function TrackItem() {
                           <Link
                             key={batch.id}
                             href={`/track/${batch.id}`}
-                            className="block text-xs hover:underline"
+                            className="block text-sm hover:underline"
                           >
-                            • {batch.id}
+                            {batch.id}
                           </Link>
                         ))}
                       </div>
@@ -537,10 +543,10 @@ export default function TrackItem() {
 
             {/* BINS HISTORY ACCORDION */}
             {data.bins && data.bins.length > 0 && (
-              <div className="border-b border-black py-0.5">
+              <div className=" border-black py-0.5">
                 <Accordion type="single" collapsible className="border-0">
                   <AccordionItem value="bins-history" className="border-0">
-                    <AccordionTrigger className="text-xs font-bold hover:no-underline py-0 h-5">
+                    <AccordionTrigger className="text-sm font-bold hover:no-underline py-0 h-5">
                       Source Bins ({data.bins.length})
                     </AccordionTrigger>
                     <AccordionContent className="px-0 pt-1 pb-1">
@@ -549,9 +555,9 @@ export default function TrackItem() {
                           <Link
                             key={bin.id}
                             href={`/track/${bin.id}`}
-                            className="block text-xs hover:underline"
+                            className="block text-sm hover:underline"
                           >
-                            • {bin.id}
+                            {bin.id}
                           </Link>
                         ))}
                       </div>
@@ -566,14 +572,14 @@ export default function TrackItem() {
 
         {/* SUPPLY CHAIN HISTORY ACCORDIONS - For Batches only */}
         {idStartsWith("T") && (
-          <div className="px-2 py-1 text-xs border-b-[6px] border-black">
+          <div className="px-2 py-1 text-sm border-b-[6px] border-black">
 
             {/* BINS HISTORY ACCORDION */}
             {data.bins && data.bins.length > 0 && (
-              <div className="border-b border-black py-0.5">
+              <div className=" border-black py-0.5">
                 <Accordion type="single" collapsible className="border-0">
                   <AccordionItem value="bins-history" className="border-0">
-                    <AccordionTrigger className="text-xs font-bold hover:no-underline py-0 h-5">
+                    <AccordionTrigger className="text-sm font-bold hover:no-underline py-0 h-5">
                       Source Bins ({data.bins.length})
                     </AccordionTrigger>
                     <AccordionContent className="px-0 pt-1 pb-1">
@@ -582,9 +588,9 @@ export default function TrackItem() {
                           <Link
                             key={bin.id}
                             href={`/track/${bin.id}`}
-                            className="block text-xs hover:underline"
+                            className="block text-sm hover:underline"
                           >
-                            • {bin.id}
+                            {bin.id}
                           </Link>
                         ))}
                       </div>
@@ -599,16 +605,18 @@ export default function TrackItem() {
 
         {/* EVENT DETAILS ACCORDIONS FOR BATCHES/BLANKS/ITEMS */}
         {!idStartsWith("B") && data.events && data.events.length > 0 && (
-          <div className="px-2 py-1 text-xs border-b-[6px] border-black">
+          <div className=" px-2 pt-1 text-sm  border-black">
             {data.events.map((event: any) => (
-              <div key={event.eventId} className="border-b border-black py-0.5">
+              <div key={event.eventId} className=" border-black py-0.5">
                 <Accordion type="single" collapsible className="border-0">
                   <AccordionItem value={`event-${event.eventId}`} className="border-0">
-                    <AccordionTrigger className="text-xs font-bold hover:no-underline py-0 h-5">
-                      Event: {event.name}
+                    <AccordionTrigger className="text-sm font-bold hover:no-underline py-0">
+                      Event Details
                     </AccordionTrigger>
                     <AccordionContent className="px-0 pt-1 pb-1">
-                      <div className="space-y-0.5 pl-3 text-xs">
+                      
+                      <div className="space-y-0.5 pl-3 text-sm">
+                        <div className="font-bold"> {event.name}</div>
                         {event.scheduledDate && (
                           <div>Scheduled: {formatDate(event.scheduledDate)}</div>
                         )}
@@ -616,6 +624,10 @@ export default function TrackItem() {
                           <div className="italic text-[10px] mt-1">{event.description}</div>
                         )}
                       </div>
+
+                      
+
+                      
                     </AccordionContent>
                   </AccordionItem>
                 </Accordion>
@@ -626,23 +638,25 @@ export default function TrackItem() {
 
         {/* ========== ORG MESSAGE SECTION ========== */}
         {data.orgMessage && (
-          <div className="px-2 py-2 text-xs border-b-[6px] border-black">
+          <div className="px-2 py-2 text-sm border-b-[6px] border-black">
             <div className="font-bold mb-1">Message from {data.organization?.name || "Unknown Origin"}:</div>
-            <div className="italic text-[10px]">"{data.orgMessage}"</div>
+            <div className="w-full flex justify-center">
+            <div className="w-2/3 text-center italic text-sm leading-0.5 py-6">"{data.orgMessage}"</div>
+             </div>
           </div>
         )}
 
         {/* EVENT DETAILS ACCORDION FOR BINS */}
         {idStartsWith("B") && data.event && data.event.trim() && (
-          <div className="px-2 py-1 text-xs border-b-[6px] border-black">
-            <div className="border-b border-black py-0.5">
+          <div className="px-2 py-1 text-sm border-b-[6px] border-black">
+            <div className=" border-black py-0.5">
               <Accordion type="single" collapsible className="border-0">
                 <AccordionItem value="event-details" className="border-0">
-                  <AccordionTrigger className="text-xs font-bold hover:no-underline py-0 h-5">
+                  <AccordionTrigger className="text-sm font-bold hover:no-underline py-0 h-5">
                     Event Details
                   </AccordionTrigger>
                   <AccordionContent className="px-0 pt-1 pb-1">
-                    <div className="space-y-0.5 pl-3 text-xs">
+                    <div className="space-y-0.5 pl-3 text-sm">
                       <div className="font-bold">{data.event}</div>
                       {data.eventScheduledDate && (
                         <div>Scheduled: {formatDate(data.eventScheduledDate)}</div>
@@ -660,7 +674,7 @@ export default function TrackItem() {
 
         {/* ========== PRODUCT DETAILS SECTION ========== */}
         {data.type === 'item' && data.productDetails && (
-          <div className="px-2 py-1 text-xs border-b-[6px] border-black">
+          <div  id="test3" className="px-2 py-1 text-sm ">
             
             <div className="flex justify-between border-b border-black py-0.5">
               <span className="font-bold">Product Name</span>
@@ -699,23 +713,25 @@ export default function TrackItem() {
             )}
             
             {data.productDetails.description && (
-              <div className="pt-1 mt-1 border-t border-black">
+              <div className="py-0.5 border-black">
                 <div className="font-bold mb-0.5">Description:</div>
-                <div className="italic text-[10px]">{data.productDetails.description}</div>
+                <div className="flex w-full mx-auto justify-center">
+                <div className=" w-2/3 text-center italic text-[10px]">{data.productDetails.description}</div>
               </div>
+                </div>
             )}
           </div>
         )}
      
         {/* ========== CONNECTED ITEMS SECTION ========== */}
-        <div className="px-2 py-1 text-xs border-b-[6px] border-black">
+        <div id="test3" className="px-2 py-1 text-sm border-b-[6px] border-black">
         
         {/* PRODUCED BLANKS ACCORDION */}
         {data.producedBlanks && data.producedBlanks.length > 0 && (
-          <div className="border-b border-black py-0.5">
+          <div className=" border-black py-0.5">
             <Accordion type="single" collapsible className="border-0">
               <AccordionItem value="produced-blanks" className="border-0">
-                <AccordionTrigger className="text-xs font-bold hover:no-underline py-0 h-5">
+                <AccordionTrigger className="text-sm font-bold hover:no-underline py-0 h-5">
                   Produced Blanks ({data.producedBlanks.length})
                 </AccordionTrigger>
                 <AccordionContent className="px-0 pt-1 pb-1">
@@ -724,10 +740,10 @@ export default function TrackItem() {
                       <Link
                         key={blank.id}
                         href={`/track/${blank.id}`}
-                        className="block text-xs hover:underline"
+                        className="block text-sm hover:underline"
                       >
                         <div className="flex justify-between">
-                          <span>• {blank.id}</span>
+                          <span>{blank.id}</span>
                           <span className="text-[10px]">{blank.weight}kg</span>
                         </div>
                       </Link>
@@ -741,10 +757,10 @@ export default function TrackItem() {
 
         {/* PRODUCED ITEMS ACCORDION */}
         {data.producedItems && data.producedItems.length > 0 && (
-          <div className="border-b border-black py-0.5">
+          <div className=" border-black py-0.5">
             <Accordion type="single" collapsible className="border-0">
               <AccordionItem value="produced-items" className="border-0">
-                <AccordionTrigger className="text-xs font-bold hover:no-underline py-0 h-5">
+                <AccordionTrigger className="text-sm font-bold hover:no-underline py-0 h-5">
                   Finished Products ({data.producedItems.length})
                 </AccordionTrigger>
                 <AccordionContent className="px-0 pt-1 pb-1">
@@ -753,10 +769,10 @@ export default function TrackItem() {
                       <Link
                         key={item.id}
                         href={`/track/${item.id}`}
-                        className="block text-xs hover:underline"
+                        className="block text-sm hover:underline"
                       >
                         <div className="flex justify-between">
-                          <span>• {item.id}</span>
+                          <span>{item.id}</span>
                           {item.serialNumber && (
                             <span className="text-[10px]">#{item.serialNumber}</span>
                           )}
@@ -772,10 +788,10 @@ export default function TrackItem() {
 
         {/* PRODUCED BATCHES ACCORDION */}
         {data.producedBatches && data.producedBatches.length > 0 && (
-          <div className="border-b border-black py-0.5">
+          <div className=" border-black py-0.5">
             <Accordion type="single" collapsible className="border-0">
               <AccordionItem value="produced-batches" className="border-0">
-                <AccordionTrigger className="text-xs font-bold hover:no-underline py-0 h-5">
+                <AccordionTrigger className="text-sm font-bold hover:no-underline py-0 h-5">
                   Produced Batches ({data.producedBatches.length})
                 </AccordionTrigger>
                 <AccordionContent className="px-0 pt-1 pb-1">
@@ -784,11 +800,11 @@ export default function TrackItem() {
                       <Link
                         key={batch.id}
                         href={`/track/${batch.id}`}
-                        className="block text-xs hover:underline"
+                        className="block text-sm hover:underline"
                       >
                         <div className="flex justify-between">
                           <span className="text-[10px]">{formatDate(batch.collectionDate)}</span>
-                          <span>• {batch.id}</span>
+                          <span>{batch.id}</span>
                         </div>
                       </Link>
                     ))}
@@ -802,10 +818,20 @@ export default function TrackItem() {
 
         {/* ========== FOOTER DISCLAIMER ========== */}
         <div className="px-2 py-2 text-[8px] leading-tight">
-          <span className="font-bold">* Material Facts</span> provides complete transparency about the circular journey of recycled materials. The information displayed represents verified data from our tracking system. For questions about this item or our recycling process, visit popcycle.org
+          <span className="font-bold">Material Facts</span> provides complete transparency about the circular journey of recycled materials. The information displayed represents verified data from our tracking system. For questions about this item or our recycling process, visit popcycle.io/faq or contact us at support@popcycle.io.
         </div>
         
       </div>
     </div>
+      <div className="flex gap-x-2 lg:-mt-12 w-min px-4 py-2 text-gray-400 rounded-full bg-gray-100">
+         <Download/>
+        <ReceiptText/>
+       
+         <Image/>
+        
+        
+     <div className="text-gray-300"></div>
+      </div>
+      </div>
   );
 }

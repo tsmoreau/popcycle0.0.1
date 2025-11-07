@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { ObjectId } from 'mongodb';
+import { ObjectId, Db } from 'mongodb';
 import { getDatabase } from '../../../../lib/mongodb';
 import { Bin, Batch, Blank, Item } from '../../../../lib/schemas-v3';
 
@@ -30,7 +30,7 @@ interface SupplyChainData {
 
 // Traverse supply chain upward from batch/blank/item to collect all related records
 async function traceSupplyChain(
-  db: any,
+  db: Db,
   options: {
     batchIds?: string[];
     blankIds?: string[];
