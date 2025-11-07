@@ -235,7 +235,7 @@ export default function TrackItem() {
   };
 
   return (
-    <div className="min-h-screen lg:max-w-[35vw] py-20 flex mx-auto justify-center font-jost bg-white">
+    <div className="lg:max-w-[35vw] py-20 flex mx-auto justify-center font-jost bg-white">
       <div className="w-full mx-auto bg-white border border-black mr-6 ml-6 p-2">
         
         {/* ========== MATERIAL FACTS HEADER ========== */}
@@ -298,8 +298,14 @@ export default function TrackItem() {
           {/* ORIGINS - Multi-origin display for Items/Batches/Blanks */}
           {data.origins && data.origins.length > 0 && (
             <div className="flex justify-between border-b border-black py-0.5">
-              <span className="font-bold">{data.origins.length === 1 ? "Origin" : "Origins"} {data.origins.map((o: any) => o.name).join(", ")}</span>
-              <span className="font-bold"></span>
+              <span className="font-bold">{data.origins.length === 1 ? "Origin" : "Origins"}</span>
+              <div className="flex flex-wrap gap-x-1 justify-end max-w-[60%]">
+                {data.origins.map((origin: any, idx: number) => (
+                  <span key={origin.id} className="font-bold">
+                    {origin.name}{idx < data.origins.length - 1 ? "," : ""}
+                  </span>
+                ))}
+              </div>
             </div>
           )}
 
