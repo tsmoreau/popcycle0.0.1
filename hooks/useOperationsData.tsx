@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Bin, Batch, Order, Blank } from '../lib/schemas-v3';
+import { Bin, Batch, Order, Blank, Item } from '../lib/schemas-v3';
 
 export const useOperationsData = () => {
   // Data state
@@ -7,12 +7,14 @@ export const useOperationsData = () => {
   const [batches, setBatches] = useState<Batch[]>([]);
   const [orders, setOrders] = useState<Order[]>([]);
   const [blanks, setBlanks] = useState<Blank[]>([]);
+  const [items, setItems] = useState<Item[]>([]);
 
   // Loading state
   const [loadingBins, setLoadingBins] = useState(true);
   const [loadingBatches, setLoadingBatches] = useState(true);
   const [loadingOrders, setLoadingOrders] = useState(true);
   const [loadingBlanks, setLoadingBlanks] = useState(true);
+  const [loadingItems, setLoadingItems] = useState(true);
 
   // Fetch functions
   const fetchBins = async () => {
@@ -84,6 +86,24 @@ export const useOperationsData = () => {
       setBlanks([]);
     } finally {
       setLoadingBlanks(false);
+    }
+  };
+
+  const fetchItems = async () => {
+    try {
+      setLoadingItems(true);
+      const response = await fetch('/api/operations/items');
+      if (response.ok) {
+        const data = await response.json();
+        setItems(data);
+      } else {
+        throw new Error('Failed to fetch items');
+      }
+    } catch (error) {
+      console.error('Error fetching items:', error);
+      setItems([]);
+    } finally {
+      setLoadingItems(false);
     }
   };
 
@@ -315,6 +335,7 @@ export const useOperationsData = () => {
     fetchBatches();
     fetchOrders();
     fetchBlanks();
+    fetchItems();
   }, []);
 
   return {
@@ -323,18 +344,21 @@ export const useOperationsData = () => {
     batches,
     orders,
     blanks,
+    items,
     
     // Loading states
     loadingBins,
     loadingBatches,
     loadingOrders,
     loadingBlanks,
+    loadingItems,
     
     // Refetch functions
     fetchBins,
     fetchBatches,
     fetchOrders,
     fetchBlanks,
+    fetchItems,
     
     // CRUD handlers
     handleBinSave,

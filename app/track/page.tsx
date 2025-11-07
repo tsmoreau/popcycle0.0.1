@@ -5,26 +5,18 @@ import { Input } from "../components/ui/input";
 import { QRCodeElement } from "../components/PopArtElements";
 import { ChevronDown } from "lucide-react";
 import Link from "next/link";
-import { useState, useEffect, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { LoadingSquare } from "../components/ui/loading-square";
-
-interface SampleQRCodes {
-  bins: Array<{ id: string; name: string; isActive: boolean; status: string }>;
-  batches: Array<{ id: string; binIds: string[]; status: string }>;
-  blanks: Array<{ id: string; batchId: string; status: string; userId?: string; productId?: string }>;
-}
+import { useOperationsData } from "../../hooks/useOperationsData";
 
 export default function Track() {
-  const [sampleCodes, setSampleCodes] = useState<SampleQRCodes>({
-    bins: [],
-    batches: [],
-    blanks: []
-  });
+  const { bins, batches, blanks, items, loadingBins, loadingBatches, loadingBlanks, loadingItems } = useOperationsData();
   const [selectedFilter, setSelectedFilter] = useState<string>("ALL");
   const [searchTerm, setSearchTerm] = useState<string>("");
-  const [loading, setLoading] = useState(true);
   const [filterOpen, setFilterOpen] = useState(false);
   const filterRef = useRef<HTMLDivElement>(null);
+  
+  const loading = loadingBins || loadingBatches || loadingBlanks || loadingItems;
 
   // Close dropdown when clicking outside
   useEffect(() => {
@@ -37,64 +29,29 @@ export default function Track() {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  useEffect(() => {
-    // Fetch existing QR codes from the database
-    const fetchExistingCodes = async () => {
-      try {
-        // Fetch existing bins, batches, and blanks
-        const [binsRes, batchesRes, blanksRes] = await Promise.all([
-          fetch('/api/items/sample?type=bins'),
-          fetch('/api/items/sample?type=batches'), 
-          fetch('/api/items/sample?type=blanks')
-        ]);
-
-        const bins = await binsRes.json();
-        const batches = await batchesRes.json();
-        const blanks = await blanksRes.json();
-
-        setSampleCodes({
-          bins: bins.success ? bins.items : [],
-          batches: batches.success ? batches.items : [],
-          blanks: blanks.success ? blanks.items : []
-        });
-      } catch (error) {
-        console.error('Failed to fetch existing codes:', error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchExistingCodes();
-  }, []);
-
   // Filter and combine codes based on selected filter
   const getFilteredCodes = () => {
     let codes: Array<{ id: string; type: string; name?: string }> = [];
     
     switch (selectedFilter) {
       case "ACTIVE BINS":
-        codes = sampleCodes.bins.filter(bin => bin.isActive).map(bin => ({ id: bin.id, type: "active bin", name: bin.name }));
+        codes = bins.filter(bin => bin.isActive).map(bin => ({ id: bin._id, type: "active bin", name: bin.name }));
         break;
       case "COLLECTED BATCHES":
-        codes = sampleCodes.batches.map(batch => ({ id: batch.id, type: "processing batch" }));
+        codes = batches.map(batch => ({ id: batch._id, type: "collected batch" }));
         break;
       case "PRESSED BLANKS":
-        // Blanks that haven't been turned into products yet (no productId)
-        codes = sampleCodes.blanks.filter(blank => blank.status === 'blank' && !blank.productId).map(blank => ({ id: blank.id, type: "pressed blank" }));
+        codes = blanks.filter(blank => blank.status === 'blank').map(blank => ({ id: blank._id, type: "pressed blank" }));
         break;
       case "MANUFACTURED ITEMS":
-        // Blanks that have been turned into products (have productId) but not yet assigned to makers (no userId)
-        codes = sampleCodes.blanks.filter(blank => blank.productId && !blank.userId).map(blank => ({ id: blank.id, type: "manufactured item" }));
-        break;
-      case "ASSEMBLED ITEMS":
-        // Filter blanks that have been assembled by makers (same as manufactured for now)
-        codes = sampleCodes.blanks.filter(blank => blank.status === 'assembled' && blank.userId && blank.productId).map(blank => ({ id: blank.id, type: "assembled item" }));
+        codes = items.map(item => ({ id: item._id, type: "manufactured item" }));
         break;
       default: // "ALL"
         codes = [
-          ...sampleCodes.bins.filter(bin => bin.isActive).map(bin => ({ id: bin.id, type: "active bin", name: bin.name })),
-          ...sampleCodes.batches.map(batch => ({ id: batch.id, type: `${batch.status} batch` })),
-          ...sampleCodes.blanks.map(blank => ({ id: blank.id, type: `${blank.status} item` }))
+          ...bins.filter(bin => bin.isActive).map(bin => ({ id: bin._id, type: "active bin", name: bin.name })),
+          ...batches.map(batch => ({ id: batch._id, type: "collected batch" })),
+          ...blanks.filter(blank => blank.status === 'blank').map(blank => ({ id: blank._id, type: "pressed blank" })),
+          ...items.map(item => ({ id: item._id, type: "manufactured item" }))
         ];
     }
 
@@ -172,7 +129,6 @@ export default function Track() {
                     "COLLECTED BATCHES",
                     "PRESSED BLANKS",
                     "MANUFACTURED ITEMS",
-                    "ASSEMBLED ITEMS",
                   ].map((category) => (
                     <button
                       key={category}
