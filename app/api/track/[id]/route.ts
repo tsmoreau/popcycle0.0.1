@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { ObjectId, Db } from 'mongodb';
 import { getDatabase } from '../../../../lib/mongodb';
-import { Bin, Batch, Blank, Item } from '../../../../lib/schemas-v3';
+import { Bin, Batch, Blank, Item, Org, Event } from '../../../../lib/schemas-v3';
 
 // Function to determine collection type from QR code
 function getCollectionType(qrCode: string): 'bin' | 'batch' | 'blank' | 'item' | null {
@@ -132,7 +132,7 @@ async function traceSupplyChain(
 }
 
 // Fetch and format organizations from collected orgIds
-async function fetchOrigins(db: any, orgIds: Set<string>) {
+async function fetchOrigins(db: Db, orgIds: Set<string>) {
   if (orgIds.size === 0) return [];
   
   const orgObjectIds: ObjectId[] = Array.from(orgIds)
@@ -145,11 +145,11 @@ async function fetchOrigins(db: any, orgIds: Set<string>) {
     })
     .filter((id): id is ObjectId => id !== null);
   
-  const orgs = await db.collection('orgs')
+  const orgs = await db.collection<Org>('orgs')
     .find({ _id: { $in: orgObjectIds } })
     .toArray();
   
-  return orgs.map(o => ({
+  return orgs.map((o: Org) => ({
     id: o._id.toString(),
     name: o.name,
     type: o.orgType,
@@ -159,14 +159,14 @@ async function fetchOrigins(db: any, orgIds: Set<string>) {
 }
 
 // Fetch and format events from collected eventIds
-async function fetchEvents(db: any, eventIds: Set<string>) {
+async function fetchEvents(db: Db, eventIds: Set<string>) {
   if (eventIds.size === 0) return [];
   
-  const events = await db.collection('events')
+  const events = await db.collection<Event>('events')
     .find({ eventId: { $in: Array.from(eventIds) } })
     .toArray();
   
-  return events.map(e => ({
+  return events.map((e: Event) => ({
     eventId: e.eventId,
     name: e.name,
     description: e.description,
@@ -177,7 +177,7 @@ async function fetchEvents(db: any, eventIds: Set<string>) {
 
 // Enrich items/blanks with product details
 async function enrichWithProducts<T extends { productId?: any }>(
-  db: any,
+  db: Db,
   items: T[]
 ): Promise<Array<T & { productName?: string; productType?: string }>> {
   return Promise.all(
