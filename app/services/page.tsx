@@ -6,7 +6,7 @@ export default function Services() {
   return (
     <div className="min-h-screen bg-white font-jost">
       {/* Hero Section */}
-      <section className="relative py-40 lg:py-48 px-6 bg-gray-50 overflow-hidden flex items-center">
+      <section className="relative py-40 lg:py-48 px-6 bg-gray-50 font-jost overflow-hidden h-[40vh] lg:h-[60vh] flex items-center">
        
         
         <div className="max-w-5xl mx-auto text-center relative z-20">

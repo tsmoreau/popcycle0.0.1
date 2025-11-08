@@ -823,7 +823,7 @@ export default function TrackItem() {
         </div>
         
       </div>
-      <div className="absolute -bottom-16 flex gap-x-2 w-min px-4 py-2 text-gray-400 rounded-full bg-gray-100">
+      <div className="absolute -bottom-24 lg:-bottom-16 flex gap-x-2 w-min px-4 py-2 text-gray-400 rounded-full bg-gray-100">
          <Download/>
         <ReceiptText/>
 

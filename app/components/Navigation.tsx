@@ -137,7 +137,7 @@ export default function Navigation() {
                 <div className="w-80 bg-white border border-gray-200 shadow-lg p-6">
                   {iconDropdownOpen === 'search' && (
                     <div>
-                      <h3 className="font-jost text-lg font-semibold mb-4 text-pop-black border-b pb-2">Track Lifecycle</h3>
+                      <h3 className="font-jost text-lg font-semibold mb-4 text-pop-black border-b pb-2">Track Material Lifecycle</h3>
                       <input
                         type="text"
                         placeholder="Enter object code..."
@@ -170,7 +170,7 @@ export default function Navigation() {
          
           
           {/* Mobile menu button - moved to left */}
-          <div className="lg:hidden self-center ml-2">
+          <div className="absolute left-2 lg:hidden self-center mb-2 text-gray-400">
             <Button
               variant="ghost"
               size="sm"
@@ -187,18 +187,18 @@ export default function Navigation() {
 
           <div className="flex justify-center w-full mb-1 ">
           {/* Logo */}
-          <Link href="/" className=" pl-0 self-end pb-2 flex items-center space-x-2 group  mx-auto">
+          <Link href="/" className=" pl-0 mb-3  flex items-center space-x-2 group  mx-auto">
             
-            <div className="w-12 h-12 bg-pop-green flex items-center justify-center transition-all group-hover:bg-opacity-90 mt-1">
+            <div className="  bg-pop-green flex items-center justify-center transition-all group-hover:bg-opacity-90 mt-1">
               <img
                 src="https://storage.googleapis.com/popcycle01/logo2.svg"
                
-                className="w-full h-full object-cover"
+                className="w-10 h-10 object-cover"
                 data-testid="img-product-info"
               />
             </div>
             <div className="flex-col flex mt-2">
-            <span className="text-4xl  tracking-tighter font-base text-gray-900">
+            <span className="text-4xl -mb-1 tracking-tighter font-light text-gray-900">
               PopCycle
             </span>
             <span className="hidden mt-0.0 ml-1 tracking-[2.2em] text-[8px] font-bold text-gray-900">
@@ -226,13 +226,13 @@ export default function Navigation() {
               className="hover:opacity-80 transition-opacity"
               data-testid="button-search-mobile"
             >
-              <Search className="hidden w-5 h-5 text-gray-700" />
+              <Search className="hidden w-5 h-5 text-gray-600" />
             </button>
             <button
               className="hidden hover hover:opacity-80 transition-opacity"
               data-testid="button-cart-mobile"
             >
-              <ShoppingCart className="w-5 h-5 text-gray-700" />
+              <ShoppingCart className="w-5 h-5 text-gray-600" />
             </button>
           </div>
 
