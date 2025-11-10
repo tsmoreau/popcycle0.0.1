@@ -110,7 +110,7 @@ export default function Navigation() {
               className="hover:opacity-80 transition-opacity"
               data-testid="button-search"
             >
-              <Search className="w-5 h-5 text-gray-400" />
+              <Search className="w-5 h-5 text-gray-700" />
             </button>
 
             {/* User Icon */}
@@ -119,7 +119,7 @@ export default function Navigation() {
               className="hidden lg:flex w-5 h-5 hover:opacity-80 transition-opacity"
               data-testid="button-user"
             >
-              <User className="w-5 h-5 text-gray-400" />
+              <User className="w-5 h-5 text-gray-700" />
             </button>
 
             {/* Shopping Cart */}
@@ -185,11 +185,11 @@ export default function Navigation() {
             </Button>
           </div>
 
-          <div className="flex justify-center w-full mb-1 ">
+          <div className="flex justify-center w-full mb-1 mr-2">
           {/* Logo */}
           <Link href="/" className=" pl-0 mb-3  flex items-center space-x-2 group  mx-auto">
             
-            <div className="  bg-pop-green flex items-center justify-center transition-all group-hover:bg-opacity-90 mt-1">
+            <div className="   flex items-center justify-center transition-all group-hover:bg-opacity-90 mt-1.5 -mr-1">
               <img
                 src="https://storage.googleapis.com/popcycle01/logo2.svg"
                
@@ -226,13 +226,13 @@ export default function Navigation() {
               className="hover:opacity-80 transition-opacity"
               data-testid="button-search-mobile"
             >
-              <Search className="hidden w-5 h-5 text-gray-600" />
+              <Search className="hidden w-5 h-5 text-gray-900" />
             </button>
             <button
               className="hidden hover hover:opacity-80 transition-opacity"
               data-testid="button-cart-mobile"
             >
-              <ShoppingCart className="w-5 h-5 text-gray-600" />
+              <ShoppingCart className="w-5 h-5 text-gray-900" />
             </button>
           </div>
 
