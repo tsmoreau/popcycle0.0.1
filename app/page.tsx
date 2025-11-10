@@ -20,49 +20,50 @@ export default function Home() {
         </video>
         
         {/* Dark Overlay */}
-        <div className="absolute inset-0 transition ease-in-out hover:bg-black/30 duration-300 z-10"></div>
+        <div className="absolute inset-0 transition ease-in-out hover:bg-black/30 duration-400 z-10"></div>
         
         {/* Content */}
-        <div className="mb-12 transition ease-in-out group-hover:transform group-hover:-translate-y-4 transform  w-full mx-auto text-center  z-20">
+        <div className="mb- transition ease-in-out group-hover:transform group-hover:-translate-y-6 transform  w-full mx-auto text-center duration-400 mb-20 z-20">
 
 <div className=" text-3xl lg:text-5xl tracking-tight leading-tight text-white font-light mb-2 hidden"> Playful Design    </div>
           <div className="text-3xl lg:text-5xl mb-3 tracking-tight leading-tight text-white font-light">Traceable Sustainability</div>
           
        
-          <p className="text-base font-light lg:text-2xl lg:max-w-[40vw] mx-auto leading-relaxed text-white mb-4">
-            Transforming post-consumer plastic into unique designer objects with complete traceability. 
+          <p className="text-base font-light lg:text-2xl lg:max-w-[35vw] mx-auto leading-relaxed text-white">
+            Transforming post-consumer plastic into designer objects with complete traceability. 
            
           </p>
           
-          <div className="flex flex-col sm:flex-row justify-center items-center">
-          
+         
+        </div>
+        <div className="left-1/2 -translate-x-1/2 absolute bottom-10 flex flex-col sm:flex-row justify-center items-center z-30">
 
-          
 
-            <div 
-              onClick={() => {
-                document.getElementById('top')?.scrollIntoView({ 
-                  behavior: 'smooth',
-                  block: 'start'
-                });
-              }}
-              className="cursor-pointer duration-1000 hidden group-hover:flex"
-            >
-              <svg width="40px" height="40px" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                <path 
-                  strokeWidth="0.5"    
-                  stroke="#FFFFFF" 
-                  fill="none" 
-                  strokeLinecap="round"  
-                  strokeLinejoin="round"
-                  d="M3 7 L10 14 L17 7" 
-                />
-              </svg>
-            </div>
 
-            
-            
+
+          <div 
+            onClick={() => {
+              document.getElementById('top')?.scrollIntoView({ 
+                behavior: 'smooth',
+                block: 'start'
+              });
+            }}
+            className="duration-400 cursor-pointer opacity-0 group-hover:opacity-100 z-30"
+          >
+            <svg width="40px" height="40px" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+              <path 
+                strokeWidth="0.75"    
+                stroke="#FFFFFF" 
+                fill="none" 
+                strokeLinecap="round"  
+                strokeLinejoin="round"
+                d="M3 7 L10 14 L17 7" 
+              />
+            </svg>
           </div>
+
+
+
         </div>
       </section>
 
@@ -74,7 +75,7 @@ export default function Home() {
           {/* Featured Products Grid */}
           <section id="top" className="lg:mt-16 pt-12 pb-4  bg-white">
             <div className="lg:w-[90vw] mx-4 mx-auto pt-1">
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-x-5 gap-y-3 lg:gap-y-6  ">
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-x-5 gap-y-3 lg:gap-y-12  ">
                 {/* Product Card 1 */}
                 <Link href="/about" className="group">
                   <div className="relative aspect-[7/4] overflow-hidden bg-gray-100">
@@ -93,24 +94,27 @@ export default function Home() {
                   </div>
                   <div className="w-auto h-auto justify-items-center my-2">
 
-                    <h3 className="text-black mt-2 font-light text-xl lg:text-lg ">Studio Editions</h3>
-                    <p className="text-gray-500 -mt-1 text-base">One of a kind limited run designs.</p>
+                    <h3 className="text-black mt-3 font-base text-xl lg:text-lg ">Studio Editions</h3>
+                    <p className="text-gray-500 -mt-0.5 text-base">One of a kind limited run designs.</p>
                     </div>
                 </Link>
 
                 {/* Product Card 2 */}
               <Link href="/about" className="group">
                 <div className="relative aspect-[7/4] bg-gray-100 overflow-hidden">
-                  <div className="absolute inset-0 flex items-center justify-center">
-                    <Recycle className="w-24 h-24 text-gray-300" />
-                  </div>
+                  <img
+                    src="https://storage.googleapis.com/popcycle01/products/68f7c497367b7700db69fcc5/assets/upscalemedia-transformed-1761341017228.png"
+
+                    className="w-full h-full object-cover object-bottom transition duration-300 ease-in-out transform hover:scale-105"
+                  
+                  />
                   <div className="absolute bottom-0 left-0 right-0 p-6 ">
 
                   </div>
                 </div>
                 <div className="w-auto h-auto justify-items-center my-2">
-                  <h3 className="text-black mt-2 font-light text-lg ">Custom Collections</h3>
-                  <p className="text-gray-500 -mt-1 text-base">Exclusive designs and products</p>
+                  <h3 className="text-black mt-2 font-base text-lg ">Custom Collections</h3>
+                  <p className="text-gray-500 -mt-0.5 text-base">Exclusive designs and products</p>
                   </div>
               </Link>
 
@@ -219,6 +223,41 @@ export default function Home() {
 
       </section>
 
+
+      <section className="mt-16 text-center">
+
+         <div className="hidden text-5xl font-light pb-8">Studio Retainer</div>
+          <div className=" w-[90vw] md:flex lg:flex mx-auto">
+
+
+            <div className="w-[90vw] h-[60vh] lg:w-3/5 bg-gray-50 flex flex-col mx-auto items-center justify-center ">
+              <Factory className="w-24 h-24 text-gray-300" />
+
+            </div>
+
+            <div className="w-[90vw] lg:w-2/5 bg-gray-50 h-auto text-left">
+
+              <div className="py-16 px-16 text-black">
+
+                <div  className="text-3xl font-base pb-6">Community Produced </div>
+                <div className="text-xl font-light ">PopCycle sources its recycled materials from Community Partners and tracks those materials from pickup to processing to final object, and embeds that journey into every object we produce. Every PopCycle object carries its complete history with it, from Community Partner pickup to final produced item.</div>
+                <Button
+                  size="lg"
+                  variant="outline"
+                  className="flex-1 px-12 h-14 text-base font-light bg-pop-green text-white hover:bg-white hover:text-black mt-8"
+                >
+                  Track an Object
+                </Button>
+              </div>
+            </div>
+
+          </div>
+
+
+
+      </section>
+
+
       
       <section className="hidden pt-12 mt- text-center">
 
@@ -257,7 +296,7 @@ export default function Home() {
 
 
       {/* Product Highlights Grid */}
-      <section className="hidden py-16 lg:py-20 px-6 bg-white">
+      <section className=" py-16 lg:py-20 px-6 bg-white">
         <div className="max-w-7xl mx-auto">
           <h2 className="text-3xl lg:text-4xl mb-12 text-center">Featured Products</h2>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6 lg:gap-8">
