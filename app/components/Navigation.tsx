@@ -208,9 +208,9 @@ export default function Navigation() {
             </Button>
           </div>
 
-          <div className="flex justify-center w-full mb-1 lg:mr-2">
+          <div className="scale-110 flex justify-center w-full mb-1 lg:mr-2">
           {/* Logo */}
-          <Link href="/" className="mt-1 scale-135 pl-0 mb-2  flex items-center space-x-2 group  mx-auto">
+          <Link href="/" className="mt-1 scale-110 pl-0 mb-2  flex items-center space-x-2 group  mx-auto">
             
             <div className="  mt-1 flex items-center justify-center transition-all group-hover:bg-opacity-90 -mr-1">
               <img
