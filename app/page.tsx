@@ -7,7 +7,7 @@ export default function Home() {
   return (
     <div className="min-h-screen font-jost">
       {/* Hero Section */}
-      <section className="relative group font-jost overflow-hidden h-[60vh] lg:h-[80vh] flex items-end pb-12">
+      <section className="relative group font-jost overflow-hidden h-[70vh] lg:h-[80vh] flex items-end pb-12">
         {/* Background Video */}
         <video
           autoPlay
@@ -73,7 +73,7 @@ export default function Home() {
 
           {/* Featured Products Grid */}
           <section id="top" className="lg:mt-20 pt-8 pb-4  bg-white">
-            <div className="lg:w-[90vw] mx-4 mx-auto pt-1">
+            <div className="w-[95vw] lg:w-[90vw] mx-4 mx-auto pt-1">
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-x-5 gap-y-3 lg:gap-y-12  ">
                 {/* Product Card 1 */}
                 <Link href="/about" className="group">
