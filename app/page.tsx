@@ -190,7 +190,7 @@ export default function Home() {
 
             <div id="top" className="w-full lg:w-2/5  h-auto  text-center lg:text-left">
 
-              <div className="py-8 px-6 lg:py-16 lg:pl-16 lg:pr-36 text-black">
+              <div className="py-8 px-6 lg:py-16 px-16 text-black">
 
                 <div  className="text-2xl lg:text-3xl font-base pb-4 lg:pb-6">Community Sourced </div>
                 <div className="text-base lg:text-xl font-light ">PopCycle sources its recycled materials from local Community Partners and transforms them into branded products for those partners, allowing for low-footprint proveable waste reuse, as well as curated product creation for local businesses.</div>
@@ -214,11 +214,11 @@ export default function Home() {
       <section className="mt-12 lg:mt-16 text-center">
 
          <div className="hidden text-5xl font-light pb-8">Studio Retainer</div>
-          <div className=" w-full h-auto md:h-[60vh] flex flex-col-reverse md:flex-row mx-auto">
+          <div className=" w-[90vw] h-auto md:h-[60vh] flex flex-col-reverse md:flex-row mx-auto">
 
             <div className="w-full lg:w-2/5  h-auto text-center lg:text-right">
 
-              <div className="py-8 px-6 lg:py-16 lg:pr-16 lg:pl-36 text-black">
+              <div className="py-8 px-6 lg:py-16 lg:pr-16 lg:pl-16 text-black">
 
                 <div  className="text-2xl lg:text-3xl font-base pb-4 lg:pb-6">Sustainably Manufactured</div>
                 <div className="text-base lg:text-xl font-light ">PopCycle processes all material locally and in-house, using minimally destructive, environmentally friendly recycling methods, removing plastic from the waste stream and providing ongoing community impact measurement.</div>
@@ -254,7 +254,7 @@ export default function Home() {
       <section className="mt-12 lg:mt-16 text-center">
 
          <div className="hidden text-5xl font-light pb-8">Studio Retainer</div>
-          <div className=" w-full h-auto md:flex lg:flex mx-auto">
+          <div className="lg:w-[90vw] h-auto md:flex lg:flex mx-auto">
 
 
             <div className="w-full h-auto md:h-[60vh] lg:w-3/5 bg-gray-50 flex flex-col mx-auto items-center justify-center ">
@@ -271,7 +271,7 @@ export default function Home() {
 
             <div className="w-full lg:w-2/5 bg-white h-auto text-center lg:text-left">
 
-              <div className="py-8 px-6 lg:py-16 lg:pl-16 lg:pr-36 text-black">
+              <div className="py-8 px-6 lg:py-16 lg:pl-16 lg:pr-16 text-black">
 
                 <div  className="text-2xl lg:text-3xl font-base pb-4 lg:pb-6">Fully Tracked </div>
                 <div className="text-base lg:text-xl font-light ">PopCycle tracks our materials from pickup, through processing, to final object, allowing us to provide you with complete post-consumer material provenance. Every PopCycle object carries a QR code linking to its complete Material Facts history, from original material bins, through to processing batches and final produced item.</div>
