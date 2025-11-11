@@ -99,7 +99,7 @@ export default function Navigation() {
   ];
 
   return (
-    <nav className="font-jost font-light h-20 mt-8  z-50 bg-white border-b border-gray-200">
+    <nav className="font-jost font-light h-24  z-50 bg-white border-b border-gray-200">
       <div className="relative max-w-full mx-auto h-auto pt-2">
         <div className="absolute bottom-4 -mt-2 right-5  ">
           <div 
