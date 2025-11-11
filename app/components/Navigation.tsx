@@ -596,7 +596,7 @@ export default function Navigation() {
 
       {/* Mobile Menu */}
       {mobileMenuOpen && (
-        <div className="lg:hidden z-50 font-jost font-light bg-white border- border-gray-200 mt-1.5">
+        <div className="lg:hidden z-50 font-jost font-light bg-white border- border-gray-200 mt-2">
           <div className="hidden px-4 py-6 space-y-4">
             {/* About Mobile Accordion Section */}
             <div className="space-y-2">

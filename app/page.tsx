@@ -68,7 +68,6 @@ export default function Home() {
       </section>
 
      
-      {/* Editorial Section */}
 
 
 
@@ -170,11 +169,12 @@ export default function Home() {
           </section>
 
 
+      {/* Editorial Section */}
 
       <section className=" mt-32 text-center">
 
          <div className="hidden text-5xl font-light pb-8">Studio Retainer</div>
-          <div className=" w-full h-[60vh] md:flex lg:flex mx-auto">
+          <div className=" w-full h-auto md:h-[60vh] md:flex lg:flex mx-auto">
 
 
             <div className="w-full aspect[7/5]  lg:w-3/5 bg-gray-50 flex flex-col mx-auto items-center justify-center lg:h-auto ">
@@ -188,16 +188,16 @@ export default function Home() {
 
             </div>
 
-            <div id="top" className="w-[90vw] lg:w-2/5  h-auto text-left">
+            <div id="top" className="w-full lg:w-2/5  h-auto text-left">
 
-              <div className="py-16 pl-16 pr-36 text-black">
+              <div className="py-8 px-6 lg:py-16 lg:pl-16 lg:pr-36 text-black">
 
-                <div  className="text-3xl font-base pb-6">Community Sourced </div>
-                <div className="text-xl font-light ">PopCycle sources its recycled materials from local Community Partners and transforms them into branded products for those partners, allowing for low-footprint proveable waste reuse, as well as curated product creation for local businesses.</div>
+                <div  className="text-2xl lg:text-3xl font-base pb-4 lg:pb-6">Community Sourced </div>
+                <div className="text-base lg:text-xl font-light ">PopCycle sources its recycled materials from local Community Partners and transforms them into branded products for those partners, allowing for low-footprint proveable waste reuse, as well as curated product creation for local businesses.</div>
                 <Button
                   size="lg"
                   variant="outline"
-                  className="flex-1 px-12 h-14 text-base font-light bg-pop-green text-white hover:bg-white hover:text-black mt-8"
+                  className="flex-1 px-8 lg:px-12 h-12 lg:h-14 text-sm lg:text-base font-light bg-pop-green text-white hover:bg-white hover:text-black mt-6 lg:mt-8"
                 >
                   Learn More
                 </Button>
@@ -214,18 +214,18 @@ export default function Home() {
       <section className="mt-16 text-center">
 
          <div className="hidden text-5xl font-light pb-8">Studio Retainer</div>
-          <div className=" w-full h-[60vh] md:flex lg:flex mx-auto">
+          <div className=" w-full h-auto md:h-[60vh] md:flex lg:flex mx-auto">
 
-            <div className="w-[90vw] lg:w-2/5  h-auto text-right">
+            <div className="w-full lg:w-2/5  h-auto text-left lg:text-right">
 
-              <div className="py-16 pr-16 pl-36 text-black">
+              <div className="py-8 px-6 lg:py-16 lg:pr-16 lg:pl-36 text-black">
 
-                <div  className="text-3xl font-base pb-6">Sustainably Manufactured</div>
-                <div className="text-xl font-light ">PopCycle processes all material locally and in-house, using minimally destructive, environmentally friendly recycling methods, removing plastic from the waste stream and providing ongoing community impact measurement.</div>
+                <div  className="text-2xl lg:text-3xl font-base pb-4 lg:pb-6">Sustainably Manufactured</div>
+                <div className="text-base lg:text-xl font-light ">PopCycle processes all material locally and in-house, using minimally destructive, environmentally friendly recycling methods, removing plastic from the waste stream and providing ongoing community impact measurement.</div>
                 <Button
                   size="lg"
                   variant="outline"
-                  className="flex-1 px-12 h-14 text-base font-light bg-pop-green text-white hover:bg-white hover:text-black mt-8"
+                  className="flex-1 px-8 lg:px-12 h-12 lg:h-14 text-sm lg:text-base font-light bg-pop-green text-white hover:bg-white hover:text-black mt-6 lg:mt-8"
                 >
                   The PopCycle Process
                 </Button>
@@ -254,10 +254,10 @@ export default function Home() {
       <section className=" mt-16 text-center">
 
          <div className="hidden text-5xl font-light pb-8">Studio Retainer</div>
-          <div className=" w-full md:flex lg:flex mx-auto">
+          <div className=" w-full h-auto md:flex lg:flex mx-auto">
 
 
-            <div className="w-full h-[60vh] lg:w-3/5 bg-gray-50 flex flex-col mx-auto items-center justify-center ">
+            <div className="w-full h-auto md:h-[60vh] lg:w-3/5 bg-gray-50 flex flex-col mx-auto items-center justify-center ">
 
               <img
                 src="https://storage.googleapis.com/popcycle01/products/68f7c497367b7700db69fccb/assets/gemini-generated-image-301d4u301d4u301d-1761761133617.png"
@@ -269,16 +269,16 @@ export default function Home() {
 
             </div>
 
-            <div className="w-[90vw] lg:w-2/5 bg-white h-auto text-left">
+            <div className="w-full lg:w-2/5 bg-white h-auto text-left">
 
-              <div className="py-16 pl-16 pr-36 text-black">
+              <div className="py-8 px-6 lg:py-16 lg:pl-16 lg:pr-36 text-black">
 
-                <div  className="text-3xl font-base pb-6">Fully Tracked </div>
-                <div className="text-xl font-light ">PopCycle tracks our materials from pickup, through processing, to final object, allowing us to provide you with complete post-consumer material provenance. Every PopCycle object carries a QR code linking to its complete Material Facts history, from original material bins, through to processing batches and final produced item.</div>
+                <div  className="text-2xl lg:text-3xl font-base pb-4 lg:pb-6">Fully Tracked </div>
+                <div className="text-base lg:text-xl font-light ">PopCycle tracks our materials from pickup, through processing, to final object, allowing us to provide you with complete post-consumer material provenance. Every PopCycle object carries a QR code linking to its complete Material Facts history, from original material bins, through to processing batches and final produced item.</div>
                 <Button
                   size="lg"
                   variant="outline"
-                  className="flex-1 px-12 h-14 text-base font-light bg-pop-green text-white hover:bg-white hover:text-black mt-8"
+                  className="flex-1 px-8 lg:px-12 h-12 lg:h-14 text-sm lg:text-base font-light bg-pop-green text-white hover:bg-white hover:text-black mt-6 lg:mt-8"
                 >
                   Track an Object
                 </Button>
@@ -325,7 +325,7 @@ export default function Home() {
 
 
 
-      </section>
+                </section>
 
 
 
