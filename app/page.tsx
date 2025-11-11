@@ -7,7 +7,7 @@ export default function Home() {
   return (
     <div className="min-h-screen font-jost">
       {/* Hero Section */}
-      <section className="relative group font-jost overflow-hidden h-[70vh] lg:h-[80vh] flex items-end pb-12">
+      <section className="relative group font-jost overflow-hidden h-[80vh] flex items-end pb-12">
         {/* Background Video */}
         <video
           autoPlay
@@ -72,9 +72,9 @@ export default function Home() {
 
 
           {/* Featured Products Grid */}
-          <section id="top" className="lg:mt-20 pt-8 pb-4  bg-white">
+          <section id="top" className="mt-6 lg:mt-20 pt-8 pb-4  bg-white">
             <div className="w-[95vw] lg:w-[90vw] mx-4 mx-auto pt-1">
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-x-5 gap-y-3 lg:gap-y-12  ">
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-x-5 gap-y-6 lg:gap-y-12  ">
                 {/* Product Card 1 */}
                 <Link href="/about" className="group">
                   <div className="relative aspect-[7/4] overflow-hidden bg-gray-100">
@@ -94,7 +94,7 @@ export default function Home() {
                   <div className="w-auto h-auto justify-items-center my-2">
 
                     <h3 className="text-black mt-3 font-base text-xl lg:text-lg ">Studio Editions</h3>
-                    <p className="text-gray-500 -mt-1 text-lg">One of a kind limited run designs</p>
+                    <p className="text-gray-500 -mt-1 text-lg">One of a kind limited runs</p>
                     </div>
                 </Link>
 
@@ -171,7 +171,7 @@ export default function Home() {
 
       {/* Editorial Section */}
 
-      <section className=" mt-32 text-center">
+      <section className="mt-24 lg:mt-32 text-center">
 
          <div className="hidden text-5xl font-light pb-8">Studio Retainer</div>
           <div className=" w-full h-auto md:h-[60vh] md:flex lg:flex mx-auto">
@@ -188,7 +188,7 @@ export default function Home() {
 
             </div>
 
-            <div id="top" className="w-full lg:w-2/5  h-auto text-left">
+            <div id="top" className="w-full lg:w-2/5  h-auto  text-center lg:text-left">
 
               <div className="py-8 px-6 lg:py-16 lg:pl-16 lg:pr-36 text-black">
 
@@ -211,12 +211,12 @@ export default function Home() {
       </section>
 
 
-      <section className="mt-16 text-center">
+      <section className="mt-12 lg:mt-16 text-center">
 
          <div className="hidden text-5xl font-light pb-8">Studio Retainer</div>
           <div className=" w-full h-auto md:h-[60vh] flex flex-col-reverse md:flex-row mx-auto">
 
-            <div className="w-full lg:w-2/5  h-auto text-left lg:text-right">
+            <div className="w-full lg:w-2/5  h-auto text-center lg:text-right">
 
               <div className="py-8 px-6 lg:py-16 lg:pr-16 lg:pl-36 text-black">
 
@@ -251,7 +251,7 @@ export default function Home() {
       </section>
 
 
-      <section className=" mt-16 text-center">
+      <section className="mt-12 lg:mt-16 text-center">
 
          <div className="hidden text-5xl font-light pb-8">Studio Retainer</div>
           <div className=" w-full h-auto md:flex lg:flex mx-auto">
@@ -269,7 +269,7 @@ export default function Home() {
 
             </div>
 
-            <div className="w-full lg:w-2/5 bg-white h-auto text-left">
+            <div className="w-full lg:w-2/5 bg-white h-auto text-center lg:text-left">
 
               <div className="py-8 px-6 lg:py-16 lg:pl-16 lg:pr-36 text-black">
 
@@ -350,7 +350,7 @@ export default function Home() {
       </section>
 
       {/* CTA Section */}
-      <section className=" pt-72 pb-24  px-6 bg-white">
+      <section className="pt-72 pb-24  px-6 bg-white">
         <div className="max-w-3xl mx-auto text-center">
           <h2 className="text-3xl lg:text-4xl mb-6 leading-tight">
             Start Your Circular Journey
