@@ -189,7 +189,7 @@ export default function Navigation() {
             )}
           </div>
             </div>
-        <div className=" mt-1 flex align-center  items-end justify-between ">
+        <div className=" mt-2.5 flex align-center  items-end justify-between ">
          
           
           {/* Mobile menu button - moved to left */}
@@ -216,7 +216,7 @@ export default function Navigation() {
               <img
                 src="https://storage.googleapis.com/popcycle01/logo2.svg"
                
-                className="w-12 h-12 object-cover"
+                className="w-11 h-11 object-cover"
                 data-testid="img-product-info"
               />
             </div>
