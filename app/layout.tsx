@@ -46,8 +46,8 @@ const gabarito = Gabarito({
 })
 
 export const metadata = {
-  title: 'PopCycle - Circular Plastic Tracking',
-  description: 'Transform corporate plastic waste into trackable, educational products',
+  title: 'PopCycle',
+  description: 'Transforming post-consumer plastic into traceable designer goods',
 }
 
 export default function RootLayout({

@@ -112,7 +112,7 @@ export default function Navigation() {
               className="hover:opacity-80 transition-opacity"
               data-testid="button-search"
             >
-              <Search className="w-5 h-5 text-gray-400" />
+              <Search className="w-5 h-5 text-gray-300 hover:text-gray-600" />
             </button>
 
             {/* User Icon */}
@@ -121,7 +121,7 @@ export default function Navigation() {
               className="hidden lg:flex w-5 h-5 hover:opacity-80 transition-opacity"
               data-testid="button-user"
             >
-              <User className="w-5 h-5 text-gray-400" />
+              <User className="w-5 h-5 text-gray-300 hover:text-gray-600" />
             </button>
 
             {/* Shopping Cart */}
@@ -139,10 +139,10 @@ export default function Navigation() {
                 <div className="w-80 bg-white border border-gray-200 shadow-lg p-6">
                   {iconDropdownOpen === 'search' && (
                     <div>
-                      <h3 className="font-jost text-lg font-semibold mb-4 text-pop-black border-b pb-2">Track Material Facts</h3>
+                      <h3 className="font-jost text-lg font-semibold mb-4 text-pop-black border-b pb-2">Search Material Facts</h3>
                       <input
                         type="text"
-                        placeholder="Enter object code..."
+                        placeholder="Enter object number..."
                         value={trackingCode}
                         onChange={(e) => setTrackingCode(e.target.value)}
                         onKeyDown={(e) => {
@@ -171,7 +171,7 @@ export default function Navigation() {
 
                   {iconDropdownOpen === 'user' && (
                     <div>
-                      <h3 className="font-jost text-lg font-semibold mb-4 text-pop-black border-b pb-2">Account</h3>
+                      <h3 className="font-jost text-lg font-semibold mb-4 text-pop-black border-b pb-2">User Profile</h3>
                      <AuthButton />
                     </div>
                   )}
@@ -189,7 +189,7 @@ export default function Navigation() {
             )}
           </div>
             </div>
-        <div className=" mt-2.5 flex align-center  items-end justify-between ">
+        <div className=" mt-1.5 flex align-center  items-end justify-between ">
          
           
           {/* Mobile menu button - moved to left */}
@@ -212,16 +212,16 @@ export default function Navigation() {
           {/* Logo */}
           <Link href="/" className=" pl-0 mb-2  flex items-center space-x-2 group  mx-auto">
             
-            <div className="  mt-2 flex items-center justify-center transition-all group-hover:bg-opacity-90 -mr-1">
+            <div className="  mt-1 flex items-center justify-center transition-all group-hover:bg-opacity-90 -mr-1">
               <img
                 src="https://storage.googleapis.com/popcycle01/logo2.svg"
                
-                className="w-11 h-11 object-cover"
+                className="w-11 h-11 object-cover mt-1"
                 data-testid="img-product-info"
               />
             </div>
             <div className="flex-col flex mt-2">
-            <span className="text-4xl -mb-1 tracking-tighter font-normal text-gray-900">
+            <span className="text-4xl -mb-1 tracking-tighter font-light text-gray-900">
               PopCycle
             </span>
             <span className="hidden mt-0.0 ml-1 tracking-[2.2em] text-[8px] font-bold text-gray-900">
