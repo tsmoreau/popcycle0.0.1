@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useState, useEffect, useRef } from "react";
 import { useSession, signOut } from "next-auth/react";
 import { Button } from "./ui/button";
@@ -24,6 +24,7 @@ import AuthButton from "./AuthButton";
 
 export default function Navigation() {
   const pathname = usePathname();
+  const router = useRouter();
   const [aboutOpen, setAboutOpen] = useState(false);
   const [productsOpen, setProductsOpen] = useState(false);
   const [servicesOpen, setServicesOpen] = useState(false);
@@ -33,6 +34,7 @@ export default function Navigation() {
   const [mobileProductsOpen, setMobileProductsOpen] = useState(false);
   const [mobileServicesOpen, setMobileServicesOpen] = useState(false);
   const [iconDropdownOpen, setIconDropdownOpen] = useState<'search' | 'user' | 'cart' | null>(null);
+  const [trackingCode, setTrackingCode] = useState("");
 
   const userMenuRef = useRef<HTMLDivElement>(null);
 
@@ -110,7 +112,7 @@ export default function Navigation() {
               className="hover:opacity-80 transition-opacity"
               data-testid="button-search"
             >
-              <Search className="w-5 h-5 text-gray-700" />
+              <Search className="w-5 h-5 text-gray-400" />
             </button>
 
             {/* User Icon */}
@@ -119,7 +121,7 @@ export default function Navigation() {
               className="hidden lg:flex w-5 h-5 hover:opacity-80 transition-opacity"
               data-testid="button-user"
             >
-              <User className="w-5 h-5 text-gray-700" />
+              <User className="w-5 h-5 text-gray-400" />
             </button>
 
             {/* Shopping Cart */}
@@ -128,7 +130,7 @@ export default function Navigation() {
               className="hidden hover:opacity-80 transition-opacity"
               data-testid="button-cart"
             >
-              <ShoppingCart className="w-6 h-6 text-gray-700" />
+              <ShoppingCart className="w-6 h-6 text-gray-400" />
             </button>
 
             {/* Unified Dropdown */}
@@ -141,8 +143,29 @@ export default function Navigation() {
                       <input
                         type="text"
                         placeholder="Enter object code..."
+                        value={trackingCode}
+                        onChange={(e) => setTrackingCode(e.target.value)}
+                        onKeyDown={(e) => {
+                          if (e.key === 'Enter' && trackingCode.trim()) {
+                            router.push(`/track/${trackingCode.trim()}`);
+                            setTrackingCode("");
+                            setIconDropdownOpen(null);
+                          }
+                        }}
                         className="w-full px-4 py-2 border border-gray-300 rounded-md font-jost focus:outline-none focus:border-pop-green"
                       />
+                      {trackingCode.trim() && (
+                        <button 
+                          onClick={() => {
+                            router.push(`/track/${trackingCode.trim()}`);
+                            setTrackingCode("");
+                            setIconDropdownOpen(null);
+                          }}
+                          className="mt-2 w-full mx-auto flex text-center justify-center text-white bg-pop-green py-2 hover:bg-pop-green/90 transition-colors cursor-pointer rounded-md"
+                        >
+                          Track Object
+                        </button>
+                      )}
                     </div>
                   )}
 

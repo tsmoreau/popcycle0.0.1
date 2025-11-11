@@ -217,7 +217,7 @@ export default function Navigation() {
             {/* Shopping Cart */}
             <button
               onMouseEnter={() => setIconDropdownOpen('cart')}
-              className="hover:opacity-80 transition-opacity"
+              className="hidden hover:opacity-80 transition-opacity"
               data-testid="button-cart"
             >
               <ShoppingCart className="w-6 h-6 text-gray-700" />
@@ -267,7 +267,7 @@ export default function Navigation() {
               <Search className="w-5 h-5 text-gray-700" />
             </button>
             <button
-              className="hover:opacity-80 transition-opacity"
+              className="hidden hover:opacity-80 transition-opacity"
               data-testid="button-cart-mobile"
             >
               <ShoppingCart className="w-5 h-5 text-gray-700" />

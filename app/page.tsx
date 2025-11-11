@@ -145,7 +145,15 @@ export default function Home() {
                 <Link href="/about" className=" group">
                   <div className="relative aspect-[7/4] bg-gray-100 overflow-hidden">
                     <div className="absolute inset-0 flex items-center justify-center">
-                      <Recycle className="w-24 h-24 text-gray-300" />
+                      <img
+                        src="https://storage.googleapis.com/popcycle01/Gemini_Generated_Image_ugvelnugvelnugve.png"
+
+                        className="w-full h-full object-cover object-bottom transition duration-300 ease-in-out transform hover:scale-105"
+                        data-testid="img-product-info"
+                      />
+
+                      
+                      
                     </div>
                     <div className="absolute bottom-0 left-0 right-0 p-6 ">
 
@@ -166,10 +174,10 @@ export default function Home() {
       <section className=" mt-32 text-center">
 
          <div className="hidden text-5xl font-light pb-8">Studio Retainer</div>
-          <div className=" w-[85vw] h-[60vh] md:flex lg:flex mx-auto">
+          <div className=" w-full h-[60vh] md:flex lg:flex mx-auto">
 
 
-            <div className="w-[90vw] aspect[7/5]  lg:w-3/5 bg-gray-50 flex flex-col mx-auto items-center justify-center lg:h-auto ">
+            <div className="w-full aspect[7/5]  lg:w-3/5 bg-gray-50 flex flex-col mx-auto items-center justify-center lg:h-auto ">
 
               <img
                 src="https://storage.googleapis.com/popcycle01/products/68f7c497367b7700db69fccb/assets/gemini-generated-image-301d4u301d4u301d-1761761133617.png"
@@ -185,13 +193,13 @@ export default function Home() {
               <div className="py-16 px-16 text-black">
 
                 <div  className="text-3xl font-base pb-6">Community Sourced </div>
-                <div className="text-xl font-light ">PopCycle sources its recycled materials from local Community Partners and tracks those materials from pickup, to processing, to final object, allowing us to provide complete post-consumer material provenance. </div>
+                <div className="text-xl font-light ">PopCycle sources its recycled materials from local Community Partners and transforms them into branded products for those partners, allowing for proven material waste diversion as well as curated product creation.</div>
                 <Button
                   size="lg"
                   variant="outline"
                   className="flex-1 px-12 h-14 text-base font-light bg-pop-green text-white hover:bg-white hover:text-black mt-8"
                 >
-                  Track an Object
+                  Learn More
                 </Button>
               </div>
             </div>
@@ -206,10 +214,25 @@ export default function Home() {
       <section className="mt-16 text-center">
 
          <div className="hidden text-5xl font-light pb-8">Studio Retainer</div>
-          <div className=" w-[85vw] h-[60vh] md:flex lg:flex mx-auto">
+          <div className=" w-full h-[60vh] md:flex lg:flex mx-auto">
 
+            <div className="w-[90vw] lg:w-2/5  h-auto text-right">
 
-            <div className="w-[90vw]  lg:w-3/5 bg-gray-50 flex flex-col mx-auto items-center justify-center h-auto ">
+              <div className="py-16 px-16 text-black">
+
+                <div  className="text-3xl font-base pb-6">Sustainably Manufactured</div>
+                <div className="text-xl font-light ">PopCycle processes all material locally and in-house, using minimally destructive, environmentally friendly recycling methods, removing plastic from the waste stream and providing Community Partners with brand-focused product.</div>
+                <Button
+                  size="lg"
+                  variant="outline"
+                  className="flex-1 px-12 h-14 text-base font-light bg-pop-green text-white hover:bg-white hover:text-black mt-8"
+                >
+                  Track an Object
+                </Button>
+              </div>
+            </div>
+
+            <div className="w-full  lg:w-3/5 bg-gray-50 flex flex-col mx-auto items-center justify-center h-auto ">
 
               <img
                 src="https://storage.googleapis.com/popcycle01/products/68f7c497367b7700db69fccb/assets/gemini-generated-image-301d4u301d4u301d-1761761133617.png"
@@ -220,22 +243,7 @@ export default function Home() {
 
             </div>
 
-            <div className="w-[90vw] lg:w-2/5  h-auto text-left">
-
-              <div className="py-16 px-16 text-black">
-
-                <div  className="text-3xl font-base pb-6">Sustainably Manufactured</div>
-                <div className="text-xl font-light ">PopCycle processes all material locally and in-house, using minimally destructive, environmentally friendly recycling methods, removing plastic from the waste stream and providing Community Partners with brand-focused product.</div>
-                <Button
-                  size="lg"
-                  variant="outline"
-                  className="flex-1 px-12 h-14 text-base font-light bg-pop-blue text-white hover:bg-white hover:text-black mt-8"
-                >
-                  Track an Object
-                </Button>
-              </div>
-            </div>
-
+        
           </div>
 
 
@@ -246,10 +254,10 @@ export default function Home() {
       <section className=" mt-16 text-center">
 
          <div className="hidden text-5xl font-light pb-8">Studio Retainer</div>
-          <div className=" w-[90vw] md:flex lg:flex mx-auto">
+          <div className=" w-full md:flex lg:flex mx-auto">
 
 
-            <div className="w-[90vw] h-[60vh] lg:w-3/5 bg-gray-50 flex flex-col mx-auto items-center justify-center ">
+            <div className="w-full h-[60vh] lg:w-3/5 bg-gray-50 flex flex-col mx-auto items-center justify-center ">
 
               <img
                 src="https://storage.googleapis.com/popcycle01/products/68f7c497367b7700db69fccb/assets/gemini-generated-image-301d4u301d4u301d-1761761133617.png"
@@ -261,16 +269,16 @@ export default function Home() {
 
             </div>
 
-            <div className="w-[90vw] lg:w-2/5 bg-gray-50 h-auto text-left">
+            <div className="w-[90vw] lg:w-2/5 bg-white h-auto text-left">
 
-              <div className="py-16 px-16 text-black">
+              <div className="py-16 pl-16 pr-36 text-black">
 
-                <div  className="text-3xl font-base pb-6">Community Produced </div>
-                <div className="text-xl font-light ">PopCycle sources its recycled materials from Community Partners and tracks those materials from pickup to processing to final object, and embeds that journey into every object we produce. Every PopCycle object carries its complete history with it, from Community Partner pickup to final produced item.</div>
+                <div  className="text-3xl font-base pb-6">Fully Tracked </div>
+                <div className="text-xl font-light ">PopCycle tracks our materials from pickup, through processing, to final object, allowing us to provide you with complete post-consumer material provenance.</div>
                 <Button
                   size="lg"
                   variant="outline"
-                  className="flex-1 px-12 h-14 text-base font-light bg-pop-red text-white hover:bg-white hover:text-black mt-8"
+                  className="flex-1 px-12 h-14 text-base font-light bg-pop-green text-white hover:bg-white hover:text-black mt-8"
                 >
                   Track an Object
                 </Button>
@@ -342,7 +350,7 @@ export default function Home() {
       </section>
 
       {/* CTA Section */}
-      <section className=" pt-64 pb-24  px-6 bg-white">
+      <section className=" pt-72 pb-24  px-6 bg-white">
         <div className="max-w-3xl mx-auto text-center">
           <h2 className="text-3xl lg:text-4xl mb-6 leading-tight">
             Start Your Circular Journey
