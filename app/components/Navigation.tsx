@@ -99,9 +99,9 @@ export default function Navigation() {
   ];
 
   return (
-    <nav className="font-jost font-light  z-50 bg-white border-b border-gray-200">
+    <nav className="font-jost font-light h-20 mt-2  z-50 bg-white border-b border-gray-200">
       <div className="relative max-w-full mx-auto h-auto pt-2">
-        <div className="absolute top-1/2 -mt-2 right-5  ">
+        <div className="absolute bottom-4 -mt-2 right-5  ">
           <div 
             className="flex items-center space-x-3 self-end relative"
             onMouseLeave={() => setIconDropdownOpen(null)}
@@ -135,11 +135,11 @@ export default function Navigation() {
 
             {/* Unified Dropdown */}
             {iconDropdownOpen && (
-              <div className="z-50 absolute right-0 top-full pt-2 mt-2">
+              <div className="z-50 absolute right-0 top-full pt-2 mt-0">
                 <div className="w-80 bg-white border border-gray-200 shadow-lg p-6">
                   {iconDropdownOpen === 'search' && (
                     <div>
-                      <h3 className="font-jost text-lg font-semibold mb-4 text-pop-black border-b pb-2">Track Material Lifecycle</h3>
+                      <h3 className="font-jost text-lg font-semibold mb-4 text-pop-black border-b pb-2">Track Material Facts</h3>
                       <input
                         type="text"
                         placeholder="Enter object code..."
@@ -189,7 +189,7 @@ export default function Navigation() {
             )}
           </div>
             </div>
-        <div className=" flex align-bottom items-end justify-between h-16 lg:h-16">
+        <div className=" mt-2.5 flex align-center  items-end justify-between ">
          
           
           {/* Mobile menu button - moved to left */}
@@ -210,9 +210,9 @@ export default function Navigation() {
 
           <div className="flex justify-center w-full mb-1 mr-2">
           {/* Logo */}
-          <Link href="/" className=" pl-0 mb-3  flex items-center space-x-2 group  mx-auto">
+          <Link href="/" className=" pl-0 mb-2  flex items-center space-x-2 group  mx-auto">
             
-            <div className="   flex items-center justify-center transition-all group-hover:bg-opacity-90 mt-1.5 -mr-1">
+            <div className="  mt-2 flex items-center justify-center transition-all group-hover:bg-opacity-90 -mr-1">
               <img
                 src="https://storage.googleapis.com/popcycle01/logo2.svg"
                
