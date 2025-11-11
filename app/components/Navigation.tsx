@@ -99,7 +99,7 @@ export default function Navigation() {
   ];
 
   return (
-    <nav className="relative font-jost font-light h-28 mt-2  z-50 bg-white border-b border-gray-200">
+    <nav className="font-jost font-light h-24  z-50 bg-white border-b border-gray-200 relative">
       <div className="relative max-w-full mx-auto h-auto pt-2">
         <div className="absolute bottom-4 -mt-2 right-5  ">
           <div 
@@ -208,9 +208,9 @@ export default function Navigation() {
             </Button>
           </div>
 
-          <div className="scale-110 flex justify-center w-full mb-1 lg:mr-2">
+          <div className="flex justify-center w-full mb-1 lg:mr-2">
           {/* Logo */}
-          <Link href="/" className="mt-1 scale-110 pl-0 mb-2  flex items-center space-x-2 group  mx-auto">
+          <Link href="/" className="scale-125 pl-0 mb-2  flex items-center space-x-2 group  mx-auto">
             
             <div className="  mt-1 flex items-center justify-center transition-all group-hover:bg-opacity-90 -mr-1">
               <img
@@ -596,7 +596,7 @@ export default function Navigation() {
 
       {/* Mobile Menu */}
       {mobileMenuOpen && (
-        <div className="lg:hidden z-50 font-jost font-light bg-white border-t border-gray-200">
+        <div className="lg:hidden z-50 font-jost font-light bg-white border-t border-gray-200 mt">
           <div className="hidden px-4 py-6 space-y-4">
             {/* About Mobile Accordion Section */}
             <div className="space-y-2">
