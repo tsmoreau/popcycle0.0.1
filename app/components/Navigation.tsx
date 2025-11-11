@@ -189,11 +189,11 @@ export default function Navigation() {
             )}
           </div>
             </div>
-        <div className=" mt-1.5 flex align-center  items-end justify-between ">
+        <div className=" mt-3 flex align-center  items-end justify-between ">
          
           
           {/* Mobile menu button - moved to left */}
-          <div className="absolute left-2 lg:hidden self-center mb-2 text-gray-400">
+          <div className="absolute bottom-0 left-2 lg:hidden self-center mb-2 text-gray-300">
             <Button
               variant="ghost"
               size="sm"
@@ -208,9 +208,9 @@ export default function Navigation() {
             </Button>
           </div>
 
-          <div className="flex justify-center w-full mb-1 mr-2">
+          <div className="flex justify-center w-full mb-1 lg:mr-2">
           {/* Logo */}
-          <Link href="/" className="scale-150 pl-0 mb-2  flex items-center space-x-2 group  mx-auto">
+          <Link href="/" className="scale-125 pl-0 mb-2  flex items-center space-x-2 group  mx-auto">
             
             <div className="  mt-1 flex items-center justify-center transition-all group-hover:bg-opacity-90 -mr-1">
               <img
@@ -596,7 +596,7 @@ export default function Navigation() {
 
       {/* Mobile Menu */}
       {mobileMenuOpen && (
-        <div className="lg:hidden font-jost font-light bg-white border-t border-gray-200">
+        <div className="lg:hidden z-50 font-jost font-light bg-white border-t border-gray-200">
           <div className="hidden px-4 py-6 space-y-4">
             {/* About Mobile Accordion Section */}
             <div className="space-y-2">
@@ -734,7 +734,7 @@ export default function Navigation() {
                       signOut();
                       setMobileMenuOpen(false);
                     }}
-                    className="w-full flex items-center px-4 py-2 font-jost text-sm rounded-md hover:bg-pop-red hover:text-white transition-colors text-left"
+                    className="w-full flex items-center px-4 py-2 font-jost text-sm rounded-md hover:bg-pop-red hover:text-white transition-colors text-left z-50"
                   >
                     <LogOut className="w-4 h-4 mr-3" />
                     Sign Out
