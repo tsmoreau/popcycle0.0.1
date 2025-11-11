@@ -101,7 +101,7 @@ export default function Navigation() {
   return (
     <nav className="font-jost font-light h-24  z-50 bg-white border-b border-gray-200 relative">
       <div className="relative max-w-full mx-auto h-auto pt-2">
-        <div className="absolute bottom-4 -mt-2 right-5  ">
+        <div className="absolute bottom-4 -mt-2 mb- right-5  ">
           <div 
             className="flex items-center space-x-3 self-end relative"
             onMouseLeave={() => setIconDropdownOpen(null)}
@@ -135,7 +135,7 @@ export default function Navigation() {
 
             {/* Unified Dropdown */}
             {iconDropdownOpen && (
-              <div className="z-50 absolute right-0 top-full pt-2 mt-0">
+              <div className="z-50 absolute right-0 top-full pt-6 mt-0">
                 <div className="w-80 bg-white border border-gray-200 shadow-lg p-6">
                   {iconDropdownOpen === 'search' && (
                     <div>
@@ -189,7 +189,7 @@ export default function Navigation() {
             )}
           </div>
             </div>
-        <div className=" mt-3 flex align-center  items-end justify-between ">
+        <div className=" mt-2 flex align-center  items-end justify-between ">
          
           
           {/* Mobile menu button - moved to left */}
@@ -208,11 +208,11 @@ export default function Navigation() {
             </Button>
           </div>
 
-          <div className="flex justify-center w-full mb-1 lg:mr-2">
+          <div className="flex justify-center w-full mb-1 ml-1.5 lg:ml-0 lg:mr-2">
           {/* Logo */}
           <Link href="/" className="scale-125 pl-0 mb-2  flex items-center space-x-2 group  mx-auto">
             
-            <div className="  mt-1 flex items-center justify-center transition-all group-hover:bg-opacity-90 -mr-1">
+            <div className="  mt-2 flex items-center justify-center transition-all group-hover:bg-opacity-90 -mr-1">
               <img
                 src="https://storage.googleapis.com/popcycle01/logo2.svg"
                
@@ -220,7 +220,7 @@ export default function Navigation() {
                 data-testid="img-product-info"
               />
             </div>
-            <div className="flex-col flex mt-2">
+            <div className="flex-col flex mt-3">
             <span className="text-4xl -mb-1 tracking-tighter font-light text-gray-900">
               PopCycle
             </span>
@@ -596,7 +596,7 @@ export default function Navigation() {
 
       {/* Mobile Menu */}
       {mobileMenuOpen && (
-        <div className="lg:hidden z-50 font-jost font-light bg-white border-t border-gray-200 mt">
+        <div className="lg:hidden z-50 font-jost font-light bg-white border- border-gray-200 mt-1.5">
           <div className="hidden px-4 py-6 space-y-4">
             {/* About Mobile Accordion Section */}
             <div className="space-y-2">
