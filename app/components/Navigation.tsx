@@ -189,7 +189,7 @@ export default function Navigation() {
             )}
           </div>
             </div>
-        <div className=" mt-2.5 flex align-center  items-end justify-between ">
+        <div className=" mt-1 flex align-center  items-end justify-between ">
          
           
           {/* Mobile menu button - moved to left */}
@@ -216,12 +216,12 @@ export default function Navigation() {
               <img
                 src="https://storage.googleapis.com/popcycle01/logo2.svg"
                
-                className="w-10 h-10 object-cover"
+                className="w-12 h-12 object-cover"
                 data-testid="img-product-info"
               />
             </div>
             <div className="flex-col flex mt-2">
-            <span className="text-4xl -mb-1 tracking-tighter font-light text-gray-900">
+            <span className="text-4xl -mb-1 tracking-tighter font-normal text-gray-900">
               PopCycle
             </span>
             <span className="hidden mt-0.0 ml-1 tracking-[2.2em] text-[8px] font-bold text-gray-900">
