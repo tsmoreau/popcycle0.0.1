@@ -210,7 +210,7 @@ export default function Navigation() {
 
           <div className="flex justify-center w-full mb-1 mr-2">
           {/* Logo */}
-          <Link href="/" className="scale-110 pl-0 mb-2  flex items-center space-x-2 group  mx-auto">
+          <Link href="/" className="scale-150 pl-0 mb-2  flex items-center space-x-2 group  mx-auto">
             
             <div className="  mt-1 flex items-center justify-center transition-all group-hover:bg-opacity-90 -mr-1">
               <img
