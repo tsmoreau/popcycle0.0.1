@@ -99,7 +99,7 @@ export default function Navigation() {
   ];
 
   return (
-    <nav className="font-jost font-light h-24  z-50 bg-white border-b border-gray-200">
+    <nav className="relative font-jost font-light h-28 mt-2  z-50 bg-white border-b border-gray-200">
       <div className="relative max-w-full mx-auto h-auto pt-2">
         <div className="absolute bottom-4 -mt-2 right-5  ">
           <div 
@@ -210,7 +210,7 @@ export default function Navigation() {
 
           <div className="flex justify-center w-full mb-1 lg:mr-2">
           {/* Logo */}
-          <Link href="/" className="scale-125 pl-0 mb-2  flex items-center space-x-2 group  mx-auto">
+          <Link href="/" className="mt-1 scale-135 pl-0 mb-2  flex items-center space-x-2 group  mx-auto">
             
             <div className="  mt-1 flex items-center justify-center transition-all group-hover:bg-opacity-90 -mr-1">
               <img
