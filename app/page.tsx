@@ -7,7 +7,7 @@ export default function Home() {
   return (
     <div className="min-h-screen font-jost">
       {/* Hero Section */}
-      <section className="relative group font-jost overflow-hidden h-[80vh] flex items-end pb-12">
+      <section className="relative group font-jost overflow-hidden h-[80vh] flex items-center pb-12">
         {/* Background Video */}
         <video
           autoPlay
@@ -23,7 +23,7 @@ export default function Home() {
         <div className="absolute inset-0 transition ease-in-out hover:bg-black/30 duration-400 z-10"></div>
         
         {/* Content */}
-        <div className="relative  w-full mx-auto text-center z-20">
+        <div className="relative mt-72 w-full mx-auto text-center z-20">
 
 <div className="transition ease-in-out group-hover:transform group-hover:-translate-y-8 transform duration-400 ">    
           <div className="text-3xl lg:text-5xl mb-3 tracking-normal leading-tight text-white font-light group-hover:opacity-100 opacity-80">Traceable Sustainability</div>
@@ -174,7 +174,7 @@ export default function Home() {
       <section className="mt-24 lg:mt-32 text-center">
 
          <div className="hidden text-5xl font-light pb-8">Studio Retainer</div>
-          <div className=" w-[90vw] h-auto md:h-[60vh] md:flex lg:flex mx-auto">
+          <div className="w-full  lg:w-[90vw] h-auto md:h-[60vh] md:flex lg:flex mx-auto">
 
 
             <div className="w-full aspect[7/5]  lg:w-3/5 bg-gray-50 flex flex-col mx-auto items-center justify-center lg:h-auto ">
@@ -190,7 +190,7 @@ export default function Home() {
 
             <div id="top" className="w-full lg:w-2/5  h-auto  text-center lg:text-left">
 
-              <div className="py-8 px-6 lg:py-16 px-16 text-black">
+              <div className="py-8 px-6 lg:py-16 lg:pr-16 lg:pl-16 text-black">
 
                 <div  className="text-2xl lg:text-3xl font-base pb-4 lg:pb-6">Community Sourced </div>
                 <div className="text-base lg:text-xl font-light ">PopCycle sources its recycled materials from local Community Partners and transforms them into branded products for those partners, allowing for low-footprint proveable waste reuse, as well as curated product creation for local businesses.</div>
@@ -214,7 +214,7 @@ export default function Home() {
       <section className="mt-12 lg:mt-16 text-center">
 
          <div className="hidden text-5xl font-light pb-8">Studio Retainer</div>
-          <div className=" w-[90vw] h-auto md:h-[60vh] flex flex-col-reverse md:flex-row mx-auto">
+          <div className="w-full  lg:w-[90vw] h-auto md:h-[60vh] flex flex-col-reverse md:flex-row mx-auto">
 
             <div className="w-full lg:w-2/5  h-auto text-center lg:text-right">
 
@@ -254,7 +254,7 @@ export default function Home() {
       <section className="mt-12 lg:mt-16 text-center">
 
          <div className="hidden text-5xl font-light pb-8">Studio Retainer</div>
-          <div className="lg:w-[90vw] h-auto md:flex lg:flex mx-auto">
+          <div className="w-full lg:w-[90vw] h-auto md:flex lg:flex mx-auto">
 
 
             <div className="w-full h-auto md:h-[60vh] lg:w-3/5 bg-gray-50 flex flex-col mx-auto items-center justify-center ">
