@@ -216,6 +216,19 @@ export default function Home() {
          <div className="hidden text-5xl font-light pb-8">Studio Retainer</div>
           <div className=" w-full h-[60vh] md:flex lg:flex mx-auto">
 
+
+            <div className="w-full  lg:w-3/5 bg-gray-50 flex flex-col mx-auto items-center justify-center h-auto ">
+
+              <img
+                src="https://storage.googleapis.com/popcycle01/products/68f7c497367b7700db69fccb/assets/gemini-generated-image-301d4u301d4u301d-1761761133617.png"
+
+                className="w-full h-full object-cover object-bottom "
+                data-testid="img-product-info"
+              />
+
+            </div>
+
+
             <div className="w-[90vw] lg:w-2/5  h-auto text-right">
 
               <div className="py-16 px-16 text-black">
@@ -232,18 +245,7 @@ export default function Home() {
               </div>
             </div>
 
-            <div className="w-full  lg:w-3/5 bg-gray-50 flex flex-col mx-auto items-center justify-center h-auto ">
-
-              <img
-                src="https://storage.googleapis.com/popcycle01/products/68f7c497367b7700db69fccb/assets/gemini-generated-image-301d4u301d4u301d-1761761133617.png"
-
-                className="w-full h-full object-cover object-bottom "
-                data-testid="img-product-info"
-              />
-
-            </div>
-
-        
+            
           </div>
 
 
