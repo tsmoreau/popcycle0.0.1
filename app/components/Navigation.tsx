@@ -99,7 +99,7 @@ export default function Navigation() {
   ];
 
   return (
-    <nav className="font-jost font-light h-20 mt-4  z-50 bg-white border-b border-gray-200">
+    <nav className="font-jost font-light h-20 mt-8  z-50 bg-white border-b border-gray-200">
       <div className="relative max-w-full mx-auto h-auto pt-2">
         <div className="absolute bottom-4 -mt-2 right-5  ">
           <div 
@@ -210,7 +210,7 @@ export default function Navigation() {
 
           <div className="flex justify-center w-full mb-1 mr-2">
           {/* Logo */}
-          <Link href="/" className="scale-105 pl-0 mb-2  flex items-center space-x-2 group  mx-auto">
+          <Link href="/" className="scale-110 pl-0 mb-2  flex items-center space-x-2 group  mx-auto">
             
             <div className="  mt-1 flex items-center justify-center transition-all group-hover:bg-opacity-90 -mr-1">
               <img
@@ -222,7 +222,7 @@ export default function Navigation() {
             </div>
             <div className="flex-col flex mt-2">
             <span className="text-4xl -mb-1 tracking-tighter font-light text-gray-900">
-              PopCycle!
+              PopCycle
             </span>
             <span className="hidden mt-0.0 ml-1 tracking-[2.2em] text-[8px] font-bold text-gray-900">
               STUDIO
