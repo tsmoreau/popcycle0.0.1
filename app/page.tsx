@@ -214,7 +214,7 @@ export default function Home() {
       <section className="mt-16 text-center">
 
          <div className="hidden text-5xl font-light pb-8">Studio Retainer</div>
-          <div className=" w-full h-auto md:h-[60vh] md:flex lg:flex mx-auto">
+          <div className=" w-full h-auto md:h-[60vh] flex flex-col-reverse md:flex-row mx-auto">
 
             <div className="w-full lg:w-2/5  h-auto text-left lg:text-right">
 
