@@ -34,7 +34,7 @@ export default function About() {
           <h1 className="text-4xl lg:text-6xl mb-8 tracking-tight leading-tight text-black font-light">
             About PopCycle
           </h1>
-          <p className="text-lg lg:text-xl max-w-3xl mx-auto leading-relaxed text-black font-light">
+          <p className="text-lg lg:text-xl max-w-3xl mx-auto leading-relaxed text-black font-extralight">
             PopCycle is an LA Based Design Studio that transforms tracked plastic waste streams into custom products that delight. We believe that each item we engage with can be anchor for story, learning, connection, and impact.
           </p>
         </div>

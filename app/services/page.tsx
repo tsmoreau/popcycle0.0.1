@@ -9,11 +9,11 @@ export default function Services() {
       <section className="relative py-40 lg:py-48 px-6 bg-gray-50 font-jost overflow-hidden h-[40vh] lg:h-[60vh] flex items-center">
        
         
-        <div className="max-w-5xl mx-auto text-center relative z-20">
-          <h1 className="text-4xl lg:text-6xl mb-8 tracking-tight leading-tight text-black font-light">
+        <div className="max-w-5xl mx-auto text-center relative z-20 -mt-7">
+          <h1 className="text-4xl lg:text-6xl mb-8 tracking-normal leading-normal text-black font-light">
             Services
           </h1>
-          <p className="text-lg lg:text-xl max-w-3xl mx-auto leading-relaxed text-black/90 font-light">
+          <p className="text-lg lg:text-xl max-w-3xl mx-auto leading-wide text-black/90 font-extralight">
             Complete circular manufacturing solutions from waste collection through custom product creation and delivery.
           </p>
         </div>

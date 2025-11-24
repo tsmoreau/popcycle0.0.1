@@ -126,7 +126,7 @@ export default function Shop() {
       <div className="font-jost relative h-[40vh] lg:h-[60vh] bg-gray-50 items-center justify-center text-center flex">
         <div className="flex-col flex mx-auto">
         <h1 className="text-6xl font-light mb-6 text-pop-black">Products</h1>
-        <p className="text-xl text-pop-black max-w-3xl mx-auto mb-8 font-extralight">
+        <p className="mt-0.5 text-xl text-pop-black max-w-3xl mx-auto mb-8 font-extralight">
           Toys, games, models, and more, custom-cut from traceable, 100%
           recycled waste plastic. Choose your design and a sheet blank and
           we'll send you a unique piece of sustainability.
@@ -135,17 +135,17 @@ export default function Shop() {
       </div>
 
       {/* Categories Filter */}
-      <div className="max-w-7xl mx-auto px-6 py-8">
-        <div className="flex items-center justify-between gap-4 flex-wrap">
+      <div className="max-w-7xl mx-auto px-6 py-16 ">
+        <div className="font-light flex items-center justify-between gap-4 flex-wrap">
           <div className="flex items-center gap-4">
-            <span className="text-sm text-pop-gray">Filter products:</span>
+            <span className="text-sm text-gray-500">Filter products:</span>
             <div className="relative" ref={filterRef}>
               <button
                 onClick={() => setFilterOpen(!filterOpen)}
-                className="border border-gray-200 bg-white pl-4 pr-5 py-2 text-sm systematic-caps cursor-pointer hover:bg-gray-50 transition-colors flex items-center whitespace-nowrap"
+                className="border border-gray-200 bg-white pl-6 pr-6 py-2 text-sm uppercase cursor-pointer hover:bg-gray-50 transition-colors flex items-center whitespace-nowrap"
               >
                 {selectedCategory}
-                <ChevronDown className="ml-2 w-4 h-4 text-pop-black" />
+                <ChevronDown className="ml-2 w-4 h-4 text-gray-400" />
               </button>
               
               {filterOpen && (
@@ -157,7 +157,7 @@ export default function Shop() {
                         setSelectedCategory(category);
                         setFilterOpen(false);
                       }}
-                      className="block w-full text-left px-5 py-3 systematic-caps text-sm hover:bg-pop-green hover:text-white transition-colors whitespace-nowrap"
+                      className="font-light  w-full text-left px-5 py-3 uppercase text-sm hover:bg-pop-green hover:text-white transition-colors whitespace-nowrap"
                     >
                       {category}
                     </button>
@@ -166,14 +166,14 @@ export default function Shop() {
               )}
             </div>
           </div>
-          <div className="text-sm text-pop-gray">
+          <div className="text-sm text-pop-gray font-light">
             {filteredProducts.length} {filteredProducts.length === 1 ? 'product' : 'products'}
           </div>
         </div>
       </div>
 
       {/* Products Grid */}
-      <div className="max-w-7xl mx-auto px-6 pb-16">
+      <div className="max-w-7xl mx-auto px-6 pb-16 font-light">
         {loading ? (
           <div className="flex justify-center items-center py-16">
             <LoadingSquare color="green" text="Loading Products..." />

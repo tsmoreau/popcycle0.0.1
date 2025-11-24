@@ -75,12 +75,12 @@ export default function Track() {
   return (
     <div className="min-h-screen bg-white font-jost">
       {/* Hero Section */}
-      <section className="relative py-40 lg:py-48 px-6 bg-gray-50">
-        <div className="max-w-5xl mx-auto text-center">
-          <h1 className="text-5xl lg:text-7xl mb-8 tracking-tight leading-tight text-black font-light">
+      <section className="h-[40vh] lg:h-[60vh] relative h-[40vh] lg:h-[60vh] flex items-center px-6 bg-gray-50">
+        <div className="max-w-5xl mx-auto text-center mt-12">
+          <h1 className="mt-3 text-5xl lg:text-7xl mb-7 tracking-normal leading-normal text-black font-light">
             Track
           </h1>
-          <p className="text-lg lg:text-xl max-w-3xl mx-auto leading-relaxed text-black/90 font-light mb-12">
+          <p className="text-lg lg:text-xl max-w-xl mx-auto leading-wide text-black/90 font-extralight mb-12">
             Enter an item code to see its complete journey from waste collection to finished product.
           </p>
 
@@ -106,11 +106,11 @@ export default function Track() {
       </section>
 
       {/* Filter and Grid Section */}
-      <div className="max-w-7xl mx-auto px-6 py-16">
+      <div className="flex-col mx-auto items-center justify-between max-w-7xl mx-auto px-6 py-16">
         {/* Filter Bar */}
-        <div className="flex items-center justify-between mb-12 pb-6 border-b border-gray-200">
+        <div className="flex items-center justify-between mb-12 pb-4  border-gray-200">
           <div className="flex items-center gap-6">
-            <span className="text-sm text-gray-500 font-light">Filter by type</span>
+            <span className="text-sm text-gray-500 font-light">Filter by type:</span>
             <div className="relative" ref={filterRef}>
               <button
                 onClick={() => setFilterOpen(!filterOpen)}
@@ -153,7 +153,7 @@ export default function Track() {
         </div>
 
         {/* QR Codes Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-px bg-gray-200">
+        <div className=" grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-px bg-gray-200 border ">
           {loading ? (
             <div className="col-span-full flex justify-center items-center py-20 bg-white">
               <LoadingSquare color="green" text="Loading Items..." />
@@ -161,7 +161,7 @@ export default function Track() {
           ) : (
             getFilteredCodes().map((code) => (
               <Link key={code.id} href={`/track/${code.id}`}>
-                <div className="bg-white p-12 hover:bg-gray-50 transition-colors cursor-pointer aspect-square flex flex-col justify-center items-center text-center">
+                <div className="aspect-square bg-white p-12 hover:bg-gray-50 transition-colors cursor-pointer aspect-square flex flex-col justify-center items-center text-center">
                   <QRCodeElement
                     qrCode={code.id}
                     size="md"

@@ -7,7 +7,7 @@ export default function Home() {
   return (
     <div className="min-h-screen font-jost">
       {/* Hero Section */}
-      <section className="relative group font-jost overflow-hidden h-[80vh] flex items-center pb-12">
+      <section className="relative group font-jost overflow-hidden h-[80vh] flex items-end pb-24">
         {/* Background Video */}
         <video
           autoPlay
@@ -20,17 +20,17 @@ export default function Home() {
         </video>
         
         {/* Dark Overlay */}
-        <div className="absolute inset-0 transition ease-in-out hover:bg-black/30 duration-400 z-10"></div>
+        <div className="absolute inset-0 transition ease-in-out hover:bg-black/30 duration-500 z-10"></div>
         
         {/* Content */}
-        <div className="relative mt-72 w-full mx-auto text-center z-20">
+        <div className="relative mt-24 w-full mx-auto text-center z-20">
 
-<div className="transition ease-in-out group-hover:transform group-hover:-translate-y-8 transform duration-400 ">    
-          <div className="text-3xl lg:text-5xl mb-3 tracking-normal leading-tight text-white font-light group-hover:opacity-100 opacity-80">Traceable Sustainability</div>
+<div className="transition ease-in-out group-hover:transform group-hover:-translate-y-8 transform duration-500 ">    
+          <div className="text-3xl lg:text-5xl mb-3 tracking-normal leading-normal text-white font-light group-hover:opacity-100 opacity-80">Traceable Sustainability</div>
           
        
-          <p className="text-base font-light lg:text-2xl max-w-[90vw] lg:max-w-[35vw] mx-auto leading-relaxed group-hover:opacity-100 opacity-80 text-white">
-            Transforming post-consumer plastic into designer objects with complete traceability. 
+          <p className="text-base tracking-normal font-extralight lg:text-2xl max-w-[90vw] lg:max-w-[40vw] mx-auto leading-0.5 group-hover:opacity-100 opacity-80 text-white">
+           We transform post-consumer plastic into designer objects with complete material traceability. 
            
           </p>
            </div>
@@ -46,7 +46,7 @@ export default function Home() {
                   block: 'start'
                 });
               }}
-              className="duration-400 cursor-pointer opacity-0 group-hover:opacity-100 z-30 ease-in-out transition"
+              className="duration-500 cursor-pointer opacity-0 group-hover:opacity-100 z-30 ease-in-out transition"
             >
               <svg width="40px" height="40px" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
                 <path 
@@ -68,113 +68,13 @@ export default function Home() {
       </section>
 
      
-
-
-
-          {/* Featured Products Grid */}
-          <section id="top" className="mt-6 lg:mt-20 pt-8 pb-4  bg-white">
-            <div className="w-[95vw] lg:w-[90vw] mx-4 mx-auto pt-1">
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-x-5 gap-y-6 lg:gap-y-12  ">
-                {/* Product Card 1 */}
-                <Link href="/about" className="group">
-                  <div className="relative aspect-[7/4] overflow-hidden bg-gray-100">
-                   
-                  
-
-
-                      <img
-                        src="https://storage.googleapis.com/popcycle01/products/68f7c497367b7700db69fcc5/assets/upscalemedia-transformed-1761341017228.png"
-                      
-                        className="w-full h-full object-cover object-bottom transition duration-300 ease-in-out transform hover:scale-105"
-                        data-testid="img-product-info"
-                      />
-                      
-                   
-                  </div>
-                  <div className="w-auto h-auto justify-items-center my-2">
-
-                    <h3 className="text-black mt-3 font-base text-xl lg:text-lg ">Studio Editions</h3>
-                    <p className="text-gray-500 -mt-1 text-lg">One of a kind limited runs</p>
-                    </div>
-                </Link>
-
-                {/* Product Card 2 */}
-              <Link href="/about" className="group">
-                <div className="relative aspect-[7/4] bg-gray-100 overflow-hidden">
-                  <img
-                    src="https://storage.googleapis.com/popcycle01/Gemini_Generated_Image_393va2393va2393v.png"
-
-                    
-
-                    className="w-full h-full object-cover object-bottom transition duration-300 ease-in-out transform hover:scale-105"
-                  
-                  />
-                  <div className="absolute bottom-0 left-0 right-0 p-6 ">
-
-                  </div>
-                </div>
-                <div className="w-auto h-auto justify-items-center my-2">
-                  <h3 className="text-black mt-2 font-base text-lg ">Custom Collections</h3>
-                  <p className="text-gray-500 -mt-1 text-lg">Exclusive designs and products</p>
-                  </div>
-              </Link>
-
-                 {/* Product Card 3 */}
-                <Link href="/about" className=" group">
-                  <div className="relative aspect-[7/4] bg-gray-100 overflow-hidden">
-                    <div className="absolute inset-0 flex items-center justify-center">
-                    <img
-                      src="https://storage.googleapis.com/popcycle01/Gemini_Generated_Image_d5b7k3d5b7k3d5b7.png"
-
-                      className="w-full h-full object-cover object-bottom transition duration-300 ease-in-out transform hover:scale-105"
-                      data-testid="img-product-info"
-                    />
- </div>
-                    <div className="absolute bottom-0 left-0 right-0 p-6 ">
-
-                    </div>
-                  </div>
-                  <div className="w-auto h-auto justify-items-center my-2">
-                  <h3 className="text-black mt-2 font-base text-lg ">Community Partners</h3>
-                  <p className="text-gray-500 -mt-1 text-lg">Products from your waste stream</p>
-                    </div>
-                </Link>
-
-                {/* Product Card 4 */}
-                <Link href="/about" className=" group">
-                  <div className="relative aspect-[7/4] bg-gray-100 overflow-hidden">
-                    <div className="absolute inset-0 flex items-center justify-center">
-                      <img
-                        src="https://storage.googleapis.com/popcycle01/Gemini_Generated_Image_ugvelnugvelnugve.png"
-
-                        className="w-full h-full object-cover object-bottom transition duration-300 ease-in-out transform hover:scale-105"
-                        data-testid="img-product-info"
-                      />
-
-                      
-                      
-                    </div>
-                    <div className="absolute bottom-0 left-0 right-0 p-6 ">
-
-                    </div>
-                  </div>
-                  <div className="w-auto h-auto justify-items-center my-2">
-                  <h3 className="text-black mt-2 font-base text-lg ">Complete Lifecycle Tracking</h3>
-                  <p className="text-gray-500 -mt-1 text-lg">Provable material diversion</p>
-                    </div>
-                </Link>
-              
-              </div>
-            </div>
-          </section>
-
-
       {/* Editorial Section */}
 
-      <section className="mt-24 lg:mt-32 text-center">
+      <div>
+      <section className="mt-12  text-center">
 
          <div className="hidden text-5xl font-light pb-8">Studio Retainer</div>
-          <div className="w-full  lg:w-[90vw] h-auto md:h-[60vh] md:flex lg:flex mx-auto">
+          <div className="w-[80vw]   h-auto md:h-[60vh] md:flex lg:flex mx-auto">
 
 
             <div className="w-full aspect[7/5]  lg:w-3/5 bg-gray-50 flex flex-col mx-auto items-center justify-center lg:h-auto ">
@@ -192,8 +92,13 @@ export default function Home() {
 
               <div className="py-8 px-6 lg:py-16 lg:pr-16 lg:pl-16 text-black">
 
-                <div  className="text-2xl lg:text-3xl font-base pb-4 lg:pb-6">Community Sourced </div>
-                <div className="text-base lg:text-xl font-light ">PopCycle sources its recycled materials from local Community Partners and transforms them into branded products for those partners, allowing for low-footprint proveable waste reuse, as well as curated product creation for local businesses.</div>
+                
+                <h1 className="text-2xl lg:text-3xl mb-4 tracking-normal leading-normal text-black font-light">
+                  Community Sourced
+                </h1>
+                <p className="text-lg lg:text-xl max-w-3xl mx-auto leading-wide text-black/90 font-extralight">
+                  PopCycle sources its recycled materials from local Community Partners and transforms them into branded products for those partners, allowing for low-footprint proveable waste reuse, as well as curated product creation for local businesses.
+                </p>
                 <Button
                   size="lg"
                   variant="outline"
@@ -211,17 +116,17 @@ export default function Home() {
       </section>
 
 
-      <section className="mt-12 lg:mt-16 text-center">
+      <section className="mt-12  text-center">
 
          <div className="hidden text-5xl font-light pb-8">Studio Retainer</div>
-          <div className="w-full  lg:w-[90vw] h-auto md:h-[60vh] flex flex-col-reverse md:flex-row mx-auto">
+          <div className="w-[80vw]    h-auto md:h-[60vh] flex flex-col-reverse md:flex-row mx-auto">
 
-            <div className="w-full lg:w-2/5  h-auto text-center lg:text-right">
+            <div className="w-full aspect[7/5]  lg:w-2/5  h-auto text-center lg:text-right">
 
               <div className="py-8 px-6 lg:py-16 lg:pr-16 lg:pl-16 text-black">
 
-                <div  className="text-2xl lg:text-3xl font-base pb-4 lg:pb-6">Sustainably Manufactured</div>
-                <div className="text-base lg:text-xl font-light ">PopCycle processes all material locally and in-house, using minimally destructive, environmentally friendly recycling methods, removing plastic from the waste stream and providing ongoing community impact measurement.</div>
+                <div  className="text-2xl lg:text-3xl mb-4 tracking-normal leading-normal text-black font-light">Sustainably Manufactured</div>
+                <div className="text-lg lg:text-xl max-w-3xl mx-auto leading-wide text-black/90 font-extralight">PopCycle processes all material locally and in-house, using minimally destructive, environmentally friendly recycling methods, removing plastic from the waste stream and providing ongoing community impact measurement.</div>
                 <Button
                   size="lg"
                   variant="outline"
@@ -251,13 +156,13 @@ export default function Home() {
       </section>
 
 
-      <section className="mt-12 lg:mt-16 text-center">
+      <section className="mt-12  text-center">
 
          <div className="hidden text-5xl font-light pb-8">Studio Retainer</div>
-          <div className="w-full lg:w-[90vw] h-auto md:flex lg:flex mx-auto">
+          <div className="w-[80vw]  h-auto md:flex lg:flex mx-auto">
 
 
-            <div className="w-full h-auto md:h-[60vh] lg:w-3/5 bg-gray-50 flex flex-col mx-auto items-center justify-center ">
+            <div className="w-full aspect[7/5]  h-auto md:h-[60vh] lg:w-3/5 bg-gray-50 flex flex-col mx-auto items-center justify-center ">
 
               <img
                 src="https://storage.googleapis.com/popcycle01/products/68f7c497367b7700db69fccb/assets/gemini-generated-image-301d4u301d4u301d-1761761133617.png"
@@ -273,8 +178,8 @@ export default function Home() {
 
               <div className="py-8 px-6 lg:py-16 lg:pl-16 lg:pr-16 text-black">
 
-                <div  className="text-2xl lg:text-3xl font-base pb-4 lg:pb-6">Fully Tracked </div>
-                <div className="text-base lg:text-xl font-light ">PopCycle tracks our materials from pickup, through processing, to final object, allowing us to provide you with complete post-consumer material provenance. Every PopCycle object carries a QR code linking to its complete Material Facts history, from original material bins, through to processing batches and final produced item.</div>
+                <div  className="text-2xl lg:text-3xl mb-4 tracking-normal leading-normal text-black font-light">Fully Tracked </div>
+                <div className="text-lg lg:text-xl max-w-3xl mx-auto leading-wide text-black/90 font-extralight">PopCycle tracks our materials from pickup, through processing, to final object, allowing us to provide you with complete post-consumer material provenance.</div>
                 <Button
                   size="lg"
                   variant="outline"
@@ -290,73 +195,115 @@ export default function Home() {
 
 
       </section>
+        </div>
 
 
-      
-      <section className="hidden pt-12 mt- text-center">
+      {/* Featured Products Grid */}
+        <section id="top" className="mt-24 lg:mt-36 pt-8 pb-4  bg-white">
+          <div className="w-[95vw] lg:w-[80vw] mx-4 mx-auto pt-1">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-x-5 gap-y-6 lg:gap-y-12  ">
+              {/* Product Card 1 */}
+              <Link href="/about" className="group">
+                <div className=" relative aspect-[7/4] overflow-hidden bg-gray-100">
 
-         <div className="hidden text-5xl font-light pb-8">Studio Retainer</div>
-          <div className=" w-[90vw] flex mx-auto">
 
-            <div className="w-2/5 bg-gray-50 h-auto text-right">
 
-              <div className="py-16 px-16 text-black">
 
-                <div className="text-3xl font-base pb-6">Community Produced </div>
-                <div className="text-xl font-light ">PopCycle sources its recycled materials from Community Partners and tracks those materials from pickup to processing to final object, and embeds that journey into every object we produce. Every PopCycle object carries its history from Community Partner to final produced item.</div>
-                <Button
-                  size="lg"
-                  variant="outline"
-                  className="flex-1 px-12 h-14 text-base font-light bg-pop-green text-white hover:bg-white hover:text-black mt-8"
-                >
-                  Track an Object
-                </Button>
+                    <img
+                      src="https://storage.googleapis.com/popcycle01/products/68f7c497367b7700db69fcc5/assets/upscalemedia-transformed-1761341017228.png"
+
+                      className=" w-full h-full object-cover object-bottom transition duration-300 ease-in-out transform hover:scale-105"
+                      data-testid="img-product-info"
+                    />
+
+
+                </div>
+                <div className="w-auto h-auto justify-items-center my-2">
+
+                  <h3 className="text-black tracking-normal mt-3 font-light text-xl lg:text-lg ">Studio Editions</h3>
+                  <p className="text-gray-500 font-extralight -mt-1 text-lg">One of a kind limited runs</p>
+                  </div>
+              </Link>
+
+              {/* Product Card 2 */}
+            <Link href="/about" className="group">
+              <div className="relative aspect-[7/4] bg-gray-100 overflow-hidden">
+                <img
+                  src="https://storage.googleapis.com/popcycle01/Gemini_Generated_Image_393va2393va2393v.png"
+
+
+
+                  className="w-full h-full object-cover object-bottom transition duration-300 ease-in-out transform hover:scale-105"
+
+                />
+                <div className="absolute bottom-0 left-0 right-0 p-6 ">
+
+                </div>
               </div>
-            </div>
+              <div className="w-auto h-auto justify-items-center my-2">
+                <h3 className="font-[500] text-black mt-2 font-light text-lg ">Custom Collections</h3>
+                <p className="text-gray-500 font-extralight -mt-1 text-lg">Exclusive designs and products</p>
+                </div>
+            </Link>
 
-            <div className="w-3/5 bg-gray-50 flex flex-col mx-auto items-center justify-center">
-              <Eye className="w-24 h-24 text-gray-300" />
-
-            </div>
-
-
-
-          </div>
-
-
-
-                </section>
-
-
-
-      {/* Product Highlights Grid */}
-      <section className="hidden py-16 lg:py-20 px-6 ">
-        <div className="max-w-[90vw] mx-auto">
-          <h2 className="text-3xl lg:text-4xl mb-12 text-center">Featured Products</h2>
-          <div className="w-3/4 items-center  flex mx-auto justify-center grid grid-cols-2 md:grid-cols-3 gap-6 lg:gap-8">
-            {[1, 2, 3].map((item) => (
-              <Link key={item} href="/about" className="group">
-                <div className="relative aspect-square bg-gray-50 mb-3 overflow-hidden">
+               {/* Product Card 3 */}
+              <Link href="/about" className=" group">
+                <div className="relative aspect-[7/4] bg-gray-100 overflow-hidden">
                   <div className="absolute inset-0 flex items-center justify-center">
-                    <Recycle className="w-12 h-12 text-gray-300" />
+                  <img
+                    src="https://storage.googleapis.com/popcycle01/Gemini_Generated_Image_d5b7k3d5b7k3d5b7.png"
+
+                    className="w-full h-full object-cover object-bottom transition duration-300 ease-in-out transform hover:scale-105"
+                    data-testid="img-product-info"
+                  />
+      </div>
+                  <div className="absolute bottom-0 left-0 right-0 p-6 ">
+
                   </div>
                 </div>
-                <h4 className="text-sm font-medium mb-1">Product {item}</h4>
-                <p className="text-xs text-gray-600">Recycled materials</p>
+                <div className="w-auto h-auto justify-items-center my-2">
+                <h3 className="font-[500] text-black mt-2 font-light text-lg ">Community Partners</h3>
+                <p className="text-gray-500 -mt-1 text-lg font-extralight">Products from your waste stream</p>
+                  </div>
               </Link>
-            ))}
+
+              {/* Product Card 4 */}
+              <Link href="/about" className=" group">
+                <div className="relative aspect-[7/4] bg-gray-100 overflow-hidden">
+                  <div className="absolute inset-0 flex items-center justify-center">
+                    <img
+                      src="https://storage.googleapis.com/popcycle01/Gemini_Generated_Image_ugvelnugvelnugve.png"
+
+                      className="w-full h-full object-cover object-bottom transition duration-300 ease-in-out transform hover:scale-105"
+                      data-testid="img-product-info"
+                    />
+
+
+
+                  </div>
+                  <div className="absolute bottom-0 left-0 right-0 p-6 ">
+
+                  </div>
+                </div>
+                <div className="w-auto h-auto justify-items-center my-2">
+                <h3 className=" text-black mt-2 font-light text-lg ">Complete Lifecycle Tracking</h3>
+                <p className="text-gray-500 -mt-1 text-lg font-extralight">Provable material diversion</p>
+                  </div>
+              </Link>
+
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
+
 
       {/* CTA Section */}
-      <section className="pt-72 pb-24  px-6 bg-white">
+      <section className="pt-96 pb-36  px-6 bg-white">
         <div className="max-w-3xl mx-auto text-center">
-          <h2 className="text-3xl lg:text-4xl mb-6 leading-tight">
+          <h2 className="text-4xl lg:text-5xl mb-2 font-light leading-tight">
             Start Your Circular Journey
           </h2>
           
-          <p className="text-lg mb-10 text-gray-600 leading-relaxed max-w-2xl mx-auto">
+          <p className="text-2xl mb-10 text-gray-600 font-extralight leading-relaxed max-w-2xl mx-auto">
             Transform waste into traceable, branded products.
           </p>
           

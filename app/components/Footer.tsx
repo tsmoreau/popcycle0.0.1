@@ -12,31 +12,52 @@ export default function Footer() {
     return null;
   }
   return (
-    <footer className="bg-gray-50 text-black py-16 pt-24 mt-16 ">
+    <footer className="bg-gray-50 text-black py-10 pt-24 mt-16 ">
       <div className="max-w-9/10  mx-auto px-6">
-        <div id="main" className="flex flex-col lg:flex-row mx-auto justify-center items-center lg:items-start text-center  gap-x-16 ">
+        <Link href="/" className=" hidden lg:block w-auto transform -translate-y-1 scale- w-auto md:mb-0 justify-center text-center">
+          <div className=" flex w-auto justify-center font-jost font-light pl-0 pb-2 space-x-1 mt-1">
+
+           <img
+                src="https://storage.googleapis.com/popcycle01/Gemini_Generated_Image_pih22upih22upih2.png"
+
+                className="w-11 h-11 object-cover mt-0.5"
+                data-testid="img-product-info"
+              />
+
+            <div className="flex-col flex mt-">
+            <span className="text-4xl  tracking-tight font-medium text-gray-900 uppercase ">
+              PopCycle
+            </span>
+            <span className=" -mt-1.5 ml-1 tracking-[0.32em] text-[8px] font-bold text-gray-900">
+              RECYCLING DESIGN STUDIO
+            </span>
+              </div>
+          </div>
+          <p className="hidden text-sm text-gray-500">© 2025 Insight Makers LLC.</p>
+        </Link>
+        <div id="main" className="mt-4 flex flex-col lg:flex-row mx-auto justify-center items-center lg:items-start text-center  gap-x-12 ">
           {/* Logo & Description */}
-          <div className="w-auto  mb-8 w-auto md:mb-0 justify-center text-center">
-            <div className=" flex w-auto justify-center font-jost font-light pl-0 pb-2 space-x-2 ">
+          <Link href="/" className="lg:hidden w-auto transform -translate-y-1  mb-4 w-auto md:mb-0 justify-center text-center">
+            <div className=" flex w-auto justify-center font-jost font-light pl-0 pb-2 space-x-1 mt-1">
 
              <img
-                  src="https://storage.googleapis.com/popcycle01/logo2.svg"
+                  src="https://storage.googleapis.com/popcycle01/Gemini_Generated_Image_pih22upih22upih2.png"
 
-                  className="w-12 h-12 object-cover"
+                  className="w-11 h-11 object-cover mt-0.5"
                   data-testid="img-product-info"
                 />
-              
-              <div className="flex-col flex mt-2">
-              <span className="text-4xl  tracking-tighter font-base text-gray-900">
+
+              <div className="flex-col flex mt-">
+              <span className="text-4xl  tracking-tight font-medium text-gray-900 uppercase ">
                 PopCycle
               </span>
-              <span className="hidden mt-0.0 ml-1 tracking-[2.2em] text-[8px] font-bold text-gray-900">
-                STUDIO
+              <span className=" -mt-1.5 ml-1 tracking-[0.32em] text-[8px] font-bold text-gray-900">
+                RECYCLING DESIGN STUDIO
               </span>
                 </div>
             </div>
-            <p className="text-sm text-gray-500">© 2025 Insight Makers LLC.</p>
-          </div>
+            <p className="hidden text-sm text-gray-500">© 2025 Insight Makers LLC.</p>
+          </Link>
 
           {/* Main Nav */}
           <div className="mb-8 md:mb-0 -mt-2 text-center ">
@@ -61,6 +82,12 @@ export default function Footer() {
                 className="block text-sm text-gray-500 hover:text-white transition-colors"
               >
                 Services
+              </Link>
+              <Link
+                href="/services"
+                className="block text-sm text-gray-500 hover:text-white transition-colors"
+              >
+                Track
               </Link>
               
             </div>
