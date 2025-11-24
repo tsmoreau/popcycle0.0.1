@@ -93,9 +93,9 @@ function AuthButtonContent() {
           <DialogHeader className="space-y-6 pb-2">
             <div className="text-center">
               <img
-                src="https://storage.googleapis.com/popcycle01/logo2.svg"
+                src="https://storage.googleapis.com/popcycle01/Gemini_Generated_Image_pih22upih22upih2.png"
                 alt="PopCycle"
-                className="w-14 h-14 mx-auto mb-4"
+                className="w-14 h-14 mx-auto mb-4 object-cover"
               />
               <DialogTitle className="text-2xl font-jost font-light text-pop-black">
                 Sign In
