@@ -20,16 +20,16 @@ export default function Home() {
         </video>
         
         {/* Dark Overlay */}
-        <div className="absolute inset-0 transition ease-in-out hover:bg-black/30 duration-500 z-10"></div>
+        <div className="hidden absolute inset-0 transition ease-in-out hover:bg-black/30 duration-300 z-10"></div>
         
         {/* Content */}
         <div className="relative mt-24 w-full mx-auto text-center z-20">
 
-<div className="transition ease-in-out group-hover:transform group-hover:-translate-y-8 transform duration-500 ">    
-          <div className="text-3xl lg:text-5xl mb-3 tracking-normal leading-normal text-white font-light group-hover:opacity-100 opacity-80">Traceable Sustainability</div>
+<div className="transition ease-in-out group-hover:transform group-hover:-translate-y-8 transform duration-300 ">    
+          <div className="text-3xl lg:text-5xl mb-3 tracking-normal leading-normal text-white font-light ">Traceable Sustainability</div>
           
        
-          <p className="text-base tracking-normal font-extralight lg:text-2xl max-w-[90vw] lg:max-w-[40vw] mx-auto leading-0.5 group-hover:opacity-100 opacity-80 text-white">
+          <p className="text-base tracking-normal font-extralight lg:text-2xl max-w-[90vw] lg:max-w-[40vw] mx-auto leading-0.5  text-white">
            We transform post-consumer plastic into designer objects with complete material traceability. 
            
           </p>
@@ -46,7 +46,7 @@ export default function Home() {
                   block: 'start'
                 });
               }}
-              className="duration-500 cursor-pointer opacity-0 group-hover:opacity-100 z-30 ease-in-out transition"
+              className="duration-300 cursor-pointer opacity-0 group-hover:opacity-100 z-30 ease-in-out transition"
             >
               <svg width="40px" height="40px" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
                 <path 
