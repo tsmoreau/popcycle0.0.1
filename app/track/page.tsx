@@ -106,9 +106,9 @@ export default function Track() {
       </section>
 
       {/* Filter and Grid Section */}
-      <div className="flex-col mx-auto items-center justify-between max-w-7xl mx-auto px-6 py-16">
+      <div className="flex-col mx-auto items-center justify-between max-w-5xl mx-auto px-6 py-16">
         {/* Filter Bar */}
-        <div className="flex items-center justify-between mb-12 pb-4  border-gray-200">
+        <div className="flex items-center justify-between mb-8 pb-4  border-gray-200">
           <div className="flex items-center gap-6">
             <span className="text-sm text-gray-500 font-light">Filter by type:</span>
             <div className="relative" ref={filterRef}>

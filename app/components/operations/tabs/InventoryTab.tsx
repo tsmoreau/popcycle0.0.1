@@ -50,6 +50,7 @@ export const InventoryTab = ({
           onSave={handleBlankSave}
           onAdd={handleBlankAdd}
           onDelete={handleBlankDelete}
+          idPrefix="K"
         />
       )}
 

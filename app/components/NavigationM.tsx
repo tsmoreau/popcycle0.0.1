@@ -117,36 +117,40 @@ export default function Navigation() {
           </div>
 
           <div className="flex mb-1">
-          {/* Logo */}
-          <Link href="/" className="pl-2 lg:pl-12 pl-0 self-end pb-2 flex items-center space-x-2 group lg:mx-0 mx-auto">
-            <div className="w-10 h-10 bg-pop-green flex items-center justify-center transition-all group-hover:bg-opacity-90 mt-1">
-              <img
-                src="https://storage.googleapis.com/popcycle01/logo2.svg"
 
-                className="w-10 h-10 object-cover"
-                data-testid="img-product-info"
-              />
-            </div>
-            <div className="flex-col flex mt-2">
-            <span className="text-4xl  tracking-tighter font-base text-gray-900">
-              PopCycle
-            </span>
-            <span className="hidden mt-0.0 ml-1 tracking-[2.2em] text-[8px] font-bold text-gray-900">
-              STUDIO
-            </span>
+            {/* Logo */}
+            <Link href="/" className="w-auto transform translate-y-3 mt-0.5  w-auto md:mb-0 justify-center text-center ml-12">
+              <div className=" flex w-auto justify-center font-jost font-light pl-0 pb-2 space-x-1 mt-1">
+
+               <img
+                    src="https://storage.googleapis.com/popcycle01/Gemini_Generated_Image_pih22upih22upih2.png"
+
+                    className="w-11 h-11 object-cover mt-0.5"
+                    data-testid="img-product-info"
+                  />
+
+                <div className="flex-col flex mt-">
+                <span className="text-4xl  tracking-tight font-medium text-gray-900 uppercase ">
+                  PopCycle
+                </span>
+                <span className=" -mt-1.5 ml-1 tracking-[0.32em] text-[8px] font-bold text-gray-900">
+                  RECYCLING DESIGN STUDIO
+                </span>
+                  </div>
               </div>
-          </Link>
+              <p className="hidden text-sm text-gray-500">© 2025 Insight Makers LLC.</p>
+            </Link>
 
 
           {/* Absolutely centered navigation links */}
-          <div className="  hidden self-end lg:flex items-end space-x-10 ml-8">
+          <div className="  hidden self-end lg:flex items-end space-x-10 ml-12">
             {/* About Dropdown */}
             <div
               onMouseEnter={() => setAboutOpen(true)}
               onMouseLeave={() => setAboutOpen(false)}
             >
               <button
-                className={`text-lg  hover:text-pop-green transition-colors flex items-center space-x-1 py-2 ${
+                className={`text-base  hover:text-pop-green transition-colors flex items-center space-x-1 py-2 ${
                   pathname?.startsWith("/about") ? "nav-link-active" : ""
                 }`}
               >
@@ -160,7 +164,7 @@ export default function Navigation() {
               onMouseLeave={() => setProductsOpen(false)}
             >
               <button
-                className={`text-lg hover:text-pop-green transition-colors flex items-center space-x-1 py-2 ${
+                className={`text-base hover:text-pop-green transition-colors flex items-center space-x-1 py-2 ${
                   pathname === "/shop" ? "nav-link-active" : ""
                 }`}
               >
@@ -174,7 +178,7 @@ export default function Navigation() {
               onMouseLeave={() => setServicesOpen(false)}
             >
               <button
-                className={`text-lg hover:text-pop-green transition-colors flex items-center space-x-1 py-2 ${
+                className={`text-base hover:text-pop-green transition-colors flex items-center space-x-1 py-2 ${
                   pathname === "/services" ? "nav-link-active" : ""
                 }`}
               >

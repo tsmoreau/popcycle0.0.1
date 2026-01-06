@@ -99,7 +99,7 @@ export default function Navigation() {
   ];
 
   return (
-    <nav className="font-jost font-light h-24  z-50 bg-white border-b border-gray-200 relative">
+    <nav className="font-jost font-light h-24   z-50 bg-white border-b border-gray-200 relative">
       <div className="relative max-w-full mx-auto h-auto pt-2">
         <div className="absolute bottom-4 -mt-2 mb- right-5  ">
           <div 
@@ -208,30 +208,38 @@ export default function Navigation() {
             </Button>
           </div>
 
-          <div className="flex justify-center w-full mb-1 ml-2 lg:ml-0">
+          <div className="flex justify-center mx-auto items-center w-full mb-1 ml-2 lg:ml-0">
           {/* Logo */}
-            <Link href="/" className="w-auto transform translate-y-2 lg:scale-125 w-auto md:mb-0 justify-center text-center">
+            <div  className="relative w-auto transform translate-y-2 lg:scale-125 w-auto md:mb-0 justify-center text-center">
               <div className=" flex w-auto justify-center font-jost font-light pl-0 pb-2 space-x-1 mt-1">
 
-               <img
+                <Link href="/">
+               <img 
                     src="https://storage.googleapis.com/popcycle01/Gemini_Generated_Image_pih22upih22upih2.png"
 
                     className="w-11 h-11 object-cover mt-0.5"
                     data-testid="img-product-info"
                   />
+                </Link>
 
                 <div className="flex-col flex mt-">
-                <span className="text-4xl  tracking-tight font-medium text-gray-900 uppercase ">
+                <Link href="/" className="text-4xl  tracking-tight font-medium text-gray-900 uppercase ">
                   PopCycle
+                </Link>
+                <span className=" -mt-1.5 ml-0.5 pl-0.5 tracking-[0.24em] text-[8px] font-bold text-gray-900">
+                  RECYCLING + DESIGN STUDIO
                 </span>
-                <span className=" -mt-1.5 ml-1 tracking-[0.32em] text-[8px] font-bold text-gray-900">
-                  RECYCLING DESIGN STUDIO
-                </span>
+                  <span className="hidden -mt-1.5 ml-1 tracking-[0.3em] text-[8px] font-bold text-gray-900">
+                    <Link href="/about" className="hover:text-pop-green">ABOUT </Link> 
+                    <Link href="/products" className="hover:text-pop-green">PRODUCTS </Link>
+                    <Link href="/services" className="hover:text-pop-green">SERVICES</Link>
+                  </span>
                   </div>
               </div>
               <p className="hidden text-sm text-gray-500">© 2025 Insight Makers LLC.</p>
-            </Link>
-
+          
+              <div className="hidden absolute -bottom-3 inset-x-0 tracking-[0.1em] text-[9px] font-light text-gray-900">ABOUT - PRODUCTS - SERVICES</div>
+            </div>
 
           {/* Absolutely centered navigation links */}
         

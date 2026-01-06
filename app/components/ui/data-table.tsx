@@ -56,6 +56,8 @@ export interface DataTableProps<T> {
   onAdd?: (item: T) => Promise<void>
   onDelete?: (item: T) => Promise<void>
   className?: string
+  // Auto-generate ID prefix for new entries (e.g., 'B' for bins, 'T' for batches, 'K' for blanks)
+  idPrefix?: string
   // External sorting state (optional)
   sortField?: string
   sortDirection?: SortDirection
@@ -90,6 +92,7 @@ export function DataTable<T extends Record<string, any>>({
   onAdd,
   onDelete,
   className = "",
+  idPrefix,
   sortField: externalSortField,
   sortDirection: externalSortDirection,
   onSort,
@@ -247,7 +250,14 @@ export function DataTable<T extends Record<string, any>>({
     // Initialize empty form data based on editable fields
     const initFormData: Record<string, any> = {}
     editableFields?.forEach(field => {
-      initFormData[String(field.key)] = ''
+      // Auto-generate ID if idPrefix is provided and this is the _id field
+      if (field.key === '_id' && idPrefix) {
+        // Generate 7-char uppercase Base36 sequence, padded to ensure exactly 7 chars
+        const sequence = Math.random().toString(36).substring(2, 9).toUpperCase().padEnd(7, '0')
+        initFormData[String(field.key)] = `${idPrefix}${sequence}`
+      } else {
+        initFormData[String(field.key)] = ''
+      }
     })
     setEditingItem(emptyItem)
     setEditFormData(initFormData)

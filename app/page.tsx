@@ -74,7 +74,7 @@ export default function Home() {
       <section className="mt-12  text-center">
 
          <div className="hidden text-5xl font-light pb-8">Studio Retainer</div>
-          <div className="w-[80vw]   h-auto md:h-[60vh] md:flex lg:flex mx-auto">
+          <div className="w-[70vw]   h-auto md:h-[60vh] md:flex lg:flex mx-auto">
 
 
             <div className="w-full aspect[7/5]  lg:w-3/5 bg-gray-50 flex flex-col mx-auto items-center justify-center lg:h-auto ">

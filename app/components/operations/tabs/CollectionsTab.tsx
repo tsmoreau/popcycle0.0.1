@@ -56,6 +56,7 @@ export const CollectionsTab = ({
           onSave={handleBinSave}
           onAdd={handleBinAdd}
           onDelete={handleBinDelete}
+          idPrefix="B"
           sortField={collectionsSortField}
           sortDirection={collectionsSortDirection}
           onSort={onSort}

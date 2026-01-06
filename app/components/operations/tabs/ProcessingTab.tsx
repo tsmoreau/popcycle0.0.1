@@ -57,6 +57,7 @@ export const ProcessingTab = ({
           onSave={handleBatchSave}
           onAdd={handleBatchAdd}
           onDelete={handleBatchDelete}
+          idPrefix="T"
           sortField={processingSortField}
           sortDirection={processingSortDirection}
           onSort={onSort}
